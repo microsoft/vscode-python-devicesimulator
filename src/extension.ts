@@ -54,6 +54,22 @@ export function activate(context: vscode.ExtensionContext) {
 
         currentPanel.webview.html = getWebviewContent(apxSrc, context);
 
+        // Handle messages from webview
+        currentPanel.webview.onDidReceiveMessage(
+          message => {
+            switch (message.command) {
+              case "light-press":
+                vscode.window.showInformationMessage(message.text);
+                return;
+              default:
+                vscode.window.showInformationMessage("We out here");
+                break;
+            }
+          },
+          undefined,
+          context.subscriptions
+        );
+
         currentPanel.onDidDispose(
           () => {
             currentPanel = undefined;
@@ -70,20 +86,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 function getWebviewContent(img: vscode.Uri, context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-				<title>Adafruit Simulator</title>
-				</head>
-			<body>
-				<div id="root"></div>
-        <img src="${img}" width="300" />
-        ${loadScript(context, "out/vendor.js")}
-        ${loadScript(context, "out/aliens.js")}
-			</body>
-			</html>`;
+            <title>Adafruit Simulator</title>
+            </head>
+          <body>
+            <div id="root"></div>
+            <script>
+              const vscode = acquireVsCodeApi();
+            </script>
+            ${loadScript(context, "out/vendor.js")}
+            ${loadScript(context, "out/aliens.js")}
+          </body>
+          </html>`;
 }
 
 // this method is called when your extension is deactivated

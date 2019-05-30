@@ -3,7 +3,7 @@ const tsImportPlugin = require("ts-import-plugin");
 
 module.exports = {
   entry: {
-    simulator: "./src/view/index.tsx"
+    aliens: "./src/view/index.tsx"
   },
   output: {
     path: path.resolve(__dirname, "out"),
@@ -78,10 +78,19 @@ module.exports = {
             loader: "css-loader"
           }
         ]
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-inline"
       }
     ]
-  },
-  performance: {
-    hints: false
   }
+  // When importing a module whose path matches one of the following, just
+  // assume a corresponding global variable exists and use that instead.
+  // This is important because it allows us to avoid bundling all of our
+  // dependencies, which allows browsers to cache those libraries between builds.
+  // externals: {
+  //   react: "React",
+  //   "react-dom": "ReactDOM"
+  // }
 };
