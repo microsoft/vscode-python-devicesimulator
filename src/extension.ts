@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Send message to the webview
   let runEmulator = vscode.commands.registerCommand(
-    "adafruit.runEmulator",
+    "adafruit.runSimulator",
     () => {
       if (!currentPanel) {
         return;
