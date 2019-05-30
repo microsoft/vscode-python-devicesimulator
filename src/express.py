@@ -1,4 +1,5 @@
 from pixel import Pixel
+
 class Express:
     def __init__(self):
         # Our actual state
