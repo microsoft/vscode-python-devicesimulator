@@ -15,29 +15,24 @@ def main():
     # lines = read_in()
 
     openCmd = {
-        "command": "state",
         "cpx": {
             'pixels': [
-            (255, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
-            (0, 0, 0),
+                (0, 0, 255),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
+                (0, 0, 0),
             ],
             'button_a': False,
             'button_b': False,
         }
     }
     print(json.dumps(openCmd))
-    # if lines == "hello":
-    # print(json.dumps(openCmd))
-    # else:
-    # print ("hello from Python")
 
 
 # start process

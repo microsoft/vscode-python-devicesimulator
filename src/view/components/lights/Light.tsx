@@ -13,16 +13,6 @@ const getRGB = (props: IProps): string => {
 };
 
 const App: React.FC<IProps> = props => {
-  // const style = {
-  //   border:
-  //     "1px solid rgb(" +
-  //     props.light.red +
-  //     "," +
-  //     props.light.green +
-  //     "," +
-  //     props.light.blue +
-  //     ")"
-  // };
   const xPos: number = 150;
   const yPos: number = 100;
   const radius: number = 20;

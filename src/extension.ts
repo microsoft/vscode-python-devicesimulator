@@ -28,7 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
   let openSimulator = vscode.commands.registerCommand(
     "adafruit.helloSimulator",
     () => {
-      // The code you place here will be executed every time your command is executed
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.One);
       } else {
