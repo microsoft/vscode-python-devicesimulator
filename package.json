@@ -10,14 +10,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.helloSimulator"
+    "onCommand:adafruit.helloSimulator",
+    "onCommand:adafruit.runEmulator"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.helloSimulator",
-        "title": "Open Simulator"
+        "command": "adafruit.helloSimulator",
+        "title": "Open Simulator",
+        "category": "Adafruit"
+      },
+      {
+        "command": "adafruit.runEmulator",
+        "title": "Run the Emulator",
+        "category": "Adafruit"
       }
     ]
   },

@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import * as path from "path";
+import * as cp from "child_process";
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -24,8 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand(
-    "extension.helloSimulator",
+  let openSimulator = vscode.commands.registerCommand(
+    "adafruit.helloSimulator",
     () => {
       // The code you place here will be executed every time your command is executed
       if (currentPanel) {
@@ -44,31 +45,8 @@ export function activate(context: vscode.ExtensionContext) {
             enableScripts: true
           } // Webview options. More on these later.
         );
-        // Get path to resource on disk
-        const onDiskPath = vscode.Uri.file(
-          path.join(context.extensionPath, "public", "apx.svg")
-        );
 
-        // And get the special URI to use with the webview
-        const apxSrc = onDiskPath.with({ scheme: "vscode-resource" });
-
-        currentPanel.webview.html = getWebviewContent(apxSrc, context);
-
-        // Handle messages from webview
-        currentPanel.webview.onDidReceiveMessage(
-          message => {
-            switch (message.command) {
-              case "light-press":
-                vscode.window.showInformationMessage(message.text);
-                return;
-              default:
-                vscode.window.showInformationMessage("We out here");
-                break;
-            }
-          },
-          undefined,
-          context.subscriptions
-        );
+        currentPanel.webview.html = getWebviewContent(context);
 
         currentPanel.onDidDispose(
           () => {
@@ -81,10 +59,75 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(disposable);
+  // Send message to the webview
+  let runEmulator = vscode.commands.registerCommand(
+    "adafruit.runEmulator",
+    () => {
+      if (!currentPanel) {
+        return;
+      }
+      /************************ */
+
+      // Get the Python script path (And the special URI to use with the webview)
+      const onDiskPath = vscode.Uri.file(
+        path.join(context.extensionPath, "src/scripts", "control.py")
+      );
+      const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+
+      // Create the Python process
+      let childProcess = cp.spawn("python", [scriptPath.fsPath]);
+
+      let dataForTheProcess = "hello";
+      let dataFromTheProcess = "";
+
+      // Data received from Python process
+      childProcess.stdout.on("data", function(data) {
+        dataFromTheProcess += data.toString();
+      });
+      // End of the data transmission
+      childProcess.stdout.on("end", function() {
+        console.log("Process output = ", dataFromTheProcess);
+        if (currentPanel) {
+          currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
+        }
+      });
+      // Std error output
+      childProcess.stderr.on("data", data => {
+        console.log(`stderr: ${data}`);
+      });
+      // When the process is done
+      childProcess.on("close", (code: number) => {
+        console.log(`Command execution exited with code: ${code}`);
+      });
+
+      // Send input to the Python process
+      childProcess.stdin.write(JSON.stringify(dataForTheProcess));
+      childProcess.stdin.end();
+
+      ///////
+      // Handle messages from webview
+      currentPanel.webview.onDidReceiveMessage(
+        message => {
+          switch (message.command) {
+            case "light-press":
+              vscode.window.showInformationMessage(message.text);
+              return;
+            default:
+              vscode.window.showInformationMessage("We out here");
+              break;
+          }
+        },
+        undefined,
+        context.subscriptions
+      );
+      /************************ */
+    }
+  );
+
+  context.subscriptions.push(openSimulator, runEmulator);
 }
 
-function getWebviewContent(img: vscode.Uri, context: vscode.ExtensionContext) {
+function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
           <html lang="en">
           <head>

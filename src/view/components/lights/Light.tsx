@@ -4,20 +4,12 @@ import * as React from "react";
 
 interface IProps {
   name?: string;
-  light: any;
+  light: Array<number>;
   onClick: () => void;
 }
 
 const getRGB = (props: IProps): string => {
-  return (
-    "rgb(" +
-    props.light.red +
-    "," +
-    props.light.green +
-    "," +
-    props.light.blue +
-    ")"
-  );
+  return "rgb(" + props.light.toString() + ")";
 };
 
 const App: React.FC<IProps> = props => {
