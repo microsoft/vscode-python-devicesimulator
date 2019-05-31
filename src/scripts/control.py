@@ -15,7 +15,6 @@ def main():
     # lines = read_in()
 
     openCmd = {
-        "cpx": {
             'pixels': [
                 (0, 0, 255),
                 (0, 0, 0),
@@ -30,7 +29,6 @@ def main():
             ],
             'button_a': False,
             'button_b': False,
-        }
     }
     print(json.dumps(openCmd))
 

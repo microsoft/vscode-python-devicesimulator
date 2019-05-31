@@ -1,5 +1,4 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
@@ -10,31 +9,22 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
     .toString()}"></script>`;
 }
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+// Extension activation
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "embedded-python" is now active!'
-  );
 
-  // Only allow a webview
+  console.log(    'Congratulations, your extension Adafruit_Simulator is now active!'  );
+
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  let openSimulator = vscode.commands.registerCommand(
-    "adafruit.helloSimulator",
-    () => {
+  // Open Simulator on the webview
+  let openSimulator = vscode.commands.registerCommand("adafruit.openSimulator", () => {
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.One);
       } else {
         currentPanel = vscode.window.createWebviewPanel(
-          "adafruitSimulator", // Identifies the type of the webview. Used internally
-          "Adafruit CPX", // Title of the panel displayed to the user
-          vscode.ViewColumn.Two, // Editor column to show the new webview panel in.
+          "adafruitSimulator",
+          "Adafruit CPX",
+          vscode.ViewColumn.Two,
           {
             // Only allow the webview to access resources in our extension's media directory
             localResourceRoots: [
@@ -42,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.Uri.file(path.join(context.extensionPath, "out"))
             ],
             enableScripts: true
-          } // Webview options. More on these later.
+          }
         );
 
         currentPanel.webview.html = getWebviewContent(context);
@@ -59,17 +49,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  let runEmulator = vscode.commands.registerCommand(
-    "adafruit.runEmulator",
-    () => {
+  let runEmulator = vscode.commands.registerCommand("adafruit.runEmulator", () => {
       if (!currentPanel) {
         return;
       }
-      /************************ */
 
       // Get the Python script path (And the special URI to use with the webview)
       const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, "src/scripts", "control.py")
+        path.join(context.extensionPath, "src/scripts", "code.py")
       );
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
@@ -103,7 +90,6 @@ export function activate(context: vscode.ExtensionContext) {
       childProcess.stdin.write(JSON.stringify(dataForTheProcess));
       childProcess.stdin.end();
 
-      ///////
       // Handle messages from webview
       currentPanel.webview.onDidReceiveMessage(
         message => {
@@ -119,7 +105,6 @@ export function activate(context: vscode.ExtensionContext) {
         undefined,
         context.subscriptions
       );
-      /************************ */
     }
   );
 
