@@ -3,7 +3,6 @@
 import * as React from "react";
 
 interface IProps {
-  name?: string;
   light: Array<number>;
   onClick: () => void;
 }
