@@ -22,8 +22,8 @@
         "category": "Adafruit"
       },
       {
-        "command": "adafruit.runEmulator",
-        "title": "Run the Emulator",
+        "command": "adafruit.runSimulator",
+        "title": "Run the Simulator",
         "category": "Adafruit"
       }
     ]
