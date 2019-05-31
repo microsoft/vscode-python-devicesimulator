@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  let runEmulator = vscode.commands.registerCommand("adafruit.runEmulator", () => {
+  let runSimulator = vscode.commands.registerCommand("adafruit.runSimulator", () => {
       if (!currentPanel) {
         return;
       }
@@ -108,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(openSimulator, runEmulator);
+  context.subscriptions.push(openSimulator, runSimulator);
 }
 
 function getWebviewContent(context: vscode.ExtensionContext) {

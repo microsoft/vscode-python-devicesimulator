@@ -11,7 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:adafruit.openSimulator",
-    "onCommand:adafruit.runEmulator"
+    "onCommand:adafruit.runSimulator"
   ],
   "main": "./out/extension.js",
   "contributes": {
