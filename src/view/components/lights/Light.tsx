@@ -3,7 +3,6 @@
 import * as React from "react";
 
 interface IProps {
-  name?: string;
   light: Array<number>;
   onClick: () => void;
 }
@@ -17,7 +16,7 @@ const App: React.FC<IProps> = props => {
   const yPos: number = 100;
   const radius: number = 20;
   return (
-    <svg id="led-light-1">
+    <svg id="led-1">
       <circle
         onClick={props.onClick}
         cx={xPos}
