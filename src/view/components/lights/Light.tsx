@@ -8,8 +8,8 @@ interface IProps {
   onClick: () => void;
 }
 
-const getRGB = (props: IProps): string => {
-  return "rgb(" + props.light.toString() + ")";
+const getRGB = (light: Array<number>): string => {
+  return "rgb(" + light.toString() + ")";
 };
 
 const App: React.FC<IProps> = props => {
@@ -23,7 +23,7 @@ const App: React.FC<IProps> = props => {
         cx={xPos}
         cy={yPos}
         r={radius}
-        fill={getRGB(props)}
+        fill={getRGB(props.light)}
       />
     </svg>
   );

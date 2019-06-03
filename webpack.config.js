@@ -3,7 +3,7 @@ const tsImportPlugin = require("ts-import-plugin");
 
 module.exports = {
   entry: {
-    aliens: "./src/view/index.tsx"
+    simulator: "./src/view/index.tsx"
   },
   output: {
     path: path.resolve(__dirname, "out"),

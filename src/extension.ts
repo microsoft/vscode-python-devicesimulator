@@ -141,7 +141,7 @@ function getWebviewContent(context: vscode.ExtensionContext) {
               const vscode = acquireVsCodeApi();
             </script>
             ${loadScript(context, "out/vendor.js")}
-            ${loadScript(context, "out/aliens.js")}
+            ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
 }
