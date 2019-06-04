@@ -46,7 +46,7 @@ class Simulator extends React.Component<any, IState> {
   handleMessage = (event: any): void => {
     const message = event.data; // The JSON data our extension sent
     console.log("change state");
-    this.setState(message.cpx);
+    this.setState(message);
   };
 
   componentDidMount() {
