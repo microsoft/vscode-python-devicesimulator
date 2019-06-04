@@ -12,7 +12,7 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
 
-  console.log(    'Congratulations, your extension Adafruit_Simulator is now active!'  );
+  console.log('Congratulations, your extension Adafruit_Simulator is now active!');
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
 
