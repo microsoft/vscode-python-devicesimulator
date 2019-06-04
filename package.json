@@ -1,14 +1,26 @@
 {
-  "name": "embedded-python",
-  "displayName": "embedded-python",
-  "description": "",
+  "name": "__EXTENSIONNAME__",
+  "displayName": "__DISPLAYNAME__",
+  "description": "__DESCRIPTION__",
   "version": "0.0.1",
+  "publisher": "__PUBLISHER__",
   "engines": {
     "vscode": "^1.34.0"
   },
   "categories": [
     "Other"
   ],
+  "preview": true,
+  "homepage": "https://github.com/microsoft/vscode-python-embedded/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/microsoft/vscode-python-embedded/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-python-embedded",
+    "vsce": "^1.57.1"
+  },
   "activationEvents": [
     "onCommand:adafruit.openSimulator",
     "onCommand:adafruit.runSimulator"
@@ -38,6 +50,9 @@
     "watch:views": "webpack --watch --mode development",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "package": "vsce package"
   },
   "devDependencies": {
@@ -56,6 +71,10 @@
     "style-loader": "^0.21.0",
     "ts-import-plugin": "^1.5.4",
     "ts-loader": "^4.4.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-microsoft-contrib": "^6.1.0",
+    "tslint-react-hooks": "^2.0.0",
+    "tslint-react": "^3.6.0",
     "vsce": "^1.47.0",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
