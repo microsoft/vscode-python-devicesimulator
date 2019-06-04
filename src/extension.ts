@@ -28,7 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
           {
             // Only allow the webview to access resources in our extension's media directory
             localResourceRoots: [
-              vscode.Uri.file(path.join(context.extensionPath, "public")),
               vscode.Uri.file(path.join(context.extensionPath, "out"))
             ],
             enableScripts: true
@@ -126,7 +125,7 @@ function getWebviewContent(context: vscode.ExtensionContext) {
               const vscode = acquireVsCodeApi();
             </script>
             ${loadScript(context, "out/vendor.js")}
-            ${loadScript(context, "out/aliens.js")}
+            ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
 }

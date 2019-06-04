@@ -18,7 +18,7 @@ interface vscode {
 
 declare const vscode: vscode;
 
-const addCategory = () =>
+const sendMessage = () =>
   vscode.postMessage({ command: "light-press", text: "HELOOOO" });
 
 class Simulator extends React.Component<any, IState> {
@@ -83,7 +83,7 @@ class Simulator extends React.Component<any, IState> {
       button_a: false,
       button_b: false
     });
-    addCategory();
+    sendMessage();
   }
 }
 
