@@ -24,4 +24,7 @@ class Pixel:
             raise ValueError('The pixel value should be in range 0, 255.')
 
         return val
-        
+
+    def fill(self, val):
+        for index in range(len(self._state['pixels'])):
+            self._state['pixels'][index] = self.checkPixelValue(val) 

@@ -69,6 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
       childProcess.stdout.on("data", function(data) {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
+          console.log("Process output = ", dataFromTheProcess);
           currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
         }
       });
