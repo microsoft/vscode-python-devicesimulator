@@ -51,7 +51,7 @@ const initSvgStyle = (svgElement: HTMLElement): void => {
 
 
 const isLightOn = (pixValue: Array<number>): boolean => {
-  return ! pixValue.includes(-1);
+  return ! pixValue.every((val) => { return (val == 0) });
 }  
 
 

@@ -11,4 +11,17 @@ class Pixel:
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
-        self._state['pixels'][index] = max(val, (-1,-1,-1)) # Prevent negative values
+        self._state['pixels'][index] = self.checkPixelValue(val) 
+
+    def checkPixelValue(self, val):
+        # Check it's a valid tuple
+        if len(val) != 3:
+            raise ValueError('The pixel value should be a tuple with 3 values.')
+        # Convert to int
+        val = tuple(map(int, val)) 
+        # Prevent negative values
+        if any(pix < 0 or pix > 255 for pix in val): 
+            raise ValueError('The pixel value should be in range 0, 255.')
+
+        return val
+        
