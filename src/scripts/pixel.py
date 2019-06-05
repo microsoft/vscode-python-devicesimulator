@@ -11,4 +11,4 @@ class Pixel:
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
-        self._state['pixels'][index] = val
+        self._state['pixels'][index] = max(val, (-1,-1,-1)) # Prevent negative values
