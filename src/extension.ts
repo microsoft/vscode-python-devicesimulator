@@ -53,6 +53,13 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      const activeTextEditor : vscode.TextEditor|undefined = vscode.window.activeTextEditor;
+      let currentFileAbsPath : string = "";
+
+      if (activeTextEditor) {
+        currentFileAbsPath = activeTextEditor.document.fileName;
+      }
+
       // Get the Python script path (And the special URI to use with the webview)
       const onDiskPath = vscode.Uri.file(
         path.join(context.extensionPath, "out", "setup.py")
@@ -60,7 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
       // Create the Python process
-      let childProcess = cp.spawn("python", [scriptPath.fsPath]);
+      let childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
