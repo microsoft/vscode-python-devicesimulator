@@ -1,4 +1,4 @@
-from pixel import Pixel
+from .pixel import Pixel
 
 class Express:
     def __init__(self):
@@ -21,6 +21,5 @@ class Express:
         }
 
         self.pixels = Pixel(self.state)
-
 
 cpx = Express()
