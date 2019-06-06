@@ -1,5 +1,5 @@
 import * as React from "react";
-import Cpx from "./cpx/cpx";
+import Cpx from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;

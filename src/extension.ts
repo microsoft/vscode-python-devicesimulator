@@ -73,13 +73,6 @@ export function activate(context: vscode.ExtensionContext) {
           currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
         }
       });
-      // End of the data transmission
-      childProcess.stdout.on("end", function() {
-        console.log("Process output = ", dataFromTheProcess);
-        // if (currentPanel) {
-        //   currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
-        // }
-      });
       // Std error output
       childProcess.stderr.on("data", data => {
         console.log(`stderr: ${data}`);

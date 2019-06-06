@@ -1,12 +1,11 @@
 
 import * as React from "react";
-import CPX_SVG from "./cpx_svg";
-import * as SvgStyle from "./cpx_svg_style";
-import svg from "./svg_utils";
+import CPX_SVG from "./Cpx_svg";
+import * as SvgStyle from "./Cpx_svg_style";
+import svg from "./Svg_utils";
 
 
 interface IProps {
-  name?: string;
   pixels: Array<Array<number>>;
   onClick: () => void;
 }

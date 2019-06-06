@@ -11,17 +11,17 @@ namespace svg {
         }
     }
 
-    export function elt(name: string, props?: any): SVGElement {
-        let el = document.createElementNS("http://www.w3.org/2000/svg", name)
+    export function createElement(name: string, props?: any): SVGElement {
+        let newElement = document.createElementNS("http://www.w3.org/2000/svg", name)
         if (props)
-            svg.hydrate(el, props);
-        return el;
+            svg.hydrate(newElement, props);
+        return newElement;
     }
 
     export function child(parent: Element, name: string, props?: any): SVGElement {
-        let el = svg.elt(name, props);
-        parent.appendChild(el);
-        return el;
+        let childElement = svg.createElement(name, props);
+        parent.appendChild(childElement);
+        return childElement;
     }
 
     export function fill(el: SVGElement, c: string) {
@@ -37,7 +37,7 @@ namespace svg {
     }
 
     export function mkTitle(txt: string): SVGTitleElement {
-        let t = svg.elt("title") as SVGTitleElement;
+        let t = svg.createElement("title") as SVGTitleElement;
         t.textContent = txt;
         return t;
     }

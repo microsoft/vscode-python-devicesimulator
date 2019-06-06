@@ -11,9 +11,9 @@ class Pixel:
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
-        self._state['pixels'][index] = self.checkPixelValue(val) 
+        self._state['pixels'][index] = self.extractPixelValue(val) 
 
-    def checkPixelValue(self, val):
+    def extractPixelValue(self, val):
         # Check it's a valid tuple
         if len(val) != 3:
             raise ValueError('The pixel value should be a tuple with 3 values.')
@@ -27,4 +27,4 @@ class Pixel:
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
-            self._state['pixels'][index] = self.checkPixelValue(val) 
+            self._state['pixels'][index] = self.extractPixelValue(val) 
