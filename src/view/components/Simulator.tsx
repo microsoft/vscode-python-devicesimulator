@@ -1,7 +1,5 @@
-"use strict";
-
 import * as React from "react";
-import Light from "./lights/Light";
+import Cpx from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
@@ -61,7 +59,7 @@ class Simulator extends React.Component<any, IState> {
   render() {
     return (
       <div>
-        <Light light={this.state.pixels[0]} onClick={this.sendClickInfo} />
+        <Cpx pixels={this.state.pixels} onClick={this.sendClickInfo} />
       </div>
     );
   }

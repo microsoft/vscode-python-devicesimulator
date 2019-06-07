@@ -14,7 +14,7 @@ class Express:
                 (0, 0, 0),
                 (0, 0, 0),
                 (0, 0, 0),
-                (0, 0, 0),
+                (0, 0, 0)
             ],
             'button_a': False,
             'button_b': False,
