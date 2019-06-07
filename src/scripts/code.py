@@ -1,4 +1,4 @@
-from express import cpx
+from adafruit_circuitplayground.express import cpx
 
 import time
 
