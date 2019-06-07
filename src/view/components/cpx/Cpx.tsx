@@ -38,7 +38,9 @@ const initSvgStyle = (svgElement: HTMLElement): void => {
   let glow = svg.child(defs, "filter", { id: "filterglow", x: "-5%", y: "-5%", width: "120%", height: "120%" });
   svg.child(glow, "feGaussianBlur", { stdDeviation: "5", result: "glow" });
   let merge = svg.child(glow, "feMerge", {});
-  for (let i = 0; i < 3; ++i) svg.child(merge, "feMergeNode", { in: "glow" })
+  for (let i = 0; i < 3; ++i) {
+    svg.child(merge, "feMergeNode", { in: "glow" })
+  }
 
   let neopixelglow = svg.child(defs, "filter", { id: "neopixelglow", x: "-300%", y: "-300%", width: "600%", height: "600%" });
   svg.child(neopixelglow, "feGaussianBlur", { stdDeviation: "4.3", result: "coloredBlur" });
