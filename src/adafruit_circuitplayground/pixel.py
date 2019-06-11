@@ -11,7 +11,10 @@ class Pixel:
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
-        self._state['pixels'][index] = self.extractPixelValue(val) 
+        self._state['pixels'][index] = self.extractPixelValue(val)
+
+    def __getitem__(self, index):
+        return self._state['pixels'][index]
 
     def extractPixelValue(self, val):
         # Convert HEX to RGB
