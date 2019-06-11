@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
@@ -15,7 +14,7 @@ interface IProps {
 /** Functional Component render */
 const Cpx: React.FC<IProps> = props => {
 
-  let svgElement = window.document.getElementById('svg');
+  let svgElement = window.document.getElementById("cpx_svg");
 
   if (svgElement)
     initSvgStyle(svgElement, props.brightness);
@@ -26,7 +25,7 @@ const Cpx: React.FC<IProps> = props => {
   return (
     CPX_SVG
   );
-};
+}
 
 
 const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
@@ -40,7 +39,7 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
   svg.child(glow, "feGaussianBlur", { stdDeviation: "5", result: "glow" });
   let merge = svg.child(glow, "feMerge", {});
   for (let i = 0; i < 3; ++i) {
-    svg.child(merge, "feMergeNode", { in: "glow" })
+    svg.child(merge, "feMergeNode", { in: "glow" });
   }
 
   let neopixelglow = svg.child(defs, "filter", { id: "neopixelglow", x: "-300%", y: "-300%", width: "600%", height: "600%" });
@@ -59,7 +58,7 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
 
 
 const updateNeopixels = (props: IProps): void => {
-  for (let i = 0; i < 10 ; i ++) {
+  for (let i = 0; i < 10; i ++) {
     let led = window.document.getElementById(`LED${i}`);
     if (led) {
       setLED(led, props.pixels[i], props.brightness);
@@ -86,7 +85,7 @@ const setLED = (led: HTMLElement, pixValue: Array<number>, brightness: number): 
   } else {
     led.style.fill = SvgStyle.OFF_COLOR;
     led.style.filter = `none`;
-    led.style.stroke = `none`
+    led.style.stroke = `none`;
   }
 };
 
