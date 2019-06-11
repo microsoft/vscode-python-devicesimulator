@@ -45,6 +45,7 @@
     "compile": "npm-run-all compile:*",
     "compile:extension": "tsc",
     "compile:views": "webpack --mode development",
+    "compile:python": "xcopy src\\setup.py out\\ /I /Y && xcopy src\\adafruit_circuitplayground out\\adafruit_circuitplayground /S /I /E /Y",
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc --watch",
     "watch:views": "webpack --watch --mode development",
