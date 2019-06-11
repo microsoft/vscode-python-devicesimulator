@@ -40,3 +40,15 @@ class Pixel:
             raise ValueError('The pixel hexadicimal color value should be in range #000000 and #FFFFFF.')
         return tuple(int(hexValue[i:i+valueLength//3], 16) for i in range(0, valueLength, valueLength//3))
 
+    @property
+    def brightness(self):
+        return self._state['brightness']
+
+    @brightness.setter
+    def brightness(self, brightness):
+        if not self.validBrightness(brightness):
+            raise ValueError('The brightness value should be a number between 0 and 1.')
+        self._state['brightness'] = brightness
+
+    def validBrightness(self, brightness):
+        return (type(brightness) is float or type(brightness) is int) and (brightness >= 0 and brightness <= 1)

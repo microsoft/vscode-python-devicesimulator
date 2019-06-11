@@ -3,6 +3,7 @@ import Cpx from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
+  brightness: number;
   button_a: any;
   button_b: any;
 }
@@ -35,6 +36,7 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0],
         [0, 0, 0]
       ],
+      brightness: 1.0,
       button_a: false,
       button_b: false
     };
@@ -59,7 +61,7 @@ class Simulator extends React.Component<any, IState> {
   render() {
     return (
       <div>
-        <Cpx pixels={this.state.pixels} onClick={this.sendClickInfo} />
+        <Cpx pixels={this.state.pixels} brightness={this.state.brightness} onClick={this.sendClickInfo} />
       </div>
     );
   }
@@ -78,6 +80,7 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0],
         [0, 0, 0]
       ],
+      brightness: 1.0,
       button_a: false,
       button_b: false
     });

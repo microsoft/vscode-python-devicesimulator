@@ -7,6 +7,7 @@ import svg from "./Svg_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
+  brightness: number;
   onClick: () => void;
 }
 
@@ -17,10 +18,10 @@ const Cpx: React.FC<IProps> = props => {
   let svgElement = window.document.getElementById('svg');
 
   if (svgElement)
-    initSvgStyle(svgElement);
+    initSvgStyle(svgElement, props.brightness);
 
-  // Update LEDs state
-  updateLEDs(props.pixels);
+  // Update Neopixels state
+  updateNeopixels(props);
   
   return (
     CPX_SVG
@@ -28,7 +29,7 @@ const Cpx: React.FC<IProps> = props => {
 };
 
 
-const initSvgStyle = (svgElement: HTMLElement): void => {
+const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
   let style: SVGStyleElement = svg.child(svgElement, "style", {}) as SVGStyleElement;
   style.textContent = SvgStyle.SVG_STYLE;
 
@@ -48,33 +49,57 @@ const initSvgStyle = (svgElement: HTMLElement): void => {
   svg.child(neopixelmerge, "feMergeNode", { in: "coloredBlur" });
   svg.child(neopixelmerge, "feMergeNode", { in: "coloredBlur" });
   svg.child(neopixelmerge, "feMergeNode", { in: "SourceGraphic" });
+
+  // Brightness
+  let neopixelfeComponentTransfer = svg.child(neopixelglow, "feComponentTransfer", {});
+  svg.child(neopixelfeComponentTransfer, "feFuncR", {id:"brightnessFilterR", type: "linear", slope: brightness});
+  svg.child(neopixelfeComponentTransfer, "feFuncG", {id:"brightnessFilterG", type: "linear", slope: brightness});
+  svg.child(neopixelfeComponentTransfer, "feFuncB", {id:"brightnessFilterB", type: "linear", slope: brightness});
 }
+
+
+const updateNeopixels = (props: IProps): void => {
+  for (let i = 0; i < 10 ; i ++) {
+    let led = window.document.getElementById(`LED${i}`);
+    if (led) {
+      setLED(led, props.pixels[i], props.brightness);
+    }
+  }
+}
+
+
+const setLED = (led: HTMLElement, pixValue: Array<number>, brightness: number): void => {
+  if (isLightOn(pixValue) && brightness > 0) {
+    // Neopixels style (Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/board.ts)
+    changeBrightness("brightnessFilterR", brightness);
+    changeBrightness("brightnessFilterG", brightness);
+    changeBrightness("brightnessFilterB", brightness);
+
+    let [hue, sat, lum] = SvgStyle.rgbToHsl([pixValue[0], pixValue[1], pixValue[2]]);
+    let innerLum = Math.max(lum * SvgStyle.INTENSITY_FACTOR, SvgStyle.MAX_LUM);
+    lum = lum * 90 / 100 + 10; // at least 10% luminosity
+        
+    led.style.filter = `url(#neopixelglow)`;
+    led.style.fill = `hsl(${hue}, ${sat}%, ${innerLum}%)`;
+    led.style.stroke = `hsl(${hue}, ${sat}%, ${Math.min(lum * 3, SvgStyle.MIN_LUM)}%)`
+    led.style.strokeWidth = `1.5`;
+  } else {
+    led.style.fill = SvgStyle.OFF_COLOR;
+    led.style.filter = `none`;
+    led.style.stroke = `none`
+  }
+};
 
 
 const isLightOn = (pixValue: Array<number>): boolean => {
   return ! pixValue.every((val) => { return (val == 0) });
-}  
+}
 
 
-const setLED = (pixValue: Array<number>, led: HTMLElement): void => {
-  if (isLightOn(pixValue)) {
-    led.style.fill = "rgb(" + pixValue.toString() + ")";
-    led.style.filter = `url(#neopixelglow)`;
-  }  
-  else {
-    led.style.fill = "#c8c8c8";
-    led.style.filter = `none`;
-  }  
-};  
-
-
-const updateLEDs = (pixelsState: Array<Array<number>>): void => {
-  for (let i = 0; i < 10 ; i ++) {
-    let led = window.document.getElementById(`LED${i}`);
-    if (led) {
-      setLED(pixelsState[i], led);
-    }
-  }
+const changeBrightness = (filterID: string, brightness: number): void => {
+  let brightnessFilter: HTMLElement | null = window.document.getElementById(filterID);
+  if (brightnessFilter)
+    brightnessFilter.setAttribute("slope", brightness.toString());
 }
 
 
