@@ -2,7 +2,7 @@ from .pixel import Pixel
 
 class Express:
     def __init__(self):
-        # State in the Pyhton process
+        # State in the Python process
         self.state = {
             'pixels': [
                 (0, 0, 0),

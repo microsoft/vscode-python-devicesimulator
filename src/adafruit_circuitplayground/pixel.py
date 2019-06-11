@@ -11,13 +11,13 @@ class Pixel:
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
-        self._state['pixels'][index] = self.extractPixelValue(val)
+        self._state['pixels'][index] = self.extract_pixel_value(val)
         self.show()
 
     def __getitem__(self, index):
         return self._state['pixels'][index]
 
-    def extractPixelValue(self, val):
+    def extract_pixel_value(self, val):
         # Convert HEX to RGB
         if type(val) is not tuple:
             val = self.hex_to_rgb(val)
@@ -34,16 +34,19 @@ class Pixel:
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
-            self._state['pixels'][index] = self.extractPixelValue(val) 
+            self._state['pixels'][index] = self.extract_pixel_value(val)
         self.show()
 
-    # Adapted from : https://pythonjunkie.wordpress.com/2012/07/19/convert-hex-color-values-to-rgb-in-python/
     def hex_to_rgb(self, hexValue):
         hexValue = hexValue.lstrip('#')
-        valueLength = len(hexValue)
-        if valueLength != 6:
+        if len(hexValue) != 6:
             raise ValueError('The pixel hexadicimal color value should be in range #000000 and #FFFFFF.')
-        return tuple(int(hexValue[i:i+valueLength//3], 16) for i in range(0, valueLength, valueLength//3))
+        # Convert the string hex to rgb tuple
+        hexToRgbValue = []
+        for i in range(0, len(hexValue), 2):
+            hexColor = hexValue[i:i+2]
+            hexToRgbValue.append(int(hexColor, 16))
+        return tuple(hexToRgbValue)
 
     @property
     def brightness(self):
@@ -51,10 +54,10 @@ class Pixel:
 
     @brightness.setter
     def brightness(self, brightness):
-        if not self.validBrightness(brightness):
+        if not self.valid_brightness(brightness):
             raise ValueError('The brightness value should be a number between 0 and 1.')
         self._state['brightness'] = brightness
         self.show()
 
-    def validBrightness(self, brightness):
+    def valid_brightness(self, brightness):
         return (type(brightness) is float or type(brightness) is int) and (brightness >= 0 and brightness <= 1)

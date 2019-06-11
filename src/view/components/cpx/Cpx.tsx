@@ -16,12 +16,12 @@ const Cpx: React.FC<IProps> = props => {
 
   let svgElement = window.document.getElementById("cpx_svg");
 
-  if (svgElement)
+  if (svgElement) {
     initSvgStyle(svgElement, props.brightness);
+    // Update Neopixels state
+    updateNeopixels(props);
+  }
 
-  // Update Neopixels state
-  updateNeopixels(props);
-  
   return (
     CPX_SVG
   );
@@ -58,16 +58,16 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
 
 
 const updateNeopixels = (props: IProps): void => {
-  for (let i = 0; i < 10; i ++) {
-    let led = window.document.getElementById(`LED${i}`);
+  for (let i = 0; i < props.pixels.length; i ++) {
+    let led = window.document.getElementById(`NEOPIXEL_${i}`);
     if (led) {
-      setLED(led, props.pixels[i], props.brightness);
+      setNeopixel(led, props.pixels[i], props.brightness);
     }
   }
 }
 
 
-const setLED = (led: HTMLElement, pixValue: Array<number>, brightness: number): void => {
+const setNeopixel = (led: HTMLElement, pixValue: Array<number>, brightness: number): void => {
   if (isLightOn(pixValue) && brightness > 0) {
     // Neopixels style (Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/board.ts)
     changeBrightness("brightnessFilterR", brightness);
@@ -75,12 +75,12 @@ const setLED = (led: HTMLElement, pixValue: Array<number>, brightness: number): 
     changeBrightness("brightnessFilterB", brightness);
 
     let [hue, sat, lum] = SvgStyle.rgbToHsl([pixValue[0], pixValue[1], pixValue[2]]);
-    let innerLum = Math.max(lum * SvgStyle.INTENSITY_FACTOR, SvgStyle.MAX_LUM);
-    lum = lum * 90 / 100 + 10; // at least 10% luminosity
+    let innerLum = Math.max(lum * SvgStyle.INTENSITY_FACTOR, SvgStyle.MIN_INNER_LUM);
+    lum = lum * 90 / 100 + 10; // at least 10% luminosity for the stroke
         
     led.style.filter = `url(#neopixelglow)`;
     led.style.fill = `hsl(${hue}, ${sat}%, ${innerLum}%)`;
-    led.style.stroke = `hsl(${hue}, ${sat}%, ${Math.min(lum * 3, SvgStyle.MIN_LUM)}%)`
+    led.style.stroke = `hsl(${hue}, ${sat}%, ${Math.min(lum * 3, SvgStyle.MAX_STROKE_LUM)}%)`
     led.style.strokeWidth = `1.5`;
   } else {
     led.style.fill = SvgStyle.OFF_COLOR;
