@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
@@ -7,6 +6,7 @@ import svg from "./Svg_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
+  brightness: number;
   onClick: () => void;
 }
 
@@ -14,21 +14,21 @@ interface IProps {
 /** Functional Component render */
 const Cpx: React.FC<IProps> = props => {
 
-  let svgElement = window.document.getElementById('svg');
+  let svgElement = window.document.getElementById("cpx_svg");
 
-  if (svgElement)
-    initSvgStyle(svgElement);
+  if (svgElement) {
+    initSvgStyle(svgElement, props.brightness);
+    // Update Neopixels state
+    updateNeopixels(props);
+  }
 
-  // Update LEDs state
-  updateLEDs(props.pixels);
-  
   return (
     CPX_SVG
   );
-};
+}
 
 
-const initSvgStyle = (svgElement: HTMLElement): void => {
+const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
   let style: SVGStyleElement = svg.child(svgElement, "style", {}) as SVGStyleElement;
   style.textContent = SvgStyle.SVG_STYLE;
 
@@ -39,7 +39,7 @@ const initSvgStyle = (svgElement: HTMLElement): void => {
   svg.child(glow, "feGaussianBlur", { stdDeviation: "5", result: "glow" });
   let merge = svg.child(glow, "feMerge", {});
   for (let i = 0; i < 3; ++i) {
-    svg.child(merge, "feMergeNode", { in: "glow" })
+    svg.child(merge, "feMergeNode", { in: "glow" });
   }
 
   let neopixelglow = svg.child(defs, "filter", { id: "neopixelglow", x: "-300%", y: "-300%", width: "600%", height: "600%" });
@@ -48,33 +48,57 @@ const initSvgStyle = (svgElement: HTMLElement): void => {
   svg.child(neopixelmerge, "feMergeNode", { in: "coloredBlur" });
   svg.child(neopixelmerge, "feMergeNode", { in: "coloredBlur" });
   svg.child(neopixelmerge, "feMergeNode", { in: "SourceGraphic" });
+
+  // Brightness
+  let neopixelfeComponentTransfer = svg.child(neopixelglow, "feComponentTransfer", {});
+  svg.child(neopixelfeComponentTransfer, "feFuncR", {id:"brightnessFilterR", type: "linear", slope: brightness});
+  svg.child(neopixelfeComponentTransfer, "feFuncG", {id:"brightnessFilterG", type: "linear", slope: brightness});
+  svg.child(neopixelfeComponentTransfer, "feFuncB", {id:"brightnessFilterB", type: "linear", slope: brightness});
 }
+
+
+const updateNeopixels = (props: IProps): void => {
+  for (let i = 0; i < props.pixels.length; i ++) {
+    let led = window.document.getElementById(`NEOPIXEL_${i}`);
+    if (led) {
+      setNeopixel(led, props.pixels[i], props.brightness);
+    }
+  }
+}
+
+
+const setNeopixel = (led: HTMLElement, pixValue: Array<number>, brightness: number): void => {
+  if (isLightOn(pixValue) && brightness > 0) {
+    // Neopixels style (Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/board.ts)
+    changeBrightness("brightnessFilterR", brightness);
+    changeBrightness("brightnessFilterG", brightness);
+    changeBrightness("brightnessFilterB", brightness);
+
+    let [hue, sat, lum] = SvgStyle.rgbToHsl([pixValue[0], pixValue[1], pixValue[2]]);
+    let innerLum = Math.max(lum * SvgStyle.INTENSITY_FACTOR, SvgStyle.MIN_INNER_LUM);
+    lum = lum * 90 / 100 + 10; // at least 10% luminosity for the stroke
+        
+    led.style.filter = `url(#neopixelglow)`;
+    led.style.fill = `hsl(${hue}, ${sat}%, ${innerLum}%)`;
+    led.style.stroke = `hsl(${hue}, ${sat}%, ${Math.min(lum * 3, SvgStyle.MAX_STROKE_LUM)}%)`
+    led.style.strokeWidth = `1.5`;
+  } else {
+    led.style.fill = SvgStyle.OFF_COLOR;
+    led.style.filter = `none`;
+    led.style.stroke = `none`;
+  }
+};
 
 
 const isLightOn = (pixValue: Array<number>): boolean => {
   return ! pixValue.every((val) => { return (val == 0) });
-}  
+}
 
 
-const setLED = (pixValue: Array<number>, led: HTMLElement): void => {
-  if (isLightOn(pixValue)) {
-    led.style.fill = "rgb(" + pixValue.toString() + ")";
-    led.style.filter = `url(#neopixelglow)`;
-  }  
-  else {
-    led.style.fill = "#c8c8c8";
-    led.style.filter = `none`;
-  }  
-};  
-
-
-const updateLEDs = (pixelsState: Array<Array<number>>): void => {
-  for (let i = 0; i < 10 ; i ++) {
-    let led = window.document.getElementById(`LED${i}`);
-    if (led) {
-      setLED(pixelsState[i], led);
-    }
-  }
+const changeBrightness = (filterID: string, brightness: number): void => {
+  let brightnessFilter: HTMLElement | null = window.document.getElementById(filterID);
+  if (brightnessFilter)
+    brightnessFilter.setAttribute("slope", brightness.toString());
 }
 
 
