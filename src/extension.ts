@@ -1,4 +1,3 @@
-
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
@@ -12,9 +11,10 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
 
-  console.log('Congratulations, your extension Adafruit_Simulator is now active!');
+  console.log("Congratulations, your extension Adafruit_Simulator is now active!");
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
+  let childProcess: cp.ChildProcess;
 
   // Open Simulator on the webview
   let openSimulator = vscode.commands.registerCommand("adafruit.openSimulator", () => {
@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const activeTextEditor : vscode.TextEditor|undefined = vscode.window.activeTextEditor;
+      const activeTextEditor : vscode.TextEditor | undefined = vscode.window.activeTextEditor;
       let currentFileAbsPath : string = "";
 
       if (activeTextEditor) {
@@ -66,8 +66,11 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
-      // Create the Python process
-      let childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
+      // Create the Python process (after killing the one running if any)
+      if (childProcess != undefined) {
+        childProcess.kill();
+      }
+      childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
