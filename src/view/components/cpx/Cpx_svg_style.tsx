@@ -5,8 +5,8 @@ export const MB_WIDTH = 180.09375;
 export const MB_HEIGHT = 179.22874;
 
 export const OFF_COLOR = "#c8c8c8";
-export const MIN_LUM = 75;
-export const MAX_LUM = 85;
+export const MAX_STROKE_LUM = 75;
+export const MIN_INNER_LUM = 85;
 export const INTENSITY_FACTOR = 1.3;
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
