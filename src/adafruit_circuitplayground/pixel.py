@@ -12,6 +12,7 @@ class Pixel:
     
     def __setitem__(self, index, val):
         self._state['pixels'][index] = self.extractPixelValue(val)
+        self.show()
 
     def __getitem__(self, index):
         return self._state['pixels'][index]
@@ -27,13 +28,14 @@ class Pixel:
         val = tuple(map(int, val)) 
         # Prevent negative values
         if any(pix < 0 or pix > 255 for pix in val): 
-            raise ValueError('The pixel value should  between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
+            raise ValueError('The pixel value should between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
 
         return val
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
             self._state['pixels'][index] = self.extractPixelValue(val) 
+        self.show()
 
     # Adapted from : https://pythonjunkie.wordpress.com/2012/07/19/convert-hex-color-values-to-rgb-in-python/
     def hex_to_rgb(self, hexValue):
@@ -52,6 +54,7 @@ class Pixel:
         if not self.validBrightness(brightness):
             raise ValueError('The brightness value should be a number between 0 and 1.')
         self._state['brightness'] = brightness
+        self.show()
 
     def validBrightness(self, brightness):
         return (type(brightness) is float or type(brightness) is int) and (brightness >= 0 and brightness <= 1)
