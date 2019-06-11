@@ -74,13 +74,20 @@ export function activate(context: vscode.ExtensionContext) {
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
+      let oldState = "";
 
       // Data received from Python process
       childProcess.stdout.on("data", function(data) {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
-          console.log("Process output = ", dataFromTheProcess);
-          currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
+          // Process the data from the process and send one state at a time
+          dataFromTheProcess.split("\0"). forEach(message => {
+            if (currentPanel && message.length > 0 && message != oldState) {
+              console.log("Process output = ", message);
+              currentPanel.webview.postMessage(JSON.parse(message));
+              oldState = message;
+            }
+          });
         }
       });
       // Std error output

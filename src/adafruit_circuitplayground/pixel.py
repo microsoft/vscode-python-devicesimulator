@@ -7,7 +7,7 @@ class Pixel:
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
-        print(json.dumps(self._state))
+        print(json.dumps(self._state) + '\0', end='')
         sys.stdout.flush()
     
     def __setitem__(self, index, val):
