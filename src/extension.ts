@@ -68,6 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Create the Python process (after killing the one running if any)
       if (childProcess != undefined) {
+        // TODO: We need to check the process was correctly killed
         childProcess.kill();
       }
       childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
@@ -81,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
           // Process the data from the process and send one state at a time
-          dataFromTheProcess.split("\0"). forEach(message => {
+          dataFromTheProcess.split("\0").forEach(message => {
             if (currentPanel && message.length > 0 && message != oldState) {
               console.log("Process output = ", message);
               currentPanel.webview.postMessage(JSON.parse(message));
