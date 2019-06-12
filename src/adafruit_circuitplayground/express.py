@@ -1,4 +1,5 @@
 from .pixel import Pixel
+from .led import LED
 
 class Express:
     def __init__(self):
@@ -17,6 +18,7 @@ class Express:
                 (0, 0, 0)
             ],
             'brightness': 1.0,
+            'red_led': False,
             'button_a': False,
             'button_b': False,
         }
