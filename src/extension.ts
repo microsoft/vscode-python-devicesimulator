@@ -18,8 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   const pathToLib : string = __dirname;
-  const currentExtraPaths : string[] | undefined = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths');
-  if (currentExtraPaths && !currentExtraPaths.includes(pathToLib)) {
+  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
+  if (!currentExtraPaths.includes(pathToLib)) {
     currentExtraPaths.push(pathToLib);
   }
   vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
