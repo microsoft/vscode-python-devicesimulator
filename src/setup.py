@@ -16,15 +16,17 @@ class UserInput(threading.Thread):
         while True:
             # lock.acquire()
             read_val = sys.stdin.readline()
-            print("read"+read_val)
+            # print("read"+read_val)
             # lock.release()
             if not read_val:
-                break
+                print("nothing")
             try:
-                read_val = json.loads(read_val)
-                print("hi " + read_val)
-            except:
-                break
+                # print("hi " + read_val)
+                cpx.state = json.loads(read_val)
+                # print(json.dumps(cpx.state))
+                # sys.stdout.flush()
+            except Exception as e:
+                print("oh no" ,e)
 
 
 # Read data from stdin
@@ -48,11 +50,15 @@ user_input = UserInput()
 threads.append(user_input)
 user_input.start()
 
-# Execute the user's code.py file
-abs_path_to_code_file = sys.argv[1]
-with open(abs_path_to_code_file) as file:
-    user_code = file.read()
-    exec(user_code)
+def execute_user_code(abs_path_to_code_file):
+    # Execute the user's code.py file
+    with open(abs_path_to_code_file) as file:
+        user_code = file.read()
+        exec(user_code)
+
+user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code )
+threads.append(user_code)
+user_code.start()
 
 for x in threads:
     x.join()

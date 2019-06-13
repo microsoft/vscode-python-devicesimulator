@@ -73,7 +73,24 @@ class Simulator extends React.Component<any, IState> {
   }
 
   sendClickInfo() {
-    this.setState({
+    // this.setState({
+    //   brightness: 1.0,
+    //   button_a: false,
+    //   button_b: false,
+    //   pixels: [
+    //     [0, 255, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0]
+    //   ]
+    // });
+    sendMessage({
       brightness: 1.0,
       button_a: false,
       button_b: false,
@@ -90,7 +107,6 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0]
       ]
     });
-    sendMessage(this.state);
   }
 }
 

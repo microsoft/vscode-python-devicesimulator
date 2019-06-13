@@ -110,8 +110,8 @@ export function activate(context: vscode.ExtensionContext) {
               console.log(message.type);
               console.log("About to write");
               console.log(JSON.stringify(message.text) + "\n");
-              childProcess.stdin.write("hello\n"); //JSON.stringify(message.text));
-              childProcess.stdin.end();
+              childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+              // childProcess.stdin.end();
               break;
             default:
               vscode.window.showInformationMessage("Not an expected message");

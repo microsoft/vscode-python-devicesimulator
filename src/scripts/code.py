@@ -3,7 +3,7 @@ from adafruit_circuitplayground.express import cpx
 import time
 count = False
 while True:
-    cpx.pixels[0] = (255, 0, 0)
+    # cpx.pixels[0] = (255, 0, 0)
     # cpx.pixels[1] = (0, 255, 0)
     # cpx.pixels[2] = (0, 153, 255)
     # cpx.pixels[3] = (255, 163, 26)
@@ -13,11 +13,9 @@ while True:
     # cpx.pixels[7] = (0, 0, 0)
     # cpx.pixels[8] = (0, 0, 0)
     # cpx.pixels[9] = (0, 0, 0)
-    if not count:
-        cpx.pixels.show()
-        count = True
+    cpx.pixels.show()
 
-    time.sleep(4)
+    time.sleep(2)
 
     # cpx.pixels[0] = (0, 0, 0)
     # cpx.pixels[1] = (0, 0, 0)
