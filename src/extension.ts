@@ -1,4 +1,3 @@
-
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
@@ -11,13 +10,16 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
-
-  console.log('Congratulations, your extension Adafruit_Simulator is now active!');
+  console.log(
+    "Congratulations, your extension Adafruit_Simulator is now active!"
+  );
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
 
   // Open Simulator on the webview
-  let openSimulator = vscode.commands.registerCommand("adafruit.openSimulator", () => {
+  let openSimulator = vscode.commands.registerCommand(
+    "adafruit.openSimulator",
+    () => {
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.One);
       } else {
@@ -48,13 +50,16 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  let runSimulator = vscode.commands.registerCommand("adafruit.runSimulator", () => {
+  let runSimulator = vscode.commands.registerCommand(
+    "adafruit.runSimulator",
+    () => {
       if (!currentPanel) {
         return;
       }
-
-      const activeTextEditor : vscode.TextEditor|undefined = vscode.window.activeTextEditor;
-      let currentFileAbsPath : string = "";
+      console.log("Ruinning user code");
+      const activeTextEditor: vscode.TextEditor | undefined =
+        vscode.window.activeTextEditor;
+      let currentFileAbsPath: string = "";
 
       if (activeTextEditor) {
         currentFileAbsPath = activeTextEditor.document.fileName;
@@ -67,7 +72,10 @@ export function activate(context: vscode.ExtensionContext) {
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
       // Create the Python process
-      let childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
+      let childProcess = cp.spawn("python", [
+        scriptPath.fsPath,
+        currentFileAbsPath
+      ]);
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
@@ -89,19 +97,24 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(`Command execution exited with code: ${code}`);
       });
 
-      // Send input to the Python process
-      childProcess.stdin.write(JSON.stringify(dataForTheProcess));
-      childProcess.stdin.end();
+      // childProcess.stdin.write("Hello\n");
+      // childProcess.stdin.end();
 
       // Handle messages from webview
       currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
-            case "light-press":
-              vscode.window.showInformationMessage(message.text);
-              return;
+            case "button-press":
+              vscode.window.showInformationMessage(message.type);
+              // Send input to the Python process
+              console.log(message.type);
+              console.log("About to write");
+              console.log(JSON.stringify(message.text) + "\n");
+              childProcess.stdin.write("hello\n"); //JSON.stringify(message.text));
+              childProcess.stdin.end();
+              break;
             default:
-              vscode.window.showInformationMessage("We out here");
+              vscode.window.showInformationMessage("Not an expected message");
               break;
           }
         },
