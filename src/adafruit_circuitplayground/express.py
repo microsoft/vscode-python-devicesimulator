@@ -1,5 +1,6 @@
 from .pixel import Pixel
-from .led import LED
+import json
+import sys
 
 class Express:
     def __init__(self):
@@ -24,5 +25,18 @@ class Express:
         }
 
         self.pixels = Pixel(self.state)
+
+    @property
+    def red_led(self):
+        return self.state['red_led']
+
+    @red_led.setter
+    def red_led(self, value):
+        self.state['red_led'] = value
+        self.__show()
+
+    def __show(self):
+        print(json.dumps(self.state))
+        sys.stdout.flush()
 
 cpx = Express()
