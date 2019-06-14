@@ -1,6 +1,7 @@
-from .pixel import Pixel
 import json
 import sys
+from .pixel import Pixel
+from . import utils
 
 class Express:
     def __init__(self):
@@ -36,7 +37,6 @@ class Express:
         self.__show()
 
     def __show(self):
-        print(json.dumps(self.state))
-        sys.stdout.flush()
+        utils.show(self.state)
 
 cpx = Express()
