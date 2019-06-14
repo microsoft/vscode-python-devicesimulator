@@ -32,7 +32,7 @@ class Express:
 
     @red_led.setter
     def red_led(self, value):
-        self.state['red_led'] = value
+        self.state['red_led'] = bool(value)
         self.__show()
 
     def __show(self):
