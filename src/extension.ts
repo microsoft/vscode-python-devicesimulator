@@ -10,9 +10,9 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
+  console.log(
     "Congratulations, your extension Adafruit_Simulator is now active!"
   );
-
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
   let childProcess: cp.ChildProcess;
@@ -60,12 +60,11 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
-      
+
       console.log("Ruinning user code");
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
       let currentFileAbsPath: string = "";
-
 
       if (activeTextEditor) {
         currentFileAbsPath = activeTextEditor.document.fileName;
@@ -87,7 +86,6 @@ export function activate(context: vscode.ExtensionContext) {
         scriptPath.fsPath,
         currentFileAbsPath
       ]);
-
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
@@ -141,13 +139,21 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 const updatePythonExtraPaths = () => {
-  const pathToLib : string = __dirname;
-  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
+  const pathToLib: string = __dirname;
+  const currentExtraPaths: string[] =
+    vscode.workspace.getConfiguration().get("python.autoComplete.extraPaths") ||
+    [];
   if (!currentExtraPaths.includes(pathToLib)) {
     currentExtraPaths.push(pathToLib);
   }
-  vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
-}
+  vscode.workspace
+    .getConfiguration()
+    .update(
+      "python.autoComplete.extraPaths",
+      currentExtraPaths,
+      vscode.ConfigurationTarget.Global
+    );
+};
 
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>

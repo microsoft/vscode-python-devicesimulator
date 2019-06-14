@@ -73,6 +73,7 @@ class Simulator extends React.Component<any, IState> {
   }
 
   handleClick(id: string, active: boolean, event: Event) {
+    event.preventDefault();
     const a: boolean = id.match(/BTN_A/) !== null;
     const b: boolean = id.match(/BTN_B/) !== null;
 
