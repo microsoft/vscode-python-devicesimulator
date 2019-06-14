@@ -17,12 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
 
   // Add our library path to settings.json for autocomplete functionality
-  const pathToLib : string = __dirname;
-  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
-  if (!currentExtraPaths.includes(pathToLib)) {
-    currentExtraPaths.push(pathToLib);
-  }
-  vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
+  updatePythonExtraPaths();
 
   // Open Simulator on the webview
   let openSimulator = vscode.commands.registerCommand("adafruit.openSimulator", () => {
@@ -120,6 +115,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(openSimulator, runSimulator);
+}
+
+const updatePythonExtraPaths = () => {
+  const pathToLib : string = __dirname;
+  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
+  if (!currentExtraPaths.includes(pathToLib)) {
+    currentExtraPaths.push(pathToLib);
+  }
+  vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
 }
 
 function getWebviewContent(context: vscode.ExtensionContext) {
