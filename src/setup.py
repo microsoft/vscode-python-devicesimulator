@@ -3,6 +3,7 @@ import sys
 import json
 import threading
 import copy
+from pathlib import Path
 
 read_val = ""
 
@@ -28,7 +29,7 @@ class UserInput(threading.Thread):
 
 
 # Insert absolute path to Adafruit library into sys.path
-abs_path_to_parent_dir = os.path.abspath(os.getcwd())
+abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 library_name = "adafruit_circuitplayground"
 abs_path_to_lib = os.path.join(abs_path_to_parent_dir, library_name)
 sys.path.insert(0, abs_path_to_lib)

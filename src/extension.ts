@@ -10,11 +10,15 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
     "Congratulations, your extension Adafruit_Simulator is now active!"
   );
 
+
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
+  let childProcess: cp.ChildProcess;
+
+  // Add our library path to settings.json for autocomplete functionality
+  updatePythonExtraPaths();
 
   // Open Simulator on the webview
   let openSimulator = vscode.commands.registerCommand(
@@ -56,10 +60,12 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
+      
       console.log("Ruinning user code");
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
       let currentFileAbsPath: string = "";
+
 
       if (activeTextEditor) {
         currentFileAbsPath = activeTextEditor.document.fileName;
@@ -71,21 +77,34 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
-      // Create the Python process
-      let childProcess = cp.spawn("python", [
+      // Create the Python process (after killing the one running if any)
+      if (childProcess != undefined) {
+        // TODO: We need to check the process was correctly killed
+        childProcess.kill();
+      }
+
+      childProcess = cp.spawn("python", [
         scriptPath.fsPath,
         currentFileAbsPath
       ]);
 
+
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
+      let oldState = "";
 
       // Data received from Python process
       childProcess.stdout.on("data", function(data) {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
-          console.log("Process output = ", dataFromTheProcess);
-          currentPanel.webview.postMessage(JSON.parse(dataFromTheProcess));
+          // Process the data from the process and send one state at a time
+          dataFromTheProcess.split("\0").forEach(message => {
+            if (currentPanel && message.length > 0 && message != oldState) {
+              console.log("Process output = ", message);
+              currentPanel.webview.postMessage(JSON.parse(message));
+              oldState = message;
+            }
+          });
         }
       });
       // Std error output
@@ -119,6 +138,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(openSimulator, runSimulator);
+}
+
+const updatePythonExtraPaths = () => {
+  const pathToLib : string = __dirname;
+  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
+  if (!currentExtraPaths.includes(pathToLib)) {
+    currentExtraPaths.push(pathToLib);
+  }
+  vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
 }
 
 function getWebviewContent(context: vscode.ExtensionContext) {
