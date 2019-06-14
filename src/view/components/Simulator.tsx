@@ -3,8 +3,8 @@ import Cpx from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
-  red_led: boolean;
   brightness: number;
+  red_led: boolean;
   button_a: any;
   button_b: any;
 }
