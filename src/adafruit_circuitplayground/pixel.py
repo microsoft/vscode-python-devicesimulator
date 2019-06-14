@@ -5,13 +5,19 @@ from . import utils
 class Pixel:
     def __init__(self, state):
         self._state = state
+        self._auto_write = False
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
         utils.show(self._state)
+
+    def show_if_auto_write(self):
+        if self._auto_write:
+            self.show()
     
     def __setitem__(self, index, val):
         self._state['pixels'][index] = self.extract_pixel_value(val)
+        self.show_if_auto_write()
 
     def __getitem__(self, index):
         return self._state['pixels'][index]
@@ -27,13 +33,14 @@ class Pixel:
         val = tuple(map(int, val)) 
         # Prevent negative values
         if any(pix < 0 or pix > 255 for pix in val): 
-            raise ValueError('The pixel value should  between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
+            raise ValueError('The pixel value should between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
 
         return val
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
-            self._state['pixels'][index] = self.extract_pixel_value(val) 
+            self._state['pixels'][index] = self.extract_pixel_value(val)
+        self.show_if_auto_write()
 
     def hex_to_rgb(self, hexValue):
         hexValue = hexValue.lstrip('#')
@@ -55,6 +62,7 @@ class Pixel:
         if not self.valid_brightness(brightness):
             raise ValueError('The brightness value should be a number between 0 and 1.')
         self._state['brightness'] = brightness
+        self.show_if_auto_write()
 
     def valid_brightness(self, brightness):
         return (type(brightness) is float or type(brightness) is int) and (brightness >= 0 and brightness <= 1)
