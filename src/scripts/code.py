@@ -1,7 +1,6 @@
 from adafruit_circuitplayground.express import cpx
 
 import time
-count = False
 while True:
     # cpx.pixels[0] = (255, 0, 0)
     # cpx.pixels[1] = (0, 255, 0)

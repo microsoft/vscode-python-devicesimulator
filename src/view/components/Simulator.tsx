@@ -18,8 +18,8 @@ interface vscode {
 declare const vscode: vscode;
 
 const sendMessage = (state: any) => {
-  console.log("snedmessage");
-  vscode.postMessage({ command: "button-press", text: state, type: "HELOOOO" });
+  console.log("sendmessage");
+  vscode.postMessage({ command: "button-press", text: state });
 };
 
 class Simulator extends React.Component<any, IState> {
@@ -42,7 +42,7 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0]
       ]
     };
-    this.sendClickInfo = this.sendClickInfo.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleMessage = (event: any): void => {
@@ -53,12 +53,12 @@ class Simulator extends React.Component<any, IState> {
 
   componentDidMount() {
     console.log("Mounted");
-    window.addEventListener("message", this.handleMessage.bind(this));
+    window.addEventListener("message", this.handleMessage);
   }
 
   componentWillUnmount() {
     // Make sure to remove the DOM listener when the component is unmounted.
-    window.removeEventListener("message", this.handleMessage.bind(this));
+    window.removeEventListener("message", this.handleMessage);
   }
   render() {
     return (
@@ -66,47 +66,29 @@ class Simulator extends React.Component<any, IState> {
         <Cpx
           pixels={this.state.pixels}
           brightness={this.state.brightness}
-          onClick={this.sendClickInfo}
+          onMouseEvent={this.handleClick}
         />
       </div>
     );
   }
 
-  sendClickInfo() {
-    // this.setState({
-    //   brightness: 1.0,
-    //   button_a: false,
-    //   button_b: false,
-    //   pixels: [
-    //     [0, 255, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0],
-    //     [0, 0, 0]
-    //   ]
-    // });
-    sendMessage({
-      brightness: 1.0,
-      button_a: false,
-      button_b: false,
-      pixels: [
-        [0, 255, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ]
-    });
+  handleClick(id: string, active: boolean, event: Event) {
+    const a: boolean = id.match(/BTN_A/) !== null;
+    const b: boolean = id.match(/BTN_B/) !== null;
+
+    if (a) {
+      const newState = {
+        button_a: active
+      };
+      this.setState(newState);
+      sendMessage(newState);
+    } else if (b) {
+      const newState = {
+        button_b: active
+      };
+      this.setState(newState);
+      sendMessage(newState);
+    }
   }
 }
 

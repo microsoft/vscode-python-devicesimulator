@@ -97,21 +97,15 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(`Command execution exited with code: ${code}`);
       });
 
-      // childProcess.stdin.write("Hello\n");
-      // childProcess.stdin.end();
-
       // Handle messages from webview
       currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
             case "button-press":
-              vscode.window.showInformationMessage(message.type);
               // Send input to the Python process
-              console.log(message.type);
               console.log("About to write");
               console.log(JSON.stringify(message.text) + "\n");
               childProcess.stdin.write(JSON.stringify(message.text) + "\n");
-              // childProcess.stdin.end();
               break;
             default:
               vscode.window.showInformationMessage("Not an expected message");

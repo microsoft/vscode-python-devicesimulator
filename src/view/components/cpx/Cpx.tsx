@@ -6,7 +6,7 @@ import svg from "./Svg_utils";
 interface IProps {
   pixels: Array<Array<number>>;
   brightness: number;
-  onClick: () => void;
+  onMouseEvent: (id: string, active: boolean, event: Event) => void;
 }
 
 /** Functional Component render */
@@ -17,7 +17,7 @@ const Cpx: React.FC<IProps> = props => {
     initSvgStyle(svgElement, props.brightness);
     // Update Neopixels state
     updateNeopixels(props);
-    addButtonListeners(props.onClick);
+    addButtonListeners(props.onMouseEvent);
   }
 
   return CPX_SVG;
@@ -149,14 +149,17 @@ const changeBrightness = (filterID: string, brightness: number): void => {
     brightnessFilter.setAttribute("slope", brightness.toString());
 };
 
-const addButtonListeners = (onclick: () => void): void => {
-  const ButtonA = window.document.getElementById("BTN_A_OUTER");
-  const ButtonB = window.document.getElementById("BTN_B_OUTER");
-  console.log("button " + ButtonA);
-  console.log("button " + ButtonB);
-
-  if (ButtonA) ButtonA.onclick = onclick;
-  if (ButtonB) ButtonB.onclick = onclick;
+const addButtonListeners = (
+  onMouseEvent: (id: string, active: boolean, event: Event) => void
+): void => {
+  const buttons = ["A_OUTER", "A_INNER", "B_OUTER", "B_INNER"];
+  buttons.forEach(buttonName => {
+    const button = window.document.getElementById("BTN_" + buttonName);
+    if (button) {
+      button.onmousedown = e => onMouseEvent(button.id, true, e);
+      button.onmouseup = e => onMouseEvent(button.id, false, e);
+    }
+  });
 };
 
 export default Cpx;

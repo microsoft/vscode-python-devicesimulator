@@ -1,5 +1,6 @@
 from .pixel import Pixel
 
+
 class Express:
     def __init__(self):
         # State in the Python process
@@ -23,5 +24,5 @@ class Express:
 
         self.pixels = Pixel(self.state)
 
-global cpx
+
 cpx = Express()
