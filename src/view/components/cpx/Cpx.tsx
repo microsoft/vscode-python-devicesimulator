@@ -6,6 +6,7 @@ import svg from "./Svg_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
+  red_led: boolean;
   brightness: number;
   onClick: () => void;
 }
@@ -20,6 +21,7 @@ const Cpx: React.FC<IProps> = props => {
     initSvgStyle(svgElement, props.brightness);
     // Update Neopixels state
     updateNeopixels(props);
+    updateRedLED(props);
   }
 
   return (
@@ -56,7 +58,6 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
   svg.child(neopixelfeComponentTransfer, "feFuncB", {id:"brightnessFilterB", type: "linear", slope: brightness});
 }
 
-
 const updateNeopixels = (props: IProps): void => {
   for (let i = 0; i < props.pixels.length; i ++) {
     let led = window.document.getElementById(`NEOPIXEL_${i}`);
@@ -66,6 +67,16 @@ const updateNeopixels = (props: IProps): void => {
   }
 }
 
+const updateRedLED = (props: IProps): void => {
+  let redLED = window.document.getElementById('SERIAL_LED');
+  if (redLED) {
+    if (props.red_led) {
+      redLED.style.fill = "#ff7777";
+    } else {
+      redLED.style.fill = "#ffffff";
+    }
+  }
+}
 
 const setNeopixel = (led: HTMLElement, pixValue: Array<number>, brightness: number): void => {
   if (isLightOn(pixValue) && brightness > 0) {
