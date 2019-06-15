@@ -94,10 +94,12 @@ export function activate(context: vscode.ExtensionContext) {
           });
         }
       });
+
       // Std error output
       childProcess.stderr.on("data", data => {
         console.log(`stderr: ${data}`);
       });
+
       // When the process is done
       childProcess.on("close", (code: number) => {
         console.log(`Command execution exited with code: ${code}`);

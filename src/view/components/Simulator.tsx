@@ -4,11 +4,7 @@ import Cpx from "./cpx/Cpx";
 interface IState {
   pixels: Array<Array<number>>;
   brightness: number;
-<<<<<<< HEAD
-  red_led: boolean,
-=======
   red_led: boolean;
->>>>>>> users/t-jowang/led-api
   button_a: any;
   button_b: any;
 }
