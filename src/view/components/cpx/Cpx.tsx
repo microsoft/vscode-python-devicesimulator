@@ -3,6 +3,8 @@ import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
 import svg from "./Svg_utils";
 
+const redLEDOn: string = "#FF7777";
+const redLEDOff: string = "#FFFFFF";
 
 interface IProps {
   pixels: Array<Array<number>>;
@@ -21,7 +23,7 @@ const Cpx: React.FC<IProps> = props => {
     initSvgStyle(svgElement, props.brightness);
     // Update Neopixels state
     updateNeopixels(props);
-    updateRedLED(props);
+    updateRedLED(props.red_led);
   }
 
   return (
@@ -67,13 +69,13 @@ const updateNeopixels = (props: IProps): void => {
   }
 }
 
-const updateRedLED = (props: IProps): void => {
+const updateRedLED = (propsRedLED: boolean): void => {
   let redLED = window.document.getElementById('SERIAL_LED');
   if (redLED) {
-    if (props.red_led) {
-      redLED.style.fill = "#ff7777";
+    if (propsRedLED) {
+      redLED.style.fill = redLEDOn;
     } else {
-      redLED.style.fill = "#ffffff";
+      redLED.style.fill = redLEDOff;
     }
   }
 }
