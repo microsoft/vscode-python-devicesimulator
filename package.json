@@ -49,6 +49,7 @@
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc --watch",
     "watch:views": "webpack --watch --mode development",
+    "watch:python": "xcopy src\\setup.py out\\ /I /Y && xcopy src\\adafruit_circuitplayground out\\adafruit_circuitplayground /S /I /E /Y",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",

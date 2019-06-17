@@ -10,8 +10,9 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
-
-  console.log("Congratulations, your extension Adafruit_Simulator is now active!");
+  console.log(
+    "Congratulations, your extension Adafruit_Simulator is now active!"
+  );
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
   let childProcess: cp.ChildProcess;
@@ -20,7 +21,9 @@ export function activate(context: vscode.ExtensionContext) {
   updatePythonExtraPaths();
 
   // Open Simulator on the webview
-  let openSimulator = vscode.commands.registerCommand("adafruit.openSimulator", () => {
+  let openSimulator = vscode.commands.registerCommand(
+    "adafruit.openSimulator",
+    () => {
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.One);
       } else {
@@ -51,13 +54,17 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  let runSimulator = vscode.commands.registerCommand("adafruit.runSimulator", () => {
+  let runSimulator = vscode.commands.registerCommand(
+    "adafruit.runSimulator",
+    () => {
       if (!currentPanel) {
         return;
       }
 
-      const activeTextEditor : vscode.TextEditor | undefined = vscode.window.activeTextEditor;
-      let currentFileAbsPath : string = "";
+      console.log("Running user code");
+      const activeTextEditor: vscode.TextEditor | undefined =
+        vscode.window.activeTextEditor;
+      let currentFileAbsPath: string = "";
 
       if (activeTextEditor) {
         currentFileAbsPath = activeTextEditor.document.fileName;
@@ -74,7 +81,11 @@ export function activate(context: vscode.ExtensionContext) {
         // TODO: We need to check the process was correctly killed
         childProcess.kill();
       }
-      childProcess = cp.spawn("python", [scriptPath.fsPath, currentFileAbsPath]);
+
+      childProcess = cp.spawn("python", [
+        scriptPath.fsPath,
+        currentFileAbsPath
+      ]);
 
       let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
@@ -105,19 +116,20 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(`Command execution exited with code: ${code}`);
       });
 
-      // Send input to the Python process
-      childProcess.stdin.write(JSON.stringify(dataForTheProcess));
-      childProcess.stdin.end();
-
       // Handle messages from webview
       currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
-            case "light-press":
-              vscode.window.showInformationMessage(message.text);
-              return;
+            case "button-press":
+              // Send input to the Python process
+              console.log("About to write");
+              console.log(JSON.stringify(message.text) + "\n");
+              childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+              break;
             default:
-              vscode.window.showInformationMessage("We out here");
+              vscode.window.showInformationMessage(
+                "Webview sent an unexpected message"
+              );
               break;
           }
         },
@@ -131,13 +143,21 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 const updatePythonExtraPaths = () => {
-  const pathToLib : string = __dirname;
-  const currentExtraPaths : string[] = vscode.workspace.getConfiguration().get('python.autoComplete.extraPaths') || [];
+  const pathToLib: string = __dirname;
+  const currentExtraPaths: string[] =
+    vscode.workspace.getConfiguration().get("python.autoComplete.extraPaths") ||
+    [];
   if (!currentExtraPaths.includes(pathToLib)) {
     currentExtraPaths.push(pathToLib);
   }
-  vscode.workspace.getConfiguration().update('python.autoComplete.extraPaths', currentExtraPaths, vscode.ConfigurationTarget.Global);
-}
+  vscode.workspace
+    .getConfiguration()
+    .update(
+      "python.autoComplete.extraPaths",
+      currentExtraPaths,
+      vscode.ConfigurationTarget.Global
+    );
+};
 
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>

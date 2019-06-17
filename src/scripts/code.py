@@ -1,7 +1,6 @@
 from adafruit_circuitplayground.express import cpx
 
 import time
-
 while True:
     cpx.red_led = True
     cpx.pixels[0] = (255, 0, 0)
@@ -32,7 +31,6 @@ while True:
     cpx.pixels.show()
 
     time.sleep(2)
-
 
     cpx.pixels.fill((0, 0, 200))
     cpx.pixels.show()
