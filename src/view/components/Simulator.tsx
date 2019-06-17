@@ -4,6 +4,7 @@ import Cpx from "./cpx/Cpx";
 interface IState {
   pixels: Array<Array<number>>;
   brightness: number;
+  red_led: boolean;
   button_a: any;
   button_b: any;
 }
@@ -40,7 +41,9 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
-      ]
+      ],
+
+      red_led: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
