@@ -52,5 +52,5 @@ user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
 threads.append(user_code)
 user_code.start()
 
-for x in threads:
-    x.join()
+for thread in threads:
+    thread.join()

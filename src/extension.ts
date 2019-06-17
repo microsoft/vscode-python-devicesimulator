@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      console.log("Ruinning user code");
+      console.log("Running user code");
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
       let currentFileAbsPath: string = "";
@@ -125,7 +125,9 @@ export function activate(context: vscode.ExtensionContext) {
               childProcess.stdin.write(JSON.stringify(message.text) + "\n");
               break;
             default:
-              vscode.window.showInformationMessage("Not an expected message");
+              vscode.window.showInformationMessage(
+                "Webview sent an unexpected message"
+              );
               break;
           }
         },
