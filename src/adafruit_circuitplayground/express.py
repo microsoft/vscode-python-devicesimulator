@@ -3,10 +3,14 @@ import sys
 from .pixel import Pixel
 from . import utils
 
+
 class Express:
     def __init__(self):
         # State in the Python process
         self.state = {
+            'brightness': 1.0,
+            'button_a': False,
+            'button_b': False,
             'pixels': [
                 (0, 0, 0),
                 (0, 0, 0),
@@ -19,10 +23,7 @@ class Express:
                 (0, 0, 0),
                 (0, 0, 0)
             ],
-            'brightness': 1.0,
-            'red_led': False,
-            'button_a': False,
-            'button_b': False,
+          'red_led': False
         }
 
         self.pixels = Pixel(self.state)
