@@ -1,7 +1,11 @@
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/svg.ts
 
-
 namespace svg {
+  export function addClass(el: SVGElement, cls: string) {
+    if (el.classList) el.classList.add(cls);
+    else if (el.className.baseVal.indexOf(cls) < 0)
+      el.className.baseVal += " " + cls;
+  }
 
     export function hydrate(el: SVGElement, props: any) {
         for (let k in props) {

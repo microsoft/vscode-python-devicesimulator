@@ -2,22 +2,28 @@ import * as React from "react";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
 import svg from "./Svg_utils";
+import accessibility from "./Accessibility_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
   brightness: number;
-  onMouseEvent: (id: string, active: boolean, event: Event) => void;
+  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void;
 }
+
+let firstTime = true;
 
 /** Functional Component render */
 const Cpx: React.FC<IProps> = props => {
   let svgElement = window.document.getElementById("cpx_svg");
 
   if (svgElement) {
-    initSvgStyle(svgElement, props.brightness);
+    if (firstTime) {
+      initSvgStyle(svgElement, props.brightness);
+      setupButtons(props.onMouseEvent);
+      firstTime = false;
+    }
     // Update Neopixels state
     updateNeopixels(props);
-    addButtonListeners(props.onMouseEvent);
   }
 
   return CPX_SVG;
@@ -149,17 +155,39 @@ const changeBrightness = (filterID: string, brightness: number): void => {
     brightnessFilter.setAttribute("slope", brightness.toString());
 };
 
-const addButtonListeners = (
-  onMouseEvent: (id: string, active: boolean, event: Event) => void
+const setupButtons = (
+  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void
 ): void => {
-  const buttons = ["A_OUTER", "A_INNER", "B_OUTER", "B_INNER"];
-  buttons.forEach(buttonName => {
+  const outButtons = ["A_OUTER", "B_OUTER"];
+  const inButtons = ["A_INNER", "B_INNER"];
+  outButtons.forEach(buttonName => {
     const button = window.document.getElementById("BTN_" + buttonName);
+
     if (button) {
-      button.onmousedown = e => onMouseEvent(button.id, true, e);
-      button.onmouseup = e => onMouseEvent(button.id, false, e);
+      setupButton(button, "sim-button-outer", onMouseEvent);
     }
   });
+  inButtons.forEach(buttonName => {
+    const button = window.document.getElementById("BTN_" + buttonName);
+    if (button) {
+      setupButton(button, "sim-button", onMouseEvent);
+    }
+  });
+};
+
+const setupButton = (
+  button: HTMLElement,
+  className: string,
+  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void
+) => {
+  const svgButton = (button as unknown) as SVGElement;
+  svg.addClass(svgButton, className);
+  if (className.match(/outer/) !== null) {
+    accessibility.makeFocusable(svgButton);
+  }
+  svgButton.addEventListener("mousedown", e => onMouseEvent(button, true, e));
+  svgButton.addEventListener("mouseup", e => onMouseEvent(button, false, e));
+  svgButton.addEventListener("mouseleave", e => onMouseEvent(button, false, e));
 };
 
 export default Cpx;

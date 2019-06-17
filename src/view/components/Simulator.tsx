@@ -72,24 +72,34 @@ class Simulator extends React.Component<any, IState> {
     );
   }
 
-  handleClick(id: string, active: boolean, event: Event) {
+  handleClick(button: HTMLElement, active: boolean, event: Event) {
     event.preventDefault();
-    const a: boolean = id.match(/BTN_A/) !== null;
-    const b: boolean = id.match(/BTN_B/) !== null;
-
-    if (a) {
+    const a: boolean = button.id.match(/BTN_A/) !== null;
+    const b: boolean = button.id.match(/BTN_B/) !== null;
+    let innerButton;
+    if (a && button) {
+      innerButton = window.document.getElementById("BTN_A_INNER");
       const newState = {
         button_a: active
       };
       this.setState(newState);
       sendMessage(newState);
-    } else if (b) {
+    } else if (b && button) {
+      innerButton = window.document.getElementById("BTN_B_INNER");
       const newState = {
         button_b: active
       };
       this.setState(newState);
       sendMessage(newState);
     }
+    if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+    button.focus();
+  }
+
+  getButtonColor(pressed: boolean) {
+    const buttonUps = "#000";
+    const buttonDown = "#FFA500";
+    return pressed ? buttonDown : buttonUps;
   }
 }
 
