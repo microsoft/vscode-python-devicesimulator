@@ -3,9 +3,6 @@ import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
 import svg from "./Svg_utils";
 
-const redLEDOn: string = "#FF7777";
-const redLEDOff: string = "#FFFFFF";
-
 interface IProps {
   pixels: Array<Array<number>>;
   red_led: boolean;
@@ -107,11 +104,7 @@ const updateNeopixels = (props: IProps): void => {
 const updateRedLED = (propsRedLED: boolean): void => {
   let redLED = window.document.getElementById('SERIAL_LED');
   if (redLED) {
-    if (propsRedLED) {
-      redLED.style.fill = redLEDOn;
-    } else {
-      redLED.style.fill = redLEDOff;
-    }
+    redLED.style.fill = propsRedLED ? SvgStyle.RED_LED_ON : SvgStyle.RED_LED_OFF;
   }
 };
 
