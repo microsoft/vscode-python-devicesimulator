@@ -1,9 +1,11 @@
 import * as React from "react";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
   brightness: number;
+  red_led: boolean;
   button_a: any;
   button_b: any;
 }
@@ -40,7 +42,9 @@ class Simulator extends React.Component<any, IState> {
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
-      ]
+      ],
+
+      red_led: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -66,6 +70,7 @@ class Simulator extends React.Component<any, IState> {
         <Cpx
           pixels={this.state.pixels}
           brightness={this.state.brightness}
+          red_led={this.state.red_led}
           onMouseEvent={this.handleClick}
         />
       </div>
@@ -97,8 +102,8 @@ class Simulator extends React.Component<any, IState> {
   }
 
   getButtonColor(pressed: boolean) {
-    const buttonUps = "#000";
-    const buttonDown = "#FFA500";
+    const buttonUps = BUTTON_NEUTRAL;
+    const buttonDown = BUTTON_PRESSED;
     return pressed ? buttonDown : buttonUps;
   }
 }
