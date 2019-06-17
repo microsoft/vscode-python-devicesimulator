@@ -17,6 +17,7 @@ while True:
 
     time.sleep(2)
 
+    cpx.red_led = False
     cpx.pixels[0] = (0, 0, 0)
     cpx.pixels[1] = (0, 0, 0)
     cpx.pixels[2] = (0, 0, 0)

@@ -8,6 +8,8 @@ export const OFF_COLOR = "#c8c8c8";
 export const MAX_STROKE_LUM = 75;
 export const MIN_INNER_LUM = 85;
 export const INTENSITY_FACTOR = 1.3;
+export const RED_LED_ON: string = "#FF7777";
+export const RED_LED_OFF: string = "#FFFFFF";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(rgb: [number, number, number]): [number, number, number] {

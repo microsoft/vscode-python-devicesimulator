@@ -5,6 +5,7 @@ import svg from "./Svg_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
+  red_led: boolean;
   brightness: number;
   onMouseEvent: (id: string, active: boolean, event: Event) => void;
 }
@@ -17,6 +18,7 @@ const Cpx: React.FC<IProps> = props => {
     initSvgStyle(svgElement, props.brightness);
     // Update Neopixels state
     updateNeopixels(props);
+    updateRedLED(props.red_led);
     addButtonListeners(props.onMouseEvent);
   }
 
@@ -96,6 +98,13 @@ const updateNeopixels = (props: IProps): void => {
     if (led) {
       setNeopixel(led, props.pixels[i], props.brightness);
     }
+  }
+};
+
+const updateRedLED = (propsRedLED: boolean): void => {
+  let redLED = window.document.getElementById('SERIAL_LED');
+  if (redLED) {
+    redLED.style.fill = propsRedLED ? SvgStyle.RED_LED_ON : SvgStyle.RED_LED_OFF;
   }
 };
 

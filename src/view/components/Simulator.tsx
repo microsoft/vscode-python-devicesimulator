@@ -69,6 +69,7 @@ class Simulator extends React.Component<any, IState> {
         <Cpx
           pixels={this.state.pixels}
           brightness={this.state.brightness}
+          red_led={this.state.red_led}
           onMouseEvent={this.handleClick}
         />
       </div>
