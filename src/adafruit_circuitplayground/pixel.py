@@ -16,11 +16,18 @@ class Pixel:
             self.show()
 
     def __getitem__(self, index):
+        if not self.valid_index(index):
+            raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
         return self._state['pixels'][index]
     
     def __setitem__(self, index, val):
+        if not self.valid_index(index):
+            raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
         self._state['pixels'][index] = self.extract_pixel_value(val)
         self.show_if_auto_write()
+
+    def valid_index(self, index):
+        return type(index) is int and index >= -len(self._state['pixels']) and index < len(self._state['pixels'])
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
