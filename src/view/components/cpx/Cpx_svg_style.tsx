@@ -34,9 +34,17 @@ export function rgbToHsl(
     h = 0;
   } else {
     // Hue
-    if (cMax === r$) h = 60 * (((g$ - b$) / cDelta) % 6);
-    else if (cMax === g$) h = 60 * ((b$ - r$) / cDelta + 2);
-    else if (cMax === b$) h = 60 * ((r$ - g$) / cDelta + 4);
+    switch (cMax) {
+      case r$:
+        h = 60 * (((g$ - b$) / cDelta) % 6);
+        break;
+      case g$:
+        h = 60 * ((b$ - r$) / cDelta + 2);
+        break;
+      case b$:
+        h = 60 * ((r$ - g$) / cDelta + 4);
+        break;
+    }
 
     // Saturation
     if (l > 50) s = 100 * (cDelta / (2 - maxAndMin));
