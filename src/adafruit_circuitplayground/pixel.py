@@ -14,44 +14,49 @@ class Pixel:
     def show_if_auto_write(self):
         if self._auto_write:
             self.show()
+
+    def __getitem__(self, index):
+        return self._state['pixels'][index]
     
     def __setitem__(self, index, val):
         self._state['pixels'][index] = self.extract_pixel_value(val)
         self.show_if_auto_write()
-
-    def __getitem__(self, index):
-        return self._state['pixels'][index]
-
-    def extract_pixel_value(self, val):
-        # Convert HEX to RGB
-        if type(val) is not tuple:
-            val = self.hex_to_rgb(val)
-        # Check it's a valid tuple
-        if len(val) != 3:
-            raise ValueError('The pixel value should be a tuple with 3 values between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
-        # Convert to int
-        val = tuple(map(int, val)) 
-        # Prevent negative values
-        if any(pix < 0 or pix > 255 for pix in val): 
-            raise ValueError('The pixel value should between 0 and 255 or an hexadecimal color between #000000 and #FFFFFF.')
-
-        return val
 
     def fill(self, val):
         for index in range(len(self._state['pixels'])):
             self._state['pixels'][index] = self.extract_pixel_value(val)
         self.show_if_auto_write()
 
+    def extract_pixel_value(self, val):
+        # Type validation
+        if type(val) is list:
+            rgb_value = tuple(val)
+        elif type(val) is int:
+            rgb_value = self.hex_to_rgb(hex(val))
+        elif type(val) is tuple:
+            rgb_value = val
+        else:
+            raise ValueError('The pixel color value type should be tuple, list or hexadecimal.')
+        # Values validation
+        if len(rgb_value) != 3 or any(not self.valid_rgb_value(pix) for pix in rgb_value):
+            raise ValueError('The pixel color value should be a tuple with three values between 0 and 255 or an hexadecimal color between 0x000000 and 0xFFFFFF.')
+
+        return rgb_value
+
     def hex_to_rgb(self, hexValue):
-        hexValue = hexValue.lstrip('#')
-        if len(hexValue) != 6:
+        if hexValue[0:2] == '0x' and len(hexValue) <= 8:
+            hexToRgbValue = [0,0,0]
+            hexColor = hexValue[2:].zfill(6)
+            hexToRgbValue[0] = int(hexColor[0:2], 16) # R
+            hexToRgbValue[1] = int(hexColor[2:4], 16) # G
+            hexToRgbValue[2] = int(hexColor[4:6], 16) # B
+
+            return tuple(hexToRgbValue)
+        else:
             raise ValueError('The pixel hexadicimal color value should be in range #000000 and #FFFFFF.')
-        # Convert the string hex to rgb tuple
-        hexToRgbValue = []
-        for i in range(0, len(hexValue), 2):
-            hexColor = hexValue[i:i+2]
-            hexToRgbValue.append(int(hexColor, 16))
-        return tuple(hexToRgbValue)
+
+    def valid_rgb_value(self, pixValue):
+        return type(pixValue) is int and pixValue >= 0 and pixValue <= 255
 
     @property
     def brightness(self):
