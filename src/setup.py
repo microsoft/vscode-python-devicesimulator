@@ -45,7 +45,11 @@ def execute_user_code(abs_path_to_code_file):
     # Execute the user's code.py file
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
-        exec(user_code)
+        try:
+            exec(user_code)
+        except Exception as e:
+            print("Error in code execution : ", e)
+            sys.stdout.flush()
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
