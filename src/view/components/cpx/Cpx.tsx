@@ -8,7 +8,9 @@ interface IProps {
   pixels: Array<Array<number>>;
   red_led: boolean;
   brightness: number;
-  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void;
+  onMouseUp: (button: HTMLElement, event: Event) => void;
+  onMouseDown: (button: HTMLElement, event: Event) => void;
+  onMouseLeave: (button: HTMLElement, event: Event) => void;
 }
 
 let firstTime = true;
@@ -20,13 +22,13 @@ const Cpx: React.FC<IProps> = props => {
   if (svgElement) {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
-      setupButtons(props.onMouseEvent);
+      setupButtons(props);
       firstTime = false;
     }
     // Update Neopixels state
     updateNeopixels(props);
     updateRedLED(props.red_led);
-    addButtonListeners(props.onMouseEvent);
+    setupButtons(props);
   }
 
   return CPX_SVG;
@@ -167,39 +169,33 @@ const changeBrightness = (filterID: string, brightness: number): void => {
     brightnessFilter.setAttribute("slope", brightness.toString());
 };
 
-const setupButtons = (
-  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void
-): void => {
+const setupButtons = (props: IProps): void => {
   const outButtons = ["A_OUTER", "B_OUTER"];
   const inButtons = ["A_INNER", "B_INNER"];
   outButtons.forEach(buttonName => {
     const button = window.document.getElementById("BTN_" + buttonName);
 
     if (button) {
-      setupButton(button, "sim-button-outer", onMouseEvent);
+      setupButton(button, "sim-button-outer", props);
     }
   });
   inButtons.forEach(buttonName => {
     const button = window.document.getElementById("BTN_" + buttonName);
     if (button) {
-      setupButton(button, "sim-button", onMouseEvent);
+      setupButton(button, "sim-button", props);
     }
   });
 };
 
-const setupButton = (
-  button: HTMLElement,
-  className: string,
-  onMouseEvent: (button: HTMLElement, active: boolean, event: Event) => void
-) => {
+const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   const svgButton = (button as unknown) as SVGElement;
   svg.addClass(svgButton, className);
   if (className.match(/outer/) !== null) {
     accessibility.makeFocusable(svgButton);
   }
-  svgButton.addEventListener("mousedown", e => onMouseEvent(button, true, e));
-  svgButton.addEventListener("mouseup", e => onMouseEvent(button, false, e));
-  svgButton.addEventListener("mouseleave", e => onMouseEvent(button, false, e));
+  svgButton.onmousedown = e => props.onMouseDown(button, e);
+  svgButton.onmouseup = e => props.onMouseUp(button, e);
+  svgButton.onmouseleave = e => props.onMouseLeave(button, e);
 };
 
 export default Cpx;
