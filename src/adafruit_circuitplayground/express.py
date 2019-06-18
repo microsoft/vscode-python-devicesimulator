@@ -29,6 +29,14 @@ class Express:
         self.pixels = Pixel(self.state)
 
     @property
+    def button_a(self):
+        return self.state['button_a']
+
+    @property
+    def button_b(self):
+        return self.state['button_b']
+
+    @property
     def red_led(self):
         return self.state['red_led']
 
