@@ -1,4 +1,5 @@
 import * as React from "react";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
 
 interface IState {
@@ -45,7 +46,11 @@ class Simulator extends React.Component<any, IState> {
 
       red_led: false
     };
+
     this.handleClick = this.handleClick.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   handleMessage = (event: any): void => {
@@ -69,30 +74,59 @@ class Simulator extends React.Component<any, IState> {
         <Cpx
           pixels={this.state.pixels}
           brightness={this.state.brightness}
-          onMouseEvent={this.handleClick}
+          red_led={this.state.red_led}
+          onMouseUp={this.onMouseUp}
+          onMouseDown={this.onMouseDown}
+          onMouseLeave={this.onMouseLeave}
         />
       </div>
     );
   }
 
-  handleClick(id: string, active: boolean, event: Event) {
+  protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
-    const a: boolean = id.match(/BTN_A/) !== null;
-    const b: boolean = id.match(/BTN_B/) !== null;
+    this.handleClick(button, true);
+    button.focus();
+  }
+  protected onMouseUp(button: HTMLElement, event: Event) {
+    event.preventDefault();
+    this.handleClick(button, false);
+  }
+  protected onMouseLeave(button: HTMLElement, event: Event) {
+    event.preventDefault();
 
-    if (a) {
-      const newState = {
+    if (button.getAttribute("pressed") === "true") {
+      this.handleClick(button, false);
+    }
+  }
+
+  private handleClick(button: HTMLElement, active: boolean) {
+    const ButtonA: boolean = button.id.match(/BTN_A/) !== null;
+    const ButtonB: boolean = button.id.match(/BTN_B/) !== null;
+    let innerButton;
+    let newState;
+    if (ButtonA) {
+      innerButton = window.document.getElementById("BTN_A_INNER");
+      newState = {
         button_a: active
       };
       this.setState(newState);
-      sendMessage(newState);
-    } else if (b) {
-      const newState = {
+    } else if (ButtonB) {
+      innerButton = window.document.getElementById("BTN_B_INNER");
+      newState = {
         button_b: active
       };
       this.setState(newState);
-      sendMessage(newState);
     }
+    button.setAttribute("pressed", `${active}`);
+    if (newState) sendMessage(newState);
+    if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+  }
+
+  private getButtonColor(pressed: boolean) {
+    const buttonUps = BUTTON_NEUTRAL;
+    const buttonDown = BUTTON_PRESSED;
+    return pressed ? buttonDown : buttonUps;
   }
 }
 

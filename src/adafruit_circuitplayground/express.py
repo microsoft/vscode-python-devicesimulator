@@ -4,6 +4,7 @@ from .pixel import Pixel
 from . import utils
 
 
+
 class Express:
     def __init__(self):
         # State in the Python process
@@ -27,6 +28,14 @@ class Express:
         }
 
         self.pixels = Pixel(self.__state)
+
+    @property
+    def button_a(self):
+        return self.state['button_a']
+
+    @property
+    def button_b(self):
+        return self.state['button_b']
 
     @property
     def red_led(self):

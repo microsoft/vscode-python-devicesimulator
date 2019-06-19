@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
   let childProcess: cp.ChildProcess;
+  let messageListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
@@ -77,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
       // Create the Python process (after killing the one running if any)
-      if (childProcess != undefined) {
+      if (childProcess !== undefined) {
         // TODO: We need to check the process was correctly killed
         childProcess.kill();
       }
@@ -115,8 +116,15 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(`Command execution exited with code: ${code}`);
       });
 
+      if (messageListener !== undefined) {
+        messageListener.dispose();
+        const index = context.subscriptions.indexOf(messageListener);
+        if (index > -1) {
+          context.subscriptions.splice(index, 1);
+        }
+      }
       // Handle messages from webview
-      currentPanel.webview.onDidReceiveMessage(
+      messageListener = currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
             case "button-press":

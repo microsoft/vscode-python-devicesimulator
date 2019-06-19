@@ -1,6 +1,5 @@
 // Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/board.ts#L477
 
-
 export const MB_WIDTH = 180.09375;
 export const MB_HEIGHT = 179.22874;
 
@@ -8,36 +7,48 @@ export const OFF_COLOR = "#c8c8c8";
 export const MAX_STROKE_LUM = 75;
 export const MIN_INNER_LUM = 85;
 export const INTENSITY_FACTOR = 1.3;
+export const RED_LED_ON: string = "#FF7777";
+export const RED_LED_OFF: string = "#FFFFFF";
+export const BUTTON_NEUTRAL: string = "#000000";
+export const BUTTON_PRESSED: string = "#FFA500";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
-export function rgbToHsl(rgb: [number, number, number]): [number, number, number] {
+export function rgbToHsl(
+  rgb: [number, number, number]
+): [number, number, number] {
   let [r, g, b] = rgb;
   let [r$, g$, b$] = [r / 255, g / 255, b / 255];
   let cMin = Math.min(r$, g$, b$);
   let cMax = Math.max(r$, g$, b$);
   let cDelta = cMax - cMin;
-  let h: number = 0, s: number, l: number;
+  let h: number = 0,
+    s: number,
+    l: number;
   let maxAndMin = cMax + cMin;
 
   // Luminosity
-  l = (maxAndMin / 2) * 100
+  l = (maxAndMin / 2) * 100;
 
   if (cDelta === 0) {
-      s = 0; h  = 0;
+    s = 0;
+    h = 0;
   } else {
-      // Hue
-      if (cMax === r$)
-          h = 60 * (((g$ - b$) / cDelta) % 6);
-      else if (cMax === g$)
-          h = 60 * (((b$ - r$) / cDelta) + 2);
-      else if (cMax === b$)
-          h = 60 * (((r$ - g$) / cDelta) + 4);
+    // Hue
+    switch (cMax) {
+      case r$:
+        h = 60 * (((g$ - b$) / cDelta) % 6);
+        break;
+      case g$:
+        h = 60 * ((b$ - r$) / cDelta + 2);
+        break;
+      case b$:
+        h = 60 * ((r$ - g$) / cDelta + 4);
+        break;
+    }
 
-      // Saturation
-      if (l > 50)
-          s = 100 * (cDelta / (2 - maxAndMin));
-      else
-          s = 100 * (cDelta / maxAndMin);
+    // Saturation
+    if (l > 50) s = 100 * (cDelta / (2 - maxAndMin));
+    else s = 100 * (cDelta / maxAndMin);
   }
 
   return [Math.floor(h), Math.floor(s), Math.floor(l)];
