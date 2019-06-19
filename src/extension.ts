@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
     "adafruit.openSimulator",
     () => {
       if (currentPanel) {
-        currentPanel.reveal(vscode.ViewColumn.One);
+        currentPanel.reveal(vscode.ViewColumn.Two);
       } else {
         currentPanel = vscode.window.createWebviewPanel(
           "adafruitSimulator",
