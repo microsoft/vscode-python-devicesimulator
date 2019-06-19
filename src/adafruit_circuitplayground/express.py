@@ -31,11 +31,11 @@ class Express:
 
     @property
     def button_a(self):
-        return self.state['button_a']
+        return self.__state['button_a']
 
     @property
     def button_b(self):
-        return self.state['button_b']
+        return self.__state['button_b']
 
     @property
     def red_led(self):
