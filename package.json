@@ -2,7 +2,7 @@
   "name": "__EXTENSIONNAME__",
   "displayName": "__DISPLAYNAME__",
   "description": "__DESCRIPTION__",
-  "version": "0.0.1",
+  "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
   "engines": {
     "vscode": "^1.34.0"
