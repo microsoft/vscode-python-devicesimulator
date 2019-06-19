@@ -7,7 +7,7 @@ from . import utils
 class Express:
     def __init__(self):
         # State in the Python process
-        self.state = {
+        self.__state = {
             'brightness': 1.0,
             'button_a': False,
             'button_b': False,
@@ -26,18 +26,18 @@ class Express:
           'red_led': False
         }
 
-        self.pixels = Pixel(self.state)
+        self.pixels = Pixel(self.__state)
 
     @property
     def red_led(self):
-        return self.state['red_led']
+        return self.__state['red_led']
 
     @red_led.setter
     def red_led(self, value):
-        self.state['red_led'] = bool(value)
+        self.__state['red_led'] = bool(value)
         self.__show()
 
     def __show(self):
-        utils.show(self.state)
+        utils.show(self.__state)
 
 cpx = Express()

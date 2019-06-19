@@ -4,53 +4,53 @@ from . import utils
 
 class Pixel:
     def __init__(self, state):
-        self._state = state
-        self._auto_write = False
+        self.__state = state
+        self.__auto_write = False
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
-        utils.show(self._state)
+        utils.show(self.__state)
 
-    def show_if_auto_write(self):
-        if self._auto_write:
+    def __show_if_auto_write(self):
+        if self.__auto_write:
             self.show()
 
     def __getitem__(self, index):
-        if not self.valid_index(index):
+        if not self.__valid_index(index):
             raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
-        return self._state['pixels'][index]
+        return self.__state['pixels'][index]
     
     def __setitem__(self, index, val):
-        if not self.valid_index(index):
+        if not self.__valid_index(index):
             raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
-        self._state['pixels'][index] = self.extract_pixel_value(val)
-        self.show_if_auto_write()
+        self.__state['pixels'][index] = self.__extract_pixel_value(val)
+        self.__show_if_auto_write()
 
-    def valid_index(self, index):
-        return type(index) is int and index >= -len(self._state['pixels']) and index < len(self._state['pixels'])
+    def __valid_index(self, index):
+        return type(index) is int and index >= -len(self.__state['pixels']) and index < len(self.__state['pixels'])
 
     def fill(self, val):
-        for index in range(len(self._state['pixels'])):
-            self._state['pixels'][index] = self.extract_pixel_value(val)
-        self.show_if_auto_write()
+        for index in range(len(self.__state['pixels'])):
+            self.__state['pixels'][index] = self.__extract_pixel_value(val)
+        self.__show_if_auto_write()
 
-    def extract_pixel_value(self, val):
+    def __extract_pixel_value(self, val):
         # Type validation
         if type(val) is list:
             rgb_value = tuple(val)
         elif type(val) is int:
-            rgb_value = self.hex_to_rgb(hex(val))
+            rgb_value = self.__hex_to_rgb(hex(val))
         elif type(val) is tuple:
             rgb_value = val
         else:
             raise ValueError('The pixel color value type should be tuple, list or hexadecimal.')
         # Values validation
-        if len(rgb_value) != 3 or any(not self.valid_rgb_value(pix) for pix in rgb_value):
+        if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
             raise ValueError('The pixel color value should be a tuple with three values between 0 and 255 or an hexadecimal color between 0x000000 and 0xFFFFFF.')
 
         return rgb_value
 
-    def hex_to_rgb(self, hexValue):
+    def __hex_to_rgb(self, hexValue):
         if hexValue[0:2] == '0x' and len(hexValue) <= 8:
             hexToRgbValue = [0,0,0]
             hexColor = hexValue[2:].zfill(6)
@@ -62,19 +62,19 @@ class Pixel:
         else:
             raise ValueError('The pixel hexadicimal color value should be in range #000000 and #FFFFFF.')
 
-    def valid_rgb_value(self, pixValue):
+    def __valid_rgb_value(self, pixValue):
         return type(pixValue) is int and pixValue >= 0 and pixValue <= 255
 
     @property
     def brightness(self):
-        return self._state['brightness']
+        return self.__state['brightness']
 
     @brightness.setter
     def brightness(self, brightness):
-        if not self.valid_brightness(brightness):
+        if not self.__valid_brightness(brightness):
             raise ValueError('The brightness value should be a number between 0 and 1.')
-        self._state['brightness'] = brightness
-        self.show_if_auto_write()
+        self.__state['brightness'] = brightness
+        self.__show_if_auto_write()
 
-    def valid_brightness(self, brightness):
+    def __valid_brightness(self, brightness):
         return (type(brightness) is float or type(brightness) is int) and (brightness >= 0 and brightness <= 1)
