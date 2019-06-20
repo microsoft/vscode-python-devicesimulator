@@ -13,6 +13,26 @@ interface IMyProps {
   children?: any;
 }
 
+const DEFAULT_STATE: IState = {
+  brightness: 1.0,
+  button_a: false,
+  button_b: false,
+  pixels: [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ],
+
+  red_led: false
+};
+
 interface vscode {
   postMessage(message: any): void;
 }
@@ -27,25 +47,7 @@ const sendMessage = (state: any) => {
 class Simulator extends React.Component<any, IState> {
   constructor(props: IMyProps) {
     super(props);
-    this.state = {
-      brightness: 1.0,
-      button_a: false,
-      button_b: false,
-      pixels: [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ],
-
-      red_led: false
-    };
+    this.state = DEFAULT_STATE;
 
     this.handleClick = this.handleClick.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -55,8 +57,20 @@ class Simulator extends React.Component<any, IState> {
 
   handleMessage = (event: any): void => {
     const message = event.data; // The JSON data our extension sent
-    console.log("change state:" + message);
-    this.setState(message);
+    switch (message.command) {
+      case "reset-state":
+        console.log("Clearing the state");
+        this.setState(DEFAULT_STATE);
+        break;
+      case "set-state":
+        console.log("Setting the state: " + JSON.stringify(message.state));
+        this.setState(message.state);
+        break;
+      default:
+        console.log("Invalid message received from the extension.");
+        this.setState(DEFAULT_STATE);
+        break;
+    }
   };
 
   componentDidMount() {

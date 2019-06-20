@@ -79,6 +79,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Create the Python process (after killing the one running if any)
       if (childProcess !== undefined) {
+        if (currentPanel) {
+          console.log("Sending clearing state command");
+          currentPanel.webview.postMessage({ command: "reset-state" });
+        }
         // TODO: We need to check the process was correctly killed
         childProcess.kill();
       }
@@ -99,7 +103,10 @@ export function activate(context: vscode.ExtensionContext) {
           dataFromTheProcess.split("\0").forEach(message => {
             if (currentPanel && message.length > 0 && message != oldState) {
               console.log("Process output = ", message);
-              currentPanel.webview.postMessage(JSON.parse(message));
+              currentPanel.webview.postMessage({
+                command: "set-state",
+                state: JSON.parse(message)
+              });
               oldState = message;
             }
           });
