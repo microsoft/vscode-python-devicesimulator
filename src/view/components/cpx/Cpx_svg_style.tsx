@@ -15,6 +15,7 @@ export const BUTTON_OUTER: string = "#DCDCDC";
 export const BUTTON_CORNER_RADIUS: number = 2;
 export const BUTTON_WIDTH: number = 10;
 export const BUTTON_CIRCLE_RADIUS: number = 3;
+export const BUTTON_TEXT_BASELINE: number = 163;
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(
