@@ -34,33 +34,33 @@ const Cpx: React.FC<IProps> = props => {
   return CPX_SVG;
 };
 
-const mkBtn = (
+const makeButton = (
   g: SVGElement,
   left: number,
   top: number,
   id: string
 ): { outer: SVGElement; inner: SVGElement } => {
-  const btnr = 2;
-  const btnw = 10;
-  const btnb = 3;
+  const buttonCornerRadius = SvgStyle.BUTTON_CORNER_RADIUS;
+  const buttonWidth = SvgStyle.BUTTON_WIDTH;
+  const buttonCircleRadius = SvgStyle.BUTTON_CIRCLE_RADIUS;
   const btng = svg.child(g, "g", { class: "sim-button-group" });
   svg.child(btng, "rect", {
     id: id + "_OUTER",
     x: left,
     y: top,
-    rx: btnr,
-    ry: btnr,
-    width: btnw,
-    height: btnw,
+    rx: buttonCornerRadius,
+    ry: buttonCornerRadius,
+    width: buttonWidth,
+    height: buttonWidth,
     fill: SvgStyle.BUTTON_OUTER
   });
 
   const outer = btng;
   const inner = svg.child(btng, "circle", {
     id: id + "_INNER",
-    cx: left + btnw / 2,
-    cy: top + btnw / 2,
-    r: btnb,
+    cx: left + buttonWidth / 2,
+    cy: top + buttonWidth / 2,
+    r: buttonCircleRadius,
     fill: SvgStyle.BUTTON_NEUTRAL
   });
 
@@ -138,7 +138,7 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
 
   // BTN A+B
   const outerBtn = (left: number, top: number, label: string) => {
-    const button = mkBtn(g, left, top, "BTN_AB");
+    const button = makeButton(g, left, top, "BTN_AB");
     return button;
   };
 
