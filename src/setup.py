@@ -41,7 +41,7 @@ user_input.start()
 
 # User code thread
 def execute_user_code(abs_path_to_code_file):
-    cpx.abs_path_to_code_file = abs_path_to_code_file
+    cpx._Express__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file) as file:
         user_code = file.read()

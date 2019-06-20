@@ -2,8 +2,7 @@ import sys
 import json
 
 def show(state):
-    print(json.dumps(state) + '\0', end='')
-    sys.stdout.flush()
+    print(json.dumps(state) + '\0', end='', flush=True)
 
 def remove_leading_slashes(string):
     forward_slash_count = string.count('/')
