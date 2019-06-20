@@ -108,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Std error output
       childProcess.stderr.on("data", data => {
-        console.log(`stderr: ${data}`);
+        console.log(`Error from the Python process through stderr: ${data}`);
       });
 
       // When the process is done

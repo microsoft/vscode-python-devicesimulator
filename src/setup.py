@@ -25,8 +25,7 @@ class UserInput(threading.Thread):
                 cpx._Express__state['button_b'] = new_state.get(
                     'button_b', cpx._Express__state['button_b'])
             except Exception as e:
-                print("Error trying to send event to the process : ", e)
-                sys.stdout.flush()
+                print("Error trying to send event to the process : ", e, file=sys.stderr, flush= True)
 
 
 # Insert absolute path to Adafruit library into sys.path
@@ -48,9 +47,9 @@ def execute_user_code(abs_path_to_code_file):
         user_code = file.read()
         try:
             exec(user_code)
-        except Exception as e:
-            print("Error in code execution : ", e)
             sys.stdout.flush()
+        except Exception as e:
+            print("Error in code execution : ", e, file=sys.stderr, flush= True)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
