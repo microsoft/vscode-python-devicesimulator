@@ -34,6 +34,39 @@ const Cpx: React.FC<IProps> = props => {
   return CPX_SVG;
 };
 
+const mkBtn = (
+  g: SVGElement,
+  left: number,
+  top: number,
+  id: string
+): { outer: SVGElement; inner: SVGElement } => {
+  const btnr = 2;
+  const btnw = 10;
+  const btnb = 3;
+  const btng = svg.child(g, "g", { class: "sim-button-group" });
+  svg.child(btng, "rect", {
+    id: id + "_OUTER",
+    x: left,
+    y: top,
+    rx: btnr,
+    ry: btnr,
+    width: btnw,
+    height: btnw,
+    fill: SvgStyle.BUTTON_OUTER
+  });
+
+  const outer = btng;
+  const inner = svg.child(btng, "circle", {
+    id: id + "_INNER",
+    cx: left + btnw / 2,
+    cy: top + btnw / 2,
+    r: btnb,
+    fill: SvgStyle.BUTTON_NEUTRAL
+  });
+
+  return { outer, inner };
+};
+
 const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
   let style: SVGStyleElement = svg.child(
     svgElement,
@@ -48,6 +81,9 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
     "defs",
     {}
   ) as SVGDefsElement;
+
+  let g = svg.createElement("g") as SVGElement;
+  svgElement.appendChild(g);
 
   let glow = svg.child(defs, "filter", {
     id: "filterglow",
@@ -99,6 +135,20 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
     type: "linear",
     slope: brightness
   });
+
+  // BTN A+B
+  const outerBtn = (left: number, top: number, label: string) => {
+    const button = mkBtn(g, left, top, "BTN_AB");
+    return button;
+  };
+
+  let ab = outerBtn(165, SvgStyle.MB_HEIGHT - 15, "A+B");
+  let abtext = svg.child(ab.outer, "text", {
+    x: 163,
+    y: SvgStyle.MB_HEIGHT - 18,
+    class: "sim-text"
+  }) as SVGTextElement;
+  abtext.textContent = "A+B";
 };
 
 const updateNeopixels = (props: IProps): void => {
@@ -170,8 +220,8 @@ const changeBrightness = (filterID: string, brightness: number): void => {
 };
 
 const setupButtons = (props: IProps): void => {
-  const outButtons = ["A_OUTER", "B_OUTER"];
-  const inButtons = ["A_INNER", "B_INNER"];
+  const outButtons = ["A_OUTER", "B_OUTER", "AB_OUTER"];
+  const inButtons = ["A_INNER", "B_INNER", "AB_INNER"];
   outButtons.forEach(buttonName => {
     const button = window.document.getElementById("BTN_" + buttonName);
 
@@ -187,9 +237,22 @@ const setupButtons = (props: IProps): void => {
   });
 };
 
+const addButtonLabels = (button: HTMLElement) => {
+  let label = "";
+  if (button.id.match(/AB/) !== null) {
+    label = "A+B";
+  } else if (button.id.match(/A/) !== null) {
+    label = "A";
+  } else if (button.id.match(/B/) !== null) {
+    label = "B";
+  }
+  accessibility.setAria(button, "button", label);
+};
+
 const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   const svgButton = (button as unknown) as SVGElement;
   svg.addClass(svgButton, className);
+  addButtonLabels(button);
   if (className.match(/outer/) !== null) {
     accessibility.makeFocusable(svgButton);
   }

@@ -11,6 +11,7 @@ export const RED_LED_ON: string = "#FF7777";
 export const RED_LED_OFF: string = "#FFFFFF";
 export const BUTTON_NEUTRAL: string = "#000000";
 export const BUTTON_PRESSED: string = "#FFA500";
+export const BUTTON_OUTER: string = "#DCDCDC";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(
