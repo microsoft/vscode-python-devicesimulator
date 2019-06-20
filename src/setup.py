@@ -20,12 +20,12 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
-                cpx.state['button_a'] = new_state.get(
-                    'button_a', cpx.state['button_a'])
-                cpx.state['button_b'] = new_state.get(
-                    'button_b', cpx.state['button_b'])
+                cpx._Express__state['button_a'] = new_state.get(
+                    'button_a', cpx._Express__state['button_a'])
+                cpx._Express__state['button_b'] = new_state.get(
+                    'button_b', cpx._Express__state['button_b'])
             except Exception as e:
-                print("oh no", e)
+                print("Error trying to send event to the process : ", e, file=sys.stderr, flush= True)
 
 
 # Insert absolute path to Adafruit library into sys.path
@@ -45,7 +45,11 @@ def execute_user_code(abs_path_to_code_file):
     # Execute the user's code.py file
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
-        exec(user_code)
+        try:
+            exec(user_code)
+            sys.stdout.flush()
+        except Exception as e:
+            print("Error in code execution : ", e, file=sys.stderr, flush= True)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)

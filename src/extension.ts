@@ -88,7 +88,6 @@ export function activate(context: vscode.ExtensionContext) {
         currentFileAbsPath
       ]);
 
-      let dataForTheProcess = "hello";
       let dataFromTheProcess = "";
       let oldState = "";
 
@@ -109,11 +108,11 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Std error output
       childProcess.stderr.on("data", data => {
-        console.log(`stderr: ${data}`);
+        console.log(`Error from the Python process through stderr: ${data}`);
       });
 
       // When the process is done
-      childProcess.on("close", (code: number) => {
+      childProcess.on("end", (code: number) => {
         console.log(`Command execution exited with code: ${code}`);
       });
 
