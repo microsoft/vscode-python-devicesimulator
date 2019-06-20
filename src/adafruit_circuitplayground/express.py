@@ -55,7 +55,6 @@ class Express:
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
-        self.__speaker_enabled = True
         abs_path_parent_dir = os.path.abspath(os.path.join(self.__abs_path_to_code_file, os.pardir))
         abs_path_wav_file = os.path.normpath(os.path.join(abs_path_parent_dir, file_name))
 
@@ -69,6 +68,5 @@ class Express:
             play_obj.wait_done()
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
-        self.__speaker_enabled = False
     
 cpx = Express()
