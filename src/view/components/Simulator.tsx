@@ -117,9 +117,17 @@ class Simulator extends React.Component<any, IState> {
   private handleClick(button: HTMLElement, active: boolean) {
     const ButtonA: boolean = button.id.match(/BTN_A/) !== null;
     const ButtonB: boolean = button.id.match(/BTN_B/) !== null;
+    const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
-    if (ButtonA) {
+    if (ButtonAB) {
+      innerButton = window.document.getElementById("BTN_AB_INNER");
+      newState = {
+        button_a: active,
+        button_b: active
+      };
+      this.setState(newState);
+    } else if (ButtonA) {
       innerButton = window.document.getElementById("BTN_A_INNER");
       newState = {
         button_a: active
