@@ -60,12 +60,15 @@ class Express:
 
         if sys.implementation.version[0] >= 3:
             wave_obj = sa.WaveObject.from_wave_file(abs_path_wav_file)
-            try:
-                play_obj = wave_obj.play()
-            except:
-                # TODO TASK: 29054 Verfication of a "valid" .wav file
-                raise EnvironmentError("The Circuit Playground Express can only play .wav files.")
-            play_obj.wait_done()
+            if file_name.endswith(".wav"):
+                try:
+                    play_obj = wave_obj.play()
+                except:
+                    # TODO TASK: 29054 Verfication of a "valid" .wav file
+                    raise EnvironmentError("Your .wav file is not suitable for the Circuit Playground Express.")
+                play_obj.wait_done()
+            else:
+                raise TypeError("The Circuit Playground Express can only play .wav files.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
     
