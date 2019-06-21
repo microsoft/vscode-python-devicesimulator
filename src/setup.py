@@ -4,6 +4,7 @@ import json
 import threading
 import copy
 from pathlib import Path
+import traceback
 
 read_val = ""
 
@@ -46,10 +47,16 @@ def execute_user_code(abs_path_to_code_file):
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
         try:
-            exec(user_code)
+            codeObj = compile(user_code, abs_path_to_code_file, 'exec')
+            exec(codeObj)
             sys.stdout.flush()
-        except Exception as e:
-            print("Error in code execution : ", e, file=sys.stderr, flush= True)
+        except Exception as e:            
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            print(e, "\n\tTraceback of code execution : ", file=sys.stderr)
+            stackTrace = traceback.format_exception(exc_type, exc_value, exc_traceback)
+            for frameIndex in range(2, len(stackTrace) - 1):
+                print('\t' + str(stackTrace[frameIndex]), file=sys.stderr, end='')
+            sys.stderr.flush()
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)

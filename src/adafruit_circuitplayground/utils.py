@@ -2,5 +2,6 @@ import sys
 import json
 
 def show(state):
-    print(json.dumps(state) + '\0', end='')
+    message = {'type': 'state', 'data': json.dumps(state)}
+    print(json.dumps(message) + '\0', end='')
     sys.stdout.flush()
