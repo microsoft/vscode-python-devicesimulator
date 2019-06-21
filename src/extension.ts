@@ -91,11 +91,17 @@ export function activate(context: vscode.ExtensionContext) {
       // Opening the output panel
       if (outChannel === undefined) {
         outChannel = vscode.window.createOutputChannel("Adafruit Simulator");
-        outChannel.show();
-        outChannel.append("Welcome to the Adafruit Simulator output tab !\n\n");
+        logToOutputChannel(
+          outChannel,
+          "Welcome to the Adafruit Simulator output tab !\n\n",
+          true
+        );
       }
 
-      logToOutputChannel(outChannel, "\n[INFO] Deploying code to the simulator...\n");
+      logToOutputChannel(
+        outChannel,
+        "\n[INFO] Deploying code to the simulator...\n"
+      );
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -209,12 +215,16 @@ const updatePythonExtraPaths = () => {
     );
 };
 
-const logToOutputChannel = (outChannel: vscode.OutputChannel | undefined, message: string, show: boolean = false) => {
+const logToOutputChannel = (
+  outChannel: vscode.OutputChannel | undefined,
+  message: string,
+  show: boolean = false
+) => {
   if (outChannel) {
     if (show) outChannel.show();
     outChannel.append(message);
   }
-}
+};
 
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
