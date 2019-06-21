@@ -95,8 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
         outChannel.append("Welcome to the Adafruit Simulator output tab !\n\n");
       }
 
-      if (outChannel)
-        outChannel.append("\n[INFO] Deploying code to the simulator...\n");
+      logToOutputChannel(outChannel, "\n[INFO] Deploying code to the simulator...\n");
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -138,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
               } catch (err) {
                 console.log(`Non-JSON output from the process :  ${message}`);
-                if (outChannel) outChannel.append(`[PRINT] ${message}\n`);
+                logToOutputChannel(outChannel, `[PRINT] ${message}\n`);
               }
             }
           });
@@ -148,10 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.log(`Error from the Python process through stderr: ${data}`);
-        if (outChannel) {
-          outChannel.show();
-          outChannel.append(`[ERROR] ${data} \n`);
-        }
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
         if (currentPanel) {
           console.log("Sending clearing state command");
           currentPanel.webview.postMessage({ command: "reset-state" });
@@ -212,6 +208,13 @@ const updatePythonExtraPaths = () => {
       vscode.ConfigurationTarget.Global
     );
 };
+
+const logToOutputChannel = (outChannel: vscode.OutputChannel | undefined, message: string, show: boolean = false) => {
+  if (outChannel) {
+    if (show) outChannel.show();
+    outChannel.append(message);
+  }
+}
 
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
