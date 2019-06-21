@@ -10,7 +10,7 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
+  console.info(
     "Congratulations, your extension Adafruit_Simulator is now active!"
   );
 
@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
     "adafruit.openSimulator",
     () => {
       if (currentPanel) {
-        currentPanel.reveal(vscode.ViewColumn.One);
+        currentPanel.reveal(vscode.ViewColumn.Two);
       } else {
         currentPanel = vscode.window.createWebviewPanel(
           "adafruitSimulator",
@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      console.log("Running user code");
+      console.info("Running user code");
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
       let currentFileAbsPath: string = "";
@@ -79,6 +79,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Create the Python process (after killing the one running if any)
       if (childProcess !== undefined) {
+        if (currentPanel) {
+          console.info("Sending clearing state command");
+          currentPanel.webview.postMessage({ command: "reset-state" });
+        }
         // TODO: We need to check the process was correctly killed
         childProcess.kill();
       }
@@ -99,7 +103,10 @@ export function activate(context: vscode.ExtensionContext) {
           dataFromTheProcess.split("\0").forEach(message => {
             if (currentPanel && message.length > 0 && message != oldState) {
               console.log("Process output = ", message);
-              currentPanel.webview.postMessage(JSON.parse(message));
+              currentPanel.webview.postMessage({
+                command: "set-state",
+                state: JSON.parse(message)
+              });
               oldState = message;
             }
           });
@@ -108,12 +115,12 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Std error output
       childProcess.stderr.on("data", data => {
-        console.log(`Error from the Python process through stderr: ${data}`);
+        console.error(`Error from the Python process through stderr: ${data}`);
       });
 
       // When the process is done
       childProcess.on("end", (code: number) => {
-        console.log(`Command execution exited with code: ${code}`);
+        console.info(`Command execution exited with code: ${code}`);
       });
 
       if (messageListener !== undefined) {
