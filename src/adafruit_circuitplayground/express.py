@@ -59,8 +59,8 @@ class Express:
         abs_path_wav_file = os.path.normpath(os.path.join(abs_path_parent_dir, file_name))
 
         if sys.implementation.version[0] >= 3:
-            wave_obj = sa.WaveObject.from_wave_file(abs_path_wav_file)
             if file_name.endswith(".wav"):
+                wave_obj = sa.WaveObject.from_wave_file(abs_path_wav_file)
                 try:
                     play_obj = wave_obj.play()
                 except:
@@ -68,7 +68,7 @@ class Express:
                     raise EnvironmentError("Your .wav file is not suitable for the Circuit Playground Express.")
                 play_obj.wait_done()
             else:
-                raise TypeError("The Circuit Playground Express can only play .wav files.")
+                raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
     
