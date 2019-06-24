@@ -3,11 +3,11 @@ import sys
 import json
 import threading
 import copy
+from adafruit_circuitplayground.express import cpx
 from pathlib import Path
 import traceback
 
 read_val = ""
-
 
 class UserInput(threading.Thread):
 
@@ -41,9 +41,9 @@ user_input = UserInput()
 threads.append(user_input)
 user_input.start()
 
-
 # User code thread
 def execute_user_code(abs_path_to_code_file):
+    cpx._Express__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
