@@ -10,5 +10,4 @@ def show(state):
 
 def remove_leading_slashes(string):
     string = string.lstrip('\\/')
-
     return string
