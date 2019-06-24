@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
       let oldMessage = "";
 
       // Data received from Python process
-      childProcess.stdout.on("data", function(data) {
+      childProcess.stdout.on("data", data => {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
           // Process the data from the process and send one state at a time
@@ -143,7 +143,6 @@ export function activate(context: vscode.ExtensionContext) {
                 }
               } catch (err) {
                 console.log(`Non-JSON output from the process :  ${message}`);
-                // logToOutputChannel(outChannel, `[PRINT] ${message}\n`);
               }
             }
           });
