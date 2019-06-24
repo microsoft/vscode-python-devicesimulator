@@ -2706,17 +2706,17 @@ export const CPX_SVG = (
         id="path2486"
         fill="#b4b4b4"
       />
-      <path d="M62.138 51.542h19.8v-9.899h-19.8v9.899z" id="SLIDE_HOUSING" />
-      <g id="SLIDE" transform="matrix(1 0 0 -1 80.538 51.542)">
+      <path d="M62.138 51.542h19.8v-9.899h-19.8v9.899z" id="SWITCH_HOUSING" />
+      <g id="SWITCH" transform="matrix(1 0 0 -1 80.538 51.542)">
         <path
           d="M0 0v2.9h1.4v4.201H0V10h-4.2V7.101h-8.5V10H-17V7.101h-1.4V2.9h1.4V0H0z"
-          id="SLIDE_HOVER"
+          id="SWITCH_HOVER"
           fill="#dcdcdc"
         />
       </g>
       <path
         d="M72.038 44.342h4.3v-2.8h-4.3v2.8z"
-        id="SLIDE_INNER"
+        id="SWITCH_INNER"
         fill="#333"
       />
       <g id="g2496" transform="translate(69.938 47.943)">

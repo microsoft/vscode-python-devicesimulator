@@ -23,12 +23,13 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupSwitch(props);
       firstTime = false;
     }
     // Update Neopixels state
     updateNeopixels(props);
     updateRedLED(props.red_led);
-    setupButtons(props);
+    // setupButtons(props);
   }
 
   return CPX_SVG;
@@ -259,6 +260,51 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   svgButton.onmousedown = e => props.onMouseDown(button, e);
   svgButton.onmouseup = e => props.onMouseUp(button, e);
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
+};
+
+let swStateIsOn: boolean = false;
+
+const setupSwitch = (props: IProps): void => {
+  const switchElement = window.document.getElementById("SWITCH");
+  const swInnerElement = window.document.getElementById("SWITCH_INNER");
+  const swHousingElement = window.document.getElementById("SWITCH_HOUSING");
+
+  if (switchElement && swInnerElement && swHousingElement) {
+    let svgSwitch: SVGElement = (switchElement as unknown) as SVGElement;
+    let svgSwitchInner: SVGElement = (swInnerElement as unknown) as SVGElement;
+    let svgSwitchHousing: SVGElement = (swHousingElement as unknown) as SVGElement;
+
+    svg.addClass(svgSwitch, "sim-slide-switch");
+
+    svgSwitch.onmouseup = e => switchHandler(svgSwitch, e);
+    svgSwitchInner.onmouseup = e => switchHandler(svgSwitchInner, e);
+    svgSwitchHousing.onmouseup = e => switchHandler(svgSwitchHousing, e);
+
+    accessibility.makeFocusable(svgSwitch);
+    accessibility.setAria(
+      svgSwitch,
+      "button",
+      "On/Off Switch. Current state : " + swStateIsOn ? "On" : "Off"
+    );
+    svgSwitch.setAttribute("aria-pressed", swStateIsOn.toString());
+  }
+};
+
+const switchHandler = (svgSwitch: SVGElement, event: Event): void => {
+  const swInner = window.document.getElementById("SWITCH_INNER");
+  let slide = (swInner as unknown) as SVGElement;
+  svg.addClass(slide, "sim-slide-switch-inner");
+
+  swStateIsOn = !swStateIsOn;
+  console.log("In handler : " + swStateIsOn);
+
+  if (swStateIsOn) {
+    svg.addClass(slide, "on");
+    slide.setAttribute("transform", "translate(-5,0)");
+  } else {
+    svg.removeClass(slide, "on");
+    slide.removeAttribute("transform");
+  }
 };
 
 export default Cpx;
