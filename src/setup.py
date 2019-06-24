@@ -5,6 +5,7 @@ import threading
 import copy
 from adafruit_circuitplayground.express import cpx
 from pathlib import Path
+import traceback
 
 read_val = ""
 
@@ -25,7 +26,8 @@ class UserInput(threading.Thread):
                 cpx._Express__state['button_b'] = new_state.get(
                     'button_b', cpx._Express__state['button_b'])
             except Exception as e:
-                print("Error trying to send event to the process : ", e, file=sys.stderr, flush= True)
+                print("Error trying to send event to the process : ",
+                      e, file=sys.stderr, flush=True)
 
 
 # Insert absolute path to Adafruit library into sys.path
@@ -46,10 +48,18 @@ def execute_user_code(abs_path_to_code_file):
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
         try:
-            exec(user_code)
+            codeObj = compile(user_code, abs_path_to_code_file, 'exec')
+            exec(codeObj)
             sys.stdout.flush()
         except Exception as e:
-            print("Error in code execution : ", e, file=sys.stderr, flush= True)
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            errorMessage = '\n\tTraceback of code execution : \n'
+            stackTrace = traceback.format_exception(
+                exc_type, exc_value, exc_traceback)
+
+            for frameIndex in range(2, len(stackTrace) - 1):
+                errorMessage += '\t' + str(stackTrace[frameIndex])
+            print(e, errorMessage, file=sys.stderr, flush=True)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)

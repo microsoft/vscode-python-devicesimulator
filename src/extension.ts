@@ -15,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
+  let outChannel: vscode.OutputChannel | undefined = undefined;
   let childProcess: cp.ChildProcess;
   let messageListener: vscode.Disposable;
 
@@ -87,27 +88,62 @@ export function activate(context: vscode.ExtensionContext) {
         childProcess.kill();
       }
 
+      // Opening the output panel
+      if (outChannel === undefined) {
+        outChannel = vscode.window.createOutputChannel("Adafruit Simulator");
+        logToOutputChannel(
+          outChannel,
+          "Welcome to the Adafruit Simulator output tab !\n\n",
+          true
+        );
+      }
+
+      logToOutputChannel(
+        outChannel,
+        "\n[INFO] Deploying code to the simulator...\n"
+      );
+
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
         currentFileAbsPath
       ]);
 
       let dataFromTheProcess = "";
-      let oldState = "";
+      let oldMessage = "";
 
       // Data received from Python process
-      childProcess.stdout.on("data", function(data) {
+      childProcess.stdout.on("data", data => {
         dataFromTheProcess = data.toString();
         if (currentPanel) {
           // Process the data from the process and send one state at a time
           dataFromTheProcess.split("\0").forEach(message => {
-            if (currentPanel && message.length > 0 && message != oldState) {
-              console.log("Process output = ", message);
-              currentPanel.webview.postMessage({
-                command: "set-state",
-                state: JSON.parse(message)
-              });
-              oldState = message;
+            if (currentPanel && message.length > 0 && message != oldMessage) {
+              oldMessage = message;
+              let messageToWebview;
+              // Check the message is a JSON
+              try {
+                messageToWebview = JSON.parse(message);
+                // Check the JSON is a state
+                switch (messageToWebview.type) {
+                  case "state":
+                    console.log(
+                      `Process state output = ${messageToWebview.data}`
+                    );
+                    currentPanel.webview.postMessage({
+                      command: "set-state",
+                      state: JSON.parse(messageToWebview.data)
+                    });
+                    break;
+
+                  default:
+                    console.log(
+                      `Non-state JSON output from the process : ${messageToWebview}`
+                    );
+                    break;
+                }
+              } catch (err) {
+                console.log(`Non-JSON output from the process :  ${message}`);
+              }
             }
           });
         }
@@ -116,6 +152,11 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+        if (currentPanel) {
+          console.log("Sending clearing state command");
+          currentPanel.webview.postMessage({ command: "reset-state" });
+        }
       });
 
       // When the process is done
@@ -171,6 +212,17 @@ const updatePythonExtraPaths = () => {
       currentExtraPaths,
       vscode.ConfigurationTarget.Global
     );
+};
+
+const logToOutputChannel = (
+  outChannel: vscode.OutputChannel | undefined,
+  message: string,
+  show: boolean = false
+) => {
+  if (outChannel) {
+    if (show) outChannel.show();
+    outChannel.append(message);
+  }
 };
 
 function getWebviewContent(context: vscode.ExtensionContext) {
