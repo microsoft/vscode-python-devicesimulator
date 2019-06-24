@@ -143,7 +143,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
               } catch (err) {
                 console.log(`Non-JSON output from the process :  ${message}`);
-                logToOutputChannel(outChannel, `[PRINT] ${message}\n`);
+                // logToOutputChannel(outChannel, `[PRINT] ${message}\n`);
               }
             }
           });
