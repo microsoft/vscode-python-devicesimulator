@@ -1,12 +1,13 @@
-# Getting started with intro to CircuitPython tutorial: https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library
-# View Circuit Playground Express’s product guide on: https://learn.adafruit.com/adafruit-circuit-playground-express
+'''
+Save your file as "code.py" or "main.py" to run on the actual device
 
-# Save your file as "code.py" or "main.py" to run on the actual device.
+Getting started with CPX and CircuitPython intro on: https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library
 
-# Import the CPX library
+Find example code for CPX on: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples
+'''
+
+# import cpx library
 from adafruit_circuitplayground.express import cpx
 
 while True:
     # start your code here
-    # create a ongoing loop for your code
-    print("h")
