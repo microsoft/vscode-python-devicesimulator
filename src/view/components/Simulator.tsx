@@ -91,6 +91,7 @@ class Simulator extends React.Component<any, IState> {
           pixels={this.state.pixels}
           brightness={this.state.brightness}
           red_led={this.state.red_led}
+          switch={this.state.switch}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseLeave={this.onMouseLeave}

@@ -8,6 +8,7 @@ interface IProps {
   pixels: Array<Array<number>>;
   red_led: boolean;
   brightness: number;
+  switch: boolean;
   onMouseUp: (button: HTMLElement, event: Event) => void;
   onMouseDown: (button: HTMLElement, event: Event) => void;
   onMouseLeave: (button: HTMLElement, event: Event) => void;
@@ -261,8 +262,6 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
 };
 
-let swStateIsOn: boolean = false;
-
 const setupSwitch = (props: IProps): void => {
   const switchElement = window.document.getElementById("SWITCH");
   const swInnerElement = window.document.getElementById("SWITCH_INNER");
@@ -283,9 +282,8 @@ const setupSwitch = (props: IProps): void => {
     accessibility.setAria(
       svgSwitch,
       "button",
-      "On/Off Switch. Current state : " + swStateIsOn ? "On" : "Off"
+      "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
     );
-    svgSwitch.setAttribute("aria-pressed", swStateIsOn.toString());
   }
 };
 
