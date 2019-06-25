@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
+import svg from "./cpx/Svg_utils";
 
 interface IState {
   pixels: Array<Array<number>>;
@@ -115,6 +116,20 @@ class Simulator extends React.Component<any, IState> {
   }
 
   private handleClick(button: HTMLElement, active: boolean) {
+    let newState = undefined;
+    if (button.id.includes("BTN")) {
+      console.log("HANDLE BUTTON");
+      newState = this.handleButtonClick(button, active);
+    } else if (button.id.includes("SWITCH")) {
+      console.log("HANDLE SWITCH");
+      this.handleSwitchClick();
+    } else return;
+
+    button.setAttribute("pressed", `${active}`);
+    if (newState) sendMessage(newState);
+  }
+
+  private handleButtonClick(button: HTMLElement, active: boolean) {
     const ButtonA: boolean = button.id.match(/BTN_A/) !== null;
     const ButtonB: boolean = button.id.match(/BTN_B/) !== null;
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
@@ -140,15 +155,35 @@ class Simulator extends React.Component<any, IState> {
       };
       this.setState(newState);
     }
-    button.setAttribute("pressed", `${active}`);
-    if (newState) sendMessage(newState);
     if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+    return newState;
   }
 
   private getButtonColor(pressed: boolean) {
     const buttonUps = BUTTON_NEUTRAL;
     const buttonDown = BUTTON_PRESSED;
     return pressed ? buttonDown : buttonUps;
+  }
+
+  private swStateIsOn: boolean = false;
+
+  private handleSwitchClick() {
+    const switchInner = (window.document.getElementById(
+      "SWITCH_INNER"
+    ) as unknown) as SVGElement;
+
+    svg.addClass(switchInner, "sim-slide-switch-inner");
+
+    this.swStateIsOn = !this.swStateIsOn;
+    console.log("In handler : " + this.swStateIsOn);
+
+    if (this.swStateIsOn) {
+      svg.addClass(switchInner, "on");
+      switchInner.setAttribute("transform", "translate(-5,0)");
+    } else {
+      svg.removeClass(switchInner, "on");
+      switchInner.removeAttribute("transform");
+    }
   }
 }
 
