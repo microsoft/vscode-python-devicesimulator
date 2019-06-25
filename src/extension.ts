@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
+import * as fs from "fs";
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -53,6 +54,21 @@ export function activate(context: vscode.ExtensionContext) {
         );
       }
     }
+  );
+
+  let newProject = vscode.commands.registerCommand(
+    "adafruit.newProject",
+    () => {
+      const filePath = __dirname + "\\template.py"
+      const file = fs.readFileSync(filePath, "utf8");
+
+      vscode.workspace.openTextDocument({content: file, language: "en"})
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }), (error: any) => {
+        // do smth about err
+      }
+    } 
   );
 
   // Send message to the webview
@@ -194,7 +210,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(openSimulator, runSimulator);
+  context.subscriptions.push(openSimulator, runSimulator, newProject);
 }
 
 const updatePythonExtraPaths = () => {

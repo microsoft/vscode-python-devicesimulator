@@ -23,7 +23,9 @@
   },
   "activationEvents": [
     "onCommand:adafruit.openSimulator",
-    "onCommand:adafruit.runSimulator"
+    "onCommand:adafruit.runSimulator",
+    "onCommand:adafruit.newProject"
+
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -36,6 +38,11 @@
       {
         "command": "adafruit.runSimulator",
         "title": "Run the Simulator",
+        "category": "Adafruit"
+      },
+      {
+        "command": "adafruit.newProject",
+        "title": "New Project",
         "category": "Adafruit"
       }
     ]
