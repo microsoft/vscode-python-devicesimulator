@@ -13,7 +13,7 @@ Please delete options that are not relevant.
 
 # Limitations:
 
-Please descibe limitations of this PR
+Please describe limitations of this PR
 
 # Testing:
 
