@@ -7,8 +7,9 @@ interface IState {
   pixels: Array<Array<number>>;
   brightness: number;
   red_led: boolean;
-  button_a: any;
-  button_b: any;
+  button_a: boolean;
+  button_b: boolean;
+  switch: boolean;
 }
 interface IMyProps {
   children?: any;
@@ -30,8 +31,8 @@ const DEFAULT_STATE: IState = {
     [0, 0, 0],
     [0, 0, 0]
   ],
-
-  red_led: false
+  red_led: false,
+  switch: false
 };
 
 interface vscode {
@@ -118,15 +119,15 @@ class Simulator extends React.Component<any, IState> {
   private handleClick(button: HTMLElement, active: boolean) {
     let newState = undefined;
     if (button.id.includes("BTN")) {
-      console.log("HANDLE BUTTON");
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
-      console.log("HANDLE SWITCH");
-      this.handleSwitchClick();
+      newState = this.handleSwitchClick();
     } else return;
 
-    button.setAttribute("pressed", `${active}`);
-    if (newState) sendMessage(newState);
+    if (newState) {
+      button.setAttribute("pressed", `${active}`);
+      sendMessage(newState);
+    }
   }
 
   private handleButtonClick(button: HTMLElement, active: boolean) {
@@ -165,8 +166,6 @@ class Simulator extends React.Component<any, IState> {
     return pressed ? buttonDown : buttonUps;
   }
 
-  private swStateIsOn: boolean = false;
-
   private handleSwitchClick() {
     const switchInner = (window.document.getElementById(
       "SWITCH_INNER"
@@ -174,16 +173,17 @@ class Simulator extends React.Component<any, IState> {
 
     svg.addClass(switchInner, "sim-slide-switch-inner");
 
-    this.swStateIsOn = !this.swStateIsOn;
-    console.log("In handler : " + this.swStateIsOn);
+    let switchIsOn: boolean = !this.state.switch;
 
-    if (this.swStateIsOn) {
+    if (switchIsOn) {
       svg.addClass(switchInner, "on");
       switchInner.setAttribute("transform", "translate(-5,0)");
     } else {
       svg.removeClass(switchInner, "on");
       switchInner.removeAttribute("transform");
     }
+    this.setState({ switch: switchIsOn });
+    return { switch: switchIsOn };
   }
 }
 
