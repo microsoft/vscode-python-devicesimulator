@@ -5,6 +5,8 @@
 
 # Compiled JS code
 out/
+!locales/**/out/  
+package.nls.*.json
 
 # User-specific files
 *.suo

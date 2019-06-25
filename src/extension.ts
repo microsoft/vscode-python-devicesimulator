@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
+import { CONSTANTS } from "./constants";
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -10,9 +11,7 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
-  console.info(
-    "Congratulations, your extension Adafruit_Simulator is now active!"
-  );
+  console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
   let outChannel: vscode.OutputChannel | undefined = undefined;
@@ -24,14 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Open Simulator on the webview
   let openSimulator = vscode.commands.registerCommand(
-    "adafruit.openSimulator",
+    "pacifica.openSimulator",
     () => {
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.Two);
       } else {
         currentPanel = vscode.window.createWebviewPanel(
           "adafruitSimulator",
-          "Adafruit CPX",
+          CONSTANTS.LABEL.WEBVIEW_PANEL,
           vscode.ViewColumn.Two,
           {
             // Only allow the webview to access resources in our extension's media directory
@@ -57,13 +56,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Send message to the webview
   let runSimulator = vscode.commands.registerCommand(
-    "adafruit.runSimulator",
+    "pacifica.runSimulator",
     () => {
       if (!currentPanel) {
         return;
       }
 
-      console.info("Running user code");
+      console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
       let currentFileAbsPath: string = "";
@@ -90,18 +89,11 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Opening the output panel
       if (outChannel === undefined) {
-        outChannel = vscode.window.createOutputChannel("Adafruit Simulator");
-        logToOutputChannel(
-          outChannel,
-          "Welcome to the Adafruit Simulator output tab !\n\n",
-          true
-        );
+        outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
+        logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
       }
 
-      logToOutputChannel(
-        outChannel,
-        "\n[INFO] Deploying code to the simulator...\n"
-      );
+      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_OUTPUT);
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -152,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
-        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+        logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
           currentPanel.webview.postMessage({ command: "reset-state" });
@@ -183,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
               break;
             default:
               vscode.window.showInformationMessage(
-                "Webview sent an unexpected message"
+                CONSTANTS.ERROR.UNEXPECTED_MESSAGE
               );
               break;
           }
@@ -232,7 +224,7 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <title>Adafruit Simulator</title>
+            <title>${CONSTANTS.NAME}</title>
             </head>
           <body>
             <div id="root"></div>
