@@ -59,14 +59,15 @@ export function activate(context: vscode.ExtensionContext) {
   let newProject = vscode.commands.registerCommand(
     "adafruit.newProject",
     () => {
-      const filePath = __dirname + "\\template.py"
+      const fileName = "\\template.py";
+      const filePath = __dirname + fileName; 
       const file = fs.readFileSync(filePath, "utf8");
 
       vscode.workspace.openTextDocument({content: file, language: "en"})
       .then((template: vscode.TextDocument) => {
         vscode.window.showTextDocument(template, 1, false);
       }), (error: any) => {
-        // do smth about err
+        console.log(`Failed to open a new text document:  ${error}`);
       }
     } 
   );
