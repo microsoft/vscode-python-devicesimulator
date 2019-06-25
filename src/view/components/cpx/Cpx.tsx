@@ -26,10 +26,9 @@ const Cpx: React.FC<IProps> = props => {
       setupSwitch(props);
       firstTime = false;
     }
-    // Update Neopixels state
+    // Update Neopixels and red LED state
     updateNeopixels(props);
     updateRedLED(props.red_led);
-    // setupButtons(props);
   }
 
   return CPX_SVG;
@@ -280,10 +279,6 @@ const setupSwitch = (props: IProps): void => {
     svgSwitchInner.onmouseup = e => props.onMouseUp(swInnerElement, e);
     svgSwitchHousing.onmouseup = e => props.onMouseUp(swHousingElement, e);
 
-    // svgSwitch.onmouseup = e => switchHandler(svgSwitch, e);
-    // svgSwitchInner.onmouseup = e => switchHandler(svgSwitchInner, e);
-    // svgSwitchHousing.onmouseup = e => switchHandler(svgSwitchHousing, e);
-
     accessibility.makeFocusable(svgSwitch);
     accessibility.setAria(
       svgSwitch,
@@ -293,22 +288,5 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.setAttribute("aria-pressed", swStateIsOn.toString());
   }
 };
-
-// const switchHandler = (svgSwitch: SVGElement, event: Event): void => {
-//   const swInner = window.document.getElementById("SWITCH_INNER");
-//   let slide = (swInner as unknown) as SVGElement;
-//   svg.addClass(slide, "sim-slide-switch-inner");
-
-//   swStateIsOn = !swStateIsOn;
-//   console.log("In handler : " + swStateIsOn);
-
-//   if (swStateIsOn) {
-//     svg.addClass(slide, "on");
-//     slide.setAttribute("transform", "translate(-5,0)");
-//   } else {
-//     svg.removeClass(slide, "on");
-//     slide.removeAttribute("transform");
-//   }
-// };
 
 export default Cpx;
