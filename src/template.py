@@ -6,8 +6,9 @@ Getting started with CPX and CircuitPython intro on: https://learn.adafruit.com/
 Find example code for CPX on: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples
 '''
 
-# import cpx library
+# import CPX library
 from adafruit_circuitplayground.express import cpx
 
 while True:
     # start your code here
+    pass
