@@ -122,13 +122,10 @@ class Simulator extends React.Component<any, IState> {
     if (button.id.includes("BTN")) {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
-      newState = this.handleSwitchClick();
+      newState = this.handleSwitchClick(button);
     } else return;
 
-    if (newState) {
-      button.setAttribute("pressed", `${active}`);
-      sendMessage(newState);
-    }
+    if (newState) sendMessage(newState);
   }
 
   private handleButtonClick(button: HTMLElement, active: boolean) {
@@ -158,6 +155,7 @@ class Simulator extends React.Component<any, IState> {
       this.setState(newState);
     }
     if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+    button.setAttribute("pressed", `${active}`);
     return newState;
   }
 
@@ -167,7 +165,7 @@ class Simulator extends React.Component<any, IState> {
     return pressed ? buttonDown : buttonUps;
   }
 
-  private handleSwitchClick() {
+  private handleSwitchClick(button: HTMLElement) {
     const switchInner = (window.document.getElementById(
       "SWITCH_INNER"
     ) as unknown) as SVGElement;
@@ -184,6 +182,7 @@ class Simulator extends React.Component<any, IState> {
       switchInner.removeAttribute("transform");
     }
     this.setState({ switch: switchIsOn });
+    button.setAttribute("aria-pressed", switchIsOn.toString());
     return { switch: switchIsOn };
   }
 }
