@@ -19,37 +19,38 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/vscode-python-embedded",
-    "vsce": "^1.57.1"
+    "vsce": "^1.57.1",
+    "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:adafruit.openSimulator",
-    "onCommand:adafruit.runSimulator"
+    "onCommand:pacifica.openSimulator",
+    "onCommand:pacifica.runSimulator"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "adafruit.openSimulator",
+        "command": "pacifica.openSimulator",
         "title": "Open Simulator",
-        "category": "Adafruit"
+        "category": "%pacificaExtension.commands.label%"
       },
       {
-        "command": "adafruit.runSimulator",
+        "command": "pacifica.runSimulator",
         "title": "Run the Simulator",
-        "category": "Adafruit"
+        "category": "%pacificaExtension.commands.label%"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "build": "gulp build",
+    "clean": "gulp clean",
     "compile": "npm-run-all compile:*",
-    "compile:extension": "tsc",
+    "compile:extension": "gulp compile",
     "compile:views": "webpack --mode development",
-    "compile:python": "xcopy src\\setup.py out\\ /I /Y && xcopy src\\adafruit_circuitplayground out\\adafruit_circuitplayground /S /I /E /Y",
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc --watch",
     "watch:views": "webpack --watch --mode development",
-    "watch:python": "xcopy src\\setup.py out\\ /I /Y && xcopy src\\adafruit_circuitplayground out\\adafruit_circuitplayground /S /I /E /Y",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
@@ -65,6 +66,13 @@
     "@types/mocha": "^2.2.42",
     "@types/react": "16.8.18",
     "@types/react-dom": "16.8.4",
+    "del": "^4.0.0",
+    "event-stream": "^4.0.1",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.1.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
     "css-loader": "^1.0.0",
     "less": "^3.7.0",
     "less-loader": "^4.1.0",
@@ -79,12 +87,14 @@
     "tslint-react": "^3.6.0",
     "vsce": "^1.47.0",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "vscode-nls-dev": "^3.2.6"
   },
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "svg-inline-react": "^3.1.0"
+    "svg-inline-react": "^3.1.0",
+    "vscode-nls": "^4.1.0"
   },
   "eslintConfig": {
     "extends": "react-app"
