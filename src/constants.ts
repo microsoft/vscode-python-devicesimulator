@@ -7,7 +7,7 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   ERROR: {
     STDERR: (data: string) => {
-      return localize("error.stderr", "[ERROR] {0} \n", data);
+      return localize("error.stderr", `[ERROR] ${data} \n`);
     },
     UNEXPECTED_MESSAGE: localize(
       "error.unexpectedMessage",
