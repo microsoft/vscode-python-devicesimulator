@@ -6,7 +6,6 @@ from .pixel import Pixel
 from . import utils
 
 
-
 class Express:
     def __init__(self):
         # State in the Python process
@@ -26,7 +25,8 @@ class Express:
                 (0, 0, 0),
                 (0, 0, 0)
             ],
-          'red_led': False
+            'red_led': False,
+            'switch': False
         }
 
         self.pixels = Pixel(self.__state)
@@ -50,6 +50,10 @@ class Express:
         self.__state['red_led'] = bool(value)
         self.__show()
 
+    @property
+    def switch(self):
+        return self.__state['switch']
+
     def __show(self):
         utils.show(self.__state)
 
@@ -71,5 +75,5 @@ class Express:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
-    
+
 cpx = Express()

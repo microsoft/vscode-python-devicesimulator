@@ -8,6 +8,7 @@ interface IProps {
   pixels: Array<Array<number>>;
   red_led: boolean;
   brightness: number;
+  switch: boolean;
   onMouseUp: (button: HTMLElement, event: Event) => void;
   onMouseDown: (button: HTMLElement, event: Event) => void;
   onMouseLeave: (button: HTMLElement, event: Event) => void;
@@ -23,12 +24,12 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupSwitch(props);
       firstTime = false;
     }
-    // Update Neopixels state
+    // Update Neopixels and red LED state
     updateNeopixels(props);
     updateRedLED(props.red_led);
-    setupButtons(props);
   }
 
   return CPX_SVG;
@@ -259,6 +260,31 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   svgButton.onmousedown = e => props.onMouseDown(button, e);
   svgButton.onmouseup = e => props.onMouseUp(button, e);
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
+};
+
+const setupSwitch = (props: IProps): void => {
+  const switchElement = window.document.getElementById("SWITCH");
+  const swInnerElement = window.document.getElementById("SWITCH_INNER");
+  const swHousingElement = window.document.getElementById("SWITCH_HOUSING");
+
+  if (switchElement && swInnerElement && swHousingElement) {
+    let svgSwitch: SVGElement = (switchElement as unknown) as SVGElement;
+    let svgSwitchInner: SVGElement = (swInnerElement as unknown) as SVGElement;
+    let svgSwitchHousing: SVGElement = (swHousingElement as unknown) as SVGElement;
+
+    svg.addClass(svgSwitch, "sim-slide-switch");
+
+    svgSwitch.onmouseup = e => props.onMouseUp(switchElement, e);
+    svgSwitchInner.onmouseup = e => props.onMouseUp(swInnerElement, e);
+    svgSwitchHousing.onmouseup = e => props.onMouseUp(swHousingElement, e);
+
+    accessibility.makeFocusable(svgSwitch);
+    accessibility.setAria(
+      svgSwitch,
+      "button",
+      "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
+    );
+  }
 };
 
 export default Cpx;

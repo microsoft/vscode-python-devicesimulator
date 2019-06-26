@@ -162,10 +162,10 @@ export const SVG_STYLE = `
         r:8px;
     }
 
-    #SLIDE_HOVER {
+    #SWITCH_HOVER {
         cursor: pointer;
     }
-    .sim-slide-switch:hover #SLIDE_HOVER {
+    .sim-slide-switch:hover #SWITCH_HOVER {
         stroke:orange !important;
         stroke-width: 1px;
     }

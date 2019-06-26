@@ -1,13 +1,15 @@
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
+import svg from "./cpx/Svg_utils";
 
 interface IState {
   pixels: Array<Array<number>>;
   brightness: number;
   red_led: boolean;
-  button_a: any;
-  button_b: any;
+  button_a: boolean;
+  button_b: boolean;
+  switch: boolean;
 }
 interface IMyProps {
   children?: any;
@@ -29,8 +31,8 @@ const DEFAULT_STATE: IState = {
     [0, 0, 0],
     [0, 0, 0]
   ],
-
-  red_led: false
+  red_led: false,
+  switch: false
 };
 
 interface vscode {
@@ -89,6 +91,7 @@ class Simulator extends React.Component<any, IState> {
           pixels={this.state.pixels}
           brightness={this.state.brightness}
           red_led={this.state.red_led}
+          switch={this.state.switch}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseLeave={this.onMouseLeave}
@@ -115,6 +118,17 @@ class Simulator extends React.Component<any, IState> {
   }
 
   private handleClick(button: HTMLElement, active: boolean) {
+    let newState = undefined;
+    if (button.id.includes("BTN")) {
+      newState = this.handleButtonClick(button, active);
+    } else if (button.id.includes("SWITCH")) {
+      newState = this.handleSwitchClick(button);
+    } else return;
+
+    if (newState) sendMessage(newState);
+  }
+
+  private handleButtonClick(button: HTMLElement, active: boolean) {
     const ButtonA: boolean = button.id.match(/BTN_A/) !== null;
     const ButtonB: boolean = button.id.match(/BTN_B/) !== null;
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
@@ -140,15 +154,36 @@ class Simulator extends React.Component<any, IState> {
       };
       this.setState(newState);
     }
-    button.setAttribute("pressed", `${active}`);
-    if (newState) sendMessage(newState);
     if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+    button.setAttribute("pressed", `${active}`);
+    return newState;
   }
 
   private getButtonColor(pressed: boolean) {
     const buttonUps = BUTTON_NEUTRAL;
     const buttonDown = BUTTON_PRESSED;
     return pressed ? buttonDown : buttonUps;
+  }
+
+  private handleSwitchClick(button: HTMLElement) {
+    const switchInner = (window.document.getElementById(
+      "SWITCH_INNER"
+    ) as unknown) as SVGElement;
+
+    svg.addClass(switchInner, "sim-slide-switch-inner");
+
+    let switchIsOn: boolean = !this.state.switch;
+
+    if (switchIsOn) {
+      svg.addClass(switchInner, "on");
+      switchInner.setAttribute("transform", "translate(-5,0)");
+    } else {
+      svg.removeClass(switchInner, "on");
+      switchInner.removeAttribute("transform");
+    }
+    this.setState({ switch: switchIsOn });
+    button.setAttribute("aria-pressed", switchIsOn.toString());
+    return { switch: switchIsOn };
   }
 }
 
