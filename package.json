@@ -24,19 +24,25 @@
   },
   "activationEvents": [
     "onCommand:pacifica.openSimulator",
-    "onCommand:pacifica.runSimulator"
+    "onCommand:pacifica.runSimulator",
+    "onCommand:pacifica.newProject"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "pacifica.openSimulator",
-        "title": "Open Simulator",
+        "title": "%pacificaExtension.commands.openSimulator%",
         "category": "%pacificaExtension.commands.label%"
       },
       {
         "command": "pacifica.runSimulator",
-        "title": "Run the Simulator",
+        "title": "%pacificaExtension.commands.runSimulator%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.newProject",
+        "title": "%pacificaExtension.commands.newProject%",
         "category": "%pacificaExtension.commands.label%"
       }
     ]

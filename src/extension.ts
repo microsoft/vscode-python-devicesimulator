@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
+import * as fs from "fs";
 import { CONSTANTS } from "./constants";
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
@@ -54,8 +55,24 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  let newProject = vscode.commands.registerCommand(
+    "pacifica.newProject",
+    () => {
+      const fileName = "template.py";
+      const filePath = __dirname + path.sep + fileName;
+      const file = fs.readFileSync(filePath, "utf8");
+
+      vscode.workspace.openTextDocument({content: file, language: "en"})
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }), (error: any) => {
+        console.error(`Failed to open a new text document:  ${error}`);
+      }
+    } 
+  );
+
   // Send message to the webview
-  let runSimulator = vscode.commands.registerCommand(
+  const runSimulator = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
       if (!currentPanel) {
@@ -186,7 +203,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(openSimulator, runSimulator);
+  context.subscriptions.push(openSimulator, runSimulator, newProject);
 }
 
 const updatePythonExtraPaths = () => {
