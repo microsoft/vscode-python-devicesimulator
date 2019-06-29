@@ -35,4 +35,9 @@ export const CONSTANTS = {
   NAME: localize("name", "Adafruit Simulator")
 };
 
+// Need the different events we want to track and the name of it
+export enum TelemetryEventName {
+  
+}
+
 export default CONSTANTS;

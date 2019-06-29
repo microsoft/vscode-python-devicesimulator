@@ -2,7 +2,13 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
+import TelemetryReporter from "vscode-extension-telemetry";
 import { CONSTANTS } from "./constants";
+
+const extensionId = "--extension-name--";
+const extensionVersion = "1";
+const instrumentationkey = "";
+let reporter: TelemetryReporter;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -13,6 +19,8 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 // Extension activation
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
+
+  reporter = new TelemetryReporter(extensionId, extensionVersion, instrumentationkey);
 
   let currentPanel: vscode.WebviewPanel | undefined = undefined;
   let outChannel: vscode.OutputChannel | undefined = undefined;
@@ -255,4 +263,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  reporter.dispose();
+}
