@@ -92,7 +92,8 @@ if __name__ == "__main__":
         print("Error trying to send event to the process : ",
               cpx.error_message, file=sys.stderr, flush=True)
     if cpx.connected:
-        dest_path = os.path.join(device_directory, "code.py")
+        dest_path = os.path.join(
+            device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
         shutil.copyfile(sys.argv[1], dest_path)
         print("Completed", end="", flush=True)
     else:
