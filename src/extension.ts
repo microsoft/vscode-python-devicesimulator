@@ -235,7 +235,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Data received from Python process
     deviceProcess.stdout.on("data", data => {
       dataFromTheProcess = data.toString();
-      if (dataFromTheProcess === "Completed") {
+      if (dataFromTheProcess === CONSTANTS.INFO.COMPLETED_MESSAGE) {
         logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
       }
       console.log(`Device output = ${dataFromTheProcess}`);

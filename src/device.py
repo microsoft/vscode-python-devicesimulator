@@ -5,10 +5,10 @@ from subprocess import check_output
 
 class Adafruit:
     def __init__(self):
-        self.connected = True
+        self.connected = False
         self.error_message = None
 
-    def workspace_dir(self):
+    def find_workspace_dir(self):
         """
         Return the default location on the filesystem for opening and closing
         files.
@@ -57,8 +57,7 @@ class Adafruit:
                     path = '{}:\\'.format(disk)
                     if (os.path.exists(path)):
                         if (get_volume_name(path) == 'CIRCUITPY'):
-                            self.configured = True
-                            return path
+                            device_dir = path
 
             finally:
                 ctypes.windll.kernel32.SetErrorMode(old_mode)
@@ -69,17 +68,17 @@ class Adafruit:
         if device_dir:
             # Found it!
             self.connected = True
-            return device_dir
+            self.error_message = None
+            wd = device_dir
         else:
             wd = None
-            if self.connected:
-                m = 'Could not find an attached Adafruit CircuitPython'\
-                    ' device.'
-                info = "In order to deploy to the physical device you must"\
-                    " have a formatted device plugged in while in bootloader mode."
-                self.error_message = (m, info.format(wd))
-                self.connected = False
-            return wd
+            m = 'Could not find an attached Adafruit CircuitPython'\
+                ' device.'
+            info = "In order to deploy to the physical device you must"\
+                " have a formatted device plugged in while in bootloader mode."
+            self.error_message = (m, info)
+            self.connected = False
+        return wd
 
 
 if __name__ == "__main__":
@@ -87,7 +86,7 @@ if __name__ == "__main__":
     import sys
 
     cpx = Adafruit()
-    device_directory = cpx.workspace_dir()
+    device_directory = cpx.find_workspace_dir()
     if cpx.error_message:
         print("Error trying to send event to the process : ",
               cpx.error_message, file=sys.stderr, flush=True)

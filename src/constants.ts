@@ -15,6 +15,7 @@ export const CONSTANTS = {
     )
   },
   INFO: {
+    COMPLETED_MESSAGE: "Completed",
     DEPLOY_DEVICE: localize(
       "info.deployDevice",
       "\n[INFO] Deploying code to the device...\n"
