@@ -12,7 +12,7 @@ class Adafruit:
         """
         Return the default location on the filesystem for opening and closing
         files.
-        code from: https://github.com/mu-editor/mu/blob/master/mu/modes/adafruit.py
+        Code based on: https://github.com/mu-editor/mu/blob/master/mu/modes/adafruit.py
         """
         device_dir = None
         # Attempts to find the path on the filesystem that represents the
