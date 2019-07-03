@@ -5,11 +5,12 @@ export interface IPackageJson {
     name?: string;
     version?: string;
     publisher?: string;
-    instrumentationKey?: string;
+    instrumentationKey: string;
 }
 
-export default function getPackageInfo(context: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, extensionId: string, instrumentationKey: string } {
+export default function getPackageInfo(context: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, instrumentationKey: string } {
    let packageJson: IPackageJson;
+
    try {
        packageJson = JSON.parse(fs.readFileSync("../../package.json", "utf8"));
    } catch (error) {
@@ -17,6 +18,7 @@ export default function getPackageInfo(context: vscode.ExtensionContext): { exte
        console.error();
        throw error;
    }
+
    const extensionName: string | undefined = packageJson.name;
    const extensionVersion: string | undefined = packageJson.version;
    const publisher: string | undefined = packageJson.publisher;
@@ -37,12 +39,6 @@ export default function getPackageInfo(context: vscode.ExtensionContext): { exte
    if (!extensionVersion) {
        throw new Error('Extension\'s package.json is missing version.');
    }
-
-
-
    
-
-   const extensionId: string = `${packageJson.publisher}.${packageJson.name}`;
-   
-   return { extensionName, extensionVersion, extensionId, instrumentationKey };
+   return { extensionName, extensionVersion, instrumentationKey };
 }

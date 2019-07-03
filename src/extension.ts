@@ -2,13 +2,8 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
-import TelemetryReporter from "vscode-extension-telemetry";
-import { CONSTANTS } from "./constants";
-
-const extensionId = "--extension-name--";
-const extensionVersion = "1";
-const instrumentationkey = "";
-let reporter: TelemetryReporter;
+import TelemetryAI from "./telemetry/telemetryAI";
+import { CONSTANTS, TelemetryEventName} from "./constants";
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -20,10 +15,10 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  reporter = new TelemetryReporter(extensionId, extensionVersion, instrumentationkey);
+  const reporter = new TelemetryAI(context);
 
-  let currentPanel: vscode.WebviewPanel | undefined = undefined;
-  let outChannel: vscode.OutputChannel | undefined = undefined;
+  let currentPanel: vscode.WebviewPanel | undefined;
+  let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess;
   let messageListener: vscode.Disposable;
 
@@ -31,9 +26,11 @@ export function activate(context: vscode.ExtensionContext) {
   updatePythonExtraPaths();
 
   // Open Simulator on the webview
-  let openSimulator = vscode.commands.registerCommand(
+  const openSimulator = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
+      reporter.trackEventTime("Open Simulator", 10000, 200230, { "name": "jonathan" });
+
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.Two);
       } else {
@@ -63,9 +60,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  let newProject = vscode.commands.registerCommand(
+  const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, 1, {})
+
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
@@ -264,5 +263,5 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-  reporter.dispose();
+  // reporter.dispose();
 }

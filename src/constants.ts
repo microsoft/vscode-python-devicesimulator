@@ -37,7 +37,11 @@ export const CONSTANTS = {
 
 // Need the different events we want to track and the name of it
 export enum TelemetryEventName {
-  
+  OPEN_SIMULATOR = "SIMULATOR.OPEN",
+  FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
+  BUTTON_A_CLICK = "BUTTON.A.CLICK",
+  BUTTON_B_CLICK = "BUTTON.B.CLICK",
+  COMMAND_NEW_PROJECT = "COMMAND.NEW.PROJECT"
 }
 
 export default CONSTANTS;
