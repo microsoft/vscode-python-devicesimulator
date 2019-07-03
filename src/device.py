@@ -1,8 +1,9 @@
-import os
-import platform
-import win32api
-import string
 from subprocess import check_output
+import string
+import os
+import sys
+if sys.platform == "win32":
+    import win32api
 
 
 class Adafruit:
@@ -16,13 +17,14 @@ class Adafruit:
         """
         found_directory = None
 
-        if platform.system() in ["Linux", "Mac"]:
+        if sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
+            # Mac or Linux
             mounted = check_output(['mount']).split('\n')
             for name in mounted:
                 print(name)
                 if name.endswith("CIRCUITPY"):
                     found_directory = name
-        elif platform.system() == "Windows":
+        elif sys.platform == "win32":
             for drive_letter in string.ascii_uppercase:
                 drive_path = "{}:{}".format(drive_letter, os.sep)
                 if (os.path.exists(drive_path)):
@@ -31,7 +33,7 @@ class Adafruit:
                         found_directory = drive_path
         else:
             raise NotImplementedError(
-                'The OS "{}" not supported.'.format(os.name))
+                'The OS "{}" not supported.'.format(sys.platform))
 
         if not found_directory:
             self.connected = False
@@ -45,13 +47,11 @@ class Adafruit:
 
 if __name__ == "__main__":
     import shutil
-    import sys
 
     cpx = Adafruit()
     device_directory = cpx.find_device_directory()
     if cpx.error_message:
-        print(
-            "{}:\t{}".format(cpx.error_message), file=sys.stderr, flush=True)
+        print("{}:\t{}".format(cpx.error_message), file=sys.stderr, flush=True)
     if cpx.connected:
         dest_path = os.path.join(
             device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
