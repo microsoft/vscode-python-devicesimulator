@@ -1,4 +1,4 @@
-# Instructions on how to set up and run our code for developers
+# Instructions on How to Set Up and Run our Code for Developers
 
 ## Dependencies
 
@@ -25,7 +25,7 @@
 
 - Python extension for VS Code (download from VS Code market place)
 
-## Steps to get start running the extension in debug mode
+## Steps to Get Started Running the Extension in Debug Mode
 
 1. Make sure you have all the dependencies installed (Node, Python, simpleaudio, VS Code, Python VS Code extension)
 
@@ -47,7 +47,7 @@
   listed as 'Adafruit : ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
 
-## Repository structure (important files)
+## Repository Structure (important files)
 
 - src
   - `adafruit_circuitplayground` : our mock library
