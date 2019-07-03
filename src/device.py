@@ -1,5 +1,7 @@
 import os
-import ctypes
+import platform
+import win32api
+import string
 from subprocess import check_output
 
 
@@ -8,77 +10,37 @@ class Adafruit:
         self.connected = False
         self.error_message = None
 
-    def find_workspace_dir(self):
+    def find_device_directory(self):
         """
-        Return the default location on the filesystem for opening and closing
-        files.
-        code from: https://github.com/mu-editor/mu/blob/master/mu/modes/adafruit.py
+        Check if the Circuit Playground Express is available/plugged in
         """
-        device_dir = None
-        # Attempts to find the path on the filesystem that represents the
-        # plugged in CIRCUITPY board.
-        if os.name == 'posix':
-            # We're on Linux or OSX
-            for mount_command in ['mount', '/sbin/mount']:
-                try:
-                    mount_output = check_output(mount_command).splitlines()
-                    mounted_volumes = [x.split()[2] for x in mount_output]
-                    for volume in mounted_volumes:
-                        if volume.endswith(b'CIRCUITPY'):
-                            device_dir = volume.decode('utf-8')
-                except FileNotFoundError:
-                    next
-        elif os.name == 'nt':
-            # We're on Windows.
+        found_directory = None
 
-            def get_volume_name(disk_name):
-                """
-                Each disk or external device connected to windows has an
-                attribute called "volume name". This function returns the
-                volume name for the given disk/device.
-
-                Code from http://stackoverflow.com/a/12056414
-                """
-                vol_name_buf = ctypes.create_unicode_buffer(1024)
-                ctypes.windll.kernel32.GetVolumeInformationW(
-                    ctypes.c_wchar_p(disk_name), vol_name_buf,
-                    ctypes.sizeof(vol_name_buf), None, None, None, None, 0)
-                return vol_name_buf.value
-
-            #
-            # In certain circumstances, volumes are allocated to USB
-            # storage devices which cause a Windows popup to raise if their
-            # volume contains no media. Wrapping the check in SetErrorMode
-            # with SEM_FAILCRITICALERRORS (1) prevents this popup.
-            #
-            old_mode = ctypes.windll.kernel32.SetErrorMode(1)
-            try:
-                for disk in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-                    path = '{}:\\'.format(disk)
-                    if (os.path.exists(path)):
-                        if (get_volume_name(path) == 'CIRCUITPY'):
-                            device_dir = path
-
-            finally:
-                ctypes.windll.kernel32.SetErrorMode(old_mode)
+        if platform.system() in ["Linux", "Mac"]:
+            mounted = check_output(['mount']).split('\n')
+            for name in mounted:
+                print(name)
+                if name.endswith("CIRCUITPY"):
+                    found_directory = name
+        elif platform.system() == "Windows":
+            for drive_letter in string.ascii_uppercase:
+                drive_path = f'{drive_letter}:\\'
+                if (os.path.exists(drive_path)):
+                    drive_name = win32api.GetVolumeInformation(drive_path)[0]
+                    if drive_name == "CIRCUITPY":
+                        found_directory = drive_path
         else:
-            # No support for unknown operating systems.
-            raise NotImplementedError('OS "{}" not supported.'.format(os.name))
+            raise NotImplementedError(
+                'The OS "{}" not supported.'.format(os.name))
 
-        if device_dir:
-            # Found it!
+        if not found_directory:
+            self.connected = False
+            self.error_message = ("No Circuitplayground Express detected",
+                                  "In order to deploy to the device the device must be plugged in via USB")
+        else:
             self.connected = True
             self.error_message = None
-            wd = device_dir
-        else:
-            wd = None
-            m = 'Could not find an attached Adafruit CircuitPython'\
-                ' device.'
-            info = "In order to deploy to the physical device you must"\
-                " have a formatted device plugged in while in bootloader mode."
-            self.error_message = (m, info)
-            self.connected = False
-        return wd
+        return found_directory
 
 
 if __name__ == "__main__":
@@ -86,14 +48,12 @@ if __name__ == "__main__":
     import sys
 
     cpx = Adafruit()
-    device_directory = cpx.find_workspace_dir()
+    device_directory = cpx.find_device_directory()
     if cpx.error_message:
-        print("Error trying to send event to the process : ",
-              cpx.error_message, file=sys.stderr, flush=True)
+        print(
+            f'{cpx.error_message[0]}:\t{cpx.error_message[1]}', file=sys.stderr, flush=True)
     if cpx.connected:
         dest_path = os.path.join(
             device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
         shutil.copyfile(sys.argv[1], dest_path)
         print("Completed", end="", flush=True)
-    else:
-        print("Device not found", file=sys.stderr, flush=True)
