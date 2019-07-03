@@ -27,12 +27,17 @@
 
 ## Steps to get start running the extension in debug mode
 
-- Make sure you have all the dependencies installed (Node, Python, simpleaudio, VS Code, Python VS Code extension)
-- Open the repository
-- Open a terminal inside VS Code pointing to the code repository
-- Run the command : `npm install`
-- Run the command : `npm run compile`
-- Start debugging the extension by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
+1. Make sure you have all the dependencies installed (Node, Python, simpleaudio, VS Code, Python VS Code extension)
+
+2. Open the repository
+
+3. Open a terminal inside VS Code pointing to the code repository
+
+4. Run the command : `npm install`
+
+5. Run the command : `npm run compile`
+
+6. Start debugging the extension by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
 
 ## Notes on how to use it
 
@@ -45,9 +50,9 @@
 ## Repository structure (important files)
 
 - src
-  - ./adafruit_circuitplayground : our mock library
-  - ./extension.ts : our extension code
-  - ./setup.py : the file containing the code ran by the Python process spawned by the extension, responsible for running the user's code
-  - ./view : React side
-    - ./components
-    - ./cpx/ and ./Simulator.tsx : contain the React components and objects to display and handle the simulator webview
+  - `adafruit_circuitplayground` : our mock library
+  - `extension.ts` : our extension code
+  - `setup.py` : the file containing the code ran by the Python process spawned by the extension, responsible for running the user's code
+  - `view` : React side
+    - `components/`
+    - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
