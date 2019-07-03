@@ -24,7 +24,7 @@ class Adafruit:
                     found_directory = name
         elif platform.system() == "Windows":
             for drive_letter in string.ascii_uppercase:
-                drive_path = f'{drive_letter}:\\'
+                drive_path = "{}:{}".format(drive_letter, os.sep)
                 if (os.path.exists(drive_path)):
                     drive_name = win32api.GetVolumeInformation(drive_path)[0]
                     if drive_name == "CIRCUITPY":
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     device_directory = cpx.find_device_directory()
     if cpx.error_message:
         print(
-            f'{cpx.error_message[0]}:\t{cpx.error_message[1]}', file=sys.stderr, flush=True)
+            "{}:\t{}".format(cpx.error_message), file=sys.stderr, flush=True)
     if cpx.connected:
         dest_path = os.path.join(
             device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
