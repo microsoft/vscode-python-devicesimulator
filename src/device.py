@@ -3,6 +3,7 @@ import string
 import os
 import sys
 if sys.platform == "win32":
+    # pylint: disable=import-error
     import win32api
 
 
@@ -19,12 +20,13 @@ class Adafruit:
 
         if sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
             # Mac or Linux
-            mounted = check_output(['mount']).split('\n')
-            for name in mounted:
-                print(name)
-                if name.endswith("CIRCUITPY"):
-                    found_directory = name
+            mounted = check_output('mount').decode('utf-8').split('\n')
+            for mount in mounted:
+                drive_path = mount.split()[2] if mount else ""
+                if drive_path.endswith("CIRCUITPY"):
+                    found_directory = drive_path
         elif sys.platform == "win32":
+            # Windows
             for drive_letter in string.ascii_uppercase:
                 drive_path = "{}:{}".format(drive_letter, os.sep)
                 if (os.path.exists(drive_path)):
@@ -37,8 +39,8 @@ class Adafruit:
 
         if not found_directory:
             self.connected = False
-            self.error_message = ("No Circuitplayground Express detected",
-                                  "In order to deploy to the device the device must be plugged in via USB")
+            self.error_message = ("No Circuit Playground Express detected",
+                                  "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}".format(sys.platform))
         else:
             self.connected = True
             self.error_message = None
@@ -51,7 +53,8 @@ if __name__ == "__main__":
     cpx = Adafruit()
     device_directory = cpx.find_device_directory()
     if cpx.error_message:
-        print("{}:\t{}".format(cpx.error_message), file=sys.stderr, flush=True)
+        print("{}:\t{}".format(
+            cpx.error_message[0], cpx.error_message[1]), file=sys.stderr, flush=True)
     if cpx.connected:
         dest_path = os.path.join(
             device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
