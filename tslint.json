@@ -1,0 +1,26 @@
+{
+  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier",
+    "tslint-react-hooks",
+    "tslint-microsoft-contrib/latest"
+  ],
+  "rules": {
+    "no-implicit-dependencies": [true, "dev"],
+    "no-string-throw": true,
+    "no-unused-expression": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-relative-imports": false,
+    "max-func-body-length": false,
+    "curly": true,
+    "class-name": true,
+    "triple-equals": true,
+    "object-literal-sort-keys": true,
+    "react-hooks-nesting": "error",
+    "ordered-imports": false
+  },
+  "defaultSeverity": "warning"
+}

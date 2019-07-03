@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Compiled JS code
+out/
+!locales/**/out/  
+package.nls.*.json
+
 # User-specific files
 *.suo
 *.user
