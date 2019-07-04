@@ -22,6 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
+  // Opening the output panel
+  if (outChannel === undefined) {
+    outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
+    logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
+  }
+
   // Open Simulator on the webview
   let openSimulator = vscode.commands.registerCommand(
     "pacifica.openSimulator",
@@ -62,13 +68,15 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
-      vscode.workspace.openTextDocument({content: file, language: "en"})
-      .then((template: vscode.TextDocument) => {
-        vscode.window.showTextDocument(template, 1, false);
-      }), (error: any) => {
-        console.error(`Failed to open a new text document:  ${error}`);
-      }
-    } 
+      vscode.workspace
+        .openTextDocument({ content: file, language: "en" })
+        .then((template: vscode.TextDocument) => {
+          vscode.window.showTextDocument(template, 1, false);
+        }),
+        (error: any) => {
+          console.error(`Failed to open a new text document:  ${error}`);
+        };
+    }
   );
 
   // Send message to the webview
@@ -104,13 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
         childProcess.kill();
       }
 
-      // Opening the output panel
-      if (outChannel === undefined) {
-        outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
-        logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
-      }
-
-      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_OUTPUT);
+      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -203,7 +205,62 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(openSimulator, runSimulator, newProject);
+  // Send message to the webview
+  let runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
+    console.info("Sending code to device");
+
+    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+
+    const activeTextEditor: vscode.TextEditor | undefined =
+      vscode.window.activeTextEditor;
+    let currentFileAbsPath: string = "";
+
+    if (activeTextEditor) {
+      currentFileAbsPath = activeTextEditor.document.fileName;
+    }
+
+    // Get the Python script path (And the special URI to use with the webview)
+    const onDiskPath = vscode.Uri.file(
+      path.join(context.extensionPath, "out", "device.py")
+    );
+    const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+
+    const deviceProcess = cp.spawn("python", [
+      scriptPath.fsPath,
+      currentFileAbsPath
+    ]);
+
+    let dataFromTheProcess = "";
+
+    // Data received from Python process
+    deviceProcess.stdout.on("data", data => {
+      dataFromTheProcess = data.toString();
+      if (dataFromTheProcess === CONSTANTS.INFO.COMPLETED_MESSAGE) {
+        logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+      }
+      console.log(`Device output = ${dataFromTheProcess}`);
+    });
+
+    // Std error output
+    deviceProcess.stderr.on("data", data => {
+      console.error(
+        `Error from the Python device process through stderr: ${data}`
+      );
+      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+    });
+
+    // When the process is done
+    deviceProcess.on("end", (code: number) => {
+      console.info(`Command execution exited with code: ${code}`);
+    });
+  });
+
+  context.subscriptions.push(
+    openSimulator,
+    runSimulator,
+    runDevice,
+    newProject
+  );
 }
 
 const updatePythonExtraPaths = () => {
