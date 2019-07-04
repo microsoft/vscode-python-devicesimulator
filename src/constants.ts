@@ -1,4 +1,5 @@
 import * as nls from "vscode-nls";
+import { MessageItem } from "vscode";
 
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
@@ -6,6 +7,10 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONSTANTS = {
   ERROR: {
+    NO_DEVICE: localize(
+      "warning.noDevice",
+      "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `[ERROR] ${data} \n`);
     },
@@ -41,7 +46,18 @@ export const CONSTANTS = {
   LABEL: {
     WEBVIEW_PANEL: localize("label.webviewPanel", "Adafruit CPX")
   },
+  LINKS: {
+    HELP:
+      "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart"
+  },
   NAME: localize("name", "Adafruit Simulator")
 };
+
+// tslint:disable-next-line: no-namespace
+export namespace DialogResponses {
+  export const HELP: MessageItem = {
+    title: localize("dialogResponses.help", "I need help")
+  };
+}
 
 export default CONSTANTS;
