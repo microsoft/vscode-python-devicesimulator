@@ -25,6 +25,7 @@ class Adafruit:
                 drive_path = mount.split()[2] if mount else ""
                 if drive_path.endswith("CIRCUITPY"):
                     found_directory = drive_path
+                    break
         elif sys.platform == "win32":
             # Windows
             for drive_letter in string.ascii_uppercase:
@@ -33,6 +34,7 @@ class Adafruit:
                     drive_name = win32api.GetVolumeInformation(drive_path)[0]
                     if drive_name == "CIRCUITPY":
                         found_directory = drive_path
+                        break
         else:
             raise NotImplementedError(
                 'The OS "{}" not supported.'.format(sys.platform))
