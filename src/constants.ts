@@ -8,7 +8,7 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   ERROR: {
     NO_DEVICE: localize(
-      "warning.noDevice",
+      "error.noDevice",
       "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
     ),
     STDERR: (data: string) => {
