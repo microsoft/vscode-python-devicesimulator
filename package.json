@@ -103,6 +103,8 @@
     "vscode-nls-dev": "^3.2.6"
   },
   "dependencies": {
+    "@types/open": "^6.1.0",
+    "open": "^6.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "svg-inline-react": "^3.1.0",
