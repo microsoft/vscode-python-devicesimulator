@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as nls from "vscode-nls";
 
 const localize: nls.LocalizeFunc = nls.config({

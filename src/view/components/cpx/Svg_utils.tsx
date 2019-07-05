@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/svg.ts
 
 namespace svg {
