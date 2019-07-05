@@ -8,7 +8,7 @@
   "info.deploySimulator": "\n[INFO] Deploying code to the simulator...\n",
   "info.deploySuccess": "\n[INFO] Code successfully deployed\n",
   "info.extensionActivated": "Congratulations, your extension Adafruit_Simulator is now active!",
-  "info.newProject": "New to python or Circuit Playground Express project? We are here to help!",
+  "info.newProject": "New to Python or Circuit Playground Express project? We are here to help!",
   "info.runningCode": "Running user code",
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
   "label.webviewPanel": "Adafruit CPX",

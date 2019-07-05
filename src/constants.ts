@@ -35,7 +35,7 @@ export const CONSTANTS = {
     ),
     NEW_PROJECT: localize(
       "info.newProject",
-      "New to python or Circuit Playground Express project? We are here to help!"
+      "New to Python or Circuit Playground Express project? We are here to help!"
     ),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     WELCOME_OUTPUT_TAB: localize(
