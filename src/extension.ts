@@ -5,7 +5,7 @@ import * as fs from "fs";
 import * as open from "open";
 import { CONSTANTS, DialogResponses } from "./constants";
 
-let shouldShowNewPeroject: boolean = true;
+let shouldShowNewProject: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
-      if (shouldShowNewPeroject) {
+      if (shouldShowNewProject) {
         vscode.window
           .showInformationMessage(
             CONSTANTS.INFO.NEW_PROJECT,
@@ -83,7 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
           )
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowNewPeroject = false;
+              shouldShowNewProject = false;
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
             } else if (selection === DialogResponses.TUTORIALS) {
