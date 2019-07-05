@@ -15,9 +15,18 @@ export const CONSTANTS = {
     )
   },
   INFO: {
-    DEPLOY_OUTPUT: localize(
-      "info.deployOutput",
+    COMPLETED_MESSAGE: "Completed",
+    DEPLOY_DEVICE: localize(
+      "info.deployDevice",
+      "\n[INFO] Deploying code to the device...\n"
+    ),
+    DEPLOY_SIMULATOR: localize(
+      "info.deploySimulator",
       "\n[INFO] Deploying code to the simulator...\n"
+    ),
+    DEPLOY_SUCCESS: localize(
+      "info.deploySuccess",
+      "\n[INFO] Code successfully deployed\n"
     ),
     EXTENSION_ACTIVATED: localize(
       "info.extensionActivated",

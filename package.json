@@ -26,7 +26,8 @@
   "activationEvents": [
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
-    "onCommand:pacifica.newProject"
+    "onCommand:pacifica.newProject",
+    "onCommand:pacifica.runDevice"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -44,6 +45,11 @@
       {
         "command": "pacifica.newProject",
         "title": "%pacificaExtension.commands.newProject%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.runDevice",
+        "title": "%pacificaExtension.commands.runDevice%",
         "category": "%pacificaExtension.commands.label%"
       }
     ]
