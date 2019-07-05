@@ -40,7 +40,7 @@ export default class TelmemetryAI {
         const measurement = {
             duration: (endTime - startTime) / 1000
         }
-        // Only send event if telemetry is not supressed
+        // Only send event if telemetry is not suppressed
         TelmemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement);
     }
 }

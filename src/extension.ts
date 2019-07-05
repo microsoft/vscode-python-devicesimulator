@@ -15,8 +15,7 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  const reporter = new TelemetryAI(context);
-
+  const reporter: TelemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
   let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess;
@@ -321,6 +320,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {
-  // reporter.dispose();
-}
+export function deactivate() {}

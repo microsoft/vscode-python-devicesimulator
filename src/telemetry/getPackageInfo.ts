@@ -20,15 +20,13 @@ const getPackagePath = (context: vscode.ExtensionContext) => {
 
 export default function getPackageInfo(context: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, instrumentationKey: string } {
    let packageJson: IPackageJson;
-   
    const packagePath = getPackagePath(context); 
 
    try {
        packageJson = JSON.parse(fs.readFileSync(packagePath.fsPath, "utf8"));
    } catch (error) {
-       // Throw an error
-       console.error();
-       throw error;
+       console.error(`Failed to read from package.json: ${error}`);
+       throw new Error(`Failed to read from package.json: ${error}`);
    }
 
    const extensionName: string | undefined = packageJson.name;
