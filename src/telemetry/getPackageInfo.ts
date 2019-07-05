@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs'
+import * as path from 'path';
 
 export interface IPackageJson {
     name?: string;
@@ -8,11 +9,22 @@ export interface IPackageJson {
     instrumentationKey: string;
 }
 
+const getPackagePath = (context: vscode.ExtensionContext) => {
+    const onDiskPath = vscode.Uri.file(
+        path.join(context.extensionPath, "package.json")
+    );
+    const packagePath = onDiskPath.with({ scheme: "vscode-resource" });
+
+    return packagePath; 
+}
+
 export default function getPackageInfo(context: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, instrumentationKey: string } {
    let packageJson: IPackageJson;
+   
+   const packagePath = getPackagePath(context); 
 
    try {
-       packageJson = JSON.parse(fs.readFileSync("../../package.json", "utf8"));
+       packageJson = JSON.parse(fs.readFileSync(packagePath.fsPath, "utf8"));
    } catch (error) {
        // Throw an error
        console.error();

@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
   const openSimulator = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
-      reporter.trackEventTime("Open Simulator", 10000, 200230, { "name": "jonathan" });
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
 
       if (currentPanel) {
         currentPanel.reveal(vscode.ViewColumn.Two);
@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
   const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
-      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, 1, {})
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, {})
 
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
@@ -85,6 +85,8 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
+
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR, {});
 
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =

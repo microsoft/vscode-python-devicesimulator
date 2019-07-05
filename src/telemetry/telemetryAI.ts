@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import TelemetryReporter from "vscode-extension-telemetry";
 import getPackageInfo from "./getPackageInfo";
-import { TelemetryEventName } from "../constants";
 
 // tslint:disable-next-line:export-name
 export default class TelmemetryAI {
@@ -25,10 +24,8 @@ export default class TelmemetryAI {
         this.trackTimeDuration(eventName, startTime, endTime, eventProperties);
     }
 
-    public trackFeatureUsage(eventName: string, numberOfClicks: number, eventProperties?: { [key: string]: string }) {
-        const measurement = {
-            numClicks: numberOfClicks
-        };
+    public trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
+        const measurement = {};
         TelmemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties, measurement);
     }
 
@@ -43,7 +40,7 @@ export default class TelmemetryAI {
         const measurement = {
             duration: (endTime - startTime) / 1000
         }
-        // TODO: Abstracted out for now.
+        // Only send event if telemetry is not supressed
         TelmemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement);
     }
 }
