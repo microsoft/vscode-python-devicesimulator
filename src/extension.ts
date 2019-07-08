@@ -2,7 +2,10 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
-import { CONSTANTS } from "./constants";
+import * as open from "open";
+import { CONSTANTS, DialogResponses } from "./constants";
+
+let shouldShowNewProject: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -69,7 +72,30 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
+
+      if (shouldShowNewProject) {
+        vscode.window
+          .showInformationMessage(
+            CONSTANTS.INFO.NEW_PROJECT,
+            ...[
+              DialogResponses.DONT_SHOW,
+              DialogResponses.EXAMPLE_CODE,
+              DialogResponses.TUTORIALS
+            ]
+          )
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowNewProject = false;
+            } else if (selection === DialogResponses.EXAMPLE_CODE) {
+              open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            } else if (selection === DialogResponses.TUTORIALS) {
+              open(CONSTANTS.LINKS.TUTORIALS);
+            }
+          });
+      }
+
       openWebview();
+
 
       vscode.workspace
         .openTextDocument({ content: file, language: "en" })
@@ -316,4 +342,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
