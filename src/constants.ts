@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import * as nls from "vscode-nls";
+import { MessageItem } from "vscode";
 
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
@@ -35,6 +36,10 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+    NEW_PROJECT: localize(
+      "info.newProject",
+      "New to Python or Circuit Playground Express project? We are here to help!"
+    ),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
@@ -44,7 +49,26 @@ export const CONSTANTS = {
   LABEL: {
     WEBVIEW_PANEL: localize("label.webviewPanel", "Adafruit CPX")
   },
+  LINKS: {
+    EXAMPLE_CODE:
+      "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
+    TUTORIALS:
+      "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
+  },
   NAME: localize("name", "Adafruit Simulator")
 };
+
+// tslint:disable-next-line: no-namespace
+export namespace DialogResponses {
+  export const DONT_SHOW: MessageItem = {
+    title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
+  };
+  export const TUTORIALS: MessageItem = {
+    title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
+  };
+  export const EXAMPLE_CODE: MessageItem = {
+    title: localize("dialogResponses.exampleCode", "Example Code on GitHub")
+  };
+}
 
 export default CONSTANTS;

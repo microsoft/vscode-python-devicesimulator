@@ -5,7 +5,10 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
-import { CONSTANTS } from "./constants";
+import * as open from "open";
+import { CONSTANTS, DialogResponses } from "./constants";
+
+let shouldShowNewProject: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -24,52 +27,78 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-
-  // Opening the output panel
+  
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
   }
 
-  // Open Simulator on the webview
-  let openSimulator = vscode.commands.registerCommand(
-    "pacifica.openSimulator",
-    () => {
-      if (currentPanel) {
-        currentPanel.reveal(vscode.ViewColumn.Two);
-      } else {
-        currentPanel = vscode.window.createWebviewPanel(
-          "adafruitSimulator",
-          CONSTANTS.LABEL.WEBVIEW_PANEL,
-          vscode.ViewColumn.Two,
-          {
-            // Only allow the webview to access resources in our extension's media directory
-            localResourceRoots: [
-              vscode.Uri.file(path.join(context.extensionPath, "out"))
-            ],
-            enableScripts: true
-          }
-        );
+  const openWebview = () => {
+    if (currentPanel) {
+      currentPanel.reveal(vscode.ViewColumn.Two);
+    } else {
+      currentPanel = vscode.window.createWebviewPanel(
+        "adafruitSimulator",
+        CONSTANTS.LABEL.WEBVIEW_PANEL,
+        vscode.ViewColumn.Two,
+        {
+          // Only allow the webview to access resources in our extension's media directory
+          localResourceRoots: [
+            vscode.Uri.file(path.join(context.extensionPath, "out"))
+          ],
+          enableScripts: true
+        }
+      );
+      
+      currentPanel.webview.html = getWebviewContent(context);
 
-        currentPanel.webview.html = getWebviewContent(context);
-
-        currentPanel.onDidDispose(
-          () => {
-            currentPanel = undefined;
-          },
-          undefined,
-          context.subscriptions
-        );
-      }
+      currentPanel.onDidDispose(
+        () => {
+          currentPanel = undefined;
+        },
+        undefined,
+        context.subscriptions
+      );
     }
+  };
+
+  // Open Simulator on the webview
+  const openSimulator = vscode.commands.registerCommand(
+    "pacifica.openSimulator",
+    openWebview
   );
 
-  let newProject = vscode.commands.registerCommand(
+  const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
+
+
+      if (shouldShowNewProject) {
+        vscode.window
+          .showInformationMessage(
+            CONSTANTS.INFO.NEW_PROJECT,
+            ...[
+              DialogResponses.DONT_SHOW,
+              DialogResponses.EXAMPLE_CODE,
+              DialogResponses.TUTORIALS
+            ]
+          )
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowNewProject = false;
+            } else if (selection === DialogResponses.EXAMPLE_CODE) {
+              open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            } else if (selection === DialogResponses.TUTORIALS) {
+              open(CONSTANTS.LINKS.TUTORIALS);
+            }
+          });
+      }
+
+      openWebview();
+
 
       vscode.workspace
         .openTextDocument({ content: file, language: "en" })
@@ -86,10 +115,11 @@ export function activate(context: vscode.ExtensionContext) {
   const runSimulator = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
+      openWebview();
+
       if (!currentPanel) {
         return;
       }
-
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
@@ -315,4 +345,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
