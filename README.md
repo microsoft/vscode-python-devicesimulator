@@ -21,6 +21,10 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 - [Data collection](PRIVACY.md)
 
+## Third Party Notice
+
+- [Third Party Notice](ThirdPartyNotices.txt)
+
 ## Documentation
 
 - [Setup for developers](/docs/developers-setup.md)
