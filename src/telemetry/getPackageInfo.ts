@@ -5,7 +5,6 @@ import * as path from 'path';
 export interface IPackageJson {
     name?: string;
     version?: string;
-    publisher?: string;
     instrumentationKey: string;
 }
 
@@ -31,7 +30,6 @@ export default function getPackageInfo(context: vscode.ExtensionContext): { exte
 
    const extensionName: string | undefined = packageJson.name;
    const extensionVersion: string | undefined = packageJson.version;
-   const publisher: string | undefined = packageJson.publisher;
    const instrumentationKey: string | undefined = packageJson.instrumentationKey;
 
    if (!extensionName) {
@@ -40,10 +38,6 @@ export default function getPackageInfo(context: vscode.ExtensionContext): { exte
 
    if (!extensionVersion) {
        throw new Error('Extension\'s package.json is missing version.');
-   }
-
-   if (!publisher) {
-       throw new Error('Extension\'s package.json is missing publisher.');
    }
 
    if (!extensionVersion) {
