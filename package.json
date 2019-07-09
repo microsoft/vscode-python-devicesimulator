@@ -4,6 +4,7 @@
   "description": "__DESCRIPTION__",
   "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
+  "instrumentationKey": "__AIKEY__",
   "engines": {
     "vscode": "^1.34.0"
   },
@@ -107,9 +108,12 @@
     "webpack-cli": "^3.0.8"
   },
   "dependencies": {
+    "@types/open": "^6.1.0",
+    "open": "^6.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "svg-inline-react": "^3.1.0",
+    "vscode-extension-telemetry": "^0.1.1",
     "vscode-nls": "^4.1.0"
   },
   "eslintConfig": {

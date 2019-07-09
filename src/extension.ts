@@ -2,7 +2,12 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
-import { CONSTANTS } from "./constants";
+import * as open from "open";
+import TelemetryAI from "./telemetry/telemetryAI";
+import { CONSTANTS, DialogResponses, TelemetryEventName} from "./constants";
+
+let shouldShowNewProject: boolean = true;
+
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -14,8 +19,9 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  let currentPanel: vscode.WebviewPanel | undefined = undefined;
-  let outChannel: vscode.OutputChannel | undefined = undefined;
+  const reporter: TelemetryAI = new TelemetryAI(context);
+  let currentPanel: vscode.WebviewPanel | undefined;
+  let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess;
   let messageListener: vscode.Disposable;
 
@@ -28,6 +34,8 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const openWebview = () => {
+    reporter.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
+
     if (currentPanel) {
       currentPanel.reveal(vscode.ViewColumn.Two);
     } else {
@@ -65,11 +73,39 @@ export function activate(context: vscode.ExtensionContext) {
   const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, {})
+
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
+
+      if (shouldShowNewProject) {
+        vscode.window
+          .showInformationMessage(
+            CONSTANTS.INFO.NEW_PROJECT,
+            ...[
+              DialogResponses.DONT_SHOW,
+              DialogResponses.EXAMPLE_CODE,
+              DialogResponses.TUTORIALS
+            ]
+          )
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowNewProject = false;
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
+            } else if (selection === DialogResponses.EXAMPLE_CODE) {
+              open(CONSTANTS.LINKS.EXAMPLE_CODE);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
+            } else if (selection === DialogResponses.TUTORIALS) {
+              open(CONSTANTS.LINKS.TUTORIALS);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
+            }
+          });
+      }
+
       openWebview();
+
 
       vscode.workspace
         .openTextDocument({ content: file, language: "en" })
@@ -91,6 +127,9 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
+
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR, {});
+
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
@@ -212,6 +251,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Send message to the webview
   let runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
+    reporter.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
@@ -239,10 +279,40 @@ export function activate(context: vscode.ExtensionContext) {
     // Data received from Python process
     deviceProcess.stdout.on("data", data => {
       dataFromTheProcess = data.toString();
-      if (dataFromTheProcess === CONSTANTS.INFO.COMPLETED_MESSAGE) {
-        logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-      }
       console.log(`Device output = ${dataFromTheProcess}`);
+      let messageToWebview;
+      try {
+        messageToWebview = JSON.parse(dataFromTheProcess);
+        // Check the JSON is a state
+        switch (messageToWebview.type) {
+          case "complete":
+            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+            break;
+
+          case "no-device":
+            vscode.window
+              .showErrorMessage(
+                CONSTANTS.ERROR.NO_DEVICE,
+                ...[DialogResponses.HELP]
+              )
+              .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.HELP) {
+                  open(CONSTANTS.LINKS.HELP);
+                }
+              });
+            break;
+
+          default:
+            console.log(
+              `Non-state JSON output from the process : ${messageToWebview}`
+            );
+            break;
+        }
+      } catch (err) {
+        console.log(
+          `Non-JSON output from the process :  ${dataFromTheProcess}`
+        );
+      }
     });
 
     // Std error output
@@ -316,4 +386,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
