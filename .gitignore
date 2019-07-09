@@ -8,6 +8,9 @@ out/
 !locales/**/out/  
 package.nls.*.json
 
+# testing
+.vscode-test 
+
 # User-specific files
 *.suo
 *.user
