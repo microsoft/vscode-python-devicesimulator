@@ -3,7 +3,8 @@ import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
-import { CONSTANTS, DialogResponses } from "./constants";
+import TelemetryAI from "./telemetry/telemetryAI";
+import { CONSTANTS, DialogResponses, TelemetryEventName} from "./constants";
 
 let shouldShowNewProject: boolean = true;
 
@@ -18,8 +19,9 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  let currentPanel: vscode.WebviewPanel | undefined = undefined;
-  let outChannel: vscode.OutputChannel | undefined = undefined;
+  const reporter: TelemetryAI = new TelemetryAI(context);
+  let currentPanel: vscode.WebviewPanel | undefined;
+  let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess;
   let messageListener: vscode.Disposable;
 
@@ -32,6 +34,8 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const openWebview = () => {
+    reporter.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
+
     if (currentPanel) {
       currentPanel.reveal(vscode.ViewColumn.Two);
     } else {
@@ -69,6 +73,8 @@ export function activate(context: vscode.ExtensionContext) {
   const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, {})
+
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
@@ -87,10 +93,13 @@ export function activate(context: vscode.ExtensionContext) {
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowNewProject = false;
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
             } else if (selection === DialogResponses.TUTORIALS) {
               open(CONSTANTS.LINKS.TUTORIALS);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
             }
           });
       }
@@ -118,6 +127,9 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
+
+      reporter.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR, {});
+
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
@@ -239,6 +251,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Send message to the webview
   let runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
+    reporter.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
