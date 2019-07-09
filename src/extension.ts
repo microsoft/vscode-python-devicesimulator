@@ -93,10 +93,13 @@ export function activate(context: vscode.ExtensionContext) {
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowNewProject = false;
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
             } else if (selection === DialogResponses.TUTORIALS) {
               open(CONSTANTS.LINKS.TUTORIALS);
+              reporter.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
             }
           });
       }
@@ -248,6 +251,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Send message to the webview
   let runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
+    reporter.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
