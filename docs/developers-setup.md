@@ -52,7 +52,7 @@
 - src
   - `adafruit_circuitplayground` : our mock library
   - `extension.ts` : our extension code
-  - `setup.py` : the file containing the code ran by the Python process spawned by the extension, responsible for running the user's code
+  - `process_user_code.py` : the file containing the code ran by the Python process spawned by the extension, responsible for running the user's code
   - `view` : React side
     - `components/`
     - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
