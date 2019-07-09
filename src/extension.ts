@@ -34,8 +34,6 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const openWebview = () => {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
-
     if (currentPanel) {
       currentPanel.reveal(vscode.ViewColumn.Two);
     } else {
@@ -68,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
   const openSimulator = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
       openWebview();
     }
   );
