@@ -13,9 +13,6 @@ import * as assert from 'assert';
 
 // Defines a Mocha test suite to group tests of similar kind together
 suite('Extension Test Suite', () => {
-    // before(() => {
-    //     vscode.window.showInformationMessage('Start all tests.');
-    // });
 
     test('Sample test', () => {
         assert.equal(-1, [1, 2, 3].indexOf(5));
