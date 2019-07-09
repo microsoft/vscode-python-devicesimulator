@@ -304,20 +304,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-const handleButtonPressTelemetry = (buttonState: {}) => {
-  // TODO: send only when value is true
-  if (Object.keys(buttonState).length >= 2) {
+const handleButtonPressTelemetry = (buttonState: any) => {
+  if (buttonState["button_a"] && buttonState["button_b"]) {
     TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
-  } else {
-    Object.entries(buttonState).map(([key, value]) => {
-      if (key === "button_a" && value) {
-        TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
-      } else if (key === "button_b" && value) {
-        TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
-      } else if (key === "switch" && value) {
-        TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
-      }
-    });
+  } else if (buttonState["button_a"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
+  } else if (buttonState["button_b"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
+  } else if (buttonState["switch"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
 }
 
