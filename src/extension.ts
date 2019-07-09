@@ -2,8 +2,12 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
+import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
-import { CONSTANTS, TelemetryEventName} from "./constants";
+import { CONSTANTS, DialogResponses, TelemetryEventName} from "./constants";
+
+let shouldShowNewProject: boolean = true;
+
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -75,7 +79,30 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
+
+      if (shouldShowNewProject) {
+        vscode.window
+          .showInformationMessage(
+            CONSTANTS.INFO.NEW_PROJECT,
+            ...[
+              DialogResponses.DONT_SHOW,
+              DialogResponses.EXAMPLE_CODE,
+              DialogResponses.TUTORIALS
+            ]
+          )
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowNewProject = false;
+            } else if (selection === DialogResponses.EXAMPLE_CODE) {
+              open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            } else if (selection === DialogResponses.TUTORIALS) {
+              open(CONSTANTS.LINKS.TUTORIALS);
+            }
+          });
+      }
+
       openWebview();
+
 
       vscode.workspace
         .openTextDocument({ content: file, language: "en" })
@@ -248,10 +275,40 @@ export function activate(context: vscode.ExtensionContext) {
     // Data received from Python process
     deviceProcess.stdout.on("data", data => {
       dataFromTheProcess = data.toString();
-      if (dataFromTheProcess === CONSTANTS.INFO.COMPLETED_MESSAGE) {
-        logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-      }
       console.log(`Device output = ${dataFromTheProcess}`);
+      let messageToWebview;
+      try {
+        messageToWebview = JSON.parse(dataFromTheProcess);
+        // Check the JSON is a state
+        switch (messageToWebview.type) {
+          case "complete":
+            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+            break;
+
+          case "no-device":
+            vscode.window
+              .showErrorMessage(
+                CONSTANTS.ERROR.NO_DEVICE,
+                ...[DialogResponses.HELP]
+              )
+              .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.HELP) {
+                  open(CONSTANTS.LINKS.HELP);
+                }
+              });
+            break;
+
+          default:
+            console.log(
+              `Non-state JSON output from the process : ${messageToWebview}`
+            );
+            break;
+        }
+      } catch (err) {
+        console.log(
+          `Non-JSON output from the process :  ${dataFromTheProcess}`
+        );
+      }
     });
 
     // Std error output
@@ -325,4 +382,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

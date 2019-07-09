@@ -2,6 +2,7 @@ from subprocess import check_output
 import string
 import os
 import sys
+import json
 if sys.platform == "win32":
     # pylint: disable=import-error
     import win32api
@@ -61,4 +62,7 @@ if __name__ == "__main__":
         dest_path = os.path.join(
             device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
         shutil.copyfile(sys.argv[1], dest_path)
-        print("Completed", end="", flush=True)
+        message = {'type': 'complete'}
+    else:
+        message = {'type': 'no-device'}
+    print(json.dumps(message), flush=True)
