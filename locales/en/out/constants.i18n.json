@@ -1,7 +1,9 @@
 {
   "dialogResponses.dontShowAgain": "Don't Show Again",
   "dialogResponses.exampleCode": "Example Code on GitHub",
+  "dialogResponses.help": "I need help",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
+  "error.noDevice": "No plugged in boards detected. Please double check if your board is connected and/or properly formatted",
   "error.stderr": "[ERROR] {0} \n",
   "error.unexpectedMessage": "Webview sent an unexpected message",
   "info.deployDevice": "\n[INFO] Deploying code to the device...\n",
