@@ -3,11 +3,15 @@ import TelemetryReporter from "vscode-extension-telemetry";
 import getPackageInfo from "./getPackageInfo";
 
 // tslint:disable-next-line:export-name
-export default class TelmemetryAI {
+export default class TelemetryAI {
+    static trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties);
+    }
+
     private static telemetryReporter: TelemetryReporter;
 
-    constructor(private vscodeContext: vscode.ExtensionContext) {
-        TelmemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
+    constructor(vscodeContext: vscode.ExtensionContext) {
+        TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
     }
 
     public getExtensionName(context: vscode.ExtensionContext): string {
@@ -24,11 +28,6 @@ export default class TelmemetryAI {
         this.trackTimeDuration(eventName, startTime, endTime, eventProperties);
     }
 
-    public trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
-        const measurement = {};
-        TelmemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties, measurement);
-    }
-
     private createTelemetryReporter(context: vscode.ExtensionContext): TelemetryReporter {
         const { extensionName, extensionVersion, instrumentationKey } = getPackageInfo(context);
         const reporter: TelemetryReporter = new TelemetryReporter(extensionName, extensionVersion, instrumentationKey);
@@ -41,6 +40,6 @@ export default class TelmemetryAI {
             duration: (endTime - startTime) / 1000
         }
         // Only send event if telemetry is not suppressed
-        TelmemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement);
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement);
     }
 }
