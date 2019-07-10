@@ -82,19 +82,19 @@
         "pacifica.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacifica.configuration.properties.open%",
+          "description": "%pacificaExtension.configuration.properties.open%",
           "scope": "resource"
         },
         "pacifica.showSimulatorIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacifica.configuration.properties.simulator%",
+          "description": "%pacificaExtension.configuration.properties.simulator%",
           "scope": "resource"
         },
         "pacifica.showDeviceIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacifica.configuration.properties.device%",
+          "description": "%pacificaExtension.configuration.properties.device%",
           "scope": "resource"
         }
       }
