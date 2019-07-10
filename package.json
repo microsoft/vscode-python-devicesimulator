@@ -35,12 +35,14 @@
       {
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/open-simulator.svg"
       },
       {
         "command": "pacifica.runSimulator",
         "title": "%pacificaExtension.commands.runSimulator%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/run-on-simulator.svg"
       },
       {
         "command": "pacifica.newProject",
@@ -50,9 +52,53 @@
       {
         "command": "pacifica.runDevice",
         "title": "%pacificaExtension.commands.runDevice%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/save-to-board.svg"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
+          "command": "pacifica.openSimulator",
+          "group": "navigation@1"
+        },
+        {
+          "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
+          "command": "pacifica.runSimulator",
+          "group": "navigation@2"
+        },
+        {
+          "when": "editorLangId==python && config.pacifica.showDeviceIconInEditorTitleMenu",
+          "command": "pacifica.runDevice",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "%pacificaExtension.configuration.title%",
+      "properties": {
+        "pacifica.showOpenIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.open%",
+          "scope": "resource"
+        },
+        "pacifica.showSimulatorIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.simulator%",
+          "scope": "resource"
+        },
+        "pacifica.showDeviceIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.device%",
+          "scope": "resource"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
