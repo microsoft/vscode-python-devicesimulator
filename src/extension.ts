@@ -34,8 +34,6 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const openWebview = () => {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
-
     if (currentPanel) {
       currentPanel.reveal(vscode.ViewColumn.Two);
     } else {
@@ -68,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
   const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
       openWebview();
     }
   );
@@ -76,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, {});
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
 
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
@@ -132,7 +130,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR, {});
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
