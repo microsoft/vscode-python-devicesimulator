@@ -327,7 +327,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Std error output
     deviceProcess.stderr.on("data", data => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS, { error: data });
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS, { error: `${data}` });
       console.error(
         `Error from the Python device process through stderr: ${data}`
       );
