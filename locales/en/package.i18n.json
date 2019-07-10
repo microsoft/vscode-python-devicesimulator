@@ -3,5 +3,9 @@
   "pacificaExtension.commands.openSimulator": "Open Simulator",
   "pacificaExtension.commands.runSimulator": "Run Simulator",
   "pacificaExtension.commands.newProject": "New Project",
-  "pacificaExtension.commands.runDevice": "Deploy to Device"
+  "pacificaExtension.commands.runDevice": "Deploy to Device",
+  "pacificaExtension.configuration.title": "Pacfica configuration",
+  "pacifica.configuration.properties.open": "Whether to show 'Opem Simulator' icon in editor title menu.",
+  "pacifica.configuration.properties.device": "Whether to show 'Run Device' icon in editor title menu.",
+  "pacifica.configuration.properties.simulator": "Whether to show 'Run Device' icon in editor title menu."
 }
