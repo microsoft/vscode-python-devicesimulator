@@ -7,6 +7,10 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONSTANTS = {
   ERROR: {
+    NO_DEVICE: localize(
+      "error.noDevice",
+      "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `[ERROR] ${data} \n`);
     },
@@ -49,6 +53,8 @@ export const CONSTANTS = {
   LINKS: {
     EXAMPLE_CODE:
       "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
+    HELP:
+      "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
@@ -59,6 +65,7 @@ export const CONSTANTS = {
 export enum TelemetryEventName {
   FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
 
+  COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
   COMMAND_NEW_PROJECT = "COMMAND.NEW.PROJECT",
   COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
   COMMAND_RUN_SIMULATOR = "COMMAND.RUN.SIMULATOR",
@@ -66,11 +73,19 @@ export enum TelemetryEventName {
   SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",
   SIMULATOR_BUTTON_B = "SIMULATOR.BUTTON.B",
   SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
-  SIMULATOR_SWITCH = "SIMULATOR.SWITCH"
+  SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
+
+  CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
+  CLICK_DIALOG_EXAMPLE_CODE = "CLICK.DIALOG.EXAMPLE.CODE",
+  CLICK_DIALOG_TUTORIALS = "CLICK.DIALOG.TUTORIALS",
+  
 }
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
+  export const HELP: MessageItem = {
+    title: localize("dialogResponses.help", "I need help")
+  };
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };

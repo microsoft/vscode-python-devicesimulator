@@ -8,6 +8,7 @@ import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
 
 let shouldShowNewProject: boolean = true;
 
+
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
     .with({ scheme: "vscode-resource" })
@@ -33,6 +34,8 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const openWebview = () => {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
+
     if (currentPanel) {
       currentPanel.reveal(vscode.ViewColumn.Two);
     } else {
@@ -93,10 +96,13 @@ export function activate(context: vscode.ExtensionContext) {
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowNewProject = false;
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
             } else if (selection === DialogResponses.TUTORIALS) {
               open(CONSTANTS.LINKS.TUTORIALS);
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
             }
           });
       }
@@ -249,6 +255,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Send message to the webview
   const runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
@@ -276,10 +283,40 @@ export function activate(context: vscode.ExtensionContext) {
     // Data received from Python process
     deviceProcess.stdout.on("data", data => {
       dataFromTheProcess = data.toString();
-      if (dataFromTheProcess === CONSTANTS.INFO.COMPLETED_MESSAGE) {
-        logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-      }
       console.log(`Device output = ${dataFromTheProcess}`);
+      let messageToWebview;
+      try {
+        messageToWebview = JSON.parse(dataFromTheProcess);
+        // Check the JSON is a state
+        switch (messageToWebview.type) {
+          case "complete":
+            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+            break;
+
+          case "no-device":
+            vscode.window
+              .showErrorMessage(
+                CONSTANTS.ERROR.NO_DEVICE,
+                ...[DialogResponses.HELP]
+              )
+              .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.HELP) {
+                  open(CONSTANTS.LINKS.HELP);
+                }
+              });
+            break;
+
+          default:
+            console.log(
+              `Non-state JSON output from the process : ${messageToWebview}`
+            );
+            break;
+        }
+      } catch (err) {
+        console.log(
+          `Non-JSON output from the process :  ${dataFromTheProcess}`
+        );
+      }
     });
 
     // Std error output
