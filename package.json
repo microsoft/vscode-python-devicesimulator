@@ -4,6 +4,7 @@
   "description": "__DESCRIPTION__",
   "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
+  "instrumentationKey": "__AIKEY__",
   "engines": {
     "vscode": "^1.34.0"
   },
@@ -34,12 +35,14 @@
       {
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/open-simulator.svg"
       },
       {
         "command": "pacifica.runSimulator",
         "title": "%pacificaExtension.commands.runSimulator%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/run-on-simulator.svg"
       },
       {
         "command": "pacifica.newProject",
@@ -49,9 +52,53 @@
       {
         "command": "pacifica.runDevice",
         "title": "%pacificaExtension.commands.runDevice%",
-        "category": "%pacificaExtension.commands.label%"
+        "category": "%pacificaExtension.commands.label%",
+        "icon": "./assets/save-to-board.svg"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
+          "command": "pacifica.openSimulator",
+          "group": "navigation@1"
+        },
+        {
+          "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
+          "command": "pacifica.runSimulator",
+          "group": "navigation@2"
+        },
+        {
+          "when": "editorLangId==python && config.pacifica.showDeviceIconInEditorTitleMenu",
+          "command": "pacifica.runDevice",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "%pacificaExtension.configuration.title%",
+      "properties": {
+        "pacifica.showOpenIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.open%",
+          "scope": "resource"
+        },
+        "pacifica.showSimulatorIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.simulator%",
+          "scope": "resource"
+        },
+        "pacifica.showDeviceIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pacificaExtension.configuration.properties.device%",
+          "scope": "resource"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -63,44 +110,48 @@
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc --watch",
     "watch:views": "webpack --watch --mode development",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "package": "vsce package"
   },
   "devDependencies": {
-    "typescript": "^3.3.1",
-    "vscode": "^1.1.28",
-    "tslint": "^5.12.1",
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
     "@types/node": "^10.12.21",
-    "@types/mocha": "^2.2.42",
     "@types/react": "16.8.18",
     "@types/react-dom": "16.8.4",
+    "@types/vscode": "^1.34.0",
+    "css-loader": "^1.0.0",
     "del": "^4.0.0",
     "event-stream": "^4.0.1",
+    "glob": "^7.1.4",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.1.0",
     "gulp-filter": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
-    "css-loader": "^1.0.0",
     "less": "^3.7.0",
     "less-loader": "^4.1.0",
+    "mocha": "^6.1.4",
     "npm-run-all": "^4.1.3",
     "react-scripts": "3.0.1",
     "style-loader": "^0.21.0",
     "ts-import-plugin": "^1.5.4",
     "ts-loader": "^4.4.2",
+    "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-microsoft-contrib": "^6.1.0",
-    "tslint-react-hooks": "^2.0.0",
     "tslint-react": "^3.6.0",
+    "tslint-react-hooks": "^2.0.0",
+    "typescript": "^3.3.1",
     "vsce": "^1.47.0",
+    "vscode-nls-dev": "^3.2.6",
+    "vscode-test": "^1.0.0",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
-    "vscode-nls-dev": "^3.2.6"
+    "webpack-cli": "^3.0.8"
   },
   "dependencies": {
     "@types/open": "^6.1.0",
@@ -108,6 +159,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "svg-inline-react": "^3.1.0",
+    "vscode-extension-telemetry": "^0.1.1",
     "vscode-nls": "^4.1.0"
   },
   "eslintConfig": {
