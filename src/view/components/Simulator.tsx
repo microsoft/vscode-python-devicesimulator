@@ -126,9 +126,13 @@ class Simulator extends React.Component<any, IState> {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
       newState = this.handleSwitchClick(button);
-    } else return;
+    } else {
+      return;
+    }
 
-    if (newState) sendMessage(newState);
+    if (newState) {
+      sendMessage(newState);
+    }
   }
 
   private handleButtonClick(button: HTMLElement, active: boolean) {
@@ -180,7 +184,7 @@ class Simulator extends React.Component<any, IState> {
 
     svg.addClass(switchInner, "sim-slide-switch-inner");
 
-    let switchIsOn: boolean = !this.state.switch;
+    const switchIsOn: boolean = !this.state.switch;
 
     if (switchIsOn) {
       svg.addClass(switchInner, "on");

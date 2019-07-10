@@ -4,7 +4,7 @@
   "description": "__DESCRIPTION__",
   "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
-  "instrumentationKey": "__AIKEY__",
+  "instrumentationKey": "aba8e4b2-8ed2-4c89-b0a1-1595fbf8e833",
   "engines": {
     "vscode": "^1.34.0"
   },

@@ -65,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   // Open Simulator on the webview
-  const openSimulator = vscode.commands.registerCommand(
+  const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR, {});
@@ -73,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const newProject = vscode.commands.registerCommand(
+  const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT, {});
@@ -116,13 +116,14 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showTextDocument(template, 1, false);
         }),
         (error: any) => {
+          TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT, { error });
           console.error(`Failed to open a new text document:  ${error}`);
         };
     }
   );
 
   // Send message to the webview
-  const runSimulator = vscode.commands.registerCommand(
+  const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
       openWebview();
@@ -209,6 +210,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
+        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS, { errpr: data });
         logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
@@ -228,6 +230,7 @@ export function activate(context: vscode.ExtensionContext) {
           context.subscriptions.splice(index, 1);
         }
       }
+
       // Handle messages from webview
       messageListener = currentPanel.webview.onDidReceiveMessage(
         message => {
@@ -253,7 +256,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  const runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
+  const runDevice: vscode.Disposable = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
     TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
@@ -290,10 +293,12 @@ export function activate(context: vscode.ExtensionContext) {
         // Check the JSON is a state
         switch (messageToWebview.type) {
           case "complete":
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE);
             logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
             break;
 
           case "no-device":
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE);
             vscode.window
               .showErrorMessage(
                 CONSTANTS.ERROR.NO_DEVICE,
@@ -301,6 +306,7 @@ export function activate(context: vscode.ExtensionContext) {
               )
               .then((selection: vscode.MessageItem | undefined) => {
                 if (selection === DialogResponses.HELP) {
+                  TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE);
                   open(CONSTANTS.LINKS.HELP);
                 }
               });
@@ -321,6 +327,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Std error output
     deviceProcess.stderr.on("data", data => {
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS, { error: data });
       console.error(
         `Error from the Python device process through stderr: ${data}`
       );
