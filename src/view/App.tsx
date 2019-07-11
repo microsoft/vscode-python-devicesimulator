@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 "use strict";
 import * as React from "react";
 import Simulator from "./components/Simulator";

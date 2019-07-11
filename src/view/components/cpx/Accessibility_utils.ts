@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // Helpers designed to help to make a simulator accessible.
 namespace accessibility {
   export function makeFocusable(elem: SVGElement): void {

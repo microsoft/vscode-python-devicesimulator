@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/boardsvg.ts
 
 import * as React from "react";
