@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
       vscode.workspace
-        .openTextDocument({ content: file, language: "en" })
+        .openTextDocument({ content: file, language: "python" })
         .then((template: vscode.TextDocument) => {
           vscode.window.showTextDocument(template, 1, false);
         }),
