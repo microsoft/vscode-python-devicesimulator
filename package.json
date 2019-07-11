@@ -26,7 +26,8 @@
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newProject",
-    "onCommand:pacifica.runDevice"
+    "onCommand:pacifica.runDevice",
+    "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -50,6 +51,80 @@
         "command": "pacifica.runDevice",
         "title": "%pacificaExtension.commands.runDevice%",
         "category": "%pacificaExtension.commands.label%"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "python"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "python",
+        "label": "Pacifica Simulator Debugger",
+        "program": "./out/debugAdapter.js",
+        "runtime": "node",
+        "configurationAttributes": {
+          "launch": {
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Absolute path to the code file.",
+                "default": "${file}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after launch.",
+                "default": true
+              },
+              "justMyCode": {
+                "type": "boolean",
+                "default": true
+              },
+              "args": {
+                "type": "array",
+                "description": "Command line arguments passed to the program.",
+                "default": [],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rules": {
+                "type": "array",
+                "description": "Debugger rules.",
+                "default": [],
+                "items": {
+                  "path": "string",
+                  "include": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "python",
+            "request": "launch",
+            "name": "Pacifica Simulator Debugger",
+            "program": "${file}",
+            "stopOnEntry": true,
+            "justMyCode": true
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Pacifica Simulator Debugger : Launch",
+            "description": "Pacifica Simulator Debugger - A configuration for debugging a python code file for the Pacifica simulator.",
+            "body": {
+              "type": "python",
+              "request": "launch",
+              "name": "Pacifica Simulator Debugger",
+              "program": "${file}",
+              "stopOnEntry": true,
+              "justMyCode": true
+            }
+          }
+        ]
       }
     ]
   },

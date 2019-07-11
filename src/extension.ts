@@ -7,7 +7,6 @@ import { CONSTANTS, DialogResponses } from "./constants";
 
 let shouldShowNewProject: boolean = true;
 
-
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
     .with({ scheme: "vscode-resource" })
@@ -25,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-  
+
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
@@ -47,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true
         }
       );
-      
+
       currentPanel.webview.html = getWebviewContent(context);
 
       currentPanel.onDidDispose(
@@ -73,7 +72,6 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
 
-
       if (shouldShowNewProject) {
         vscode.window
           .showInformationMessage(
@@ -96,7 +94,6 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       openWebview();
-
 
       vscode.workspace
         .openTextDocument({ content: file, language: "en" })
@@ -128,10 +125,10 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       // Get the Python script path (And the special URI to use with the webview)
-      const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, "out", "setup.py")
-      );
-      const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+      // const onDiskPath = vscode.Uri.file(
+      //   path.join(context.extensionPath, "out", "setup.py")
+      // );
+      // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
       // Create the Python process (after killing the one running if any)
       if (childProcess !== undefined) {
@@ -146,7 +143,7 @@ export function activate(context: vscode.ExtensionContext) {
       logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
       childProcess = cp.spawn("python", [
-        scriptPath.fsPath,
+        getPathToScript(context, "out", "setup.py"),
         currentFileAbsPath
       ]);
 
@@ -251,13 +248,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // Get the Python script path (And the special URI to use with the webview)
-    const onDiskPath = vscode.Uri.file(
-      path.join(context.extensionPath, "out", "device.py")
-    );
-    const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+    // const onDiskPath = vscode.Uri.file(
+    //   path.join(context.extensionPath, "out", "device.py")
+    // );
+    // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
     const deviceProcess = cp.spawn("python", [
-      scriptPath.fsPath,
+      getPathToScript(context, "out", "device.py"),
       currentFileAbsPath
     ]);
 
@@ -316,13 +313,34 @@ export function activate(context: vscode.ExtensionContext) {
     });
   });
 
+  // Debugger configuration
+  const debugConfigurationProvider = new SimulatorConfigurationProvider(
+    getPathToScript(context, "out", "setup.py")
+  );
+
   context.subscriptions.push(
     openSimulator,
     runSimulator,
     runDevice,
-    newProject
+    newProject,
+    vscode.debug.registerDebugConfigurationProvider(
+      "python",
+      debugConfigurationProvider
+    )
   );
 }
+
+const getPathToScript = (
+  context: vscode.ExtensionContext,
+  folderName: string,
+  fileName: string
+) => {
+  const onDiskPath = vscode.Uri.file(
+    path.join(context.extensionPath, folderName, fileName)
+  );
+  const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+  return scriptPath.fsPath;
+};
 
 const updatePythonExtraPaths = () => {
   const pathToLib: string = __dirname;
@@ -372,5 +390,119 @@ function getWebviewContent(context: vscode.ExtensionContext) {
           </html>`;
 }
 
+class SimulatorConfigurationProvider
+  implements vscode.DebugConfigurationProvider {
+  constructor(private pathToScript: string) {}
+
+  /**
+   * Massage a debug configuration just before a debug session is being launched,
+   * e.g. add all missing attributes to the debug configuration.
+   */
+  public resolveDebugConfiguration(
+    folder: vscode.WorkspaceFolder | undefined,
+    config: vscode.DebugConfiguration,
+    token?: vscode.CancellationToken
+  ): vscode.ProviderResult<vscode.DebugConfiguration> {
+    // console.error("PPAAATTHH : " +'${file}');
+    // config.program = 'C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\main.py';
+    // config.args = ['C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\code.py'];
+    // config.rules = [{"path": "C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\main.py", "include":false}]
+
+    // Setup.py Path
+    // const onDiskPath = vscode.Uri.file(
+    // 	path.join(this.context.extensionPath, "scripts", "main.py")
+    //   );
+    // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
+    // const setupScriptPathString = scriptPath.fsPath;
+    /*
+		config.program = this.pathToScript;
+
+		// Code.py path
+		const activeTextEditor = vscode.window.activeTextEditor;
+		// let currentFileAbsPath: string = "";
+		if (activeTextEditor && activeTextEditor.document.languageId === 'python') {
+			const currentFileAbsPath = activeTextEditor.document.fileName;
+      config.args = [currentFileAbsPath];
+		}
+
+		// Ignore setup.py
+		config.rules = [{"path": this.pathToScript, "include":false}];
+    */
+
+    // Check config name
+    if (config.name === "Pacifica Simulator Debugger") {
+      // TODO: Move config name to constants
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (activeTextEditor) {
+        // TODO : What happens if there is o activeTextEditor ?
+        // Check file name
+        const currentFilePath = activeTextEditor.document.fileName;
+        const name = currentFilePath.substr(currentFilePath.length - 7, 7); // TODO: Move 7 to constants
+        let validName = name === "code.py" || name === "main.py"; // TODO : Move names to constants + Move to function
+
+        // Check file type // TODO : Check if we need to check language ID
+        if (
+          !(activeTextEditor.document.languageId === "python") ||
+          !validName
+        ) {
+          return vscode.window
+            .showErrorMessage("Invalid code file selected to debug.")
+            .then(_ => {
+              return undefined; // Abort launch
+            });
+        }
+        // Set setup path as program
+        config.program = this.pathToScript;
+        // Set code.py path as args
+        config.args = [currentFilePath];
+        // Set rules
+        config.rules = [
+          // {
+          //   module: "adafruit_circuitplayground",
+          //   include: false
+          // },
+          { path: this.pathToScript, include: false },
+          {
+            path:
+              "c:\\Users\\t-chcido\\Documents\\Adafruit\\git\\debugger\\vscode-python-embedded\\out\\adafruit_circuitplayground\\*",
+            include: false
+          },
+          // { module: "adafruit_circuitplayground", include: false },
+          { module: "simpleaudio", include: false }
+        ];
+      }
+    } //"c:\\Users\\t-chcido\\Documents\\Adafruit\\git\\debugger\\vscode-python-embedded\\out\\adafruit_circuitplayground"
+    // Abort / show error invalid file
+    if (!config.program) {
+      return vscode.window
+        .showInformationMessage("Cannot find a program to debug")
+        .then(_ => {
+          return undefined; // Abort launch
+        });
+    }
+    return config;
+
+    //   // Setup path
+    //   config.program = this.pathToScript;
+
+    //   // Code.py path
+    //   const activeTextEditor = vscode.window.activeTextEditor;
+    //   if (activeTextEditor && activeTextEditor.document.languageId === 'python') {
+    //     const currentFileAbsPath = activeTextEditor.document.fileName;
+    //     config.args = [currentFileAbsPath];
+    //   }
+
+    //  // Ignore setup.py
+    //  config.rules = [{"path": this.pathToScript, "include":false}];
+    // 	if (!config.program) {
+    // 		return vscode.window.showInformationMessage("Cannot find a program to debug").then(_ => {
+    // 			return undefined;	// Abort launch
+    // 		});
+    // 	}
+
+    // 	return config;
+  }
+}
+
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
