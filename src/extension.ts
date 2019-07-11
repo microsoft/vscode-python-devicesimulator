@@ -8,6 +8,8 @@ import * as fs from "fs";
 import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
+import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import * as utils from "./utils";
 
 let shouldShowNewProject: boolean = true;
 
@@ -95,13 +97,19 @@ export function activate(context: vscode.ExtensionContext) {
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowNewProject = false;
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+              );
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
+              );
             } else if (selection === DialogResponses.TUTORIALS) {
               open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_TUTORIALS
+              );
             }
           });
       }
@@ -140,12 +148,6 @@ export function activate(context: vscode.ExtensionContext) {
         currentFileAbsPath = activeTextEditor.document.fileName;
       }
 
-      // Get the Python script path (And the special URI to use with the webview)
-      // const onDiskPath = vscode.Uri.file(
-      //   path.join(context.extensionPath, "out", "process_user_code.py")
-      // );
-      // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-
       // Create the Python process (after killing the one running if any)
       if (childProcess !== undefined) {
         if (currentPanel) {
@@ -159,7 +161,7 @@ export function activate(context: vscode.ExtensionContext) {
       logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
       childProcess = cp.spawn("python", [
-        getPathToScript(context, "out", "process_user_code.py"),
+        utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
       ]);
 
@@ -251,89 +253,86 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  const runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
-    console.info("Sending code to device");
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+  const runDevice = vscode.commands.registerCommand(
+    "pacifica.runDevice",
+    () => {
+      console.info("Sending code to device");
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    const activeTextEditor: vscode.TextEditor | undefined =
-      vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
+      const activeTextEditor: vscode.TextEditor | undefined =
+        vscode.window.activeTextEditor;
+      let currentFileAbsPath: string = "";
 
-    if (activeTextEditor) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
-
-    // Get the Python script path (And the special URI to use with the webview)
-    // const onDiskPath = vscode.Uri.file(
-    //   path.join(context.extensionPath, "out", "device.py")
-    // );
-    // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-
-    const deviceProcess = cp.spawn("python", [
-      getPathToScript(context, "out", "device.py"),
-      currentFileAbsPath
-    ]);
-
-    let dataFromTheProcess = "";
-
-    // Data received from Python process
-    deviceProcess.stdout.on("data", data => {
-      dataFromTheProcess = data.toString();
-      console.log(`Device output = ${dataFromTheProcess}`);
-      let messageToWebview;
-      try {
-        messageToWebview = JSON.parse(dataFromTheProcess);
-        // Check the JSON is a state
-        switch (messageToWebview.type) {
-          case "complete":
-            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-            break;
-
-          case "no-device":
-            vscode.window
-              .showErrorMessage(
-                CONSTANTS.ERROR.NO_DEVICE,
-                ...[DialogResponses.HELP]
-              )
-              .then((selection: vscode.MessageItem | undefined) => {
-                if (selection === DialogResponses.HELP) {
-                  open(CONSTANTS.LINKS.HELP);
-                }
-              });
-            break;
-
-          default:
-            console.log(
-              `Non-state JSON output from the process : ${messageToWebview}`
-            );
-            break;
-        }
-      } catch (err) {
-        console.log(
-          `Non-JSON output from the process :  ${dataFromTheProcess}`
-        );
+      if (activeTextEditor) {
+        currentFileAbsPath = activeTextEditor.document.fileName;
       }
-    });
 
-    // Std error output
-    deviceProcess.stderr.on("data", data => {
-      console.error(
-        `Error from the Python device process through stderr: ${data}`
-      );
-      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-    });
+      const deviceProcess = cp.spawn("python", [
+        utils.getPathToScript(context, "out", "device.py"),
+        currentFileAbsPath
+      ]);
 
-    // When the process is done
-    deviceProcess.on("end", (code: number) => {
-      console.info(`Command execution exited with code: ${code}`);
-    });
-  });
+      let dataFromTheProcess = "";
+
+      // Data received from Python process
+      deviceProcess.stdout.on("data", data => {
+        dataFromTheProcess = data.toString();
+        console.log(`Device output = ${dataFromTheProcess}`);
+        let messageToWebview;
+        try {
+          messageToWebview = JSON.parse(dataFromTheProcess);
+          // Check the JSON is a state
+          switch (messageToWebview.type) {
+            case "complete":
+              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+              break;
+
+            case "no-device":
+              vscode.window
+                .showErrorMessage(
+                  CONSTANTS.ERROR.NO_DEVICE,
+                  ...[DialogResponses.HELP]
+                )
+                .then((selection: vscode.MessageItem | undefined) => {
+                  if (selection === DialogResponses.HELP) {
+                    open(CONSTANTS.LINKS.HELP);
+                  }
+                });
+              break;
+
+            default:
+              console.log(
+                `Non-state JSON output from the process : ${messageToWebview}`
+              );
+              break;
+          }
+        } catch (err) {
+          console.log(
+            `Non-JSON output from the process :  ${dataFromTheProcess}`
+          );
+        }
+      });
+
+      // Std error output
+      deviceProcess.stderr.on("data", data => {
+        console.error(
+          `Error from the Python device process through stderr: ${data}`
+        );
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+      });
+
+      // When the process is done
+      deviceProcess.on("end", (code: number) => {
+        console.info(`Command execution exited with code: ${code}`);
+      });
+    }
+  );
 
   // Debugger configuration
-  const debugConfigurationProvider = new SimulatorConfigurationProvider(
-    getPathToScript(context, "out", "setup.py")
+  const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
+    utils.getPathToScript(context, "out", "process_user_code.py")
   );
 
   context.subscriptions.push(
@@ -343,22 +342,10 @@ export function activate(context: vscode.ExtensionContext) {
     newProject,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
-      debugConfigurationProvider
+      simulatorDebugConfiguration
     )
   );
 }
-
-const getPathToScript = (
-  context: vscode.ExtensionContext,
-  folderName: string,
-  fileName: string
-) => {
-  const onDiskPath = vscode.Uri.file(
-    path.join(context.extensionPath, folderName, fileName)
-  );
-  const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-  return scriptPath.fsPath;
-};
 
 const handleButtonPressTelemetry = (buttonState: any) => {
   if (buttonState["button_a"] && buttonState["button_b"]) {
@@ -370,7 +357,7 @@ const handleButtonPressTelemetry = (buttonState: any) => {
   } else if (buttonState["switch"]) {
     TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
-}
+};
 
 const updatePythonExtraPaths = () => {
   const pathToLib: string = __dirname;
@@ -418,120 +405,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
-}
-
-class SimulatorConfigurationProvider
-  implements vscode.DebugConfigurationProvider {
-  constructor(private pathToScript: string) {}
-
-  /**
-   * Massage a debug configuration just before a debug session is being launched,
-   * e.g. add all missing attributes to the debug configuration.
-   */
-  public resolveDebugConfiguration(
-    folder: vscode.WorkspaceFolder | undefined,
-    config: vscode.DebugConfiguration,
-    token?: vscode.CancellationToken
-  ): vscode.ProviderResult<vscode.DebugConfiguration> {
-    // console.error("PPAAATTHH : " +'${file}');
-    // config.program = 'C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\main.py';
-    // config.args = ['C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\code.py'];
-    // config.rules = [{"path": "C:\\Users\\t-chcido\\Documents\\Adafruit\\testing\\py-debug-extension\\scripts\\main.py", "include":false}]
-
-    // Setup.py Path
-    // const onDiskPath = vscode.Uri.file(
-    // 	path.join(this.context.extensionPath, "scripts", "main.py")
-    //   );
-    // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-    // const setupScriptPathString = scriptPath.fsPath;
-    /*
-		config.program = this.pathToScript;
-
-		// Code.py path
-		const activeTextEditor = vscode.window.activeTextEditor;
-		// let currentFileAbsPath: string = "";
-		if (activeTextEditor && activeTextEditor.document.languageId === 'python') {
-			const currentFileAbsPath = activeTextEditor.document.fileName;
-      config.args = [currentFileAbsPath];
-		}
-
-		// Ignore setup.py
-		config.rules = [{"path": this.pathToScript, "include":false}];
-    */
-
-    // Check config name
-    if (config.name === "Pacifica Simulator Debugger") {
-      // TODO: Move config name to constants
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (activeTextEditor) {
-        // TODO : What happens if there is o activeTextEditor ?
-        // Check file name
-        const currentFilePath = activeTextEditor.document.fileName;
-        const name = currentFilePath.substr(currentFilePath.length - 7, 7); // TODO: Move 7 to constants
-        let validName = name === "code.py" || name === "main.py"; // TODO : Move names to constants + Move to function
-
-        // Check file type // TODO : Check if we need to check language ID
-        if (
-          !(activeTextEditor.document.languageId === "python") ||
-          !validName
-        ) {
-          return vscode.window
-            .showErrorMessage("Invalid code file selected to debug.")
-            .then(_ => {
-              return undefined; // Abort launch
-            });
-        }
-        // Set setup path as program
-        config.program = this.pathToScript;
-        // Set code.py path as args
-        config.args = [currentFilePath];
-        // Set rules
-        config.rules = [
-          // {
-          //   module: "adafruit_circuitplayground",
-          //   include: false
-          // },
-          { path: this.pathToScript, include: false },
-          {
-            path:
-              "c:\\Users\\t-chcido\\Documents\\Adafruit\\git\\debugger\\vscode-python-embedded\\out\\adafruit_circuitplayground\\*",
-            include: false
-          },
-          // { module: "adafruit_circuitplayground", include: false },
-          { module: "simpleaudio", include: false }
-        ];
-      }
-    } //"c:\\Users\\t-chcido\\Documents\\Adafruit\\git\\debugger\\vscode-python-embedded\\out\\adafruit_circuitplayground"
-    // Abort / show error invalid file
-    if (!config.program) {
-      return vscode.window
-        .showInformationMessage("Cannot find a program to debug")
-        .then(_ => {
-          return undefined; // Abort launch
-        });
-    }
-    return config;
-
-    //   // Setup path
-    //   config.program = this.pathToScript;
-
-    //   // Code.py path
-    //   const activeTextEditor = vscode.window.activeTextEditor;
-    //   if (activeTextEditor && activeTextEditor.document.languageId === 'python') {
-    //     const currentFileAbsPath = activeTextEditor.document.fileName;
-    //     config.args = [currentFileAbsPath];
-    //   }
-
-    //  // Ignore setup.py
-    //  config.rules = [{"path": this.pathToScript, "include":false}];
-    // 	if (!config.program) {
-    // 		return vscode.window.showInformationMessage("Cannot find a program to debug").then(_ => {
-    // 			return undefined;	// Abort launch
-    // 		});
-    // 	}
-
-    // 	return config;
-  }
 }
 
 // this method is called when your extension is deactivated

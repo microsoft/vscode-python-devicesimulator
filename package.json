@@ -122,7 +122,7 @@
               "stopOnEntry": {
                 "type": "boolean",
                 "description": "Automatically stop after launch.",
-                "default": true
+                "default": false
               },
               "justMyCode": {
                 "type": "boolean",
@@ -154,7 +154,7 @@
             "request": "launch",
             "name": "Pacifica Simulator Debugger",
             "program": "${file}",
-            "stopOnEntry": true,
+            "stopOnEntry": false,
             "justMyCode": true
           }
         ],
@@ -167,7 +167,7 @@
               "request": "launch",
               "name": "Pacifica Simulator Debugger",
               "program": "${file}",
-              "stopOnEntry": true,
+              "stopOnEntry": false,
               "justMyCode": true
             }
           }

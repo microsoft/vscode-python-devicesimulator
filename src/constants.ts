@@ -99,4 +99,10 @@ export namespace DialogResponses {
   };
 }
 
+export const USER_CODE_NAMES = {
+  CODE_PY: "code.py",
+  MAIN_PY: "main.py",
+  VALID_LENGTH: 7
+};
+
 export default CONSTANTS;
