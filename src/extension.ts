@@ -208,7 +208,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
-        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS, { errpr: data });
+        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
         logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
