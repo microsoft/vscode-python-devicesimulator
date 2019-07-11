@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // Adapted from : https://github.com/microsoft/pxt-adafruit/blob/master/sim/visuals/board.ts#L477
 
 export const MB_WIDTH = 180.09375;
