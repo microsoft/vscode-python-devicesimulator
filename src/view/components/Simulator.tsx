@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
@@ -84,6 +87,7 @@ class Simulator extends React.Component<any, IState> {
     // Make sure to remove the DOM listener when the component is unmounted.
     window.removeEventListener("message", this.handleMessage);
   }
+
   render() {
     return (
       <div>
@@ -105,10 +109,12 @@ class Simulator extends React.Component<any, IState> {
     this.handleClick(button, true);
     button.focus();
   }
+
   protected onMouseUp(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, false);
   }
+
   protected onMouseLeave(button: HTMLElement, event: Event) {
     event.preventDefault();
 
@@ -134,6 +140,7 @@ class Simulator extends React.Component<any, IState> {
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
+
     if (ButtonAB) {
       innerButton = window.document.getElementById("BTN_AB_INNER");
       newState = {
@@ -154,7 +161,11 @@ class Simulator extends React.Component<any, IState> {
       };
       this.setState(newState);
     }
-    if (innerButton) innerButton.style.fill = this.getButtonColor(active);
+
+    if (innerButton) {
+      innerButton.style.fill = this.getButtonColor(active);
+    }
+
     button.setAttribute("pressed", `${active}`);
     return newState;
   }
