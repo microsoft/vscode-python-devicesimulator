@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as nls from "vscode-nls";
 import { MessageItem } from "vscode";
 
@@ -60,6 +63,25 @@ export const CONSTANTS = {
   },
   NAME: localize("name", "Adafruit Simulator")
 };
+
+// Need the different events we want to track and the name of it
+export enum TelemetryEventName {
+  FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
+
+  COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
+  COMMAND_NEW_PROJECT = "COMMAND.NEW.PROJECT",
+  COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
+  COMMAND_RUN_SIMULATOR = "COMMAND.RUN.SIMULATOR",
+
+  SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",
+  SIMULATOR_BUTTON_B = "SIMULATOR.BUTTON.B",
+  SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
+  SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
+
+  CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
+  CLICK_DIALOG_EXAMPLE_CODE = "CLICK.DIALOG.EXAMPLE.CODE",
+  CLICK_DIALOG_TUTORIALS = "CLICK.DIALOG.TUTORIALS"
+}
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {

@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
-import { CONSTANTS, DialogResponses } from "./constants";
+import TelemetryAI from "./telemetry/telemetryAI";
+import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
 
 let shouldShowNewProject: boolean = true;
 
@@ -17,8 +21,9 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  let currentPanel: vscode.WebviewPanel | undefined = undefined;
-  let outChannel: vscode.OutputChannel | undefined = undefined;
+  const reporter: TelemetryAI = new TelemetryAI(context);
+  let currentPanel: vscode.WebviewPanel | undefined;
+  let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess;
   let messageListener: vscode.Disposable;
 
@@ -62,12 +67,17 @@ export function activate(context: vscode.ExtensionContext) {
   // Open Simulator on the webview
   const openSimulator = vscode.commands.registerCommand(
     "pacifica.openSimulator",
-    openWebview
+    () => {
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
+      openWebview();
+    }
   );
 
   const newProject = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+
       const fileName = "template.py";
       const filePath = __dirname + path.sep + fileName;
       const file = fs.readFileSync(filePath, "utf8");
@@ -85,10 +95,13 @@ export function activate(context: vscode.ExtensionContext) {
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowNewProject = false;
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
             } else if (selection === DialogResponses.EXAMPLE_CODE) {
               open(CONSTANTS.LINKS.EXAMPLE_CODE);
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
             } else if (selection === DialogResponses.TUTORIALS) {
               open(CONSTANTS.LINKS.TUTORIALS);
+              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
             }
           });
       }
@@ -115,6 +128,9 @@ export function activate(context: vscode.ExtensionContext) {
       if (!currentPanel) {
         return;
       }
+
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
+
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
@@ -126,7 +142,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Get the Python script path (And the special URI to use with the webview)
       // const onDiskPath = vscode.Uri.file(
-      //   path.join(context.extensionPath, "out", "setup.py")
+      //   path.join(context.extensionPath, "out", "process_user_code.py")
       // );
       // const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
@@ -143,7 +159,7 @@ export function activate(context: vscode.ExtensionContext) {
       logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
       childProcess = cp.spawn("python", [
-        getPathToScript(context, "out", "setup.py"),
+        getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
       ]);
 
@@ -216,6 +232,7 @@ export function activate(context: vscode.ExtensionContext) {
           switch (message.command) {
             case "button-press":
               // Send input to the Python process
+              handleButtonPressTelemetry(message.text);
               console.log("About to write");
               console.log(JSON.stringify(message.text) + "\n");
               childProcess.stdin.write(JSON.stringify(message.text) + "\n");
@@ -234,8 +251,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  let runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
+  const runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
     console.info("Sending code to device");
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
@@ -341,6 +359,18 @@ const getPathToScript = (
   const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
   return scriptPath.fsPath;
 };
+
+const handleButtonPressTelemetry = (buttonState: any) => {
+  if (buttonState["button_a"] && buttonState["button_b"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
+  } else if (buttonState["button_a"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
+  } else if (buttonState["button_b"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
+  } else if (buttonState["switch"]) {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+  }
+}
 
 const updatePythonExtraPaths = () => {
   const pathToLib: string = __dirname;
