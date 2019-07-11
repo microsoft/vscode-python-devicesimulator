@@ -114,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showTextDocument(template, 1, false);
         }),
         (error: any) => {
-          TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT, { error });
+          TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT);
           console.error(`Failed to open a new text document:  ${error}`);
         };
     }
