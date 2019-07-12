@@ -178,11 +178,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   const runSimulatorCommand = () => {
     openWebview();
-    console.log("in run ");
+
     if (!currentPanel) {
       return;
     }
-    console.log("in run after");
 
     TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
@@ -194,7 +193,6 @@ export function activate(context: vscode.ExtensionContext) {
     if (activeTextEditor) {
       currentFileAbsPath = activeTextEditor.document.fileName;
     }
-    console.log("cur file", currentFileAbsPath);
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
@@ -227,7 +225,7 @@ export function activate(context: vscode.ExtensionContext) {
             try {
               messageToWebview = JSON.parse(message);
               // Check the JSON is a state
-              switch (messageToWebview.type) {
+              switch (messageToWebview.  ) {
                 case "state":
                   console.log(
                     `Process state output = ${messageToWebview.data}`
