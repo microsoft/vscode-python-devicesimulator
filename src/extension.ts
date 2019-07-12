@@ -67,56 +67,58 @@ export function activate(context: vscode.ExtensionContext) {
     "pacifica.openSimulator",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
+      TelemetryAI.runWithLatencyMeasure(openWebview, TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR);
       openWebview();
     }
   );
+
+  const openTemplateFile = () => {
+    const fileName = "template.py";
+    const filePath = __dirname + path.sep + fileName;
+    const file = fs.readFileSync(filePath, "utf8");
+
+    if (shouldShowNewProject) {
+      vscode.window
+        .showInformationMessage(
+          CONSTANTS.INFO.NEW_PROJECT,
+          ...[
+            DialogResponses.DONT_SHOW,
+            DialogResponses.EXAMPLE_CODE,
+            DialogResponses.TUTORIALS
+          ]
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          if (selection === DialogResponses.DONT_SHOW) {
+            shouldShowNewProject = false;
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
+          } else if (selection === DialogResponses.EXAMPLE_CODE) {
+            open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
+          } else if (selection === DialogResponses.TUTORIALS) {
+            open(CONSTANTS.LINKS.TUTORIALS);
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
+          }
+      });
+    }
+
+    openWebview();
+
+    vscode.workspace
+      .openTextDocument({ content: file, language: "en" })
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }),
+      (error: any) => {
+        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT);
+        console.error(`Failed to open a new text document:  ${error}`);
+      };
+  }
 
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
-
-      const fileName = "template.py";
-      const filePath = __dirname + path.sep + fileName;
-      const file = fs.readFileSync(filePath, "utf8");
-
-
-      if (shouldShowNewProject) {
-        vscode.window
-          .showInformationMessage(
-            CONSTANTS.INFO.NEW_PROJECT,
-            ...[
-              DialogResponses.DONT_SHOW,
-              DialogResponses.EXAMPLE_CODE,
-              DialogResponses.TUTORIALS
-            ]
-          )
-          .then((selection: vscode.MessageItem | undefined) => {
-            if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowNewProject = false;
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
-            } else if (selection === DialogResponses.EXAMPLE_CODE) {
-              open(CONSTANTS.LINKS.EXAMPLE_CODE);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
-            } else if (selection === DialogResponses.TUTORIALS) {
-              open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
-            }
-          });
-      }
-
-      openWebview();
-
-
-      vscode.workspace
-        .openTextDocument({ content: file, language: "en" })
-        .then((template: vscode.TextDocument) => {
-          vscode.window.showTextDocument(template, 1, false);
-        }),
-        (error: any) => {
-          TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT);
-          console.error(`Failed to open a new text document:  ${error}`);
-        };
+      TelemetryAI.runWithLatencyMeasure(openTemplateFile, TelemetryEventName.PERFORMANCE_NEW_PROJECT);
     }
   );
 
@@ -173,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (currentPanel) {
           // Process the data from the process and send one state at a time
           dataFromTheProcess.split("\0").forEach(message => {
-            if (currentPanel && message.length > 0 && message != oldMessage) {
+            if (currentPanel && message.length > 0 && message !== oldMessage) {
               oldMessage = message;
               let messageToWebview;
               // Check the message is a JSON
