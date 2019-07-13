@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as vscode from "vscode";
 import * as path from "path";
 import * as cp from "child_process";
@@ -145,7 +148,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Get the Python script path (And the special URI to use with the webview)
       const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, "out", "setup.py")
+        path.join(context.extensionPath, "out", "process_user_code.py")
       );
       const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
 
