@@ -9,6 +9,7 @@ import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
 
+let currentFileAbsPath: string = "";
 let shouldShowNewProject: boolean = true;
 
 
@@ -30,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-  
+
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
@@ -52,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true
         }
       );
-      
+
       currentPanel.webview.html = getWebviewContent(context);
 
       currentPanel.onDidDispose(
@@ -138,9 +139,8 @@ export function activate(context: vscode.ExtensionContext) {
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
-      let currentFileAbsPath: string = "";
 
-      if (activeTextEditor) {
+      if (activeTextEditor && activeTextEditor.document.fileName.endsWith(".py")) {
         currentFileAbsPath = activeTextEditor.document.fileName;
       }
 
@@ -161,6 +161,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
+      if (currentFileAbsPath === "") logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN);
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -265,11 +266,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
 
-    if (activeTextEditor) {
+    if (activeTextEditor && activeTextEditor.document.fileName.endsWith(".py")) {
       currentFileAbsPath = activeTextEditor.document.fileName;
     }
+
+    if (currentFileAbsPath === "") logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN);
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
