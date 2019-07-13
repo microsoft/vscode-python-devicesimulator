@@ -9,6 +9,8 @@ import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
 
+// Notification booleans
+let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
 
 
@@ -30,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-  
+
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
@@ -52,12 +54,16 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true
         }
       );
-      
+
       currentPanel.webview.html = getWebviewContent(context);
 
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          if (firstTimeClosed) {
+            vscode.window.showInformationMessage(CONSTANTS.INFO.FIRST_TIME_WEBVIEW)
+            firstTimeClosed = false;
+          }
         },
         undefined,
         context.subscriptions

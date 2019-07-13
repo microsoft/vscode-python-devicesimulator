@@ -40,6 +40,10 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+    FIRST_TIME_WEBVIEW: localize(
+      "info.firstTimeWebview",
+      "Click on the \"Open Simulator\" button on the upper right corner of the text editor, or select from command palette to re-open it."
+    ),
     NEW_PROJECT: localize(
       "info.newProject",
       "New to Python or Circuit Playground Express project? We are here to help!"
@@ -92,7 +96,7 @@ export enum TelemetryEventName {
   ERROR_DEPLOY_WITHOUT_DEVICE = "ERROR.DEPLOY.WITHOUT.DEVICE",
 
   SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE"
- }
+}
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
