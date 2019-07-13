@@ -255,10 +255,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // Send message to the webview
-  const runDevice: vscode.Disposable = vscode.commands.registerCommand("pacifica.runDevice", () => {
+  const deployCodeToDevice = () => {
     console.info("Sending code to device");
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
@@ -338,6 +336,13 @@ export function activate(context: vscode.ExtensionContext) {
     deviceProcess.on("end", (code: number) => {
       console.info(`Command execution exited with code: ${code}`);
     });
+  }
+
+  const runDevice: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runDevice",
+    () => {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+    TelemetryAI.runWithLatencyMeasure(deployCodeToDevice, TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE);
   });
 
   context.subscriptions.push(
