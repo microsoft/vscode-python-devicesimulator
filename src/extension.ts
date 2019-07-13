@@ -30,10 +30,28 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-  
+
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
+  }
+
+  const getFile = () => {
+    const options: vscode.OpenDialogOptions = {
+      canSelectMany: false,
+      filters: {
+        'All files': ['*'],
+        'Python files': ['py']
+      },
+      openLabel: 'Open'
+    };
+
+    return vscode.window.showOpenDialog(options).then(fileUri => {
+      if (fileUri && fileUri[0]) {
+        console.log('Selected file: ' + fileUri[0].fsPath);
+        return fileUri[0].fsPath;
+      }
+    });
   }
 
   const openWebview = () => {
@@ -52,7 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true
         }
       );
-      
+
       currentPanel.webview.html = getWebviewContent(context);
 
       currentPanel.onDidDispose(
@@ -126,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runSimulator",
-    () => {
+    async () => {
       openWebview();
 
       if (!currentPanel) {
@@ -138,11 +156,8 @@ export function activate(context: vscode.ExtensionContext) {
       console.info(CONSTANTS.INFO.RUNNING_CODE);
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
-      let currentFileAbsPath: string = "";
 
-      if (activeTextEditor) {
-        currentFileAbsPath = activeTextEditor.document.fileName;
-      }
+      const currentFileAbsPath = await getFile();
 
       // Get the Python script path (And the special URI to use with the webview)
       const onDiskPath = vscode.Uri.file(
@@ -164,7 +179,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
-        currentFileAbsPath
+        currentFileAbsPath ? currentFileAbsPath : ""
       ]);
 
       let dataFromTheProcess = "";
@@ -257,7 +272,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Send message to the webview
-  const runDevice: vscode.Disposable = vscode.commands.registerCommand("pacifica.runDevice", () => {
+  const runDevice: vscode.Disposable = vscode.commands.registerCommand("pacifica.runDevice", async () => {
     console.info("Sending code to device");
     TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
@@ -265,11 +280,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
-
-    if (activeTextEditor) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
+    const currentFileAbsPath = await getFile();
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
@@ -279,7 +290,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const deviceProcess = cp.spawn("python", [
       scriptPath.fsPath,
-      currentFileAbsPath
+      currentFileAbsPath ? currentFileAbsPath : ""
     ]);
 
     let dataFromTheProcess = "";
