@@ -98,14 +98,20 @@ export enum TelemetryEventName {
   SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE"
 }
 
+export enum WebviewMessages {
+  BUTTON_PRESS = "button-press",
+  PLAY_SIMULATOR = "play-simulator"
+} 
+
+
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
-  };
+  }; 
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
-  };
+  }; 
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
   };
