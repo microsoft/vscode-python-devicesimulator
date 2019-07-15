@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
         CONSTANTS.LABEL.WEBVIEW_PANEL,
-        vscode.ViewColumn.Two,
+        { preserveFocus: true, viewColumn: vscode.ViewColumn.Two },
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
@@ -442,7 +442,7 @@ const logToOutputChannel = (
   show: boolean = false
 ) => {
   if (outChannel) {
-    if (show) outChannel.show();
+    if (show) outChannel.show(true);
     outChannel.append(message);
   }
 };
