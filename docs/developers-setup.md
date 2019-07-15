@@ -21,6 +21,10 @@
       (Link to download : https://visualstudio.microsoft.com/vs/older-downloads under
       'Redistributables and Build tools' : 'Microsoft Build Tools 2015')
 
+- Pywin32
+
+  - Run the command in a console : `pip install pywin32`
+
 - VS Code
 
 - Python extension for VS Code (download from VS Code market place)
@@ -41,6 +45,7 @@
 
 ## Notes on how to use it
 
+- [Documentation to use the Extension](/docs/how-to-use.md)
 - Debugging the extension opens a new VS Code window with the extension installed
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
