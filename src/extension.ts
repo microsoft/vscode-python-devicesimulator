@@ -140,9 +140,7 @@ export function activate(context: vscode.ExtensionContext) {
       const activeTextEditor: vscode.TextEditor | undefined =
         vscode.window.activeTextEditor;
 
-      if (activeTextEditor && activeTextEditor.document.fileName.endsWith(".py")) {
-        currentFileAbsPath = activeTextEditor.document.fileName;
-      }
+      updateCurrentFileIfPython(activeTextEditor);
 
       // Get the Python script path (And the special URI to use with the webview)
       const onDiskPath = vscode.Uri.file(
@@ -161,7 +159,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
-      if (currentFileAbsPath === "") logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN);
+      if (currentFileAbsPath === "") { logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true); }
 
       childProcess = cp.spawn("python", [
         scriptPath.fsPath,
@@ -267,11 +265,9 @@ export function activate(context: vscode.ExtensionContext) {
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
 
-    if (activeTextEditor && activeTextEditor.document.fileName.endsWith(".py")) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
+    updateCurrentFileIfPython(activeTextEditor);
 
-    if (currentFileAbsPath === "") logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN);
+    if (currentFileAbsPath === "") { logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true); }
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
@@ -349,6 +345,12 @@ export function activate(context: vscode.ExtensionContext) {
     runDevice,
     newProject
   );
+}
+
+const updateCurrentFileIfPython = (activeTextEditor: vscode.TextEditor | undefined) => {
+  if (activeTextEditor && activeTextEditor.document.languageId === "python") {
+    currentFileAbsPath = activeTextEditor.document.fileName;
+  }
 }
 
 const handleButtonPressTelemetry = (buttonState: any) => {
