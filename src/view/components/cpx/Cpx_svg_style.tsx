@@ -19,6 +19,8 @@ export const BUTTON_CORNER_RADIUS: number = 2;
 export const BUTTON_WIDTH: number = 10;
 export const BUTTON_CIRCLE_RADIUS: number = 3;
 export const BUTTON_TEXT_BASELINE: number = 163;
+export const POWER_LED_ON: string ="#00FF00";
+export const POWER_LED_OFF: string ="#FFFFFF";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(

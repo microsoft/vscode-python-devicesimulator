@@ -2557,7 +2557,7 @@ export const CPX_SVG = (
       <path
         d="M52.266 135.795h3.543v-3.543h-3.543v3.543z"
         id="PWR_LED"
-        fill="#0f0"
+        fill="white"
       />
       <g id="g2334" transform="translate(54.038 134.59)">
         <path
