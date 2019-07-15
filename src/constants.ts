@@ -42,7 +42,7 @@ export const CONSTANTS = {
     ),
     FIRST_TIME_WEBVIEW: localize(
       "info.firstTimeWebview",
-      "Click on the \"Open Simulator\" button on the upper right corner of the text editor, or select from command palette to re-open it."
+      "To reopen the simulator click on the \"Open Simulator\" button on the upper right corner of the text editor, or select the command \"Open Simulator\" from command palette."
     ),
     NEW_PROJECT: localize(
       "info.newProject",
