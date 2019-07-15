@@ -19,11 +19,8 @@ export const getPathToScript = (
 };
 
 export const validCodeFileName = (filePath: string) => {
-  const fileName = filePath.substr(
-    filePath.length - USER_CODE_NAMES.VALID_LENGTH,
-    USER_CODE_NAMES.VALID_LENGTH
-  );
   return (
-    fileName === USER_CODE_NAMES.CODE_PY || fileName === USER_CODE_NAMES.CODE_PY
+    filePath.endsWith(USER_CODE_NAMES.CODE_PY) ||
+    filePath.endsWith(USER_CODE_NAMES.MAIN_PY)
   );
 };

@@ -3,6 +3,7 @@
 
 import * as vscode from "vscode";
 import { validCodeFileName } from "./utils";
+import { CONSTANTS } from "./constants";
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
@@ -17,8 +18,7 @@ export class SimulatorDebugConfigurationProvider
     token?: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.DebugConfiguration> {
     // Check config name
-    if (config.name === "Pacifica Simulator Debugger") {
-      // TODO: Move config name to constants
+    if (config.name === CONSTANTS.DEBUG_CONFIGURATION_NAME) {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (activeTextEditor) {
         const currentFilePath = activeTextEditor.document.fileName;
@@ -29,8 +29,8 @@ export class SimulatorDebugConfigurationProvider
           !validCodeFileName(currentFilePath)
         ) {
           return vscode.window
-            .showErrorMessage("Invalid code file selected to debug.")
-            .then(_ => {
+            .showErrorMessage(CONSTANTS.ERROR.INVALID_FILE_NAME_DEBUG)
+            .then(() => {
               return undefined; // Abort launch
             });
         }
@@ -52,8 +52,8 @@ export class SimulatorDebugConfigurationProvider
     // Abort / show error message if can't find process_user_code.py
     if (!config.program) {
       return vscode.window
-        .showInformationMessage("Cannot find a program to debug.")
-        .then(_ => {
+        .showInformationMessage(CONSTANTS.ERROR.NO_PROGRAM_FOUND_DEBUG)
+        .then(() => {
           return undefined; // Abort launch
         });
     }

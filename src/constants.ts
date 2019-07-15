@@ -9,10 +9,19 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONSTANTS = {
+  DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
+    INVALID_FILE_NAME_DEBUG: localize(
+      "error.invalidFileNameDebug",
+      "Invalid code file selected to debug."
+    ),
     NO_DEVICE: localize(
       "error.noDevice",
       "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+    ),
+    NO_PROGRAM_FOUND_DEBUG: localize(
+      "error.noProgramFoundDebug",
+      "Cannot find a program to debug."
     ),
     STDERR: (data: string) => {
       return localize("error.stderr", `[ERROR] ${data} \n`);
@@ -101,8 +110,7 @@ export namespace DialogResponses {
 
 export const USER_CODE_NAMES = {
   CODE_PY: "code.py",
-  MAIN_PY: "main.py",
-  VALID_LENGTH: 7
+  MAIN_PY: "main.py"
 };
 
 export default CONSTANTS;
