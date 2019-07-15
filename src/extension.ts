@@ -165,7 +165,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const killProcessIfRunning = () => {
-    // Create the Python process (after killing the one running if any)
     if (childProcess !== undefined) {
       if (currentPanel) {
         console.info("Sending clearing state command");
