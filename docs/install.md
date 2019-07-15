@@ -15,8 +15,8 @@
 
 - [VS Code](https://code.visualstudio.com/Download)
 - [Node](https://nodejs.org/en/download/)
-- [Python 3.7.^](https://www.python.org/downloads/)
-- Python VS Code extension (download from VS Code Market place)
+- [Python 3.7.4 (or latest)](https://www.python.org/downloads/)
+- Python VS Code extension (download from VS Code Marketplace)
 - Simple audio :
   - `python -m pip install --upgrade pip`
   - `pip install simpleaudio`

@@ -2,18 +2,20 @@
 
 Commands are accessible through :
 
-- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Adafruit : `command_name`'
+- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
 - **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open
 
 ## Available commands
 
-- **Open simulator** : opens the webview of the simulator.
-- **New project** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
+- **Open Simulator** : opens the webview of the simulator.
+
+- **New Project** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
-- **Run simulator** : run the code you have open on the simulator (make sure you've clicked on a valid code file).  
+- **Run Simulator** : run the code you have open on the simulator (make sure you've clicked on a valid code file).  
   _(**Note :** will open the simulator webview if it's not open yet)_.
-- **Deploy to device** : saves the code to a Circuit Playground Express.  
+
+- **Deploy to Device** : saves the code to a Circuit Playground Express.  
   _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
 
 ## Available features
