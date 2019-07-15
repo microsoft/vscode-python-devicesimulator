@@ -71,7 +71,6 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
       TelemetryAI.runWithLatencyMeasure(openWebview, TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR);
-      openWebview();
     }
   );
 
@@ -107,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
     openWebview();
 
     vscode.workspace
-      .openTextDocument({ content: file, language: "en" })
+      .openTextDocument({ content: file, language: "python" })
       .then((template: vscode.TextDocument) => {
         vscode.window.showTextDocument(template, 1, false);
       }),

@@ -8,11 +8,11 @@ export default class TelemetryAI {
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties);
     }
 
-    public static runWithLatencyMeasure(functionToRun: Function, eventName: string): void {
+    public static runWithLatencyMeasure(functionToRun: () => void, eventName: string): void {
         const numberOfNanosecondsInSecond: number = 1000000000;
-        const currentTime: number = Number(process.hrtime.bigint());
+        const startTime: number = Number(process.hrtime.bigint());
         functionToRun();
-        const latency: number = Number(process.hrtime.bigint()) - currentTime;
+        const latency: number = Number(process.hrtime.bigint()) - startTime;
         const measurement = {
             duration: latency / numberOfNanosecondsInSecond
         }
