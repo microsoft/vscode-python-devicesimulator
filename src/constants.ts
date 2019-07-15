@@ -14,8 +14,12 @@ export const CONSTANTS = {
       "error.noDevice",
       "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
     ),
+    NO_FILE_TO_RUN: localize(
+      "error.noFileToRun",
+      "\n[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples"
+    ),
     STDERR: (data: string) => {
-      return localize("error.stderr", `[ERROR] ${data} \n`);
+      return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
     UNEXPECTED_MESSAGE: localize(
       "error.unexpectedMessage",
@@ -101,17 +105,17 @@ export enum TelemetryEventName {
 export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator"
-} 
+}
 
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
-  }; 
+  };
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
-  }; 
+  };
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
   };

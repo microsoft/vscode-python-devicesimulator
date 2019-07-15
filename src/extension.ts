@@ -9,6 +9,7 @@ import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { CONSTANTS, DialogResponses, TelemetryEventName, WebviewMessages } from "./constants";
 
+let currentFileAbsPath: string = "";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
@@ -188,16 +189,16 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
-
     console.info(CONSTANTS.INFO.RUNNING_CODE);
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
 
-    if (activeTextEditor) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
+    updateCurrentFileIfPython(activeTextEditor);
+
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
+
+
+    if (currentFileAbsPath === "") { logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true); }
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
@@ -286,11 +287,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
 
-    if (activeTextEditor) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
+    updateCurrentFileIfPython(activeTextEditor);
+
+    if (currentFileAbsPath === "") { logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true); }
 
     // Get the Python script path (And the special URI to use with the webview)
     const onDiskPath = vscode.Uri.file(
@@ -368,6 +368,12 @@ export function activate(context: vscode.ExtensionContext) {
     runDevice,
     newProject
   );
+}
+
+const updateCurrentFileIfPython = (activeTextEditor: vscode.TextEditor | undefined) => {
+  if (activeTextEditor && activeTextEditor.document.languageId === "python") {
+    currentFileAbsPath = activeTextEditor.document.fileName;
+  }
 }
 
 const handleButtonPressTelemetry = (buttonState: any) => {
