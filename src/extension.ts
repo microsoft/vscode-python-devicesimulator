@@ -9,6 +9,8 @@ import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { CONSTANTS, DialogResponses, TelemetryEventName, WebviewMessages } from "./constants";
 
+// Notification booleans
+let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
 
 
@@ -99,6 +101,10 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          if (firstTimeClosed) {
+            vscode.window.showInformationMessage(CONSTANTS.INFO.FIRST_TIME_WEBVIEW)
+            firstTimeClosed = false;
+          }
         },
         undefined,
         context.subscriptions
