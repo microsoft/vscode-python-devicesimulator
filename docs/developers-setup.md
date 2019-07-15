@@ -9,8 +9,8 @@
 - Python 3 (or latest)
 
   - Download link : https://www.python.org/downloads/
-  - /!\ Make sure Python is in your path (during installation or insert it manually afterwards)
-  - /!\ Make sure pip is added to your environment variables as well
+  - **NOTE :** Make sure Python is in your path (during installation or insert it manually afterwards)
+  - **NOTE :** Make sure pip is added to your environment variables as well
     (for example it could be find at : c:\users\<alias>\appdata\local\programs\python\python37\lib\site-packages\pip)
   - Run in a console `python -m pip install --upgrade pip`
 

@@ -14,7 +14,7 @@ Commands are accessible through :
 - **Run simulator** : run the code you have open on the simulator (make sure you've clicked on a valid code file).  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 - **Deploy to device** : saves the code to a Circuit Playground Express.  
-  _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Tutorial video](https://www.youtube.com/watch?v=TIcq6sr7EmY))_.
+  _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
 
 ## Available features
 

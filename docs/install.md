@@ -8,7 +8,7 @@
 3. At the bottom of the page download the .vsix file
 4. To install the .vsix file :
    - Go to the directory where the downloaded vsix file is and run in a command console: `code --install-extension <vsix file name>`
-   - Or in VS Code, go to the extension tab, in menu (…) select 'Install from VSIX' and search the file you downloaded
+   - Or in VS Code, go to the extension tab (a), in menu (b) select 'Install from VSIX' (c) and search the file you downloaded
      ![VSIX Install Instructions](./vsix-install-instructions.png)
 
 ## Prerequisites
