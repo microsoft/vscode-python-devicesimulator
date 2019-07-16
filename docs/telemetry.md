@@ -11,7 +11,7 @@ This extension collects basic diagnostics telemetry and usage data:
 
 ## Usage Telemetry
 
-Through the Application Insights API, telemetry events are collected to gather basic information regarding Pacifica extension usage. The follow table describes the Telemetry events we collect:
+Through the Application Insights API, telemetry events are collected on Pacifica extension usage. The follow table describes the Telemetry events we collect:
 
 |     **Property**       | **Note**                                                                                             |
 | :-------------------:  | ---------------------------------------------------------------------------------------------------- |
