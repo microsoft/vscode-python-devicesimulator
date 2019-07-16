@@ -119,6 +119,7 @@ class Simulator extends React.Component<any, IState> {
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
+            power_led={this.state.cpx.power_led}
             switch={this.state.cpx.switch}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
