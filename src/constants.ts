@@ -13,7 +13,7 @@ export const CONSTANTS = {
   ERROR: {
     INVALID_FILE_NAME_DEBUG: localize(
       "error.invalidFileNameDebug",
-      "Invalid code file selected to debug."
+      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
     ),
     NO_DEVICE: localize(
       "error.noDevice",
