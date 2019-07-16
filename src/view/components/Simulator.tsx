@@ -7,6 +7,7 @@ import Cpx from "./cpx/Cpx";
 import Button from "./Button";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
+import RefreshLogo from "../svgs/refresh_svg";
 import svg from "./cpx/Svg_utils";
 
 import "../styles/Simulator.css";
@@ -72,6 +73,7 @@ class Simulator extends React.Component<any, IState> {
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.playSimulatorClick = this.playSimulatorClick.bind(this);
+    this.refreshSimulatorClick = this.refreshSimulatorClick.bind(this);
   }
 
   handleMessage = (event: any): void => {
@@ -110,23 +112,29 @@ class Simulator extends React.Component<any, IState> {
     const image = this.state.play_button ? StopLogo : PlayLogo;
     return (
       <div className="simulator">
-      <div>
-        <Cpx
+        <div>
+          <Cpx
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
             switch={this.state.cpx.switch}
-          onMouseUp={this.onMouseUp}
-          onMouseDown={this.onMouseDown}
-          onMouseLeave={this.onMouseLeave}
-        />
-      </div>
+            onMouseUp={this.onMouseUp}
+            onMouseDown={this.onMouseDown}
+            onMouseLeave={this.onMouseLeave}
+          />
+        </div>
         <div className="buttons">
           <Button
             onClick={this.playSimulatorClick}
             image={image}
             on={this.state.play_button}
             label="play"
+          />
+          <Button
+            onClick={this.refreshSimulatorClick}
+            image={RefreshLogo}
+            on={false}
+            label="refresh"
           />
         </div>
       </div>
@@ -137,6 +145,11 @@ class Simulator extends React.Component<any, IState> {
     this.setState({ ...this.state, play_button: !this.state.play_button });
     sendMessage("play-simulator", !this.state.play_button);
   }
+
+  protected refreshSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+    sendMessage("refresh-simulator", true);
+  }
+
   protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, true);
