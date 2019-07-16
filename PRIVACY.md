@@ -14,7 +14,7 @@ learn more. This extension respects the `telemetry.enableTelemetry`
 setting which you can learn more about at
 https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting.
 
-To disable telemetry on Windows, follow these steps:
+To disable telemetry, follow these steps:
 1) Open **File** (Open **Code** on macOS)
 2) Select **Preferences**
 3) Select **Settings**

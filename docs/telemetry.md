@@ -16,9 +16,9 @@ Through the Application Insights API, telemetry events are collected to gather b
 |     **Property**       | **Note**                                                                                             |
 | :-------------------:  | ---------------------------------------------------------------------------------------------------- |
 |    **Event Name**      | Unique event name/descriptor for the event. For ex: Pacifica/COMMAND_NEW_PROJECT                     |
-| **VS Code Session ID** | A unique identifier for the current session. Changes each time the editor is started.                |
+| **VS Code Session ID** | A unique identifier for the current session (changes each time the editor is started)                |
 | **VS Code Machine ID** | A unique identifier for the computer                                                                 |
-|  **VSCode Version**    | VS Code version being used by the user                                                               |
+|  **VS Code Version**   | VS Code version being used by the user                                                               |
 | **Extension Version**  | Pacifica extension version being used                                                                |
 |        **OS**          | User's operating system                                                                              |
 |    **Performance**     | A number indicating how long the command or API call took to execute                                 |
