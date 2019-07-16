@@ -3,8 +3,7 @@
 
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import Cpx from "./cpx/Cpx";
-import svg from "./cpx/Svg_utils";
+import Cpx, { updateSwitch } from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
@@ -181,23 +180,9 @@ class Simulator extends React.Component<any, IState> {
   }
 
   private handleSwitchClick(button: HTMLElement) {
-    const switchInner = (window.document.getElementById(
-      "SWITCH_INNER"
-    ) as unknown) as SVGElement;
-
-    svg.addClass(switchInner, "sim-slide-switch-inner");
-
     const switchIsOn: boolean = !this.state.switch;
-
-    if (switchIsOn) {
-      svg.addClass(switchInner, "on");
-      switchInner.setAttribute("transform", "translate(-5,0)");
-    } else {
-      svg.removeClass(switchInner, "on");
-      switchInner.removeAttribute("transform");
-    }
+    updateSwitch(switchIsOn);
     this.setState({ switch: switchIsOn });
-    button.setAttribute("aria-pressed", switchIsOn.toString());
     return { switch: switchIsOn };
   }
 }
