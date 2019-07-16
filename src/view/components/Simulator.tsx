@@ -14,6 +14,7 @@ import "../styles/Simulator.css";
 
 interface ICpxState {
   pixels: Array<Array<number>>;
+  power_led: boolean;
   brightness: number;
   red_led: boolean;
   button_a: boolean;
@@ -45,6 +46,7 @@ const DEFAULT_CPX_STATE: ICpxState = {
     [0, 0, 0],
     [0, 0, 0]
   ],
+  power_led: true,
   red_led: false,
   switch: false
 };
