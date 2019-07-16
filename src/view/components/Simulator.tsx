@@ -4,9 +4,14 @@
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx from "./cpx/Cpx";
+import Button from "./Button";
+import PlayLogo from "../svgs/play_svg";
+import StopLogo from "../svgs/stop_svg";
 import svg from "./cpx/Svg_utils";
 
-interface IState {
+import "../styles/Simulator.css";
+
+interface ICpxState {
   pixels: Array<Array<number>>;
   brightness: number;
   red_led: boolean;
@@ -14,11 +19,16 @@ interface IState {
   button_b: boolean;
   switch: boolean;
 }
+
+interface IState {
+  cpx: ICpxState;
+  play_button: boolean;
+}
 interface IMyProps {
   children?: any;
 }
 
-const DEFAULT_STATE: IState = {
+const DEFAULT_CPX_STATE: ICpxState = {
   brightness: 1.0,
   button_a: false,
   button_b: false,
@@ -44,20 +54,24 @@ interface vscode {
 
 declare const vscode: vscode;
 
-const sendMessage = (state: any) => {
+const sendMessage = (type: string, state: any) => {
   console.log("sendmessage");
-  vscode.postMessage({ command: "button-press", text: state });
+  vscode.postMessage({ command: type, text: state });
 };
 
 class Simulator extends React.Component<any, IState> {
   constructor(props: IMyProps) {
     super(props);
-    this.state = DEFAULT_STATE;
+    this.state = {
+      cpx: DEFAULT_CPX_STATE,
+      play_button: false
+    };
 
     this.handleClick = this.handleClick.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.playSimulatorClick = this.playSimulatorClick.bind(this);
   }
 
   handleMessage = (event: any): void => {
@@ -65,15 +79,19 @@ class Simulator extends React.Component<any, IState> {
     switch (message.command) {
       case "reset-state":
         console.log("Clearing the state");
-        this.setState(DEFAULT_STATE);
+        this.setState({
+          ...this.state,
+          cpx: DEFAULT_CPX_STATE,
+          play_button: false
+        });
         break;
       case "set-state":
         console.log("Setting the state: " + JSON.stringify(message.state));
-        this.setState(message.state);
+        this.setState({ ...this.state, cpx: message.state, play_button: true });
         break;
       default:
         console.log("Invalid message received from the extension.");
-        this.setState(DEFAULT_STATE);
+        this.setState({ ...this.state, cpx: DEFAULT_CPX_STATE });
         break;
     }
   };
@@ -89,21 +107,36 @@ class Simulator extends React.Component<any, IState> {
   }
 
   render() {
+    const image = this.state.play_button ? StopLogo : PlayLogo;
     return (
+      <div className="simulator">
       <div>
         <Cpx
-          pixels={this.state.pixels}
-          brightness={this.state.brightness}
-          red_led={this.state.red_led}
-          switch={this.state.switch}
+            pixels={this.state.cpx.pixels}
+            brightness={this.state.cpx.brightness}
+            red_led={this.state.cpx.red_led}
+            switch={this.state.cpx.switch}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseLeave={this.onMouseLeave}
         />
       </div>
+        <div className="buttons">
+          <Button
+            onClick={this.playSimulatorClick}
+            image={image}
+            on={this.state.play_button}
+            label="play"
+          />
+        </div>
+      </div>
     );
   }
 
+  protected playSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+    this.setState({ ...this.state, play_button: !this.state.play_button });
+    sendMessage("play-simulator", !this.state.play_button);
+  }
   protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, true);
@@ -124,7 +157,7 @@ class Simulator extends React.Component<any, IState> {
   }
 
   private handleClick(button: HTMLElement, active: boolean) {
-    let newState = undefined;
+    let newState;
     if (button.id.includes("BTN")) {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
@@ -134,7 +167,7 @@ class Simulator extends React.Component<any, IState> {
     }
 
     if (newState) {
-      sendMessage(newState);
+      sendMessage("button-press", newState);
     }
   }
 
@@ -144,6 +177,7 @@ class Simulator extends React.Component<any, IState> {
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
+    let cpxState = this.state.cpx;
 
     if (ButtonAB) {
       innerButton = window.document.getElementById("BTN_AB_INNER");
@@ -151,19 +185,22 @@ class Simulator extends React.Component<any, IState> {
         button_a: active,
         button_b: active
       };
-      this.setState(newState);
+      cpxState = { ...cpxState, ...newState };
+      this.setState({ ...this.state, ...newState });
     } else if (ButtonA) {
       innerButton = window.document.getElementById("BTN_A_INNER");
       newState = {
         button_a: active
       };
-      this.setState(newState);
+      cpxState = { ...cpxState, ...newState };
+      this.setState({ ...this.state, ...newState });
     } else if (ButtonB) {
       innerButton = window.document.getElementById("BTN_B_INNER");
       newState = {
         button_b: active
       };
-      this.setState(newState);
+      cpxState = { ...cpxState, ...newState };
+      this.setState({ ...this.state, ...newState });
     }
 
     if (innerButton) {
@@ -181,13 +218,14 @@ class Simulator extends React.Component<any, IState> {
   }
 
   private handleSwitchClick(button: HTMLElement) {
+    let cpxState = this.state.cpx;
     const switchInner = (window.document.getElementById(
       "SWITCH_INNER"
     ) as unknown) as SVGElement;
 
     svg.addClass(switchInner, "sim-slide-switch-inner");
 
-    const switchIsOn: boolean = !this.state.switch;
+    const switchIsOn: boolean = !this.state.cpx.switch;
 
     if (switchIsOn) {
       svg.addClass(switchInner, "on");
@@ -196,7 +234,8 @@ class Simulator extends React.Component<any, IState> {
       svg.removeClass(switchInner, "on");
       switchInner.removeAttribute("transform");
     }
-    this.setState({ switch: switchIsOn });
+    cpxState = { ...cpxState, switch: switchIsOn };
+    this.setState({ ...this.state, ...cpxState });
     button.setAttribute("aria-pressed", switchIsOn.toString());
     return { switch: switchIsOn };
   }

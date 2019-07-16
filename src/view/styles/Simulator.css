@@ -1,0 +1,13 @@
+.simulator {
+  display: flex;
+  flex-direction: column;
+  /* background: whitesmoke; */
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  justify-content: center;
+}

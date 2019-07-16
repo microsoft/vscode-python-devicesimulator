@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
   const reporter: TelemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
   let outChannel: vscode.OutputChannel | undefined;
-  let childProcess: cp.ChildProcess;
+  let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
         CONSTANTS.LABEL.WEBVIEW_PANEL,
-        vscode.ViewColumn.Two,
+        { preserveFocus: true, viewColumn: vscode.ViewColumn.Two },
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
@@ -76,7 +76,9 @@ export function activate(context: vscode.ExtensionContext) {
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
                 console.log(JSON.stringify(message.text) + "\n");
-                childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                if (childProcess) {
+                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log("Play button");
@@ -86,6 +88,10 @@ export function activate(context: vscode.ExtensionContext) {
                 } else {
                   killProcessIfRunning();
                 }
+                break;
+              case WebviewMessages.REFRESH_SIMULATOR:
+                console.log("Refresh button");
+                runSimulatorCommand();
                 break;
               default:
                 vscode.window.showInformationMessage(
@@ -148,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
             open(CONSTANTS.LINKS.TUTORIALS);
             TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
           }
-      });
+        });
     }
 
     openWebview();
@@ -180,10 +186,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
       // TODO: We need to check the process was correctly killed
       childProcess.kill();
+      childProcess = undefined;
     }
   }
 
-  const runSimulatorCommand = () => {
+  const runSimulatorCommand = async () => {
     openWebview();
 
     if (!currentPanel) {
@@ -194,7 +201,7 @@ export function activate(context: vscode.ExtensionContext) {
     const activeTextEditor: vscode.TextEditor | undefined =
       vscode.window.activeTextEditor;
 
-    updateCurrentFileIfPython(activeTextEditor);
+    await updateCurrentFileIfPython(activeTextEditor);
 
     TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
@@ -363,9 +370,9 @@ export function activate(context: vscode.ExtensionContext) {
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runDevice",
     () => {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
-    TelemetryAI.runWithLatencyMeasure(deployCodeToDevice, TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE);
-  });
+      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+      TelemetryAI.runWithLatencyMeasure(deployCodeToDevice, TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE);
+    });
 
   context.subscriptions.push(
     openSimulator,
@@ -375,9 +382,29 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-const updateCurrentFileIfPython = (activeTextEditor: vscode.TextEditor | undefined) => {
+const getFile = () => {
+  const options: vscode.OpenDialogOptions = {
+    canSelectMany: false,
+    filters: {
+      'All files': ['*'],
+      'Python files': ['py']
+    },
+    openLabel: 'Open'
+  };
+
+  return vscode.window.showOpenDialog(options).then(fileUri => {
+    if (fileUri && fileUri[0]) {
+      console.log('Selected file: ' + fileUri[0].fsPath);
+      return fileUri[0].fsPath;
+    }
+  });
+}
+
+const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | undefined) => {
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
+  } else if (currentFileAbsPath === "") {
+    currentFileAbsPath = await getFile() || "";
   }
 }
 
