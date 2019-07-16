@@ -33,8 +33,8 @@ Commands are accessible through :
 
 ## Not supported yet
 
-- Print statements on the code
-- Not having to call the show method every time
+- User print statements
+- Updating the simulator's state without needing to call the`show` method
 - Auto-detect/format the device
 - Serial monitor for the device
 - Debugger for the simulator
@@ -48,9 +48,9 @@ Commands are accessible through :
   - Green LED
   - IR transmitter
 
-## Troubleshoot
+## Troubleshooting Tips
 
-- The first time you install the extension, you'll need to execute the `run` command at least once in order to have access to the library.
+- The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
