@@ -126,62 +126,71 @@ export function activate(context: vscode.ExtensionContext) {
     "pacifica.openSimulator",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
-      openWebview();
+      TelemetryAI.runWithLatencyMeasure(
+        openWebview,
+        TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
+      );
     }
   );
+
+  const openTemplateFile = () => {
+    const fileName = "template.py";
+    const filePath = __dirname + path.sep + fileName;
+    const file = fs.readFileSync(filePath, "utf8");
+
+    if (shouldShowNewProject) {
+      vscode.window
+        .showInformationMessage(
+          CONSTANTS.INFO.NEW_PROJECT,
+          ...[
+            DialogResponses.DONT_SHOW,
+            DialogResponses.EXAMPLE_CODE,
+            DialogResponses.TUTORIALS
+          ]
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          if (selection === DialogResponses.DONT_SHOW) {
+            shouldShowNewProject = false;
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+            );
+          } else if (selection === DialogResponses.EXAMPLE_CODE) {
+            open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
+            );
+          } else if (selection === DialogResponses.TUTORIALS) {
+            open(CONSTANTS.LINKS.TUTORIALS);
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_TUTORIALS
+            );
+          }
+        });
+    }
+
+    openWebview();
+
+    vscode.workspace
+      .openTextDocument({ content: file, language: "python" })
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }),
+      (error: any) => {
+        TelemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
+        );
+        console.error(`Failed to open a new text document:  ${error}`);
+      };
+  };
 
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
-
-      const fileName = "template.py";
-      const filePath = __dirname + path.sep + fileName;
-      const file = fs.readFileSync(filePath, "utf8");
-
-      if (shouldShowNewProject) {
-        vscode.window
-          .showInformationMessage(
-            CONSTANTS.INFO.NEW_PROJECT,
-            ...[
-              DialogResponses.DONT_SHOW,
-              DialogResponses.EXAMPLE_CODE,
-              DialogResponses.TUTORIALS
-            ]
-          )
-          .then((selection: vscode.MessageItem | undefined) => {
-            if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowNewProject = false;
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.CLICK_DIALOG_DONT_SHOW
-              );
-            } else if (selection === DialogResponses.EXAMPLE_CODE) {
-              open(CONSTANTS.LINKS.EXAMPLE_CODE);
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
-              );
-            } else if (selection === DialogResponses.TUTORIALS) {
-              open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.CLICK_DIALOG_TUTORIALS
-              );
-            }
-          });
-      }
-
-      openWebview();
-
-      vscode.workspace
-        .openTextDocument({ content: file, language: "python" })
-        .then((template: vscode.TextDocument) => {
-          vscode.window.showTextDocument(template, 1, false);
-        }),
-        (error: any) => {
-          TelemetryAI.trackFeatureUsage(
-            TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
-          );
-          console.error(`Failed to open a new text document:  ${error}`);
-        };
+      TelemetryAI.runWithLatencyMeasure(
+        openTemplateFile,
+        TelemetryEventName.PERFORMANCE_NEW_PROJECT
+      );
     }
   );
 
@@ -290,95 +299,101 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // Send message to the webview
+  const deployCodeToDevice = () => {
+    console.info("Sending code to device");
+
+    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+
+    const activeTextEditor: vscode.TextEditor | undefined =
+      vscode.window.activeTextEditor;
+
+    updateCurrentFileIfPython(activeTextEditor);
+
+    if (currentFileAbsPath === "") {
+      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    }
+
+    const deviceProcess = cp.spawn("python", [
+      utils.getPathToScript(context, "out", "device.py"),
+      currentFileAbsPath
+    ]);
+
+    let dataFromTheProcess = "";
+
+    // Data received from Python process
+    deviceProcess.stdout.on("data", data => {
+      dataFromTheProcess = data.toString();
+      console.log(`Device output = ${dataFromTheProcess}`);
+      let messageToWebview;
+      try {
+        messageToWebview = JSON.parse(dataFromTheProcess);
+        // Check the JSON is a state
+        switch (messageToWebview.type) {
+          case "complete":
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
+            );
+            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+            break;
+
+          case "no-device":
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
+            );
+            vscode.window
+              .showErrorMessage(
+                CONSTANTS.ERROR.NO_DEVICE,
+                ...[DialogResponses.HELP]
+              )
+              .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.HELP) {
+                  TelemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                  );
+                  open(CONSTANTS.LINKS.HELP);
+                }
+              });
+            break;
+
+          default:
+            console.log(
+              `Non-state JSON output from the process : ${messageToWebview}`
+            );
+            break;
+        }
+      } catch (err) {
+        console.log(
+          `Non-JSON output from the process :  ${dataFromTheProcess}`
+        );
+      }
+    });
+
+    // Std error output
+    deviceProcess.stderr.on("data", data => {
+      TelemetryAI.trackFeatureUsage(
+        TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+        { error: `${data}` }
+      );
+      console.error(
+        `Error from the Python device process through stderr: ${data}`
+      );
+      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+    });
+
+    // When the process is done
+    deviceProcess.on("end", (code: number) => {
+      console.info(`Command execution exited with code: ${code}`);
+    });
+  };
+
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runDevice",
     () => {
-      console.info("Sending code to device");
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
-
-      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
-
-      const activeTextEditor: vscode.TextEditor | undefined =
-        vscode.window.activeTextEditor;
-
-      updateCurrentFileIfPython(activeTextEditor);
-
-      if (currentFileAbsPath === "") {
-        logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
-      }
-
-      const deviceProcess = cp.spawn("python", [
-        utils.getPathToScript(context, "out", "device.py"),
-        currentFileAbsPath
-      ]);
-
-      let dataFromTheProcess = "";
-
-      // Data received from Python process
-      deviceProcess.stdout.on("data", data => {
-        dataFromTheProcess = data.toString();
-        console.log(`Device output = ${dataFromTheProcess}`);
-        let messageToWebview;
-        try {
-          messageToWebview = JSON.parse(dataFromTheProcess);
-          // Check the JSON is a state
-          switch (messageToWebview.type) {
-            case "complete":
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
-              );
-              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-              break;
-
-            case "no-device":
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
-              );
-              vscode.window
-                .showErrorMessage(
-                  CONSTANTS.ERROR.NO_DEVICE,
-                  ...[DialogResponses.HELP]
-                )
-                .then((selection: vscode.MessageItem | undefined) => {
-                  if (selection === DialogResponses.HELP) {
-                    TelemetryAI.trackFeatureUsage(
-                      TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
-                    );
-                    open(CONSTANTS.LINKS.HELP);
-                  }
-                });
-              break;
-
-            default:
-              console.log(
-                `Non-state JSON output from the process : ${messageToWebview}`
-              );
-              break;
-          }
-        } catch (err) {
-          console.log(
-            `Non-JSON output from the process :  ${dataFromTheProcess}`
-          );
-        }
-      });
-
-      // Std error output
-      deviceProcess.stderr.on("data", data => {
-        TelemetryAI.trackFeatureUsage(
-          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
-          { error: `${data}` }
-        );
-        console.error(
-          `Error from the Python device process through stderr: ${data}`
-        );
-        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-      });
-
-      // When the process is done
-      deviceProcess.on("end", (code: number) => {
-        console.info(`Command execution exited with code: ${code}`);
-      });
+      TelemetryAI.runWithLatencyMeasure(
+        deployCodeToDevice,
+        TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE
+      );
     }
   );
 
