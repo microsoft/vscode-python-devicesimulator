@@ -1,0 +1,35 @@
+.sliderArea{
+    height: 32px;
+    border-color: brown;
+    background-color: greenyellow;
+}
+.sliderValue{
+    text-align: center;
+    width: 48px;
+    height: 32px;
+    background-color: var(--vscode-editor-background);
+    color: white;
+    border:0;
+    margin-right: 15px;
+    vertical-align: middle;
+    
+
+}
+
+.slider{
+    -webkit-appearance: none;
+    background-color: #cccccc;
+    color: var(--vscode-textLink-activeForeground);
+    vertical-align: middle;
+    height: 1px;
+    
+}
+.slider::-webkit-slider-thumb{
+    color: yellow;
+}
+.slider::-ms-track{
+    color: var(--vscode-textLink-activeForeground);
+}
+.slider:focus{
+    border: var(--focusBorder)
+}
