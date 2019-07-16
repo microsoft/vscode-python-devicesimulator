@@ -4,8 +4,19 @@ import getPackageInfo from "./getPackageInfo";
 
 // tslint:disable-next-line:export-name
 export default class TelemetryAI {
-    static trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
+    public static trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties);
+    }
+
+    public static runWithLatencyMeasure(functionToRun: () => void, eventName: string): void {
+        const numberOfNanosecondsInSecond: number = 1000000000;
+        const startTime: number = Number(process.hrtime.bigint());
+        functionToRun();
+        const latency: number = Number(process.hrtime.bigint()) - startTime;
+        const measurement = {
+            duration: latency / numberOfNanosecondsInSecond
+        }
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, {}, measurement);
     }
 
     private static telemetryReporter: TelemetryReporter;

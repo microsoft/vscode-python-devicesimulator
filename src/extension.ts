@@ -118,56 +118,57 @@ export function activate(context: vscode.ExtensionContext) {
     "pacifica.openSimulator",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
-      openWebview();
+      TelemetryAI.runWithLatencyMeasure(openWebview, TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR);
     }
   );
+
+  const openTemplateFile = () => {
+    const fileName = "template.py";
+    const filePath = __dirname + path.sep + fileName;
+    const file = fs.readFileSync(filePath, "utf8");
+
+    if (shouldShowNewProject) {
+      vscode.window
+        .showInformationMessage(
+          CONSTANTS.INFO.NEW_PROJECT,
+          ...[
+            DialogResponses.DONT_SHOW,
+            DialogResponses.EXAMPLE_CODE,
+            DialogResponses.TUTORIALS
+          ]
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          if (selection === DialogResponses.DONT_SHOW) {
+            shouldShowNewProject = false;
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
+          } else if (selection === DialogResponses.EXAMPLE_CODE) {
+            open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
+          } else if (selection === DialogResponses.TUTORIALS) {
+            open(CONSTANTS.LINKS.TUTORIALS);
+            TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
+          }
+      });
+    }
+
+    openWebview();
+
+    vscode.workspace
+      .openTextDocument({ content: file, language: "python" })
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }),
+      (error: any) => {
+        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT);
+        console.error(`Failed to open a new text document:  ${error}`);
+      };
+  }
 
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
       TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
-
-      const fileName = "template.py";
-      const filePath = __dirname + path.sep + fileName;
-      const file = fs.readFileSync(filePath, "utf8");
-
-
-      if (shouldShowNewProject) {
-        vscode.window
-          .showInformationMessage(
-            CONSTANTS.INFO.NEW_PROJECT,
-            ...[
-              DialogResponses.DONT_SHOW,
-              DialogResponses.EXAMPLE_CODE,
-              DialogResponses.TUTORIALS
-            ]
-          )
-          .then((selection: vscode.MessageItem | undefined) => {
-            if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowNewProject = false;
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
-            } else if (selection === DialogResponses.EXAMPLE_CODE) {
-              open(CONSTANTS.LINKS.EXAMPLE_CODE);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
-            } else if (selection === DialogResponses.TUTORIALS) {
-              open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
-            }
-          });
-      }
-
-      openWebview();
-
-
-      vscode.workspace
-        .openTextDocument({ content: file, language: "python" })
-        .then((template: vscode.TextDocument) => {
-          vscode.window.showTextDocument(template, 1, false);
-        }),
-        (error: any) => {
-          TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_COMMAND_NEW_PROJECT);
-          console.error(`Failed to open a new text document:  ${error}`);
-        };
+      TelemetryAI.runWithLatencyMeasure(openTemplateFile, TelemetryEventName.PERFORMANCE_NEW_PROJECT);
     }
   );
 
@@ -196,7 +197,6 @@ export function activate(context: vscode.ExtensionContext) {
     updateCurrentFileIfPython(activeTextEditor);
 
     TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
-
 
     if (currentFileAbsPath === "") { logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true); }
 
@@ -278,10 +278,8 @@ export function activate(context: vscode.ExtensionContext) {
     "pacifica.runSimulator", () => { runSimulatorCommand(); }
   );
 
-  // Send message to the webview
-  const runDevice: vscode.Disposable = vscode.commands.registerCommand("pacifica.runDevice", () => {
+  const deployCodeToDevice = () => {
     console.info("Sending code to device");
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
@@ -360,6 +358,13 @@ export function activate(context: vscode.ExtensionContext) {
     deviceProcess.on("end", (code: number) => {
       console.info(`Command execution exited with code: ${code}`);
     });
+  }
+
+  const runDevice: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runDevice",
+    () => {
+    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+    TelemetryAI.runWithLatencyMeasure(deployCodeToDevice, TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE);
   });
 
   context.subscriptions.push(
