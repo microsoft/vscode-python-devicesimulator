@@ -7,6 +7,7 @@ import Cpx, { updateSwitch } from "./cpx/Cpx";
 
 interface IState {
   pixels: Array<Array<number>>;
+  power_led: boolean;
   brightness: number;
   red_led: boolean;
   button_a: boolean;
@@ -33,6 +34,7 @@ const DEFAULT_STATE: IState = {
     [0, 0, 0],
     [0, 0, 0]
   ],
+  power_led: true,
   red_led: false,
   switch: false
 };
@@ -92,6 +94,7 @@ class Simulator extends React.Component<any, IState> {
       <div>
         <Cpx
           pixels={this.state.pixels}
+          power_led={this.state.power_led}
           brightness={this.state.brightness}
           red_led={this.state.red_led}
           switch={this.state.switch}

@@ -9,6 +9,7 @@ import accessibility from "./Accessibility_utils";
 
 interface IProps {
   pixels: Array<Array<number>>;
+  power_led: boolean;
   red_led: boolean;
   brightness: number;
   switch: boolean;
@@ -33,6 +34,7 @@ const Cpx: React.FC<IProps> = props => {
     // Update Neopixels and red LED state
     updateNeopixels(props);
     updateRedLED(props.red_led);
+    updatePowerLED(props.power_led);
     updateSwitch(props.switch);
   }
 
@@ -171,6 +173,15 @@ const updateRedLED = (propsRedLED: boolean): void => {
     redLED.style.fill = propsRedLED
       ? SvgStyle.RED_LED_ON
       : SvgStyle.RED_LED_OFF;
+  }
+};
+
+const updatePowerLED = (propsPowerLED: boolean): void => {
+  let powerLED = window.document.getElementById("PWR_LED");
+  if (powerLED) {
+    powerLED.style.fill = propsPowerLED
+      ? SvgStyle.POWER_LED_ON
+      : SvgStyle.POWER_LED_OFF;
   }
 };
 
