@@ -17,23 +17,36 @@ interface ISliderProps{
 
 
 class InputSlider extends React.Component<ISliderProps,any,any>{
+
     constructor(props: ISliderProps){
         super(props);
         this.state = {
-            value:0
+            value:0,
+            dummy: 0
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.validateInput = this.validateInput.bind(this);
     }
 
     
     render(){
       return (
         <div className="inputSlider">
-            <input className="sliderValue" value={this.state.value}/>        
+            <input className="sliderValue" value={this.state.value} 
+            onInput={this.handleOnChange} defaultValue={this.props.min.toLocaleString()} max={this.props.max}/>        
             <div className="sliderArea">
-                <input type="range"  className="slider" aria-valuemin={this.props.min} aria-valuemax={this.props.max} step={this.props.step} title={this.props.title} onChange={this.handleOnChange} aria-valuenow={this.state.value}/>
-                <div className="labelArea">
+                <div className="upLabelArea">
+                    <div className='minLabel'>
+                        {this.props.min_label}
+                    </div>
+                    <div className='maxLabel'>
+                        {this.props.max_label}
+                    </div>
+                </div>
+                <input type="range"  className="slider" min={this.props.min} max={this.props.max} 
+                step={this.props.step} title={this.props.title} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
+                <div className="downLabelArea">
                     <div className='minLabel'>
                         {this.props.min_label}
                     </div>
@@ -42,7 +55,9 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                     </div>
                 </div>
             </div>
+            <div>{this.state.dummy}</div>
         </div>
+
         
       )
     }
@@ -51,7 +66,20 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
        const inputElement = event.target 
        const newValue = inputElement? inputElement.value:0;
        this.setState({value:newValue});
+       console.log(newValue);
     
+    }
+
+    private validateInput(){
+        if(this.state.value<this.props.min){
+            this.setState({value:this.props.min,dummy:2});
+        }
+        if(this.state.value>this.props.max){
+            this.setState({value:this.props.max,dummy:1});
+        }
+
+
+
     }
 
 }
