@@ -86,15 +86,6 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
     
     }
 
-    
-    private  convertCelsiusToFaren(value:number): number{
-        return value*1.8+32
-    }
-
-    private  convertsFarenToCelsius(value:number): number{
-        return (value-32)/1.8
-    }
-
 
 }
 
