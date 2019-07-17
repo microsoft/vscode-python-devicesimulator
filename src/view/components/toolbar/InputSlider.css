@@ -1,18 +1,16 @@
 
 .inputSlider{
-    height: 32px;
+    height: 50px;
     margin-bottom: 100px;
-    
 }
 .sliderValue{
     text-align: center;
-    width: 48px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     background-color: var(--vscode-editor-background);
     color: white;
     border:0;
     margin-right: 15px;
-    vertical-align: middle;
     
 }
 
@@ -41,7 +39,7 @@
 }
 
 .sliderValue:focus{
-    background-color: var(--vscode-textLink-activeForeground);
+    outline-color:  var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
 .minLabel{
@@ -58,19 +56,29 @@
 
 .sliderArea,
 .sliderValue{
-    display: inline;
+    display: inline-block;
 }
 
 .sliderArea{
     width: 280px;
-    /* background-color: aqua; */
-    height: 20px;
+    height: 30px;
     vertical-align: middle;
+
 }
-.labelArea{
+.downLabelArea{
     /* background-color: goldenrod; */
     width: 280px;
-    margin-left: 65px;
     height: 15px;
+    margin-top: 10px
 
+}
+.upLabelArea{
+    width: 280px;
+    height: 15px;
+    margin-bottom: 10px;
+
+}
+
+.slider,.upLabelArea,.downLabelArea{
+    display: block;
 }
