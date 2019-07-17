@@ -421,6 +421,12 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
+const getActivePythonFile = () => {
+  const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
+  const activeEditor = editors.find((editor) => editor.document.languageId === "python");
+  return activeEditor ? activeEditor.document.fileName : "";
+}
+
 const getFile = () => {
   const options: vscode.OpenDialogOptions = {
     canSelectMany: false,
@@ -428,7 +434,7 @@ const getFile = () => {
       'All files': ['*'],
       'Python files': ['py']
     },
-    openLabel: 'Open'
+    openLabel: 'Run File'
   };
 
   return vscode.window.showOpenDialog(options).then(fileUri => {
@@ -443,7 +449,7 @@ const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | u
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
   } else if (currentFileAbsPath === "") {
-    currentFileAbsPath = await getFile() || "";
+    currentFileAbsPath = getActivePythonFile() || await getFile() || "";
   }
 };
 
