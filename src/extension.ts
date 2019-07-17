@@ -224,6 +224,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
     }
 
     killProcessIfRunning();
@@ -311,6 +316,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
     }
 
     const deviceProcess = cp.spawn("python", [

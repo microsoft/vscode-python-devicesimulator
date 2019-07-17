@@ -53,6 +53,12 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+    FILE_SELECTED: (filePath: string) => {
+      return localize(
+        "info.fileSelected",
+        `[INFO] File selected : ${filePath} \n`
+      );
+    },
     FIRST_TIME_WEBVIEW: localize(
       "info.firstTimeWebview",
       'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
