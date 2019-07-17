@@ -3,8 +3,6 @@
 
 import * as React from "react";
 import "./InputSlider.css"
-import { timingSafeEqual } from "crypto";
-
 
 interface ISliderProps{
     min:number;
