@@ -47,7 +47,7 @@ export const CONSTANTS = {
     ),
     DEPLOY_SUCCESS: localize(
       "info.deploySuccess",
-      "\n[INFO] Code successfully deployed\n"
+      "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
     ),
     EXTENSION_ACTIVATED: localize(
       "info.extensionActivated",
