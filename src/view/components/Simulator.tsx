@@ -13,8 +13,7 @@ import svg from "./cpx/Svg_utils";
 import "../styles/Simulator.css";
 
 interface ICpxState {
-  pixels: Array<Array<number>>;
-  power_led: boolean;
+  pixels: number[][];
   brightness: number;
   red_led: boolean;
   button_a: boolean;
@@ -46,7 +45,6 @@ const DEFAULT_CPX_STATE: ICpxState = {
     [0, 0, 0],
     [0, 0, 0]
   ],
-  power_led: true,
   red_led: false,
   switch: false
 };
@@ -119,8 +117,8 @@ class Simulator extends React.Component<any, IState> {
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
-            power_led={this.state.cpx.power_led}
             switch={this.state.cpx.switch}
+            on={this.state.play_button}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseLeave={this.onMouseLeave}

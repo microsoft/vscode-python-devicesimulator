@@ -21,8 +21,8 @@ let currentFileAbsPath: string = "";
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
 
-function loadScript(context: vscode.ExtensionContext, path: string) {
-  return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
+function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
+  return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
     .with({ scheme: "vscode-resource" })
     .toString()}"></script>`;
 }
@@ -176,11 +176,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     openWebview();
 
+    // tslint:disable-next-line: ban-comma-operator
     vscode.workspace
       .openTextDocument({ content: file, language: "python" })
       .then((template: vscode.TextDocument) => {
         vscode.window.showTextDocument(template, 1, false);
       }),
+      // tslint:disable-next-line: no-unused-expression
       (error: any) => {
         TelemetryAI.trackFeatureUsage(
           TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
@@ -488,7 +490,7 @@ const logToOutputChannel = (
   show: boolean = false
 ) => {
   if (outChannel) {
-    if (show) outChannel.show(true);
+    if (show) { outChannel.show(true); }
     outChannel.append(message);
   }
 };
@@ -514,4 +516,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
