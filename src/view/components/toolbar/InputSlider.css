@@ -1,7 +1,8 @@
-.sliderArea{
+
+.inputSlider{
     height: 32px;
-    border-color: brown;
-    background-color: greenyellow;
+    margin-bottom: 100px;
+    
 }
 .sliderValue{
     text-align: center;
@@ -13,23 +14,63 @@
     margin-right: 15px;
     vertical-align: middle;
     
-
 }
 
 .slider{
     -webkit-appearance: none;
     background-color: #cccccc;
-    color: var(--vscode-textLink-activeForeground);
-    vertical-align: middle;
     height: 1px;
+    width: 280px;
+    vertical-align: middle;
     
 }
 .slider::-webkit-slider-thumb{
-    color: yellow;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%; 
+    background:var(--vscode-textLink-activeForeground);
+    cursor: pointer;
 }
-.slider::-ms-track{
-    color: var(--vscode-textLink-activeForeground);
-}
+
+.slider::-webkit-slider-runnable-track:focus,
+.inputSlider:focus,
 .slider:focus{
-    border: var(--focusBorder)
+    outline: none;
+}
+
+.sliderValue:focus{
+    background-color: var(--vscode-textLink-activeForeground);
+}
+.maxLabel,
+.minLabel{
+    display: inline-block;
+    font-size: 12px;
+    position: relative;
+    vertical-align: top;
+
+}
+
+.maxLabel{
+    margin-left: 220px;
+}
+
+.sliderArea,
+.sliderValue{
+    display: inline;
+}
+
+.sliderArea{
+    width: 280px;
+    /* background-color: aqua; */
+    height: 20px;
+    vertical-align: middle;
+}
+.labelArea{
+    /* background-color: goldenrod; */
+    width: 280px;
+    margin-left: 65px;
+    height: 15px;
+
 }

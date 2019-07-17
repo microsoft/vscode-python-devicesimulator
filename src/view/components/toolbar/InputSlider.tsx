@@ -29,11 +29,21 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     
     render(){
       return (
-        <div className="sliderArea">
+        <div className="inputSlider">
             <input className="sliderValue" value={this.state.value}/>        
-            <input type="range"  className="slider" aria-valuemin={this.props.min} aria-valuemax={this.props.max} step={this.props.step} title={this.props.title} onChange={this.handleOnChange} aria-valuenow={this.state.value}/>
-           
-        </div>  
+            <div className="sliderArea">
+                <input type="range"  className="slider" aria-valuemin={this.props.min} aria-valuemax={this.props.max} step={this.props.step} title={this.props.title} onChange={this.handleOnChange} aria-valuenow={this.state.value}/>
+                <div className="labelArea">
+                    <div className='minLabel'>
+                        {this.props.min_label}
+                    </div>
+                    <div className='maxLabel'>
+                        {this.props.max_label}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
       )
     }
 
