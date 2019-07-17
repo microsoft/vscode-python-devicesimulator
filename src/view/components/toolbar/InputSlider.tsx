@@ -19,8 +19,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     constructor(props: ISliderProps){
         super(props);
         this.state = {
-            value:0,
-            dummy: 0
+            value:0
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
@@ -53,7 +52,6 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                     </div>
                 </div>
             </div>
-            <div>{this.state.dummy}</div>
         </div>
 
         
