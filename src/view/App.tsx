@@ -4,7 +4,7 @@
 "use strict";
 import * as React from "react";
 import Simulator from "./components/Simulator";
-import InputSlider from "./components/toolbar/InputSlider"
+import TemperatureSensorBar from "./components/toolbar/TemperatureSensorBar"
 import "./App.css";
 
 class App extends React.Component {
@@ -13,7 +13,8 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <Simulator />
-          <InputSlider min={0} max={250} title={"slider"} step={1} min_label={"min"} max_label={"max"}/>
+          <TemperatureSensorBar/>
+
           <a
             className="App-link"
             href="https://github.com/microsoft/vscode-python-embedded"

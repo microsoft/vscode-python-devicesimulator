@@ -3,15 +3,12 @@
 
 import * as React from "react";
 import "./InputSlider.css"
-import { timingSafeEqual } from "crypto";
-
 
 interface ISliderProps{
     min:number;
     max: number;
     min_label: string;
     max_label: string;
-    title: string;
     step:number;
 }
 
@@ -46,13 +43,13 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                     </div>
                 </div>
                 <input type="range"  className="slider" min={this.props.min} max={this.props.max} 
-                step={this.props.step} title={this.props.title} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
+                step={this.props.step} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
                 <div className="downLabelArea">
                     <div className='minLabel'>
-                        {this.props.min_label}
+                        {this.props.min}
                     </div>
                     <div className='maxLabel'>
-                        {this.props.max_label}
+                        {this.props.max}
                     </div>
                 </div>
             </div>
