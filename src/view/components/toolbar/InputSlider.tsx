@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import "./InputSlider.css"
+import { timingSafeEqual } from "crypto";
 
 
 interface ISliderProps{
@@ -26,15 +27,15 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
-        this.validateInput = this.validateInput.bind(this);
+        this.validateRange = this.validateRange.bind(this);
     }
 
     
     render(){
       return (
         <div className="inputSlider">
-            <input className="sliderValue" value={this.state.value} 
-            onInput={this.handleOnChange} defaultValue={this.props.min.toLocaleString()} max={this.props.max}/>        
+            <input type="text"  className="sliderValue" value={this.state.value} 
+            onInput={this.handleOnChange} defaultValue={this.props.min.toLocaleString()} pattern="[-?0-9]*" onKeyUp={this.validateRange}/>        
             <div className="sliderArea">
                 <div className="upLabelArea">
                     <div className='minLabel'>
@@ -63,14 +64,20 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     }
 
     private handleOnChange(event: React.ChangeEvent<HTMLInputElement>){
-       const inputElement = event.target 
-       const newValue = inputElement? inputElement.value:0;
-       this.setState({value:newValue});
-       console.log(newValue);
+
+       this.updateValue(event);
+       this.validateRange();
+    
     
     }
 
-    private validateInput(){
+    private updateValue(event: React.ChangeEvent<HTMLInputElement>){
+        const newValue = (event.target.validity.valid) ? event.target.value : this.state.value;
+        this.setState({value:newValue});
+        
+    }
+
+    private validateRange(){
         if(this.state.value<this.props.min){
             this.setState({value:this.props.min,dummy:2});
         }
@@ -81,6 +88,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
 
 
     }
+
 
 }
 
