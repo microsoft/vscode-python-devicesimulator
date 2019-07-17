@@ -108,6 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
               CONSTANTS.INFO.FIRST_TIME_WEBVIEW
