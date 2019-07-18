@@ -23,8 +23,7 @@ interface ITemperatureUnit {
 const CELSIUS_STATE: ITemperatureUnit ={
     name: "°C",
     minValue: -40,
-    maxValue: 40,
-
+    maxValue: 40
 }
 
 
@@ -33,7 +32,7 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
     constructor(props: any){
         super(props);
         this.state = CELSIUS_STATE
-            }
+    }
 
 
     render(){
@@ -50,8 +49,6 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
                     step={1} />
 
         </div>
-
-        
       )
     }
 
