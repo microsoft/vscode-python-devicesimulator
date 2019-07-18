@@ -54,8 +54,15 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                         {this.props.max_label}
                     </div>
                 </div>
-                <input type="range"  className="slider" min={this.props.min} max={this.props.max} 
-                step={this.props.step} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
+                <input type="range"
+                    className="slider"
+                    min={this.props.min}
+                    max={this.props.max} 
+                    step={this.props.step} 
+                    onChange={this.handleOnChange}
+                    value={this.state.value}
+                    defaultValue={this.props.min.toLocaleString()}
+                />
                 <div className="downLabelArea">
                     <div className='minLabel'>
                         {this.props.min}
