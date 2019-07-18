@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
   const reporter: TelemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
   let outChannel: vscode.OutputChannel | undefined;
-  let childProcess: cp.ChildProcess;
+  let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
@@ -82,7 +82,9 @@ export function activate(context: vscode.ExtensionContext) {
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
                 console.log(JSON.stringify(message.text) + "\n");
-                childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                if (childProcess) {
+                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log("Play button");
@@ -92,6 +94,10 @@ export function activate(context: vscode.ExtensionContext) {
                 } else {
                   killProcessIfRunning();
                 }
+                break;
+              case WebviewMessages.REFRESH_SIMULATOR:
+                console.log("Refresh button");
+                runSimulatorCommand();
                 break;
               default:
                 vscode.window.showInformationMessage(
@@ -203,10 +209,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
       // TODO: We need to check the process was correctly killed
       childProcess.kill();
+      childProcess = undefined;
     }
   };
 
-  const runSimulatorCommand = () => {
+  const runSimulatorCommand = async () => {
     openWebview();
 
     if (!currentPanel) {
@@ -220,7 +227,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     killProcessIfRunning();
 
-    updateCurrentFileIfPython(vscode.window.activeTextEditor);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
@@ -419,11 +426,35 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-const updateCurrentFileIfPython = (
-  activeTextEditor: vscode.TextEditor | undefined
-) => {
+const getActivePythonFile = () => {
+  const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
+  const activeEditor = editors.find((editor) => editor.document.languageId === "python");
+  return activeEditor ? activeEditor.document.fileName : "";
+}
+
+const getFileFromFilePicker = () => {
+  const options: vscode.OpenDialogOptions = {
+    canSelectMany: false,
+    filters: {
+      'All files': ['*'],
+      'Python files': ['py']
+    },
+    openLabel: 'Run File'
+  };
+
+  return vscode.window.showOpenDialog(options).then(fileUri => {
+    if (fileUri && fileUri[0]) {
+      console.log('Selected file: ' + fileUri[0].fsPath);
+      return fileUri[0].fsPath;
+    }
+  });
+}
+
+const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | undefined) => {
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
+  } else if (currentFileAbsPath === "") {
+    currentFileAbsPath = getActivePythonFile() || await getFileFromFilePicker() || "";
   }
 };
 
@@ -488,4 +519,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
