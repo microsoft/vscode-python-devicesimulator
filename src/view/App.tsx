@@ -11,19 +11,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <main className="App-main">
           <Simulator />
           <TemperatureSensorBar/>
-
-          <a
-            className="App-link"
-            href="https://github.com/microsoft/vscode-python-embedded"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Check out our repo!
-          </a>
-        </header>
+        </main>
       </div>
     );
   }

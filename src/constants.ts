@@ -47,12 +47,18 @@ export const CONSTANTS = {
     ),
     DEPLOY_SUCCESS: localize(
       "info.deploySuccess",
-      "\n[INFO] Code successfully deployed\n"
+      "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
     ),
     EXTENSION_ACTIVATED: localize(
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+    FILE_SELECTED: (filePath: string) => {
+      return localize(
+        "info.fileSelected",
+        `[INFO] File selected : ${filePath} \n`
+      );
+    },
     FIRST_TIME_WEBVIEW: localize(
       "info.firstTimeWebview",
       'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
@@ -78,7 +84,7 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Adafruit Simulator")
+  NAME: localize("name", "Pacifica Simulator")
 };
 
 // Need the different events we want to track and the name of it
@@ -119,7 +125,8 @@ export enum TelemetryEventName {
 export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator",
-  SENSOR_CHANGED= "sensor-changed"
+  SENSOR_CHANGED= "sensor-changed",
+  REFRESH_SIMULATOR = "refresh-simulator"
 }
 
 // tslint:disable-next-line: no-namespace
