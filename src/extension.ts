@@ -108,6 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
               CONSTANTS.INFO.FIRST_TIME_WEBVIEW
@@ -217,78 +218,80 @@ export function activate(context: vscode.ExtensionContext) {
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
-    const activeTextEditor: vscode.TextEditor | undefined =
-      vscode.window.activeTextEditor;
+    killProcessIfRunning();
 
-    updateCurrentFileIfPython(activeTextEditor);
+    updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
-    }
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
 
-    killProcessIfRunning();
+      childProcess = cp.spawn("python", [
+        utils.getPathToScript(context, "out", "process_user_code.py"),
+        currentFileAbsPath
+      ]);
 
-    childProcess = cp.spawn("python", [
-      utils.getPathToScript(context, "out", "process_user_code.py"),
-      currentFileAbsPath
-    ]);
+      let dataFromTheProcess = "";
+      let oldMessage = "";
 
-    let dataFromTheProcess = "";
-    let oldMessage = "";
+      // Data received from Python process
+      childProcess.stdout.on("data", data => {
+        dataFromTheProcess = data.toString();
+        if (currentPanel) {
+          // Process the data from the process and send one state at a time
+          dataFromTheProcess.split("\0").forEach(message => {
+            if (currentPanel && message.length > 0 && message != oldMessage) {
+              oldMessage = message;
+              let messageToWebview;
+              // Check the message is a JSON
+              try {
+                messageToWebview = JSON.parse(message);
+                // Check the JSON is a state
+                switch (messageToWebview.type) {
+                  case "state":
+                    console.log(
+                      `Process state output = ${messageToWebview.data}`
+                    );
+                    currentPanel.webview.postMessage({
+                      command: "set-state",
+                      state: JSON.parse(messageToWebview.data)
+                    });
+                    break;
 
-    // Data received from Python process
-    childProcess.stdout.on("data", data => {
-      dataFromTheProcess = data.toString();
-      if (currentPanel) {
-        // Process the data from the process and send one state at a time
-        dataFromTheProcess.split("\0").forEach(message => {
-          if (currentPanel && message.length > 0 && message != oldMessage) {
-            oldMessage = message;
-            let messageToWebview;
-            // Check the message is a JSON
-            try {
-              messageToWebview = JSON.parse(message);
-              // Check the JSON is a state
-              switch (messageToWebview.type) {
-                case "state":
-                  console.log(
-                    `Process state output = ${messageToWebview.data}`
-                  );
-                  currentPanel.webview.postMessage({
-                    command: "set-state",
-                    state: JSON.parse(messageToWebview.data)
-                  });
-                  break;
-
-                default:
-                  console.log(
-                    `Non-state JSON output from the process : ${messageToWebview}`
-                  );
-                  break;
+                  default:
+                    console.log(
+                      `Non-state JSON output from the process : ${messageToWebview}`
+                    );
+                    break;
+                }
+              } catch (err) {
+                console.log(`Non-JSON output from the process :  ${message}`);
               }
-            } catch (err) {
-              console.log(`Non-JSON output from the process :  ${message}`);
             }
-          }
-        });
-      }
-    });
+          });
+        }
+      });
 
-    // Std error output
-    childProcess.stderr.on("data", data => {
-      console.error(`Error from the Python process through stderr: ${data}`);
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
-      logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
-      if (currentPanel) {
-        console.log("Sending clearing state command");
-        currentPanel.webview.postMessage({ command: "reset-state" });
-      }
-    });
+      // Std error output
+      childProcess.stderr.on("data", data => {
+        console.error(`Error from the Python process through stderr: ${data}`);
+        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
+        logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
+        if (currentPanel) {
+          console.log("Sending clearing state command");
+          currentPanel.webview.postMessage({ command: "reset-state" });
+        }
+      });
 
-    // When the process is done
-    childProcess.on("end", (code: number) => {
-      console.info(`Command execution exited with code: ${code}`);
-    });
+      // When the process is done
+      childProcess.on("end", (code: number) => {
+        console.info(`Command execution exited with code: ${code}`);
+      });
+    }
   };
 
   // Send message to the webview
@@ -304,86 +307,88 @@ export function activate(context: vscode.ExtensionContext) {
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    const activeTextEditor: vscode.TextEditor | undefined =
-      vscode.window.activeTextEditor;
-
-    updateCurrentFileIfPython(activeTextEditor);
+    updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
-    }
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
 
-    const deviceProcess = cp.spawn("python", [
-      utils.getPathToScript(context, "out", "device.py"),
-      currentFileAbsPath
-    ]);
+      const deviceProcess = cp.spawn("python", [
+        utils.getPathToScript(context, "out", "device.py"),
+        currentFileAbsPath
+      ]);
 
-    let dataFromTheProcess = "";
+      let dataFromTheProcess = "";
 
-    // Data received from Python process
-    deviceProcess.stdout.on("data", data => {
-      dataFromTheProcess = data.toString();
-      console.log(`Device output = ${dataFromTheProcess}`);
-      let messageToWebview;
-      try {
-        messageToWebview = JSON.parse(dataFromTheProcess);
-        // Check the JSON is a state
-        switch (messageToWebview.type) {
-          case "complete":
-            TelemetryAI.trackFeatureUsage(
-              TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
-            );
-            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-            break;
+      // Data received from Python process
+      deviceProcess.stdout.on("data", data => {
+        dataFromTheProcess = data.toString();
+        console.log(`Device output = ${dataFromTheProcess}`);
+        let messageToWebview;
+        try {
+          messageToWebview = JSON.parse(dataFromTheProcess);
+          // Check the JSON is a state
+          switch (messageToWebview.type) {
+            case "complete":
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
+              );
+              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+              break;
 
-          case "no-device":
-            TelemetryAI.trackFeatureUsage(
-              TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
-            );
-            vscode.window
-              .showErrorMessage(
-                CONSTANTS.ERROR.NO_DEVICE,
-                ...[DialogResponses.HELP]
-              )
-              .then((selection: vscode.MessageItem | undefined) => {
-                if (selection === DialogResponses.HELP) {
-                  TelemetryAI.trackFeatureUsage(
-                    TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
-                  );
-                  open(CONSTANTS.LINKS.HELP);
-                }
-              });
-            break;
+            case "no-device":
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
+              );
+              vscode.window
+                .showErrorMessage(
+                  CONSTANTS.ERROR.NO_DEVICE,
+                  ...[DialogResponses.HELP]
+                )
+                .then((selection: vscode.MessageItem | undefined) => {
+                  if (selection === DialogResponses.HELP) {
+                    TelemetryAI.trackFeatureUsage(
+                      TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                    );
+                    open(CONSTANTS.LINKS.HELP);
+                  }
+                });
+              break;
 
-          default:
-            console.log(
-              `Non-state JSON output from the process : ${messageToWebview}`
-            );
-            break;
+            default:
+              console.log(
+                `Non-state JSON output from the process : ${messageToWebview}`
+              );
+              break;
+          }
+        } catch (err) {
+          console.log(
+            `Non-JSON output from the process :  ${dataFromTheProcess}`
+          );
         }
-      } catch (err) {
-        console.log(
-          `Non-JSON output from the process :  ${dataFromTheProcess}`
+      });
+
+      // Std error output
+      deviceProcess.stderr.on("data", data => {
+        TelemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+          { error: `${data}` }
         );
-      }
-    });
+        console.error(
+          `Error from the Python device process through stderr: ${data}`
+        );
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+      });
 
-    // Std error output
-    deviceProcess.stderr.on("data", data => {
-      TelemetryAI.trackFeatureUsage(
-        TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
-        { error: `${data}` }
-      );
-      console.error(
-        `Error from the Python device process through stderr: ${data}`
-      );
-      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-    });
-
-    // When the process is done
-    deviceProcess.on("end", (code: number) => {
-      console.info(`Command execution exited with code: ${code}`);
-    });
+      // When the process is done
+      deviceProcess.on("end", (code: number) => {
+        console.info(`Command execution exited with code: ${code}`);
+      });
+    }
   };
 
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
