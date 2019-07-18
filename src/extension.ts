@@ -20,6 +20,7 @@ let currentFileAbsPath: string = "";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
+let shoulShowInvalidFileNamePopup: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -229,6 +230,29 @@ export function activate(context: vscode.ExtensionContext) {
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
+
+      if(!utils.validCodeFileName(currentFileAbsPath) && shoulShowInvalidFileNamePopup){
+        // to the popup
+        vscode.window
+        .showInformationMessage(
+          CONSTANTS.INFO.NEW_PROJECT,
+          ...[
+            DialogResponses.DONT_SHOW,
+            DialogResponses.MESSAGE_UNDERSTOOD
+          ]
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          if (selection === DialogResponses.DONT_SHOW) {
+            shoulShowInvalidFileNamePopup = false;
+            TelemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+            );
+          }
+        });
+
+      
+      }
+
 
       childProcess = cp.spawn("python", [
         utils.getPathToScript(context, "out", "process_user_code.py"),

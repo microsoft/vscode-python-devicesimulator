@@ -19,6 +19,10 @@ export const CONSTANTS = {
       "error.incorrectFileNameForDevicePopup",
       'Seems like you have a different file name than CPX requires, please rename it to "code.py" or "main.py".'
     ),
+    INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
+      "error.incorrectFileNameForSimulatorPopup",
+      'We want your code to work on your actual board as well, make sure you name your file "code.py" or "main.py" to do so.'
+    ),
     INVALID_FILE_NAME_DEBUG: localize(
       "error.invalidFileNameDebug",
       'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
@@ -148,6 +152,9 @@ export namespace DialogResponses {
   };
   export const EXAMPLE_CODE: MessageItem = {
     title: localize("dialogResponses.exampleCode", "Example Code on GitHub")
+  };
+  export const MESSAGE_UNDERSTOOD: MessageItem = {
+    title: localize("dialogResponses.messageUnderstood", "Got It")
   };
 }
 
