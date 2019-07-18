@@ -1,5 +1,5 @@
 :root{
-    --unknown-gray-color:#cccccc;
+    --slider-gray-color:#cccccc;
 }
 .inputSlider{
     height: 50px;
@@ -17,7 +17,7 @@
 
 .slider{
     -webkit-appearance: none;
-    background-color: var(--unknown-gray-color);
+    background-color: var(--slider-gray-color);
     height: 1px;
     width: 280px;
     vertical-align: middle;
