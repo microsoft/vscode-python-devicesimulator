@@ -21,6 +21,9 @@
       (Link to download : https://visualstudio.microsoft.com/vs/older-downloads under
       'Redistributables and Build tools' : 'Microsoft Build Tools 2015')
 
+- pytest
+  - Run the command in a console : `pip install pytest`
+
 - VS Code
 
 - Python extension for VS Code (download from VS Code market place)

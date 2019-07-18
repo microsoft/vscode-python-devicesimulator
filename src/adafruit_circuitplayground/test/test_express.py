@@ -1,7 +1,7 @@
 import pytest
 
-from .express import Express
-from .pixel import Pixel
+from ..express import Express
+from ..pixel import Pixel
 
 class TestExpress(object):
 
