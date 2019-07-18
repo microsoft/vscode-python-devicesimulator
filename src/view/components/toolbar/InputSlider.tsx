@@ -4,12 +4,25 @@
 import * as React from "react";
 import "./InputSlider.css"
 
+interface vscode {
+    postMessage(message: any): void;
+}
+  
+declare const vscode: vscode;
+
+const sendMessage = (state: any) => {
+    console.log("sendmessage");
+    vscode.postMessage({ command: "sensor-changed", text: state });
+};
+  
+ 
 interface ISliderProps{
     min:number;
     max: number;
     min_label: string;
     max_label: string;
     step:number;
+    type:string;
 }
 
 
@@ -62,8 +75,14 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
 
        this.updateValue(event);
        this.validateRange();
+       this.setMessage();
+
     
     
+    }
+    setMessage() {
+        return {'type':this.props.t}
+        
     }
 
     private updateValue(event: React.ChangeEvent<HTMLInputElement>){
