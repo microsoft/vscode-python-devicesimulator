@@ -1,0 +1,29 @@
+.button {
+  width: 60px;
+  height: 32px;
+  background: var(--vscode-debugToolBar-background);
+  border-color: var(--vscode-debugToolBar-background);
+}
+
+.play-button {
+  border-radius: 8px 0px 0px 8px;
+}
+
+.refresh-button {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.play-icon {
+  background-color: var(--vscode-terminal-ansiRed);
+  opacity: 1;
+}
+
+.play-button:hover,
+.refresh-button:hover {
+  background-color: var(--vscode-terminal-selectionBackground);
+}
+
+.play-button:active,
+.refresh-button:active {
+  background-color: var(--vscode-editor-selectionHighlightBackground);
+}
