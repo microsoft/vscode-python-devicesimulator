@@ -8,7 +8,6 @@ import Button from "./Button";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
-import svg from "./cpx/Svg_utils";
 
 import "../styles/Simulator.css";
 
