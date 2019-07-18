@@ -84,7 +84,7 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Adafruit Simulator")
+  NAME: localize("name", "Pacifica Simulator")
 };
 
 // Need the different events we want to track and the name of it
