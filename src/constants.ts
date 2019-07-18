@@ -67,7 +67,9 @@ export const CONSTANTS = {
       "info.newProject",
       "New to Python or Circuit Playground Express project? We are here to help!"
     ),
+    REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
+    THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You will be taken to a third-party website which is a non-Microsoft service."),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
       "Welcome to the Adafruit Simulator output tab !\n\n"
@@ -81,6 +83,7 @@ export const CONSTANTS = {
       "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
     HELP:
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+    PRIVACY: "https://github.com/microsoft/vscode-python-embedded/blob/dev/PRIVACY.md",
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
@@ -136,6 +139,8 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
+  export const OK: MessageItem = { title: localize("dialogResponses.ok", "Ok") };
+  export const PRIVACY_STATEMENT: MessageItem = { title: localize("info.privacyStatement", "Privacy Statement") };
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
   };

@@ -167,10 +167,20 @@ export function activate(context: vscode.ExtensionContext) {
               TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
             );
           } else if (selection === DialogResponses.TUTORIALS) {
-            open(CONSTANTS.LINKS.TUTORIALS);
-            TelemetryAI.trackFeatureUsage(
-              TelemetryEventName.CLICK_DIALOG_TUTORIALS
-            );
+            const okAction = () => {
+              open(CONSTANTS.LINKS.TUTORIALS);
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_TUTORIALS
+              );
+            }
+            const privacyAction = () => {
+              open(CONSTANTS.LINKS.PRIVACY);
+              open(CONSTANTS.LINKS.TUTORIALS);
+              TelemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_TUTORIALS
+              );
+            }
+            utils.showPrivacyModal(okAction, privacyAction);
           }
         });
     }
@@ -360,10 +370,20 @@ export function activate(context: vscode.ExtensionContext) {
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
                   if (selection === DialogResponses.HELP) {
-                    TelemetryAI.trackFeatureUsage(
-                      TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
-                    );
-                    open(CONSTANTS.LINKS.HELP);
+                    const okAction = () => {
+                      open(CONSTANTS.LINKS.HELP);
+                      TelemetryAI.trackFeatureUsage(
+                        TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                      );
+                    }
+                    const privacyAction = () => {
+                      open(CONSTANTS.LINKS.PRIVACY);
+                      open(CONSTANTS.LINKS.HELP);
+                      TelemetryAI.trackFeatureUsage(
+                        TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                      );
+                    }
+                    utils.showPrivacyModal(okAction, privacyAction);
                   }
                 });
               break;

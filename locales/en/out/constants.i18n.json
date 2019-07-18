@@ -2,6 +2,8 @@
   "dialogResponses.dontShowAgain": "Don't Show Again",
   "dialogResponses.exampleCode": "Example Code on GitHub",
   "dialogResponses.help": "I need help",
+  "dialogResponses.ok": "Ok",
+  "info.privacyStatement": "Privacy Statement",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
   "error.noDevice": "No plugged in boards detected. Please double check if your board is connected and/or properly formatted",
   "error.noFileToRun": "\n[ERROR] We can't find the .py file to run on simulator. Open up a new .py file, or browse through some examples\n",
@@ -13,7 +15,9 @@
   "info.extensionActivated": "Congratulations, your extension Adafruit_Simulator is now active!",
   "info.firstTimeWebview": "To reopen the simulator click on the \"Open Simulator\" button on the upper right corner of the text editor, or select the command \"Open Simulator\" from command palette.",
   "info.newProject": "New to Python or Circuit Playground Express project? We are here to help!",
+  "info.redirect": "You are being redirected.",
   "info.runningCode": "Running user code",
+  "info.thirdPartyWebsite": "You will be taken to a third-party website which is a non-Microsoft service.",
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
   "label.webviewPanel": "Adafruit CPX",
   "name": "Pacifica Simulator"
