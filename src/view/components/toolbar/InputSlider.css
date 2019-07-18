@@ -1,4 +1,6 @@
-
+:root{
+    --unknown-gray-color:#cccccc;
+}
 .inputSlider{
     height: 50px;
     margin-bottom: 100px;
@@ -16,7 +18,7 @@
 
 .slider{
     -webkit-appearance: none;
-    background-color: #cccccc;
+    background-color: var(--unknown-gray-color);
     height: 1px;
     width: 280px;
     vertical-align: middle;
@@ -66,7 +68,6 @@
 
 }
 .downLabelArea{
-    /* background-color: goldenrod; */
     width: 280px;
     height: 15px;
     margin-top: 10px
