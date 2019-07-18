@@ -27,5 +27,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Documentation
 
+- [Installation instructions](/docs/install.md)
+- [How to use the Extension](/docs/how-to-use.md)
 - [Setup for developers](/docs/developers-setup.md)
 - [Contributing](CONTRIBUTING.md)

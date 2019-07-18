@@ -6,11 +6,11 @@
 
   - Download link : https://nodejs.org/en/download/
 
-- Python 3 (or latest)
+- Python 3.7.4 (or latest)
 
   - Download link : https://www.python.org/downloads/
-  - /!\ Make sure Python is in your path (during installation or insert it manually afterwards)
-  - /!\ Make sure pip is added to your environment variables as well
+  - **NOTE :** Make sure Python is in your path under an environment variable named `python` (during installation or insert it manually afterwards)
+  - **NOTE :** Make sure pip is added to your environment variables as well
     (for example it could be find at : c:\users\<alias>\appdata\local\programs\python\python37\lib\site-packages\pip)
   - Run in a console `python -m pip install --upgrade pip`
 
@@ -22,7 +22,12 @@
       'Redistributables and Build tools' : 'Microsoft Build Tools 2015')
 
 - pytest
+
   - Run the command in a console : `pip install pytest`
+
+- Pywin32
+
+  - Run the command in a console : `pip install pywin32`
 
 - VS Code
 
@@ -44,10 +49,11 @@
 
 ## Notes on how to use it
 
+- [Documentation to use the Extension](/docs/how-to-use.md)
 - Debugging the extension opens a new VS Code window with the extension installed
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
-  listed as 'Adafruit : ...'
+  listed as 'Pacifica : ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
 
 ## Repository Structure (important files)

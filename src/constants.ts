@@ -9,13 +9,26 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONSTANTS = {
+  DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
+    INVALID_FILE_NAME_DEBUG: localize(
+      "error.invalidFileNameDebug",
+      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
+    ),
     NO_DEVICE: localize(
       "error.noDevice",
       "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
     ),
+    NO_FILE_TO_RUN: localize(
+      "error.noFileToRun",
+      "\n[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples\n"
+    ),
+    NO_PROGRAM_FOUND_DEBUG: localize(
+      "error.noProgramFoundDebug",
+      "Cannot find a program to debug."
+    ),
     STDERR: (data: string) => {
-      return localize("error.stderr", `[ERROR] ${data} \n`);
+      return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
     UNEXPECTED_MESSAGE: localize(
       "error.unexpectedMessage",
@@ -34,11 +47,21 @@ export const CONSTANTS = {
     ),
     DEPLOY_SUCCESS: localize(
       "info.deploySuccess",
-      "\n[INFO] Code successfully deployed\n"
+      "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
     ),
     EXTENSION_ACTIVATED: localize(
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
+    ),
+    FILE_SELECTED: (filePath: string) => {
+      return localize(
+        "info.fileSelected",
+        `[INFO] File selected : ${filePath} \n`
+      );
+    },
+    FIRST_TIME_WEBVIEW: localize(
+      "info.firstTimeWebview",
+      'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
     ),
     NEW_PROJECT: localize(
       "info.newProject",
@@ -61,7 +84,7 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Adafruit Simulator")
+  NAME: localize("name", "Pacifica Simulator")
 };
 
 // Need the different events we want to track and the name of it
@@ -91,8 +114,19 @@ export enum TelemetryEventName {
   ERROR_COMMAND_NEW_PROJECT = "ERROR.COMMAND.NEW.PROJECT",
   ERROR_DEPLOY_WITHOUT_DEVICE = "ERROR.DEPLOY.WITHOUT.DEVICE",
 
-  SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE"
- }
+  SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE",
+
+  // Performance
+  PERFORMANCE_DEPLOY_DEVICE = "PERFORMANCE.DEPLOY.DEVICE",
+  PERFORMANCE_NEW_PROJECT = "PERFORMANCE.NEW.PROJECT",
+  PERFORMANCE_OPEN_SIMULATOR = "PERFORMANCE.OPEN.SIMULATOR"
+}
+
+export enum WebviewMessages {
+  BUTTON_PRESS = "button-press",
+  PLAY_SIMULATOR = "play-simulator",
+  REFRESH_SIMULATOR = "refresh-simulator"
+}
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
@@ -109,5 +143,10 @@ export namespace DialogResponses {
     title: localize("dialogResponses.exampleCode", "Example Code on GitHub")
   };
 }
+
+export const USER_CODE_NAMES = {
+  CODE_PY: "code.py",
+  MAIN_PY: "main.py"
+};
 
 export default CONSTANTS;
