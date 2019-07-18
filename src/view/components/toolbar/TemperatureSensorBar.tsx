@@ -9,7 +9,8 @@ import "./TemperatureSensorBar.css"
 const TEMPERATURE_SENSOR_PROPERTIES = {
     MIN_LABEL: "Cold",
     MAX_LABEL: "Hot",
-    LABEL: "Temperature sensor"
+    LABEL: "Temperature sensor",
+    TYPE: "temperature",
   }
 
 
@@ -62,7 +63,7 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
                 </div>
                 
             </div>
-                <InputSlider min={this.state.minValue} max={this.state.maxValue}
+                <InputSlider min={this.state.minValue} max={this.state.maxValue} type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
                     min_label={TEMPERATURE_SENSOR_PROPERTIES.MIN_LABEL} max_label={TEMPERATURE_SENSOR_PROPERTIES.MAX_LABEL}
                     step={1} />
 
