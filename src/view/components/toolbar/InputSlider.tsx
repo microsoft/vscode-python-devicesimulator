@@ -72,7 +72,6 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     }
 
     private handleOnChange(event: React.ChangeEvent<HTMLInputElement>){
-       console.log(this.state.value)
        this.updateValue(event);
        this.validateRange();
        console.log(this.state.value)
@@ -105,8 +104,6 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
         if(this.state.value>this.props.max){
             this.setState({value:this.props.max,dummy:1});
         }
-
-
 
     }
 
