@@ -427,7 +427,7 @@ const getActivePythonFile = () => {
   return activeEditor ? activeEditor.document.fileName : "";
 }
 
-const getFile = () => {
+const getFileFromFilePicker = () => {
   const options: vscode.OpenDialogOptions = {
     canSelectMany: false,
     filters: {
@@ -449,7 +449,7 @@ const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | u
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
   } else if (currentFileAbsPath === "") {
-    currentFileAbsPath = getActivePythonFile() || await getFile() || "";
+    currentFileAbsPath = getActivePythonFile() || await getFileFromFilePicker() || "";
   }
 };
 
@@ -514,4 +514,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
