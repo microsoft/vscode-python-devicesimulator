@@ -44,9 +44,14 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
                 <div className="title">{TEMPERATURE_SENSOR_PROPERTIES.LABEL+" "+CELSIUS_STATE.name}</div>
                 
             </div>
-                <InputSlider min={this.state.minValue} max={this.state.maxValue} type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
-                    min_label={TEMPERATURE_SENSOR_PROPERTIES.MIN_LABEL} max_label={TEMPERATURE_SENSOR_PROPERTIES.MAX_LABEL}
-                    step={1} />
+                <InputSlider
+                    min={this.state.minValue}
+                    max={this.state.maxValue} 
+                    type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
+                    min_label={TEMPERATURE_SENSOR_PROPERTIES.MIN_LABEL}
+                    max_label={TEMPERATURE_SENSOR_PROPERTIES.MAX_LABEL}
+                    step={1}
+                 />
 
         </div>
       )
