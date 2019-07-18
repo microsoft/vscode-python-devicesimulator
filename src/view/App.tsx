@@ -13,7 +13,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <Simulator />
-          <InputSlider min={0} max={250} title={"slider"} step={1} min_label={"min"} max_label={"max"}/>
+          <InputSlider min={0} max={250} step={1} min_label={"min"} max_label={"max"}/>
           <a
             className="App-link"
             href="https://github.com/microsoft/vscode-python-embedded"

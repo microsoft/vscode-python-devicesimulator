@@ -9,7 +9,6 @@ interface ISliderProps{
     max: number;
     min_label: string;
     max_label: string;
-    title:string;
     step:number;
 }
 
