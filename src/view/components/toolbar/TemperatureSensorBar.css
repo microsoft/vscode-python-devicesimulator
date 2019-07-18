@@ -1,14 +1,5 @@
-.faren,.celsius{
-    margin-right: 50px;
-    font-size: 14px;
-    display: inline;
-    
 
-}
 
-.unitChoice{
-    font-size: 14px;
-}
 .title{
     font-size: 14px;
     text-align: left;
@@ -18,10 +9,10 @@
 .header{
     -webkit-appearance: none;
     height: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 2px;
 
 }
 
 .temperatureSensorBar{
-    margin-top: 20px;
+    margin-top: 10px;
 }

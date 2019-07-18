@@ -26,23 +26,14 @@ const CELSIUS_STATE: ITemperatureUnit ={
     maxValue: 40,
 
 }
-const FARENHEIT_STATE: ITemperatureUnit ={
-    name: "C",
-    minValue: -400,
-    maxValue: 400,
 
-}
 
 class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
 
     constructor(props: any){
         super(props);
         this.state = CELSIUS_STATE
-        
-
-
-        this.handleOnUnitChange = this.handleOnUnitChange.bind(this);
-    }
+            }
 
 
     render(){
@@ -52,15 +43,6 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
         <div className="temperatureSensorBar">
             <div className="header">
                 <div className="title">{TEMPERATURE_SENSOR_PROPERTIES.LABEL}</div>
-
-                <div className="celsius">
-                    <input type="radio" value={CELSIUS_STATE.name}  className="celsius" name="Temperature unit" onChange={this.handleOnUnitChange}/>
-                    {CELSIUS_STATE.name}
-                </div>
-                <div className="faren" >
-                    <input type="radio" value={FARENHEIT_STATE.name} className="faren" name="Temperature unit"  onChange={this.handleOnUnitChange}/>
-                    {FARENHEIT_STATE.name}
-                </div>
                 
             </div>
                 <InputSlider min={this.state.minValue} max={this.state.maxValue} type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
@@ -71,20 +53,6 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
 
         
       )
-    }
-
-    private handleOnUnitChange(event: React.ChangeEvent<HTMLInputElement>){
-        const newValue = event.target.value;
-
-        if(this.state.name == CELSIUS_STATE.name && newValue == FARENHEIT_STATE.name ){
-            this.setState(FARENHEIT_STATE);
-        }
-
-        if(this.state.name == FARENHEIT_STATE.name && newValue == CELSIUS_STATE.name ){
-            this.setState(CELSIUS_STATE);
-        }
-
-    
     }
 
 
