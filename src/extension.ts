@@ -97,7 +97,9 @@ export function activate(context: vscode.ExtensionContext) {
                 console.log("sensor changed");
                 console.log(JSON.stringify(message.text) + "\n");
                 console.log(JSON.parse(JSON.stringify(message.text) + "\n"))
-                childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                if(childProcess){
+                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                }
                 break;
               default:
                 vscode.window.showInformationMessage(
