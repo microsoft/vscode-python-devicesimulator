@@ -35,6 +35,8 @@ const Cpx: React.FC<IProps> = props => {
     updateNeopixels(props);
     updateRedLED(props.red_led);
     updatePowerLED(props.on);
+    updateSwitch(props.switch);
+
   }
 
   return CPX_SVG;
@@ -298,6 +300,26 @@ const setupSwitch = (props: IProps): void => {
       "button",
       "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
     );
+  }
+};
+
+export const updateSwitch = (switchState: boolean): void => {
+  const switchElement = window.document.getElementById("SWITCH");
+  const switchInner = (window.document.getElementById(
+    "SWITCH_INNER"
+  ) as unknown) as SVGElement;
+
+  if (switchElement && switchInner) {
+    svg.addClass(switchInner, "sim-slide-switch-inner");
+
+    if (switchState) {
+      svg.addClass(switchInner, "on");
+      switchInner.setAttribute("transform", "translate(-5,0)");
+    } else {
+      svg.removeClass(switchInner, "on");
+      switchInner.removeAttribute("transform");
+    }
+    switchElement.setAttribute("aria-pressed", switchState.toString());
   }
 };
 
