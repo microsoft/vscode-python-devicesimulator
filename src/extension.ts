@@ -93,6 +93,12 @@ export function activate(context: vscode.ExtensionContext) {
                   killProcessIfRunning();
                 }
                 break;
+              case WebviewMessages.SENSOR_CHANGED:
+                console.log("sensor changed");
+                console.log(JSON.stringify(message.text) + "\n");
+                console.log(JSON.parse(JSON.stringify(message.text) + "\n"))
+                childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                break;
               default:
                 vscode.window.showInformationMessage(
                   CONSTANTS.ERROR.UNEXPECTED_MESSAGE
