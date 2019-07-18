@@ -311,6 +311,17 @@ export function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else if (!utils.validCodeFileName(currentFileAbsPath)) {
+      // Output panel
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
+        true
+      );
+      // Popup
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
+      );
     } else {
       logToOutputChannel(
         outChannel,

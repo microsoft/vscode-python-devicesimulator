@@ -11,6 +11,14 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
+    INCORRECT_FILE_NAME_FOR_DEVICE: localize(
+      "error.incorrectFileNameForDevice",
+      '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
+    ),
+    INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
+      "error.incorrectFileNameForDevicePopup",
+      'Seems like you have a different file name than CPX requires, please rename it to "code.py" or "main.py".'
+    ),
     INVALID_FILE_NAME_DEBUG: localize(
       "error.invalidFileNameDebug",
       'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
@@ -21,7 +29,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      "\n[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples\n"
+      "[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples\n"
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
