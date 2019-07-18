@@ -9,7 +9,7 @@ interface ISliderProps{
     max: number;
     min_label: string;
     max_label: string;
-    title: string;
+    title:string;
     step:number;
 }
 
@@ -32,7 +32,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
       return (
         <div className="inputSlider">
             <input type="text"  className="sliderValue" value={this.state.value} 
-            onInput={this.handleOnChange} defaultValue={this.props.min.toLocaleString()} pattern="[-?0-9]*" onKeyUp={this.validateRange}/>        
+            onInput={this.handleOnChange} defaultValue={this.props.min.toLocaleString()} pattern="^-?[0-9]*$" onKeyUp={this.validateRange}/>        
             <div className="sliderArea">
                 <div className="upLabelArea">
                     <div className='minLabel'>
@@ -43,7 +43,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                     </div>
                 </div>
                 <input type="range"  className="slider" min={this.props.min} max={this.props.max} 
-                step={this.props.step} title={this.props.title} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
+                step={this.props.step} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
                 <div className="downLabelArea">
                     <div className='minLabel'>
                         {this.props.min_label}
@@ -60,7 +60,6 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     }
 
     private handleOnChange(event: React.ChangeEvent<HTMLInputElement>){
-
        this.updateValue(event);
        this.validateRange();
     
@@ -80,8 +79,6 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
         if(this.state.value>this.props.max){
             this.setState({value:this.props.max,dummy:1});
         }
-
-
 
     }
 
