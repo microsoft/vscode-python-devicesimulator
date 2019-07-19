@@ -27,24 +27,12 @@ export const validCodeFileName = (filePath: string) => {
 
 export const showPrivacyModal = (okAction: () => void) => {
   window.showInformationMessage(
-    CONSTANTS.INFO.THIRD_PARTY_WEBSITE,
-    { modal: true },
-    DialogResponses.PRIVACY_STATEMENT
+    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE} ${CONSTANTS.LINKS.PRIVACY}`,
+    DialogResponses.ACCEPT_PRIVACY
   )
     .then((privacySelection: MessageItem | undefined) => {
-      if (privacySelection === DialogResponses.OK) {
+      if (privacySelection === DialogResponses.ACCEPT_PRIVACY) {
         okAction();
-      } else {
-        window.showInformationMessage(
-          CONSTANTS.INFO.REDIRECT,
-          { modal: true },
-          DialogResponses.OK
-        )
-          .then((redirectSelection: MessageItem | undefined) => {
-            if (redirectSelection === DialogResponses.OK) {
-              okAction();
-            }
-          })
       }
     })
 }
