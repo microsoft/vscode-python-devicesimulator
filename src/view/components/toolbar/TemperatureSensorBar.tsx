@@ -34,7 +34,6 @@ class TemperatureSensorBar extends React.Component<any,ITemperatureUnit,any>{
         this.state = CELSIUS_STATE
     }
 
-
     render(){
 
       
