@@ -30,6 +30,8 @@ Commands are accessible through :
   - Sound - .wav files
   - Red LED
   - Switch
+  - Green LED
+  - Temperature sensor
 
 ## Not supported yet
 
@@ -40,12 +42,10 @@ Commands are accessible through :
 - Debugger for the simulator
 - Device's features
   - Light sensor
-  - Temperature sensor
   - Motion sensors
   - Sound sensor
   - Touch sensors
   - Sound - tones
-  - Green LED
   - IR transmitter
 
 ## Troubleshooting Tips
