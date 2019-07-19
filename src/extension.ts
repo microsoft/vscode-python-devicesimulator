@@ -235,7 +235,7 @@ export function activate(context: vscode.ExtensionContext) {
         // to the popup
         vscode.window
         .showInformationMessage(
-          CONSTANTS.INFO.NEW_PROJECT,
+          CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
           ...[
             DialogResponses.DONT_SHOW,
             DialogResponses.MESSAGE_UNDERSTOOD

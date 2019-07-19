@@ -19,7 +19,7 @@ export const CONSTANTS = {
       "error.incorrectFileNameForDevicePopup",
       'Seems like you have a different file name than CPX requires, please rename it to "code.py" or "main.py".'
     ),
-    INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
+     INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
       "error.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well, make sure you name your file "code.py" or "main.py" to do so.'
     ),
