@@ -20,6 +20,7 @@ let currentFileAbsPath: string = "";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
+let telemetryAI: TelemetryAI;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -31,7 +32,7 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  const reporter: TelemetryAI = new TelemetryAI(context);
+  telemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
   let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess | undefined;
@@ -139,8 +140,8 @@ export function activate(context: vscode.ExtensionContext) {
   const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
-      TelemetryAI.runWithLatencyMeasure(
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
+      telemetryAI.runWithLatencyMeasure(
         openWebview,
         TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
       );
@@ -165,17 +166,17 @@ export function activate(context: vscode.ExtensionContext) {
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
             shouldShowNewProject = false;
-            TelemetryAI.trackFeatureUsage(
+            telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
           } else if (selection === DialogResponses.EXAMPLE_CODE) {
             open(CONSTANTS.LINKS.EXAMPLE_CODE);
-            TelemetryAI.trackFeatureUsage(
+            telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
             );
           } else if (selection === DialogResponses.TUTORIALS) {
             open(CONSTANTS.LINKS.TUTORIALS);
-            TelemetryAI.trackFeatureUsage(
+            telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_TUTORIALS
             );
           }
@@ -192,7 +193,7 @@ export function activate(context: vscode.ExtensionContext) {
       }),
       // tslint:disable-next-line: no-unused-expression
       (error: any) => {
-        TelemetryAI.trackFeatureUsage(
+        telemetryAI.trackFeatureUsage(
           TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
         );
         console.error(`Failed to open a new text document:  ${error}`);
@@ -202,8 +203,8 @@ export function activate(context: vscode.ExtensionContext) {
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
-      TelemetryAI.runWithLatencyMeasure(
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+      telemetryAI.runWithLatencyMeasure(
         openTemplateFile,
         TelemetryEventName.PERFORMANCE_NEW_PROJECT
       );
@@ -230,7 +231,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     console.info(CONSTANTS.INFO.RUNNING_CODE);
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
@@ -295,7 +296,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
-        TelemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
+        telemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
         logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
@@ -350,14 +351,14 @@ export function activate(context: vscode.ExtensionContext) {
           // Check the JSON is a state
           switch (messageToWebview.type) {
             case "complete":
-              TelemetryAI.trackFeatureUsage(
+              telemetryAI.trackFeatureUsage(
                 TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
               );
               logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
               break;
 
             case "no-device":
-              TelemetryAI.trackFeatureUsage(
+              telemetryAI.trackFeatureUsage(
                 TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
               );
               vscode.window
@@ -367,7 +368,7 @@ export function activate(context: vscode.ExtensionContext) {
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
                   if (selection === DialogResponses.HELP) {
-                    TelemetryAI.trackFeatureUsage(
+                    telemetryAI.trackFeatureUsage(
                       TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                     );
                     open(CONSTANTS.LINKS.HELP);
@@ -388,17 +389,17 @@ export function activate(context: vscode.ExtensionContext) {
         }
       });
 
-      // Std error output
-      deviceProcess.stderr.on("data", data => {
-        TelemetryAI.trackFeatureUsage(
-          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
-          { error: `${data}` }
-        );
-        console.error(
-          `Error from the Python device process through stderr: ${data}`
-        );
-        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-      });
+    // Std error output
+    deviceProcess.stderr.on("data", data => {
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+        { error: `${data}` }
+      );
+      console.error(
+        `Error from the Python device process through stderr: ${data}`
+      );
+      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+    });
 
       // When the process is done
       deviceProcess.on("end", (code: number) => {
@@ -410,8 +411,8 @@ export function activate(context: vscode.ExtensionContext) {
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runDevice",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
-      TelemetryAI.runWithLatencyMeasure(
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+      telemetryAI.runWithLatencyMeasure(
         deployCodeToDevice,
         TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE
       );
@@ -469,13 +470,13 @@ const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | u
 
 const handleButtonPressTelemetry = (buttonState: any) => {
   if (buttonState["button_a"] && buttonState["button_b"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
   } else if (buttonState["button_a"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
   } else if (buttonState["button_b"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
   } else if (buttonState["switch"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
 };
 
