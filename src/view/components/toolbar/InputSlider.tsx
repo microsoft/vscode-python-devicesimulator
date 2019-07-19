@@ -20,7 +20,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     constructor(props: ISliderProps){
         super(props);
         this.state = {
-            value:0
+            value: 0
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
