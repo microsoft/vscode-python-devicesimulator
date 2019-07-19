@@ -5,7 +5,6 @@ import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./TemperatureSensorBar.css"
 
-
 const TEMPERATURE_SENSOR_PROPERTIES = {
     MIN_LABEL: "Cold",
     MAX_LABEL: "Hot",
