@@ -46,7 +46,6 @@ export class SimulatorDebugConfigurationProvider
               shouldShowInvalidFileNamePopup = false;
             }
             return config;
-
           });
         }
         // Set process_user_code path as program
