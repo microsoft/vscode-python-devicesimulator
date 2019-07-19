@@ -103,7 +103,7 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Adafruit Simulator")
+  NAME: localize("name", "Pacifica Simulator")
 };
 
 // Need the different events we want to track and the name of it
@@ -143,7 +143,8 @@ export enum TelemetryEventName {
 
 export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
-  PLAY_SIMULATOR = "play-simulator"
+  PLAY_SIMULATOR = "play-simulator",
+  REFRESH_SIMULATOR = "refresh-simulator"
 }
 
 // tslint:disable-next-line: no-namespace
