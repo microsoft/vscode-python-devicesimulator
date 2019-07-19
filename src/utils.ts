@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ExtensionContext, Uri, MessageItem, window } from "vscode";
+import { ExtensionContext, MessageItem, Uri, window } from "vscode";
 import * as path from "path";
-import { USER_CODE_NAMES, DialogResponses, CONSTANTS } from "./constants";
+import { CONSTANTS, DialogResponses, USER_CODE_NAMES } from "./constants";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
