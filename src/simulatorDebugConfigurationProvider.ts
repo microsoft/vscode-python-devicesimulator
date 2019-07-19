@@ -45,7 +45,7 @@ export class SimulatorDebugConfigurationProvider
             module: "adafruit_circuitplayground",
             include: false
           },
-          { module: "simpleaudio", include: false }
+          { module: "playsound", include: false }
         ];
       }
     }

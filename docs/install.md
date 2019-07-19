@@ -17,10 +17,9 @@
 - [Node](https://nodejs.org/en/download/)
 - [Python 3.7.4 (or latest)](https://www.python.org/downloads/)
 - Python VS Code extension (download from VS Code Marketplace)
-- Simple audio :
+- playsound :
   - `python -m pip install --upgrade pip`
-  - `pip install simpleaudio`
-  - **Troubleshoot :** If it's not working make sure you have pip and C++ 2015 build tools installed ([Download link](https://visualstudio.microsoft.com/vs/older-downloads), and look under 'Redistributables and Build tools' : 'Microsoft Build Tools 2015')
+  - `pip install playsound`
 - Pywin32 : `pip install pywin32`
 
 ## How to use the extension
