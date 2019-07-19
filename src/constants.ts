@@ -11,6 +11,8 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
+    
+    
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
       '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
@@ -19,13 +21,9 @@ export const CONSTANTS = {
       "error.incorrectFileNameForDevicePopup",
       'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
     ),
-     INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
-      "error.incorrectFileNameForSimulatorPopup",
-      'We want your code to work on your actual board as well, make sure you name your file "code.py" or "main.py" to do so.'
-    ),
-    INVALID_FILE_NAME_DEBUG: localize(
-      "error.invalidFileNameDebug",
-      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
+     INVALID_FILE_EXTENSION_DEBUG: localize(
+      "error.invalidFileExtensionDebug",
+      'The file you tried to run isn\'t  a python file.'
     ),
     NO_DEVICE: localize(
       "error.noDevice",
@@ -65,6 +63,7 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+
     FILE_SELECTED: (filePath: string) => {
       return localize(
         "info.fileSelected",
@@ -74,6 +73,14 @@ export const CONSTANTS = {
     FIRST_TIME_WEBVIEW: localize(
       "info.firstTimeWebview",
       'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
+    ),
+    INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
+      "info.incorrectFileNameForSimulatorPopup",
+      'We want your code to work on your actual board as well, make sure you name your file "code.py" or "main.py" to do so.'
+    ),
+    INVALID_FILE_NAME_DEBUG: localize(
+      "info.invalidFileNameDebug",
+      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual board.'
     ),
     NEW_PROJECT: localize(
       "info.newProject",
