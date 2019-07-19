@@ -173,14 +173,7 @@ export function activate(context: vscode.ExtensionContext) {
                 TelemetryEventName.CLICK_DIALOG_TUTORIALS
               );
             }
-            const privacyAction = () => {
-              open(CONSTANTS.LINKS.PRIVACY);
-              open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(
-                TelemetryEventName.CLICK_DIALOG_TUTORIALS
-              );
-            }
-            utils.showPrivacyModal(okAction, privacyAction);
+            utils.showPrivacyModal(okAction);
           }
         });
     }
@@ -376,14 +369,7 @@ export function activate(context: vscode.ExtensionContext) {
                         TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                       );
                     }
-                    const privacyAction = () => {
-                      open(CONSTANTS.LINKS.PRIVACY);
-                      open(CONSTANTS.LINKS.HELP);
-                      TelemetryAI.trackFeatureUsage(
-                        TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
-                      );
-                    }
-                    utils.showPrivacyModal(okAction, privacyAction);
+                    utils.showPrivacyModal(okAction);
                   }
                 });
               break;

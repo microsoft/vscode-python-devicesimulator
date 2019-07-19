@@ -25,18 +25,26 @@ export const validCodeFileName = (filePath: string) => {
   );
 };
 
-export const showPrivacyModal = (okAction: () => void, privacyAction: () => void) => {
+export const showPrivacyModal = (okAction: () => void) => {
   window.showInformationMessage(
-    `${CONSTANTS.INFO.REDIRECT}\n${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}`,
+    CONSTANTS.INFO.THIRD_PARTY_WEBSITE,
     { modal: true },
-    DialogResponses.OK,
     DialogResponses.PRIVACY_STATEMENT
   )
-    .then((selection2: MessageItem | undefined) => {
-      if (selection2 === DialogResponses.OK) {
+    .then((privacySelection: MessageItem | undefined) => {
+      if (privacySelection === DialogResponses.OK) {
         okAction();
-      } else if (selection2 === DialogResponses.PRIVACY_STATEMENT) {
-        privacyAction();
+      } else {
+        window.showInformationMessage(
+          CONSTANTS.INFO.REDIRECT,
+          { modal: true },
+          DialogResponses.OK
+        )
+          .then((redirectSelection: MessageItem | undefined) => {
+            if (redirectSelection === DialogResponses.OK) {
+              okAction();
+            }
+          })
       }
     })
 }
