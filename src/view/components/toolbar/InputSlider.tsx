@@ -10,6 +10,7 @@ interface ISliderProps{
     min_label: string;
     max_label: string;
     step:number;
+    type: string;
 }
 
 
@@ -19,7 +20,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
     constructor(props: ISliderProps){
         super(props);
         this.state = {
-            value:0,
+            value: 0
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
@@ -45,10 +46,10 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
                 step={this.props.step} onChange={this.handleOnChange} value={this.state.value} defaultValue={this.props.min.toLocaleString()}/>
                 <div className="downLabelArea">
                     <div className='minLabel'>
-                        {this.props.min_label}
+                        {this.props.min}
                     </div>
                     <div className='maxLabel'>
-                        {this.props.max_label}
+                        {this.props.max}
                     </div>
                 </div>
             </div>
