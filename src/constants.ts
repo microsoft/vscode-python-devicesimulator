@@ -69,7 +69,7 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You’re will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"),
+    THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
       "Welcome to the Adafruit Simulator output tab !\n\n"
