@@ -33,7 +33,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      "[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples\n"
+      "[ERROR] We can't find the .py file to run. Open up a new .py file, or run the \"New Project\" command to get started and see useful links\n"
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
