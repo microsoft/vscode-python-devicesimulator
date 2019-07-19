@@ -170,7 +170,7 @@ export function activate(context: vscode.ExtensionContext) {
           } else if (selection === DialogResponses.TUTORIALS) {
             const okAction = () => {
               open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(
+              telemetryAI.trackFeatureUsage(
                 TelemetryEventName.CLICK_DIALOG_TUTORIALS
               );
             }
@@ -366,7 +366,7 @@ export function activate(context: vscode.ExtensionContext) {
                   if (selection === DialogResponses.HELP) {
                     const okAction = () => {
                       open(CONSTANTS.LINKS.HELP);
-                      TelemetryAI.trackFeatureUsage(
+                      telemetryAI.trackFeatureUsage(
                         TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                       );
                     }
@@ -388,17 +388,17 @@ export function activate(context: vscode.ExtensionContext) {
         }
       });
 
-    // Std error output
-    deviceProcess.stderr.on("data", data => {
-      telemetryAI.trackFeatureUsage(
-        TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
-        { error: `${data}` }
-      );
-      console.error(
-        `Error from the Python device process through stderr: ${data}`
-      );
-      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-    });
+      // Std error output
+      deviceProcess.stderr.on("data", data => {
+        telemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+          { error: `${data}` }
+        );
+        console.error(
+          `Error from the Python device process through stderr: ${data}`
+        );
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+      });
 
       // When the process is done
       deviceProcess.on("end", (code: number) => {
