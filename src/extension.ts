@@ -20,7 +20,7 @@ let currentFileAbsPath: string = "";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
-let shoulShowInvalidFileNamePopup: boolean = true;
+let shouldShowInvalidFileNamePopup: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, path: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
@@ -231,7 +231,7 @@ export function activate(context: vscode.ExtensionContext) {
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
 
-      if(!utils.validCodeFileName(currentFileAbsPath) && shoulShowInvalidFileNamePopup){
+      if(!utils.validCodeFileName(currentFileAbsPath) && shouldShowInvalidFileNamePopup){
         // to the popup
         vscode.window
         .showInformationMessage(
@@ -243,7 +243,7 @@ export function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shoulShowInvalidFileNamePopup = false;
+            shouldShowInvalidFileNamePopup = false;
             TelemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );

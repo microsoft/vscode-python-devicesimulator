@@ -5,7 +5,7 @@ import * as vscode from "vscode";
 import { validCodeFileName } from "./utils";
 import { CONSTANTS,DialogResponses } from "./constants";
 
-let shoulShowInvalidFileNamePopup: boolean = true;
+let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
@@ -34,7 +34,7 @@ export class SimulatorDebugConfigurationProvider
             .then(() => {
               return undefined; // Abort launch
             });
-        }else if(!validCodeFileName(currentFilePath) && shoulShowInvalidFileNamePopup){
+        }else if(!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup){
           return vscode.window
           .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
           ...[
@@ -43,7 +43,7 @@ export class SimulatorDebugConfigurationProvider
           ])
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
-              shoulShowInvalidFileNamePopup = false;
+              shouldShowInvalidFileNamePopup = false;
               return config;
             }else{
               return config;
