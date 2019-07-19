@@ -4,7 +4,7 @@
   "dialogResponses.help": "I need help",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
  " error.incorrectFileNameForDevice":"[ERROR] Can\\'t deploy to your Circuit Playground Express device, please rename your file to \"code.py\" or \"main.py\". \n",
-  "error.incorrectFileNameForDevicePopup":"Seems like you have a different file name than CPX requires, please rename it to \"code.py\" or \"main.py\".",
+  "error.incorrectFileNameForDevicePopup":"Seems like you have a different file name than what the CPX requires, please rename it to \"code.py\" or \"main.py\".",
   "error.incorrectFileNameForSimulatorPopup":"We want your code to work on your actual board as well, make sure you name your file \"code.py\" or \"main.py\" to do so.",
   "error.invalidFileNameDebug":"The file you tried to run isn\\'t named \"code.py\" or \"main.py\". Rename your file if you wish to debug it.",
   "error.noDevice": "No plugged in boards detected. Please double check if your board is connected and/or properly formatted",
