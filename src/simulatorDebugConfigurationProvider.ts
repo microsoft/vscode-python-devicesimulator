@@ -44,10 +44,9 @@ export class SimulatorDebugConfigurationProvider
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowInvalidFileNamePopup = false;
-              return config;
-            }else{
-              return config;
             }
+            return config;
+
           });
         }
         // Set process_user_code path as program
