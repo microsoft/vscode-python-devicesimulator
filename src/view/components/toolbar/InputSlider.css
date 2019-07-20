@@ -1,4 +1,6 @@
-
+:root{
+    --slider-gray-color:#cccccc;
+}
 .inputSlider{
     height: 50px;
     margin-bottom: 100px;
@@ -15,7 +17,7 @@
 
 .slider{
     -webkit-appearance: none;
-    background-color: #cccccc;
+    background-color: var(--slider-gray-color);
     height: 1px;
     width: 280px;
     vertical-align: middle;
