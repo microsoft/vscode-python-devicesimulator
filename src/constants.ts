@@ -80,7 +80,7 @@ export const CONSTANTS = {
     ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",
-      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual board.'
+      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
     ),
     NEW_PROJECT: localize(
       "info.newProject",
