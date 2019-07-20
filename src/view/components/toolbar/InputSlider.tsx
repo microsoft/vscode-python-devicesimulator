@@ -99,10 +99,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
   private validateRange() {
     if (this.state.value < this.props.min) {
-      this.setState({ value: this.props.min, dummy: 2 });
+      this.setState({ value: this.props.min });
     }
     if (this.state.value > this.props.max) {
-      this.setState({ value: this.props.max, dummy: 1 });
+      this.setState({ value: this.props.max });
     }
   }
 }
