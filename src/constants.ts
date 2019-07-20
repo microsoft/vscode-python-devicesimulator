@@ -23,7 +23,7 @@ export const CONSTANTS = {
     ),
      INVALID_FILE_EXTENSION_DEBUG: localize(
       "error.invalidFileExtensionDebug",
-      'The file you tried to run isn\'t  a python file.'
+      'The file you tried to run isn\'t a python file.'
     ),
     NO_DEVICE: localize(
       "error.noDevice",
@@ -80,7 +80,7 @@ export const CONSTANTS = {
     ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",
-      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual board.'
+      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
     ),
     NEW_PROJECT: localize(
       "info.newProject",
