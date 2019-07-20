@@ -35,7 +35,7 @@ export class SimulatorDebugConfigurationProvider
               return undefined; // Abort launch
             });
         }else if(!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup){
-          return vscode.window
+          vscode.window
           .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
           ...[
             DialogResponses.DONT_SHOW,
@@ -45,7 +45,6 @@ export class SimulatorDebugConfigurationProvider
             if (selection === DialogResponses.DONT_SHOW) {
               shouldShowInvalidFileNamePopup = false;
             }
-            return config;
           });
         }
         // Set process_user_code path as program
