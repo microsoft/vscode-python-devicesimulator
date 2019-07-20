@@ -11,8 +11,6 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
-    
-    
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
       '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
@@ -21,9 +19,9 @@ export const CONSTANTS = {
       "error.incorrectFileNameForDevicePopup",
       'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
     ),
-     INVALID_FILE_EXTENSION_DEBUG: localize(
+    INVALID_FILE_EXTENSION_DEBUG: localize(
       "error.invalidFileExtensionDebug",
-      'The file you tried to run isn\'t a Python file.'
+      "The file you tried to run isn't a Python file."
     ),
     NO_DEVICE: localize(
       "error.noDevice",
@@ -31,7 +29,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      "[ERROR] We can't find the .py file to run. Open up a new .py file, or run the \"New Project\" command to get started and see useful links\n"
+      '[ERROR] We can\'t find the .py file to run. Open up a new .py file, or run the "New Project" command to get started and see useful links\n'
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
@@ -80,7 +78,7 @@ export const CONSTANTS = {
     ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",
-      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
+      'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
     ),
     NEW_PROJECT: localize(
       "info.newProject",
