@@ -76,7 +76,7 @@ export const CONSTANTS = {
     ),
     INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
       "info.incorrectFileNameForSimulatorPopup",
-      'We want your code to work on your actual board as well, make sure you name your file "code.py" or "main.py" to do so.'
+      'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
     ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",

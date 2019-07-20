@@ -16,7 +16,7 @@
   "info.deploySuccess": "\n[INFO] Code successfully deployed\n",
   "info.extensionActivated": "Congratulations, your extension Adafruit_Simulator is now active!",
   "info.firstTimeWebview": "To reopen the simulator click on the \"Open Simulator\" button on the upper right corner of the text editor, or select the command \"Open Simulator\" from command palette.",
-  "error.invalidFileExtensionDebug":"The file you tried to run isn\\'t  a Python file.",
+  "error.invalidFileExtensionDebug":"The file you tried to run isn\\'t a Python file.",
   "info.newProject": "New to Python or Circuit Playground Express project? We are here to help!",
   "info.runningCode": "Running user code",
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
