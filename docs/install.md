@@ -19,7 +19,7 @@ _Note: You need to install all the dependencies in order to use the extension._
 - [Node](https://nodejs.org/en/download/)
 - [Python 3.7.4 (or latest)](https://www.python.org/downloads/)
   - **Warning :** Make sure you've included `python` and `pip` to your `PATH` in your **environment variables**.  
-  _(Note: the easiest way to do it might be when you install Python, you can select the "add to path" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python` in a terminal, the command is recognized.)_
+  _(Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python` in a terminal, the command is recognized.)_
 - Python VS Code extension (download from VS Code Marketplace)
 - Simple audio :
   - `python -m pip install --upgrade pip`
