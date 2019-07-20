@@ -103,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if(childProcess){
                   childProcess.stdin.write(JSON.stringify(message.text) + "\n");
                 }
+                break;
               case WebviewMessages.REFRESH_SIMULATOR:
                 console.log("Refresh button");
                 runSimulatorCommand();

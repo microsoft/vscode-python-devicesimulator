@@ -82,26 +82,24 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
        this.updateValue(event);
        this.validateRange();
        console.log(this.state.value)
-       let newSensorState = this.setMessage(event)
+       const newSensorState = this.setMessage(event)
        if(newSensorState){
            sendMessage(newSensorState)
        }
        console.log(this.state.value)
 
     }
-    setMessage(event: React.ChangeEvent<HTMLInputElement>) {
-        if(this.props.type && this.state.value &&  (event.target.valueAsNumber))
-            return {
-                temperature: (event.target.valueAsNumber)
-            }
-        
-            return ;
+   private  setMessage(event: React.ChangeEvent<HTMLInputElement>) {
+        let newSensorState;
+        if(this.props.type && this.state.value && (event.target.valueAsNumber)){
+            newSensorState ={temperature: event.target.valueAsNumber}
+        }
+        return newSensorState
     }
 
     private updateValue(event: React.ChangeEvent<HTMLInputElement>){
-        const newValue = (event.target.validity.valid) ? event.target.value : this.state.value;      
+        const newValue = (event.target.validity.valid) ? event.target.value : this.state.value;
         this.setState({value:newValue});
-      
     }
 
     private validateRange(){
