@@ -14,7 +14,7 @@
     (for example it could be find at : c:\users\<alias>\appdata\local\programs\python\python37\lib\site-packages\pip)
   - Run in a console `python -m pip install --upgrade pip`
 
-- playsound
+- Playsound
 
   - Run the command in a console : `pip install playsound`
 
@@ -28,7 +28,7 @@
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
-1. Make sure you have all the dependencies installed (Node, Python, playsound, VS Code, Python VS Code extension)
+1. Make sure you have all the dependencies installed (Node, Python, Playsound, VS Code, Python VS Code extension)
 
 2. Open the repository
 
