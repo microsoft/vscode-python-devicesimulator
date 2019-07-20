@@ -83,7 +83,7 @@ class InputSlider extends React.Component<ISliderProps,any,any>{
        this.validateRange();
        console.log(this.state.value)
        const newSensorState = this.setMessage(event)
-       if(newSensorState){
+       if (newSensorState){
            sendMessage(newSensorState)
        }
        console.log(this.state.value)
