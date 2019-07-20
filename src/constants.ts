@@ -23,7 +23,7 @@ export const CONSTANTS = {
     ),
      INVALID_FILE_EXTENSION_DEBUG: localize(
       "error.invalidFileExtensionDebug",
-      'The file you tried to run isn\'t a python file.'
+      'The file you tried to run isn\'t a Python file.'
     ),
     NO_DEVICE: localize(
       "error.noDevice",
