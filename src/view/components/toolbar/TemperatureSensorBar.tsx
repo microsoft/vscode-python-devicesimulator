@@ -35,7 +35,7 @@ class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
       <div className="temperatureSensorBar">
         <div className="header">
           <div className="title">
-            {TEMPERATURE_SENSOR_PROPERTIES.LABEL} {CELSIUS_STATE.unitLabel}
+            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} ${CELSIUS_STATE.unitLabel}`}
           </div>
         </div>
         <InputSlider
