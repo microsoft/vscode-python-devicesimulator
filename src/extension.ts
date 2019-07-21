@@ -158,11 +158,9 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_PROJECT,
-          ...[
             DialogResponses.DONT_SHOW,
             DialogResponses.EXAMPLE_CODE,
             DialogResponses.TUTORIALS
-          ]
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
@@ -365,7 +363,7 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window
                 .showErrorMessage(
                   CONSTANTS.ERROR.NO_DEVICE,
-                  ...[DialogResponses.HELP]
+                 DialogResponses.HELP
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
                   if (selection === DialogResponses.HELP) {
@@ -457,7 +455,7 @@ const getFileFromFilePicker = () => {
 
   return vscode.window.showOpenDialog(options).then(fileUri => {
     if (fileUri && fileUri[0]) {
-      console.log("Selected file: " + fileUri[0].fsPath);
+      console.log(`Selected file: ${fileUri[0].fsPath}`);
       return fileUri[0].fsPath;
     }
   });
