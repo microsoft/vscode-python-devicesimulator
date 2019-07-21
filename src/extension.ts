@@ -457,7 +457,7 @@ const getFileFromFilePicker = () => {
 
   return vscode.window.showOpenDialog(options).then(fileUri => {
     if (fileUri && fileUri[0]) {
-      console.log("Selected file: " + fileUri[0].fsPath);
+      console.log(`Selected file: ${fileUri[0].fsPath}`);
       return fileUri[0].fsPath;
     }
   });

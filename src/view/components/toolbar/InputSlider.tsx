@@ -34,6 +34,31 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     this.validateRange = this.validateRange.bind(this);
   }
 
+  handleMessage = (event: any): void => {
+    const message = event.data; // The JSON data our extension sent
+    switch (message.command) {
+      case "reset-state":
+        this.setState({ value: 0 });
+        break;
+      case "set-state":
+        console.log("Setting the state: " + JSON.stringify(message.state));
+        break;
+      default:
+        console.log("Invalid message received from the extension.");
+        this.setState({ value: 0 });
+        break;
+    }
+  };
+
+  componentDidMount() {
+    console.log("Mounted");
+    window.addEventListener("message", this.handleMessage);
+  }
+
+  componentWillUnmount() {
+    // Make sure to remove the DOM listener when the component is unmounted.
+    window.removeEventListener("message", this.handleMessage);
+  }
   render() {
     return (
       <div className="inputSlider">
