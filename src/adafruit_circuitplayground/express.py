@@ -29,7 +29,8 @@ class Express:
                 (0, 0, 0)
             ],
             'red_led': False,
-            'switch': False
+            'switch': False,
+            'temperature': 0
         }
 
         self.pixels = Pixel(self.__state)
@@ -55,6 +56,10 @@ class Express:
     @property
     def switch(self):
         return self.__state['switch']
+
+    @property
+    def temperature(self):
+        return self.__state['temperature']
 
     def __show(self):
         utils.show(self.__state)
