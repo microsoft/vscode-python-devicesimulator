@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./TemperatureSensorBar.css";
+import "./LightSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_ressources";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
@@ -20,19 +20,19 @@ const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
   unitLabel: "Lux"
 };
 
-class LightSensorBar extends React.Component{
+class LightSensorBar extends React.Component {
   constructor(props: any) {
     super(props);
   }
 
   render() {
     return (
-      <div className="LightSensorBar">
+      <div className="lightSensorBar">
         <div className="header">
           <div className="title">
-            {LIGHT_SENSOR_PROPERTIES.LABEL +
-              " " +
-              LIGHT_SENSOR_PROPERTIES.unitLabel}
+            {`${LIGHT_SENSOR_PROPERTIES.LABEL} (${
+              LIGHT_SENSOR_PROPERTIES.unitLabel
+            })`}
           </div>
         </div>
         <InputSlider

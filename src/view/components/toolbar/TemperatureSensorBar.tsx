@@ -20,7 +20,7 @@ const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
   unitLabel: "°C"
 };
 
-class TemperatureSensorBar extends React.Component{
+class TemperatureSensorBar extends React.Component {
   constructor(props: any) {
     super(props);
   }
@@ -30,9 +30,9 @@ class TemperatureSensorBar extends React.Component{
       <div className="temperatureSensorBar">
         <div className="header">
           <div className="title">
-            {TEMPERATURE_SENSOR_PROPERTIES.LABEL +
-              " " +
-              TEMPERATURE_SENSOR_PROPERTIES.unitLabel}
+            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} (${
+              TEMPERATURE_SENSOR_PROPERTIES.unitLabel
+            })`}
           </div>
         </div>
         <InputSlider
