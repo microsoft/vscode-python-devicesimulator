@@ -77,23 +77,31 @@ export function activate(context: vscode.ExtensionContext) {
         // Handle messages from webview
         messageListener = currentPanel.webview.onDidReceiveMessage(
           message => {
+            const messageJson = JSON.stringify(message.text);
             switch (message.command) {
               case WebviewMessages.BUTTON_PRESS:
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
-                console.log(JSON.stringify(message.text) + "\n");
+                console.log(messageJson  + "\n");
                 if (childProcess) {
-                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                  childProcess.stdin.write(messageJson  + "\n");
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log("Play button");
-                console.log(JSON.stringify(message.text) + "\n");
+                console.log(messageJson  + "\n");
                 if (message.text as boolean) {
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
+                }
+                break;
+              case WebviewMessages.SENSOR_CHANGED:
+                console.log("sensor changed");
+                console.log(messageJson  + "\n");
+                if (childProcess) {
+                  childProcess.stdin.write(messageJson  + "\n");
                 }
                 break;
               case WebviewMessages.REFRESH_SIMULATOR:
@@ -150,11 +158,9 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_PROJECT,
-          ...[
             DialogResponses.DONT_SHOW,
             DialogResponses.EXAMPLE_CODE,
             DialogResponses.TUTORIALS
-          ]
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
@@ -357,7 +363,7 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window
                 .showErrorMessage(
                   CONSTANTS.ERROR.NO_DEVICE,
-                  ...[DialogResponses.HELP]
+                 DialogResponses.HELP
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
                   if (selection === DialogResponses.HELP) {
@@ -382,17 +388,17 @@ export function activate(context: vscode.ExtensionContext) {
         }
       });
 
-    // Std error output
-    deviceProcess.stderr.on("data", data => {
-      telemetryAI.trackFeatureUsage(
-        TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
-        { error: `${data}` }
-      );
-      console.error(
-        `Error from the Python device process through stderr: ${data}`
-      );
-      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-    });
+      // Std error output
+      deviceProcess.stderr.on("data", data => {
+        telemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+          { error: `${data}` }
+        );
+        console.error(
+          `Error from the Python device process through stderr: ${data}`
+        );
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+      });
 
       // When the process is done
       deviceProcess.on("end", (code: number) => {
@@ -431,33 +437,38 @@ export function activate(context: vscode.ExtensionContext) {
 
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
-  const activeEditor = editors.find((editor) => editor.document.languageId === "python");
+  const activeEditor = editors.find(
+    editor => editor.document.languageId === "python"
+  );
   return activeEditor ? activeEditor.document.fileName : "";
-}
+};
 
 const getFileFromFilePicker = () => {
   const options: vscode.OpenDialogOptions = {
     canSelectMany: false,
     filters: {
-      'All files': ['*'],
-      'Python files': ['py']
+      "All files": ["*"],
+      "Python files": ["py"]
     },
-    openLabel: 'Run File'
+    openLabel: "Run File"
   };
 
   return vscode.window.showOpenDialog(options).then(fileUri => {
     if (fileUri && fileUri[0]) {
-      console.log('Selected file: ' + fileUri[0].fsPath);
+      console.log(`Selected file: ${fileUri[0].fsPath}`);
       return fileUri[0].fsPath;
     }
   });
-}
+};
 
-const updateCurrentFileIfPython = async (activeTextEditor: vscode.TextEditor | undefined) => {
+const updateCurrentFileIfPython = async (
+  activeTextEditor: vscode.TextEditor | undefined
+) => {
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
   } else if (currentFileAbsPath === "") {
-    currentFileAbsPath = getActivePythonFile() || await getFileFromFilePicker() || "";
+    currentFileAbsPath =
+      getActivePythonFile() || (await getFileFromFilePicker()) || "";
   }
 };
 
@@ -496,7 +507,9 @@ const logToOutputChannel = (
   show: boolean = false
 ) => {
   if (outChannel) {
-    if (show) { outChannel.show(true); }
+    if (show) {
+      outChannel.show(true);
+    }
     outChannel.append(message);
   }
 };
@@ -522,4 +535,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
