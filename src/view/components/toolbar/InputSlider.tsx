@@ -43,7 +43,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           value={this.state.value}
           onInputCapture={this.handleOnChange}
           defaultValue={this.props.min.toLocaleString()}
-          pattern="[-?0-9]*"
+          pattern="^-?[0-9]*$"
           onKeyUp={this.validateRange}
         />
         <div className="sliderArea">
@@ -73,18 +73,16 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   private handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.updateValue(event);
     this.validateRange();
-    const newSensorState = this.setMessage(event);
+    const newSensorState = this.writeMessage(event);
     if (newSensorState) {
       sendMessage(newSensorState);
     }
   }
 
-  private setMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    let newSensorState;
-    if (this.props.type && this.state.value && event.target.valueAsNumber) {
-      newSensorState = { temperature: event.target.valueAsNumber };
-    }
-    return newSensorState;
+  private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
+    return this.props.type && this.state.value && event.target.valueAsNumber
+      ? { temperature: event.target.valueAsNumber }
+      : undefined;
   }
 
   private updateValue(event: React.ChangeEvent<HTMLInputElement>) {
