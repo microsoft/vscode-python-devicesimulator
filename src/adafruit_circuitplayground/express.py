@@ -62,7 +62,7 @@ class Express:
         return self.__state['temperature']
 
     @property
-    def light(self):(self):
+    def light(self):
         return self.__state['light']
 
     def __show(self):
