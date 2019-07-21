@@ -11,7 +11,6 @@ interface vscode {
 declare const vscode: vscode;
 
 const sendMessage = (state: any) => {
-  console.log("sendmessage");
   vscode.postMessage({ command: "sensor-changed", text: state });
 };
 
@@ -99,12 +98,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   private handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.updateValue(event);
     this.validateRange();
-    console.log(this.state.value);
     const newSensorState = this.setMessage(event);
     if (newSensorState) {
       sendMessage(newSensorState);
     }
-    console.log(this.state.value);
   }
 
   private setMessage(event: React.ChangeEvent<HTMLInputElement>) {
