@@ -4,7 +4,7 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./LightSensorBar.css";
-import Constants from "../../../constants"
+import {} from "../../../constants"
 
 const TEMPERATURE_SENSOR_PROPERTIES = {
   LABEL: "Temperature sensor",
