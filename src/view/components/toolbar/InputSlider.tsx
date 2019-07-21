@@ -66,7 +66,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           type="text"
           className="sliderValue"
           value={this.state.value}
-          onInputCapture={this.handleOnChange}
+          onInput={this.handleOnChange}
           defaultValue={this.props.min.toLocaleString()}
           pattern="^-?[0-9]*$"
           onKeyUp={this.validateRange}
@@ -105,8 +105,9 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   }
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    return this.props.type && this.state.value && event.target.valueAsNumber
-      ? { temperature: event.target.valueAsNumber }
+    parseInt(event.target.value, 10);
+    return this.props.type && this.state.value && event.target.value
+      ? { temperature: parseInt(event.target.value, 10) }
       : undefined;
   }
 
@@ -114,6 +115,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
+    console.log(`set state to ${this.state.value}`);
     this.setState({ value: newValue });
   }
 
