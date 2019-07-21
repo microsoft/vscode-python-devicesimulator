@@ -150,12 +150,10 @@ export function activate(context: vscode.ExtensionContext) {
     if (shouldShowNewProject) {
       vscode.window
         .showInformationMessage(
-          CONSTANTS.INFO.NEW_PROJECT,
-          ...[
+          CONSTANTS.INFO.NEW_PROJECT,     
             DialogResponses.DONT_SHOW,
             DialogResponses.EXAMPLE_CODE,
-            DialogResponses.TUTORIALS
-          ]
+            DialogResponses.TUTORIALS    
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
@@ -246,10 +244,8 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
-          ...[
             DialogResponses.DONT_SHOW,
             DialogResponses.MESSAGE_UNDERSTOOD
-          ]
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
