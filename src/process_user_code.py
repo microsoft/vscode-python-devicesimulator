@@ -10,6 +10,14 @@ from adafruit_circuitplayground.express import cpx
 from pathlib import Path
 import traceback
 
+AWAITED_EVENTLIST =[
+    'button_a',
+    'button_b',
+    'switch'
+    'temperature',
+    'light'
+]
+
 read_val = ""
 
 class UserInput(threading.Thread):
@@ -24,14 +32,10 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
-                cpx._Express__state['button_a'] = new_state.get(
-                    'button_a', cpx._Express__state['button_a'])
-                cpx._Express__state['button_b'] = new_state.get(
-                    'button_b', cpx._Express__state['button_b'])
-                cpx._Express__state['switch'] = new_state.get(
-                    'switch', cpx._Express__state['switch'])
-                cpx._Express__state['temperature'] = new_state.get(
-                    'temperature', cpx._Express__state['temperature'])
+                for event in AWAITED_EVENTLIST:
+                    cpx._Express__state[event] = new_state.get(
+                    event, cpx._Express__state[event])
+
             except Exception as e:
                 print("Error trying to send event to the process : ",
                       e, file=sys.stderr, flush=True)
