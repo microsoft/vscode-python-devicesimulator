@@ -142,6 +142,7 @@ export enum TelemetryEventName {
 export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator",
+  SENSOR_CHANGED = "sensor-changed",
   REFRESH_SIMULATOR = "refresh-simulator"
 }
 

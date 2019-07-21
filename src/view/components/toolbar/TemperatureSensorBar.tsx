@@ -13,15 +13,15 @@ const TEMPERATURE_SENSOR_PROPERTIES = {
 };
 
 interface ITemperatureUnit {
-  name: string;
+  unitLabel: string;
   minValue: number;
   maxValue: number;
 }
 
 const CELSIUS_STATE: ITemperatureUnit = {
-  name: "°C",
+  maxValue: 40,
   minValue: -40,
-  maxValue: 40
+  unitLabel: "°C"
 };
 
 class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
@@ -35,7 +35,9 @@ class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
       <div className="temperatureSensorBar">
         <div className="header">
           <div className="title">
-            {TEMPERATURE_SENSOR_PROPERTIES.LABEL} {CELSIUS_STATE.name}
+            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} ${
+              CELSIUS_STATE.unitLabel
+            }`}
           </div>
         </div>
         <InputSlider
