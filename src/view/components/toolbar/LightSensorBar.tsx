@@ -3,53 +3,48 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./LightSensorBar.css";
-import {} from "../../../constants"
+import "./TemperatureSensorBar.css";
+import { ISensorProps, ISliderProps } from "./Toolbar_ressources";
 
-const TEMPERATURE_SENSOR_PROPERTIES = {
-  LABEL: "Temperature sensor",
-  MAX_LABEL: "Hot",
-  MIN_LABEL: "Cold",
-  TYPE: "temperature"
+const LIGHT_SLIDER_PROPS: ISliderProps = {
+  maxValue: 125,
+  minValue: -55,
+  minLabel: "Dark",
+  maxLabel: "Bright",
+  type: "light"
 };
 
-interface ITemperatureUnit {
-  unitLabel: string;
-  minValue: number;
-  maxValue: number;
-}
-
-const CELSIUS_STATE: ITemperatureUnit = {
-  maxValue: 40,
-  minValue: -40,
-  unitLabel: "°C"
+const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
+  LABEL: "Light sensor",
+  sliderProps: LIGHT_SLIDER_PROPS,
+  unitLabel: "Lux"
 };
 
-class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
+class LightSensorBar extends React.Component{
   constructor(props: any) {
     super(props);
-    this.state = CELSIUS_STATE;
   }
 
   render() {
     return (
-      <div className="temperatureSensorBar">
+      <div className="LightSensorBar">
         <div className="header">
           <div className="title">
-            {TEMPERATURE_SENSOR_PROPERTIES.LABEL + " " + CELSIUS_STATE.unitLabel}
+            {LIGHT_SENSOR_PROPERTIES.LABEL +
+              " " +
+              LIGHT_SENSOR_PROPERTIES.unitLabel}
           </div>
         </div>
         <InputSlider
-          min={this.state.minValue}
-          max={this.state.maxValue}
-          type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
-          min_label={TEMPERATURE_SENSOR_PROPERTIES.MIN_LABEL}
-          max_label={TEMPERATURE_SENSOR_PROPERTIES.MAX_LABEL}
-          step={1}
+          minValue={LIGHT_SENSOR_PROPERTIES.sliderProps.minValue}
+          maxValue={LIGHT_SENSOR_PROPERTIES.sliderProps.maxValue}
+          type={LIGHT_SENSOR_PROPERTIES.sliderProps.type}
+          minLabel={LIGHT_SENSOR_PROPERTIES.sliderProps.minLabel}
+          maxLabel={LIGHT_SENSOR_PROPERTIES.sliderProps.maxLabel}
         />
       </div>
     );
   }
 }
 
-export default TemperatureSensorBar;
+export default LightSensorBar;
