@@ -77,19 +77,20 @@ export function activate(context: vscode.ExtensionContext) {
         // Handle messages from webview
         messageListener = currentPanel.webview.onDidReceiveMessage(
           message => {
+            const messageJson = JSON.stringify(message.text);
             switch (message.command) {
               case WebviewMessages.BUTTON_PRESS:
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
-                console.log(JSON.stringify(message.text) + "\n");
+                console.log(messageJson  + "\n");
                 if (childProcess) {
-                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                  childProcess.stdin.write(messageJson  + "\n");
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log("Play button");
-                console.log(JSON.stringify(message.text) + "\n");
+                console.log(messageJson  + "\n");
                 if (message.text as boolean) {
                   runSimulatorCommand();
                 } else {
@@ -98,10 +99,9 @@ export function activate(context: vscode.ExtensionContext) {
                 break;
               case WebviewMessages.SENSOR_CHANGED:
                 console.log("sensor changed");
-                console.log(JSON.stringify(message.text) + "\n");
-                console.log(JSON.parse(JSON.stringify(message.text) + "\n"));
+                console.log(messageJson  + "\n");
                 if (childProcess) {
-                  childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+                  childProcess.stdin.write(messageJson  + "\n");
                 }
                 break;
               case WebviewMessages.REFRESH_SIMULATOR:
