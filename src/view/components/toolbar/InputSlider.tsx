@@ -73,7 +73,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   private setMessage(event: React.ChangeEvent<HTMLInputElement>) {
     let newSensorState;
     if (this.props.type && this.state.value && event.target.valueAsNumber) {
-      newSensorState = { temperature: event.target.valueAsNumber };
+      newSensorState = { [this.props.type]: event.target.valueAsNumber };
     }
     return newSensorState;
   }

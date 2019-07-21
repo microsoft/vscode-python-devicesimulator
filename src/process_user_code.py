@@ -13,7 +13,7 @@ import traceback
 AWAITED_EVENTLIST =[
     'button_a',
     'button_b',
-    'switch'
+    'switch',
     'temperature',
     'light'
 ]
