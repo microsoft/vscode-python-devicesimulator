@@ -16,7 +16,7 @@ const LIGHT_SLIDER_PROPS: ISliderProps = {
 
 const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
   LABEL: "Light sensor",
-  sliderProps: LIGHT_SLIDER_PROPS,
+  sliderProps: [LIGHT_SLIDER_PROPS],
   unitLabel: "Lux"
 };
 
@@ -36,11 +36,11 @@ class LightSensorBar extends React.Component {
           </div>
         </div>
         <InputSlider
-          minValue={LIGHT_SENSOR_PROPERTIES.sliderProps.minValue}
-          maxValue={LIGHT_SENSOR_PROPERTIES.sliderProps.maxValue}
-          type={LIGHT_SENSOR_PROPERTIES.sliderProps.type}
-          minLabel={LIGHT_SENSOR_PROPERTIES.sliderProps.minLabel}
-          maxLabel={LIGHT_SENSOR_PROPERTIES.sliderProps.maxLabel}
+          minValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minValue}
+          maxValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxValue}
+          type={LIGHT_SENSOR_PROPERTIES.sliderProps[0].type}
+          minLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minLabel}
+          maxLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
         />
       </div>
     );
