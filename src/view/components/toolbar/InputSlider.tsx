@@ -105,7 +105,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   }
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    parseInt(event.target.value, 10);
     return this.props.type && this.state.value && event.target.value
       ? { temperature: parseInt(event.target.value, 10) }
       : undefined;

@@ -20,6 +20,7 @@ let currentFileAbsPath: string = "";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
+let shouldShowInvalidFileNamePopup: boolean = true;
 let telemetryAI: TelemetryAI;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
@@ -83,14 +84,14 @@ export function activate(context: vscode.ExtensionContext) {
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
-                console.log(messageJson  + "\n");
+                console.log(messageJson + "\n");
                 if (childProcess) {
-                  childProcess.stdin.write(messageJson  + "\n");
+                  childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log("Play button");
-                console.log(messageJson  + "\n");
+                console.log(messageJson + "\n");
                 if (message.text as boolean) {
                   runSimulatorCommand();
                 } else {
@@ -99,9 +100,9 @@ export function activate(context: vscode.ExtensionContext) {
                 break;
               case WebviewMessages.SENSOR_CHANGED:
                 console.log("sensor changed");
-                console.log(messageJson  + "\n");
+                console.log(messageJson + "\n");
                 if (childProcess) {
-                  childProcess.stdin.write(messageJson  + "\n");
+                  childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
               case WebviewMessages.REFRESH_SIMULATOR:
@@ -158,9 +159,9 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_PROJECT,
-            DialogResponses.DONT_SHOW,
-            DialogResponses.EXAMPLE_CODE,
-            DialogResponses.TUTORIALS
+          DialogResponses.DONT_SHOW,
+          DialogResponses.EXAMPLE_CODE,
+          DialogResponses.TUTORIALS
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
@@ -246,6 +247,27 @@ export function activate(context: vscode.ExtensionContext) {
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
 
+      if (
+        !utils.validCodeFileName(currentFileAbsPath) &&
+        shouldShowInvalidFileNamePopup
+      ) {
+        // to the popup
+        vscode.window
+          .showInformationMessage(
+            CONSTANTS.INFO.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
+            DialogResponses.DONT_SHOW,
+            DialogResponses.MESSAGE_UNDERSTOOD
+          )
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowInvalidFileNamePopup = false;
+              telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+              );
+            }
+          });
+      }
+
       childProcess = cp.spawn("python", [
         utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
@@ -327,6 +349,17 @@ export function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else if (!utils.validCodeFileName(currentFileAbsPath)) {
+      // Output panel
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
+        true
+      );
+      // Popup
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
+      );
     } else {
       logToOutputChannel(
         outChannel,
@@ -363,7 +396,7 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window
                 .showErrorMessage(
                   CONSTANTS.ERROR.NO_DEVICE,
-                 DialogResponses.HELP
+                  DialogResponses.HELP
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
                   if (selection === DialogResponses.HELP) {
