@@ -15,7 +15,11 @@ AWAITED_EVENTLIST = [
     'button_b',
     'switch',
     'temperature',
-    'light'
+    'light',
+    'motion_x',
+    'motion_y',
+    'motion_z'
+
 ]
 
 read_val = ""
