@@ -1,9 +1,9 @@
 :root {
   --slider-gray-color: #cccccc;
 }
-.inputSlider{
-    height: 50px;
-    margin-bottom: 40px;
+.inputSlider {
+  height: 50px;
+  margin-bottom: 40px;
 }
 .sliderValue {
   text-align: center;
