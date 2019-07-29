@@ -7,13 +7,24 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
 import TelemetryAI from "./telemetry/telemetryAI";
-import { CONSTANTS, DialogResponses, TelemetryEventName } from "./constants";
+import {
+  CONSTANTS,
+  DialogResponses,
+  TelemetryEventName,
+  WebviewMessages
+} from "./constants";
+import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import * as utils from "./utils";
 
+let currentFileAbsPath: string = "";
+// Notification booleans
+let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
+let shouldShowInvalidFileNamePopup: boolean = true;
+let telemetryAI: TelemetryAI;
 
-
-function loadScript(context: vscode.ExtensionContext, path: string) {
-  return `<script src="${vscode.Uri.file(context.asAbsolutePath(path))
+function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
+  return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
     .with({ scheme: "vscode-resource" })
     .toString()}"></script>`;
 }
@@ -22,15 +33,15 @@ function loadScript(context: vscode.ExtensionContext, path: string) {
 export function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
-  const reporter: TelemetryAI = new TelemetryAI(context);
+  telemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
   let outChannel: vscode.OutputChannel | undefined;
-  let childProcess: cp.ChildProcess;
+  let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
-  
+
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
@@ -43,7 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
         CONSTANTS.LABEL.WEBVIEW_PANEL,
-        vscode.ViewColumn.Two,
+        { preserveFocus: true, viewColumn: vscode.ViewColumn.Two },
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
@@ -52,12 +63,74 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true
         }
       );
-      
+
       currentPanel.webview.html = getWebviewContent(context);
+
+      if (messageListener !== undefined) {
+        messageListener.dispose();
+        const index = context.subscriptions.indexOf(messageListener);
+        if (index > -1) {
+          context.subscriptions.splice(index, 1);
+        }
+      }
+
+      if (currentPanel) {
+        // Handle messages from webview
+        messageListener = currentPanel.webview.onDidReceiveMessage(
+          message => {
+            const messageJson = JSON.stringify(message.text);
+            switch (message.command) {
+              case WebviewMessages.BUTTON_PRESS:
+                // Send input to the Python process
+                handleButtonPressTelemetry(message.text);
+                console.log("About to write");
+                console.log(messageJson + "\n");
+                if (childProcess) {
+                  childProcess.stdin.write(messageJson + "\n");
+                }
+                break;
+              case WebviewMessages.PLAY_SIMULATOR:
+                console.log("Play button");
+                console.log(messageJson + "\n");
+                if (message.text as boolean) {
+                  runSimulatorCommand();
+                } else {
+                  killProcessIfRunning();
+                }
+                break;
+              case WebviewMessages.SENSOR_CHANGED:
+                console.log("sensor changed");
+                console.log(messageJson + "\n");
+                if (childProcess) {
+                  childProcess.stdin.write(messageJson + "\n");
+                }
+                break;
+              case WebviewMessages.REFRESH_SIMULATOR:
+                console.log("Refresh button");
+                runSimulatorCommand();
+                break;
+              default:
+                vscode.window.showInformationMessage(
+                  CONSTANTS.ERROR.UNEXPECTED_MESSAGE
+                );
+                break;
+            }
+          },
+          undefined,
+          context.subscriptions
+        );
+      }
 
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          killProcessIfRunning();
+          if (firstTimeClosed) {
+            vscode.window.showInformationMessage(
+              CONSTANTS.INFO.FIRST_TIME_WEBVIEW
+            );
+            firstTimeClosed = false;
+          }
         },
         undefined,
         context.subscriptions
@@ -66,103 +139,140 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   // Open Simulator on the webview
-  const openSimulator = vscode.commands.registerCommand(
+  const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSimulator",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
-      openWebview();
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
+      telemetryAI.runWithLatencyMeasure(
+        openWebview,
+        TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
+      );
     }
   );
 
-  const newProject = vscode.commands.registerCommand(
+  const openTemplateFile = () => {
+    const fileName = "template.py";
+    const filePath = __dirname + path.sep + fileName;
+    const file = fs.readFileSync(filePath, "utf8");
+
+    if (shouldShowNewProject) {
+      vscode.window
+        .showInformationMessage(
+          CONSTANTS.INFO.NEW_PROJECT,
+          DialogResponses.DONT_SHOW,
+          DialogResponses.EXAMPLE_CODE,
+          DialogResponses.TUTORIALS
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          if (selection === DialogResponses.DONT_SHOW) {
+            shouldShowNewProject = false;
+            telemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+            );
+          } else if (selection === DialogResponses.EXAMPLE_CODE) {
+            open(CONSTANTS.LINKS.EXAMPLE_CODE);
+            telemetryAI.trackFeatureUsage(
+              TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
+            );
+          } else if (selection === DialogResponses.TUTORIALS) {
+            const okAction = () => {
+              open(CONSTANTS.LINKS.TUTORIALS);
+              telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_TUTORIALS
+              );
+            }
+            utils.showPrivacyModal(okAction);
+          }
+        });
+    }
+
+    openWebview();
+
+    // tslint:disable-next-line: ban-comma-operator
+    vscode.workspace
+      .openTextDocument({ content: file, language: "python" })
+      .then((template: vscode.TextDocument) => {
+        vscode.window.showTextDocument(template, 1, false);
+      }),
+      // tslint:disable-next-line: no-unused-expression
+      (error: any) => {
+        telemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
+        );
+        console.error(`Failed to open a new text document:  ${error}`);
+      };
+  };
+
+  const newProject: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.newProject",
     () => {
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+      telemetryAI.runWithLatencyMeasure(
+        openTemplateFile,
+        TelemetryEventName.PERFORMANCE_NEW_PROJECT
+      );
+    }
+  );
 
-      const fileName = "template.py";
-      const filePath = __dirname + path.sep + fileName;
-      const file = fs.readFileSync(filePath, "utf8");
+  const killProcessIfRunning = () => {
+    if (childProcess !== undefined) {
+      if (currentPanel) {
+        console.info("Sending clearing state command");
+        currentPanel.webview.postMessage({ command: "reset-state" });
+      }
+      // TODO: We need to check the process was correctly killed
+      childProcess.kill();
+      childProcess = undefined;
+    }
+  };
 
+  const runSimulatorCommand = async () => {
+    openWebview();
 
-      if (shouldShowNewProject) {
+    if (!currentPanel) {
+      return;
+    }
+
+    console.info(CONSTANTS.INFO.RUNNING_CODE);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
+
+    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
+
+    killProcessIfRunning();
+
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
+
+    if (currentFileAbsPath === "") {
+      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
+
+      if (
+        !utils.validCodeFileName(currentFileAbsPath) &&
+        shouldShowInvalidFileNamePopup
+      ) {
+        // to the popup
         vscode.window
           .showInformationMessage(
-            CONSTANTS.INFO.NEW_PROJECT,
-            ...[
-              DialogResponses.DONT_SHOW,
-              DialogResponses.EXAMPLE_CODE,
-              DialogResponses.TUTORIALS
-            ]
+            CONSTANTS.INFO.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
+            DialogResponses.DONT_SHOW,
+            DialogResponses.MESSAGE_UNDERSTOOD
           )
           .then((selection: vscode.MessageItem | undefined) => {
             if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowNewProject = false;
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_DONT_SHOW);
-            } else if (selection === DialogResponses.EXAMPLE_CODE) {
-              open(CONSTANTS.LINKS.EXAMPLE_CODE);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE);
-            } else if (selection === DialogResponses.TUTORIALS) {
-              open(CONSTANTS.LINKS.TUTORIALS);
-              TelemetryAI.trackFeatureUsage(TelemetryEventName.CLICK_DIALOG_TUTORIALS);
+              shouldShowInvalidFileNamePopup = false;
+              telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+              );
             }
           });
       }
 
-      openWebview();
-
-
-      vscode.workspace
-        .openTextDocument({ content: file, language: "en" })
-        .then((template: vscode.TextDocument) => {
-          vscode.window.showTextDocument(template, 1, false);
-        }),
-        (error: any) => {
-          console.error(`Failed to open a new text document:  ${error}`);
-        };
-    }
-  );
-
-  // Send message to the webview
-  const runSimulator = vscode.commands.registerCommand(
-    "pacifica.runSimulator",
-    () => {
-      openWebview();
-
-      if (!currentPanel) {
-        return;
-      }
-
-      TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
-
-      console.info(CONSTANTS.INFO.RUNNING_CODE);
-      const activeTextEditor: vscode.TextEditor | undefined =
-        vscode.window.activeTextEditor;
-      let currentFileAbsPath: string = "";
-
-      if (activeTextEditor) {
-        currentFileAbsPath = activeTextEditor.document.fileName;
-      }
-
-      // Get the Python script path (And the special URI to use with the webview)
-      const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, "out", "process_user_code.py")
-      );
-      const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-
-      // Create the Python process (after killing the one running if any)
-      if (childProcess !== undefined) {
-        if (currentPanel) {
-          console.info("Sending clearing state command");
-          currentPanel.webview.postMessage({ command: "reset-state" });
-        }
-        // TODO: We need to check the process was correctly killed
-        childProcess.kill();
-      }
-
-      logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
-
       childProcess = cp.spawn("python", [
-        scriptPath.fsPath,
+        utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
       ]);
 
@@ -210,6 +320,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Std error output
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
+        telemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
         logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
@@ -221,138 +332,196 @@ export function activate(context: vscode.ExtensionContext) {
       childProcess.on("end", (code: number) => {
         console.info(`Command execution exited with code: ${code}`);
       });
+    }
+  };
 
-      if (messageListener !== undefined) {
-        messageListener.dispose();
-        const index = context.subscriptions.indexOf(messageListener);
-        if (index > -1) {
-          context.subscriptions.splice(index, 1);
-        }
-      }
-      // Handle messages from webview
-      messageListener = currentPanel.webview.onDidReceiveMessage(
-        message => {
-          switch (message.command) {
-            case "button-press":
-              // Send input to the Python process
-              handleButtonPressTelemetry(message.text);
-              console.log("About to write");
-              console.log(JSON.stringify(message.text) + "\n");
-              childProcess.stdin.write(JSON.stringify(message.text) + "\n");
+  // Send message to the webview
+  const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runSimulator",
+    () => {
+      runSimulatorCommand();
+    }
+  );
+
+  const deployCodeToDevice = () => {
+    console.info("Sending code to device");
+
+    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+
+    updateCurrentFileIfPython(vscode.window.activeTextEditor);
+
+    if (currentFileAbsPath === "") {
+      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+    } else if (!utils.validCodeFileName(currentFileAbsPath)) {
+      // Output panel
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
+        true
+      );
+      // Popup
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
+      );
+    } else {
+      logToOutputChannel(
+        outChannel,
+        CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+      );
+
+      const deviceProcess = cp.spawn("python", [
+        utils.getPathToScript(context, "out", "device.py"),
+        currentFileAbsPath
+      ]);
+
+      let dataFromTheProcess = "";
+
+      // Data received from Python process
+      deviceProcess.stdout.on("data", data => {
+        dataFromTheProcess = data.toString();
+        console.log(`Device output = ${dataFromTheProcess}`);
+        let messageToWebview;
+        try {
+          messageToWebview = JSON.parse(dataFromTheProcess);
+          // Check the JSON is a state
+          switch (messageToWebview.type) {
+            case "complete":
+              telemetryAI.trackFeatureUsage(
+                TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
+              );
+              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
               break;
+
+            case "no-device":
+              telemetryAI.trackFeatureUsage(
+                TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
+              );
+              vscode.window
+                .showErrorMessage(
+                  CONSTANTS.ERROR.NO_DEVICE,
+                  DialogResponses.HELP
+                )
+                .then((selection: vscode.MessageItem | undefined) => {
+                  if (selection === DialogResponses.HELP) {
+                    const okAction = () => {
+                      open(CONSTANTS.LINKS.HELP);
+                      telemetryAI.trackFeatureUsage(
+                        TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                      );
+                    }
+                    utils.showPrivacyModal(okAction);
+                  }
+                });
+              break;
+
             default:
-              vscode.window.showInformationMessage(
-                CONSTANTS.ERROR.UNEXPECTED_MESSAGE
+              console.log(
+                `Non-state JSON output from the process : ${messageToWebview}`
               );
               break;
           }
-        },
-        undefined,
-        context.subscriptions
+        } catch (err) {
+          console.log(
+            `Non-JSON output from the process :  ${dataFromTheProcess}`
+          );
+        }
+      });
+
+      // Std error output
+      deviceProcess.stderr.on("data", data => {
+        telemetryAI.trackFeatureUsage(
+          TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+          { error: `${data}` }
+        );
+        console.error(
+          `Error from the Python device process through stderr: ${data}`
+        );
+        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+      });
+
+      // When the process is done
+      deviceProcess.on("end", (code: number) => {
+        console.info(`Command execution exited with code: ${code}`);
+      });
+    }
+  };
+
+  const runDevice: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runDevice",
+    () => {
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
+      telemetryAI.runWithLatencyMeasure(
+        deployCodeToDevice,
+        TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE
       );
     }
   );
 
-  // Send message to the webview
-  const runDevice = vscode.commands.registerCommand("pacifica.runDevice", () => {
-    console.info("Sending code to device");
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
-
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
-
-    const activeTextEditor: vscode.TextEditor | undefined =
-      vscode.window.activeTextEditor;
-    let currentFileAbsPath: string = "";
-
-    if (activeTextEditor) {
-      currentFileAbsPath = activeTextEditor.document.fileName;
-    }
-
-    // Get the Python script path (And the special URI to use with the webview)
-    const onDiskPath = vscode.Uri.file(
-      path.join(context.extensionPath, "out", "device.py")
-    );
-    const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
-
-    const deviceProcess = cp.spawn("python", [
-      scriptPath.fsPath,
-      currentFileAbsPath
-    ]);
-
-    let dataFromTheProcess = "";
-
-    // Data received from Python process
-    deviceProcess.stdout.on("data", data => {
-      dataFromTheProcess = data.toString();
-      console.log(`Device output = ${dataFromTheProcess}`);
-      let messageToWebview;
-      try {
-        messageToWebview = JSON.parse(dataFromTheProcess);
-        // Check the JSON is a state
-        switch (messageToWebview.type) {
-          case "complete":
-            logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
-            break;
-
-          case "no-device":
-            vscode.window
-              .showErrorMessage(
-                CONSTANTS.ERROR.NO_DEVICE,
-                ...[DialogResponses.HELP]
-              )
-              .then((selection: vscode.MessageItem | undefined) => {
-                if (selection === DialogResponses.HELP) {
-                  open(CONSTANTS.LINKS.HELP);
-                }
-              });
-            break;
-
-          default:
-            console.log(
-              `Non-state JSON output from the process : ${messageToWebview}`
-            );
-            break;
-        }
-      } catch (err) {
-        console.log(
-          `Non-JSON output from the process :  ${dataFromTheProcess}`
-        );
-      }
-    });
-
-    // Std error output
-    deviceProcess.stderr.on("data", data => {
-      console.error(
-        `Error from the Python device process through stderr: ${data}`
-      );
-      logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
-    });
-
-    // When the process is done
-    deviceProcess.on("end", (code: number) => {
-      console.info(`Command execution exited with code: ${code}`);
-    });
-  });
+  // Debugger configuration
+  const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
+    utils.getPathToScript(context, "out", "process_user_code.py")
+  );
 
   context.subscriptions.push(
     openSimulator,
     runSimulator,
     runDevice,
-    newProject
+    newProject,
+    vscode.debug.registerDebugConfigurationProvider(
+      "python",
+      simulatorDebugConfiguration
+    )
   );
 }
 
+const getActivePythonFile = () => {
+  const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
+  const activeEditor = editors.find(
+    editor => editor.document.languageId === "python"
+  );
+  return activeEditor ? activeEditor.document.fileName : "";
+};
+
+const getFileFromFilePicker = () => {
+  const options: vscode.OpenDialogOptions = {
+    canSelectMany: false,
+    filters: {
+      "All files": ["*"],
+      "Python files": ["py"]
+    },
+    openLabel: "Run File"
+  };
+
+  return vscode.window.showOpenDialog(options).then(fileUri => {
+    if (fileUri && fileUri[0]) {
+      console.log(`Selected file: ${fileUri[0].fsPath}`);
+      return fileUri[0].fsPath;
+    }
+  });
+};
+
+const updateCurrentFileIfPython = async (
+  activeTextEditor: vscode.TextEditor | undefined
+) => {
+  if (activeTextEditor && activeTextEditor.document.languageId === "python") {
+    currentFileAbsPath = activeTextEditor.document.fileName;
+  } else if (currentFileAbsPath === "") {
+    currentFileAbsPath =
+      getActivePythonFile() || (await getFileFromFilePicker()) || "";
+  }
+};
+
 const handleButtonPressTelemetry = (buttonState: any) => {
   if (buttonState["button_a"] && buttonState["button_b"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
   } else if (buttonState["button_a"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
   } else if (buttonState["button_b"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
   } else if (buttonState["switch"]) {
-    TelemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
-}
+};
 
 const updatePythonExtraPaths = () => {
   const pathToLib: string = __dirname;
@@ -377,7 +546,9 @@ const logToOutputChannel = (
   show: boolean = false
 ) => {
   if (outChannel) {
-    if (show) outChannel.show();
+    if (show) {
+      outChannel.show(true);
+    }
     outChannel.append(message);
   }
 };
@@ -403,4 +574,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
