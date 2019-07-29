@@ -1,5 +1,6 @@
 {
   "pacificaExtension.commands.label": "Pacifica",
+  "pacificaExtension.commands.openSerialMonitor": "Open Serial Monitor",
   "pacificaExtension.commands.openSimulator": "Open Simulator",
   "pacificaExtension.commands.runSimulator": "Run Simulator",
   "pacificaExtension.commands.newProject": "New Project",

@@ -24,6 +24,7 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
+    "onCommand:pacifica.openSerialMonitor",
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newProject",
@@ -33,6 +34,11 @@
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "pacifica.openSerialMonitor",
+        "title": "%pacificaExtension.commands.openSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
       {
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
