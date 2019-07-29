@@ -8,6 +8,7 @@ from playsound import playsound
 from .pixel import Pixel
 from . import utils
 
+
 class Express:
     def __init__(self):
         # State in the Python process
@@ -30,11 +31,18 @@ class Express:
             'red_led': False,
             'switch': False,
             'temperature': 0,
-            'light': 0
+            'light': 0,
+            'motion_x': 0,
+            'motion_y': 0,
+            'motion_z': 0
         }
 
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
+
+    @property
+    def acceleration(self):
+        return (self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
 
     @property
     def button_a(self):
@@ -70,8 +78,10 @@ class Express:
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
-        abs_path_parent_dir = os.path.abspath(os.path.join(self.__abs_path_to_code_file, os.pardir))
-        abs_path_wav_file = os.path.normpath(os.path.join(abs_path_parent_dir, file_name))
+        abs_path_parent_dir = os.path.abspath(
+            os.path.join(self.__abs_path_to_code_file, os.pardir))
+        abs_path_wav_file = os.path.normpath(
+            os.path.join(abs_path_parent_dir, file_name))
 
         if sys.implementation.version[0] >= 3:
             if file_name.endswith(".wav"):
@@ -79,10 +89,12 @@ class Express:
                     playsound(abs_path_wav_file)
                 except:
                     # TODO TASK: 29054 Verfication of a "valid" .wav file
-                    raise EnvironmentError("Your .wav file is not suitable for the Circuit Playground Express.")
+                    raise EnvironmentError(
+                        "Your .wav file is not suitable for the Circuit Playground Express.")
             else:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
+
 
 cpx = Express()
