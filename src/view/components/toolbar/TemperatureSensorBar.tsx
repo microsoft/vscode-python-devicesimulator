@@ -4,30 +4,24 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./TemperatureSensorBar.css";
+import { ISensorProps, ISliderProps } from "./Toolbar_ressources";
 
-const TEMPERATURE_SENSOR_PROPERTIES = {
-  LABEL: "Temperature sensor",
-  MAX_LABEL: "Hot",
-  MIN_LABEL: "Cold",
-  TYPE: "temperature"
+const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
+  maxValue: 125,
+  minValue: -55,
+  minLabel: "Cold",
+  maxLabel: "Hot",
+  type: "temperature"
 };
-
-interface ITemperatureUnit {
-  unitLabel: string;
-  minValue: number;
-  maxValue: number;
-}
-
-const CELSIUS_STATE: ITemperatureUnit = {
-  maxValue: 40,
-  minValue: -40,
+const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
+  LABEL: "Temperature sensor",
+  sliderProps: [TEMPERATURE_SLIDER_PROPS],
   unitLabel: "°C"
 };
 
-class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
+class TemperatureSensorBar extends React.Component {
   constructor(props: any) {
     super(props);
-    this.state = CELSIUS_STATE;
   }
 
   render() {
@@ -35,18 +29,17 @@ class TemperatureSensorBar extends React.Component<any, ITemperatureUnit, any> {
       <div className="temperatureSensorBar">
         <div className="header">
           <div className="title">
-            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} ${
-              CELSIUS_STATE.unitLabel
-            }`}
+            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} (${
+              TEMPERATURE_SENSOR_PROPERTIES.unitLabel
+            })`}
           </div>
         </div>
         <InputSlider
-          min={this.state.minValue}
-          max={this.state.maxValue}
-          type={TEMPERATURE_SENSOR_PROPERTIES.TYPE}
-          min_label={TEMPERATURE_SENSOR_PROPERTIES.MIN_LABEL}
-          max_label={TEMPERATURE_SENSOR_PROPERTIES.MAX_LABEL}
-          step={1}
+          minValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minValue}
+          maxValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxValue}
+          type={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].type}
+          minLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minLabel}
+          maxLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
         />
       </div>
     );
