@@ -3,7 +3,9 @@
 
 import * as vscode from "vscode";
 import { validCodeFileName } from "./utils";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS,DialogResponses } from "./constants";
+
+let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
@@ -25,14 +27,25 @@ export class SimulatorDebugConfigurationProvider
 
         // Check file type and name
         if (
-          !(activeTextEditor.document.languageId === "python") ||
-          !validCodeFileName(currentFilePath)
+          !(activeTextEditor.document.languageId === "python")
         ) {
           return vscode.window
-            .showErrorMessage(CONSTANTS.ERROR.INVALID_FILE_NAME_DEBUG)
+            .showErrorMessage(CONSTANTS.ERROR.INVALID_FILE_EXTENSION_DEBUG)
             .then(() => {
               return undefined; // Abort launch
             });
+        }else if(!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup){
+          vscode.window
+          .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
+          ...[
+            DialogResponses.DONT_SHOW,
+            DialogResponses.MESSAGE_UNDERSTOOD
+          ])
+          .then((selection: vscode.MessageItem | undefined) => {
+            if (selection === DialogResponses.DONT_SHOW) {
+              shouldShowInvalidFileNamePopup = false;
+            }
+          });
         }
         // Set process_user_code path as program
         config.program = this.pathToScript;
