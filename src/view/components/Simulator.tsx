@@ -55,7 +55,6 @@ interface vscode {
 declare const vscode: vscode;
 
 const sendMessage = (type: string, state: any) => {
-  console.log("sendmessage");
   vscode.postMessage({ command: type, text: state });
 };
 
