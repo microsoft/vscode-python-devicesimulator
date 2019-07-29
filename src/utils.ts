@@ -28,10 +28,10 @@ export const validCodeFileName = (filePath: string) => {
 export const showPrivacyModal = (okAction: () => void) => {
   window.showInformationMessage(
     `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE} ${CONSTANTS.LINKS.PRIVACY}`,
-    DialogResponses.ACCEPT_PRIVACY
+    DialogResponses.MESSAGE_UNDERSTOOD
   )
     .then((privacySelection: MessageItem | undefined) => {
-      if (privacySelection === DialogResponses.ACCEPT_PRIVACY) {
+      if (privacySelection === DialogResponses.MESSAGE_UNDERSTOOD) {
         okAction();
       }
     })

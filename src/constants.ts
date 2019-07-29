@@ -157,7 +157,6 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
-  export const ACCEPT_PRIVACY: MessageItem = { title: localize("dialogResponses.acceptPrivacy", "Got it") };
   export const PRIVACY_STATEMENT: MessageItem = { title: localize("info.privacyStatement", "Privacy Statement") };
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
