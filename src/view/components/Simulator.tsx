@@ -116,23 +116,22 @@ class Simulator extends React.Component<any, IState> {
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
             switch={this.state.cpx.switch}
-            on={this.state.play_button}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseLeave={this.onMouseLeave}
+            on={this.state.play_button}
+
           />
         </div>
         <div className="buttons">
           <Button
             onClick={this.playSimulatorClick}
             image={image}
-            on={this.state.play_button}
             label="play"
           />
           <Button
             onClick={this.refreshSimulatorClick}
             image={RefreshLogo}
-            on={false}
             label="refresh"
           />
         </div>
