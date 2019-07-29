@@ -13,7 +13,9 @@ class App extends React.Component {
       <div className="App">
         <main className="App-main">
           <Simulator />
-          <TemperatureSensorBar/>
+          <div className="sensor-scrollbox">
+            <TemperatureSensorBar/>
+          </div>
         </main>
       </div>
     );
