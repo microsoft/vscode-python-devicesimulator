@@ -4,7 +4,6 @@ import "../styles/Button.css";
 interface IButtonProps {
   image: any;
   label: string;
-  on: boolean;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
