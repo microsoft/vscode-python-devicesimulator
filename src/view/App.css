@@ -15,7 +15,7 @@
 
 .sensor-scrollbox {
   overflow-y: scroll;
-  max-height: 250px;
+  max-height: 50px;
   margin-left: auto;
   margin-right: auto;
   width: fit-content;
