@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import "./InputSlider.css";
-import {ISliderProps} from "./Toolbar_ressources";
+import { ISliderProps } from "./Toolbar_ressources";
 
 interface vscode {
   postMessage(message: any): void;
@@ -105,7 +105,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
-    console.log(`set state to ${this.state.value}`);
     this.setState({ value: newValue });
   }
 
