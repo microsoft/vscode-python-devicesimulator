@@ -1,8 +1,8 @@
 import * as React from "react";
 import Button from "../Button";
-import Temp_Icon from "../../svgs/toolbar_temperature_svg";
-import Light_Icon from "../../svgs/toolbar_light_svg";
-import Motion_Icon from "../../svgs/toolbar_motion_svg";
+import Temp_Icon from "../../svgs/toolbar_svgs/temperature_svg";
+import Light_Icon from "../../svgs/toolbar_svgs/light_svg";
+import Motion_Icon from "../../svgs/toolbar_svgs/motion_svg";
 import Modal from "../toolbar/SensorModal"
 
 class ToolBar extends React.Component {
