@@ -71,10 +71,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           <input
             type="range"
             className="slider"
-            min={this.props.minValue}
-            max={this.props.maxValue}
+            aria-valuemin={this.props.minValue}
+            aria-valuemax={this.props.maxValue}
             onChange={this.handleOnChange}
-            value={this.state.value}
+            aria-valuenow={this.state.value}
             defaultValue={this.props.minValue.toLocaleString()}
           />
           <div className="downLabelArea">
