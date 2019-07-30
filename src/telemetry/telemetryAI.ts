@@ -4,14 +4,15 @@ import getPackageInfo from "./getPackageInfo";
 
 // tslint:disable-next-line:export-name
 export default class TelemetryAI {
-    static trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
-        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, eventProperties);
-    }
-
     private static telemetryReporter: TelemetryReporter;
+    private static enableTelemetry: boolean | undefined;
 
     constructor(vscodeContext: vscode.ExtensionContext) {
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
+        TelemetryAI.enableTelemetry = vscode.workspace.getConfiguration().get("telemetry.enableTelemetry");
+        if (TelemetryAI.enableTelemetry === undefined) {
+            TelemetryAI.enableTelemetry = true;
+        }
     }
 
     public getExtensionName(context: vscode.ExtensionContext): string {
@@ -24,8 +25,25 @@ export default class TelemetryAI {
         return extensionVersion;
     }
 
-    public trackEventTime(eventName: string, startTime: number, endTime: number = Date.now(), eventProperties?: { [key: string]: string }) {
-        this.trackTimeDuration(eventName, startTime, endTime, eventProperties);
+    public sendTelemetryIfEnabled(eventName: string, properties?: { [key: string]: string }, measurements?: { [key: string]: number }) {
+        if (TelemetryAI.enableTelemetry) {
+            TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurements);
+        }
+    }
+
+    public trackFeatureUsage(eventName: string, eventProperties?: { [key: string]: string }) {
+        this.sendTelemetryIfEnabled(eventName, eventProperties)
+    }
+
+    public runWithLatencyMeasure(functionToRun: () => void, eventName: string): void {
+        const numberOfNanosecondsInSecond: number = 1000000000;
+        const startTime: number = Number(process.hrtime.bigint());
+        functionToRun();
+        const latency: number = Number(process.hrtime.bigint()) - startTime;
+        const measurement = {
+            duration: latency / numberOfNanosecondsInSecond
+        }
+        this.sendTelemetryIfEnabled(eventName, {}, measurement);
     }
 
     private createTelemetryReporter(context: vscode.ExtensionContext): TelemetryReporter {
@@ -33,13 +51,5 @@ export default class TelemetryAI {
         const reporter: TelemetryReporter = new TelemetryReporter(extensionName, extensionVersion, instrumentationKey);
         context.subscriptions.push(reporter);
         return reporter;
-    }
-
-    private trackTimeDuration(eventName: string, startTime: number, endTime: number, properties?: { [key: string]: string }) {
-        const measurement = {
-            duration: (endTime - startTime) / 1000
-        }
-        // Only send event if telemetry is not suppressed
-        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement);
     }
 }

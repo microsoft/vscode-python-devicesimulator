@@ -30,6 +30,8 @@ class UserInput(threading.Thread):
                     'button_b', cpx._Express__state['button_b'])
                 cpx._Express__state['switch'] = new_state.get(
                     'switch', cpx._Express__state['switch'])
+                cpx._Express__state['temperature'] = new_state.get(
+                    'temperature', cpx._Express__state['temperature'])
             except Exception as e:
                 print("Error trying to send event to the process : ",
                       e, file=sys.stderr, flush=True)
