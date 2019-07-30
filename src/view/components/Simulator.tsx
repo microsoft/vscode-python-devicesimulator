@@ -5,7 +5,7 @@ import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx, { updateSwitch } from "./cpx/Cpx";
 import Button from "./Button";
-import KeyboardKeys from "../constants";
+import CONSTANTS from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
@@ -156,10 +156,11 @@ class Simulator extends React.Component<any, IState> {
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
     let button;
     const target = event.target as SVGElement;
-    if (event.keyCode === KeyboardKeys.ENTER) {
+    if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
       if (target) {
         button = window.document.getElementById(target.id);
         if (button) {
+          event.preventDefault();
           if (button.id.includes("SWITCH")) {
             // Switch
             this.handleClick(button, active);
