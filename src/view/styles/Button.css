@@ -19,7 +19,9 @@
 }
 
 .play-button:hover,
-.refresh-button:hover {
+.play-button:focus,
+.refresh-button:hover,
+.refresh-button:focus {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 

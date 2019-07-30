@@ -5,6 +5,7 @@ import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx, { updateSwitch } from "./cpx/Cpx";
 import Button from "./Button";
+import KeyboardKeys from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
@@ -59,6 +60,7 @@ const sendMessage = (type: string, state: any) => {
 };
 
 class Simulator extends React.Component<any, IState> {
+  private keyPressed = false;
   constructor(props: IMyProps) {
     super(props);
     this.state = {
@@ -67,6 +69,7 @@ class Simulator extends React.Component<any, IState> {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.onKeyEvent = this.onKeyEvent.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -117,6 +120,7 @@ class Simulator extends React.Component<any, IState> {
             red_led={this.state.cpx.red_led}
             switch={this.state.cpx.switch}
             on={this.state.play_button}
+            onKeyEvent={this.onKeyEvent}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseLeave={this.onMouseLeave}
@@ -147,6 +151,30 @@ class Simulator extends React.Component<any, IState> {
 
   protected refreshSimulatorClick(event: React.MouseEvent<HTMLElement>) {
     sendMessage("refresh-simulator", true);
+  }
+
+  protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+    let button;
+    const target = event.target as SVGElement;
+    if (event.keyCode === KeyboardKeys.ENTER) {
+      if (target) {
+        button = window.document.getElementById(target.id);
+        if (button) {
+          if (button.id.includes("SWITCH")) {
+            // Switch
+            this.handleClick(button, active);
+          } else if (active && !this.keyPressed) {
+            // Send one keydown event
+            this.handleClick(button, active);
+            this.keyPressed = true;
+          } else if (!active) {
+            // Keyup event
+            this.handleClick(button, active);
+            this.keyPressed = false;
+          }
+        }
+      }
+    }
   }
 
   protected onMouseDown(button: HTMLElement, event: Event) {
