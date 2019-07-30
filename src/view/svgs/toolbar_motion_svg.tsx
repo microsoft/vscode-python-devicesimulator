@@ -8,6 +8,7 @@ export const TOOLBAR_MOTION_SVG = (
         version="1.1" 
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
     >
     <g id="motion_sensor" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Group-10" fill="#FFFFFF">
