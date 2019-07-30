@@ -4,20 +4,17 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "../../styles/LightSensorBar.css";
-import { ISensorProps, ISliderProps } from "../../components/component_utils";
+import { ISensorProps, ISliderProps } from "./componet_utils";
 
-const LIGHT_SLIDER_PROPS: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Dark",
-  maxLabel: "Bright",
-  type: "light"
-};
+interface IModalButtonProps {
+  image: any;
+  label: string;
+  width: number;
+}
 
-const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
-  LABEL: "Light sensor",
-  sliderProps: [LIGHT_SLIDER_PROPS],
-  unitLabel: "Lux"
+const MODAL_BUTTON_PROPERTIES: IModalButtonProps = {
+  image: any;
+  label: string;
 };
 
 class LightSensorBar extends React.Component {

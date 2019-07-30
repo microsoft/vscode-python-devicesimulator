@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import "../../styles/InputSlider.css";
-import { ISliderProps } from "./Toolbar_utils";
+import { ISliderProps } from "../../components/component_utils";
 
 interface vscode {
   postMessage(message: any): void;
