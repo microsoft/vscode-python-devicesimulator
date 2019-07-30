@@ -10,7 +10,7 @@ from adafruit_circuitplayground.express import cpx
 from pathlib import Path
 import traceback
 
-AWAITED_EVENTLIST =[
+AWAITED_EVENTLIST = [
     'button_a',
     'button_b',
     'switch',
