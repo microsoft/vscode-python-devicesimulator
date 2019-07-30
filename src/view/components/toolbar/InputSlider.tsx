@@ -62,6 +62,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           defaultValue={this.props.minValue.toLocaleString()}
           pattern="^-?[0-9]*$"
           onKeyUp={this.validateRange}
+          aria-label={`${this.props.type} sensor input`}
         />
         <div className="sliderArea">
           <div className="upLabelArea">
@@ -75,6 +76,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             aria-valuemax={this.props.maxValue}
             onChange={this.handleOnChange}
             aria-valuenow={this.state.value}
+            aria-label={`${this.props.type} sensor slider`}
             defaultValue={this.props.minValue.toLocaleString()}
           />
           <div className="downLabelArea">
