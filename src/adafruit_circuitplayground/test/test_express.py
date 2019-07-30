@@ -11,18 +11,7 @@ class TestExpress(object):
             'brightness': 1.0,
             'button_a': False,
             'button_b': False,
-            'pixels': [
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0),
-                (255, 0, 0)
-            ],
+            'pixels': [(255, 0, 0)] * 10,
             'red_led': False,
             'switch': False
         }
@@ -75,18 +64,7 @@ class TestExpress(object):
 
     def test_fill(self):
         self.cpx.pixels.fill((0, 255, 0))
-        expected_pixels = [
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-            (0, 255, 0),
-        ]
+        expected_pixels = [(0, 255, 0)] * 10
         assert expected_pixels == self.cpx._Express__state['pixels']
 
     def test_extract_pixel_value_list(self):
