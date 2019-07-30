@@ -4,15 +4,21 @@ import "../styles/Button.css";
 interface IButtonProps {
   image: any;
   label: string;
+  width: number;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 // Functional Component render
 const Button: React.FC<IButtonProps> = props => {
   const iconSvg: SVGElement = props.image as SVGElement;
+  const buttonStyle = { width: props.width };
 
   return (
-    <button className={`${props.label}-button button`} onClick={props.onClick}>
+    <button
+      className={`${props.label}-button button`}
+      onClick={props.onClick}
+      style={buttonStyle}
+    >
       {iconSvg}
     </button>
   );

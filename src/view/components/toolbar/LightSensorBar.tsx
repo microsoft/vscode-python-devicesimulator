@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./LightSensorBar.css";
+import "../../styles/LightSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_utils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
