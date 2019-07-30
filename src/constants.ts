@@ -11,9 +11,17 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
-    INVALID_FILE_NAME_DEBUG: localize(
-      "error.invalidFileNameDebug",
-      'The file you tried to run isn\'t named "code.py" or "main.py". Rename your file if you wish to debug it.'
+    INCORRECT_FILE_NAME_FOR_DEVICE: localize(
+      "error.incorrectFileNameForDevice",
+      '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
+    ),
+    INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
+      "error.incorrectFileNameForDevicePopup",
+      'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
+    ),
+    INVALID_FILE_EXTENSION_DEBUG: localize(
+      "error.invalidFileExtensionDebug",
+      "The file you tried to run isn't a Python file."
     ),
     NO_DEVICE: localize(
       "error.noDevice",
@@ -21,7 +29,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      "\n[ERROR] We can't find the .py file to run. Open up a new .py file, or browse through some examples to start with: https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples\n"
+      '[ERROR] We can\'t find the .py file to run. Open up a new .py file, or run the "New Project" command to get started and see useful links\n'
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
@@ -53,6 +61,7 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
+
     FILE_SELECTED: (filePath: string) => {
       return localize(
         "info.fileSelected",
@@ -63,11 +72,21 @@ export const CONSTANTS = {
       "info.firstTimeWebview",
       'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
     ),
+    INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
+      "info.incorrectFileNameForSimulatorPopup",
+      'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
+    ),
+    INVALID_FILE_NAME_DEBUG: localize(
+      "info.invalidFileNameDebug",
+      'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
+    ),
     NEW_PROJECT: localize(
       "info.newProject",
       "New to Python or Circuit Playground Express project? We are here to help!"
     ),
+    REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
+    THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
       "Welcome to the Adafruit Simulator output tab !\n\n"
@@ -81,6 +100,7 @@ export const CONSTANTS = {
       "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
     HELP:
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+    PRIVACY: "https://www.adafruit.com/privacy",
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
@@ -125,6 +145,7 @@ export enum TelemetryEventName {
 export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator",
+  SENSOR_CHANGED = "sensor-changed",
   REFRESH_SIMULATOR = "refresh-simulator"
 }
 
@@ -136,11 +157,15 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
+  export const PRIVACY_STATEMENT: MessageItem = { title: localize("info.privacyStatement", "Privacy Statement") };
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
   };
   export const EXAMPLE_CODE: MessageItem = {
     title: localize("dialogResponses.exampleCode", "Example Code on GitHub")
+  };
+  export const MESSAGE_UNDERSTOOD: MessageItem = {
+    title: localize("dialogResponses.messageUnderstood", "Got It")
   };
 }
 

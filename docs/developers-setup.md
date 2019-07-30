@@ -11,15 +11,12 @@
   - Download link : https://www.python.org/downloads/
   - **NOTE :** Make sure Python is in your path under an environment variable named `python` (during installation or insert it manually afterwards)
   - **NOTE :** Make sure pip is added to your environment variables as well
-    (for example it could be find at : c:\users\<alias>\appdata\local\programs\python\python37\lib\site-packages\pip)
+    (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
   - Run in a console `python -m pip install --upgrade pip`
 
-- Simpleaudio
+- Playsound
 
-  - Run the command in a console : `pip install simpleaudio`
-    - NOTE : If the installation doesn't work, you might need to make sure C++ 2015 build tools are installed
-      (Link to download : https://visualstudio.microsoft.com/vs/older-downloads under
-      'Redistributables and Build tools' : 'Microsoft Build Tools 2015')
+  - Run the command in a console : `pip install playsound`
 
 - pytest
 
@@ -35,7 +32,7 @@
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
-1. Make sure you have all the dependencies installed (Node, Python, simpleaudio, VS Code, Python VS Code extension)
+1. Make sure you have all the dependencies installed (Node, Python, Playsound, VS Code, Python VS Code extension)
 
 2. Open the repository
 
