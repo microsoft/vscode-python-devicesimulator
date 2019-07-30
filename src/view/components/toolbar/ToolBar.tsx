@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import * as React from "react";
 import Button from "../Button";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";

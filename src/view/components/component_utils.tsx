@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 export interface ISliderProps {
   minValue: number;
   maxValue: number;

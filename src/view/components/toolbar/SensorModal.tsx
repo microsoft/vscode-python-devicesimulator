@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import * as React from "react";
 
 class SensorModal extends React.Component<any, any, any> {
