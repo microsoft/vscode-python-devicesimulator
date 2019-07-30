@@ -4,44 +4,38 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "../../styles/LightSensorBar.css";
-import { ISensorProps, ISliderProps } from "./componet_utils";
+import { IButtonProps } from "../../components/component_utils";
+import Modal from "../toolbar/SensorModal";
+import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
+import Button from "../Button";
 
-interface IModalButtonProps {
-  image: any;
-  label: string;
-  width: number;
-}
-
-const MODAL_BUTTON_PROPERTIES: IModalButtonProps = {
-  image: any;
-  label: string;
-};
-
-class LightSensorBar extends React.Component {
-  constructor(props: any) {
+class ModalButton extends React.Component<IButtonProps, any, any> {
+  constructor(props: IButtonProps) {
     super(props);
+    this.state = {
+      showModal: false
+    };
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   render() {
     return (
-      <div className="lightSensorBar">
-        <div className="header">
-          <div className="title">
-            {`${LIGHT_SENSOR_PROPERTIES.LABEL} (${
-              LIGHT_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
-        </div>
-        <InputSlider
-          minValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minValue}
-          maxValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxValue}
-          type={LIGHT_SENSOR_PROPERTIES.sliderProps[0].type}
-          minLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minLabel}
-          maxLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
+      <span className="modal_button">
+        <Button
+          width={this.props.width}
+          onClick={this.handleOnClick}
+          image={this.props.image}
+          label={this.props.label}
         />
-      </div>
+        <Modal showModal={this.state.showModal} />
+      </span>
     );
+  }
+
+  handleOnClick(event: React.MouseEvent<HTMLElement>) {
+    console.log("clicked on the button");
+    this.setState({ showModal: !this.state.showModal });
   }
 }
 
-export default LightSensorBar;
+export default ModalButton;

@@ -7,9 +7,11 @@ class SensorModal extends React.Component<any, any, any> {
 
   render() {
     if (!this.props.showModal) {
+      console.log("has been false");
       return null;
     }
-    return <div className="sensor_modal">{this.props.children}</div>;
+    console.log("has been true");
+    return <div className="sensor_modal">hellooooooooo</div>;
   }
 }
 

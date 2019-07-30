@@ -11,3 +11,10 @@ export interface ISensorProps {
   sliderProps: ISliderProps[];
   unitLabel: string;
 }
+
+export interface IButtonProps {
+  image: any;
+  label: string;
+  width: number;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+}

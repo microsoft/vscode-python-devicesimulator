@@ -17,8 +17,7 @@
   opacity: 1;
 }
 
-.play-button:hover,
-.refresh-button:hover {
+.button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
