@@ -7,8 +7,8 @@ import "./LightSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_utils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
+  maxValue: 0,
+  minValue: 255,
   minLabel: "Dark",
   maxLabel: "Bright",
   type: "light"
