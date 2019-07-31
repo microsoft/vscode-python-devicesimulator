@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import * as React from "react";
-import LightSensorBar from "./LightSensorBar";
-import TemperatureSensorBar from "./TemperatureSensorBar";
-import MotionSensorBar from "./MotionSensorBar";
-import { TOOLBAR_ICON_LABEL } from "../component_utils";
+import {
+  TOOLBAR_ICON_LABEL,
+  LABEL_TO_MODAL_CONTENT,
+  DEFAULT_MODAL_CONTENT
+} from "../component_utils";
 
 class SensorModal extends React.Component<any, any, any> {
   constructor(props: any) {
@@ -12,65 +13,25 @@ class SensorModal extends React.Component<any, any, any> {
   }
 
   render() {
-    if (this.props.showModal && this.props.label == TOOLBAR_ICON_LABEL.LIGHT) {
-      return (
-        <div>
-          <LightSensorBar />
-        </div>
-      );
-      console.log("has been false");
-      return null;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.MOTION
-    ) {
-      return (
-        <div>
-          <MotionSensorBar />
-        </div>
-      );
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.TEMPERATURE
-    ) {
-      return (
-        <div>
-          <TemperatureSensorBar />
-        </div>
-      );
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else if (
-      this.props.showModal &&
-      this.props.label == TOOLBAR_ICON_LABEL.LIGHT
-    ) {
-      return <div>Empty View</div>;
-    } else {
-      return null;
+    for (var label of LABEL_TO_MODAL_CONTENT.keys()) {
+      console.log(`label is  ${label} against ${this.props.label}`);
+
+      if (
+        this.props.showModal &&
+        this.props.label == label &&
+        LABEL_TO_MODAL_CONTENT.get(label)
+      ) {
+        const content = LABEL_TO_MODAL_CONTENT.get(label);
+        console.log(`we have ${this.props.label} ${content}`);
+
+        const component = content
+          ? content["component"]
+          : DEFAULT_MODAL_CONTENT.component;
+        return <div>{component}</div>;
+      }
     }
+    console.log(`was false`);
+    return null;
   }
 }
 
