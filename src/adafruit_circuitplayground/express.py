@@ -8,7 +8,6 @@ from playsound import playsound
 from .pixel import Pixel
 from . import utils
 
-
 class Express:
     def __init__(self):
         # State in the Python process
@@ -30,7 +29,8 @@ class Express:
             ],
             'red_led': False,
             'switch': False,
-            'temperature': 0
+            'temperature': 0,
+            'light': 0
         }
 
         self.pixels = Pixel(self.__state)
@@ -60,6 +60,10 @@ class Express:
     @property
     def temperature(self):
         return self.__state['temperature']
+
+    @property
+    def light(self):
+        return self.__state['light']
 
     def __show(self):
         utils.show(self.__state)
