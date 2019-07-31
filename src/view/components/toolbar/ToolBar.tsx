@@ -1,5 +1,5 @@
 import * as React from "react";
-import ModalButton from "../toolbar/ModalButton";
+import Button from "../Button";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
 
@@ -10,86 +10,86 @@ class ToolBar extends React.Component {
   render() {
     return (
       <div className="toolbar">
-        <ModalButton
+        <Button
           width={TOOLBAR_EDGE_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.EDGE_SVG}
           label="left_edge"
         />
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
-          label="temperature_sensor"
+          label="slider_switch"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
-          label="motion_sensor"
+          label="push_button"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.RED_LED_SVG}
-          label="light_sensor"
+          label="red_led"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.SOUND_SVG}
-          label="temperature_sensor"
+          label="sound_sensor"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.TEMPERATURE_SVG}
-          label="motion_sensor"
+          label="temp_sensor"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.LIGHT_SVG}
           label="light_sensor"
         />
-        <ModalButton
-          width={TOOLBAR_EDGE_WIDTH}
+        <Button
+          width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.NEO_PIXEL_SVG}
-          label="right_edge"
+          label="neo_pixel"
         />
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.SPEAKER_SVG}
-          label="temperature_sensor"
+          label="speaker"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.MOTION_SVG}
           label="motion_sensor"
         />
 
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.IR_SVG}
-          label="light_sensor"
+          label="ir"
         />
-        <ModalButton
+        <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.GPIO_SVG}
           label="gpio"
         />
-        <ModalButton
+        <Button
           width={TOOLBAR_EDGE_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.EDGE_SVG}
