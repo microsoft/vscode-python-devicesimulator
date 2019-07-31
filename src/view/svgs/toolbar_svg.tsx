@@ -145,6 +145,40 @@ export const MOTION_SVG = (
   </svg>
 );
 
+export const NEO_PIXEL_SVG = (
+  <svg
+    width="16px"
+    height="16px"
+    viewBox="0 0 16 16"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <title>neon_pixel</title>
+    <desc>Created with Sketch.</desc>
+    <g
+      id="neon_pixel"
+      stroke="none"
+      stroke-width="1"
+      fill="none"
+      fill-rule="evenodd"
+    >
+      <g id="Group-10" fill="#FFFFFF">
+        <g id="Group-7">
+          <circle id="Oval-3" cx="8" cy="1.6" r="1.6" />
+          <circle id="Oval-3-Copy" cx="8" cy="14.4" r="1.6" />
+          <circle id="Oval-3-Copy-2" cx="1.6" cy="8" r="1.6" />
+          <circle id="Oval-3-Copy-3" cx="14.4" cy="8" r="1.6" />
+          <circle id="Oval-3-Copy-4" cx="12.2666667" cy="3.73333333" r="1.6" />
+          <circle id="Oval-3-Copy-6" cx="3.73333333" cy="3.73333333" r="1.6" />
+          <circle id="Oval-3-Copy-7" cx="3.73333333" cy="12.2666667" r="1.6" />
+          <circle id="Oval-3-Copy-5" cx="12.2666667" cy="12.2666667" r="1.6" />
+        </g>
+      </g>
+    </g>
+  </svg>
+);
+
 export const PUSH_BUTTON_SVG = (
   <svg
     width="16px"

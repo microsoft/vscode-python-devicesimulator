@@ -58,6 +58,12 @@ class ToolBar extends React.Component {
           label="light_sensor"
         />
         <ModalButton
+          width={TOOLBAR_EDGE_WIDTH}
+          onClick={() => {}}
+          image={TOOLBAR_SVG.NEO_PIXEL_SVG}
+          label="right_edge"
+        />
+        <ModalButton
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.SPEAKER_SVG}
