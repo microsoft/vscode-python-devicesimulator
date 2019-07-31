@@ -10,7 +10,7 @@ from adafruit_circuitplayground.express import cpx
 from pathlib import Path
 import traceback
 
-AWAITED_EVENTLIST = [
+EXPECTED_INPUT_EVENTS = [
     'button_a',
     'button_b',
     'switch',
@@ -37,7 +37,7 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
-                for event in AWAITED_EVENTLIST:
+                for event in EXPECTED_INPUT_EVENTS:
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])
 

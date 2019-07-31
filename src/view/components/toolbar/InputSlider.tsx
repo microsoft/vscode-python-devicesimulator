@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import "./InputSlider.css";
-import { ISliderProps } from "./Toolbar_ressources";
+import { ISliderProps } from "./Toolbar_utils";
 
 interface vscode {
   postMessage(message: any): void;
@@ -60,28 +60,33 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           value={this.state.value}
           onInput={this.handleOnChange}
           defaultValue={this.props.minValue.toLocaleString()}
-          pattern="^-?[0-9]*$"
+          pattern="^-?[0-9]{0,3}$"
           onKeyUp={this.validateRange}
+          aria-label={`${this.props.type} sensor input`}
         />
-        <div className="sliderArea">
-          <div className="upLabelArea">
-            <div className="minLabel">{this.props.minLabel}</div>
-            <div className="maxLabel">{this.props.maxLabel}</div>
-          </div>
+        <span className="sliderArea">
+          <span className="upLabelArea">
+            <span className="minLabel">{this.props.minValue}</span>
+            <span className="maxLabel">{this.props.maxValue}</span>
+          </span>
           <input
             type="range"
             className="slider"
+            aria-valuemin={this.props.minValue}
+            aria-valuemax={this.props.maxValue}
             min={this.props.minValue}
             max={this.props.maxValue}
             onChange={this.handleOnChange}
+            aria-valuenow={this.state.value}
             value={this.state.value}
+            aria-label={`${this.props.type} sensor slider`}
             defaultValue={this.props.minValue.toLocaleString()}
           />
-          <div className="downLabelArea">
-            <div className="minLabel">{this.props.minValue}</div>
-            <div className="maxLabel">{this.props.maxValue}</div>
-          </div>
-        </div>
+          <span className="downLabelArea">
+            <span className="minLabel">{this.props.minLabel}</span>
+            <span className="maxLabel">{this.props.maxLabel}</span>
+          </span>
+        </span>
       </div>
     );
   }
@@ -105,7 +110,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
-    console.log(`set state to ${this.state.value}`);
     this.setState({ value: newValue });
   }
 

@@ -18,6 +18,10 @@
 
   - Run the command in a console : `pip install playsound`
 
+- pytest
+
+  - Run the command in a console : `pip install pytest`
+
 - Pywin32
 
   - Run the command in a console : `pip install pywin32`
