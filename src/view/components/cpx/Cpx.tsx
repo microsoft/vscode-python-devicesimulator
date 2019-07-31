@@ -13,6 +13,7 @@ interface IProps {
   brightness: number;
   switch: boolean;
   on: boolean;
+  onKeyEvent: (event: KeyboardEvent, active: boolean) => void;
   onMouseUp: (button: HTMLElement, event: Event) => void;
   onMouseDown: (button: HTMLElement, event: Event) => void;
   onMouseLeave: (button: HTMLElement, event: Event) => void;
@@ -36,7 +37,6 @@ const Cpx: React.FC<IProps> = props => {
     updateRedLED(props.red_led);
     updatePowerLED(props.on);
     updateSwitch(props.switch);
-
   }
 
   return CPX_SVG;
@@ -275,6 +275,8 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   }
   svgButton.onmousedown = e => props.onMouseDown(button, e);
   svgButton.onmouseup = e => props.onMouseUp(button, e);
+  svgButton.onkeydown = e => props.onKeyEvent(e, true);
+  svgButton.onkeyup = e => props.onKeyEvent(e, false);
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
 };
 
@@ -293,6 +295,7 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.onmouseup = e => props.onMouseUp(switchElement, e);
     svgSwitchInner.onmouseup = e => props.onMouseUp(swInnerElement, e);
     svgSwitchHousing.onmouseup = e => props.onMouseUp(swHousingElement, e);
+    svgSwitch.onkeyup = e => props.onKeyEvent(e, false);
 
     accessibility.makeFocusable(svgSwitch);
     accessibility.setAria(
