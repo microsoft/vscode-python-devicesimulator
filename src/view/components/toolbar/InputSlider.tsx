@@ -60,7 +60,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           value={this.state.value}
           onInput={this.handleOnChange}
           defaultValue={this.props.minValue.toLocaleString()}
-          pattern="^-?[0-9]*$"
+          pattern="^-?[0-9]*{0,3}$"
           onKeyUp={this.validateRange}
           aria-label={`${this.props.type} sensor input`}
         />
