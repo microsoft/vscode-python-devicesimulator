@@ -16,11 +16,6 @@ class App extends React.Component {
       <div className="App">
         <main className="App-main">
           <Simulator />
-          <div className="sensor-scrollbox">
-            <TemperatureSensorBar />
-            <LightSensorBar />
-            <MotionSensorBar />
-          </div>
           <ToolBar />
         </main>
       </div>
