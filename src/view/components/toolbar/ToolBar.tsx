@@ -110,7 +110,6 @@ class ToolBar extends React.Component<any, any, any> {
   }
 
   handleOnClick(event: React.MouseEvent<HTMLElement>) {
-    console.log(`"clicked on the button"${event.target}`);
     this.setState({ showModal: !this.state.showModal });
   }
 }
