@@ -4,7 +4,6 @@ import * as React from "react";
 import LightSensorBar from "./LightSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
 import MotionSensorBar from "./MotionSensorBar";
-import Modal from "../toolbar/SensorModal";
 import { TOOLBAR_ICON_LABEL } from "../component_utils";
 
 class SensorModal extends React.Component<any, any, any> {

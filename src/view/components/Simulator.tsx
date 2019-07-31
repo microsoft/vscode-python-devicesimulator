@@ -191,7 +191,6 @@ class Simulator extends React.Component<any, IState> {
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
-    let cpxState = this.state.cpx;
 
     if (ButtonAB) {
       innerButton = window.document.getElementById("BTN_AB_INNER");
@@ -199,21 +198,18 @@ class Simulator extends React.Component<any, IState> {
         button_a: active,
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonA) {
       innerButton = window.document.getElementById("BTN_A_INNER");
       newState = {
         button_a: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonB) {
       innerButton = window.document.getElementById("BTN_B_INNER");
       newState = {
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     }
 
