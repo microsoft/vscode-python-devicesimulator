@@ -1,4 +1,6 @@
 import * as React from "react";
+import hhgg from "./TemperatureSensorBar";
+import TemperatureSensorBar from "./TemperatureSensorBar";
 
 class SensorModal extends React.Component<any, any, any> {
   constructor(props: any) {
@@ -7,11 +9,13 @@ class SensorModal extends React.Component<any, any, any> {
 
   render() {
     if (!this.props.showModal) {
-      console.log("has been false");
       return null;
     }
-    console.log("has been true");
-    return <div className="sensor_modal">hellooooooooo</div>;
+    return (
+      <div className="sensor_modal">
+        <TemperatureSensorBar />
+      </div>
+    );
   }
 }
 
