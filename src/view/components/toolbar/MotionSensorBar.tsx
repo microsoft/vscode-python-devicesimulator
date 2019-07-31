@@ -60,6 +60,7 @@ class MotionSensorBar extends React.Component {
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
         />
+        <br />
         <InputSlider
           minValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].minValue}
           maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxValue}
@@ -67,6 +68,7 @@ class MotionSensorBar extends React.Component {
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxLabel}
         />
+        <br />
         <InputSlider
           minValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].minValue}
           maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxValue}
@@ -74,6 +76,7 @@ class MotionSensorBar extends React.Component {
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
         />
+        <br />
       </div>
     );
   }
