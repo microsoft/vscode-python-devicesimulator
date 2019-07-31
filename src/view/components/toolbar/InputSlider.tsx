@@ -74,6 +74,8 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             className="slider"
             aria-valuemin={this.props.minValue}
             aria-valuemax={this.props.maxValue}
+            min={this.props.minValue}
+            max={this.props.maxValue}
             onChange={this.handleOnChange}
             aria-valuenow={this.state.value}
             aria-label={`${this.props.type} sensor slider`}
