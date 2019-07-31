@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ExtensionContext, Uri } from "vscode";
+import { ExtensionContext, MessageItem, Uri, window } from "vscode";
 import * as path from "path";
-import { USER_CODE_NAMES } from "./constants";
+import { CONSTANTS, DialogResponses, USER_CODE_NAMES } from "./constants";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
@@ -24,3 +24,15 @@ export const validCodeFileName = (filePath: string) => {
     filePath.endsWith(USER_CODE_NAMES.MAIN_PY)
   );
 };
+
+export const showPrivacyModal = (okAction: () => void) => {
+  window.showInformationMessage(
+    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE} ${CONSTANTS.LINKS.PRIVACY}`,
+    DialogResponses.MESSAGE_UNDERSTOOD
+  )
+    .then((privacySelection: MessageItem | undefined) => {
+      if (privacySelection === DialogResponses.MESSAGE_UNDERSTOOD) {
+        okAction();
+      }
+    })
+}
