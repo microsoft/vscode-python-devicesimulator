@@ -1,6 +1,12 @@
 import * as React from "react";
 import "../styles/Button.css";
-import { IButtonProps } from "./component_utils";
+
+export interface IButtonProps {
+  image: any;
+  label: string;
+  width: number;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+}
 
 // Functional Component render
 const Button: React.FC<IButtonProps> = props => {

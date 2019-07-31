@@ -17,7 +17,10 @@
   opacity: 1;
 }
 
-.button:hover {
+.play-button:hover,
+.play-button:focus,
+.refresh-button:hover,
+.refresh-button:focus {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 

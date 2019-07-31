@@ -4,9 +4,6 @@
 "use strict";
 import * as React from "react";
 import Simulator from "./components/Simulator";
-import TemperatureSensorBar from "./components/toolbar/TemperatureSensorBar";
-import MotionSensorBar from "./components/toolbar/MotionSensorBar";
-import LightSensorBar from "./components/toolbar/LightSensorBar";
 import ToolBar from "./components/toolbar/ToolBar";
 import "./App.css";
 

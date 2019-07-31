@@ -37,7 +37,6 @@ class Express:
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
 
-
     @property
     def button_a(self):
         return self.__state['button_a']

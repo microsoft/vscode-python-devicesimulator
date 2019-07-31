@@ -5,6 +5,7 @@ import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx, { updateSwitch } from "./cpx/Cpx";
 import Button from "./Button";
+import CONSTANTS from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
@@ -61,6 +62,7 @@ const sendMessage = (type: string, state: any) => {
 };
 
 class Simulator extends React.Component<any, IState> {
+  private keyPressed = false;
   constructor(props: IMyProps) {
     super(props);
     this.state = {
@@ -69,6 +71,7 @@ class Simulator extends React.Component<any, IState> {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.onKeyEvent = this.onKeyEvent.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -118,10 +121,11 @@ class Simulator extends React.Component<any, IState> {
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
             switch={this.state.cpx.switch}
+            on={this.state.play_button}
+            onKeyEvent={this.onKeyEvent}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseLeave={this.onMouseLeave}
-            on={this.state.play_button}
           />
         </div>
         <div className="buttons">
@@ -151,6 +155,31 @@ class Simulator extends React.Component<any, IState> {
     sendMessage("refresh-simulator", true);
   }
 
+  protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+    let button;
+    const target = event.target as SVGElement;
+    if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+      if (target) {
+        button = window.document.getElementById(target.id);
+        if (button) {
+          event.preventDefault();
+          if (button.id.includes("SWITCH")) {
+            // Switch
+            this.handleClick(button, active);
+          } else if (active && !this.keyPressed) {
+            // Send one keydown event
+            this.handleClick(button, active);
+            this.keyPressed = true;
+          } else if (!active) {
+            // Keyup event
+            this.handleClick(button, active);
+            this.keyPressed = false;
+          }
+        }
+      }
+    }
+  }
+
   protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, true);
@@ -175,7 +204,7 @@ class Simulator extends React.Component<any, IState> {
     if (button.id.includes("BTN")) {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
-      newState = this.handleSwitchClick(button);
+      newState = this.handleSwitchClick();
     } else {
       return;
     }
@@ -191,7 +220,6 @@ class Simulator extends React.Component<any, IState> {
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
-    let cpxState = this.state.cpx;
 
     if (ButtonAB) {
       innerButton = window.document.getElementById("BTN_AB_INNER");
@@ -199,21 +227,18 @@ class Simulator extends React.Component<any, IState> {
         button_a: active,
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonA) {
       innerButton = window.document.getElementById("BTN_A_INNER");
       newState = {
         button_a: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonB) {
       innerButton = window.document.getElementById("BTN_B_INNER");
       newState = {
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     }
 
@@ -231,7 +256,7 @@ class Simulator extends React.Component<any, IState> {
     return pressed ? buttonDown : buttonUps;
   }
 
-  private handleSwitchClick(button: HTMLElement) {
+  private handleSwitchClick() {
     let cpxState = this.state.cpx;
     const switchIsOn: boolean = !this.state.cpx.switch;
     updateSwitch(switchIsOn);
