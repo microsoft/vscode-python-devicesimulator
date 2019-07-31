@@ -17,6 +17,7 @@
   margin-right: 15px;
   margin-top: auto;
   margin-bottom: auto;
+  color: var(--badge-foreground);
 }
 
 .slider {
