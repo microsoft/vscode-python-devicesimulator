@@ -64,7 +64,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           onKeyUp={this.validateRange}
           aria-label={`${this.props.type} sensor input`}
         />
-        <div className="sliderArea">
+        <span className="sliderArea">
           <span className="upLabelArea">
             <span className="minLabel">{this.props.minValue}</span>
             <span className="maxLabel">{this.props.maxValue}</span>
@@ -83,7 +83,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             <span className="minLabel">{this.props.minLabel}</span>
             <span className="maxLabel">{this.props.maxLabel}</span>
           </span>
-        </div>
+        </span>
       </div>
     );
   }

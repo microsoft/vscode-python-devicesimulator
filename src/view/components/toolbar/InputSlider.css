@@ -4,7 +4,7 @@
 .inputSlider {
   height: 48px;
   margin-bottom: 40px;
-  background-color: red;
+  display: table-cell;
 }
 .sliderValue {
   -webkit-appearance: none;
@@ -15,7 +15,6 @@
   color: white;
   border: 0;
   margin-right: 15px;
-  vertical-align: middle;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -49,7 +48,6 @@
 .maxLabel,
 .minLabel {
   display: inline-block;
-  font-size: 16px;
   position: absolute;
   vertical-align: top;
 }
@@ -65,24 +63,27 @@
 .sliderArea,
 .sliderValue {
   display: inline-block;
+  vertical-align: middle;
 }
 
 .sliderArea {
   width: 280px;
-  height: 30px;
-  vertical-align: middle;
+  height: 49px;
 }
 .downLabelArea {
   width: 280px;
   height: 15px;
   margin-top: 10px;
   position: relative;
+  font-size: 14px;
 }
 .upLabelArea {
   width: 280px;
   height: 15px;
   margin-bottom: 10px;
   position: relative;
+  font-weight: bolder;
+  font-size: 16px;
 }
 
 .slider,
