@@ -2,17 +2,22 @@
   --slider-gray-color: #cccccc;
 }
 .inputSlider {
-  height: 50px;
+  height: 48px;
   margin-bottom: 40px;
+  background-color: red;
 }
 .sliderValue {
+  -webkit-appearance: none;
   text-align: center;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 32px;
   background-color: var(--vscode-editor-background);
   color: white;
   border: 0;
   margin-right: 15px;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .slider {
@@ -44,13 +49,17 @@
 .maxLabel,
 .minLabel {
   display: inline-block;
-  font-size: 12px;
-  position: relative;
+  font-size: 16px;
+  position: absolute;
   vertical-align: top;
 }
 
 .maxLabel {
-  margin-left: 220px;
+  right: 0;
+}
+
+.minLabel {
+  left: 0;
 }
 
 .sliderArea,
@@ -67,11 +76,13 @@
   width: 280px;
   height: 15px;
   margin-top: 10px;
+  position: relative;
 }
 .upLabelArea {
   width: 280px;
   height: 15px;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .slider,

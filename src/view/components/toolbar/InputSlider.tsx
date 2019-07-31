@@ -65,10 +65,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           aria-label={`${this.props.type} sensor input`}
         />
         <div className="sliderArea">
-          <div className="upLabelArea">
-            <div className="minLabel">{this.props.minValue}</div>
-            <div className="maxLabel">{this.props.maxValue}</div>
-          </div>
+          <span className="upLabelArea">
+            <span className="minLabel">{this.props.minValue}</span>
+            <span className="maxLabel">{this.props.maxValue}</span>
+          </span>
           <input
             type="range"
             className="slider"
@@ -79,10 +79,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             aria-label={`${this.props.type} sensor slider`}
             defaultValue={this.props.minValue.toLocaleString()}
           />
-          <div className="downLabelArea">
-            <div className="minLabel">{this.props.minLabel}</div>
-            <div className="maxLabel">{this.props.maxLabel}</div>
-          </div>
+          <span className="downLabelArea">
+            <span className="minLabel">{this.props.minLabel}</span>
+            <span className="maxLabel">{this.props.maxLabel}</span>
+          </span>
         </div>
       </div>
     );
