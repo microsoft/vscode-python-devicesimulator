@@ -10,7 +10,7 @@ const Button: React.FC<IButtonProps> = props => {
   return (
     <button
       className={`${props.label}-button button`}
-      onClick={props.onClick(event)}
+      onClick={props.onClick}
       style={buttonStyle}
     >
       {iconSvg}

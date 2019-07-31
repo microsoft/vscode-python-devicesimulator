@@ -5,6 +5,7 @@ import Button from "../Button";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
 import Modal from "../toolbar/SensorModal";
+import { TOOLBAR_ICON_LABEL } from "../component_utils";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -16,7 +17,6 @@ class ToolBar extends React.Component<any, any, any> {
       currentOpened: "",
       showModal: false
     };
-    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   render() {
@@ -24,92 +24,105 @@ class ToolBar extends React.Component<any, any, any> {
       <div className="toolbar">
         <Button
           width={TOOLBAR_EDGE_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LEFT_EDGE)}
           image={TOOLBAR_SVG.EDGE_SVG}
-          label="left_edge"
+          label={TOOLBAR_ICON_LABEL.LEFT_EDGE}
         />
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
           image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
-          label="temperature_sensor"
+          label={TOOLBAR_ICON_LABEL.SWITCH}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(
+            this,
+            TOOLBAR_ICON_LABEL.PUSH_BUTTON
+          )}
           image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
-          label="motion_sensor"
+          label={TOOLBAR_ICON_LABEL.PUSH_BUTTON}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RED_LED)}
           image={TOOLBAR_SVG.RED_LED_SVG}
-          label="light_sensor"
+          label={TOOLBAR_ICON_LABEL.RED_LED}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
           image={TOOLBAR_SVG.SOUND_SVG}
-          label="temperature_sensor"
+          label={TOOLBAR_ICON_LABEL.SOUND}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(
+            this,
+            TOOLBAR_ICON_LABEL.TEMPERATURE
+          )}
           image={TOOLBAR_SVG.TEMPERATURE_SVG}
-          label="motion_sensor"
+          label={TOOLBAR_ICON_LABEL.TEMPERATURE}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
           image={TOOLBAR_SVG.LIGHT_SVG}
-          label="light_sensor"
+          label={TOOLBAR_ICON_LABEL.LIGHT}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SPEAKER)}
           image={TOOLBAR_SVG.SPEAKER_SVG}
-          label="temperature_sensor"
+          label={TOOLBAR_ICON_LABEL.SPEAKER}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
           image={TOOLBAR_SVG.MOTION_SVG}
-          label="motion_sensor"
+          label={TOOLBAR_ICON_LABEL.MOTION}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
           image={TOOLBAR_SVG.IR_SVG}
-          label="light_sensor"
+          label={TOOLBAR_ICON_LABEL.IR}
         />
 
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
           image={TOOLBAR_SVG.GPIO_SVG}
-          label="temperature_sensor"
+          label={TOOLBAR_ICON_LABEL.GPIO}
         />
 
         <Button
           width={TOOLBAR_EDGE_WIDTH}
-          onClick={this.handleOnClick}
+          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RIGHT_EDGE)}
           image={TOOLBAR_SVG.EDGE_SVG}
-          label="right_edge"
+          label={TOOLBAR_ICON_LABEL.RIGHT_EDGE}
         />
-        <Modal />
+        <Modal
+          showModal={this.state.showModal}
+          label={this.state.currentOpened}
+        />
       </div>
     );
   }
 
-  handleOnClick(event: React.MouseEvent<HTMLElement>) {
+  handleOnClick(label: string) {
+    console.log(label);
+    if (!this.state.showModal) {
+      this.setState({ currentOpened: label });
+    }
     this.setState({ showModal: !this.state.showModal });
   }
 }
