@@ -202,7 +202,7 @@ class Simulator extends React.Component<any, IState> {
     if (button.id.includes("BTN")) {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
-      newState = this.handleSwitchClick(button);
+      newState = this.handleSwitchClick();
     } else {
       return;
     }
@@ -258,7 +258,7 @@ class Simulator extends React.Component<any, IState> {
     return pressed ? buttonDown : buttonUps;
   }
 
-  private handleSwitchClick(button: HTMLElement) {
+  private handleSwitchClick() {
     let cpxState = this.state.cpx;
     const switchIsOn: boolean = !this.state.cpx.switch;
     updateSwitch(switchIsOn);

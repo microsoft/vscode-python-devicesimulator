@@ -20,7 +20,6 @@ interface IProps {
 }
 
 let firstTime = true;
-let switchFlip = false;
 
 // Functional Component render
 const Cpx: React.FC<IProps> = props => {
@@ -296,7 +295,7 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.onmouseup = e => props.onMouseUp(switchElement, e);
     svgSwitchInner.onmouseup = e => props.onMouseUp(swInnerElement, e);
     svgSwitchHousing.onmouseup = e => props.onMouseUp(swHousingElement, e);
-    svgSwitch.onkeypress = e => props.onKeyEvent(e, switchFlip);
+    svgSwitch.onkeyup = e => props.onKeyEvent(e, false);
 
     accessibility.makeFocusable(svgSwitch);
     accessibility.setAria(
