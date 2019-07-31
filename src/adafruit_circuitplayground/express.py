@@ -34,7 +34,8 @@ class Express:
             'light': 0,
             'motion_x': 0,
             'motion_y': 0,
-            'motion_z': 0
+            'motion_z': 0,
+            'shake': False
         }
 
         self.pixels = Pixel(self.__state)
@@ -71,6 +72,9 @@ class Express:
 
     def __show(self):
         utils.show(self.__state)
+
+    def shake(self, shake_threshold=30):
+        return return self.__state['shake']
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
