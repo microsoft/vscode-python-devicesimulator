@@ -5,7 +5,6 @@ import * as React from "react";
 import InputSlider from "./InputSlider";
 import "../../styles/LightSensorBar.css";
 import { IButtonProps } from "../../components/component_utils";
-import Modal from "../toolbar/SensorModal";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import Button from "../Button";
 
@@ -27,7 +26,6 @@ class ModalButton extends React.Component<IButtonProps, any, any> {
           image={this.props.image}
           label={this.props.label}
         />
-        <Modal showModal={this.state.showModal} />
       </span>
     );
   }

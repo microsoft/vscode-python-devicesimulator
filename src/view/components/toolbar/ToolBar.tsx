@@ -2,7 +2,6 @@ import * as React from "react";
 import ModalButton from "../toolbar/ModalButton";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
-import Modal from "../toolbar/SensorModal";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
