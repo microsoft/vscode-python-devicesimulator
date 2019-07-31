@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 import * as React from "react";
 import {
-  TOOLBAR_ICON_LABEL,
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT
 } from "../component_utils";
