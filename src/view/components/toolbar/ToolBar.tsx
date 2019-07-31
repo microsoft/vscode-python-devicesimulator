@@ -99,7 +99,7 @@ class ToolBar extends React.Component<any, any, any> {
 
         <Button
           width={TOOLBAR_EDGE_WIDTH}
-          onClick={this.handleOnClick("right_edge")}
+          onClick={this.handleOnClick}
           image={TOOLBAR_SVG.EDGE_SVG}
           label="right_edge"
         />
@@ -108,7 +108,7 @@ class ToolBar extends React.Component<any, any, any> {
     );
   }
 
-  handleOnClick(label: string, event: React.MouseEvent<HTMLElement>) {
+  handleOnClick(event: React.MouseEvent<HTMLElement>) {
     console.log(`"clicked on the button"${event.currentTarget.dataset}`);
     this.setState({ showModal: !this.state.showModal });
   }
