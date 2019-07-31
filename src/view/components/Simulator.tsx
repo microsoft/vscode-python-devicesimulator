@@ -142,12 +142,12 @@ class Simulator extends React.Component<any, IState> {
     );
   }
 
-  protected playSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+  protected playSimulatorClick(event?: React.MouseEvent<HTMLElement>) {
     this.setState({ ...this.state, play_button: !this.state.play_button });
     sendMessage("play-simulator", !this.state.play_button);
   }
 
-  protected refreshSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+  protected refreshSimulatorClick(event?: React.MouseEvent<HTMLElement>) {
     sendMessage("refresh-simulator", true);
   }
 

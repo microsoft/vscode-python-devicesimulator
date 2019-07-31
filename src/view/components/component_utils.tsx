@@ -18,7 +18,7 @@ export interface IButtonProps {
   image: any;
   label: string;
   width: number;
-  onClick: (event: any) => void;
+  onClick: (event?: React.MouseEvent<HTMLElement>, label?: string) => void;
 }
 
 export const TOOLBAR_ICON_LABEL = {
