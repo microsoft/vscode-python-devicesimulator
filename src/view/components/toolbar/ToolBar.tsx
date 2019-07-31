@@ -87,7 +87,7 @@ class ToolBar extends React.Component {
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.GPIO_SVG}
-          label="temperature_sensor"
+          label="gpio"
         />
         <ModalButton
           width={TOOLBAR_EDGE_WIDTH}
