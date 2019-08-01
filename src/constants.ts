@@ -29,7 +29,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      "[ERROR] We can't find a Python file to run. Please make sure you select or open a new '.py' code file, or use the \"New Project\" command to get started and see useful links.\n"
+      '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New Project" command to get started and see useful links.\n'
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
