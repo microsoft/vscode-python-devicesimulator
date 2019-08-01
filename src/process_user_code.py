@@ -19,6 +19,7 @@ EXPECTED_INPUT_EVENTS = [
     'motion_x',
     'motion_y',
     'motion_z',
+    'shake'
 ]
 
 read_val = ""
@@ -36,12 +37,11 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
+                print('newstae is ')
+                print(new_state)
                 for event in EXPECTED_INPUT_EVENTS:
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])
-                    if event.find('motion') >= 0:
-                        cpx._Express__state['shake'] = True
-                        print('motion detected')
 
             except Exception as e:
                 print("Error trying to send event to the process : ",

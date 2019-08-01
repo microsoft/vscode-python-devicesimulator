@@ -8,6 +8,11 @@ export interface ISliderProps {
   type: string;
 }
 
+export interface ISensorButtonProps {
+  label: string;
+  type: string;
+}
+
 export interface ISensorProps {
   LABEL: string;
   sliderProps: ISliderProps[];

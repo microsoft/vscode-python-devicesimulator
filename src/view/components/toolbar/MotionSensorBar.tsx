@@ -5,6 +5,7 @@ import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./MotionSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_utils";
+import SensorButton from "./SensorButton";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
   maxValue: 125,
@@ -77,9 +78,7 @@ class MotionSensorBar extends React.Component {
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
         />
         <br />
-        <button aria-label="Shake button" onClick={() => {}}>
-          "Shake"
-        </button>
+        <SensorButton label="Shake" type="shake" />
       </div>
     );
   }

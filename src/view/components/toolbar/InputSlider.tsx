@@ -3,11 +3,7 @@
 
 import * as React from "react";
 import "./InputSlider.css";
-import {
-  ISliderProps,
-  SHAKE_SENSOR_EVENT,
-  MOTION_PREFIX
-} from "./Toolbar_utils";
+import { ISliderProps } from "./Toolbar_utils";
 
 interface vscode {
   postMessage(message: any): void;
@@ -15,7 +11,8 @@ interface vscode {
 
 declare const vscode: vscode;
 
-const sendMessage = (state: any, shake?: boolean) => {
+const sendMessage = (state: any) => {
+  console.log("posting shake");
   vscode.postMessage({ command: "sensor-changed", text: state });
 };
 
@@ -102,10 +99,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     if (newSensorState) {
       sendMessage(newSensorState);
     }
-    if (this.props.type.includes(MOTION_PREFIX)) {
-      console.log("motion detected");
-      sendMessage(this.writeShakeMessage);
-    }
   }
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
@@ -128,9 +121,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     if (this.state.value > this.props.maxValue) {
       this.setState({ value: this.props.maxValue });
     }
-  }
-  private writeShakeMessage() {
-    return { [SHAKE_SENSOR_EVENT]: true };
   }
 }
 
