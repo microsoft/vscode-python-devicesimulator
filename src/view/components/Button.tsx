@@ -13,7 +13,11 @@ const Button: React.FC<IButtonProps> = props => {
   const iconSvg: SVGElement = props.image as SVGElement;
 
   return (
-    <button className={`${props.label}-button button`} onClick={props.onClick}>
+    <button
+      id={`${props.label}-button`}
+      className={`${props.label}-button button`}
+      onClick={props.onClick}
+    >
       {iconSvg}
     </button>
   );

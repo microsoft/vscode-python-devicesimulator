@@ -3,8 +3,22 @@
 
 // Key events
 export const CONSTANTS = {
+  CLASS_NAME: {
+    BUTTON_A: "BTN_A_OUTER",
+    BUTTON_AB: "BTN_AB_OUTER",
+    BUTTON_B: "BTN_B_OUTER",
+    PLAY_BUTTON: "play-button",
+    REFRESH_BUTTON: "refresh-button",
+    STOP_BUTTON: "stop-button",
+    SWITCH: "SWITCH"
+  },
   KEYBOARD_KEYS: {
-    ENTER: "Enter"
+    A: "KeyA",
+    B: "KeyB",
+    CAPITAL_R: "R",
+    CAPITAL_F: "F",
+    ENTER: "Enter",
+    S: "KeyS"
   }
 }
 

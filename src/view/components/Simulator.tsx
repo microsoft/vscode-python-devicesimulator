@@ -60,7 +60,6 @@ const sendMessage = (type: string, state: any) => {
 };
 
 class Simulator extends React.Component<any, IState> {
-  private keyPressed = false;
   constructor(props: IMyProps) {
     super(props);
     this.state = {
@@ -144,37 +143,53 @@ class Simulator extends React.Component<any, IState> {
     );
   }
 
-  protected playSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+  protected playSimulatorClick() {
     this.setState({ ...this.state, play_button: !this.state.play_button });
     sendMessage("play-simulator", !this.state.play_button);
+    const button =
+      window.document.getElementById(CONSTANTS.CLASS_NAME.PLAY_BUTTON) ||
+      window.document.getElementById(CONSTANTS.CLASS_NAME.STOP_BUTTON);
+    if (button) {
+      button.focus();
+    }
   }
 
-  protected refreshSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+  protected refreshSimulatorClick() {
     sendMessage("refresh-simulator", true);
+    const button = window.document.getElementById(
+      CONSTANTS.CLASS_NAME.REFRESH_BUTTON
+    );
+    if (button) {
+      button.focus();
+    }
   }
 
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
     let button;
     const target = event.target as SVGElement;
+    // Guard Clause
+    if (target === undefined) {
+      return;
+    }
+    console.log("event", event);
     if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
-      if (target) {
-        button = window.document.getElementById(target.id);
-        if (button) {
-          event.preventDefault();
-          if (button.id.includes("SWITCH")) {
-            // Switch
-            this.handleClick(button, active);
-          } else if (active && !this.keyPressed) {
-            // Send one keydown event
-            this.handleClick(button, active);
-            this.keyPressed = true;
-          } else if (!active) {
-            // Keyup event
-            this.handleClick(button, active);
-            this.keyPressed = false;
-          }
-        }
-      }
+      button = window.document.getElementById(target.id);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)) {
+      button = window.document.getElementById(CONSTANTS.CLASS_NAME.BUTTON_A);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)) {
+      button = window.document.getElementById(CONSTANTS.CLASS_NAME.BUTTON_B);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)) {
+      button = window.document.getElementById(CONSTANTS.CLASS_NAME.SWITCH);
+    } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
+      this.playSimulatorClick();
+    } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
+      this.refreshSimulatorClick();
+    }
+
+    if (button) {
+      event.preventDefault();
+      this.handleClick(button, active);
+      button.focus();
     }
   }
 
