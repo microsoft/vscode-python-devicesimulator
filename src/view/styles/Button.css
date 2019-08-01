@@ -30,3 +30,7 @@
 .button:active {
   background-color: var(--vscode-editor-selectionHighlightBackground);
 }
+
+.left-edge-icon {
+  transform: rotate(90deg);
+}

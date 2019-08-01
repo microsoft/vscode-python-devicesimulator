@@ -18,8 +18,8 @@ export const TOOLBAR_ICON_LABEL = {
   RED_LED: "Red LED",
   TAG_INPUT: "Tag Input",
   TAG_OUTPUT: "Tag Output",
-  LEFT_EDGE: "",
-  RIGHT_EDGE: "",
+  LEFT_EDGE: "left_edge",
+  RIGHT_EDGE: "right_adge",
   NEO_PIXEL: "Neo Pixels"
 };
 
