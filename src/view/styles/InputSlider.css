@@ -40,13 +40,15 @@
 .slider::-webkit-slider-runnable-track:focus,
 .inputSlider:focus,
 .slider:focus {
-  outline: none;
+  outline-color: none;
 }
 
 .sliderValue:focus,
 .sliderValue:hover {
   -webkit-appearance: none;
-  outline-color: var(--vscode-textLink-activeForeground);
+  /* outline-color: var(--vscode-textLink-activeForeground); */
+  color: var(--vscode-textLink-activeForeground);
+  outline: 1px solid var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
 .minLabel {
@@ -94,3 +96,12 @@
 .downLabelArea {
   display: block;
 }
+
+/* input[type="text"]:hover {
+  color: var(--vscode-textLink-activeForeground);
+  outline-color: var(--vscode-textLink-activeForeground);
+}
+
+input.sliderValue:hover {
+  color: var(--vscode-textLink-activeForeground);
+} */
