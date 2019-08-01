@@ -16,7 +16,6 @@
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.button:visited,
 .button:focus,
 .button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
