@@ -45,6 +45,7 @@
 
 .sliderValue:focus,
 .sliderValue:hover {
+  -webkit-appearance: none;
   outline-color: var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
