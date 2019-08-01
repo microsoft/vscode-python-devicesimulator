@@ -28,11 +28,7 @@ class TemperatureSensorBar extends React.Component {
     return (
       <div className="temperatureSensorBar">
         <div className="header">
-          <div className="title">
-            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} (${
-              TEMPERATURE_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
+          <div className="title">{TEMPERATURE_SENSOR_PROPERTIES.LABEL}</div>
         </div>
         <InputSlider
           minValue={

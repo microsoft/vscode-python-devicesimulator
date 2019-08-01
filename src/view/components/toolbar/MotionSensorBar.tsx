@@ -53,11 +53,7 @@ class MotionSensorBar extends React.Component {
     return (
       <div className="lightSensorBar">
         <div className="header">
-          <div className="title">
-            {`${MOTION_SENSOR_PROPERTIES.LABEL} (${
-              MOTION_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
+          <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
         <InputSlider
           minValue={
