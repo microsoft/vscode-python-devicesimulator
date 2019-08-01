@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "./InputSlider.css";
+import "../../styles/InputSlider.css";
 import { ISliderProps } from "./Toolbar_utils";
 
 interface vscode {
