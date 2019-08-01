@@ -11,7 +11,6 @@ import {
   TOOLBAR_ICON_LABEL
 } from "./sensor_modal_utils";
 import { CLOSE_SVG } from "../../svgs/close_svg";
-import { string } from "prop-types";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
