@@ -23,6 +23,10 @@
   position: absolute;
   left: 200px;
 }
+.close_icon {
+  position: absolute;
+  right: 0;
+}
 
 .description {
   -webkit-appearance: none;
