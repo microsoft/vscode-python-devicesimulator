@@ -26,6 +26,6 @@
   background-color: var(--vscode-editor-selectionHighlightBackground);
 }
 
-.left-edge-button {
-  justify-content: left;
+.left-edge-icon {
+  transform: rotate(180deg);
 }
