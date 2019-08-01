@@ -4,9 +4,14 @@ import * as React from "react";
 import Button from "../Button";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
-import Modal from "../toolbar/SensorModal";
-import { TOOLBAR_ICON_LABEL } from "./sensor_modal_utils";
-import "../../styles/ToolBar.css";
+import {
+  LABEL_TO_MODAL_CONTENT,
+  DEFAULT_MODAL_CONTENT,
+  IModalContent,
+  TOOLBAR_ICON_LABEL
+} from "./sensor_modal_utils";
+import { CLOSE_SVG } from "../../svgs/close_svg";
+import { string } from "prop-types";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -18,6 +23,7 @@ class ToolBar extends React.Component<any, any, any> {
       currentOpened: "",
       showModal: false
     };
+    this.closeCurrentModal = this.closeCurrentModal.bind(this);
   }
 
   render() {
@@ -111,19 +117,68 @@ class ToolBar extends React.Component<any, any, any> {
           image={TOOLBAR_SVG.EDGE_SVG}
           label={TOOLBAR_ICON_LABEL.RIGHT_EDGE}
         />
-        <Modal
-          showModal={this.state.showModal}
-          label={this.state.currentOpened}
-        />
+        {this.getIconModal()}
       </div>
     );
   }
 
-  handleOnClick(label: string) {
-    if (!this.state.showModal) {
-      this.setState({ currentOpened: label });
+  private handleOnClick(label: string) {
+    if (!this.state.showModal && this.state.currentOpened === "") {
+      this.openModal(label);
+    } else {
+      this.closeCurrentModal();
+      this.openModal(label);
     }
-    this.setState({ showModal: !this.state.showModal });
+  }
+
+  private closeCurrentModal() {
+    console.log(" colsed");
+    this.setState({ showModal: false });
+    this.setState({ currentOpened: "" });
+  }
+
+  private openModal(label: string) {
+    this.setState({ currentOpened: label });
+    this.setState({ showModal: true });
+  }
+
+  private getIconModal() {
+    console.log(
+      `getting ${this.state.showModal} AND ${this.state.currentOpened}`
+    );
+    if (
+      this.state.showModal &&
+      LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened)
+    ) {
+      const content = LABEL_TO_MODAL_CONTENT.get(
+        this.state.currentOpened
+      ) as IModalContent;
+
+      const component = content
+        ? content["component"]
+        : DEFAULT_MODAL_CONTENT.component;
+      return (
+        <div className="sensor_modal">
+          <div className="title_group">
+            <div className="title">{content["descriptionTitle"]}</div>
+            <div className="tag">{content["tag"]}</div>
+            <div className="close_icon" onMouseDown={this.closeCurrentModal}>
+              {CLOSE_SVG}
+            </div>
+          </div>
+          <br />
+          <div className="description">{content["descriptionText"]}</div>
+          {/* make border visivle bottom */}
+          <div className="try_area">
+            <div className="title"> {content["tryItTitle"]}</div>
+            <br />
+            <div className="description">{content["tryItDescriptrion"]}</div>
+            <div>{component}</div>
+          </div>
+        </div>
+      );
+    }
+    return null;
   }
 }
 
