@@ -40,7 +40,7 @@
 .slider::-webkit-slider-runnable-track:focus,
 .inputSlider:focus,
 .slider:focus {
-  outline-color: none;
+  outline: none;
 }
 
 .sliderValue:focus,
