@@ -13,7 +13,6 @@ class App extends React.Component {
       <div className="App">
         <main className="App-main">
           <Simulator />
-
           <ToolBar />
         </main>
       </div>

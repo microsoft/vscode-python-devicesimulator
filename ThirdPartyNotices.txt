@@ -9,7 +9,7 @@ This project incorporates components from the projects listed below. The origina
 2. Python extension for Visual Studio Code (https://github.com/microsoft/vscode-python)
 3. Python Language Server (https://github.com/Microsoft/python-language-server)
 4. Visual Studio Code (https://github.com/microsoft/vscode)
-5. TypeScript (https://github.com/microsoft/vscode-python)
+5. TypeScript (https://github.com/microsoft/TypeScript/)
 6. VS Code NLS (https://github.com/Microsoft/vscode-nls)
 7. VS Code extension telemetry (https://github.com/Microsoft/vscode-extension-telemetry)
 8. React (https://github.com/facebook/react)
