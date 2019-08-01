@@ -21,11 +21,12 @@
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.button:visited {
+.button:visited,
+.button:focus,
+.button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.play-button:active,
-.refresh-button:active {
+.button:active {
   background-color: var(--vscode-editor-selectionHighlightBackground);
 }
