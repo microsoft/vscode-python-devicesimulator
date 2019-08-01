@@ -15,7 +15,7 @@ interface vscode {
 
 declare const vscode: vscode;
 
-const sendMessage = (state: any) => {
+const sendMessage = (state: any, shake?: boolean) => {
   vscode.postMessage({ command: "sensor-changed", text: state });
 };
 
@@ -103,6 +103,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
       sendMessage(newSensorState);
     }
     if (this.props.type.includes(MOTION_PREFIX)) {
+      console.log("motion detected");
       sendMessage(this.writeShakeMessage);
     }
   }
