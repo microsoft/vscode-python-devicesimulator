@@ -74,7 +74,7 @@ class Simulator extends React.Component<any, IState> {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.playSimulatorClick = this.playSimulatorClick.bind(this);
+    this.togglePlayClick = this.togglePlayClick.bind(this);
     this.refreshSimulatorClick = this.refreshSimulatorClick.bind(this);
   }
 
@@ -129,7 +129,7 @@ class Simulator extends React.Component<any, IState> {
         </div>
         <div className="buttons">
           <Button
-            onClick={this.playSimulatorClick}
+            onClick={this.togglePlayClick}
             image={image}
             label="play"
             width={SIMULATOR_BUTTON_WIDTH}
@@ -145,12 +145,12 @@ class Simulator extends React.Component<any, IState> {
     );
   }
 
-  protected playSimulatorClick() {
-    this.setState({ ...this.state, play_button: !this.state.play_button });
+  protected togglePlayClick() {
     sendMessage("play-simulator", !this.state.play_button);
+    this.setState({ ...this.state, play_button: !this.state.play_button });
     const button =
-      window.document.getElementById(CONSTANTS.CLASS_NAME.PLAY_BUTTON) ||
-      window.document.getElementById(CONSTANTS.CLASS_NAME.STOP_BUTTON);
+      window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
+      window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
     if (button) {
       button.focus();
     }
@@ -159,7 +159,7 @@ class Simulator extends React.Component<any, IState> {
   protected refreshSimulatorClick() {
     sendMessage("refresh-simulator", true);
     const button = window.document.getElementById(
-      CONSTANTS.CLASS_NAME.REFRESH_BUTTON
+      CONSTANTS.ID_NAME.REFRESH_BUTTON
     );
     if (button) {
       button.focus();
@@ -173,17 +173,17 @@ class Simulator extends React.Component<any, IState> {
     if (target === undefined) {
       return;
     }
-    console.log("event", event);
+
     if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
       button = window.document.getElementById(target.id);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)) {
-      button = window.document.getElementById(CONSTANTS.CLASS_NAME.BUTTON_A);
+      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_A);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)) {
-      button = window.document.getElementById(CONSTANTS.CLASS_NAME.BUTTON_B);
+      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_B);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)) {
-      button = window.document.getElementById(CONSTANTS.CLASS_NAME.SWITCH);
+      button = window.document.getElementById(CONSTANTS.ID_NAME.SWITCH);
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
-      this.playSimulatorClick();
+      this.togglePlayClick();
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
     }

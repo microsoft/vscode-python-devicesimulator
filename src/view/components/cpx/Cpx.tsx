@@ -287,8 +287,13 @@ const setupKeyPresses = (
 ) => {
   window.document.addEventListener("keydown", event => {
     const keyEvents = [event.key, event.code];
-    // Don't listen to keydown events from the switch or enter keys
-    if (!keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S)) {
+    // Don't listen to keydown events from the switch
+    if (
+      !(
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F)
+      )
+    ) {
       onKeyEvent(event, true);
     }
   });
