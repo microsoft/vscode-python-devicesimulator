@@ -1,5 +1,24 @@
 .sensor_modal {
-  position: absolute;
-  left: 0;
-  top: 0;
+  background-color: red;
+}
+.title {
+  -webkit-appearance: none;
+  font-size: 16px;
+  font-weight: bolder;
+  color: var(--vscode-badge-foreground);
+  text-align: right;
+  margin-left: 50px;
+  margin-top: 50px;
+  background-color: blue;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--vscode-badge-foreground);
+}
+
+.tag,
+title,
+.description_area {
+  display: inline-block;
 }
