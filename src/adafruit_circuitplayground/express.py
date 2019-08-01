@@ -42,6 +42,10 @@ class Express:
         self.__abs_path_to_code_file = ''
 
     @property
+    def acceleration(self):
+        return (self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
+
+    @property
     def button_a(self):
         return self.__state['button_a']
 
