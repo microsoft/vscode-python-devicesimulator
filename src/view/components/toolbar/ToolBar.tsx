@@ -28,7 +28,12 @@ class ToolBar extends React.Component<any, any, any> {
   render() {
     return (
       <div className="left-edge">
-        <button>{TOOLBAR_SVG.lEFT_EDGE_SVG}</button>
+        <Button
+          width={TOOLBAR_EDGE_WIDTH}
+          onClick={() => {}}
+          image={TOOLBAR_SVG.lEFT_EDGE_SVG}
+          label="edge"
+        />
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
@@ -105,7 +110,12 @@ class ToolBar extends React.Component<any, any, any> {
           label="toolbar"
         />
 
-        <button className="right-edge">{TOOLBAR_SVG.lEFT_EDGE_SVG}</button>
+        <Button
+          width={TOOLBAR_EDGE_WIDTH}
+          onClick={() => {}}
+          image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
+          label="edge"
+        />
 
         {this.getIconModal()}
       </div>

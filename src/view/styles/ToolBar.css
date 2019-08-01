@@ -62,11 +62,3 @@
 .try_area {
   position: relative;
 }
-
-.left-edge {
-  height: 32px;
-  background: var(--vscode-debugToolBar-background);
-  border-color: var(--vscode-debugToolBar-background);
-  border-radius: 8px 0px 0px 8px;
-  width: 16px;
-}

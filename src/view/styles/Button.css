@@ -29,3 +29,8 @@
 .toolbar-button {
   border: none;
 }
+
+.edge-button {
+  pointer-events: none;
+  border: none;
+}
