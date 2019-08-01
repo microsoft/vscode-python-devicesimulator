@@ -5,7 +5,7 @@ import Button from "../Button";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
 import Modal from "../toolbar/SensorModal";
-import { TOOLBAR_ICON_LABEL } from "../component_utils";
+import { TOOLBAR_ICON_LABEL } from "./sensor_modal_utils";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -119,7 +119,6 @@ class ToolBar extends React.Component<any, any, any> {
   }
 
   handleOnClick(label: string) {
-    console.log(label);
     if (!this.state.showModal) {
       this.setState({ currentOpened: label });
     }

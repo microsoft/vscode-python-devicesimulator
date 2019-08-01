@@ -4,7 +4,7 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "../../styles/TemperatureSensorBar.css";
-import { ISensorProps, ISliderProps } from "./Toolbar_utils";
+import { ISensorProps, ISliderProps } from "../../view_utils";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   maxValue: 125,

@@ -5,7 +5,7 @@ import {
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent
-} from "../component_utils";
+} from "./sensor_modal_utils";
 
 class SensorModal extends React.Component<any, any, any> {
   constructor(props: any) {
@@ -14,16 +14,12 @@ class SensorModal extends React.Component<any, any, any> {
 
   render() {
     for (var label of LABEL_TO_MODAL_CONTENT.keys()) {
-      console.log(`label is  ${label} against ${this.props.label}`);
-
       if (
         this.props.showModal &&
         this.props.label === label &&
         LABEL_TO_MODAL_CONTENT.get(label)
       ) {
         const content = LABEL_TO_MODAL_CONTENT.get(label) as IModalContent;
-
-        console.log(`we have ${this.props.label} ${content}`);
 
         const component = content
           ? content["component"]
@@ -45,7 +41,6 @@ class SensorModal extends React.Component<any, any, any> {
         );
       }
     }
-    console.log(`was false`);
     return null;
   }
 }
