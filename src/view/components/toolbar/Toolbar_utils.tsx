@@ -13,3 +13,7 @@ export interface ISensorProps {
   sliderProps: ISliderProps[];
   unitLabel: string;
 }
+
+export const X_SLIDER_INDEX = 0;
+export const Y_SLIDER_INDEX = 1;
+export const Z_SLIDER_INDEX = 2;

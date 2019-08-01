@@ -4,7 +4,7 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./LightSensorBar.css";
-import { ISensorProps, ISliderProps } from "./Toolbar_utils";
+import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "./Toolbar_utils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
   maxValue: 255,
@@ -36,11 +36,19 @@ class LightSensorBar extends React.Component {
           </div>
         </div>
         <InputSlider
-          minValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minValue}
-          maxValue={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxValue}
-          type={LIGHT_SENSOR_PROPERTIES.sliderProps[0].type}
-          minLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].minLabel}
-          maxLabel={LIGHT_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
+          minValue={
+            LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxValue
+          }
+          type={LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].type}
+          minLabel={
+            LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
+          }
         />
       </div>
     );
