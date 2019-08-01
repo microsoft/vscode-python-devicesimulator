@@ -43,7 +43,8 @@
   outline: none;
 }
 
-.sliderValue:focus {
+.sliderValue:focus,
+.sliderValue:hover {
   outline-color: var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
