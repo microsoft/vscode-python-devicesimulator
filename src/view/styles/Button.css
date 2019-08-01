@@ -26,6 +26,6 @@
   background-color: var(--vscode-editor-selectionHighlightBackground);
 }
 
-.left-edge-icon {
-  transform: rotate(180deg);
+.toolbar-button {
+  border: none;
 }
