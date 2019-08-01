@@ -3,9 +3,9 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./MotionSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_utils";
 import SensorButton from "./SensorButton";
+import "../../styles/MotionSensorBar.css";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
   maxValue: 125,

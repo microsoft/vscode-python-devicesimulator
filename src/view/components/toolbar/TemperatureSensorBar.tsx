@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./TemperatureSensorBar.css";
+import "../../styles/TemperatureSensorBar.css";
 import { ISensorProps, ISliderProps } from "./Toolbar_utils";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
