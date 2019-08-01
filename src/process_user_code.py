@@ -15,7 +15,8 @@ EXPECTED_INPUT_EVENTS = [
     'button_b',
     'switch',
     'temperature',
-    'light'
+    'light',
+
 ]
 
 read_val = ""

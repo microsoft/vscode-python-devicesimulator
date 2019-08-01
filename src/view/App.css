@@ -18,5 +18,6 @@
   max-height: 250px;
   margin-left: auto;
   margin-right: auto;
-  width: fit-content;
+  text-align: center;
+  width: 460px;
 }
