@@ -29,7 +29,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      '[ERROR] We can\'t find the .py file to run. Open up a new .py file, or run the "New Project" command to get started and see useful links\n'
+      "[ERROR] We can't find a Python file to run. Please make sure you select or open a new '.py' code file, or use the \"New Project\" command to get started and see useful links.\n"
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
@@ -86,7 +86,10 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"),
+    THIRD_PARTY_WEBSITE: localize(
+      "info.thirdPartyWebsite",
+      "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
+    ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
       "Welcome to the Adafruit Simulator output tab !\n\n"
@@ -157,7 +160,9 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
-  export const PRIVACY_STATEMENT: MessageItem = { title: localize("info.privacyStatement", "Privacy Statement") };
+  export const PRIVACY_STATEMENT: MessageItem = {
+    title: localize("info.privacyStatement", "Privacy Statement")
+  };
   export const TUTORIALS: MessageItem = {
     title: localize("dialogResponses.tutorials", "Tutorials on Adafruit")
   };
