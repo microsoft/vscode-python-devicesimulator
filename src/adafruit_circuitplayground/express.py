@@ -74,7 +74,7 @@ class Express:
         utils.show(self.__state)
 
     def shake(self, shake_threshold=30):
-        return return self.__state['shake']
+        return self.__state['shake']
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
