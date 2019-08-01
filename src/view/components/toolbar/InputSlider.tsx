@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "./InputSlider.css";
 import {
   ISliderProps,
   SHAKE_SENSOR_EVENT,
   MOTION_PREFIX
 } from "./Toolbar_utils";
+import "../../styles/InputSlider.css";
 
 interface vscode {
   postMessage(message: any): void;
