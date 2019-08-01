@@ -3,8 +3,8 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./TemperatureSensorBar.css";
 import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "./Toolbar_utils";
+import "../../styles/TemperatureSensorBar.css";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   maxValue: 125,

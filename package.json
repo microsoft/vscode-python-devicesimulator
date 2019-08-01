@@ -241,5 +241,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "extensionDependencies": [
+    "ms-python.python"
+  ]
 }
