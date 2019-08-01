@@ -27,7 +27,7 @@ class ToolBar extends React.Component<any, any, any> {
 
   render() {
     return (
-      <div className="left-edge">
+      <div className="toolbar">
         <Button
           width={TOOLBAR_EDGE_WIDTH}
           onClick={() => {}}
