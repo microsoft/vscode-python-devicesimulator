@@ -13,3 +13,6 @@ export interface ISensorProps {
   sliderProps: ISliderProps[];
   unitLabel: string;
 }
+
+export const SHAKE_SENSOR_EVENT: string = "shake";
+export const MOTION_PREFIX: string = "motion";
