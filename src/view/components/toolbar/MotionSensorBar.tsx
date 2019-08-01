@@ -76,6 +76,10 @@ class MotionSensorBar extends React.Component {
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
         />
+        <br />
+        <button aria-label="Shake button" onClick={() => {}}>
+          "Shake"
+        </button>
       </div>
     );
   }
