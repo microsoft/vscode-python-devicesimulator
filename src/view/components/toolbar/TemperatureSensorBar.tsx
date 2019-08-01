@@ -11,7 +11,8 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   minValue: -55,
   minLabel: "Cold",
   maxLabel: "Hot",
-  type: "temperature"
+  type: "temperature",
+  axisLabel: ""
 };
 const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
   LABEL: "Temperature sensor",
@@ -27,19 +28,13 @@ class TemperatureSensorBar extends React.Component {
   render() {
     return (
       <div className="temperatureSensorBar">
-        <div className="header">
-          <div className="title">
-            {`${TEMPERATURE_SENSOR_PROPERTIES.LABEL} (${
-              TEMPERATURE_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
-        </div>
         <InputSlider
           minValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minValue}
           maxValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxValue}
           type={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].type}
           minLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minLabel}
           maxLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
+          axisLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].axisLabel}
         />
       </div>
     );

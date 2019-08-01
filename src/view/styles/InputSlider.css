@@ -1,5 +1,6 @@
 :root {
   --slider-gray-color: #cccccc;
+  --slider-width: 265px;
 }
 .inputSlider {
   height: 48px;
@@ -17,13 +18,14 @@
   margin-right: 15px;
   margin-top: auto;
   margin-bottom: auto;
+  margin-left: 5px;
 }
 
 .slider {
   -webkit-appearance: none;
   background-color: var(--slider-gray-color);
   height: 1px;
-  width: 280px;
+  width: var(--slider-width);
   vertical-align: middle;
 }
 .slider::-webkit-slider-thumb {
@@ -67,18 +69,18 @@
 }
 
 .sliderArea {
-  width: 280px;
+  width: var(--slider-width);
   height: 49px;
 }
 .downLabelArea {
-  width: 280px;
+  width: var(--slider-width);
   height: 15px;
   margin-top: 10px;
   position: relative;
   font-size: 14px;
 }
 .upLabelArea {
-  width: 280px;
+  width: var(--slider-width);
   height: 15px;
   margin-bottom: 10px;
   position: relative;

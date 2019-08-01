@@ -11,21 +11,24 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
   minValue: -55,
   minLabel: "Left",
   maxLabel: "Right",
-  type: "motion_x"
+  type: "motion_x",
+  axisLabel: "X"
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
   maxValue: 125,
   minValue: -55,
   minLabel: "Back",
   maxLabel: "Front",
-  type: "motion_y"
+  type: "motion_y",
+  axisLabel: "Y"
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
   maxValue: 125,
   minValue: -55,
   minLabel: "Up",
   maxLabel: "Down",
-  type: "motion_z"
+  type: "motion_z",
+  axisLabel: "Z"
 };
 
 const MOTION_SENSOR_PROPERTIES: ISensorProps = {
@@ -45,7 +48,7 @@ class MotionSensorBar extends React.Component {
 
   render() {
     return (
-      <div className="lightSensorBar">
+      <div className="MotionSensorBar">
         <div className="header">
           <div className="title">
             {`${MOTION_SENSOR_PROPERTIES.LABEL} (${
@@ -59,6 +62,7 @@ class MotionSensorBar extends React.Component {
           type={MOTION_SENSOR_PROPERTIES.sliderProps[0].type}
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
+          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].axisLabel}
         />
         <br />
         <InputSlider
@@ -67,6 +71,7 @@ class MotionSensorBar extends React.Component {
           type={MOTION_SENSOR_PROPERTIES.sliderProps[1].type}
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxLabel}
+          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].axisLabel}
         />
         <br />
         <InputSlider
@@ -75,6 +80,7 @@ class MotionSensorBar extends React.Component {
           type={MOTION_SENSOR_PROPERTIES.sliderProps[2].type}
           minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].minLabel}
           maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
+          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].axisLabel}
         />
         <br />
       </div>

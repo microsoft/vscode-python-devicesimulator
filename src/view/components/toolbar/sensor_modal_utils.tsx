@@ -34,7 +34,7 @@ export interface IModalContent {
 
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Temperature Sensor",
-  tag: "input",
+  tag: "Input",
   descriptionText:
     "An NTC thermistor can sense temperature. Easy to calculate the temperature based on the analog voltage on analog pin #A9",
   tryItTitle: "Try it on the Simulator!",
@@ -44,7 +44,7 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
 };
 export const LIGHT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Light Sensor",
-  tag: "input",
+  tag: "Input",
   descriptionText:
     "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
   tryItTitle: "Try it on the Simulator!",
@@ -61,7 +61,7 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
 };
 export const MOTION_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Motion Sensor",
-  tag: "input",
+  tag: "Input",
   descriptionText:
     "Detects acceleration in XYZ orientations. And can also detect tilt, gravity, motion, as well as 'tap' and 'double tap' strikes on the board. ",
   tryItTitle: "Try it on the Simulator!",
@@ -71,7 +71,7 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
 };
 export const SWITCH_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Slide Switch ",
-  tag: "input",
+  tag: "Input",
   descriptionText:
     "This slide switch returns True or False depending on whether it's left or right and can be used as a toggle switch in your code!",
   tryItTitle: "Try it on the Simulator!",
@@ -80,7 +80,7 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Push Buttons",
-  tag: "input",
+  tag: "Input",
   descriptionText:
     "Two push buttons A and B are connected to digital pin #4 (Left) and #5 (Right) each.",
   tryItTitle: "Try it on the Simulator!",
