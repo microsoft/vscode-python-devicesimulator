@@ -12,11 +12,6 @@
   border-radius: 0px 8px 8px 0px;
 }
 
-.play-icon {
-  background-color: var(--vscode-terminal-ansiRed);
-  opacity: 1;
-}
-
 .button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
@@ -32,5 +27,5 @@
 }
 
 .left-edge-icon {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }

@@ -31,7 +31,7 @@ class Express:
             'red_led': False,
             'switch': False,
             'temperature': 0,
-            'light': 0
+            'light': 0,
         }
 
         self.pixels = Pixel(self.__state)
