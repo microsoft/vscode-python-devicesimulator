@@ -49,6 +49,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
   switch: false
 };
 
+const SIMULATOR_BUTTO_WIDTH = 60;
+
 interface vscode {
   postMessage(message: any): void;
 }
@@ -130,14 +132,14 @@ class Simulator extends React.Component<any, IState> {
           <Button
             onClick={this.playSimulatorClick}
             image={image}
-            on={this.state.play_button}
             label="play"
+            width={SIMULATOR_BUTTO_WIDTH}
           />
           <Button
             onClick={this.refreshSimulatorClick}
             image={RefreshLogo}
-            on={false}
             label="refresh"
+            width={SIMULATOR_BUTTO_WIDTH}
           />
         </div>
       </div>

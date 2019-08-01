@@ -10,6 +10,6 @@ export interface ISliderProps {
 
 export interface ISensorProps {
   LABEL: string;
-  sliderProps: ISliderProps;
+  sliderProps: ISliderProps[];
   unitLabel: string;
 }

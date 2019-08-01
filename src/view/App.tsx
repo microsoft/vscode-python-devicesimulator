@@ -4,8 +4,7 @@
 "use strict";
 import * as React from "react";
 import Simulator from "./components/Simulator";
-import TemperatureSensorBar from "./components/toolbar/TemperatureSensorBar";
-import LightSensorBar from "./components/toolbar/LightSensorBar";
+import ToolBar from "./components/toolbar/ToolBar";
 import "./App.css";
 
 class App extends React.Component {
@@ -14,10 +13,7 @@ class App extends React.Component {
       <div className="App">
         <main className="App-main">
           <Simulator />
-          <div className="sensor-scrollbox">
-            <TemperatureSensorBar />
-            <LightSensorBar />
-          </div>
+          <ToolBar />
         </main>
       </div>
     );

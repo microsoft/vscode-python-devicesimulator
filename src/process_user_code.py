@@ -20,6 +20,7 @@ EXPECTED_INPUT_EVENTS = [
 
 read_val = ""
 
+
 class UserInput(threading.Thread):
 
     def __init__(self):
@@ -34,7 +35,7 @@ class UserInput(threading.Thread):
                 new_state = json.loads(read_val)
                 for event in EXPECTED_INPUT_EVENTS:
                     cpx._Express__state[event] = new_state.get(
-                    event, cpx._Express__state[event])
+                        event, cpx._Express__state[event])
 
             except Exception as e:
                 print("Error trying to send event to the process : ",
@@ -53,6 +54,8 @@ threads.append(user_input)
 user_input.start()
 
 # User code thread
+
+
 def execute_user_code(abs_path_to_code_file):
     cpx._Express__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file
