@@ -1,3 +1,7 @@
 .svg-path {
   fill: var(--vscode-badge-foreground);
 }
+
+.left-edge {
+  margin-right: 20px;
+}

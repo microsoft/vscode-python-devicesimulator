@@ -31,7 +31,7 @@ class ToolBar extends React.Component<any, any, any> {
         <Button
           width={TOOLBAR_EDGE_WIDTH}
           onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LEFT_EDGE)}
-          image={TOOLBAR_SVG.EDGE_SVG}
+          image={TOOLBAR_SVG.lEFT_EDGE_SVG}
           label={TOOLBAR_ICON_LABEL.LEFT_EDGE}
         />
         <Button
@@ -113,7 +113,7 @@ class ToolBar extends React.Component<any, any, any> {
         <Button
           width={TOOLBAR_EDGE_WIDTH}
           onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RIGHT_EDGE)}
-          image={TOOLBAR_SVG.EDGE_SVG}
+          image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
           label={TOOLBAR_ICON_LABEL.RIGHT_EDGE}
         />
         {this.getIconModal()}
