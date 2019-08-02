@@ -14,16 +14,17 @@ const sendMessage = (state: any) => {
 class SensorButton extends React.Component<ISensorButtonProps, any, any> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      isActive: false
-    };
-    this.handleOnclick = this.handleOnclick.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onKeyEvent = this.onKeyEvent.bind(this);
   }
 
   render() {
     return (
       <button
-        onClick={this.handleOnclick}
+        onMouseUp={this.onMouseUp}
+        onMouseDown={this.onMouseDown}
+        onKeyUp={this.onKeyEvent}
         aria-label={`${this.props.type} sensor button`}
       >
         {this.props.label}
@@ -31,12 +32,44 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
     );
   }
 
-  private handleOnclick() {
-    this.writeMessage(true);
+  private onMouseDown() {
+    this.handleOnclick(true);
+  }
+  private onMouseUp() {
+    console.log("down");
+    this.handleOnclick(false);
+  }
+  private handleOnclick(active: boolean) {
+    this.writeMessage(active);
   }
   private writeMessage(isActive: boolean) {
-    const messageState = { [this.props.type]: true };
+    const messageState = { [this.props.type]: isActive };
     sendMessage(messageState);
+  }
+
+  protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+    let button;
+    const target = event.target as SVGElement;
+    if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+      if (target) {
+        button = window.document.getElementById(target.id);
+        if (button) {
+          event.preventDefault();
+          if (button.id.includes("SWITCH")) {
+            // Switch
+            this.handleClick(button, active);
+          } else if (active && !this.keyPressed) {
+            // Send one keydown event
+            this.handleClick(button, active);
+            this.keyPressed = true;
+          } else if (!active) {
+            // Keyup event
+            this.handleClick(button, active);
+            this.keyPressed = false;
+          }
+        }
+      }
+    }
   }
 }
 
