@@ -4,6 +4,7 @@
 import * as React from "react";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
+import CONSTANTS from "../../constants";
 import svg from "./Svg_utils";
 import accessibility from "./Accessibility_utils";
 
@@ -29,6 +30,7 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupKeyPresses(props.onKeyEvent);
       setupSwitch(props);
       firstTime = false;
     }
@@ -278,6 +280,24 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   svgButton.onkeydown = e => props.onKeyEvent(e, true);
   svgButton.onkeyup = e => props.onKeyEvent(e, false);
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
+};
+
+const setupKeyPresses = (
+  onKeyEvent: (event: KeyboardEvent, active: boolean) => void
+) => {
+  window.document.addEventListener("keydown", event => {
+    const keyEvents = [event.key, event.code];
+    // Don't listen to keydown events from the switch
+    if (
+      !(
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F)
+      )
+    ) {
+      onKeyEvent(event, true);
+    }
+  });
+  window.document.addEventListener("keyup", event => onKeyEvent(event, false));
 };
 
 const setupSwitch = (props: IProps): void => {

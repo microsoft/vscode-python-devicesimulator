@@ -19,7 +19,6 @@ EXPECTED_INPUT_EVENTS = [
     'motion_x',
     'motion_y',
     'motion_z'
-
 ]
 
 read_val = ""

@@ -2,11 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import {
-  ISliderProps,
-  SHAKE_SENSOR_EVENT,
-  MOTION_PREFIX
-} from "./Toolbar_utils";
+import { ISliderProps } from "./Toolbar_utils";
 import "../../styles/InputSlider.css";
 
 interface vscode {
@@ -102,9 +98,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     if (newSensorState) {
       sendMessage(newSensorState);
     }
-    if (this.props.type.includes(MOTION_PREFIX)) {
-      sendMessage(this.writeShakeMessage);
-    }
   }
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
@@ -127,9 +120,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     if (this.state.value > this.props.maxValue) {
       this.setState({ value: this.props.maxValue });
     }
-  }
-  private writeShakeMessage() {
-    return { [SHAKE_SENSOR_EVENT]: true };
   }
 }
 
