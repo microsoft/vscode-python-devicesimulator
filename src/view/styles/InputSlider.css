@@ -4,7 +4,7 @@
 }
 .inputSlider {
   height: 48px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   display: table-cell;
 }
 .sliderValue {
@@ -19,6 +19,7 @@
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 5px;
+  color: var(--badge-foreground);
 }
 
 .slider {
@@ -44,8 +45,11 @@
   outline: none;
 }
 
-.sliderValue:focus {
-  outline-color: var(--vscode-textLink-activeForeground);
+.sliderValue:focus,
+.sliderValue:hover {
+  -webkit-appearance: none;
+  color: var(--vscode-textLink-activeForeground);
+  outline: 1px solid var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
 .minLabel {

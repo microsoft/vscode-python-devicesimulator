@@ -15,6 +15,7 @@ const Button: React.FC<IButtonProps> = props => {
 
   return (
     <button
+      id={`${props.label}-button`}
       className={`${props.label}-button button`}
       onClick={props.onClick}
       style={buttonStyle}

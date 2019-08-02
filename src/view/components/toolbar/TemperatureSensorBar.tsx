@@ -3,8 +3,8 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
+import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../view_utils";
 import "../../styles/TemperatureSensorBar.css";
-import { ISensorProps, ISliderProps } from "../../view_utils";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   maxValue: 125,
@@ -28,13 +28,26 @@ class TemperatureSensorBar extends React.Component {
   render() {
     return (
       <div className="temperatureSensorBar">
+        <div className="header">
+          <div className="title">{TEMPERATURE_SENSOR_PROPERTIES.LABEL}</div>
+        </div>
         <InputSlider
-          minValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minValue}
-          maxValue={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxValue}
-          type={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].type}
-          minLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].minLabel}
-          maxLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
-          axisLabel={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[0].axisLabel}
+          minValue={
+            TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxValue
+          }
+          type={TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].type}
+          minLabel={
+            TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            TEMPERATURE_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].axisLabel
+          }
         />
       </div>
     );

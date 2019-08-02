@@ -3,8 +3,14 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
+import {
+  ISensorProps,
+  ISliderProps,
+  X_SLIDER_INDEX,
+  Z_SLIDER_INDEX,
+  Y_SLIDER_INDEX
+} from "../../view_utils";
 import "../../styles/MotionSensorBar.css";
-import { ISensorProps, ISliderProps } from "../../view_utils";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
   maxValue: 125,
@@ -50,37 +56,63 @@ class MotionSensorBar extends React.Component {
     return (
       <div className="MotionSensorBar">
         <div className="header">
-          <div className="title">
-            {`${MOTION_SENSOR_PROPERTIES.LABEL} (${
-              MOTION_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
+          <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[0].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[0].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
-          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].axisLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].axisLabel
+          }
         />
         <br />
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[1].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxLabel}
-          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].axisLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].axisLabel
+          }
         />
         <br />
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[2].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
-          axisLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].axisLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].axisLabel
+          }
         />
         <br />
       </div>
