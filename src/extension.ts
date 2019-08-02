@@ -14,6 +14,7 @@ import {
   WebviewMessages
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import { GrpcCom } from "./Grpc/GrpcCom";
 import * as utils from "./utils";
 
 let currentFileAbsPath: string = "";
@@ -402,6 +403,14 @@ export function activate(context: vscode.ExtensionContext) {
     utils.getPathToScript(context, "out", "process_user_code.py")
   );
 
+  const debugSessionsStart = vscode.debug.onDidStartDebugSession(
+    debugSession => {
+      console.error("DEBUG STARTED");
+      let grpcCom = new GrpcCom();
+      grpcCom.run();
+    }
+  );
+
   context.subscriptions.push(
     openSimulator,
     runSimulator,
@@ -410,7 +419,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
-    )
+    ),
+    debugSessionsStart
   );
 }
 

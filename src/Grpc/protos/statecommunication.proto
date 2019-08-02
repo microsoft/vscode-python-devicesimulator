@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ts-py.statecommunication";
+option java_outer_classname = "StateCommunicationProto";
+option objc_class_prefix = "HLW";
+
+package statecommunication;
+
+
+// The state communication service definition. // TODO: Change name to com from py to ext??
+service TsServer {
+  // Allows to update state
+  rpc UpdateState (NewState) returns (Ack) {} // TODO: Remove Ack : no return ??? Can't remove
+}
+
+// The request containing the new state
+message NewState {
+  string state = 1;
+}
+
+// The response ack
+message Ack {
+  string ackMessage = 1;
+}
+
+/*
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+*/

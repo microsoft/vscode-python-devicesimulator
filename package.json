@@ -193,6 +193,7 @@
     "package": "vsce package"
   },
   "devDependencies": {
+    "@grpc/proto-loader": "^0.1.0",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.6",
     "@types/node": "^10.12.21",
@@ -203,6 +204,7 @@
     "del": "^4.0.0",
     "event-stream": "^4.0.1",
     "glob": "^7.1.4",
+    "grpc": "^1.11.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.1.0",
     "gulp-filter": "^5.1.0",
