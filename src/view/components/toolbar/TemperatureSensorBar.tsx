@@ -12,7 +12,7 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   minLabel: "Cold",
   maxLabel: "Hot",
   type: "temperature",
-  axisLabel: ""
+  axisLabel: " "
 };
 const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
   LABEL: "Temperature sensor",

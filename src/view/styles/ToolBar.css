@@ -34,7 +34,7 @@
   margin-right: 60px;
   position: absolute;
   left: 0;
-  background-color: brown;
+  padding-left: inherit;
 }
 .tag {
   position: absolute;

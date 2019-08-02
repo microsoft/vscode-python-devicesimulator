@@ -13,7 +13,7 @@ const LIGHT_SLIDER_PROPS: ISliderProps = {
   minLabel: "Dark",
   maxLabel: "Bright",
   type: "light",
-  axisLabel: ""
+  axisLabel: " "
 };
 
 const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
