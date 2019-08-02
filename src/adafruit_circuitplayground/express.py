@@ -7,6 +7,7 @@ import os
 from playsound import playsound
 from .pixel import Pixel
 from . import utils
+from collections import namedtuple
 
 
 class Express:
@@ -40,10 +41,11 @@ class Express:
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
 
-
     @property
     def acceleration(self):
-        return (self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
+        Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
+
+        return Acceleration(self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
 
     @property
     def button_a(self):
