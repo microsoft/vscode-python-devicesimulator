@@ -73,11 +73,25 @@
   background: var(--vscode-editor-background);
   text-align: left;
   margin-left: 0;
-  font-weight: bold;
-  font-size: 16px;
   padding-bottom: 10px;
 }
 
 .info-icon {
   margin-right: 8px;
+}
+
+.info-text {
+  font-weight: 500;
+  font-size: 16px;
+  padding-right: 13px;
+}
+
+.link {
+  text-align: left;
+  text-decoration: none;
+}
+
+.link-parent {
+  padding-bottom: 33px;
+  padding-left: 150px;
 }

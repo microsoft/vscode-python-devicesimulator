@@ -22,5 +22,5 @@ export const CONSTANTS = {
   }
 };
 
-export const TOOLBAR_INFO = "Explore what's on the board";
+export const TOOLBAR_INFO = `Explore what's on the board:`;
 export default CONSTANTS;

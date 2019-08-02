@@ -8,7 +8,8 @@ import {
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent,
-  TOOLBAR_ICON_LABEL
+  TOOLBAR_ICON_LABEL,
+  CPX_EXPRESS_DOC
 } from "./sensor_modal_utils";
 import { CLOSE_SVG } from "../../svgs/close_svg";
 import { INFO_SVG } from "../../svgs/info_svg";
@@ -33,6 +34,7 @@ class ToolBar extends React.Component<any, any, any> {
         <div className="info">
           <span className="info-icon">{INFO_SVG}</span>
           <span className="info-text">{TOOLBAR_INFO}</span>
+          <span className="info-link"> {CPX_EXPRESS_DOC}</span>
         </div>
         <div className="toolbar-icon">
           <Button

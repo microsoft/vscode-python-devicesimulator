@@ -37,7 +37,6 @@
 }
 
 .toolbar-button:hover {
-  background-color: rgba(var(--vscode-badge-foreground), 0.25);
   outline: none;
 }
 

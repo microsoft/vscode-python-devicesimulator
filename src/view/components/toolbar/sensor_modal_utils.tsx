@@ -7,6 +7,23 @@ import * as React from "react";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 
+export const CPX_EXPRESS_DOC = (
+  <a
+    className="link"
+    href="https://learn.adafruit.com/adafruit-circuit-playground-express/makecode"
+  >
+    Learn More >
+  </a>
+);
+
+export const TRY_IT_MAKE_CODE = (
+  <div className="link-parent">
+    <a href="https://makecode.adafruit.com/" className="link">
+      Try it on MakeCode >
+    </a>
+  </div>
+);
+
 export const TOOLBAR_ICON_LABEL = {
   LIGHT: "Light sensor",
   IR: "IR",
@@ -117,7 +134,7 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!",
-  component: undefined
+  component: TRY_IT_MAKE_CODE
 };
 export const NEOP_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "NeoPixels",
@@ -127,7 +144,7 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
     "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
-  component: undefined
+  component: TRY_IT_MAKE_CODE
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Speaker ",
@@ -149,7 +166,7 @@ export const IR_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: undefined
+  component: TRY_IT_MAKE_CODE
 };
 export const GPIO_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "GPIO ",
@@ -160,7 +177,7 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: undefined
+  component: TRY_IT_MAKE_CODE
 };
 
 export const LABEL_TO_MODAL_CONTENT = new Map([
