@@ -58,6 +58,8 @@ class MotionSensorBar extends React.Component {
         <div className="header">
           <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
+        <SensorButton label="Shake" type="shake" />
+        <br />
         <InputSlider
           minValue={
             MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
@@ -106,7 +108,6 @@ class MotionSensorBar extends React.Component {
           }
         />
         <br />
-        <SensorButton label="Shake" type="shake" />
       </div>
     );
   }

@@ -7,6 +7,9 @@
   border: none;
   font-weight: bolder;
   margin-top: 30px;
+  margin-bottom: 30px;
+  float: left;
+  padding-left: 20px;
 }
 
 .sensor-button:focus {
