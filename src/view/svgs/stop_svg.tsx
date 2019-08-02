@@ -8,7 +8,7 @@ export const STOP_SVG = (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="14" height="14" rx="1" fill="white" />
+    <rect className="button-icon" width="14" height="14" rx="1" fill="white" />
   </svg>
 );
 
