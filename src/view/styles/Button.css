@@ -31,7 +31,6 @@
   border: none;
 }
 
-.toolbar-button:hover,
 .toolbar-button:focus {
   background-color: var(--vscode-button-background);
   outline: none;

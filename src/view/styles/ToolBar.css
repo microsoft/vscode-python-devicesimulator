@@ -23,6 +23,7 @@
   width: 320px;
   position: relative;
   height: fit-content;
+  padding-left: 16px;
 }
 .title {
   -webkit-appearance: none;
@@ -33,6 +34,7 @@
   margin-right: 60px;
   position: absolute;
   left: 0;
+  background-color: brown;
 }
 .tag {
   position: absolute;
@@ -60,6 +62,8 @@
 .title_group {
   margin-top: 20px;
   width: fit-content;
+  padding-left: 16px;
+  background-color: red;
 }
 
 .try_area {
