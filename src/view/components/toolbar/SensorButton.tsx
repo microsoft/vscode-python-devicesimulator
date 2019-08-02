@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ISensorButtonProps } from "./Toolbar_utils";
-import * as CONSTANTS from "../../constants";
+import { CONSTANTS } from "../../constants";
 
 interface vscode {
   postMessage(message: any): void;
@@ -17,7 +17,8 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
     super(props);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
-    this.onKeyEvent = this.onKeyEvent.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   render() {
@@ -25,7 +26,8 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
       <button
         onMouseUp={this.onMouseUp}
         onMouseDown={this.onMouseDown}
-        onKeyUp={this.onKeyEvent}
+        onKeyUp={this.onKeyUp}
+        onKeyDown={this.onKeyDown}
         aria-label={`${this.props.type} sensor button`}
       >
         {this.props.label}
@@ -36,8 +38,13 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
   private onMouseDown() {
     this.handleOnclick(true);
   }
+  private onKeyUp(event: React.KeyboardEvent<HTMLButtonElement>) {
+    this.onKeyEvent(event, false);
+  }
+  private onKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
+    this.onKeyEvent(event, true);
+  }
   private onMouseUp() {
-    console.log("down");
     this.handleOnclick(false);
   }
   private handleOnclick(active: boolean) {
@@ -48,28 +55,12 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
     sendMessage(messageState);
   }
 
-  private onKeyEvent(event: KeyboardEvent, active: boolean) {
-    let button;
-    const target = event.target as SVGElement;
-    if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
-      if (target) {
-        button = window.document.getElementById(target.id);
-        if (button) {
-          event.preventDefault();
-          if (button.id.includes("SWITCH")) {
-            // Switch
-            this.handleClick(button, active);
-          } else if (active && !this.keyPressed) {
-            // Send one keydown event
-            this.handleClick(button, active);
-            this.keyPressed = true;
-          } else if (!active) {
-            // Keyup event
-            this.handleClick(button, active);
-            this.keyPressed = false;
-          }
-        }
-      }
+  private onKeyEvent(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    active: boolean
+  ) {
+    if ([event.keyCode, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+      this.handleOnclick(active);
     }
   }
 }
