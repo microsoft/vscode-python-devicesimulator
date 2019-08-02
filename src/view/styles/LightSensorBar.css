@@ -1,19 +1,19 @@
-
-
-.title{
-    font-size: 14px;
-    text-align: left;
+.title {
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
 }
 
-.header{
-    -webkit-appearance: none;
-    height: 30px;
-    margin-bottom: 2px;
+.header {
+  -webkit-appearance: none;
+  height: 30px;
+  margin-bottom: 2px;
 }
 
-.lightSensorBar{
-    margin-top: 10px;
-    width: 440px;
-    margin-left: auto;
-    margin-right: auto;
+.lightSensorBar {
+  -webkit-appearance: none;
+  margin-top: 10px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }

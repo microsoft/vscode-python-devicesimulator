@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ISensorButtonProps } from "./Toolbar_utils";
+import * as CONSTANTS from "../../constants";
 
 interface vscode {
   postMessage(message: any): void;
@@ -47,7 +48,7 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
     sendMessage(messageState);
   }
 
-  protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+  private onKeyEvent(event: KeyboardEvent, active: boolean) {
     let button;
     const target = event.target as SVGElement;
     if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {

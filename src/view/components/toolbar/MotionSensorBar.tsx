@@ -3,8 +3,16 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import { ISensorProps, ISliderProps } from "./Toolbar_utils";
 import SensorButton from "./SensorButton";
+
+import {
+  ISensorProps,
+  ISliderProps,
+  X_SLIDER_INDEX,
+  Z_SLIDER_INDEX,
+  Y_SLIDER_INDEX
+} from "./Toolbar_utils";
+
 import "../../styles/MotionSensorBar.css";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
@@ -48,34 +56,54 @@ class MotionSensorBar extends React.Component {
     return (
       <div className="lightSensorBar">
         <div className="header">
-          <div className="title">
-            {`${MOTION_SENSOR_PROPERTIES.LABEL} (${
-              MOTION_SENSOR_PROPERTIES.unitLabel
-            })`}
-          </div>
+          <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[0].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[0].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[0].maxLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
+          }
         />
         <br />
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[1].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[1].maxLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].maxLabel
+          }
         />
         <br />
         <InputSlider
-          minValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].minValue}
-          maxValue={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxValue}
-          type={MOTION_SENSOR_PROPERTIES.sliderProps[2].type}
-          minLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].minLabel}
-          maxLabel={MOTION_SENSOR_PROPERTIES.sliderProps[2].maxLabel}
+          minValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].minValue
+          }
+          maxValue={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxValue
+          }
+          type={MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].type}
+          minLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].minLabel
+          }
+          maxLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxLabel
+          }
         />
         <br />
         <SensorButton label="Shake" type="shake" />

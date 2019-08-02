@@ -20,4 +20,6 @@ export interface ISensorProps {
 }
 
 export const SHAKE_SENSOR_EVENT: string = "shake";
-export const MOTION_PREFIX: string = "motion";
+export const X_SLIDER_INDEX = 0;
+export const Y_SLIDER_INDEX = 1;
+export const Z_SLIDER_INDEX = 2;
