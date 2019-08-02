@@ -4,6 +4,8 @@ import LightSensorBar from "./LightSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
 import MotionSensorBar from "./MotionSensorBar";
 import * as React from "react";
+import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
+import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 
 export const TOOLBAR_ICON_LABEL = {
   LIGHT: "Light sensor",
@@ -25,7 +27,8 @@ export const TOOLBAR_ICON_LABEL = {
 
 export interface IModalContent {
   descriptionTitle: string;
-  tag: string;
+  tagInput: any;
+  tagOutput: any;
   descriptionText: string;
   tryItTitle: string;
   tryItDescriptrion: string;
@@ -34,7 +37,8 @@ export interface IModalContent {
 
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Temperature Sensor",
-  tag: "Input",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     "An NTC thermistor can sense temperature. Easy to calculate the temperature based on the analog voltage on analog pin #A9",
   tryItTitle: "Try it on the Simulator!",
@@ -44,7 +48,8 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
 };
 export const LIGHT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Light Sensor",
-  tag: "Input",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
   tryItTitle: "Try it on the Simulator!",
@@ -53,7 +58,8 @@ export const LIGHT_MODAL_CONTENT: IModalContent = {
 };
 export const DEFAULT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "default",
-  tag: "none",
+  tagInput: undefined,
+  tagOutput: undefined,
   descriptionText: "none",
   tryItTitle: "none",
   tryItDescriptrion: "none",
@@ -61,7 +67,8 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
 };
 export const MOTION_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Motion Sensor",
-  tag: "Input",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     "Detects acceleration in XYZ orientations. And can also detect tilt, gravity, motion, as well as 'tap' and 'double tap' strikes on the board. ",
   tryItTitle: "Try it on the Simulator!",
@@ -71,7 +78,8 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
 };
 export const SWITCH_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Slide Switch ",
-  tag: "Input",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     "This slide switch returns True or False depending on whether it's left or right and can be used as a toggle switch in your code!",
   tryItTitle: "Try it on the Simulator!",
@@ -80,7 +88,8 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Push Buttons",
-  tag: "Input",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     "Two push buttons A and B are connected to digital pin #4 (Left) and #5 (Right) each.",
   tryItTitle: "Try it on the Simulator!",
@@ -90,7 +99,8 @@ export const PUSHB_MODAL_CONTENT: IModalContent = {
 };
 export const REDL_LED_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Red LED",
-  tag: "Output ",
+  tagInput: undefined,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
     "This Red LED does double duty. It's connected to the digital #13 GPIO pin, very handy for when you want an indicator LED",
   tryItTitle: "Try it on the Simulator!",
@@ -100,7 +110,8 @@ export const REDL_LED_MODAL_CONTENT: IModalContent = {
 };
 export const SOUND_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Sound Sensor",
-  tag: "Input  ",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
     " A digital microphone can detect audio volume and even perform basic FFT functions but cannot read it like an analog voltage. ",
   tryItTitle: "Simulation Coming Soon!",
@@ -110,7 +121,8 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
 };
 export const NEOP_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "NeoPixels",
-  tag: "Output",
+  tagInput: undefined,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
     "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
   tryItTitle: "Try it on the Simulator!",
@@ -119,7 +131,8 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Speaker ",
-  tag: "Output",
+  tagInput: undefined,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
     "This speaker can play .wav file and different tones, also have a class D amplifier that connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11  ",
   tryItTitle: "Try it on the Simulator!",
@@ -129,7 +142,8 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
 };
 export const IR_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "IR Transmit & Proximity",
-  tag: "Input & Output",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
     "Allow you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light. ",
   tryItTitle: "Simulation Coming Soon!",
@@ -139,7 +153,8 @@ export const IR_MODAL_CONTENT: IModalContent = {
 };
 export const GPIO_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "GPIO ",
-  tag: "Input & Output",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
     " 8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.  ",
   tryItTitle: "Simulation Coming Soon!",

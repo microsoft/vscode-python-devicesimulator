@@ -20,6 +20,7 @@ export const CONSTANTS = {
     ENTER: "Enter",
     S: "KeyS"
   }
-}
+};
 
+export const TOOLBAR_INFO = "Explore what's on the board";
 export default CONSTANTS;

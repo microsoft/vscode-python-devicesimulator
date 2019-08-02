@@ -63,9 +63,21 @@
   margin-top: 20px;
   width: fit-content;
   padding-left: 16px;
-  background-color: red;
 }
 
 .try_area {
   position: relative;
+}
+
+.info {
+  background: var(--vscode-editor-background);
+  text-align: left;
+  margin-left: 0;
+  font-weight: bold;
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+.info-icon {
+  margin-right: 8px;
 }

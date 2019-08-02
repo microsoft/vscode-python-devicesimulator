@@ -11,6 +11,8 @@ import {
   TOOLBAR_ICON_LABEL
 } from "./sensor_modal_utils";
 import { CLOSE_SVG } from "../../svgs/close_svg";
+import { INFO_SVG } from "../../svgs/info_svg";
+import { TOOLBAR_INFO } from "../../constants";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -28,6 +30,10 @@ class ToolBar extends React.Component<any, any, any> {
   render() {
     return (
       <div className="toolbar">
+        <div className="info">
+          <span className="info-icon">{INFO_SVG}</span>
+          <span className="info-text">{TOOLBAR_INFO}</span>
+        </div>
         <div className="toolbar-icon">
           <Button
             width={TOOLBAR_EDGE_WIDTH}
@@ -159,7 +165,9 @@ class ToolBar extends React.Component<any, any, any> {
         <div className="sensor_modal">
           <div className="title_group">
             <div className="title">{content["descriptionTitle"]}</div>
-            <div className="tag">{content["tag"]}</div>
+            <span className="tag">
+              {content["tagInput"]} {content["tagOutput"]}
+            </span>
             <div className="close_icon" onMouseDown={this.closeCurrentModal}>
               {CLOSE_SVG}
             </div>
