@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../styles/button.css";
+import "../styles/Button.css";
 
 export const EDGE_SVG = (
   <svg
