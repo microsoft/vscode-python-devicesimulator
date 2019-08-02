@@ -28,94 +28,96 @@ class ToolBar extends React.Component<any, any, any> {
   render() {
     return (
       <div className="toolbar">
-        <Button
-          width={TOOLBAR_EDGE_WIDTH}
-          onClick={() => {}}
-          image={TOOLBAR_SVG.lEFT_EDGE_SVG}
-          label="edge"
-        />
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
-          image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
-          label="toolbar"
-        />
+        <div className="toolbar-icon">
+          <Button
+            width={TOOLBAR_EDGE_WIDTH}
+            onClick={() => {}}
+            image={TOOLBAR_SVG.lEFT_EDGE_SVG}
+            label="edge"
+          />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
+            image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(
-            this,
-            TOOLBAR_ICON_LABEL.PUSH_BUTTON
-          )}
-          image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(
+              this,
+              TOOLBAR_ICON_LABEL.PUSH_BUTTON
+            )}
+            image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RED_LED)}
-          image={TOOLBAR_SVG.RED_LED_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RED_LED)}
+            image={TOOLBAR_SVG.RED_LED_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
-          image={TOOLBAR_SVG.SOUND_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
+            image={TOOLBAR_SVG.SOUND_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(
-            this,
-            TOOLBAR_ICON_LABEL.TEMPERATURE
-          )}
-          image={TOOLBAR_SVG.TEMPERATURE_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(
+              this,
+              TOOLBAR_ICON_LABEL.TEMPERATURE
+            )}
+            image={TOOLBAR_SVG.TEMPERATURE_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
-          image={TOOLBAR_SVG.LIGHT_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
+            image={TOOLBAR_SVG.LIGHT_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SPEAKER)}
-          image={TOOLBAR_SVG.SPEAKER_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SPEAKER)}
+            image={TOOLBAR_SVG.SPEAKER_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
-          image={TOOLBAR_SVG.MOTION_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
+            image={TOOLBAR_SVG.MOTION_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
-          image={TOOLBAR_SVG.IR_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
+            image={TOOLBAR_SVG.IR_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_BUTTON_WIDTH}
-          onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
-          image={TOOLBAR_SVG.GPIO_SVG}
-          label="toolbar"
-        />
+          <Button
+            width={TOOLBAR_BUTTON_WIDTH}
+            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
+            image={TOOLBAR_SVG.GPIO_SVG}
+            label="toolbar"
+          />
 
-        <Button
-          width={TOOLBAR_EDGE_WIDTH}
-          onClick={() => {}}
-          image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
-          label="edge"
-        />
+          <Button
+            width={TOOLBAR_EDGE_WIDTH}
+            onClick={() => {}}
+            image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
+            label="edge"
+          />
+        </div>
 
         {this.getIconModal()}
       </div>
@@ -132,7 +134,6 @@ class ToolBar extends React.Component<any, any, any> {
   }
 
   private closeCurrentModal() {
-    console.log(" colsed");
     this.setState({ showModal: false });
     this.setState({ currentOpened: "" });
   }
@@ -143,9 +144,6 @@ class ToolBar extends React.Component<any, any, any> {
   }
 
   private getIconModal() {
-    console.log(
-      `getting ${this.state.showModal} AND ${this.state.currentOpened}`
-    );
     if (
       this.state.showModal &&
       LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened)

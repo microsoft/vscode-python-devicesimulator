@@ -1,13 +1,16 @@
 .toolbar {
   background: var(--vscode-debugToolBar-background);
   width: fit-content;
-  box-shadow: 0px 0px 20px black;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
   border-radius: 2px;
   height: fit-content;
   margin-left: auto;
   margin-right: auto;
   margin-top: 53px;
   margin-bottom: 50px;
+}
+.toolbar-icon {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
 }
 
 .tag,

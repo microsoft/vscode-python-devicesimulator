@@ -8,7 +8,7 @@
   border-radius: 8px 0px 0px 8px;
 }
 
-.refresh-button {
+.-button {
   border-radius: 0px 8px 8px 0px;
 }
 
@@ -16,8 +16,10 @@
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.button:focus,
-.button:hover {
+.play-button:focus,
+.play-button:hover,
+.refresh-button:focus,
+.refresh-button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
@@ -27,6 +29,17 @@
 
 .toolbar-button {
   border: none;
+}
+
+.toolbar-button:hover,
+.toolbar-button:focus {
+  background-color: var(--vscode-button-background);
+  outline: none;
+}
+
+.toolbar-button:hover {
+  background-color: var(--vscode-badge-foreground);
+  outline: none;
 }
 
 .edge-button {
