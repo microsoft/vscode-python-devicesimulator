@@ -34,8 +34,6 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
-                print('newstae is ')
-                print(new_state)
                 for event in EXPECTED_INPUT_EVENTS:
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])

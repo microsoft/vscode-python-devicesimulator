@@ -12,7 +12,6 @@ interface vscode {
 declare const vscode: vscode;
 
 const sendMessage = (state: any) => {
-  console.log("posting shake");
   vscode.postMessage({ command: "sensor-changed", text: state });
 };
 
