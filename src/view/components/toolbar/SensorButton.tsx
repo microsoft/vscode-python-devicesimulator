@@ -16,10 +16,6 @@ const sendMessage = (state: any) => {
 class SensorButton extends React.Component<ISensorButtonProps, any, any> {
   constructor(props: any) {
     super(props);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   render() {
@@ -37,25 +33,20 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
     );
   }
 
-  private onMouseDown() {
-    this.handleOnclick(true);
-  }
-  private onKeyUp(event: React.KeyboardEvent<HTMLButtonElement>) {
+  private onMouseDown = () => this.handleOnclick(true);
+
+  private onKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) =>
     this.onKeyEvent(event, false);
-  }
-  private onKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
+
+  private onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) =>
     this.onKeyEvent(event, true);
-  }
-  private onMouseUp() {
-    this.handleOnclick(false);
-  }
-  private handleOnclick(active: boolean) {
-    this.writeMessage(active);
-  }
-  private writeMessage(isActive: boolean) {
-    const messageState = { [this.props.type]: isActive };
+
+  private onMouseUp = () => this.handleOnclick(false);
+
+  private handleOnclick = (active: boolean) => {
+    const messageState = { [this.props.type]: active };
     sendMessage(messageState);
-  }
+  };
 
   private onKeyEvent(
     event: React.KeyboardEvent<HTMLButtonElement>,
