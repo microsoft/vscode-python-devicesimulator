@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ISensorButtonProps } from "./Toolbar_utils";
 import { CONSTANTS } from "../../constants";
+import "../../styles/SensorButton.css";
 
 interface vscode {
   postMessage(message: any): void;
@@ -29,6 +30,7 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
         onKeyUp={this.onKeyUp}
         onKeyDown={this.onKeyDown}
         aria-label={`${this.props.type} sensor button`}
+        className="sensor-button"
       >
         {this.props.label}
       </button>

@@ -1,0 +1,21 @@
+.sensor-button {
+  color: var(--vscode-badge-foreground);
+  text-align: center;
+  background-color: var(--vscode-button-background);
+  width: 343px;
+  height: 32px;
+  border: none;
+  font-weight: bolder;
+  margin-top: 30px;
+}
+
+.sensor-button:focus {
+  outline: var(--vscode-focusBorder);
+  outline-width: thick;
+  outline-offset: 15px;
+  outline-style: auto;
+}
+.sensor-button:hover {
+  outline: none;
+  background-color: var(--vscode-button-hoverBackground);
+}
