@@ -38,7 +38,6 @@ class ToolBar extends React.Component<any, any, any> {
         <div className="toolbar">
           <div className="toolbar-icon">
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_EDGE_WIDTH}
               onClick={() => {}}
@@ -46,7 +45,6 @@ class ToolBar extends React.Component<any, any, any> {
               styleLabel="edge"
             />
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
@@ -55,7 +53,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
@@ -67,7 +64,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
@@ -79,7 +75,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
@@ -88,7 +83,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
@@ -100,7 +94,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
@@ -109,7 +102,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
@@ -121,7 +113,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
@@ -130,7 +121,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
@@ -139,7 +129,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
@@ -148,7 +137,6 @@ class ToolBar extends React.Component<any, any, any> {
             />
 
             <Button
-              onBlur={this.handleOnBlur}
               label=""
               width={TOOLBAR_EDGE_WIDTH}
               onClick={() => {}}
@@ -163,39 +151,24 @@ class ToolBar extends React.Component<any, any, any> {
     );
   }
   private handleOnClick(label: string) {
-    if (!this.state.showModal && this.state.currentOpened === "") {
+    console.log(
+      `showModal:${this.state.showModal} currentlabel:${
+        this.state.currentOpened
+      } label:${label} ${this.state.currentOpened === label}`
+    );
+    if (
+      !this.state.showModal &&
+      this.state.currentOpened === "" &&
+      this.state.currentOpened !== label
+    ) {
       this.openModal(label);
     } else {
       this.closeCurrentModal();
-      this.openModal(label);
-      this.focusButton(label);
-    }
-  }
-  private focusButton(label: string) {
-    const content = LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened);
-    if (content) {
-      const id = content["id"] as string;
-      const button = window.document.getElementById(id);
-      if (button) {
-        button.focus();
+      if (this.state.currentOpened !== label) {
+        this.openModal(label);
       }
     }
   }
-
-  private handleOnBlur = () => {
-    const parent = window.document.getElementById("toolbar-parent");
-    const newFocus = window.document.activeElement;
-    console.log(`${parent} ${newFocus}`);
-    if (!parent || newFocus || !parent.contains(newFocus)) {
-      this.closeCurrentModal;
-    }
-    // const toolbarId = activeElement ? activeElement.id : undefined;
-    // console.log(`blurred ${toolbarId}`);
-    // if (toolbarId && toolbarId !== "toolbar-button") {
-    //   this.closeCurrentModal();
-    // }
-    console.log(window.document.getElementById("temperature"));
-  };
 
   private closeCurrentModal = () => {
     this.setState({ showModal: false });
