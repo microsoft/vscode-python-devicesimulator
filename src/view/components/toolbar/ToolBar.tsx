@@ -61,7 +61,7 @@ class ToolBar extends React.Component {
           width={TOOLBAR_BUTTON_WIDTH}
           onClick={() => {}}
           image={TOOLBAR_SVG.NEO_PIXEL_SVG}
-          label="neo_pixel"
+          label="neopixel"
         />
         <Button
           width={TOOLBAR_BUTTON_WIDTH}
