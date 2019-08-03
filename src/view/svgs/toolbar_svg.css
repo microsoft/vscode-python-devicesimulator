@@ -5,3 +5,7 @@
 .left-edge {
   margin-right: 20px;
 }
+
+.info-icon-svg {
+  fill: var(--vscode-foreground);
+}

@@ -29,116 +29,136 @@ class ToolBar extends React.Component<any, any, any> {
 
   render() {
     return (
-      <div className="toolbar">
+      <div className="toolbar-parent" id="toolbar-parent">
         <div className="info">
           <span className="info-icon">{INFO_SVG}</span>
           <span className="info-text">{TOOLBAR_INFO}</span>
           <span className="info-link"> {CPX_EXPRESS_DOC}</span>
         </div>
-        <div className="toolbar-icon">
-          <Button
-            label=""
-            width={TOOLBAR_EDGE_WIDTH}
-            onClick={() => {}}
-            image={TOOLBAR_SVG.lEFT_EDGE_SVG}
-            styleLabel="edge"
-          />
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
-            image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
-            styleLabel="toolbar"
-          />
+        <div className="toolbar">
+          <div className="toolbar-icon">
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_EDGE_WIDTH}
+              onClick={() => {}}
+              image={TOOLBAR_SVG.lEFT_EDGE_SVG}
+              styleLabel="edge"
+            />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
+              image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(
-              this,
-              TOOLBAR_ICON_LABEL.PUSH_BUTTON
-            )}
-            image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(
+                this,
+                TOOLBAR_ICON_LABEL.PUSH_BUTTON
+              )}
+              image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RED_LED)}
-            image={TOOLBAR_SVG.RED_LED_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(
+                this,
+                TOOLBAR_ICON_LABEL.RED_LED
+              )}
+              image={TOOLBAR_SVG.RED_LED_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
-            image={TOOLBAR_SVG.SOUND_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
+              image={TOOLBAR_SVG.SOUND_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(
-              this,
-              TOOLBAR_ICON_LABEL.TEMPERATURE
-            )}
-            image={TOOLBAR_SVG.TEMPERATURE_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(
+                this,
+                TOOLBAR_ICON_LABEL.TEMPERATURE
+              )}
+              image={TOOLBAR_SVG.TEMPERATURE_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
-            image={TOOLBAR_SVG.LIGHT_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
+              image={TOOLBAR_SVG.LIGHT_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SPEAKER)}
-            image={TOOLBAR_SVG.SPEAKER_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(
+                this,
+                TOOLBAR_ICON_LABEL.SPEAKER
+              )}
+              image={TOOLBAR_SVG.SPEAKER_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
-            image={TOOLBAR_SVG.MOTION_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
+              image={TOOLBAR_SVG.MOTION_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
-            image={TOOLBAR_SVG.IR_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
+              image={TOOLBAR_SVG.IR_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_BUTTON_WIDTH}
-            onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
-            image={TOOLBAR_SVG.GPIO_SVG}
-            styleLabel="toolbar"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_BUTTON_WIDTH}
+              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
+              image={TOOLBAR_SVG.GPIO_SVG}
+              styleLabel="toolbar"
+            />
 
-          <Button
-            label=""
-            width={TOOLBAR_EDGE_WIDTH}
-            onClick={() => {}}
-            image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
-            styleLabel="edge"
-          />
+            <Button
+              onBlur={this.handleOnBlur}
+              label=""
+              width={TOOLBAR_EDGE_WIDTH}
+              onClick={() => {}}
+              image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
+              styleLabel="edge"
+            />
+          </div>
+
+          {this.getIconModal()}
         </div>
-
-        {this.getIconModal()}
       </div>
     );
   }
@@ -149,12 +169,35 @@ class ToolBar extends React.Component<any, any, any> {
     } else {
       this.closeCurrentModal();
       this.openModal(label);
+      this.focusButton(label);
+    }
+  }
+  private focusButton(label: string) {
+    const content = LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened);
+    if (content) {
+      const id = content["id"] as string;
+      const button = window.document.getElementById(id);
+      if (button) {
+        button.focus();
+      }
     }
   }
 
   private handleOnBlur = () => {
-    this.closeCurrentModal();
+    const parent = window.document.getElementById("toolbar-parent");
+    const newFocus = window.document.activeElement;
+    console.log(`${parent} ${newFocus}`);
+    if (!parent || newFocus || !parent.contains(newFocus)) {
+      this.closeCurrentModal;
+    }
+    // const toolbarId = activeElement ? activeElement.id : undefined;
+    // console.log(`blurred ${toolbarId}`);
+    // if (toolbarId && toolbarId !== "toolbar-button") {
+    //   this.closeCurrentModal();
+    // }
+    console.log(window.document.getElementById("temperature"));
   };
+
   private closeCurrentModal = () => {
     this.setState({ showModal: false });
     this.setState({ currentOpened: "" });

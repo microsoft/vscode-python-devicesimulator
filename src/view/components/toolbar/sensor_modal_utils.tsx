@@ -50,6 +50,7 @@ export interface IModalContent {
   tryItTitle: string;
   tryItDescriptrion: string;
   component: any;
+  id: string;
 }
 
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
@@ -61,7 +62,8 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
     "You can set the temperature range from your code, as well as C or F!",
-  component: <TemperatureSensorBar />
+  component: <TemperatureSensorBar />,
+  id: "temperature"
 };
 export const LIGHT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Light Sensor",
@@ -71,7 +73,8 @@ export const LIGHT_MODAL_CONTENT: IModalContent = {
     "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion: " Change the brightness from 0 - 255 here!",
-  component: <LightSensorBar />
+  component: <LightSensorBar />,
+  id: "light_sensor"
 };
 export const DEFAULT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "default",
@@ -80,7 +83,8 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
   descriptionText: "none",
   tryItTitle: "none",
   tryItDescriptrion: "none",
-  component: undefined
+  component: undefined,
+  id: "none"
 };
 export const MOTION_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Motion Sensor",
@@ -91,7 +95,8 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
     "Change the acceleration here and click on the sensor on the board to simulate the “tap”!  ",
-  component: <MotionSensorBar />
+  component: <MotionSensorBar />,
+  id: "motion_sensor"
 };
 export const SWITCH_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Slide Switch ",
@@ -101,7 +106,8 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
     "This slide switch returns True or False depending on whether it's left or right and can be used as a toggle switch in your code!",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion: "Click it with your mouse to switch it on and off!",
-  component: undefined
+  component: undefined,
+  id: "slider_switch"
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Push Buttons",
@@ -112,9 +118,10 @@ export const PUSHB_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
     "Click them with your mouse or pressing “A” “B” on your keyboard!",
-  component: undefined
+  component: undefined,
+  id: "push_btn"
 };
-export const REDL_LED_MODAL_CONTENT: IModalContent = {
+export const RED_LED_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Red LED",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
@@ -123,7 +130,8 @@ export const REDL_LED_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
     " Run your code and see the cool effects on the simulator!",
-  component: undefined
+  component: undefined,
+  id: "red_LED"
 };
 export const SOUND_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Sound Sensor",
@@ -134,7 +142,8 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!",
-  component: TRY_IT_MAKE_CODE
+  component: TRY_IT_MAKE_CODE,
+  id: "sound_sensor"
 };
 export const NEOP_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "NeoPixels",
@@ -144,7 +153,8 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
     "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
-  component: TRY_IT_MAKE_CODE
+  component: TRY_IT_MAKE_CODE,
+  id: "neon_pixel"
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Speaker ",
@@ -155,7 +165,8 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
     "Run your code and you’ll hear the music! Press the “mute” button underneath the simulator to mute it.",
-  component: undefined
+  component: undefined,
+  id: "speaker"
 };
 export const IR_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "IR Transmit & Proximity",
@@ -166,7 +177,8 @@ export const IR_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: TRY_IT_MAKE_CODE
+  component: TRY_IT_MAKE_CODE,
+  id: "IR"
 };
 export const GPIO_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "GPIO ",
@@ -177,7 +189,8 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: TRY_IT_MAKE_CODE
+  component: TRY_IT_MAKE_CODE,
+  id: "GPIO"
 };
 
 export const LABEL_TO_MODAL_CONTENT = new Map([
@@ -186,7 +199,7 @@ export const LABEL_TO_MODAL_CONTENT = new Map([
   [TOOLBAR_ICON_LABEL.MOTION, MOTION_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.IR, IR_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.PUSH_BUTTON, PUSHB_MODAL_CONTENT],
-  [TOOLBAR_ICON_LABEL.RED_LED, REDL_LED_MODAL_CONTENT],
+  [TOOLBAR_ICON_LABEL.RED_LED, RED_LED_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SOUND, SOUND_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SPEAKER, SPEAKER_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SWITCH, SWITCH_MODAL_CONTENT],

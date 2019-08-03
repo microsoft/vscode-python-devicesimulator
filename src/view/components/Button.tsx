@@ -7,6 +7,7 @@ export interface IButtonProps {
   styleLabel: string;
   width: number;
   onClick: (event?: React.MouseEvent<HTMLElement>, label?: string) => void;
+  onBlur?: (event?: React.FocusEvent<HTMLElement>) => void;
 }
 
 // Functional Component render
@@ -20,6 +21,7 @@ const Button: React.FC<IButtonProps> = props => {
       className={`${props.styleLabel}-button button`}
       onClick={props.onClick}
       style={buttonStyle}
+      onBlur={props.onBlur}
     >
       {iconSvg}
     </button>
