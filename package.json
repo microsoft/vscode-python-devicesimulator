@@ -37,13 +37,19 @@
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/open-simulator.svg"
+        "icon": {
+          "light": "./assets/light-theme/open-simulator.svg",
+          "dark": "./assets/dark-theme/open-simulator.svg"
+        }
       },
       {
         "command": "pacifica.runSimulator",
         "title": "%pacificaExtension.commands.runSimulator%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/run-on-simulator.svg"
+        "icon": {
+          "light": "./assets/light-theme/run-on-simulator.svg",
+          "dark": "./assets/dark-theme/run-on-simulator.svg"
+        }
       },
       {
         "command": "pacifica.newProject",
@@ -54,7 +60,10 @@
         "command": "pacifica.runDevice",
         "title": "%pacificaExtension.commands.runDevice%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/save-to-board.svg"
+        "icon": {
+          "light": "./assets/light-theme/save-to-board.svg",
+          "dark": "./assets/dark-theme/save-to-board.svg"
+        }
       }
     ],
     "menus": {

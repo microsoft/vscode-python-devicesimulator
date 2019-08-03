@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./toolbar_svg.css";
+import "../styles/Button.css";
 
 export const EDGE_SVG = (
   <svg
@@ -36,7 +36,7 @@ export const GPIO_SVG = (
       <g
         id="Group-10"
         transform="translate(0.000000, 5.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <path
           d="M4.80046857,3.47534517 C4.80046857,5.04142012 3.93244826,6 2.49863335,6 C0.938305349,6 0,4.8678501 0,2.99408284 C0,1.14398422 0.941819602,0 2.46349082,0 C3.70050761,0 4.6212417,0.808678501 4.74775478,2.01183432 L3.47559547,2.01183432 C3.34908239,1.51084813 2.96954315,1.20710059 2.46349082,1.20710059 C1.74306911,1.20710059 1.31433034,1.86982249 1.31433034,2.97830375 C1.31433034,4.10650888 1.78875439,4.79289941 2.52674736,4.79289941 C3.11362749,4.79289941 3.52128075,4.40631164 3.55290902,3.83037475 L3.55642327,3.7357002 L2.62866068,3.7357002 L2.62866068,2.74161736 L4.80046857,2.74161736 L4.80046857,3.47534517 Z M5.76337368,0.153846154 L7.9843811,0.153846154 C9.0737993,0.153846154 9.81179227,0.950690335 9.81179227,2.17357002 C9.81179227,3.38461538 9.03514252,4.17751479 7.90706755,4.17751479 L7.05310426,4.17751479 L7.05310426,5.84615385 L5.76337368,5.84615385 L5.76337368,0.153846154 Z M7.05310426,1.26627219 L7.05310426,3.08481262 L7.63647013,3.08481262 C8.18469348,3.08481262 8.50800469,2.76923077 8.50800469,2.17751479 C8.50800469,1.57790927 8.18820773,1.26627219 7.64349863,1.26627219 L7.05310426,1.26627219 Z M12.0468567,5.84615385 L10.7571261,5.84615385 L10.7571261,0.153846154 L12.0468567,0.153846154 L12.0468567,5.84615385 Z M15.5048809,0 C17.0300664,0 18,1.14792899 18,2.99802761 C18,4.85207101 17.0300664,6 15.5048809,6 C13.9726669,6 13.0027333,4.85207101 13.0027333,2.99802761 C13.0027333,1.14792899 13.9832097,0 15.5048809,0 Z M15.5048809,1.19921105 C14.7914877,1.19921105 14.3170636,1.90138067 14.3170636,2.99802761 C14.3170636,4.09861933 14.7844592,4.80078895 15.5048809,4.80078895 C16.2182741,4.80078895 16.6891839,4.09861933 16.6891839,2.99802761 C16.6891839,1.90138067 16.2147599,1.19921105 15.5048809,1.19921105 Z"
@@ -62,7 +62,7 @@ export const IR_SVG = (
       <g
         id="Group-10"
         transform="translate(2.000000, 4.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <g id="Group-6">
           <path
@@ -95,7 +95,7 @@ export const LIGHT_SVG = (
       <g
         id="Group-10"
         transform="translate(4.000000, 0.000000)"
-        className="svg-path"
+        className="button-icon"
         fill-rule="nonzero"
       >
         <g id="light-bulb">
@@ -134,7 +134,7 @@ export const MOTION_SVG = (
       fill="none"
       fill-rule="evenodd"
     >
-      <g id="Group-10" className="svg-path">
+      <g id="Group-10" className="button-icon">
         <g id="Group-12">
           <path
             d="M8,8.8203 L5.88,11.9103 L8,11.9103 L8,12.5493 L5,12.5493 L5,12.0303 L7.12,8.9403 L5.12,8.9403 L5.12,8.2993 L8,8.2993 L8,8.8203 Z M17,10.5903 L13.87,8.7903 L13.87,9.9903 L11.76,9.9903 C11.63,8.7803 11.1,7.6503 10.25,6.7693 C9.39,5.9103 8.25,5.3703 7.04,5.2403 L7.04,3.1203 L8.23,3.1203 L6.38,0.0003 L4.63,3.1203 L5.83,3.1203 L5.83,5.2403 C4.5,5.3803 3.27,6.0003 2.38,6.9803 C1.48,7.9693 0.99,9.2503 1,10.5703 C0.99,11.2803 1.12,11.9903 1.38,12.6393 C1.65,13.2993 2.04,13.9003 2.54,14.4103 C3.04,14.9103 3.64,15.3093 4.3,15.5903 C4.96,15.8603 5.66,16.0003 6.38,16.0003 C7.72,16.0093 9.01,15.5193 10.01,14.6303 C11,13.7403 11.63,12.5093 11.76,11.1903 L13.87,11.1903 L13.87,12.3893 L17,10.5903 Z"
@@ -172,7 +172,7 @@ export const NEO_PIXEL_SVG = (
       fill="none"
       fill-rule="evenodd"
     >
-      <g id="Group-10" className="svg-path">
+      <g id="Group-10" className="button-icon">
         <g id="Group-7">
           <circle id="Oval-3" cx="8" cy="1.6" r="1.6" />
           <circle id="Oval-3-Copy" cx="8" cy="14.4" r="1.6" />
@@ -209,7 +209,7 @@ export const PUSH_BUTTON_SVG = (
       <g
         id="Group-10"
         transform="translate(1.000000, 1.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <g id="Group-8">
           <path
@@ -245,7 +245,7 @@ export const RED_LED_SVG = (
       <g
         id="Group-10"
         transform="translate(3.000000, 0.000000)"
-        className="svg-path"
+        className="button-icon"
         fill-rule="nonzero"
       >
         <g id="red_LED">
@@ -284,7 +284,7 @@ export const SLIDER_SWITCH_SVG = (
       <g
         id="Group-10"
         transform="translate(0.000000, 3.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <g id="Group-4">
           <path
@@ -320,7 +320,7 @@ export const SOUND_SVG = (
       <g
         id="Group-11"
         transform="translate(2.000000, 0.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <g id="sound_sensor">
           <g id="Group-10" transform="translate(0.699999, 0.500000)">
@@ -367,7 +367,7 @@ export const SPEAKER_SVG = (
       <g
         id="Group-10"
         transform="translate(1.000000, 1.000000)"
-        className="svg-path"
+        className="button-icon"
       >
         <g id="sound">
           <path
@@ -439,7 +439,7 @@ export const TEMPERATURE_SVG = (
       <g
         id="thermometer"
         transform="translate(4.000000, 0.000000)"
-        className="svg-path"
+        className="button-icon"
         fill-rule="nonzero"
       >
         <path
