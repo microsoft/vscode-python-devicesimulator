@@ -162,7 +162,6 @@ class ToolBar extends React.Component<any, any, any> {
       </div>
     );
   }
-
   private handleOnClick(label: string) {
     if (!this.state.showModal && this.state.currentOpened === "") {
       this.openModal(label);
@@ -227,6 +226,9 @@ class ToolBar extends React.Component<any, any, any> {
               {content["descriptionTitle"]}
               {content["tagInput"]}
               {content["tagOutput"]}
+              <span className="close_icon" onMouseDown={this.closeCurrentModal}>
+                {CLOSE_SVG}
+              </span>
             </span>
           </div>
           <br />
