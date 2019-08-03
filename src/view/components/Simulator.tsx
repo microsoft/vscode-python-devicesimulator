@@ -131,12 +131,14 @@ class Simulator extends React.Component<any, IState> {
           <Button
             onClick={this.togglePlayClick}
             image={image}
+            styleLabel="play"
             label="play"
             width={SIMULATOR_BUTTON_WIDTH}
           />
           <Button
             onClick={this.refreshSimulatorClick}
             image={RefreshLogo}
+            styleLabel="refresh"
             label="refresh"
             width={SIMULATOR_BUTTON_WIDTH}
           />

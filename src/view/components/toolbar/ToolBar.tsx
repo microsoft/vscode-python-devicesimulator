@@ -25,7 +25,6 @@ class ToolBar extends React.Component<any, any, any> {
       currentOpened: "",
       showModal: false
     };
-    this.closeCurrentModal = this.closeCurrentModal.bind(this);
   }
 
   render() {
@@ -38,92 +37,104 @@ class ToolBar extends React.Component<any, any, any> {
         </div>
         <div className="toolbar-icon">
           <Button
+            label=""
             width={TOOLBAR_EDGE_WIDTH}
             onClick={() => {}}
             image={TOOLBAR_SVG.lEFT_EDGE_SVG}
-            label="edge"
+            styleLabel="edge"
           />
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
             image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(
               this,
               TOOLBAR_ICON_LABEL.PUSH_BUTTON
             )}
             image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.RED_LED)}
             image={TOOLBAR_SVG.RED_LED_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
             image={TOOLBAR_SVG.SOUND_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(
               this,
               TOOLBAR_ICON_LABEL.TEMPERATURE
             )}
             image={TOOLBAR_SVG.TEMPERATURE_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
             image={TOOLBAR_SVG.LIGHT_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SPEAKER)}
             image={TOOLBAR_SVG.SPEAKER_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
             image={TOOLBAR_SVG.MOTION_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
             image={TOOLBAR_SVG.IR_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_BUTTON_WIDTH}
             onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
             image={TOOLBAR_SVG.GPIO_SVG}
-            label="toolbar"
+            styleLabel="toolbar"
           />
 
           <Button
+            label=""
             width={TOOLBAR_EDGE_WIDTH}
             onClick={() => {}}
             image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
-            label="edge"
+            styleLabel="edge"
           />
         </div>
 
@@ -141,15 +152,18 @@ class ToolBar extends React.Component<any, any, any> {
     }
   }
 
-  private closeCurrentModal() {
+  private handleOnBlur = () => {
+    this.closeCurrentModal();
+  };
+  private closeCurrentModal = () => {
     this.setState({ showModal: false });
     this.setState({ currentOpened: "" });
-  }
+  };
 
-  private openModal(label: string) {
+  private openModal = (label: string) => {
     this.setState({ currentOpened: label });
     this.setState({ showModal: true });
-  }
+  };
 
   private getIconModal() {
     if (
@@ -166,13 +180,11 @@ class ToolBar extends React.Component<any, any, any> {
       return (
         <div className="sensor_modal">
           <div className="title_group">
-            <div className="title">{content["descriptionTitle"]}</div>
-            <span className="tag">
-              {content["tagInput"]} {content["tagOutput"]}
+            <span className="title">
+              {content["descriptionTitle"]}
+              {content["tagInput"]}
+              {content["tagOutput"]}
             </span>
-            <div className="close_icon" onMouseDown={this.closeCurrentModal}>
-              {CLOSE_SVG}
-            </div>
           </div>
           <br />
           <div className="description">{content["descriptionText"]}</div>

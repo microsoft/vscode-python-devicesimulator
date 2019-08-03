@@ -2,8 +2,9 @@ import * as React from "react";
 import "../styles/Button.css";
 
 export interface IButtonProps {
-  image: any;
   label: string;
+  image: any;
+  styleLabel: string;
   width: number;
   onClick: (event?: React.MouseEvent<HTMLElement>, label?: string) => void;
 }
@@ -15,8 +16,8 @@ const Button: React.FC<IButtonProps> = props => {
 
   return (
     <button
-      id={`${props.label}-button`}
-      className={`${props.label}-button button`}
+      id={`${props.styleLabel}-button`}
+      className={`${props.styleLabel}-button button`}
       onClick={props.onClick}
       style={buttonStyle}
     >
