@@ -151,11 +151,6 @@ class ToolBar extends React.Component<any, any, any> {
     );
   }
   private handleOnClick(label: string) {
-    console.log(
-      `showModal:${this.state.showModal} currentlabel:${
-        this.state.currentOpened
-      } label:${label} ${this.state.currentOpened === label}`
-    );
     if (
       !this.state.showModal &&
       this.state.currentOpened === "" &&
