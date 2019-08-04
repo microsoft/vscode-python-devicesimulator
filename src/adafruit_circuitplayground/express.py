@@ -36,8 +36,6 @@ class Express:
             'motion_x': 0,
             'motion_y': 0,
             'motion_z': 0,
-            'detect_taps': 1,
-            'tapped': False,
             'touch': [False]*7
 
 
@@ -59,16 +57,6 @@ class Express:
     @property
     def button_b(self):
         return self.__state['button_b']
-
-    @property
-    def detect_taps(self):
-        return self.__state['detect_taps']
-
-    @detect_taps.setter
-    def detect_taps(self, value):
-        value_int = int(value)
-        self.__state['detect_taps'] = value_int if (
-            value_int == 1 or value_int == 2) else 1
 
     @property
     def red_led(self):
@@ -97,8 +85,6 @@ class Express:
     def __touch(self, i):
         return self.__state['touch'][i-1]
 
-    def adjust_touch_threshold(self, adjustement):
-        pass
 
     @property
     def touch_A1(self):
@@ -148,14 +134,7 @@ class Express:
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
 
-    def play_tone(self, frequency, duration):
-        pass
 
-    def start_tone(self, frequency):
-        pass
-
-    def stop_stone(self, frequency):
-        pass
 
 
 cpx = Express()
