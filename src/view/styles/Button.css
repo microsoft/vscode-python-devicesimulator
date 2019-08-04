@@ -4,6 +4,10 @@
   border-color: var(--vscode-debugToolBar-background);
 }
 
+.button-icon {
+  fill: var(--vscode-badge-foreground);
+}
+
 .play-button {
   border-radius: 8px 0px 0px 8px;
 }

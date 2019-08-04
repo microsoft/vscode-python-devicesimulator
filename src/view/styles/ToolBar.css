@@ -98,3 +98,7 @@
   padding-bottom: 33px;
   padding-left: 150px;
 }
+
+.info-icon-svg {
+  fill: var(--vscode-foreground);
+}

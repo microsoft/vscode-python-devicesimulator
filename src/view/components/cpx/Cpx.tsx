@@ -259,11 +259,11 @@ const setupButtons = (props: IProps): void => {
 const addButtonLabels = (button: HTMLElement) => {
   let label = "";
   if (button.id.match(/AB/) !== null) {
-    label = "A+B";
+    label = "a+b";
   } else if (button.id.match(/A/) !== null) {
-    label = "A";
+    label = "a";
   } else if (button.id.match(/B/) !== null) {
-    label = "B";
+    label = "b";
   }
   accessibility.setAria(button, "button", label);
 };
@@ -319,11 +319,7 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.onkeyup = e => props.onKeyEvent(e, false);
 
     accessibility.makeFocusable(svgSwitch);
-    accessibility.setAria(
-      svgSwitch,
-      "button",
-      "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
-    );
+    accessibility.setAria(svgSwitch, "button", "On/Off Switch");
   }
 };
 
