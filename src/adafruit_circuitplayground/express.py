@@ -35,7 +35,12 @@ class Express:
             'light': 0,
             'motion_x': 0,
             'motion_y': 0,
-            'motion_z': 0
+            'motion_z': 0,
+            'detect_taps': 1,
+            'tapped': False,
+            'touch': [False]*7
+
+
         }
 
         self.pixels = Pixel(self.__state)
@@ -54,6 +59,16 @@ class Express:
     @property
     def button_b(self):
         return self.__state['button_b']
+
+    @property
+    def detect_taps(self):
+        return self.__state['detect_taps']
+
+    @detect_taps.setter
+    def detect_taps(self, value):
+        value_int = int(value)
+        self.__state['detect_taps'] = value_int if (
+            value_int == 1 or value_int == 2) else 1
 
     @property
     def red_led(self):
@@ -78,6 +93,40 @@ class Express:
 
     def __show(self):
         utils.show(self.__state)
+
+    def __touch(self, i):
+        return self.__state['touch'][i-1]
+
+    def adjust_touch_threshold(self, adjustement):
+        pass
+
+    @property
+    def touch_A1(self):
+        return self.__touch(1)
+
+    @property
+    def touch_A2(self):
+        return self.__touch(2)
+
+    @property
+    def touch_A3(self):
+        return self.__touch(3)
+
+    @property
+    def touch_A4(self):
+        return self.__touch(4)
+
+    @property
+    def touch_A1(self):
+        return self.__touch(5)
+
+    @property
+    def touch_A1(self):
+        return self.__touch(6)
+
+    @property
+    def touch_A1(self):
+        return self.__touch(7)
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
