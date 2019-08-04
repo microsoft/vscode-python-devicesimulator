@@ -137,4 +137,10 @@ class Express:
             raise NotImplementedError("Please use Python 3 or higher.")
 
 
+<< << << < HEAD
+== == == =
+
+
+>>>>>> > 2fd2be49dcd9605e2ca34d79ef3bcef33f2e7d97
+
 cpx = Express()
