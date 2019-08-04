@@ -94,15 +94,11 @@ export const SVG_STYLE = `
     .sim-button-nut:hover {
         stroke:1px solid #704A4A;
     }
-    .sim-pin-touch:hover {
-        stroke:#D4AF37;
-        stroke-width:1px;
-    }
-
+    
     .sim-pin-touch.touched:hover {
         stroke:darkorange;
     }
-
+    
     .sim-led-back:hover {
         stroke:#fff;
         stroke-width:3px;
@@ -111,33 +107,33 @@ export const SVG_STYLE = `
         stroke:#ff7f7f;
         stroke-width:3px;
     }
-
+    
     .sim-systemled {
         fill:#333;
         stroke:#555;
         stroke-width: 1px;
     }
-
+    
     .sim-light-level-button {
         stroke:#f1c40f;
         stroke-width: 1px;
     }
-
+    
     .sim-pin-level-button {
         stroke:darkorange;
         stroke-width: 1px;
     }
-
+    
     .sim-sound-level-button {
         stroke:#7f8c8d;
         stroke-width: 1px;
     }
-
+    
     .sim-antenna {
         stroke:#555;
         stroke-width: 2px;
     }
-
+    
     .sim-text {
         font-family:"Lucida Console", Monaco, monospace;
         font-size:8px;
@@ -150,23 +146,23 @@ export const SVG_STYLE = `
     .sim-text.inverted {
         fill:#000;
     }
-
+    
     .sim-text-pin {
         font-family:"Lucida Console", Monaco, monospace;
         font-size:5px;
         fill:#fff;
         pointer-events: none;
     }
-
+    
     .sim-thermometer {
         stroke:#aaa;
         stroke-width: 1px;
     }
-
+    
     #rgbledcircle:hover {
         r:8px;
     }
-
+    
     #SWITCH_HOVER {
         cursor: pointer;
     }
@@ -174,11 +170,15 @@ export const SVG_STYLE = `
         stroke:orange !important;
         stroke-width: 1px;
     }
-
+    
     .sim-slide-switch-inner.on {
         fill:#ff0000 !important;
     }
-
+    
+    .sim-slide-switch-inner.on {
+        fill:#ff0000 !important;
+    }
+    
     /* animations */
     .sim-theme-glow {
         animation-name: sim-theme-glow-animation;
@@ -207,23 +207,23 @@ export const SVG_STYLE = `
         animation-duration: 0.4s;
         animation-timing-function: ease-in;
     }
-
+    
     @keyframes sim-flash-stroke-animation {
         from { stroke: yellow; }
         to   { stroke: default; }
     }
-
-
+    
+    
     .sim-sound-stroke {
         animation-name: sim-sound-stroke-animation;
         animation-duration: 0.4s;
     }
-
+    
     @keyframes sim-sound-stroke-animation {
         from { stroke: yellow; }
         to   { stroke: default; }
     }
-
+    
     /* wireframe */
     .sim-wireframe * {
         fill: none;
@@ -255,7 +255,6 @@ export const SVG_STYLE = `
     .sim-button-outer:focus,
     .sim-slide-switch:focus,
     .sim-pin:focus,
-    .sim-pin-touch:focus,
     .sim-thermometer:focus,
     .sim-button-group:focus .sim-button-outer,
     .sim-light-level-button:focus,
@@ -271,4 +270,37 @@ export const SVG_STYLE = `
         -webkit-user-select: none;
         -ms-user-select: none;
     }
+
+    .sim-PIN_A1-touch:hover,
+    .sim-PIN_A2-touch:hover,
+    .sim-PIN_A3-touch:hover,
+    .sim-PIN_A4-touch:hover,
+    .sim-PIN_A5-touch:hover,
+    .sim-PIN_A6-touch:hover{
+        stroke:#D4AF37;
+        stroke-width:1px;
+    }
+    .sim-PIN_A1-touch:focus,
+    .sim-PIN_A2-touch:focus,
+    .sim-PIN_A3-touch:focus,
+    .sim-PIN_A4-touch:focus,
+    .sim-PIN_A5-touch:focus,
+    .sim-PIN_A6-touch:focus{
+        stroke:red;
+        stroke-width:1px;
+
+    }
+    
+    .sim-PIN_A1-touch-on,
+    .sim-PIN_A2-touch-on,
+    .sim-PIN_A3-touch-on,
+    .sim-PIN_A4-touch-on,
+    .sim-PIN_A5-touch-on,
+    .sim-PIN_A6-touch-on,
+    .sim-PIN_A7-touch-on{
+        stroke:blue;
+        stroke-width:1px;
+
+    }
+
 `;

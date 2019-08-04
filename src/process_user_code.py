@@ -18,7 +18,9 @@ EXPECTED_INPUT_EVENTS = [
     'light',
     'motion_x',
     'motion_y',
-    'motion_z'
+    'motion_z',
+    'touch'
+
 ]
 
 read_val = ""

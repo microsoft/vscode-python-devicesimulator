@@ -271,7 +271,16 @@ const setupPins = (props: IProps): void => {
     const pin = window.document.getElementById(pinName);
 
     if (pin) {
-      setupButton(pin, "sim-pin-touch", props);
+      const svgPin = (pin as unknown) as SVGElement;
+      svg.addClass(svgPin, `sim-${pinName}-touch`);
+      accessibility.makeFocusable(svgPin);
+      svgPin.onmouseup = e => props.onMouseUp(pin, e);
+      svgPin.onkeyup = e => props.onKeyEvent(e, false);
+      accessibility.setAria(
+        svgPin,
+        "Pin",
+        `Touch pin ${pinName.substr(pinName.length - 2)}`
+      );
     }
   });
 };
@@ -292,7 +301,10 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   const svgButton = (button as unknown) as SVGElement;
   svg.addClass(svgButton, className);
   addButtonLabels(button);
-  if (className.match(/outer/) !== null) {
+  if (
+    className.match(/outer/) !== null ||
+    className.match(/pin-touch/) !== null
+  ) {
     accessibility.makeFocusable(svgButton);
   }
   svgButton.onmousedown = e => props.onMouseDown(button, e);
@@ -360,6 +372,18 @@ export const updateSwitch = (switchState: boolean): void => {
       switchInner.removeAttribute("transform");
     }
     switchElement.setAttribute("aria-pressed", switchState.toString());
+  }
+};
+export const updatePinTouch = (pinState: boolean, id: string): void => {
+  const pinElement = window.document.getElementById(id);
+  const pinsvg = (pinElement as unknown) as SVGElement;
+  if (pinElement) {
+    if (pinState) {
+      svg.addClass(pinsvg, `sim-${pinElement.id}-touch-on`);
+    } else {
+      svg.removeClass(pinsvg, `sim-${pinElement.id}-touch-on`);
+    }
+    pinElement.setAttribute("aria-pressed", pinState.toString());
   }
 };
 
