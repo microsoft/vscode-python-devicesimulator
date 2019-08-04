@@ -12,6 +12,8 @@ export class UsbDetector {
         return UsbDetector._instance;
     }
 
+    private static _instance: UsbDetector;
+
     private _usbDetector;
 
     private _boardDescriptors = null;
@@ -20,14 +22,12 @@ export class UsbDetector {
 
     private constructor() { }
 
-    private static _instance: UsbDetector;
-
     public initialize(extensionRoot: string) {
         this._extensionRoot = extensionRoot;
     }
 
     public async startListening() {
-        // need to change later to see if user allows usb detection
+        // todo need to change later to see if user allows usb detection
         const enableUSBDetection = true;
         if (os.platform() === "linux" || !enableUSBDetection) {
             return;

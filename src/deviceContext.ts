@@ -1,9 +1,9 @@
-import * as vscode from "vscode";
-import * as path from "path";
 import * as fs from "fs";
+import * as path from "path";
 import * as utils from "./utils";
-import { CPX_CONFIG_FILE } from "./constants";
+import * as vscode from "vscode";
 import { CPXWorkspace } from "./cpxWorkspace";
+import { CPX_CONFIG_FILE } from "./constants";
 
 export class DeviceContext implements vscode.Disposable {
     public static getInstance(): DeviceContext {
@@ -22,18 +22,13 @@ export class DeviceContext implements vscode.Disposable {
             this._watcher = vscode.workspace.createFileSystemWatcher(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE));
             this._vscodeWatcher = vscode.workspace.createFileSystemWatcher(path.join(CPXWorkspace.rootPath, ".vscode"), true, true, false);
 
-            // reloads the config into the code if the cpx config file has changed
+            // Reloads the config into the code if the cpx config file has changed
             this._watcher.onDidCreate(() => this.loadContext());
             this._watcher.onDidChange(() => this.loadContext());
             this._watcher.onDidDelete(() => this.loadContext());
 
-            // uncomment after since i think the problem is that cpx.json isn't initialized and therefore can't be changed so the event handlers aren't
-            // getting hit
-            // this._port = "COM6"; // Will be changing the hardcoded
-
             this._vscodeWatcher.onDidDelete(() => this.loadContext());
         }
-
     }
 
     public loadContext(): Thenable<object> {
@@ -50,8 +45,7 @@ export class DeviceContext implements vscode.Disposable {
                         // Logger.notifyUserError("arduinoFileError", new Error(constants.messages.ARDUINO_FILE_ERROR));
                     }
                 } else {
-                    // this._port = null;
-                    this._port = "COM6";
+                    this._port = null;
                     this._onDidChange.fire();
                 }
                 return this;
@@ -62,8 +56,7 @@ export class DeviceContext implements vscode.Disposable {
                 // Logger.notifyUserError("arduinoFileUnhandleError", new Error(reason.toString()));
 
                  // Workaround for change in API, populate required props for arduino.json
-                this._port = "COM6";
-                // this._port = null;
+                this._port = null;
                 this._onDidChange.fire();
 
                 return this;
@@ -118,7 +111,6 @@ export class DeviceContext implements vscode.Disposable {
         }
     }
 
-
     public get onDidChange(): vscode.Event<void> {
         return this._onDidChange.event;
     }
@@ -131,5 +123,4 @@ export class DeviceContext implements vscode.Disposable {
         this._port = value;
         this.saveContext();
     }
-
 }

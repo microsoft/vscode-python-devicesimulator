@@ -1,5 +1,5 @@
-import { OutputChannel } from "vscode";
 import * as os from "os";
+import { OutputChannel } from "vscode";
 
 interface ISerialPortDetail {
     comName: string;
@@ -87,12 +87,12 @@ export class SerialPortControl {
                 });
             }
 
-            this._currentSerialPort.on("data", (_event: any) => {
-                this._outputChannel.append(_event.toString());
+            this._currentSerialPort.on("data", (event: any) => {
+                this._outputChannel.append(event.toString());
             });
 
-            this._currentSerialPort.on("error", (_error: any) => {
-                this._outputChannel.appendLine("[Error]" + _error.toString());
+            this._currentSerialPort.on("error", (error: any) => {
+                this._outputChannel.appendLine("[Error]" + error.toString());
             });
         });
     }
@@ -125,9 +125,9 @@ export class SerialPortControl {
                 resolve();
                 return;
             }
-            this._currentSerialPort.close((err: any) => {
-                if (err) {
-                    reject(err);
+            this._currentSerialPort.close((error: any) => {
+                if (error) {
+                    reject(error);
                 } else {
                     this._currentSerialPort = null;
                     resolve();
@@ -142,13 +142,13 @@ export class SerialPortControl {
             resolve(false);
             return;
           }
-          this._currentSerialPort.close((err: any) => {
+          this._currentSerialPort.close((error: any) => {
             if (this._outputChannel) {
               this._outputChannel.appendLine(`[Done] Closed the serial port ${os.EOL}`);
             }
             this._currentSerialPort = null;
-            if (err) {
-              reject(err);
+            if (error) {
+              reject(error);
             } else {
               resolve(true);
             }

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { SerialPortControl, SerialPortEnding } from "./serialPortControl";
 import { DeviceContext } from "./deviceContext";
 import { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
+import { SerialPortControl, SerialPortEnding } from "./serialPortControl";
 
 export interface ISerialPortDetail {
     comName: string;
@@ -40,18 +40,16 @@ export class SerialMonitor implements vscode.Disposable {
 
     private constructor() {
         const deviceContext = DeviceContext.getInstance();
-        // deviceContext.onDidChange(() => {
+        deviceContext.onDidChange(() => {
             if (deviceContext.port) {
                 if (!this.initialized) {
                     this.initialize();
                 }
-                // todo fix
                 this.updatePortListStatus(null);
             }
-        // });
+        });
     }
 
-    // must register the 3 commands that i have in intialize method
     public initialize() {
         const defaultBaudRate: number = SerialMonitor.DEFAULT_BAUD_RATE;
         this._outputChannel = vscode.window.createOutputChannel(SERIAL_MONITOR_NAME);
@@ -73,7 +71,6 @@ export class SerialMonitor implements vscode.Disposable {
         this._baudRateStatusBar.command = "pacifica.changeBaudRate";
         this._baudRateStatusBar.tooltip = "Baud Rate";
         this._baudRateStatusBar.text = defaultBaudRate.toString();
-        // todo fix
         this.updatePortListStatus(null);
 
         this._endingStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.ENDING);
@@ -83,7 +80,7 @@ export class SerialMonitor implements vscode.Disposable {
         this._endingStatusBar.text = `No line ending`;
     }
 
-    public async selectSerialPort(vid: string, pid: string) {
+    public async selectSerialPort(vid: string | null, pid: string | null) {
         const lists = await SerialPortControl.list();
         if (!lists.length) {
             vscode.window.showInformationMessage("No serial message is available.");
@@ -123,7 +120,7 @@ export class SerialMonitor implements vscode.Disposable {
             const ans = await vscode.window.showInformationMessage("No serial port was selected, please select a serial port first", "Yes", "No");
             if (ans === "Yes") {
                 // kinda weird workaround to passing null
-                await this.selectSerialPort("", "");
+                await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
                 return;
@@ -203,7 +200,8 @@ export class SerialMonitor implements vscode.Disposable {
     }
 
     public async changeEnding() {
-        const chosen: string|undefined = await vscode.window.showQuickPick(Object.keys(SerialPortEnding));
+        const endings: string[] = Object.keys(SerialPortEnding).filter(ending => !isNaN(Number(SerialPortEnding[ending])))
+        const chosen: string|undefined = await vscode.window.showQuickPick(endings);
         if (!chosen) {
             return;
         }
@@ -254,10 +252,9 @@ export class SerialMonitor implements vscode.Disposable {
         this._currentPort = deviceContext.port;
 
         if (deviceContext.port) {
-            // this._portsStatusBar.text = deviceContext.port;
+            this._portsStatusBar.text = deviceContext.port;
         } else {
-            // this._portsStatusBar.text = "<Select Serial Port>";
+            this._portsStatusBar.text = "<Select Serial Port>";
         }
     }
-
 }

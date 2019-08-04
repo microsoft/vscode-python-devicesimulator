@@ -1,24 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import * as vscode from "vscode";
-import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
-import TelemetryAI from "./telemetry/telemetryAI";
+import * as path from "path";
+import * as utils from "./utils";
+import * as vscode from "vscode";
 import {
   CONSTANTS,
+  CPX_CONFIG_FILE,
   DialogResponses,
   TelemetryEventName,
-  WebviewMessages,
-  CPX_CONFIG_FILE
+  WebviewMessages
 } from "./constants";
-import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
-import * as utils from "./utils";
-import { SerialMonitor } from "./serialMonitor";
-import { UsbDetector } from "./usbDetector";
 import { CPXWorkspace } from "./cpxWorkspace";
+import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import { SerialMonitor } from "./serialMonitor";
+import TelemetryAI from "./telemetry/telemetryAI";
+import { UsbDetector } from "./usbDetector";
 
 let currentFileAbsPath: string = "";
 // Notification booleans
@@ -470,8 +470,7 @@ export function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       // todo add telemetry after
-      serialMonitor.selectSerialPort("", "");
-      // serialMonitor.selectSerialPort(null, null);
+      serialMonitor.selectSerialPort(null, null);
     }
   );
 
@@ -510,15 +509,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const d = UsbDetector.getInstance();
-
-  d.initialize(context.extensionPath);
-  d.startListening();
-  // UsbDetector.getInstance().initialize(context.extensionPath);
-  // UsbDetector.getInstance().startListening();
+  UsbDetector.getInstance().initialize(context.extensionPath);
+  UsbDetector.getInstance().startListening();
 
   if (CPXWorkspace.rootPath && 
-    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)))) {
+    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) || vscode.window.activeTextEditor)) {
       (() => {
         if (!SerialMonitor.getInstance().initialized) {
           SerialMonitor.getInstance().initialize();
