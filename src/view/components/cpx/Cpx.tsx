@@ -30,6 +30,7 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupPins(props);
       setupKeyPresses(props.onKeyEvent);
       setupSwitch(props);
       firstTime = false;
@@ -252,6 +253,26 @@ const setupButtons = (props: IProps): void => {
     const button = window.document.getElementById("BTN_" + buttonName);
     if (button) {
       setupButton(button, "sim-button", props);
+    }
+  });
+};
+
+const setupPins = (props: IProps): void => {
+  const pins = [
+    "PIN_A1",
+    "PIN_A2",
+    "PIN_A3",
+    "PIN_A4",
+    "PIN_A5",
+    "PIN_A6",
+    "PIN_A7"
+  ];
+  pins.forEach(pinName => {
+    const pin = window.document.getElementById(pinName);
+
+    if (pin) {
+      console.log(`found a pin ${pinName}`);
+      setupButton(pin, "sim-pin-touch", props);
     }
   });
 };
