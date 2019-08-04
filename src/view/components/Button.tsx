@@ -17,6 +17,8 @@ const Button: React.FC<IButtonProps> = props => {
     <button
       id={`${props.label}-button`}
       className={`${props.label}-button button`}
+      aria-label={props.label}
+      role="button"
       onClick={props.onClick}
       style={buttonStyle}
     >

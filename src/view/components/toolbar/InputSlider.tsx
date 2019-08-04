@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "../../styles/InputSlider.css";
 import { ISliderProps } from "./Toolbar_utils";
+import "../../styles/InputSlider.css";
 
 interface vscode {
   postMessage(message: any): void;

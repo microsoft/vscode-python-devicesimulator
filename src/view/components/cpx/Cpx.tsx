@@ -259,11 +259,11 @@ const setupButtons = (props: IProps): void => {
 const addButtonLabels = (button: HTMLElement) => {
   let label = "";
   if (button.id.match(/AB/) !== null) {
-    label = "A+B";
+    label = "a+b";
   } else if (button.id.match(/A/) !== null) {
-    label = "A";
+    label = "a";
   } else if (button.id.match(/B/) !== null) {
-    label = "B";
+    label = "b";
   }
   accessibility.setAria(button, "button", label);
 };
@@ -287,11 +287,12 @@ const setupKeyPresses = (
 ) => {
   window.document.addEventListener("keydown", event => {
     const keyEvents = [event.key, event.code];
-    // Don't listen to keydown events from the switch
+    // Don't listen to keydown events for the switch, run button and enter key
     if (
       !(
         keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
-        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F)
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
       )
     ) {
       onKeyEvent(event, true);
@@ -318,11 +319,7 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.onkeyup = e => props.onKeyEvent(e, false);
 
     accessibility.makeFocusable(svgSwitch);
-    accessibility.setAria(
-      svgSwitch,
-      "button",
-      "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
-    );
+    accessibility.setAria(svgSwitch, "button", "On/Off Switch");
   }
 };
 
