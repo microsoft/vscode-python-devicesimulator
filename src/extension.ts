@@ -11,10 +11,14 @@ import {
   CONSTANTS,
   DialogResponses,
   TelemetryEventName,
-  WebviewMessages
+  WebviewMessages,
+  CPX_CONFIG_FILE
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import * as utils from "./utils";
+import { SerialMonitor } from "./serialMonitor";
+import { UsbDetector } from "./usbDetector";
+import { CPXWorkspace } from "./cpxWorkspace";
 
 let currentFileAbsPath: string = "";
 // Notification booleans
@@ -41,6 +45,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
+
+  // Generate cpx.json
+  utils.generateCPXConfig();
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
@@ -457,16 +464,84 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const serialMonitor: SerialMonitor = SerialMonitor.getInstance();
+  context.subscriptions.push(serialMonitor);
+  const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.selectSerialPort",
+    () => {
+      // todo add telemetry after
+      serialMonitor.selectSerialPort("", "");
+      // serialMonitor.selectSerialPort(null, null);
+    }
+  );
+
+  const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.openSerialMonitor",
+    () => {
+      serialMonitor.openSerialMonitor();
+    }
+  );
+
+  const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.changeBaudRate",
+    () => {
+      serialMonitor.changeBaudRate();
+    }
+  );
+  
+  const changeEnding: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.changeEnding",
+    () => {
+      serialMonitor.changeEnding();
+    }
+  );
+
+  const sendMessageToSerialPort: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.sendMessageToSerialPort",
+    () => {
+      serialMonitor.sendMessageToSerialPort();
+    }
+  );
+
+  const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.closeSerialMonitor",
+    (port, showWarning = true) => {
+      serialMonitor.closeSerialMonitor(port, showWarning);
+    }
+  );
+
+  const d = UsbDetector.getInstance();
+
+  d.initialize(context.extensionPath);
+  d.startListening();
+  // UsbDetector.getInstance().initialize(context.extensionPath);
+  // UsbDetector.getInstance().startListening();
+
+  if (CPXWorkspace.rootPath && 
+    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)))) {
+      (() => {
+        if (!SerialMonitor.getInstance().initialized) {
+          SerialMonitor.getInstance().initialize();
+        }
+      })();
+  }
+
   // Debugger configuration
   const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
     utils.getPathToScript(context, "out", "process_user_code.py")
   );
 
   context.subscriptions.push(
+    changeBaudRate,
+    changeEnding,
+    closeSerialMonitor,
+    openSerialMonitor,
     openSimulator,
+    newProject,
     runSimulator,
     runDevice,
-    newProject,
+    selectSerialPort,
+    sendMessageToSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
@@ -574,4 +649,16 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export async function deactivate() {
+  const monitor: SerialMonitor = SerialMonitor.getInstance();
+  await monitor.closeSerialMonitor(null, false); 
+  UsbDetector.getInstance().stopListening();
+  // log ext deactivatd
+}
+
+export interface ISerialPortDetail {
+  comName: string;
+  manufacturer: string;
+  vendorId: string;
+  productId: string;
+}

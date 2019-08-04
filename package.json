@@ -29,11 +29,27 @@
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newProject",
     "onCommand:pacifica.runDevice",
+    "onCommand:pacifica.selectSerialPort",
     "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "pacifica.changeBaudRate",
+        "title": "%pacificaExtension.commands.changeBaudRate%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.changeEnding",
+        "title": "%pacificaExtension.commands.changeEnding%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.closeSerialMonitor",
+        "title": "%pacificaExtension.commands.closeSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
       {
         "command": "pacifica.openSerialMonitor",
         "title": "%pacificaExtension.commands.openSerialMonitor%",
@@ -61,7 +77,18 @@
         "title": "%pacificaExtension.commands.runDevice%",
         "category": "%pacificaExtension.commands.label%",
         "icon": "./assets/save-to-board.svg"
+      },
+      {
+        "command": "pacifica.selectSerialPort",
+        "title": "%pacificaExtension.commands.selectSerialPort%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.sendMessageToSerialPort",
+        "title": "%pacificaExtension.commands.sendMessageToSerialPort%",
+        "category": "%pacificaExtension.commands.label%"
       }
+      
     ],
     "menus": {
       "editor/title": [
@@ -236,6 +263,7 @@
   },
   "dependencies": {
     "@types/open": "^6.1.0",
+    "eventemitter2": "^5.0.1",
     "open": "^6.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

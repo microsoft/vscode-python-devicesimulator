@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import * as nls from "vscode-nls";
+import * as path from "path";
 import { MessageItem } from "vscode";
 
 const localize: nls.LocalizeFunc = nls.config({
@@ -169,9 +170,23 @@ export namespace DialogResponses {
   };
 }
 
+export const SERIAL_MONITOR_NAME = "CPX Serial Monitor";
+
 export const USER_CODE_NAMES = {
   CODE_PY: "code.py",
   MAIN_PY: "main.py"
 };
+
+export const STATUS_BAR_PRIORITY = {
+  PORT: 20,
+  OPEN_PORT: 30,
+  BAUD_RATE: 40,
+  BOARD: 60,
+  ENDING: 70,
+  SKETCH: 80,
+  PROGRAMMER: 90,
+};
+
+export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
 
 export default CONSTANTS;
