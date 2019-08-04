@@ -19,8 +19,8 @@ export const BUTTON_CORNER_RADIUS: number = 2;
 export const BUTTON_WIDTH: number = 10;
 export const BUTTON_CIRCLE_RADIUS: number = 3;
 export const BUTTON_TEXT_BASELINE: number = 163;
-export const POWER_LED_ON: string ="#00FF00";
-export const POWER_LED_OFF: string ="#FFFFFF";
+export const POWER_LED_ON: string = "#00FF00";
+export const POWER_LED_OFF: string = "#FFFFFF";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(
@@ -255,6 +255,7 @@ export const SVG_STYLE = `
     .sim-button-outer:focus,
     .sim-slide-switch:focus,
     .sim-pin:focus,
+    .sim-pin-touch:focus,
     .sim-thermometer:focus,
     .sim-button-group:focus .sim-button-outer,
     .sim-light-level-button:focus,
