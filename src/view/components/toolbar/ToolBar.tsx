@@ -19,6 +19,8 @@ const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
 
 class ToolBar extends React.Component<any, any, any> {
+  private toolbarRef: any = React.createRef<HTMLDivElement>();
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -29,7 +31,13 @@ class ToolBar extends React.Component<any, any, any> {
 
   render() {
     return (
-      <div className="toolbar-parent" id="toolbar-parent">
+      <div
+        className="toolbar-parent"
+        id="toolbar-parent"
+        ref={toolbarRef => {
+          this.toolbarRef = toolbarRef;
+        }}
+      >
         <div className="info">
           <span className="info-icon">{INFO_SVG}</span>
           <span className="info-text">{TOOLBAR_INFO}</span>
@@ -212,6 +220,17 @@ class ToolBar extends React.Component<any, any, any> {
       );
     }
     return null;
+  }
+
+  componentDidMount() {
+    window.addEventListener("mousedown", this.handleMessage);
+  }
+  handleMessage = (event: any) => {
+    if (!this.toolbarRef.contains(event.target)) this.closeCurrentModal();
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("mousedown", this.handleMessage);
   }
 }
 
