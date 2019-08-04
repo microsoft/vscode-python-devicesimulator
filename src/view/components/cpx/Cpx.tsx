@@ -271,7 +271,6 @@ const setupPins = (props: IProps): void => {
     const pin = window.document.getElementById(pinName);
 
     if (pin) {
-      console.log(`found a pin ${pinName}`);
       setupButton(pin, "sim-pin-touch", props);
     }
   });
