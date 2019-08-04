@@ -223,14 +223,14 @@ class ToolBar extends React.Component<any, any, any> {
   }
 
   componentDidMount() {
-    window.addEventListener("mousedown", this.handleMessage);
+    window.addEventListener("mousedown", this.handleMouseEvent);
   }
-  handleMessage = (event: any) => {
+  handleMouseEvent = (event: any) => {
     if (!this.toolbarRef.contains(event.target)) this.closeCurrentModal();
   };
 
   componentWillUnmount() {
-    window.removeEventListener("mousedown", this.handleMessage);
+    window.removeEventListener("mousedown", this.handleMouseEvent);
   }
 }
 
