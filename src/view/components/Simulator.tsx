@@ -168,6 +168,7 @@ class Simulator extends React.Component<any, IState> {
 
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
     let button;
+    let pin;
     const target = event.target as SVGElement;
     // Guard Clause
     if (target === undefined) {
@@ -186,15 +187,52 @@ class Simulator extends React.Component<any, IState> {
       this.togglePlayClick();
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
-    }
+    } else {
+      switch (event.key) {
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
+          break;
 
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_TWO:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A2);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_THREE:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A3);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FOUR:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A4);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FIVE:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A5);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SIX:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
+          pin = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
+          break;
+
+        default:
+          pin = undefined;
+          break;
+      }
+    }
     if (button) {
       event.preventDefault();
       this.handleClick(button, active);
       button.focus();
     }
+    if (pin) {
+      event.preventDefault();
+      this.handleTouch(pin, active);
+      pin.focus();
+    }
   }
-
   protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, true);
@@ -213,6 +251,8 @@ class Simulator extends React.Component<any, IState> {
       this.handleClick(button, false);
     }
   }
+
+  private handleTouch(pin: HTMLElement, touched: boolean) {}
 
   private handleClick(button: HTMLElement, active: boolean) {
     let newState;
