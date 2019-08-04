@@ -117,15 +117,15 @@ class Express:
         return self.__touch(4)
 
     @property
-    def touch_A1(self):
+    def touch_A5(self):
         return self.__touch(5)
 
     @property
-    def touch_A1(self):
+    def touch_A6(self):
         return self.__touch(6)
 
     @property
-    def touch_A1(self):
+    def touch_A7(self):
         return self.__touch(7)
 
     def play_file(self, file_name):
@@ -147,6 +147,15 @@ class Express:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
+
+    def play_tone(self, frequency, duration):
+        pass
+
+    def start_tone(self, frequency):
+        pass
+
+    def stop_stone(self, frequency):
+        pass
 
 
 cpx = Express()
