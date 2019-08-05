@@ -69,6 +69,10 @@ class Express:
             value_int == 1 or value_int == 2) else 1
 
     @property
+    def tapped(self):
+        pass
+
+    @property
     def red_led(self):
         return self.__state['red_led']
 
