@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as utils from "./utils";
 import { SerialMonitor } from "./serialMonitor";
+import { object } from "prop-types";
 
 export class UsbDetector {
     public static getInstance(): UsbDetector {
@@ -14,11 +15,11 @@ export class UsbDetector {
 
     private static _instance: UsbDetector;
 
-    private _usbDetector;
+    private _usbDetector: any;
 
-    private _boardDescriptors = null;
+    private _boardDescriptors: any = null;
 
-    private _extensionRoot = null;
+    private _extensionRoot: string = null;
 
     private constructor() { }
 
@@ -27,7 +28,7 @@ export class UsbDetector {
     }
 
     public async startListening() {
-        // todo need to change later to see if user allows usb detection
+        // TODO need to change later to see if user allows usb detection
         const enableUSBDetection = true;
         if (os.platform() === "linux" || !enableUSBDetection) {
             return;
@@ -42,7 +43,7 @@ export class UsbDetector {
             throw new Error("UsbDetector should be initialized before using.");
         }
 
-        this._usbDetector.on("add", async (device) => {
+        this._usbDetector.on("add", async (device: any) => {
             if (device.vendorId && device.productId) {
                 const deviceDescriptor = this.getUsbDeviceDescriptor(
                     utils.convertToHex(device.vendorId, 4),
@@ -77,15 +78,15 @@ export class UsbDetector {
         if (!this._boardDescriptors) {
             this._boardDescriptors = [];
             const fileContent = fs.readFileSync(path.join(extensionRoot, "misc", "usbmapping.json"), "utf8");
-            const boardIndexes = JSON.parse(fileContent);
-            boardIndexes.forEach(boardIndex => {
-                boardIndex.boards.forEach(board => {
+            const boardIndexes: [] = JSON.parse(fileContent);
+            boardIndexes.forEach((boardIndex: any) => {
+                boardIndex.boards.forEach((board: any) => {
                     board.indexFile = boardIndex.index_file
                 });
                 this._boardDescriptors = this._boardDescriptors.concat(boardIndex.boards);
             });
         }
-        return this._boardDescriptors.find((obj) => {
+        return this._boardDescriptors.find((obj: any) => {
             return obj.vid === vendorId && 
                    (obj.pid === productId || 
                         (obj.pid.indexOf && obj.pid.indexOf(productId) >= 0));

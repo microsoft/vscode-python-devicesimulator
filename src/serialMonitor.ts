@@ -54,7 +54,6 @@ export class SerialMonitor implements vscode.Disposable {
         const defaultBaudRate: number = SerialMonitor.DEFAULT_BAUD_RATE;
         this._outputChannel = vscode.window.createOutputChannel(SERIAL_MONITOR_NAME);
         this._outputChannel.show(true);
-        this._outputChannel.appendLine("test message to channel");
         this._currentBaudRate = defaultBaudRate;
         this._portsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.PORT);
         this._portsStatusBar.command = "pacifica.selectSerialPort";
@@ -200,8 +199,8 @@ export class SerialMonitor implements vscode.Disposable {
     }
 
     public async changeEnding() {
-        const endings: string[] = Object.keys(SerialPortEnding).filter(ending => !isNaN(Number(SerialPortEnding[ending])))
-        const chosen: string|undefined = await vscode.window.showQuickPick(endings);
+        const endings: string[] = Object.keys(SerialPortEnding).filter((ending: any) => !isNaN(Number(SerialPortEnding[ending])))
+        const chosen: string | undefined = await vscode.window.showQuickPick(endings);
         if (!chosen) {
             return;
         }

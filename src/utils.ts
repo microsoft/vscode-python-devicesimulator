@@ -39,13 +39,13 @@ export const showPrivacyModal = (okAction: () => void) => {
     })
 }
 
-export function tryParseJSON(jsonString: string) {
+export function tryParseJSON(jsonString: string): any | boolean {
   try {
     const jsonObj = JSON.parse(jsonString);
     if (jsonObj && typeof jsonObj === "object") {
         return jsonObj;
     }
-  } catch (ex) { }
+  } catch (exception) { }
 
   return false;
 }
@@ -85,9 +85,6 @@ export function directoryExistsSync(dirPath: string): boolean {
  * This method pads the current string with another string (repeated, if needed)
  * so that the resulting string reaches the given length.
  * The padding is applied from the start (left) of the current string.
- * @argument {string} sourceString
- * @argument {string} targetLength
- * @argument {string} padString
  */
 export function padStart(sourceString: string, targetLength: number, padString?: string): string {
   if (!sourceString) {
@@ -111,11 +108,11 @@ export function padStart(sourceString: string, targetLength: number, padString?:
   }
 }
 
-export function convertToHex(num, width = 0) {
+export function convertToHex(num: number, width = 0): string {
   return padStart(num.toString(16), width, "0");
 }
 
-export function generateCPXConfig() {
+export function generateCPXConfig(): void {
   const deviceContext: DeviceContext = DeviceContext.getInstance();
   const cpxJson = {
     port: deviceContext.port

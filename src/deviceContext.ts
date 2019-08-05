@@ -15,7 +15,7 @@ export class DeviceContext implements vscode.Disposable {
     private _onDidChange = new vscode.EventEmitter<void>();
     private _watcher: vscode.FileSystemWatcher;
     private _vscodeWatcher: vscode.FileSystemWatcher;
-    private _port: string;
+    private _port!: string;
     
     private constructor() {
         if (vscode.workspace && CPXWorkspace.rootPath) {

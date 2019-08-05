@@ -163,7 +163,7 @@ export class SerialPortControl {
                 resolve();
                 return;
             }
-            this._currentSerialPort.update({ baudRate: this._currentBaudRate }, (error) => {
+            this._currentSerialPort.update({ baudRate: this._currentBaudRate }, (error: any) => {
                 if (error) {
                     reject(error);
                 } else {
