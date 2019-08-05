@@ -35,7 +35,9 @@ class Express:
             'light': 0,
             'motion_x': 0,
             'motion_y': 0,
-            'motion_z': 0
+            'motion_z': 0,
+            'detect_taps': 1,
+            'taps_detected': 0
         }
 
         self.pixels = Pixel(self.__state)
@@ -54,6 +56,20 @@ class Express:
     @property
     def button_b(self):
         return self.__state['button_b']
+
+    @property
+    def detect_taps(self):
+        return self.__state['detect_taps']
+
+    @detect_taps.setter
+    def detect_taps(self, value):
+        value_int = int(value)
+        self.__state['detect_taps'] = value_int if (
+            value_int == 1 or value_int == 2) else 1
+
+    @property
+    def tapped(self):
+        return self.__state['detect_taps'] = self.__state['taps_detected']
 
     @property
     def red_led(self):
