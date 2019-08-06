@@ -25,21 +25,21 @@ export const TRY_IT_MAKE_CODE = (
 );
 
 export const TOOLBAR_ICON_LABEL = {
-  LIGHT: "Light sensor",
-  IR: "IR",
-  TEMPERATURE: "Temperature Sensor",
-  MOTION: "Motion Sensor",
-  SWITCH: "Switch",
-  SOUND: "Sound Sensor",
-  SPEAKER: "Speaker",
   GPIO: "GPIO",
+  IR: "IR",
+  LEFT_EDGE: "left-edge",
+  LIGHT: "Light sensor",
+  MOTION: "Motion Sensor",
+  NEO_PIXEL: "Neo Pixels",
   PUSH_BUTTON: "Push Button",
   RED_LED: "Red LED",
+  RIGHT_EDGE: "right-edge",
+  SOUND: "Sound Sensor",
+  SPEAKER: "Speaker",
+  SWITCH: "Switch",
   TAG_INPUT: "Tag Input",
   TAG_OUTPUT: "Tag Output",
-  LEFT_EDGE: "left-edge",
-  RIGHT_EDGE: "right-edge",
-  NEO_PIXEL: "Neo Pixels"
+  TEMPERATURE: "Temperature Sensor"
 };
 
 export interface IModalContent {
