@@ -8,6 +8,7 @@ from playsound import playsound
 from .pixel import Pixel
 from . import utils
 from collections import namedtuple
+from pysine import sine
 
 
 class Express:
@@ -35,11 +36,13 @@ class Express:
             'light': 0,
             'motion_x': 0,
             'motion_y': 0,
-            'motion_z': 0
+            'motion_z': 0,
+            'play_tone':True
         }
 
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
+        self.shouldPlayTone = True
 
     @property
     def acceleration(self):
@@ -98,6 +101,25 @@ class Express:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
+
+    def play_tone(self, frequency, duration):
+        sine(frequency=frequency, duration=duration)
+
+    def start_tone(self, frequency):
+        print('start playing tone', flush=True)
+        while(self.shouldPlayTone):
+            print(f'keep playing{self.shouldPlayTone}', flush=True)
+            self.play_tone(frequency, 0.1)
+            self.__getToneStatus()
+            time.sleep(1)
+
+    def stop_tone(self):
+        print("stopping tone", flush=True)
+        self.shouldPlayTone = False
+        print('changed value to false', flush=True)
+
+    def __getToneStatus(self):
+        return self.shouldPlayTone
 
 
 cpx = Express()
