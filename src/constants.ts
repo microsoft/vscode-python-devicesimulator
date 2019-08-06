@@ -146,6 +146,10 @@ export const CONSTANTS = {
   }
 };
 
+export enum CONFIG_KEYS {
+  ENABLE_USB_DETECTiON = "pacifica.enableUSBDetection"
+}
+
 // Need the different events we want to track and the name of it
 export enum TelemetryEventName {
   FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",

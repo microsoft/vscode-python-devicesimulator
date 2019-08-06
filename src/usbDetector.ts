@@ -7,7 +7,9 @@ import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
 import * as utils from "./utils";
+import * as vscode from "vscode";
 import { SerialMonitor } from "./serialMonitor";
+import { CONFIG_KEYS } from "./constants";
 
 export class UsbDetector {
     public static getInstance(): UsbDetector {
@@ -32,8 +34,9 @@ export class UsbDetector {
     }
 
     public async startListening() {
-        // TODO need to change later to see if user allows usb detection
-        const enableUSBDetection = true;
+        const workspaceConfig = vscode.workspace.getConfiguration();
+        const enableUSBDetection = workspaceConfig.get(CONFIG_KEYS.ENABLE_USB_DETECTiON);
+
         if (os.platform() === "linux" || !enableUSBDetection) {
             return;
         }

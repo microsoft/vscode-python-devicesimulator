@@ -113,6 +113,10 @@
       "type": "object",
       "title": "%pacificaExtension.configuration.title%",
       "properties": {
+        "pacifica.enableUSBDetection": {
+          "type": "boolean",
+          "default": true
+        },
         "pacifica.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
