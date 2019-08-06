@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+// Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
+
 import * as fs from "fs";
 import * as path from "path";
 import * as utils from "./utils";
@@ -99,12 +104,12 @@ export class DeviceContext implements vscode.Disposable {
 
     public async initialize() {
         if (CPXWorkspace.rootPath && utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE))) {
-            // place into constants
+            // todo place into constants
             vscode.window.showInformationMessage("cpx.json is already generated.");
             return;
         } else {
             if (!CPXWorkspace.rootPath) {
-                // place into constants
+                // todo place into constants
                 vscode.window.showInformationMessage("Please open a folder first.");
                 return;
             }

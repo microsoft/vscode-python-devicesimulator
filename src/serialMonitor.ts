@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+// Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
+
 import * as vscode from "vscode";
 import { DeviceContext } from "./deviceContext";
 import { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
@@ -118,7 +123,6 @@ export class SerialMonitor implements vscode.Disposable {
         if (!this._currentPort) {
             const ans = await vscode.window.showInformationMessage("No serial port was selected, please select a serial port first", "Yes", "No");
             if (ans === "Yes") {
-                // kinda weird workaround to passing null
                 await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
@@ -138,7 +142,7 @@ export class SerialMonitor implements vscode.Disposable {
         }
 
         if (!this._serialPortControl.currentPort) {
-            // loggger error
+            // log error
             return;
         }
 

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+// Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
+
 import * as os from "os";
 import { OutputChannel } from "vscode";
 

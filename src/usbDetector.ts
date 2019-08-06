@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+// Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
+
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
 import * as utils from "./utils";
 import { SerialMonitor } from "./serialMonitor";
-import { object } from "prop-types";
 
 export class UsbDetector {
     public static getInstance(): UsbDetector {
@@ -57,10 +61,7 @@ export class UsbDetector {
                 }
 
                 const boardKey = `${deviceDescriptor.package}:${deviceDescriptor.architecture}:${deviceDescriptor.id}`;
-                // log that a board was detected
-                // if (!ArduinoContext.initialized) {
-                //     await ArduinoActivator.activate();
-                // } 
+                // Log that a board was detected
                 if (!SerialMonitor.getInstance().initialized) {
                     SerialMonitor.getInstance().initialize();
                 }
