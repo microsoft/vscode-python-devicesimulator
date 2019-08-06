@@ -10,6 +10,11 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
+  DEPENDENCY_CHECKER: {
+    PYTHON: 'python',
+    PYTHON3: 'python3',
+    PYTHON_LAUNCHER: 'py -3'
+  },
   ERROR: {
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
@@ -35,6 +40,7 @@ export const CONSTANTS = {
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
     ),
+    NO_PYTHON_PATH: localize("error.noPythonPath", "We found you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
@@ -99,6 +105,7 @@ export const CONSTANTS = {
     WEBVIEW_PANEL: localize("label.webviewPanel", "Adafruit CPX")
   },
   LINKS: {
+    DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
     EXAMPLE_CODE:
       "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
     HELP:
@@ -172,6 +179,9 @@ export namespace DialogResponses {
   export const MESSAGE_UNDERSTOOD: MessageItem = {
     title: localize("dialogResponses.messageUnderstood", "Got It")
   };
+  export const INSTALL_PYTHON: MessageItem = {
+    title: localize("dialogResponses.installPython", "Install from python.org")
+  }
 }
 
 export const USER_CODE_NAMES = {

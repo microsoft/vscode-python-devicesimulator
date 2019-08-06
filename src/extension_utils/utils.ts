@@ -3,7 +3,7 @@
 
 import { ExtensionContext, MessageItem, Uri, window } from "vscode";
 import * as path from "path";
-import { CONSTANTS, DialogResponses, USER_CODE_NAMES } from "./constants";
+import { CONSTANTS, DialogResponses, USER_CODE_NAMES } from "../constants";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
