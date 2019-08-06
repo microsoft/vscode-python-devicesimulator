@@ -101,6 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.SENSOR_CHANGED:
                 console.log("sensor changed");
                 console.log(messageJson + "\n");
+                handleSensorTelemetry(message.text);
                 if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
                 }
@@ -519,6 +520,24 @@ const handleButtonPressTelemetry = (buttonState: any) => {
   } else if (buttonState["button_b"]) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
   } else if (buttonState["switch"]) {
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+  }
+};
+
+const handleSensorTelemetry = (sensorState: any) => {
+  if (sensorState["temperarture"]) {
+    telemetryAI.trackFeatureUsage(TelemetryEventName.TEMPERATURE_SENSOR);
+  } else if (sensorState["light"]) {
+    telemetryAI.trackFeatureUsage(TelemetryEventName.LIGHT_SENSOR);
+  } else if (
+    sensorState["motion_x"] ||
+    sensorState["motion_y"] ||
+    sensorState["motion_z"]
+  ) {
+    telemetryAI.trackFeatureUsage(TelemetryEventName.MOTION_SENSOR);
+  } else if (sensorState["shake"]) {
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+  } else (sensorState["shake"]) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
 };
