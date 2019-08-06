@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../styles/Toolbar.css";
+import "../styles/ToolBar.css";
 
 export const INFO_SVG = (
   <svg
