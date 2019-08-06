@@ -48,7 +48,8 @@ class Express:
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
         self.stop = False
-        self.toner = TonerThread(400)
+        self.toner = TonerThread()
+        self.toner.start()
 
     @property
     def acceleration(self):
@@ -113,15 +114,12 @@ class Express:
 
     def start_tone(self, frequency):
         # t = TonerThread(frequency)
-        print('start playing tone', flush=True)
-        self.toner.start()
-        time.sleep(10)
-        self.toner.stop()
-        # self.toner.start()
-        self.toner.join()
+        # print('start playing tone', flush=True)
+        self.toner.set_frequency(frequency)
+        self.toner.start_tone()
 
     def stop_tone(self):
-        self.toner.stop()
+        self.toner.stop_tone()
 
 
 cpx = Express()
