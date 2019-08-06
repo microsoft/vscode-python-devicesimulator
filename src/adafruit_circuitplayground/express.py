@@ -4,11 +4,16 @@
 import json
 import sys
 import os
+import time
+from .toner import TonerThread
 from playsound import playsound
 from .pixel import Pixel
 from . import utils
 from collections import namedtuple
+from pyaudio import PyAudio
 from pysine import sine
+import numpy as np
+import threading
 
 
 class Express:
@@ -37,12 +42,12 @@ class Express:
             'motion_x': 0,
             'motion_y': 0,
             'motion_z': 0,
-            'play_tone':True
+            'play_tone': True
         }
 
         self.pixels = Pixel(self.__state)
         self.__abs_path_to_code_file = ''
-        self.shouldPlayTone = True
+        self.toner = TonerThread(frequency)
 
     @property
     def acceleration(self):
@@ -106,20 +111,13 @@ class Express:
         sine(frequency=frequency, duration=duration)
 
     def start_tone(self, frequency):
+        duration = 120
+        t = TonerThread(frequency)
         print('start playing tone', flush=True)
-        while(self.shouldPlayTone):
-            print(f'keep playing{self.shouldPlayTone}', flush=True)
-            self.play_tone(frequency, 0.1)
-            self.__getToneStatus()
-            time.sleep(1)
+        t.start()
 
     def stop_tone(self):
-        print("stopping tone", flush=True)
-        self.shouldPlayTone = False
-        print('changed value to false', flush=True)
-
-    def __getToneStatus(self):
-        return self.shouldPlayTone
+        pass
 
 
 cpx = Express()
