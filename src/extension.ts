@@ -26,6 +26,7 @@ let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let telemetryAI: TelemetryAI;
+export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -39,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   telemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
-  let outChannel: vscode.OutputChannel | undefined;
+  // let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
@@ -51,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
-    logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
   }
 
   const openWebview = () => {
@@ -243,16 +244,16 @@ export function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.RUNNING_CODE);
     telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
     killProcessIfRunning();
 
     await updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
-      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else {
-      logToOutputChannel(
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
@@ -328,7 +329,7 @@ export function activate(context: vscode.ExtensionContext) {
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
         telemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
-        logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
+        utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
         if (currentPanel) {
           console.log("Sending clearing state command");
           currentPanel.webview.postMessage({ command: "reset-state" });
@@ -353,15 +354,15 @@ export function activate(context: vscode.ExtensionContext) {
   const deployCodeToDevice = () => {
     console.info("Sending code to device");
 
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
     updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
-      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
       // Output panel
-      logToOutputChannel(
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
         true
@@ -371,7 +372,7 @@ export function activate(context: vscode.ExtensionContext) {
         CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
       );
     } else {
-      logToOutputChannel(
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
@@ -396,7 +397,7 @@ export function activate(context: vscode.ExtensionContext) {
               telemetryAI.trackFeatureUsage(
                 TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
               );
-              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+              utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
               break;
 
             case "no-device":
@@ -443,7 +444,7 @@ export function activate(context: vscode.ExtensionContext) {
         console.error(
           `Error from the Python device process through stderr: ${data}`
         );
-        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+        utils.logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
       });
 
       // When the process is done
@@ -600,19 +601,6 @@ const updatePythonExtraPaths = () => {
       currentExtraPaths,
       vscode.ConfigurationTarget.Global
     );
-};
-
-const logToOutputChannel = (
-  outChannel: vscode.OutputChannel | undefined,
-  message: string,
-  show: boolean = false
-) => {
-  if (outChannel) {
-    if (show) {
-      outChannel.show(true);
-    }
-    outChannel.append(message);
-  }
 };
 
 function getWebviewContent(context: vscode.ExtensionContext) {

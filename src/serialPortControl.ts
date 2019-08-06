@@ -80,7 +80,7 @@ export class SerialPortControl {
                 this._currentSerialPort = new SerialPortControl.serialport(this._currentPort, { baudRate: this._currentBaudRate });
                 this._outputChannel.show();
                 this._currentSerialPort.on("open", () => {
-                    this._currentSerialPort.write("TestingOpen", "Both NL & CR", (err: any) => {
+                    this._currentSerialPort.write("msft", "Both NL & CR", (err: any) => {
                         if (err && !(err.message.indexOf("Writing to COM port (GetOverlappedResult): Unknown error code 121") >= 0)) {
                             this._outputChannel.appendLine(`[Error] Failed to open the serial port - ${this._currentPort}`);
                             reject(err);

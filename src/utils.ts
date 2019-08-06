@@ -4,7 +4,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { DeviceContext } from "./deviceContext";
-import { ExtensionContext, MessageItem, Uri, window } from "vscode";
+import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
 import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "./constants";
 
 // tslint:disable-next-line: export-name
@@ -38,6 +38,19 @@ export const showPrivacyModal = (okAction: () => void) => {
       }
     })
 }
+
+export const logToOutputChannel = (
+  outChannel: OutputChannel | undefined,
+  message: string,
+  show: boolean = false
+): void => {
+  if (outChannel) {
+    if (show) {
+      outChannel.show(true);
+    }
+    outChannel.append(message);
+  }
+};
 
 export function tryParseJSON(jsonString: string): any | boolean {
   try {

@@ -12,6 +12,18 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   ERROR: {
+    FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
+      return localize(
+        "error.failedToOpenSerialPort",
+        `Failed to open serial port ${port}.`
+      )
+    },
+    FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
+      return localize(
+        "error.failedToOpenSerialPortDueTo",
+        `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
+      )
+    },
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
       '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
@@ -46,6 +58,10 @@ export const CONSTANTS = {
   },
   INFO: {
     COMPLETED_MESSAGE: "Completed",
+    CPX_JSON_ALREADY_GENERATED: localize(
+      "info.cpxJsonAlreadyGenerated",
+      "cpx.json has already been generated."
+    ),
     DEPLOY_DEVICE: localize(
       "info.deployDevice",
       "\n[INFO] Deploying code to the device...\n"
@@ -85,6 +101,10 @@ export const CONSTANTS = {
       "info.newProject",
       "New to Python or Circuit Playground Express project? We are here to help!"
     ),
+    PLEASE_OPEN_FOLDER: localize(
+      "info.pleaseOpenFolder",
+      "Please open a folder first."
+    ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     THIRD_PARTY_WEBSITE: localize("info.thirdPartyWebsite", "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"),
@@ -105,7 +125,25 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Pacifica Simulator")
+  NAME: localize("name", "Pacifica Simulator"),
+  WARNING: {
+    NO_RATE_SELECTED: localize(
+      "warning.noRateSelected",
+      "No rate is selected, keep baud rate unchanged."
+    ),
+    INVALID_BAUD_RATE: localize(
+      "warning.invalidBaudRate",
+      "Invalid baud rate, keep baud rate unchanged."
+    ),
+    SERIAL_PORT_NOT_STARTED: localize(
+      "warning.serialPortNotStarted",
+      "Serial port has not been started."
+    ),
+    SERIAL_MONITOR_NOT_STARTED: localize(
+      "warning.serialMonitorNotStarted",
+      "Serial monitor has not been started."
+    )
+  }
 };
 
 // Need the different events we want to track and the name of it
@@ -170,6 +208,7 @@ export namespace DialogResponses {
   };
 }
 
+export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
 export const SERIAL_MONITOR_NAME = "CPX Serial Monitor";
 
 export const USER_CODE_NAMES = {
@@ -187,6 +226,5 @@ export const STATUS_BAR_PRIORITY = {
   PROGRAMMER: 90,
 };
 
-export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
 
 export default CONSTANTS;

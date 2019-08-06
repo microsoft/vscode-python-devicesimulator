@@ -4,8 +4,10 @@
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
 import * as vscode from "vscode";
+import { outChannel } from "./extension";
+import { logToOutputChannel } from "./utils";
 import { DeviceContext } from "./deviceContext";
-import { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
+import CONSTANTS, { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
 import { SerialPortControl, SerialPortEnding } from "./serialPortControl";
 
 export interface ISerialPortDetail {
@@ -142,7 +144,7 @@ export class SerialMonitor implements vscode.Disposable {
         }
 
         if (!this._serialPortControl.currentPort) {
-            // log error
+            console.error(CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
             return;
         }
 
@@ -150,7 +152,7 @@ export class SerialMonitor implements vscode.Disposable {
             await this._serialPortControl.open();
             this.updatePortStatus(true);
         } catch (error) {
-            // log error
+            logToOutputChannel(outChannel, CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT_DUE_TO(this._currentPort, error), true);
         }
     }
 
@@ -169,17 +171,17 @@ export class SerialMonitor implements vscode.Disposable {
         const chosen = await vscode.window.showQuickPick(baudRates.map((baudRate) => baudRate.toString()));
 
         if (!chosen) {
-            // log that no rate is selected and will keep current rate
+            logToOutputChannel(outChannel, CONSTANTS.WARNING.NO_RATE_SELECTED, true);
             return;
         }
 
         if (!parseInt(chosen, 10)) {
-            // log that the chosen baud rate is invalid
+            logToOutputChannel(outChannel, CONSTANTS.WARNING.INVALID_BAUD_RATE, true);
             return;
         }
 
         if (!this._serialPortControl) {
-            // log that serial monitor has not been started
+            logToOutputChannel(outChannel, CONSTANTS.WARNING.SERIAL_MONITOR_NOT_STARTED, true);
             return;
         }
 
@@ -213,7 +215,7 @@ export class SerialMonitor implements vscode.Disposable {
             this.updatePortStatus(false);
             return result;
         } else if (!port && showWarning) {
-            // show warning
+            logToOutputChannel(outChannel, CONSTANTS.WARNING.SERIAL_PORT_NOT_STARTED, true);
             return false;
         }
     }

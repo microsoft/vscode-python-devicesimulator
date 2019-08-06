@@ -8,7 +8,7 @@ import * as path from "path";
 import * as utils from "./utils";
 import * as vscode from "vscode";
 import { CPXWorkspace } from "./cpxWorkspace";
-import { CPX_CONFIG_FILE } from "./constants";
+import CONSTANTS, { CPX_CONFIG_FILE } from "./constants";
 
 export class DeviceContext implements vscode.Disposable {
     public static getInstance(): DeviceContext {
@@ -104,13 +104,11 @@ export class DeviceContext implements vscode.Disposable {
 
     public async initialize() {
         if (CPXWorkspace.rootPath && utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE))) {
-            // todo place into constants
-            vscode.window.showInformationMessage("cpx.json is already generated.");
+            vscode.window.showInformationMessage(CONSTANTS.INFO.CPX_JSON_ALREADY_GENERATED);
             return;
         } else {
             if (!CPXWorkspace.rootPath) {
-                // todo place into constants
-                vscode.window.showInformationMessage("Please open a folder first.");
+                vscode.window.showInformationMessage(CONSTANTS.INFO.PLEASE_OPEN_FOLDER);
                 return;
             }
         }
