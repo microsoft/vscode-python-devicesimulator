@@ -113,8 +113,6 @@ class Express:
         sine(frequency=frequency, duration=duration)
 
     def start_tone(self, frequency):
-        # t = TonerThread(frequency)
-        # print('start playing tone', flush=True)
         self.toner.set_frequency(frequency)
         self.toner.start_tone()
 
