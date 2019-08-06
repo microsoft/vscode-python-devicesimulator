@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "./InputSlider.css";
+import { ISliderProps } from "./Toolbar_utils";
+import "../../styles/InputSlider.css";
 
 interface vscode {
   postMessage(message: any): void;
@@ -13,15 +14,6 @@ declare const vscode: vscode;
 const sendMessage = (state: any) => {
   vscode.postMessage({ command: "sensor-changed", text: state });
 };
-
-interface ISliderProps {
-  min: number;
-  max: number;
-  min_label: string;
-  max_label: string;
-  step: number;
-  type: string;
-}
 
 class InputSlider extends React.Component<ISliderProps, any, any> {
   constructor(props: ISliderProps) {
@@ -67,30 +59,34 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           className="sliderValue"
           value={this.state.value}
           onInput={this.handleOnChange}
-          defaultValue={this.props.min.toLocaleString()}
-          pattern="^-?[0-9]*$"
+          defaultValue={this.props.minValue.toLocaleString()}
+          pattern="^-?[0-9]{0,3}$"
           onKeyUp={this.validateRange}
+          aria-label={`${this.props.type} sensor input`}
         />
-        <div className="sliderArea">
-          <div className="upLabelArea">
-            <div className="minLabel">{this.props.min_label}</div>
-            <div className="maxLabel">{this.props.max_label}</div>
-          </div>
+        <span className="sliderArea">
+          <span className="upLabelArea">
+            <span className="minLabel">{this.props.minValue}</span>
+            <span className="maxLabel">{this.props.maxValue}</span>
+          </span>
           <input
             type="range"
             className="slider"
-            min={this.props.min}
-            max={this.props.max}
-            step={this.props.step}
+            aria-valuemin={this.props.minValue}
+            aria-valuemax={this.props.maxValue}
+            min={this.props.minValue}
+            max={this.props.maxValue}
             onChange={this.handleOnChange}
+            aria-valuenow={this.state.value}
             value={this.state.value}
-            defaultValue={this.props.min.toLocaleString()}
+            aria-label={`${this.props.type} sensor slider`}
+            defaultValue={this.props.minValue.toLocaleString()}
           />
-          <div className="downLabelArea">
-            <div className="minLabel">{this.props.min}</div>
-            <div className="maxLabel">{this.props.max}</div>
-          </div>
-        </div>
+          <span className="downLabelArea">
+            <span className="minLabel">{this.props.minLabel}</span>
+            <span className="maxLabel">{this.props.maxLabel}</span>
+          </span>
+        </span>
       </div>
     );
   }
@@ -106,7 +102,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
     return this.props.type && this.state.value && event.target.value
-      ? { temperature: parseInt(event.target.value, 10) }
+      ? { [this.props.type]: parseInt(event.target.value, 10) }
       : undefined;
   }
 
@@ -114,16 +110,15 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
-    console.log(`set state to ${this.state.value}`);
     this.setState({ value: newValue });
   }
 
   private validateRange() {
-    if (this.state.value < this.props.min) {
-      this.setState({ value: this.props.min });
+    if (this.state.value < this.props.minValue) {
+      this.setState({ value: this.props.minValue });
     }
-    if (this.state.value > this.props.max) {
-      this.setState({ value: this.props.max });
+    if (this.state.value > this.props.maxValue) {
+      this.setState({ value: this.props.maxValue });
     }
   }
 }

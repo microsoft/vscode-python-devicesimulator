@@ -1,0 +1,19 @@
+.title {
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.header {
+  -webkit-appearance: none;
+  height: 30px;
+  margin-bottom: 2px;
+}
+
+.lightSensorBar {
+  -webkit-appearance: none;
+  margin-top: 10px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}

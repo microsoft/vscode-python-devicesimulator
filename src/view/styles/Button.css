@@ -1,8 +1,11 @@
 .button {
-  width: 60px;
   height: 32px;
   background: var(--vscode-debugToolBar-background);
   border-color: var(--vscode-debugToolBar-background);
+}
+
+.button-icon {
+  fill: var(--vscode-badge-foreground);
 }
 
 .play-button {
@@ -19,7 +22,9 @@
 }
 
 .play-button:hover,
-.refresh-button:hover {
+.play-button:focus,
+.refresh-button:hover,
+.refresh-button:focus {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 

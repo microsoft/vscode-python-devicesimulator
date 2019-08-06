@@ -9,7 +9,7 @@ This project incorporates components from the projects listed below. The origina
 2. Python extension for Visual Studio Code (https://github.com/microsoft/vscode-python)
 3. Python Language Server (https://github.com/Microsoft/python-language-server)
 4. Visual Studio Code (https://github.com/microsoft/vscode)
-5. TypeScript (https://github.com/microsoft/vscode-python)
+5. TypeScript (https://github.com/microsoft/TypeScript/)
 6. VS Code NLS (https://github.com/Microsoft/vscode-nls)
 7. VS Code extension telemetry (https://github.com/Microsoft/vscode-extension-telemetry)
 8. React (https://github.com/facebook/react)
@@ -20,6 +20,7 @@ This project incorporates components from the projects listed below. The origina
 13. MakeCode for Adafruit Circuit Playground Express (https://github.com/microsoft/pxt-adafruit)
 14. Python for Win32 (https://github.com/mhammond/pywin32)
 15. Playsound (https://github.com/TaylorSMarks/playsound)
+16. pytest (https://docs.pytest.org/en/latest/)
 
 
 %% Files from the Python Project NOTICES, INFORMATION, AND LICENSE BEGIN HERE
@@ -2317,3 +2318,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 =============================================
 END OF Playsound NOTICES, INFORMATION, AND LICENSE
+
+
+%% pytest NOTICES, INFORMATION, AND LICENSE BEGIN HERE
+=============================================
+The MIT License (MIT)
+
+Copyright (c) 2004-2019 Holger Krekel and others
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+=============================================
+END OF pytest NOTICES, INFORMATION, AND LICENSE

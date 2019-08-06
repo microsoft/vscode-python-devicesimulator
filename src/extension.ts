@@ -188,19 +188,19 @@ export function activate(context: vscode.ExtensionContext) {
               telemetryAI.trackFeatureUsage(
                 TelemetryEventName.CLICK_DIALOG_TUTORIALS
               );
-            }
+            };
             utils.showPrivacyModal(okAction);
           }
         });
     }
 
-    openWebview();
-
     // tslint:disable-next-line: ban-comma-operator
     vscode.workspace
       .openTextDocument({ content: file, language: "python" })
       .then((template: vscode.TextDocument) => {
-        vscode.window.showTextDocument(template, 1, false);
+        vscode.window.showTextDocument(template, 1, false).then(() => {
+          openWebview();
+        });
       }),
       // tslint:disable-next-line: no-unused-expression
       (error: any) => {
@@ -416,7 +416,7 @@ export function activate(context: vscode.ExtensionContext) {
                       telemetryAI.trackFeatureUsage(
                         TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                       );
-                    }
+                    };
                     utils.showPrivacyModal(okAction);
                   }
                 });
@@ -556,7 +556,7 @@ const getFileFromFilePicker = () => {
   };
 
   return vscode.window.showOpenDialog(options).then(fileUri => {
-    if (fileUri && fileUri[0]) {
+    if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
       console.log(`Selected file: ${fileUri[0].fsPath}`);
       return fileUri[0].fsPath;
     }

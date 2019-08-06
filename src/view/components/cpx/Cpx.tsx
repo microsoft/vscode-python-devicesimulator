@@ -4,6 +4,7 @@
 import * as React from "react";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
+import CONSTANTS from "../../constants";
 import svg from "./Svg_utils";
 import accessibility from "./Accessibility_utils";
 
@@ -13,6 +14,7 @@ interface IProps {
   brightness: number;
   switch: boolean;
   on: boolean;
+  onKeyEvent: (event: KeyboardEvent, active: boolean) => void;
   onMouseUp: (button: HTMLElement, event: Event) => void;
   onMouseDown: (button: HTMLElement, event: Event) => void;
   onMouseLeave: (button: HTMLElement, event: Event) => void;
@@ -28,6 +30,7 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupKeyPresses(props.onKeyEvent);
       setupSwitch(props);
       firstTime = false;
     }
@@ -36,7 +39,6 @@ const Cpx: React.FC<IProps> = props => {
     updateRedLED(props.red_led);
     updatePowerLED(props.on);
     updateSwitch(props.switch);
-
   }
 
   return CPX_SVG;
@@ -257,11 +259,11 @@ const setupButtons = (props: IProps): void => {
 const addButtonLabels = (button: HTMLElement) => {
   let label = "";
   if (button.id.match(/AB/) !== null) {
-    label = "A+B";
+    label = "a+b";
   } else if (button.id.match(/A/) !== null) {
-    label = "A";
+    label = "a";
   } else if (button.id.match(/B/) !== null) {
-    label = "B";
+    label = "b";
   }
   accessibility.setAria(button, "button", label);
 };
@@ -275,7 +277,28 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   }
   svgButton.onmousedown = e => props.onMouseDown(button, e);
   svgButton.onmouseup = e => props.onMouseUp(button, e);
+  svgButton.onkeydown = e => props.onKeyEvent(e, true);
+  svgButton.onkeyup = e => props.onKeyEvent(e, false);
   svgButton.onmouseleave = e => props.onMouseLeave(button, e);
+};
+
+const setupKeyPresses = (
+  onKeyEvent: (event: KeyboardEvent, active: boolean) => void
+) => {
+  window.document.addEventListener("keydown", event => {
+    const keyEvents = [event.key, event.code];
+    // Don't listen to keydown events for the switch, run button and enter key
+    if (
+      !(
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+        keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
+      )
+    ) {
+      onKeyEvent(event, true);
+    }
+  });
+  window.document.addEventListener("keyup", event => onKeyEvent(event, false));
 };
 
 const setupSwitch = (props: IProps): void => {
@@ -293,13 +316,10 @@ const setupSwitch = (props: IProps): void => {
     svgSwitch.onmouseup = e => props.onMouseUp(switchElement, e);
     svgSwitchInner.onmouseup = e => props.onMouseUp(swInnerElement, e);
     svgSwitchHousing.onmouseup = e => props.onMouseUp(swHousingElement, e);
+    svgSwitch.onkeyup = e => props.onKeyEvent(e, false);
 
     accessibility.makeFocusable(svgSwitch);
-    accessibility.setAria(
-      svgSwitch,
-      "button",
-      "On/Off Switch. Current state : " + props.switch ? "On" : "Off"
-    );
+    accessibility.setAria(svgSwitch, "button", "On/Off Switch");
   }
 };
 

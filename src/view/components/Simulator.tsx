@@ -5,6 +5,7 @@ import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx, { updateSwitch } from "./cpx/Cpx";
 import Button from "./Button";
+import CONSTANTS from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
@@ -48,6 +49,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
   switch: false
 };
 
+const SIMULATOR_BUTTON_WIDTH = 60;
+
 interface vscode {
   postMessage(message: any): void;
 }
@@ -67,10 +70,11 @@ class Simulator extends React.Component<any, IState> {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.onKeyEvent = this.onKeyEvent.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.playSimulatorClick = this.playSimulatorClick.bind(this);
+    this.togglePlayClick = this.togglePlayClick.bind(this);
     this.refreshSimulatorClick = this.refreshSimulatorClick.bind(this);
   }
 
@@ -117,6 +121,7 @@ class Simulator extends React.Component<any, IState> {
             red_led={this.state.cpx.red_led}
             switch={this.state.cpx.switch}
             on={this.state.play_button}
+            onKeyEvent={this.onKeyEvent}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseLeave={this.onMouseLeave}
@@ -124,29 +129,70 @@ class Simulator extends React.Component<any, IState> {
         </div>
         <div className="buttons">
           <Button
-            onClick={this.playSimulatorClick}
+            onClick={this.togglePlayClick}
             image={image}
-            on={this.state.play_button}
             label="play"
+            width={SIMULATOR_BUTTON_WIDTH}
           />
           <Button
             onClick={this.refreshSimulatorClick}
             image={RefreshLogo}
-            on={false}
             label="refresh"
+            width={SIMULATOR_BUTTON_WIDTH}
           />
         </div>
       </div>
     );
   }
 
-  protected playSimulatorClick(event: React.MouseEvent<HTMLElement>) {
-    this.setState({ ...this.state, play_button: !this.state.play_button });
+  protected togglePlayClick() {
     sendMessage("play-simulator", !this.state.play_button);
+    this.setState({ ...this.state, play_button: !this.state.play_button });
+    const button =
+      window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
+      window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
+    if (button) {
+      button.focus();
+    }
   }
 
-  protected refreshSimulatorClick(event: React.MouseEvent<HTMLElement>) {
+  protected refreshSimulatorClick() {
     sendMessage("refresh-simulator", true);
+    const button = window.document.getElementById(
+      CONSTANTS.ID_NAME.REFRESH_BUTTON
+    );
+    if (button) {
+      button.focus();
+    }
+  }
+
+  protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+    let button;
+    const target = event.target as SVGElement;
+    // Guard Clause
+    if (target === undefined) {
+      return;
+    }
+
+    if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+      button = window.document.getElementById(target.id);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)) {
+      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_A);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)) {
+      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_B);
+    } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)) {
+      button = window.document.getElementById(CONSTANTS.ID_NAME.SWITCH);
+    } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
+      this.togglePlayClick();
+    } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
+      this.refreshSimulatorClick();
+    }
+
+    if (button) {
+      event.preventDefault();
+      this.handleClick(button, active);
+      button.focus();
+    }
   }
 
   protected onMouseDown(button: HTMLElement, event: Event) {
@@ -173,7 +219,7 @@ class Simulator extends React.Component<any, IState> {
     if (button.id.includes("BTN")) {
       newState = this.handleButtonClick(button, active);
     } else if (button.id.includes("SWITCH")) {
-      newState = this.handleSwitchClick(button);
+      newState = this.handleSwitchClick();
     } else {
       return;
     }
@@ -189,7 +235,6 @@ class Simulator extends React.Component<any, IState> {
     const ButtonAB: boolean = button.id.match(/BTN_AB/) !== null;
     let innerButton;
     let newState;
-    let cpxState = this.state.cpx;
 
     if (ButtonAB) {
       innerButton = window.document.getElementById("BTN_AB_INNER");
@@ -197,21 +242,18 @@ class Simulator extends React.Component<any, IState> {
         button_a: active,
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonA) {
       innerButton = window.document.getElementById("BTN_A_INNER");
       newState = {
         button_a: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     } else if (ButtonB) {
       innerButton = window.document.getElementById("BTN_B_INNER");
       newState = {
         button_b: active
       };
-      cpxState = { ...cpxState, ...newState };
       this.setState({ ...this.state, ...newState });
     }
 
@@ -229,7 +271,7 @@ class Simulator extends React.Component<any, IState> {
     return pressed ? buttonDown : buttonUps;
   }
 
-  private handleSwitchClick(button: HTMLElement) {
+  private handleSwitchClick() {
     let cpxState = this.state.cpx;
     const switchIsOn: boolean = !this.state.cpx.switch;
     updateSwitch(switchIsOn);

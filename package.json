@@ -59,13 +59,19 @@
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/open-simulator.svg"
+        "icon": {
+          "light": "./assets/light-theme/open-simulator.svg",
+          "dark": "./assets/dark-theme/open-simulator.svg"
+        }
       },
       {
         "command": "pacifica.runSimulator",
         "title": "%pacificaExtension.commands.runSimulator%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/run-on-simulator.svg"
+        "icon": {
+          "light": "./assets/light-theme/run-on-simulator.svg",
+          "dark": "./assets/dark-theme/run-on-simulator.svg"
+        }
       },
       {
         "command": "pacifica.newProject",
@@ -76,7 +82,10 @@
         "command": "pacifica.runDevice",
         "title": "%pacificaExtension.commands.runDevice%",
         "category": "%pacificaExtension.commands.label%",
-        "icon": "./assets/save-to-board.svg"
+        "icon": {
+          "light": "./assets/light-theme/save-to-board.svg",
+          "dark": "./assets/dark-theme/save-to-board.svg"
+        }
       },
       {
         "command": "pacifica.selectSerialPort",
@@ -223,7 +232,9 @@
     "watch:extension": "tsc --watch",
     "watch:views": "webpack --watch --mode development",
     "pretest": "npm run compile",
-    "test": "node ./out/test/runTest.js",
+    "test": "npm-run-all test:*",
+    "test:extension-tests": "node ./out/test/runTest.js",
+    "test:api-tests": "pytest src",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
@@ -277,5 +288,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "extensionDependencies": [
+    "ms-python.python"
+  ]
 }

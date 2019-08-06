@@ -12,3 +12,12 @@
   margin-top: 51px;
   margin-bottom: 53px;
 }
+
+.sensor-scrollbox {
+  overflow-y: scroll;
+  max-height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 460px;
+}
