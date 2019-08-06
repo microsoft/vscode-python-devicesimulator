@@ -60,8 +60,8 @@ export class DependencyChecker {
         let installed: boolean;
         try {
             const { stdout } = await exec(command + " --version");
-            const matches = PYTHON3_REGEX.exec(stdout) || "0.0.0";
-            installed = compareVersions(matches[2], "3.5.0") >= 0;
+            const matches = PYTHON3_REGEX.exec(stdout);
+            installed = matches ? compareVersions(matches[2], "3.5.0") >= 0 : false;
         } catch (err) {
             installed = false;
         }
