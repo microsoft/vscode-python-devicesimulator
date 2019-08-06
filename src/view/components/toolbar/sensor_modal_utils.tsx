@@ -53,17 +53,40 @@ export interface IModalContent {
   tryItTitle: string;
 }
 
-export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Temperature Sensor",
-  tagInput: TAG_INPUT_SVG,
+export const DEFAULT_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "default",
+  tagInput: undefined,
   tagOutput: undefined,
+  descriptionText: "none",
+  tryItTitle: "none",
+  tryItDescriptrion: "none",
+  component: undefined,
+  id: "none"
+};
+export const GPIO_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "GPIO ",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
-    "An NTC thermistor can sense temperature. Easy to calculate the temperature based on the analog voltage on analog pin #A9",
-  tryItTitle: "Try it on the Simulator!",
+    " 8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.  ",
+  tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
-    "You can set the temperature range from your code, as well as C or F!",
-  component: <TemperatureSensorBar />,
-  id: "temperature"
+    "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
+  component: TRY_IT_MAKE_CODE,
+  id: "GPIO"
+};
+
+export const IR_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "IR Transmit & Proximity",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: TAG_OUTPUT_SVG,
+  descriptionText:
+    "Allow you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light. ",
+  tryItTitle: "Simulation Coming Soon!",
+  tryItDescriptrion:
+    "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
+  component: TRY_IT_MAKE_CODE,
+  id: "IR"
 };
 export const LIGHT_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Light Sensor",
@@ -75,16 +98,6 @@ export const LIGHT_MODAL_CONTENT: IModalContent = {
   tryItDescriptrion: " Change the brightness from 0 - 255 here!",
   component: <LightSensorBar />,
   id: "light_sensor"
-};
-export const DEFAULT_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "default",
-  tagInput: undefined,
-  tagOutput: undefined,
-  descriptionText: "none",
-  tryItTitle: "none",
-  tryItDescriptrion: "none",
-  component: undefined,
-  id: "none"
 };
 export const MOTION_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Motion Sensor",
@@ -98,16 +111,16 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
   component: <MotionSensorBar />,
   id: "motion_sensor"
 };
-export const SWITCH_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Slide Switch ",
-  tagInput: TAG_INPUT_SVG,
-  tagOutput: undefined,
+export const NEOP_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "NeoPixels",
+  tagInput: undefined,
+  tagOutput: TAG_OUTPUT_SVG,
   descriptionText:
-    "This slide switch returns True or False depending on whether it's left or right and can be used as a toggle switch in your code!",
+    "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Click it with your mouse to switch it on and off!",
-  component: undefined,
-  id: "slider_switch"
+  tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
+  component: TRY_IT_MAKE_CODE,
+  id: "neon_pixel"
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
   descriptionTitle: " Push Buttons",
@@ -145,16 +158,16 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
   component: TRY_IT_MAKE_CODE,
   id: "sound_sensor"
 };
-export const NEOP_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "NeoPixels",
-  tagInput: undefined,
-  tagOutput: TAG_OUTPUT_SVG,
+export const SWITCH_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "Slide Switch ",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
-    "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
+    "This slide switch returns True or False depending on whether it's left or right and can be used as a toggle switch in your code!",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
-  component: TRY_IT_MAKE_CODE,
-  id: "neon_pixel"
+  tryItDescriptrion: "Click it with your mouse to switch it on and off!",
+  component: undefined,
+  id: "slider_switch"
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
   descriptionTitle: "Speaker ",
@@ -168,41 +181,29 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
   component: undefined,
   id: "speaker"
 };
-export const IR_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "IR Transmit & Proximity",
+export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
+  descriptionTitle: "Temperature Sensor",
   tagInput: TAG_INPUT_SVG,
-  tagOutput: TAG_OUTPUT_SVG,
+  tagOutput: undefined,
   descriptionText:
-    "Allow you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light. ",
-  tryItTitle: "Simulation Coming Soon!",
+    "An NTC thermistor can sense temperature. Easy to calculate the temperature based on the analog voltage on analog pin #A9",
+  tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: TRY_IT_MAKE_CODE,
-  id: "IR"
-};
-export const GPIO_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "GPIO ",
-  tagInput: TAG_INPUT_SVG,
-  tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    " 8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.  ",
-  tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in Pacifica(Project Name). But try it on MakeCode!  ",
-  component: TRY_IT_MAKE_CODE,
-  id: "GPIO"
+    "You can set the temperature range from your code, as well as C or F!",
+  component: <TemperatureSensorBar />,
+  id: "temperature"
 };
 
 export const LABEL_TO_MODAL_CONTENT = new Map([
-  [TOOLBAR_ICON_LABEL.LIGHT, LIGHT_MODAL_CONTENT],
-  [TOOLBAR_ICON_LABEL.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
-  [TOOLBAR_ICON_LABEL.MOTION, MOTION_MODAL_CONTENT],
+  [TOOLBAR_ICON_LABEL.GPIO, GPIO_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.IR, IR_MODAL_CONTENT],
+  [TOOLBAR_ICON_LABEL.LIGHT, LIGHT_MODAL_CONTENT],
+  [TOOLBAR_ICON_LABEL.MOTION, MOTION_MODAL_CONTENT],
+  [TOOLBAR_ICON_LABEL.NEO_PIXEL, NEOP_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.PUSH_BUTTON, PUSHB_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.RED_LED, RED_LED_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SOUND, SOUND_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SPEAKER, SPEAKER_MODAL_CONTENT],
   [TOOLBAR_ICON_LABEL.SWITCH, SWITCH_MODAL_CONTENT],
-  [TOOLBAR_ICON_LABEL.GPIO, GPIO_MODAL_CONTENT],
-  [TOOLBAR_ICON_LABEL.NEO_PIXEL, NEOP_MODAL_CONTENT]
+  [TOOLBAR_ICON_LABEL.TEMPERATURE, TEMPERATURE_MODAL_CONTENT]
 ]);
