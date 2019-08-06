@@ -25,8 +25,9 @@ class SensorButton extends React.Component<ISensorButtonProps, any, any> {
         onMouseDown={this.onMouseDown}
         onKeyUp={this.onKeyUp}
         onKeyDown={this.onKeyDown}
-        aria-label={`${this.props.type} sensor button`}
+        aria-label={`${this.props.type} sensor`}
         className="sensor-button"
+        role="button"
       >
         {this.props.label}
       </button>
