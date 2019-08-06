@@ -43,14 +43,14 @@ export const TOOLBAR_ICON_LABEL = {
 };
 
 export interface IModalContent {
+  component: any;
+  descriptionText: string;
   descriptionTitle: string;
+  id: string;
   tagInput: any;
   tagOutput: any;
-  descriptionText: string;
-  tryItTitle: string;
   tryItDescriptrion: string;
-  component: any;
-  id: string;
+  tryItTitle: string;
 }
 
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
