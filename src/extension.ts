@@ -495,13 +495,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const sendMessageToSerialPort: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.sendMessageToSerialPort",
-    () => {
-      serialMonitor.sendMessageToSerialPort();
-    }
-  );
-
   const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
@@ -536,7 +529,6 @@ export function activate(context: vscode.ExtensionContext) {
     runSimulator,
     runDevice,
     selectSerialPort,
-    sendMessageToSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration

@@ -160,19 +160,6 @@ export class SerialMonitor implements vscode.Disposable {
         }
     }
 
-    public async sendMessageToSerialPort() {
-        if (this._serialPortControl && this._serialPortControl.isActive) {
-            const text = await vscode.window.showInputBox();
-            try {
-                await this._serialPortControl.sendMessage(text);
-            } catch (error) {
-                // log error
-            }
-        } else {
-            // log error 
-        }
-    }
-
     public async changeBaudRate() {
         const baudRates = SerialMonitor.listBaudRates();
         const chosen = await vscode.window.showQuickPick(baudRates.map((baudRate) => baudRate.toString()));
