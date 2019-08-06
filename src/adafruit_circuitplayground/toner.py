@@ -12,10 +12,14 @@ class TonerThread(threading.Thread):
         self.frequency = frequency
 
     def stop(self):
+        print("setting stop", flush=True)
         self._stop_event.set()
 
     def stopped(self):
+
         return self._stop_event.is_set()
 
     def run(self):
-        sine(frequency=self.frequency, duration=0.1)
+        while not self.stopped():
+            print('supposed to play tone', flush=True)
+            sine(frequency=self.frequency, duration=0.2)
