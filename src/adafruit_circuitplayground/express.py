@@ -119,5 +119,8 @@ class Express:
     def stop_tone(self):
         self.toner.stop_tone()
 
+    def __del__(self):
+        self.toner.join
+
 
 cpx = Express()
