@@ -65,8 +65,7 @@ class Express:
     @detect_taps.setter
     def detect_taps(self, value):
         value_int = int(value)
-        self.__state['detect_taps'] = value_int if (
-            value_int == 1 or value_int == 2) else 1
+        self.__state['detect_taps'] = value_int if (value_int == 1 or value_int == 2) else 1
 
     @property
     def tapped(self):
