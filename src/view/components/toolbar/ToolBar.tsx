@@ -23,7 +23,6 @@ class ToolBar extends React.Component<any, any, any> {
     super(props);
     this.state = {
       currentOpened: "",
-      shouldOpenLink: false,
       showModal: false
     };
   }
@@ -155,9 +154,7 @@ class ToolBar extends React.Component<any, any, any> {
       </div>
     );
   }
-  private handleClickLink = () => {
-    this.setState({ shouldOpenLink: true });
-  };
+
   private handleOnClick(label: string) {
     if (
       !this.state.showModal &&
