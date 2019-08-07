@@ -10,11 +10,11 @@ class RedirectLink extends React.Component<any, any, any> {
   }
 
   render() {
-    return (
+    return this.state.showModal ? (
       <div>
         <RedirectModal />
       </div>
-    );
+    ) : null;
   }
 }
 export default RedirectLink;
