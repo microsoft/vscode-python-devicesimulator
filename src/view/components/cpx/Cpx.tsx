@@ -276,6 +276,8 @@ const setupPins = (props: IProps): void => {
       accessibility.makeFocusable(svgPin);
       svgPin.onmouseup = e => props.onMouseUp(pin, e);
       svgPin.onkeyup = e => props.onKeyEvent(e, false);
+      svgPin.onmousedown = e => props.onMouseDown(pin, e);
+      svgPin.onkeydown = e => props.onKeyEvent(e, true);
       accessibility.setAria(
         svgPin,
         "Pin",
@@ -375,14 +377,10 @@ export const updateSwitch = (switchState: boolean): void => {
   }
 };
 export const updatePinTouch = (pinState: boolean, id: string): void => {
+  console.log(`updating ${id} with ${pinState}`);
   const pinElement = window.document.getElementById(id);
   const pinsvg = (pinElement as unknown) as SVGElement;
   if (pinElement) {
-    if (pinState) {
-      svg.addClass(pinsvg, `sim-${pinElement.id}-touch-on`);
-    } else {
-      svg.removeClass(pinsvg, `sim-${pinElement.id}-touch-on`);
-    }
     pinElement.setAttribute("aria-pressed", pinState.toString());
   }
 };

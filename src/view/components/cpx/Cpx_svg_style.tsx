@@ -281,13 +281,13 @@ export const SVG_STYLE = `
         stroke-width:1px;
     }
     
-    .sim-PIN_A1-touch-on,
-    .sim-PIN_A2-touch-on,
-    .sim-PIN_A3-touch-on,
-    .sim-PIN_A4-touch-on,
-    .sim-PIN_A5-touch-on,
-    .sim-PIN_A6-touch-on,
-    .sim-PIN_A7-touch-on{
+    .sim-PIN_A1-touch:focus,
+    .sim-PIN_A2-touch:focus,
+    .sim-PIN_A3-touch:focus,
+    .sim-PIN_A4-touch:focus,
+    .sim-PIN_A5-touch:focus,
+    .sim-PIN_A6-touch:focus,
+    .sim-PIN_A7-touch:focus{
         stroke:#4D90FE;
         stroke-width:1px;
 

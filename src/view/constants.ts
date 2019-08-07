@@ -28,11 +28,11 @@ export const CONSTANTS = {
     S: "KeyS",
     NUMERIC_ONE: "1",
     NUMERIC_TWO: "2",
-    NUMERIC_THREE: "4",
-    NUMERIC_FOUR: "5",
-    NUMERIC_FIVE: "6",
-    NUMERIC_SIX: "7",
-    NUMERIC_SEVEN: "8"
+    NUMERIC_THREE: "3",
+    NUMERIC_FOUR: "4",
+    NUMERIC_FIVE: "5",
+    NUMERIC_SIX: "5",
+    NUMERIC_SEVEN: "7"
   }
 };
 

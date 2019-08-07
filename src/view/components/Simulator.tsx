@@ -215,11 +215,7 @@ class Simulator extends React.Component<any, IState> {
           break;
 
         case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
-          break;
-
-        default:
-          element = undefined;
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A7);
           break;
       }
     }
@@ -323,12 +319,11 @@ class Simulator extends React.Component<any, IState> {
   private handleTouchPinClick(pin: HTMLElement, active: boolean): any {
     let cpxState = this.state.cpx;
     const pinIndex = parseInt(pin.id.charAt(pin.id.length - 1)) - 1;
-    const isPinTouched: boolean = !cpxState.touch[pinIndex];
     let pinState = cpxState.touch;
-    pinState[pinIndex] = !pinState[pinIndex];
+    pinState[pinIndex] = active;
     cpxState = { ...cpxState, touch: pinState };
     this.setState({ ...this.state, ...cpxState });
-    updatePinTouch(isPinTouched, pin.id);
+    updatePinTouch(active, pin.id);
     return { touch: pinState };
   }
 }
