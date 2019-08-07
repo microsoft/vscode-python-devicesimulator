@@ -11,7 +11,7 @@
   "error.invalidFileNameDebug": "The file you tried to debug isn\\'t named \"code.py\" or \"main.py\\. Rename your file if you want your code to work on your actual device.",
   "error.noDevice": "No plugged in boards detected. Please double check if your board is connected and/or properly formatted",
   "error.noFileToRun": "\n[ERROR] We can't find the .py file to run on simulator. Open up a new .py file, or browse through some examples\n",
-  "error.noPythonPath": "We found you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again.",
+  "error.noPythonPath": "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again.",
   "error.stderr": "\n[ERROR] {0} \n",
   "error.unexpectedMessage": "Webview sent an unexpected message",
   "info.deployDevice": "\n[INFO] Deploying code to the device...\n",

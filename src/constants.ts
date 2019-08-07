@@ -40,7 +40,7 @@ export const CONSTANTS = {
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
     ),
-    NO_PYTHON_PATH: localize("error.noPythonPath", "We found you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
+    NO_PYTHON_PATH: localize("error.noPythonPath", "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
