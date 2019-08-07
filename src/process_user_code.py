@@ -9,6 +9,7 @@ import copy
 from adafruit_circuitplayground.express import cpx
 from pathlib import Path
 import traceback
+from adafruit_circuitplayground import communicationHandlerClient
 
 EXPECTED_INPUT_EVENTS = [
     'button_a',
@@ -22,6 +23,10 @@ EXPECTED_INPUT_EVENTS = [
 ]
 
 read_val = ""
+
+# Communication
+communicationHandlerClient.initConnection()
+####
 
 
 class UserInput(threading.Thread):

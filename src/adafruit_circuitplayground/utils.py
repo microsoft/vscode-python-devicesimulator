@@ -3,12 +3,21 @@
 
 import sys
 import json
+import copy
+from . import communicationHandlerClient
 
+
+previousState = {}
 
 def show(state):
-    message = {'type': 'state', 'data': json.dumps(state)}
-    print(json.dumps(message) + '\0', end='')
-    sys.stdout.flush()
+    global previousState
+    if state != previousState:
+        message = {'type': 'state', 'data': json.dumps(state)}
+        # print(json.dumps(message) + '\0', end='')
+        # sys.stdout.flush()
+        communicationHandlerClient.updateState(json.dumps(message))
+        previousState = copy.deepcopy(state)
+
 
 
 def remove_leading_slashes(string):
