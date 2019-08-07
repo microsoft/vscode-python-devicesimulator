@@ -49,7 +49,7 @@ class ToolBar extends React.Component<any, any, any> {
               label=""
               width={TOOLBAR_EDGE_WIDTH}
               onClick={() => {}}
-              image={TOOLBAR_SVG.lEFT_EDGE_SVG}
+              image={TOOLBAR_SVG.LEFT_EDGE_SVG}
               styleLabel="edge"
             />
             <Button

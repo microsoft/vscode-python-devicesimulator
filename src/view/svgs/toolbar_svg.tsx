@@ -2,7 +2,7 @@ import * as React from "react";
 import { TOOLBAR_ICON_LABEL } from "../components/toolbar/sensor_modal_utils";
 import "../styles/Button.css";
 
-export const lEFT_EDGE_SVG = (
+export const LEFT_EDGE_SVG = (
   <svg
     width="4"
     height="16"
@@ -444,4 +444,4 @@ export const TEMPERATURE_SVG = (
     </g>
   </svg>
 );
-export default lEFT_EDGE_SVG;
+export default LEFT_EDGE_SVG;
