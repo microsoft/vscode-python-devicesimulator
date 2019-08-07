@@ -6,16 +6,14 @@
   height: 32px;
   border: none;
   font-weight: bolder;
-  margin-top: 30px;
-  margin-bottom: 30px;
   float: left;
   padding-left: 20px;
 }
 
 .sensor-button:focus {
   outline-width: thick;
-  outline-offset: 15px;
-  outline-style: auto;
+  outline-offset: 4px;
+  outline: 2px solid var(--vscode-focusBorder);
 }
 .sensor-button:hover {
   outline: none;
