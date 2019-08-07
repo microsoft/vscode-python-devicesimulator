@@ -1,4 +1,4 @@
-# Project Pacifica
+# Project Device Simulator Express
 
 This project is a VS Code extension for makers to write for their microcontrollers and provide them a simulator to test their code.
 This extension currently supports some features of the Adafruit Circuit Playground Express.

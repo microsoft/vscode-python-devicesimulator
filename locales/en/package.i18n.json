@@ -1,11 +1,11 @@
 {
-  "pacificaExtension.commands.label": "Pacifica",
-  "pacificaExtension.commands.openSimulator": "Open Simulator",
-  "pacificaExtension.commands.runSimulator": "Run Simulator",
-  "pacificaExtension.commands.newProject": "New Project",
-  "pacificaExtension.commands.runDevice": "Deploy to Device",
-  "pacificaExtension.configuration.title": "Pacfica configuration",
-  "pacificaExtension.configuration.properties.open": "Whether to show 'Open Simulator' icon in editor title menu.",
-  "pacificaExtension.configuration.properties.device": "Whether to show 'Run Device' icon in editor title menu.",
-  "pacificaExtension.configuration.properties.simulator": "Whether to show 'Run Simulator' icon in editor title menu."
+  "deviceSimulatorExpressExtension.commands.label": "Device Simulator Express",
+  "deviceSimulatorExpressExtension.commands.newProject": "New Project",
+  "deviceSimulatorExpressExtension.commands.openSimulator": "Open Simulator",
+  "deviceSimulatorExpressExtension.commands.runDevice": "Deploy to Device",
+  "deviceSimulatorExpressExtension.commands.runSimulator": "Run Simulator",
+  "deviceSimulatorExpressExtension.configuration.properties.device": "Whether to show 'Run Device' icon in editor title menu.",
+  "deviceSimulatorExpressExtension.configuration.properties.open": "Whether to show 'Open Simulator' icon in editor title menu.",
+  "deviceSimulatorExpressExtension.configuration.properties.simulator": "Whether to show 'Run Simulator' icon in editor title menu.",
+  "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration"
 }

@@ -2,7 +2,7 @@
 
 Commands are accessible through :
 
-- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
+- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Device Simulator Express : `command_name`'
 - **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open
 
 ## Available commands

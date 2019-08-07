@@ -24,42 +24,42 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:pacifica.openSimulator",
-    "onCommand:pacifica.runSimulator",
-    "onCommand:pacifica.newProject",
-    "onCommand:pacifica.runDevice",
+    "onCommand:deviceSimulatorExpress.openSimulator",
+    "onCommand:deviceSimulatorExpress.runSimulator",
+    "onCommand:deviceSimulatorExpress.newProject",
+    "onCommand:deviceSimulatorExpress.runDevice",
     "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "pacifica.openSimulator",
-        "title": "%pacificaExtension.commands.openSimulator%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.openSimulator",
+        "title": "%deviceSimulatorExpressExtension.commands.openSimulator%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/open-simulator.svg",
           "dark": "./assets/dark-theme/open-simulator.svg"
         }
       },
       {
-        "command": "pacifica.runSimulator",
-        "title": "%pacificaExtension.commands.runSimulator%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.runSimulator",
+        "title": "%deviceSimulatorExpressExtension.commands.runSimulator%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/run-on-simulator.svg",
           "dark": "./assets/dark-theme/run-on-simulator.svg"
         }
       },
       {
-        "command": "pacifica.newProject",
-        "title": "%pacificaExtension.commands.newProject%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.newProject",
+        "title": "%deviceSimulatorExpressExtension.commands.newProject%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.runDevice",
-        "title": "%pacificaExtension.commands.runDevice%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.runDevice",
+        "title": "%deviceSimulatorExpressExtension.commands.runDevice%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/save-to-board.svg",
           "dark": "./assets/dark-theme/save-to-board.svg"
@@ -69,42 +69,42 @@
     "menus": {
       "editor/title": [
         {
-          "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
-          "command": "pacifica.openSimulator",
+          "when": "editorLangId==python  && config.deviceSimulatorExpress.showOpenIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.openSimulator",
           "group": "navigation@1"
         },
         {
-          "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
-          "command": "pacifica.runSimulator",
+          "when": "editorLangId==python && config.deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.runSimulator",
           "group": "navigation@2"
         },
         {
-          "when": "editorLangId==python && config.pacifica.showDeviceIconInEditorTitleMenu",
-          "command": "pacifica.runDevice",
+          "when": "editorLangId==python && config.deviceSimulatorExpress.showDeviceIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.runDevice",
           "group": "navigation@3"
         }
       ]
     },
     "configuration": {
       "type": "object",
-      "title": "%pacificaExtension.configuration.title%",
+      "title": "%deviceSimulatorExpressExtension.configuration.title%",
       "properties": {
-        "pacifica.showOpenIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.open%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.open%",
           "scope": "resource"
         },
-        "pacifica.showSimulatorIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.simulator%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.simulator%",
           "scope": "resource"
         },
-        "pacifica.showDeviceIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showDeviceIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.device%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.device%",
           "scope": "resource"
         }
       }
@@ -117,7 +117,7 @@
     "debuggers": [
       {
         "type": "python",
-        "label": "Pacifica Simulator Debugger",
+        "label": "Device Simulator Express Simulator Debugger",
         "program": "./out/debugAdapter.js",
         "runtime": "node",
         "configurationAttributes": {
@@ -161,7 +161,7 @@
           {
             "type": "python",
             "request": "launch",
-            "name": "Pacifica Simulator Debugger",
+            "name": "Device Simulator Express Debugger",
             "program": "${file}",
             "stopOnEntry": false,
             "justMyCode": true
@@ -169,12 +169,12 @@
         ],
         "configurationSnippets": [
           {
-            "label": "Pacifica Simulator Debugger : Launch",
-            "description": "Pacifica Simulator Debugger - A configuration for debugging a python code file for the Pacifica simulator.",
+            "label": "Device Simulator Express Debugger : Launch",
+            "description": "Device Simulator Express Debugger - A configuration for debugging a Python code file for the CPX simulator.",
             "body": {
               "type": "python",
               "request": "launch",
-              "name": "Pacifica Simulator Debugger",
+              "name": "Device Simulator Express Debugger",
               "program": "${file}",
               "stopOnEntry": false,
               "justMyCode": true

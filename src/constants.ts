@@ -9,7 +9,7 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONSTANTS = {
-  DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
+  DEBUG_CONFIGURATION_NAME: "Device Simulator Express Debugger",
   ERROR: {
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
@@ -107,7 +107,7 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Pacifica Simulator")
+  NAME: localize("name", "Device Simulator Express")
 };
 
 // Need the different events we want to track and the name of it

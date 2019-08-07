@@ -140,7 +140,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Open Simulator on the webview
   const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.openSimulator",
+    "deviceSimulatorExpress.openSimulator",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
       telemetryAI.runWithLatencyMeasure(
@@ -204,7 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   const newProject: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.newProject",
+    "deviceSimulatorExpress.newProject",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
       telemetryAI.runWithLatencyMeasure(
@@ -337,7 +337,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.runSimulator",
+    "deviceSimulatorExpress.runSimulator",
     () => {
       runSimulatorCommand();
     }
@@ -447,7 +447,7 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.runDevice",
+    "deviceSimulatorExpress.runDevice",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
       telemetryAI.runWithLatencyMeasure(

@@ -50,7 +50,7 @@
 - Debugging the extension opens a new VS Code window with the extension installed
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
-  listed as 'Pacifica : ...'
+  listed as 'Device Simulator Express: ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
 
 ## Repository Structure (important files)
