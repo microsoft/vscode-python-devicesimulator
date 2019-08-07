@@ -8,6 +8,7 @@
   margin-top: 53px;
   margin-bottom: 50px;
 }
+
 .toolbar-icon {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
 }
@@ -25,6 +26,7 @@
   padding-left: 16px;
   box-shadow: none;
 }
+
 .title {
   -webkit-appearance: none;
   font-size: 16px;
@@ -37,10 +39,12 @@
   padding-left: inherit;
   width: 320px;
 }
+
 .tag {
   position: absolute;
   left: 200px;
 }
+
 .close_icon {
   position: absolute;
   right: 0;
