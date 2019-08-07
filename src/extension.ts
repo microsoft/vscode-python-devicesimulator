@@ -481,6 +481,34 @@ export function activate(context: vscode.ExtensionContext) {
     utils.getPathToScript(context, "out", "process_user_code.py")
   );
 
+  ////
+  const debugSessionsStarted = vscode.debug.onDidStartDebugSession(
+    debugSession => {
+      openWebview();
+      console.error("DEBUG STARTED");
+      if (currentPanel) {
+        if (!communicationHandler) {
+          communicationHandler = new CommunicationHandlerServer(
+            currentPanel.webview
+          );
+        }
+        communicationHandler.initConnection();
+      }
+    }
+  );
+
+  const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(debugSession => {
+    console.log("DEBUG STOPED");
+    if (communicationHandler) {
+      communicationHandler.closeConnection();
+    }
+    if (currentPanel) {
+      currentPanel.webview.postMessage({ command: "reset-state" });
+    }
+  })
+  ////
+
+
   context.subscriptions.push(
     openSimulator,
     runSimulator,
@@ -489,7 +517,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
-    )
+      ),
+      debugSessionsStarted,
+      debugSessionStopped
   );
 }
 
