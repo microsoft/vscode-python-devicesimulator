@@ -87,8 +87,11 @@ export function activate(context: vscode.ExtensionContext) {
                 handleButtonPressTelemetry(message.text);
                 console.log("About to write");
                 console.log(messageJson + "\n");
-                if (childProcess) {
-                  childProcess.stdin.write(messageJson + "\n");
+                // if (childProcess) {
+                //   childProcess.stdin.write(messageJson + "\n");
+                // }
+                if (communicationHandler) {
+                  communicationHandler.emitButtonAPressed(messageJson);
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
@@ -299,8 +302,9 @@ export function activate(context: vscode.ExtensionContext) {
       let oldMessage = "";
 
       // // Data received from Python process
-      // childProcess.stdout.on("data", data => {
-      //   dataFromTheProcess = data.toString();
+      childProcess.stdout.on("data", data => {
+        dataFromTheProcess = data.toString();
+        console.log("PROCESS OUTPUT " + dataFromTheProcess);
       //   if (currentPanel) {
       //     // Process the data from the process and send one state at a time
       //     dataFromTheProcess.split("\0").forEach(message => {
@@ -329,12 +333,12 @@ export function activate(context: vscode.ExtensionContext) {
       //               break;
       //           }
       //         } catch (err) {
-      //           console.log(`Non-JSON output from the process :  ${message}`);
+                // console.log(`Non-JSON output from the process :  ${message}`);
       //         }
       //       }
       //     });
       //   }
-      // });
+      });
 
       // Std error output
       childProcess.stderr.on("data", data => {

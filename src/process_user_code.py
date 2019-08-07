@@ -57,9 +57,9 @@ abs_path_to_lib = os.path.join(abs_path_to_parent_dir, library_name)
 sys.path.insert(0, abs_path_to_lib)
 
 threads = []
-user_input = UserInput()
-threads.append(user_input)
-user_input.start()
+# user_input = UserInput()
+# threads.append(user_input)
+# user_input.start()
 
 # User code thread
 

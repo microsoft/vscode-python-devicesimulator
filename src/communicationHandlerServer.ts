@@ -36,6 +36,16 @@ export class CommunicationHandlerServer {
     this.isClosed = false;
   }
 
+  // TODO: Find a better way to send event to socket
+  public emitButtonAPressed(newState: string): void {
+    if (this.io) {
+      console.error("In emit");
+      this.io.emit("button_a_pressed", newState);
+      console.error("IO clients : ");
+      console.error(this.io.clients());
+    }
+  }
+
   private initEventHandlers() {
     if (this.io) {
 
