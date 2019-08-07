@@ -7,26 +7,22 @@ import * as React from "react";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 
-interface window{
-  showInformationMessage: (message:any)=>void
-}
-
 interface vscode {
-  window: window
+  showInformationMessage(messages: any): void;
 }
 
 declare const vscode: vscode;
 
-
-
 export const CPX_EXPRESS_DOC = (
-  <div
+  <button
     className="link"
     // href="https://learn.adafruit.com/adafruit-circuit-playground-express/makecode"
-    onClick={(e:any)=>{vscode.window.showInformationMessage("hello")}}
+    onClick={(e: any) => {
+      vscode.showInformationMessage("hello");
+    }}
   >
     Learn More >
-  </div>
+  </button>
 );
 
 export const TRY_IT_MAKE_CODE = (
