@@ -9,7 +9,7 @@
   margin-bottom: 50px;
 }
 
-.toolbar-icon {
+.toolbar {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
 }
 
@@ -25,6 +25,7 @@
   height: fit-content;
   padding-left: 16px;
   box-shadow: none;
+  background: var(--vscode-debugToolBar-background);
 }
 
 .title {
