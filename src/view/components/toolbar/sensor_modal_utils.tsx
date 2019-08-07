@@ -6,19 +6,6 @@ import MotionSensorBar from "./MotionSensorBar";
 import * as React from "react";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
-import RedirectLink from "../RedirectLink";
-
-export const CPX_EXPRESS_DOC = (
-  // <a
-  //   className="link"
-  //   href="https://learn.adafruit.com/adafruit-circuit-playground-express/makecode"
-  //   onClick={(e: any) => {}}
-  // >
-  //   Learn More >
-  // </a>
-
-  <RedirectLink />
-);
 
 export const TRY_IT_MAKE_CODE = (
   <div className="link-parent">

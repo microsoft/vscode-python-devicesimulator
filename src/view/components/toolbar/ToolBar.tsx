@@ -8,12 +8,10 @@ import {
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent,
-  TOOLBAR_ICON_LABEL,
-  CPX_EXPRESS_DOC
+  TOOLBAR_ICON_LABEL
 } from "./sensor_modal_utils";
 import { CLOSE_SVG } from "../../svgs/close_svg";
-import { INFO_SVG } from "../../svgs/info_svg";
-import { TOOLBAR_INFO } from "../../constants";
+import RedirectLink from "../RedirectLink";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -25,6 +23,7 @@ class ToolBar extends React.Component<any, any, any> {
     super(props);
     this.state = {
       currentOpened: "",
+      shouldOpenLink: false,
       showModal: false
     };
   }
@@ -39,9 +38,7 @@ class ToolBar extends React.Component<any, any, any> {
         }}
       >
         <div className="info">
-          <span className="info-icon">{INFO_SVG}</span>
-          <span className="info-text">{TOOLBAR_INFO}</span>
-          <span className="info-link"> {CPX_EXPRESS_DOC}</span>
+          <RedirectLink shouldOpen={this.state.shouldOpenLink} />
         </div>
         <div className="toolbar">
           <div className="toolbar-icon">
@@ -158,6 +155,9 @@ class ToolBar extends React.Component<any, any, any> {
       </div>
     );
   }
+  private handleClickLink = () => {
+    this.setState({ shouldOpenLink: true });
+  };
   private handleOnClick(label: string) {
     if (
       !this.state.showModal &&

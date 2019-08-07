@@ -97,6 +97,7 @@
 .link {
   text-align: left;
   text-decoration: none;
+  color: var(--vscode-button-background);
 }
 
 .link-parent {

@@ -1,5 +1,5 @@
 .redirect-link {
-  text-decoration: dodgerblue;
+  color: var(--vscode-foreground);
 }
 .redirect-modal {
   background: var(--vscode-debugToolBar-background);

@@ -1,22 +1,24 @@
 import * as React from "react";
 import RedirectModal from "./RedirectModal";
 import "../styles/RedirectLink.css";
-import { REDIRECT } from "../constants";
+import { INFO_SVG } from "../svgs/info_svg";
+import { TOOLBAR_INFO, REDIRECT } from "../constants";
 
 class RedirectLink extends React.Component<any, any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      showModal: false,
-      dontShow: false
+      showModal: false
     };
   }
 
   render() {
     return (
-      <div>
-        <div className="redirect-link" onClick={this.handleOnClickLink}>
-          <div>Learn More></div>
+      <span>
+        <div className="redirect-link">
+          <span className="info-icon">{INFO_SVG}</span>
+          <span className="info-text">{TOOLBAR_INFO}</span>
+          <span onClick={this.handleOnClickLink}>Learn More></span>
         </div>
         <Modal
           text={`${REDIRECT.description} : \n ${REDIRECT.privacy}`}
@@ -24,8 +26,9 @@ class RedirectLink extends React.Component<any, any, any> {
           onClick={this.handleOnClickButton}
           link={REDIRECT.link}
           onClickClose={this.handleOnClickButton}
+          shouldOpenLink={this.props.shouldOpeLink}
         />
-      </div>
+      </span>
     );
   }
 
@@ -39,7 +42,7 @@ class RedirectLink extends React.Component<any, any, any> {
 }
 
 const Modal = (props: any) => {
-  return props.showModal ? (
+  return props.showModal || props.shouldOpenLink ? (
     <RedirectModal
       text={props.text}
       onClickOK={props.onClick}
