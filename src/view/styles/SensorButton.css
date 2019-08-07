@@ -20,6 +20,5 @@
   background-color: var(--vscode-button-hoverBackground);
 }
 .sensor-button:hover {
-  outline: none;
   background-color: var(--vscode-button-hoverBackground);
 }
