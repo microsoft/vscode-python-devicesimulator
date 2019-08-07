@@ -73,8 +73,7 @@ class TestExpress(object):
         assert expected_pixels == self.cpx._Express__state['pixels']
 
     def test_extract_pixel_value_list(self):
-        assert (0, 255, 0) == self.cpx.pixels._Pixel__extract_pixel_value(
-            (0, 255, 0))
+        assert (0, 255, 0) == self.cpx.pixels._Pixel__extract_pixel_value((0, 255, 0))
 
     def test_extract_pixel_value_list1(self):
         assert (123, 123, 123) == self.cpx.pixels._Pixel__extract_pixel_value(
