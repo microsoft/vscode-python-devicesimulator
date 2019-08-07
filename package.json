@@ -26,7 +26,7 @@
   "activationEvents": [
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
-    "onCommand:pacifica.newProject",
+    "onCommand:pacifica.newFile",
     "onCommand:pacifica.runDevice",
     "onDebug"
   ],
@@ -52,8 +52,8 @@
         }
       },
       {
-        "command": "pacifica.newProject",
-        "title": "%pacificaExtension.commands.newProject%",
+        "command": "pacifica.newFile",
+        "title": "%pacificaExtension.commands.newFile%",
         "category": "%pacificaExtension.commands.label%"
       },
       {

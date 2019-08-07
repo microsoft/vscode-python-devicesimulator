@@ -21,7 +21,7 @@ let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowNewProject: boolean = true;
+let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
@@ -162,17 +162,17 @@ export async function activate(context: vscode.ExtensionContext) {
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
 
-    if (shouldShowNewProject) {
+    if (shouldShowNewFile) {
       vscode.window
         .showInformationMessage(
-          CONSTANTS.INFO.NEW_PROJECT,
+          CONSTANTS.INFO.NEW_FILE,
           DialogResponses.DONT_SHOW,
           DialogResponses.EXAMPLE_CODE,
           DialogResponses.TUTORIALS
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shouldShowNewProject = false;
+            shouldShowNewFile = false;
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
@@ -204,19 +204,19 @@ export async function activate(context: vscode.ExtensionContext) {
       // tslint:disable-next-line: no-unused-expression
       (error: any) => {
         telemetryAI.trackFeatureUsage(
-          TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
+          TelemetryEventName.ERROR_COMMAND_NEW_FILE
         );
         console.error(`Failed to open a new text document:  ${error}`);
       };
   };
 
-  const newProject: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.newProject",
+  const newFile: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.newFile",
     () => {
-      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
       telemetryAI.runWithLatencyMeasure(
         openTemplateFile,
-        TelemetryEventName.PERFORMANCE_NEW_PROJECT
+        TelemetryEventName.PERFORMANCE_NEW_FILE
       );
     }
   );
@@ -473,7 +473,7 @@ export async function activate(context: vscode.ExtensionContext) {
     openSimulator,
     runSimulator,
     runDevice,
-    newProject,
+    newFile,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
