@@ -1,0 +1,36 @@
+.redirect-link {
+  text-decoration: dodgerblue;
+}
+.redirect-modal {
+  background: var(--vscode-debugToolBar-background);
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  color: var(--vscode-foreground);
+  /* word-wrap: break-word; */
+  width: 450px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
+  text-align: center;
+  font-weight: 700;
+  font-optical-sizing: 16px;
+  height: 100px;
+}
+
+.redirect-button {
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 17px;
+  color: var(--vscode-button-background);
+  padding-right: 15px;
+}
+
+.redirect-description {
+  word-wrap: break-word;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  line-height: 17px;
+  opacity: 50%;
+  vertical-align: middle;
+}

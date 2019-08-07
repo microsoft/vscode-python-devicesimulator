@@ -6,17 +6,18 @@ import MotionSensorBar from "./MotionSensorBar";
 import * as React from "react";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
-
-declare const vscode: vscode;
+import RedirectLink from "../RedirectLink";
 
 export const CPX_EXPRESS_DOC = (
-  <a
-    className="link"
-    href="https://learn.adafruit.com/adafruit-circuit-playground-express/makecode"
-    onClick={(e: any) => {}}
-  >
-    Learn More >
-  </a>
+  // <a
+  //   className="link"
+  //   href="https://learn.adafruit.com/adafruit-circuit-playground-express/makecode"
+  //   onClick={(e: any) => {}}
+  // >
+  //   Learn More >
+  // </a>
+
+  <RedirectLink />
 );
 
 export const TRY_IT_MAKE_CODE = (
@@ -183,15 +184,15 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
   id: "speaker"
 };
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Temperature Sensor",
-  tagInput: TAG_INPUT_SVG,
-  tagOutput: undefined,
+  component: <TemperatureSensorBar />,
   descriptionText:
     "This sensor uses an NTC thermistor to sense temperature an calculate it with the analog voltage on analog pin #A9.",
-  tryItTitle: "Try it on the Simulator!",
+  descriptionTitle: "Temperature Sensor",
+  id: "temperature",
+  tagInput: TAG_INPUT_SVG,
+  tagOutput: undefined,
   tryItDescriptrion: "You can set the temperature range from your code!",
-  component: <TemperatureSensorBar />,
-  id: "temperature"
+  tryItTitle: "Try it on the Simulator!"
 };
 
 export const LABEL_TO_MODAL_CONTENT = new Map([
