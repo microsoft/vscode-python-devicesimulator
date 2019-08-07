@@ -15,7 +15,6 @@ import {
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import * as utils from "./extension_utils/utils";
-import { DependencyChecker } from "./extension_utils/dependencyChecker"
 
 let currentFileAbsPath: string = "";
 let telemetryAI: TelemetryAI;
@@ -44,24 +43,11 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
-  // Find our what command is the PATH for python
-  const dependencyCheck = await checkPythonDependency();
-  if (dependencyCheck.installed) {
-    pythonExecutableName = dependencyCheck.dependency;
-  } else {
-    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
-      DialogResponses.INSTALL_PYTHON)
-      .then((selection: vscode.MessageItem | undefined) => {
-        if (selection === DialogResponses.INSTALL_PYTHON) {
-          const okAction = () => {
-            open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-          };
-          utils.showPrivacyModal(okAction);
-        }
-      });
+  pythonExecutableName = await utils.setPythonExectuableName();
+
+  if (pythonExecutableName === "") {
     return;
   }
-
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
@@ -495,11 +481,6 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
-const checkPythonDependency = async () => {
-  const dependencyChecker: DependencyChecker = new DependencyChecker();
-  const result = await dependencyChecker.checkDependency(CONSTANTS.DEPENDENCY_CHECKER.PYTHON);
-  return result.payload;
-}
 
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
