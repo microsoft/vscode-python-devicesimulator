@@ -13,12 +13,15 @@
 }
 
 .sensor-button:focus {
-  outline: var(--vscode-focusBorder);
   outline-width: thick;
   outline-offset: 15px;
   outline-style: auto;
 }
 .sensor-button:hover {
+  outline: none;
+  background-color: var(--vscode-button-hoverBackground);
+}
+.sensor-button:active {
   outline: none;
   background-color: var(--vscode-button-hoverBackground);
 }
