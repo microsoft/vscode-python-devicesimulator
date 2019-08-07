@@ -7,12 +7,12 @@ import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../view_utils";
 import "../../styles/TemperatureSensorBar.css";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Cold",
+  axisLabel: " ",
   maxLabel: "Hot",
-  type: "temperature",
-  axisLabel: " "
+  maxValue: 125,
+  minLabel: "Cold",
+  minValue: -55,
+  type: "temperature"
 };
 const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
   LABEL: "Temperature sensor",
