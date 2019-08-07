@@ -65,11 +65,16 @@ class Express:
     @detect_taps.setter
     def detect_taps(self, value):
         value_int = int(value)
-        self.__state['detect_taps'] = value_int if (value_int == 1 or value_int == 2) else 1
+        self.__state['detect_taps'] = value_int if (
+            value_int == 1 or value_int == 2) else 1
 
     @property
     def tapped(self):
-        pass
+        """
+        Detects when the board has been tapped.
+        Sorry, this mehod is not implemented yet.
+        """
+        raise NotImplementedError("This method is not available")
 
     @property
     def red_led(self):
@@ -116,13 +121,25 @@ class Express:
             raise NotImplementedError("Please use Python 3 or higher.")
 
     def play_tone(self, frequency, duration):
-        pass
+        """
+        Method that plays a tone at a given frequency for a fixed duration.
+        Sorry, this mehod is not implemented yet.
+        """
+        raise NotImplementedError("This method is not available")
 
     def start_tone(self, frequency):
-        pass
+        """
+        Method that plays a tone at a given frequency.
+        Sorry, this mehod is not implemented yet.
+        """
+        raise NotImplementedError("This method is not available")
 
     def stop_stone(self, frequency):
-        pass
+        """
+        Method that stops the playing.
+        Sorry, this mehod is not implemented yet.
+        """
+        raise NotImplementedError("This method is not available")
 
 
 cpx = Express()
