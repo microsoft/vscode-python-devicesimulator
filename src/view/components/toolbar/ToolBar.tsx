@@ -43,6 +43,9 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         ref={toolbarRef => {
           this.toolbarRef = toolbarRef;
         }}
+        onMouseLeave={e => {
+          this.closeCurrentModal();
+        }}
       >
         <div className="info">
           <div className="redirect-link">
@@ -175,6 +178,10 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       this.state.currentOpened !== label
     ) {
       this.openModal(label);
+      const parent = window.document.getElementById("toolbar-parent");
+      if (parent) {
+        parent.focus();
+      }
     } else {
       this.closeCurrentModal();
       if (this.state.currentOpened !== label) {
@@ -292,20 +299,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   private handleDoNotShow = (event: React.MouseEvent<HTMLElement>) => {
     this.setState({ doNotShowAgain: true });
   };
-
-  componentDidMount() {
-    window.addEventListener("mousedown", this.handleMouseEvent);
-  }
-  handleMouseEvent = (event: any) => {
-    if (this.toolbarRef.current) {
-      if (!this.toolbarRef.current.contains(event.target))
-        this.closeCurrentModal();
-    }
-  };
-
-  componentWillUnmount() {
-    window.removeEventListener("mousedown", this.handleMouseEvent);
-  }
 }
 
 export default ToolBar;
