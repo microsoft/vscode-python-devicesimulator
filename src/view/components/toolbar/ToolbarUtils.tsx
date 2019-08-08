@@ -8,6 +8,15 @@ export interface ISliderProps {
   type: string;
 }
 
+export interface ISensorButtonProps {
+  label: string;
+  type: string;
+  onMouseUp: () => void;
+  onMouseDown: () => void;
+  onKeyUp: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+}
+
 export interface ISensorProps {
   LABEL: string;
   sliderProps: ISliderProps[];
