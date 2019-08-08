@@ -379,7 +379,6 @@ export const updateSwitch = (switchState: boolean): void => {
 export const updatePinTouch = (pinState: boolean, id: string): void => {
   console.log(`updating ${id} with ${pinState}`);
   const pinElement = window.document.getElementById(id);
-  const pinsvg = (pinElement as unknown) as SVGElement;
   if (pinElement) {
     pinElement.setAttribute("aria-pressed", pinState.toString());
   }
