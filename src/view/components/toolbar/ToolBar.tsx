@@ -212,7 +212,6 @@ class ToolBar extends React.Component<any, any, any> {
         </div>
         <br />
         <div className="description">{content["descriptionText"]}</div>
-        {/* make border visivle bottom */}
         <div className="try_area">
           <div className="title"> {content["tryItTitle"]}</div>
           <br />
