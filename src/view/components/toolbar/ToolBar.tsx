@@ -24,7 +24,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   private readonly TOOLBAR_BUTTON_WIDTH: number = 32;
   private readonly TOOLBAR_EDGE_WIDTH: number = 8;
 
-  private toolbarRef: any = React.createRef<HTMLDivElement>();
   constructor(props: any) {
     super(props);
     this.state = {
@@ -40,9 +39,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       <div
         className="toolbar-parent"
         id="toolbar-parent"
-        ref={toolbarRef => {
-          this.toolbarRef = toolbarRef;
-        }}
       >
         <div className="info">
           <div className="redirect-link">
