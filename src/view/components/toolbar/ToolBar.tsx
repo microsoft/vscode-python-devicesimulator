@@ -43,9 +43,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         ref={toolbarRef => {
           this.toolbarRef = toolbarRef;
         }}
-        onMouseLeave={e => {
-          this.closeCurrentModal();
-        }}
       >
         <div className="info">
           <div className="redirect-link">
