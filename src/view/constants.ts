@@ -31,7 +31,7 @@ export const CONSTANTS = {
     NUMERIC_THREE: "3",
     NUMERIC_FOUR: "4",
     NUMERIC_FIVE: "5",
-    NUMERIC_SIX: "5",
+    NUMERIC_SIX: "6",
     NUMERIC_SEVEN: "7"
   }
 };
