@@ -70,7 +70,7 @@ class Express:
 
     @property
     def tapped(self):
-        """  NOT IMPLEMENTED  IN THE SIMULATOR.
+        """  Not Implemented!
         True once after a detecting a tap. Requires ``cpx.detect_taps``.
 
         Tap the CPX once for a single-tap, or quickly tap twice for a double-tap.
@@ -130,59 +130,19 @@ class Express:
             raise NotImplementedError("Please use Python 3 or higher.")
 
     def play_tone(self, frequency, duration):
-        """ NOT IMPLEMENTED  IN THE SIMULATOR.
-        Produce a tone using the speaker. Try changing frequency to change
-        the pitch of the tone.
-
-        :param int frequency: The frequency of the tone in Hz
-        :param float duration: The duration of the tone in seconds
-
-        .. code-block:: python
-
-            from adafruit_circuitplayground.express import cpx
-
-            cpx.play_tone(440, 1)
+        """ Not Implemented!
         """
         raise NotImplementedError(
             "This method is not implemented in our simulator")
 
     def start_tone(self, frequency):
-        """ NOT IMPLEMENTED  IN THE SIMULATOR.
-        Produce a tone using the speaker. Try changing frequency to change
-        the pitch of the tone.
-
-        :param int frequency: The frequency of the tone in Hz
-
-        .. code-block:: python
-
-             from adafruit_circuitplayground.express import cpx
-
-             while True:
-                 if cpx.button_a:
-                     cpx.start_tone(262)
-                 elif cpx.button_b:
-                     cpx.start_tone(294)
-                 else:
-                     cpx.stop_tone()
+        """ Not Implemented!
         """
         raise NotImplementedError(
             "This method is not implemented in our simulator")
 
     def stop_stone(self):
-        """ NOT IMPLEMENTED  IN THE SIMULATOR.
-        Use with start_tone to stop the tone produced.
-
-        .. code-block:: python
-
-             from adafruit_circuitplayground.express import cpx
-
-             while True:
-                 if cpx.button_a:
-                     cpx.start_tone(262)
-                 elif cpx.button_b:
-                     cpx.start_tone(294)
-                 else:
-                     cpx.stop_tone()
+        """ Not Implemented!
         """
         # Stop playing any tones.
         raise NotImplementedError(
