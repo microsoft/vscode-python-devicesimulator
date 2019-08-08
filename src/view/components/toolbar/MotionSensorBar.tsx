@@ -9,7 +9,7 @@ import {
   X_SLIDER_INDEX,
   Z_SLIDER_INDEX,
   Y_SLIDER_INDEX
-} from "./Toolbar_utils";
+} from "./ToolbarUtils";
 import "../../styles/MotionSensorBar.css";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {

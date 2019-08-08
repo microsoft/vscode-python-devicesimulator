@@ -175,10 +175,6 @@ export const SVG_STYLE = `
         fill:#ff0000 !important;
     }
     
-    .sim-slide-switch-inner.on {
-        fill:#ff0000 !important;
-    }
-    
     /* animations */
     .sim-theme-glow {
         animation-name: sim-theme-glow-animation;
@@ -252,9 +248,9 @@ export const SVG_STYLE = `
     *:focus {
         outline: none;
     }
+
     .sim-button-outer:focus,
     .sim-slide-switch:focus,
-    .sim-pin:focus,
     .sim-thermometer:focus,
     .sim-button-group:focus .sim-button-outer,
     .sim-light-level-button:focus,
@@ -262,6 +258,7 @@ export const SVG_STYLE = `
         stroke: #4D90FE;
         stroke-width: 2px !important;
     }
+    
     .no-drag {
         user-drag: none;
         user-select: none;
