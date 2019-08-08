@@ -20,10 +20,10 @@ interface IToolbarState {
   showRedirectModal: boolean;
 }
 
-const TOOLBAR_BUTTON_WIDTH: number = 32;
-const TOOLBAR_EDGE_WIDTH: number = 8;
-
 class ToolBar extends React.Component<any, IToolbarState, any> {
+  private readonly TOOLBAR_BUTTON_WIDTH: number = 32;
+  private readonly TOOLBAR_EDGE_WIDTH: number = 8;
+
   private toolbarRef: any = React.createRef<HTMLDivElement>();
   constructor(props: any) {
     super(props);
@@ -56,14 +56,14 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
           <div className="toolbar-icon">
             <Button
               label=""
-              width={TOOLBAR_EDGE_WIDTH}
+              width={this.TOOLBAR_EDGE_WIDTH}
               onClick={() => {}}
               image={TOOLBAR_SVG.LEFT_EDGE_SVG}
               styleLabel="edge"
             />
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
               image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
               styleLabel="toolbar"
@@ -71,7 +71,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
                 this,
                 TOOLBAR_ICON_LABEL.PUSH_BUTTON
@@ -82,7 +82,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
                 this,
                 TOOLBAR_ICON_LABEL.RED_LED
@@ -93,7 +93,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
               image={TOOLBAR_SVG.SOUND_SVG}
               styleLabel="toolbar"
@@ -101,7 +101,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
                 this,
                 TOOLBAR_ICON_LABEL.TEMPERATURE
@@ -112,7 +112,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
               image={TOOLBAR_SVG.LIGHT_SVG}
               styleLabel="toolbar"
@@ -120,7 +120,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(
                 this,
                 TOOLBAR_ICON_LABEL.SPEAKER
@@ -131,7 +131,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
               image={TOOLBAR_SVG.MOTION_SVG}
               styleLabel="toolbar"
@@ -139,7 +139,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
               image={TOOLBAR_SVG.IR_SVG}
               styleLabel="toolbar"
@@ -147,7 +147,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_BUTTON_WIDTH}
+              width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
               image={TOOLBAR_SVG.GPIO_SVG}
               styleLabel="toolbar"
@@ -155,7 +155,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
             <Button
               label=""
-              width={TOOLBAR_EDGE_WIDTH}
+              width={this.TOOLBAR_EDGE_WIDTH}
               onClick={() => {}}
               image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
               styleLabel="edge"
