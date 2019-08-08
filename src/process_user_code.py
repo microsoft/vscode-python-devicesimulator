@@ -10,41 +10,9 @@ from pathlib import Path
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground import communication_handler_client
 
-EXPECTED_INPUT_EVENTS = [
-    'button_a',
-    'button_b',
-    'switch',
-    'temperature',
-    'light',
-    'motion_x',
-    'motion_y',
-    'motion_z'
-]
-
-read_val = ""
 
 # Init Communication
 communication_handler_client.init_connection()
-
-
-class UserInput(threading.Thread):
-
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        while True:
-            read_val = sys.stdin.readline()
-            sys.stdin.flush()
-            try:
-                new_state = json.loads(read_val)
-                for event in EXPECTED_INPUT_EVENTS:
-                    cpx._Express__state[event] = new_state.get(
-                        event, cpx._Express__state[event])
-
-            except Exception as e:
-                print("Error trying to send event to the process : ",
-                      e, file=sys.stderr, flush=True)
 
 
 # Insert absolute path to Adafruit library into sys.path
@@ -52,11 +20,6 @@ abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 library_name = "adafruit_circuitplayground"
 abs_path_to_lib = os.path.join(abs_path_to_parent_dir, library_name)
 sys.path.insert(0, abs_path_to_lib)
-
-threads = []
-user_input = UserInput()
-threads.append(user_input)
-user_input.start()
 
 
 # User code thread
@@ -81,8 +44,5 @@ def execute_user_code(abs_path_to_code_file):
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
-threads.append(user_code)
 user_code.start()
-
-for thread in threads:
-    thread.join()
+user_code.join()

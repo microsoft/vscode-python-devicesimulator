@@ -90,15 +90,10 @@ export function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.BUTTON_PRESS:
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
-                console.log("About to write");
-                console.log(messageJson + "\n");
-                if (childProcess) {
-                  childProcess.stdin.write(messageJson + "\n");
-                }
+                communicationHandler.emitButtonPress(messageJson);
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
-                console.log("Play button");
-                console.log(messageJson + "\n");
+                console.log(`Play button ${messageJson} \n`);
                 if (message.text as boolean) {
                   runSimulatorCommand();
                 } else {
@@ -106,11 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
-                console.log("sensor changed");
-                console.log(messageJson + "\n");
-                if (childProcess) {
-                  childProcess.stdin.write(messageJson + "\n");
-                }
+                communicationHandler.emitSensorChanged(messageJson);
                 break;
               case WebviewMessages.REFRESH_SIMULATOR:
                 console.log("Refresh button");

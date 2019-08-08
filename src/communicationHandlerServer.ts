@@ -31,9 +31,16 @@ export class CommunicationHandlerServer {
     this.simulatorWebview = webviewPanel;
   }
 
-  // TODO: Find a better way to send event to socket ?
-  public emitButtonAPressed(newState: string): void {
-    this.serverIo.emit("button_a_pressed", newState);
+  // Emit Buttons Inputs Events
+  public emitButtonPress(newState: string): void {
+    console.log(`Emit Button Press: ${newState} \n`);
+    this.serverIo.emit("button_press", newState);
+  }
+
+  // Emit Sensors Inputs Events
+  public emitSensorChanged(newState: string): void {
+    console.log(`Emit Sensor Changed: ${newState} \n`);
+    this.serverIo.emit("sensor_changed", newState);
   }
 
   private initEventsHandlers(): void {

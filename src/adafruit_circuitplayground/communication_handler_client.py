@@ -3,10 +3,14 @@
 
 import socketio
 import json
+import sys
 from . import express
 
 
 DEFAULT_PORT = 5555
+EVENTS_BUTTON_PRESS = ['button_a', 'button_b', 'switch']
+EVENTS_SENSOR_CHANGED = ['temperature', 'light',
+                       'motion_x', 'motion_y', 'motion_z']
 
 # Create Socket Client
 sio = socketio.Client()
@@ -17,6 +21,17 @@ sio = socketio.Client()
 # Initialize connection
 def init_connection(port=DEFAULT_PORT):
     sio.connect(f'http://localhost:{port}')
+
+# Transfer the user's inputs to the API
+def __update_api_state(data, expected_events):
+    try:
+        event_state = json.loads(data)
+        for event in expected_events:
+            express.cpx._Express__state[event] = event_state.get(
+                event, express.cpx._Express__state[event])
+    except Exception as e:
+        print("Error trying to send event to the process : ",
+                e, file=sys.stderr, flush=True)
 
 # Method : Update State
 def update_state(state):
@@ -31,22 +46,13 @@ def connect():
     print("I'm connected!")
 
 
-# Event : Button A Pressed
-@sio.on('button_a_pressed')
-def button_a_pressed(data):
-    event_state = json.loads(data)
-    express.cpx._Express__state['button_a'] = event_state.get(
-        'button_a', express.cpx._Express__state['button_a'])
-    print(f'MESSAGE BUTTONS A received from server: {data}', flush=True)
+# Event : Button pressed (A, B, A+B, Switch)
+@sio.on('button_press')
+def button_press(data):
+    __update_api_state(data, EVENTS_BUTTON_PRESS)
 
-# ## User inputs
-# EXPECTED_INPUT_EVENTS = [
-#     'button_a',
-#     'button_b',
-#     'switch',
-#     'temperature',
-#     'light',
-#     'motion_x',
-#     'motion_y',
-#     'motion_z'
-# ]
+
+# Event : Sensor changed (Temperature, light, Motion)
+@sio.on('sensor_changed')
+def button_press(data):
+    __update_api_state(data, EVENTS_SENSOR_CHANGED)
