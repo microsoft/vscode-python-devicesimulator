@@ -137,7 +137,7 @@ class Express:
     def stop_stone(self, frequency):
         """
         Method that stops the playing.
-        Sorry, this mehod is not implemented yet.
+        Sorry, this method is not implemented yet.
         """
         raise NotImplementedError("This method is not available")
 
