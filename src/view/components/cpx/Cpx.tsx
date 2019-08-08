@@ -303,10 +303,7 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
   const svgButton = (button as unknown) as SVGElement;
   svg.addClass(svgButton, className);
   addButtonLabels(button);
-  if (
-    className.match(/outer/) !== null ||
-    className.match(/pin-touch/) !== null
-  ) {
+  if (className.match(/outer/) !== null) {
     accessibility.makeFocusable(svgButton);
   }
   svgButton.onmousedown = e => props.onMouseDown(button, e);
