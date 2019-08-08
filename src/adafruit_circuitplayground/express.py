@@ -38,6 +38,8 @@ class Express:
             'motion_x': 0,
             'motion_y': 0,
             'motion_z': 0,
+            'detect_taps': 1,
+            'tapped': False,
             'shake': False,
         }
 
@@ -55,6 +57,24 @@ class Express:
     @property
     def button_b(self):
         return self.__state['button_b']
+
+    @property
+    def detect_taps(self):
+        return self.__state['detect_taps']
+
+    @detect_taps.setter
+    def detect_taps(self, value):
+        value_int = int(value)
+        self.__state['detect_taps'] = value_int if (
+            value_int == 1 or value_int == 2) else 1
+
+    @property
+    def tapped(self):
+        """  Not Implemented!
+        """
+
+        raise NotImplementedError(
+            "This method is not implemented by the simulator")
 
     @property
     def red_led(self):
@@ -102,6 +122,25 @@ class Express:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
             raise NotImplementedError("Please use Python 3 or higher.")
+
+    def play_tone(self, frequency, duration):
+        """ Not Implemented!
+        """
+        raise NotImplementedError(
+            "This method is not implemented by the simulator")
+
+    def start_tone(self, frequency):
+        """ Not Implemented!
+        """
+        raise NotImplementedError(
+            "This method is not implemented by the simulator")
+
+    def stop_tone(self):
+        """ Not Implemented!
+        """
+        # Stop playing any tones.
+        raise NotImplementedError(
+            "This method is not implemented by the simulator")
 
 
 cpx = Express()
