@@ -5,10 +5,10 @@ import os
 import sys
 import json
 import threading
-import copy
-from adafruit_circuitplayground.express import cpx
-from pathlib import Path
 import traceback
+from pathlib import Path
+from adafruit_circuitplayground.express import cpx
+from adafruit_circuitplayground import communication_handler_client
 
 EXPECTED_INPUT_EVENTS = [
     'button_a',
@@ -23,6 +23,9 @@ EXPECTED_INPUT_EVENTS = [
 
 read_val = ""
 
+# Init Communication
+communication_handler_client.init_connection()
+
 
 class UserInput(threading.Thread):
 
@@ -30,7 +33,6 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        from adafruit_circuitplayground.express import cpx
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
@@ -56,9 +58,8 @@ user_input = UserInput()
 threads.append(user_input)
 user_input.start()
 
+
 # User code thread
-
-
 def execute_user_code(abs_path_to_code_file):
     cpx._Express__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file

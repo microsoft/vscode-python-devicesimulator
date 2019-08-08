@@ -15,6 +15,7 @@ import {
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import * as utils from "./utils";
+import { CommunicationHandlerServer } from "./communicationHandlerServer";
 
 let currentFileAbsPath: string = "";
 // Notification booleans
@@ -38,6 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
   let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
+  const communicationHandler: CommunicationHandlerServer = new CommunicationHandlerServer(
+    currentPanel
+  );
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
@@ -75,6 +79,9 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       if (currentPanel) {
+        // Set Webview for the Server
+        communicationHandler.setWebview(currentPanel);
+
         // Handle messages from webview
         messageListener = currentPanel.webview.onDidReceiveMessage(
           message => {
@@ -124,6 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          communicationHandler.setWebview(undefined);
           killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
@@ -277,44 +285,11 @@ export function activate(context: vscode.ExtensionContext) {
       ]);
 
       let dataFromTheProcess = "";
-      let oldMessage = "";
 
       // Data received from Python process
       childProcess.stdout.on("data", data => {
         dataFromTheProcess = data.toString();
-        if (currentPanel) {
-          // Process the data from the process and send one state at a time
-          dataFromTheProcess.split("\0").forEach(message => {
-            if (currentPanel && message.length > 0 && message != oldMessage) {
-              oldMessage = message;
-              let messageToWebview;
-              // Check the message is a JSON
-              try {
-                messageToWebview = JSON.parse(message);
-                // Check the JSON is a state
-                switch (messageToWebview.type) {
-                  case "state":
-                    console.log(
-                      `Process state output = ${messageToWebview.data}`
-                    );
-                    currentPanel.webview.postMessage({
-                      command: "set-state",
-                      state: JSON.parse(messageToWebview.data)
-                    });
-                    break;
-
-                  default:
-                    console.log(
-                      `Non-state JSON output from the process : ${messageToWebview}`
-                    );
-                    break;
-                }
-              } catch (err) {
-                console.log(`Non-JSON output from the process :  ${message}`);
-              }
-            }
-          });
-        }
+        console.log("PROCESS OUTPUT " + dataFromTheProcess);
       });
 
       // Std error output
