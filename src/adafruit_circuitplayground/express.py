@@ -9,6 +9,8 @@ from .pixel import Pixel
 from . import utils
 from collections import namedtuple
 
+Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
+
 
 class Express:
     def __init__(self):
@@ -38,7 +40,7 @@ class Express:
             'motion_z': 0,
             'detect_taps': 1,
             'tapped': False,
-
+            'shake': False,
         }
 
         self.pixels = Pixel(self.__state)
@@ -46,8 +48,6 @@ class Express:
 
     @property
     def acceleration(self):
-        Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
-
         return Acceleration(self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
 
     @property
@@ -99,6 +99,9 @@ class Express:
 
     def __show(self):
         utils.show(self.__state)
+
+    def shake(self, shake_threshold=30):
+        return self.__state['shake']
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)

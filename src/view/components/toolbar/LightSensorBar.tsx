@@ -4,7 +4,7 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import "./LightSensorBar.css";
-import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "./Toolbar_utils";
+import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "./ToolbarUtils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
   maxValue: 255,
