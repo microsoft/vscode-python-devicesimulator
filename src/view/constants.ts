@@ -19,15 +19,15 @@ export const CONSTANTS = {
     CAPITAL_F: "F",
     ENTER: "Enter",
     S: "KeyS"
-  }
+  },
+  REDIRECT: {
+    link:
+      "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+    privacy: "https://www.adafruit.com/privacy",
+    description:
+      "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
+  },
+  TOOLBAR_INFO: `Explore what's on the board:`
 };
 
-export const REDIRECT = {
-  link:
-    "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
-  privacy: "https://www.adafruit.com/privacy",
-  description:
-    "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
-};
-export const TOOLBAR_INFO = `Explore what's on the board:`;
 export default CONSTANTS;

@@ -11,12 +11,19 @@ import {
   TOOLBAR_ICON_LABEL
 } from "./sensorModalUtils";
 import { INFO_SVG } from "../../svgs/info_svg";
-import { TOOLBAR_INFO, REDIRECT } from "../../constants";
+import { CONSTANTS } from "../../constants";
+
+interface IToolbarState {
+  currentOpened: string;
+  doNotShowAgain: boolean;
+  showModal: boolean;
+  showRedirectModal: boolean;
+}
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
 
-class ToolBar extends React.Component<any, any, any> {
+class ToolBar extends React.Component<any, IToolbarState, any> {
   private toolbarRef: any = React.createRef<HTMLDivElement>();
   constructor(props: any) {
     super(props);
@@ -40,7 +47,7 @@ class ToolBar extends React.Component<any, any, any> {
         <div className="info">
           <div className="redirect-link">
             <span className="info-icon">{INFO_SVG}</span>
-            <span className="info-text">{TOOLBAR_INFO}</span>
+            <span className="info-text">{CONSTANTS.TOOLBAR_INFO}</span>
             {this.getLearnLink()}
           </div>
           {this.getRedirectModal()}
@@ -230,14 +237,14 @@ class ToolBar extends React.Component<any, any, any> {
       <span>
         <div className="redirect-modal">
           <div className="redirect-description">{`${
-            REDIRECT.description
-          } : \n ${REDIRECT.privacy}`}</div>
+            CONSTANTS.REDIRECT.description
+          } : \n ${CONSTANTS.REDIRECT.privacy}`}</div>
           <a
             className="redirect-button"
             id="redirect"
             aria-label={"Information pop-up"}
             onClick={this.handleOnClickButton}
-            href={REDIRECT.link}
+            href={CONSTANTS.REDIRECT.link}
           >
             {`Got it`}
           </a>
@@ -260,7 +267,7 @@ class ToolBar extends React.Component<any, any, any> {
     );
     const linkAnchor = (
       <span className="redirect-learn-link">
-        <a href={REDIRECT.link}>Learn More</a>
+        <a href={CONSTANTS.REDIRECT.link}>Learn More</a>
       </span>
     );
     return this.state.doNotShowAgain ? linkAnchor : linkString;
@@ -277,7 +284,7 @@ class ToolBar extends React.Component<any, any, any> {
       const ref = window.document.getElementById("redirect");
       if (ref) {
         console.log("got to redirect");
-        window.location.assign(REDIRECT.link);
+        window.location.assign(CONSTANTS.REDIRECT.link);
       }
     }
   };
@@ -290,7 +297,10 @@ class ToolBar extends React.Component<any, any, any> {
     window.addEventListener("mousedown", this.handleMouseEvent);
   }
   handleMouseEvent = (event: any) => {
-    if (!this.toolbarRef.contains(event.target)) this.closeCurrentModal();
+    if (this.toolbarRef.current) {
+      if (!this.toolbarRef.current.contains(event.target))
+        this.closeCurrentModal();
+    }
   };
 
   componentWillUnmount() {
