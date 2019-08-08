@@ -115,7 +115,7 @@ class Express:
 
     def adjust_touch_threshold(self, adjustement):
         """Not implemented!
-        he CPX Simulator doesn't use capacitive touch threshold.
+        The CPX Simulator doesn't use capacitive touch threshold.
         """
         raise NotImplementedError(
             "this method is not supported by the simulator")
