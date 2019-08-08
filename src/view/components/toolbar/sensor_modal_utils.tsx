@@ -62,7 +62,7 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
     "8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
+    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   component: TRY_IT_MAKE_CODE,
   id: "GPIO"
 };
@@ -75,7 +75,7 @@ export const IR_MODAL_CONTENT: IModalContent = {
     "Allows you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light.",
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
+    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   component: TRY_IT_MAKE_CODE,
   id: "IR"
 };
@@ -144,7 +144,7 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
     "A digital microphone can detect audio volume and even perform basic FFT functions but cannot read it like an analog voltage.",
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
+    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   component: TRY_IT_MAKE_CODE,
   id: "sound_sensor"
 };

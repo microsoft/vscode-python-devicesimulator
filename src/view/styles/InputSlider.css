@@ -20,6 +20,7 @@
   margin-bottom: auto;
   margin-left: 5px;
   color: var(--badge-foreground);
+  border-radius: 2px;
 }
 
 .slider {

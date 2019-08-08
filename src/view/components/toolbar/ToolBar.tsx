@@ -10,20 +10,22 @@ import {
   IModalContent,
   TOOLBAR_ICON_LABEL
 } from "./sensor_modal_utils";
-import { CLOSE_SVG } from "../../svgs/close_svg";
-import RedirectLink from "../RedirectLink";
+import { INFO_SVG } from "../../svgs/info_svg";
+import { TOOLBAR_INFO, REDIRECT } from "../../constants";
+import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
 
 class ToolBar extends React.Component<any, any, any> {
   private toolbarRef: any = React.createRef<HTMLDivElement>();
-
   constructor(props: any) {
     super(props);
     this.state = {
       currentOpened: "",
-      showModal: false
+      doNotShowAgain: false,
+      showModal: false,
+      showRedirectModal: false
     };
   }
 
@@ -37,7 +39,12 @@ class ToolBar extends React.Component<any, any, any> {
         }}
       >
         <div className="info">
-          <RedirectLink shouldOpen={this.state.shouldOpenLink} />
+          <div className="redirect-link">
+            <span className="info-icon">{INFO_SVG}</span>
+            <span className="info-text">{TOOLBAR_INFO}</span>
+            {this.getLearnLink()}
+          </div>
+          {this.getRedirectModal()}
         </div>
         <div className="toolbar">
           <div className="toolbar-icon">
@@ -182,62 +189,106 @@ class ToolBar extends React.Component<any, any, any> {
 
   private getIconModal() {
     if (
-      this.state.showModal &&
-      LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened)
+      !this.state.showModal ||
+      !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened)
     ) {
-      const content = LABEL_TO_MODAL_CONTENT.get(
-        this.state.currentOpened
-      ) as IModalContent;
-
-      const component = content
-        ? content["component"]
-        : DEFAULT_MODAL_CONTENT.component;
-      return (
-        <div className="sensor_modal">
-          <div className="title_group">
-            <span className="title">
-              {content["descriptionTitle"]}
-              {content["tagInput"]}
-              {content["tagOutput"]}
-              <span className="close_icon" onMouseDown={this.closeCurrentModal}>
-                {CLOSE_SVG}
-              </span>
-            </span>
-          </div>
-          <br />
-          <div className="description">{content["descriptionText"]}</div>
-          {/* make border visivle bottom */}
-          <div className="try_area">
-            <div className="title"> {content["tryItTitle"]}</div>
-            <br />
-            <div className="description">{content["tryItDescriptrion"]}</div>
-            <div>{component}</div>
-          </div>
-        </div>
-      );
+      return null;
     }
-    return null;
+
+    const content = LABEL_TO_MODAL_CONTENT.get(
+      this.state.currentOpened
+    ) as IModalContent;
+
+    const component = content
+      ? content["component"]
+      : DEFAULT_MODAL_CONTENT.component;
+    return (
+      <div className="sensor_modal">
+        <div className="title_group">
+          <span className="title">
+            {content["descriptionTitle"]}
+            {content["tagInput"]}
+            {content["tagOutput"]}
+          </span>
+        </div>
+        <br />
+        <div className="description">{content["descriptionText"]}</div>
+        {/* make border visivle bottom */}
+        <div className="try_area">
+          <div className="title"> {content["tryItTitle"]}</div>
+          <br />
+          <div className="description">{content["tryItDescriptrion"]}</div>
+          <div>{component}</div>
+        </div>
+      </div>
+    );
   }
 
   private getRedirectModal() {
+    if (this.state.doNotShowAgain || !this.state.showRedirectModal) {
+      return null;
+    }
     return (
       <span>
-        {/* <div className="redirect-link">
-          <span className="info-icon">{INFO_SVG}</span>
-          <span className="info-text">{TOOLBAR_INFO}</span>
-          <span onClick={this.handleOnClickLink}>Learn More></span>
+        <div className="redirect-modal">
+          <div className="redirect-description">{`${
+            REDIRECT.description
+          } : \n ${REDIRECT.privacy}`}</div>
+          <a
+            className="redirect-button"
+            id="redirect"
+            aria-label={"Information pop-up"}
+            onClick={this.handleOnClickButton}
+            href={REDIRECT.link}
+          >
+            {`Got it`}
+          </a>
+          <span className="redirect-button" onClick={this.handleOnClickButton}>
+            {`close`}
+          </span>
+          <span className="redirect-button" onClick={this.handleDoNotShow}>
+            {`Do Not Show Again`}
+          </span>
         </div>
-        <Modal
-          text={`${REDIRECT.description} : \n ${REDIRECT.privacy}`}
-          showModal={this.state.showModal}
-          onClick={this.handleOnClickButton}
-          link={REDIRECT.link}
-          onClickClose={this.handleOnClickButton}
-          shouldOpenLink={this.props.shouldOpeLink}
-        /> */}
       </span>
     );
   }
+
+  private getLearnLink() {
+    const linkString = (
+      <span className="redirect-learn-link">
+        <span onClick={this.handleOnClickLink}>Learn More</span>
+        {ARROW_RIGHT_SVG}
+      </span>
+    );
+    const linkAnchor = (
+      <span className="redirect-learn-link">
+        <a href={REDIRECT.link}>Learn More</a>
+        {ARROW_RIGHT_SVG}
+      </span>
+    );
+    return this.state.doNotShowAgain ? linkAnchor : linkString;
+  }
+
+  private handleOnClickButton = (event: React.MouseEvent<HTMLElement>) => {
+    this.setState({ showRedirectModal: false });
+  };
+
+  private handleOnClickLink = (event: React.MouseEvent<HTMLElement>) => {
+    this.setState({ showRedirectModal: true });
+    if (this.state.doNotShowAgain) {
+      console.log("got to do not show");
+      const ref = window.document.getElementById("redirect");
+      if (ref) {
+        console.log("got to redirect");
+        window.location.assign(REDIRECT.link);
+      }
+    }
+  };
+
+  private handleDoNotShow = (event: React.MouseEvent<HTMLElement>) => {
+    this.setState({ doNotShowAgain: true });
+  };
 
   componentDidMount() {
     window.addEventListener("mousedown", this.handleMouseEvent);
