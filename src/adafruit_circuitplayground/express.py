@@ -114,7 +114,11 @@ class Express:
         return self.__touch(7)
 
     def adjust_touch_threshold(self, adjustement):
-        pass
+        """Not implemented!
+        The capacitive touch simulation does't use the threshold
+        You can still use this call if you want to deploy your code
+        """
+        raise NotImplementedError("this method is not supported by the simulator")
 
     def play_file(self, file_name):
         file_name = utils.remove_leading_slashes(file_name)
