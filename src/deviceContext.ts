@@ -5,7 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as utils from "./utils";
+import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import { CPXWorkspace } from "./cpxWorkspace";
 import CONSTANTS, { CPX_CONFIG_FILE } from "./constants";

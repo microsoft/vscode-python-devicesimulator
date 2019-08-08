@@ -6,7 +6,7 @@
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
-import * as utils from "./utils";
+import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import { SerialMonitor } from "./serialMonitor";
 import { CONFIG_KEYS } from "./constants";

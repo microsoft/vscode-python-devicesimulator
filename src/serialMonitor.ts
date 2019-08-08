@@ -5,7 +5,7 @@
 
 import * as vscode from "vscode";
 import { outChannel } from "./extension";
-import { logToOutputChannel } from "./utils";
+import { logToOutputChannel } from "./extension_utils/utils";
 import { DeviceContext } from "./deviceContext";
 import CONSTANTS, { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
 import { SerialPortControl, SerialPortEnding } from "./serialPortControl";

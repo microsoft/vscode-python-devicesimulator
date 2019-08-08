@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { validCodeFileName } from "./utils";
+import { validCodeFileName } from "./extension_utils/utils";
 import { CONSTANTS,DialogResponses } from "./constants";
 
 let shouldShowInvalidFileNamePopup: boolean = true;

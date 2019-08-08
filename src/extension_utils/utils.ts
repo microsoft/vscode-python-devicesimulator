@@ -3,9 +3,9 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { DeviceContext } from "./deviceContext";
+import { DeviceContext } from "../deviceContext";
 import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
-import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "./constants";
+import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (

@@ -5,7 +5,7 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
 import * as path from "path";
-import * as utils from "./utils";
+import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import {
   CONSTANTS,
