@@ -35,11 +35,7 @@
   border: none;
 }
 
-.toolbar-button:focus {
-  background-color: var(--vscode-button-background);
-  outline: none;
-}
-
+.toolbar-button:focus,
 .toolbar-button:hover {
   outline: none;
 }
@@ -47,4 +43,9 @@
 .edge-button {
   pointer-events: none;
   border: none;
+}
+
+.button-pressed {
+  background-color: var(--vscode-button-background);
+  outline: none;
 }

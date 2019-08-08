@@ -6,7 +6,7 @@ export interface IButtonProps {
   image: any;
   styleLabel: string;
   width: number;
-  onClick: (event?: React.MouseEvent<HTMLElement>, label?: string) => void;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 // Functional Component render
@@ -16,9 +16,9 @@ const Button: React.FC<IButtonProps> = props => {
 
   return (
     <button
-      id={`${props.styleLabel}-button`}
+      id={`${props.label}-button`}
       className={`${props.styleLabel}-button button`}
-      aria-label={props.label}
+      aria-label={props.label.replace("-", " ")}
       role="button"
       onClick={props.onClick}
       style={buttonStyle}

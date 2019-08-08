@@ -8,13 +8,13 @@ import {
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent,
-  TOOLBAR_ICON_LABEL
+  TOOLBAR_ICON_ID
 } from "./sensorModalUtils";
 import { INFO_SVG } from "../../svgs/info_svg";
 import { CONSTANTS } from "../../constants";
 
 interface IToolbarState {
-  currentOpened: string;
+  currentOpenedLabel: string;
   doNotShowAgain: boolean;
   showModal: boolean;
   showRedirectModal: boolean;
@@ -27,7 +27,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      currentOpened: "",
+      currentOpenedLabel: "",
       doNotShowAgain: false,
       showModal: false,
       showRedirectModal: false
@@ -36,10 +36,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
 
   render() {
     return (
-      <div
-        className="toolbar-parent"
-        id="toolbar-parent"
-      >
+      <div className="toolbar-parent" id="toolbar-parent">
         <div className="info">
           <div className="redirect-link">
             <span className="info-icon">{INFO_SVG}</span>
@@ -58,93 +55,101 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               styleLabel="edge"
             />
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.SWITCH}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SWITCH)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.SWITCH);
+              }}
               image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.PUSH_BUTTON}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(
-                this,
-                TOOLBAR_ICON_LABEL.PUSH_BUTTON
-              )}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.PUSH_BUTTON);
+              }}
               image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.RED_LED}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(
-                this,
-                TOOLBAR_ICON_LABEL.RED_LED
-              )}
+              onClick={e => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.RED_LED);
+              }}
               image={TOOLBAR_SVG.RED_LED_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.SOUND}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.SOUND)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.SOUND);
+              }}
               image={TOOLBAR_SVG.SOUND_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.TEMPERATURE}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(
-                this,
-                TOOLBAR_ICON_LABEL.TEMPERATURE
-              )}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.TEMPERATURE);
+              }}
               image={TOOLBAR_SVG.TEMPERATURE_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.LIGHT}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.LIGHT)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.LIGHT);
+              }}
               image={TOOLBAR_SVG.LIGHT_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.SPEAKER}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(
-                this,
-                TOOLBAR_ICON_LABEL.SPEAKER
-              )}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.SPEAKER);
+              }}
               image={TOOLBAR_SVG.SPEAKER_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.MOTION}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.MOTION)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.MOTION);
+              }}
               image={TOOLBAR_SVG.MOTION_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.IR}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.IR)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.IR);
+              }}
               image={TOOLBAR_SVG.IR_SVG}
               styleLabel="toolbar"
             />
 
             <Button
-              label=""
+              label={TOOLBAR_ICON_ID.GPIO}
               width={this.TOOLBAR_BUTTON_WIDTH}
-              onClick={this.handleOnClick.bind(this, TOOLBAR_ICON_LABEL.GPIO)}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.GPIO);
+              }}
               image={TOOLBAR_SVG.GPIO_SVG}
               styleLabel="toolbar"
             />
@@ -164,45 +169,59 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
     );
   }
 
-  private handleOnClick(label: string) {
+  private handleOnClick = (
+    event: React.MouseEvent<HTMLElement>,
+    label: string
+  ) => {
     if (
       !this.state.showModal &&
-      this.state.currentOpened === "" &&
-      this.state.currentOpened !== label
+      this.state.currentOpenedLabel === "" &&
+      this.state.currentOpenedLabel !== label
     ) {
       this.openModal(label);
-      const parent = window.document.getElementById("toolbar-parent");
-      if (parent) {
-        parent.focus();
-      }
     } else {
       this.closeCurrentModal();
-      if (this.state.currentOpened !== label) {
+      if (this.state.currentOpenedLabel !== label) {
         this.openModal(label);
       }
     }
-  }
+  };
 
+  private changePressedState(id: string, pressed: boolean) {
+    const elt = window.document.getElementById(`${id}-button`);
+    if (elt) {
+      pressed
+        ? elt.classList.add("button-pressed")
+        : elt.classList.remove("button-pressed");
+    }
+  }
   private closeCurrentModal = () => {
-    this.setState({ showModal: false });
-    this.setState({ currentOpened: "" });
+    this.changePressedState(this.state.currentOpenedLabel, false);
+    this.setState({
+      currentOpenedLabel: "",
+      showModal: false
+    });
   };
 
   private openModal = (label: string) => {
-    this.setState({ currentOpened: label });
-    this.setState({ showModal: true });
+    console.log(`openning ${label}`);
+    this.setState({
+      currentOpenedLabel: label,
+      showModal: true
+    });
+    this.changePressedState(label, true);
   };
 
   private getIconModal() {
     if (
       !this.state.showModal ||
-      !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpened)
+      !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpenedLabel)
     ) {
       return null;
     }
 
     const content = LABEL_TO_MODAL_CONTENT.get(
-      this.state.currentOpened
+      this.state.currentOpenedLabel
     ) as IModalContent;
 
     const component = content
@@ -280,10 +299,8 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   private handleOnClickLink = (event: React.MouseEvent<HTMLElement>) => {
     this.setState({ showRedirectModal: true });
     if (this.state.doNotShowAgain) {
-      console.log("got to do not show");
       const ref = window.document.getElementById("redirect");
       if (ref) {
-        console.log("got to redirect");
         window.location.assign(CONSTANTS.REDIRECT.link);
       }
     }
