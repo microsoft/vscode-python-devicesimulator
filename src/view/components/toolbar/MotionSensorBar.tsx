@@ -3,6 +3,8 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
+import SensorButton from "./SensorButton";
+
 import {
   ISensorProps,
   ISliderProps,
@@ -11,6 +13,17 @@ import {
   Y_SLIDER_INDEX
 } from "./ToolbarUtils";
 import "../../styles/MotionSensorBar.css";
+import { CONSTANTS } from "../../constants";
+
+interface vscode {
+  postMessage(message: any): void;
+}
+
+declare const vscode: vscode;
+
+const sendMessage = (state: any) => {
+  vscode.postMessage({ command: "sensor-changed", text: state });
+};
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
   maxValue: 125,
@@ -55,6 +68,15 @@ class MotionSensorBar extends React.Component {
         <div className="header">
           <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
+        <SensorButton
+          label="Shake"
+          type="shake"
+          onMouseUp={this.onMouseUp}
+          onMouseDown={this.onMouseDown}
+          onKeyUp={this.onKeyUp}
+          onKeyDown={this.onKeyDown}
+        />
+        <br />
         <InputSlider
           minValue={
             MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
@@ -102,8 +124,33 @@ class MotionSensorBar extends React.Component {
             MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxLabel
           }
         />
+        <br />
       </div>
     );
+  }
+
+  private onMouseDown = () => this.handleOnclick(true, "shake");
+
+  private onKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) =>
+    this.onKeyEvent(event, false);
+
+  private onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) =>
+    this.onKeyEvent(event, true);
+
+  private onMouseUp = () => this.handleOnclick(false, "shake");
+
+  private handleOnclick = (active: boolean, type: string) => {
+    const messageState = { [type]: active };
+    sendMessage(messageState);
+  };
+
+  private onKeyEvent(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    active: boolean
+  ) {
+    if ([event.keyCode, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+      this.handleOnclick(active, "shake");
+    }
   }
 }
 

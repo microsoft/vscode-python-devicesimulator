@@ -16,6 +16,7 @@ EXPECTED_INPUT_EVENTS = [
     'switch',
     'temperature',
     'light',
+    'shake',
     'motion_x',
     'motion_y',
     'motion_z',

@@ -14,14 +14,15 @@ import {
   WebviewMessages
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
-import * as utils from "./utils";
+import * as utils from "./extension_utils/utils";
 
 let currentFileAbsPath: string = "";
+let telemetryAI: TelemetryAI;
+let pythonExecutableName: string = "python";
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewProject: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
-let telemetryAI: TelemetryAI;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -30,7 +31,7 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
 }
 
 // Extension activation
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
   telemetryAI = new TelemetryAI(context);
@@ -41,6 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
+
+  pythonExecutableName = await utils.setPythonExectuableName();
+
+  if (pythonExecutableName === "") {
+    return;
+  }
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
@@ -271,7 +278,7 @@ export function activate(context: vscode.ExtensionContext) {
           });
       }
 
-      childProcess = cp.spawn("python", [
+      childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
       ]);
@@ -369,7 +376,7 @@ export function activate(context: vscode.ExtensionContext) {
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
 
-      const deviceProcess = cp.spawn("python", [
+      const deviceProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "device.py"),
         currentFileAbsPath
       ]);
@@ -474,6 +481,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
+
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
   const activeEditor = editors.find(
@@ -574,4 +582,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
