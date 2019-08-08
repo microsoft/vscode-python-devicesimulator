@@ -12,7 +12,6 @@ import {
 } from "./sensor_modal_utils";
 import { INFO_SVG } from "../../svgs/info_svg";
 import { TOOLBAR_INFO, REDIRECT } from "../../constants";
-import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 
 const TOOLBAR_BUTTON_WIDTH: number = 32;
 const TOOLBAR_EDGE_WIDTH: number = 8;
@@ -258,13 +257,11 @@ class ToolBar extends React.Component<any, any, any> {
     const linkString = (
       <span className="redirect-learn-link">
         <span onClick={this.handleOnClickLink}>Learn More</span>
-        {ARROW_RIGHT_SVG}
       </span>
     );
     const linkAnchor = (
       <span className="redirect-learn-link">
         <a href={REDIRECT.link}>Learn More</a>
-        {ARROW_RIGHT_SVG}
       </span>
     );
     return this.state.doNotShowAgain ? linkAnchor : linkString;

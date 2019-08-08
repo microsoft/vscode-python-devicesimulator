@@ -6,11 +6,12 @@ import MotionSensorBar from "./MotionSensorBar";
 import * as React from "react";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
+import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 
 export const TRY_IT_MAKE_CODE = (
   <div className="link-parent">
     <a href="https://makecode.adafruit.com/" className="link">
-      Try it on MakeCode >
+      Try it on MakeCode {ARROW_RIGHT_SVG}
     </a>
   </div>
 );

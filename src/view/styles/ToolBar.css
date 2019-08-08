@@ -74,6 +74,7 @@
 
 .try_area {
   position: relative;
+  padding-bottom: 30px;
 }
 
 .info {
@@ -95,21 +96,20 @@
   padding-right: 13px;
 }
 
-.link {
+.link-parent {
+  -webkit-appearance: none;
+  padding-left: 150px;
+  color: var(--vscode-textLink-activeForeground);
   text-align: left;
   text-decoration: none;
-  color: var(--vscode-button-background);
-}
-
-.link-parent {
-  padding-bottom: 33px;
-  padding-left: 150px;
-  color: var(--vscode-textLink-activeForeground);
+  font-weight: bold;
 }
 .link-parent:hover {
+  -webkit-appearance: none;
   padding-bottom: 33px;
   padding-left: 150px;
   color: var(--vscode-textLink-activeForeground);
+  text-decoration: none;
 }
 
 .info-icon-svg {
@@ -158,5 +158,10 @@
   color: var(--vscode-textLink-activeForeground);
   font-size: 16px;
   text-align: right;
-  padding-left: 10px;
+  padding-left: 16px;
+}
+
+.link {
+  -webkit-appearance: none;
+  text-decoration: none;
 }
