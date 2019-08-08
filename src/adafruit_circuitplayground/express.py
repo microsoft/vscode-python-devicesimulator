@@ -9,6 +9,8 @@ from .pixel import Pixel
 from . import utils
 from collections import namedtuple
 
+Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
+
 
 class Express:
     def __init__(self):
@@ -44,7 +46,6 @@ class Express:
 
     @property
     def acceleration(self):
-        Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
         return Acceleration(self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])
 
     @property
