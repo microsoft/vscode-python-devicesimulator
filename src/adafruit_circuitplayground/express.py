@@ -70,11 +70,20 @@ class Express:
 
     @property
     def tapped(self):
+        """  NOT IMPLEMENTED  IN THE SIMULATOR.
+        True once after a detecting a tap. Requires ``cpx.detect_taps``.
+
+        Tap the CPX once for a single-tap, or quickly tap twice for a double-tap.
+        .. code-block:: python
+
+            from adafruit_circuitplayground.express import cpx
+
+            cpx.detect_taps(2)
+            rcpx.red_led = cpx.tapped()
         """
-        Detects when the board has been tapped.
-        Sorry, this mehod is not implemented yet.
-        """
-        raise NotImplementedError("This method is not available")
+
+        raise NotImplementedError(
+            "This method is not implemented in our simulator")
 
     @property
     def red_led(self):
@@ -121,25 +130,63 @@ class Express:
             raise NotImplementedError("Please use Python 3 or higher.")
 
     def play_tone(self, frequency, duration):
+        """ NOT IMPLEMENTED  IN THE SIMULATOR.
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
+
+        :param int frequency: The frequency of the tone in Hz
+        :param float duration: The duration of the tone in seconds
+
+        .. code-block:: python
+
+            from adafruit_circuitplayground.express import cpx
+
+            cpx.play_tone(440, 1)
         """
-        Method that plays a tone at a given frequency for a fixed duration.
-        Sorry, this mehod is not implemented yet.
-        """
-        raise NotImplementedError("This method is not available")
+        raise NotImplementedError(
+            "This method is not implemented in our simulator")
 
     def start_tone(self, frequency):
-        """
-        Method that plays a tone at a given frequency.
-        Sorry, this mehod is not implemented yet.
-        """
-        raise NotImplementedError("This method is not available")
+        """ NOT IMPLEMENTED  IN THE SIMULATOR.
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
 
-    def stop_stone(self, frequency):
+        :param int frequency: The frequency of the tone in Hz
+
+        .. code-block:: python
+
+             from adafruit_circuitplayground.express import cpx
+
+             while True:
+                 if cpx.button_a:
+                     cpx.start_tone(262)
+                 elif cpx.button_b:
+                     cpx.start_tone(294)
+                 else:
+                     cpx.stop_tone()
         """
-        Method that stops the playing.
-        Sorry, this mehod is not implemented yet.
+        raise NotImplementedError(
+            "This method is not implemented in our simulator")
+
+    def stop_stone(self):
+        """ NOT IMPLEMENTED  IN THE SIMULATOR.
+        Use with start_tone to stop the tone produced.
+
+        .. code-block:: python
+
+             from adafruit_circuitplayground.express import cpx
+
+             while True:
+                 if cpx.button_a:
+                     cpx.start_tone(262)
+                 elif cpx.button_b:
+                     cpx.start_tone(294)
+                 else:
+                     cpx.stop_tone()
         """
-        raise NotImplementedError("This method is not available")
+        # Stop playing any tones.
+        raise NotImplementedError(
+            "This method is not implemented in our simulator")
 
 
 cpx = Express()
