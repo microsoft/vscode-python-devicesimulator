@@ -130,7 +130,7 @@ class Express:
     def start_tone(self, frequency):
         """
         Method that plays a tone at a given frequency.
-        Sorry, this mehod is not implemented yet.
+        Sorry, this method is not implemented yet.
         """
         raise NotImplementedError("This method is not available")
 
