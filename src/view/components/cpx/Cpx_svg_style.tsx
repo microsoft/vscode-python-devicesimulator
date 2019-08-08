@@ -274,7 +274,7 @@ export const SVG_STYLE = `
     .sim-PIN_A4-touch:hover,
     .sim-PIN_A5-touch:hover,
     .sim-PIN_A6-touch:hover{
-        stroke:orange;
+        stroke:orange !important;
         stroke-width:1px;
     }
     
@@ -286,8 +286,6 @@ export const SVG_STYLE = `
     .sim-PIN_A6-touch:focus,
     .sim-PIN_A7-touch:focus{
         stroke:#4D90FE;
-        stroke-width:1px;
-
+        stroke-width:2px;
     }
-
 `;
