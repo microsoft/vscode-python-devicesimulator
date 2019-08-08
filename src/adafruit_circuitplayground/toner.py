@@ -1,15 +1,13 @@
 import threading
 from pysine import sine
-from scipy.io.wavfile import write
 import numpy as np
 import struct
 from . import utils
 import sys
 import os
 import simpleaudio as sa
-BIT_RATE = 44100
 
-FILENAME = "tone.wav"
+BIT_RATE = 44100
 
 
 class TonerThread(threading.Thread):
@@ -36,22 +34,13 @@ class TonerThread(threading.Thread):
         self._start_event.set()
 
     def play_tone(self):
-        # print('attempt at writing', flush=True)
-        # # self.write_wave_file(self.frequency, self.duration)
-        # print('finished writing', flush=True)
         self._play_tone_event.set()
-
-    def stopped(self):
-        return self._stop_event.is_set()
 
     def run(self):
         while True:
-            if self._start_event.is_set() and not self.stopped():
-                utils.play_wave_file(
-                    self._get_filename_absolute_path(FILENAME))
+            if self._start_event.is_set() and not self._stop_event.is_set():
+                self.createTone(self.frequency, 0.5)
             elif self._play_tone_event.is_set():
-                print('should play', flush=True)
-                print(self._get_filename_absolute_path(FILENAME))
                 # utils.play_wave_file(
                 #     self._get_filename_absolute_path(FILENAME))
                 self.createTone(self.frequency, self.duration)
@@ -69,16 +58,6 @@ class TonerThread(threading.Thread):
 
     def set_duration(self, duration):
         self.duration = duration
-
-    def write_wave_file(self, frequency, duration):
-        each_sample_number = np.arange(duration * BIT_RATE)
-        waveform = np.sin(2 * np.pi * each_sample_number *
-                          frequency / BIT_RATE)
-        waveform_attenuated = waveform * 0.5
-        waveform_integers = np.int16(waveform_attenuated * 32767)
-        print("writing")
-        print(FILENAME)
-        write(FILENAME, BIT_RATE, waveform_integers)
 
     def createTone(self, frequency, duration):
         each_sample_number = np.arange(duration * BIT_RATE)
