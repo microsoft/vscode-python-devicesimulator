@@ -219,6 +219,26 @@ class ToolBar extends React.Component<any, any, any> {
     return null;
   }
 
+  private getRedirectModal() {
+    return (
+      <span>
+        {/* <div className="redirect-link">
+          <span className="info-icon">{INFO_SVG}</span>
+          <span className="info-text">{TOOLBAR_INFO}</span>
+          <span onClick={this.handleOnClickLink}>Learn More></span>
+        </div>
+        <Modal
+          text={`${REDIRECT.description} : \n ${REDIRECT.privacy}`}
+          showModal={this.state.showModal}
+          onClick={this.handleOnClickButton}
+          link={REDIRECT.link}
+          onClickClose={this.handleOnClickButton}
+          shouldOpenLink={this.props.shouldOpeLink}
+        /> */}
+      </span>
+    );
+  }
+
   componentDidMount() {
     window.addEventListener("mousedown", this.handleMouseEvent);
   }
