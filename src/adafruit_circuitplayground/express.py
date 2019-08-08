@@ -74,7 +74,7 @@ class Express:
         """
 
         raise NotImplementedError(
-            "This method is not implemented in our simulator")
+            "This method is not implemented by the simulator")
 
     @property
     def red_led(self):
@@ -124,20 +124,20 @@ class Express:
         """ Not Implemented!
         """
         raise NotImplementedError(
-            "This method is not implemented in our simulator")
+            "This method is not implemented by the simulator")
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
         raise NotImplementedError(
-            "This method is not implemented in our simulator")
+            "This method is not implemented by the simulator")
 
     def stop_stone(self):
         """ Not Implemented!
         """
         # Stop playing any tones.
         raise NotImplementedError(
-            "This method is not implemented in our simulator")
+            "This method is not implemented by the simulator")
 
 
 cpx = Express()
