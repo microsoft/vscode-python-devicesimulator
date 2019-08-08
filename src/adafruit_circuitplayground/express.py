@@ -132,7 +132,7 @@ class Express:
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
-    def stop_stone(self):
+    def stop_tone(self):
         """ Not Implemented!
         """
         # Stop playing any tones.
