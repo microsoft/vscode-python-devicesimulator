@@ -204,7 +204,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   };
 
   private openModal = (label: string) => {
-    console.log(`openning ${label}`);
     this.setState({
       currentOpenedLabel: label,
       showModal: true
