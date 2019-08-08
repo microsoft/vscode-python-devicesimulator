@@ -9,7 +9,7 @@ import {
   X_SLIDER_INDEX,
   Z_SLIDER_INDEX,
   Y_SLIDER_INDEX
-} from "../../view_utils";
+} from "../../viewUtils";
 import "../../styles/MotionSensorBar.css";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
