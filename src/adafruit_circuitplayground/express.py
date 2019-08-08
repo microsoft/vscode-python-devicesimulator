@@ -71,15 +71,6 @@ class Express:
     @property
     def tapped(self):
         """  Not Implemented!
-        True once after a detecting a tap. Requires ``cpx.detect_taps``.
-
-        Tap the CPX once for a single-tap, or quickly tap twice for a double-tap.
-        .. code-block:: python
-
-            from adafruit_circuitplayground.express import cpx
-
-            cpx.detect_taps(2)
-            rcpx.red_led = cpx.tapped()
         """
 
         raise NotImplementedError(
