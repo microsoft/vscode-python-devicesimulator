@@ -2,10 +2,10 @@ import threading
 from pysine import sine
 import numpy as np
 import struct
-from . import utils
 import sys
 import os
 import simpleaudio as sa
+import sounddevice as sd
 
 BIT_RATE = 44100
 
@@ -41,8 +41,6 @@ class TonerThread(threading.Thread):
             if self._start_event.is_set() and not self._stop_event.is_set():
                 self.createTone(self.frequency, 0.5)
             elif self._play_tone_event.is_set():
-                # utils.play_wave_file(
-                #     self._get_filename_absolute_path(FILENAME))
                 self.createTone(self.frequency, self.duration)
                 self._play_tone_event.clear()
 
@@ -65,4 +63,6 @@ class TonerThread(threading.Thread):
                           frequency / BIT_RATE)
         waveform_attenuated = waveform * 0.5
         waveform_integers = np.int16(waveform_attenuated * 32767)
-        play_obj = sa.play_buffer(waveform_integers, 1, 2, BIT_RATE)
+        # play_obj = sa.play_buffer(waveform_integers, 1, 2, BIT_RATE)
+        print("calling play", flush=True)
+        sd.play(waveform_integers, BIT_RATE)
