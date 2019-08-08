@@ -17,6 +17,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+## Documentation
+
+- [Installation instructions](/docs/install.md)
+- [How to use the Extension](/docs/how-to-use.md)
+- [Setup for developers](/docs/developers-setup.md)
+- [Contributing](CONTRIBUTING.md)
+
 ## Privacy and Telemetry Notice
 
 - [Data collection](PRIVACY.md)
@@ -24,10 +31,3 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 ## Third Party Notice
 
 - [Third Party Notice](ThirdPartyNotices.txt)
-
-## Documentation
-
-- [Installation instructions](/docs/install.md)
-- [How to use the Extension](/docs/how-to-use.md)
-- [Setup for developers](/docs/developers-setup.md)
-- [Contributing](CONTRIBUTING.md)
