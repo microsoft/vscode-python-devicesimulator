@@ -9,7 +9,7 @@ import {
   DEFAULT_MODAL_CONTENT,
   IModalContent,
   TOOLBAR_ICON_LABEL
-} from "./sensor_modal_utils";
+} from "./sensorModalUtils";
 import { INFO_SVG } from "../../svgs/info_svg";
 import { TOOLBAR_INFO, REDIRECT } from "../../constants";
 
