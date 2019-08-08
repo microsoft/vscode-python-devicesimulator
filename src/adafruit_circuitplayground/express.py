@@ -38,9 +38,8 @@ class Express:
             'motion_x': 0,
             'motion_y': 0,
             'motion_z': 0,
-            'touch': [False]*7
-            'shake': False,
-
+            'touch': [False]*7,
+            'shake': False
         }
 
         self.pixels = Pixel(self.__state)
