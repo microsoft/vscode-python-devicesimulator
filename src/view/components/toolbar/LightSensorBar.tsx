@@ -3,15 +3,16 @@
 
 import * as React from "react";
 import InputSlider from "./InputSlider";
-import "./LightSensorBar.css";
-import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "./ToolbarUtils";
+import "../../styles/LightSensorBar.css";
+import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
   maxValue: 255,
   minValue: 0,
   minLabel: "Dark",
   maxLabel: "Bright",
-  type: "light"
+  type: "light",
+  axisLabel: " "
 };
 
 const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
@@ -28,9 +29,6 @@ class LightSensorBar extends React.Component {
   render() {
     return (
       <div className="lightSensorBar">
-        <div className="header">
-          <div className="title">{LIGHT_SENSOR_PROPERTIES.LABEL}</div>
-        </div>
         <InputSlider
           minValue={
             LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].minValue
@@ -44,6 +42,9 @@ class LightSensorBar extends React.Component {
           }
           maxLabel={
             LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].axisLabel
           }
         />
       </div>

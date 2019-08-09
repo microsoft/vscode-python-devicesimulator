@@ -11,7 +11,7 @@ import {
   X_SLIDER_INDEX,
   Z_SLIDER_INDEX,
   Y_SLIDER_INDEX
-} from "./ToolbarUtils";
+} from "../../viewUtils";
 import "../../styles/MotionSensorBar.css";
 import { CONSTANTS } from "../../constants";
 
@@ -26,17 +26,19 @@ const sendMessage = (state: any) => {
 };
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Left",
+  axisLabel: "X",
   maxLabel: "Right",
+  maxValue: 125,
+  minLabel: "Left",
+  minValue: -55,
   type: "motion_x"
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Back",
+  axisLabel: "Y",
   maxLabel: "Front",
+  maxValue: 125,
+  minLabel: "Back",
+  minValue: -55,
   type: "motion_y"
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
@@ -44,7 +46,8 @@ const MOTION_SLIDER_PROPS_Z: ISliderProps = {
   minValue: -55,
   minLabel: "Up",
   maxLabel: "Down",
-  type: "motion_z"
+  type: "motion_z",
+  axisLabel: "Z"
 };
 
 const MOTION_SENSOR_PROPERTIES: ISensorProps = {
@@ -64,7 +67,7 @@ class MotionSensorBar extends React.Component {
 
   render() {
     return (
-      <div className="lightSensorBar">
+      <div className="MotionSensorBar">
         <div className="header">
           <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
         </div>
@@ -91,6 +94,9 @@ class MotionSensorBar extends React.Component {
           maxLabel={
             MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].maxLabel
           }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX].axisLabel
+          }
         />
         <br />
         <InputSlider
@@ -107,6 +113,9 @@ class MotionSensorBar extends React.Component {
           maxLabel={
             MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].maxLabel
           }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Y_SLIDER_INDEX].axisLabel
+          }
         />
         <br />
         <InputSlider
@@ -122,6 +131,9 @@ class MotionSensorBar extends React.Component {
           }
           maxLabel={
             MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].maxLabel
+          }
+          axisLabel={
+            MOTION_SENSOR_PROPERTIES.sliderProps[Z_SLIDER_INDEX].axisLabel
           }
         />
         <br />

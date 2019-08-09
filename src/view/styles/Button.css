@@ -16,19 +16,36 @@
   border-radius: 0px 8px 8px 0px;
 }
 
-.play-icon {
-  background-color: var(--vscode-terminal-ansiRed);
-  opacity: 1;
-}
-
-.play-button:hover,
-.play-button:focus,
-.refresh-button:hover,
-.refresh-button:focus {
+.button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.play-button:active,
-.refresh-button:active {
+.play-button:focus,
+.play-button:hover,
+.refresh-button:focus,
+.refresh-button:hover {
+  background-color: var(--vscode-terminal-selectionBackground);
+}
+
+.button:active {
   background-color: var(--vscode-editor-selectionHighlightBackground);
+}
+
+.toolbar-button {
+  border: none;
+}
+
+.toolbar-button:focus,
+.toolbar-button:hover {
+  outline: none;
+}
+
+.edge-button {
+  pointer-events: none;
+  border: none;
+}
+
+.button-pressed {
+  background-color: var(--vscode-button-background);
+  outline: none;
 }
