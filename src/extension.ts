@@ -23,6 +23,7 @@ let pythonExecutableName: string = "python";
 let firstTimeClosed: boolean = true;
 let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
+let shouldShowRunCodePopup: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -234,6 +235,25 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const runSimulatorCommand = async () => {
+    if (shouldShowRunCodePopup) {
+      const shouldExitCommand = await vscode.window
+        .showWarningMessage(
+          CONSTANTS.WARNING.ACCEPT_AND_RUN,
+          DialogResponses.ACCEPT_AND_RUN,
+          DialogResponses.CANCEL
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          let hasAccepted = true;
+          if (selection === DialogResponses.ACCEPT_AND_RUN) {
+            shouldShowRunCodePopup = false;
+            hasAccepted = false;
+          }
+          return hasAccepted;
+        });
+      // Don't run users code if they don't accept
+      if (shouldExitCommand) { return; }
+    }
+
     openWebview();
 
     if (!currentPanel) {

@@ -114,7 +114,10 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
-  NAME: localize("name", "Pacifica Simulator")
+  NAME: localize("name", "Pacifica Simulator"),
+  WARNING: {
+    ACCEPT_AND_RUN: localize("warning.agreeAndRun", "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."),
+  }
 };
 
 // Need the different events we want to track and the name of it
@@ -161,6 +164,12 @@ export enum WebviewMessages {
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
+  export const ACCEPT_AND_RUN: MessageItem = {
+    title: localize("dialogResponses.agreeAndRun", "Agree and Run")
+  };
+  export const CANCEL: MessageItem = {
+    title: localize("dialogResponses.cancel", "Cancel")
+  }
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
   };
