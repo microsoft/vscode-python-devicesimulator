@@ -19,6 +19,7 @@ def remove_leading_slashes(string):
 
 def play_wave_file(file_name):
 
+    abs_path_wav_file = remove_leading_slashes(file_name)
     if sys.implementation.version[0] >= 3:
         if file_name.endswith(".wav"):
             try:
