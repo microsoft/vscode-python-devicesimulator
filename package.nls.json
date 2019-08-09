@@ -2,7 +2,7 @@
   "pacificaExtension.commands.label": "Pacifica",
   "pacificaExtension.commands.openSimulator": "Open Simulator",
   "pacificaExtension.commands.runSimulator": "Run Simulator",
-  "pacificaExtension.commands.newProject": "New Project",
+  "pacificaExtension.commands.newFile": "New File",
   "pacificaExtension.commands.runDevice": "Deploy to Device",
   "pacificaExtension.configuration.title": "Pacfica configuration",
   "pacificaExtension.configuration.properties.open": "Whether to show 'Open Simulator' icon in editor title menu.",
