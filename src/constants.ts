@@ -116,7 +116,7 @@ export const CONSTANTS = {
   },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
-    ACCEPT_AND_RUN: localize("warning.acceptAndRun", "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."),
+    ACCEPT_AND_RUN: localize("warning.agreeAndRun", "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."),
   }
 };
 
@@ -165,7 +165,7 @@ export enum WebviewMessages {
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
   export const ACCEPT_AND_RUN: MessageItem = {
-    title: localize("dialogResponses.acceptAndRun", "Agree and Run")
+    title: localize("dialogResponses.agreeAndRun", "Agree and Run")
   };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")

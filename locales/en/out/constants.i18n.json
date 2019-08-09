@@ -1,5 +1,5 @@
 {
-  "dialogResponses.acceptAndRun": "Agree and Run",
+  "dialogResponses.agreeAndRun": "Agree and Run",
   "dialogResponses.acceptPrivacy": "Got it",
   "dialogResponses.cancel": "Cancel",
   "dialogResponses.dontShowAgain": "Don't Show Again",
@@ -30,5 +30,5 @@
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
   "label.webviewPanel": "Adafruit CPX",
   "name": "Pacifica Simulator",
-  "warning.acceptAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+  "warning.agreeAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
 }

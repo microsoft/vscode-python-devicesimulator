@@ -243,12 +243,12 @@ export async function activate(context: vscode.ExtensionContext) {
           DialogResponses.CANCEL
         )
         .then((selection: vscode.MessageItem | undefined) => {
-          let exitCommand = true;
+          let hasAccepted = true;
           if (selection === DialogResponses.ACCEPT_AND_RUN) {
             shouldShowRunCodePopup = false;
-            exitCommand = false;
+            hasAccepted = false;
           }
-          return exitCommand;
+          return hasAccepted;
         });
       // Don't run users code if they don't accept
       if (shouldExitCommand) { return; }
