@@ -3,6 +3,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
 import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
@@ -133,4 +134,31 @@ export function generateCPXConfig(): void {
   const cpxConfigFilePath: string = CPX_CONFIG_FILE;
   mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
   fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
+}
+export const checkPythonDependency = async () => {
+  const dependencyChecker: DependencyChecker = new DependencyChecker();
+  const result = await dependencyChecker.checkDependency(CONSTANTS.DEPENDENCY_CHECKER.PYTHON);
+  return result.payload;
+}
+
+export const setPythonExectuableName = async () => {
+  // Find our what command is the PATH for python
+  let executableName: string = "";
+  const dependencyCheck = await checkPythonDependency();
+  if (dependencyCheck.installed) {
+    executableName = dependencyCheck.dependency;
+  } else {
+    window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
+      DialogResponses.INSTALL_PYTHON)
+      .then((selection: MessageItem | undefined) => {
+        if (selection === DialogResponses.INSTALL_PYTHON) {
+          const okAction = () => {
+            open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+          };
+          showPrivacyModal(okAction);
+        }
+      });
+  }
+
+  return executableName;
 }

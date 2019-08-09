@@ -3,13 +3,13 @@
 
 import * as vscode from "vscode";
 import { validCodeFileName } from "./extension_utils/utils";
-import { CONSTANTS,DialogResponses } from "./constants";
+import { CONSTANTS, DialogResponses } from "./constants";
 
 let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
-  constructor(private pathToScript: string) {}
+  constructor(private pathToScript: string) { }
 
   /**
    * Modify the debug configuration just before a debug session is being launched.
@@ -34,18 +34,18 @@ export class SimulatorDebugConfigurationProvider
             .then(() => {
               return undefined; // Abort launch
             });
-        }else if(!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup){
+        } else if (!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup) {
           vscode.window
-          .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
-          ...[
-            DialogResponses.DONT_SHOW,
-            DialogResponses.MESSAGE_UNDERSTOOD
-          ])
-          .then((selection: vscode.MessageItem | undefined) => {
-            if (selection === DialogResponses.DONT_SHOW) {
-              shouldShowInvalidFileNamePopup = false;
-            }
-          });
+            .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
+              ...[
+                DialogResponses.DONT_SHOW,
+                DialogResponses.MESSAGE_UNDERSTOOD
+              ])
+            .then((selection: vscode.MessageItem | undefined) => {
+              if (selection === DialogResponses.DONT_SHOW) {
+                shouldShowInvalidFileNamePopup = false;
+              }
+            });
         }
         // Set process_user_code path as program
         config.program = this.pathToScript;
