@@ -39,6 +39,7 @@ class Express:
             'motion_x': 0,
             'motion_y': 0,
             'motion_z': 0,
+            'touch': [False]*7,
             'detect_taps': 1,
             'tapped': False,
             'shake': False,
@@ -99,6 +100,44 @@ class Express:
 
     def __show(self):
         utils.show(self.__state)
+
+    def __touch(self, i):
+        return self.__state['touch'][i-1]
+
+    @property
+    def touch_A1(self):
+        return self.__touch(1)
+
+    @property
+    def touch_A2(self):
+        return self.__touch(2)
+
+    @property
+    def touch_A3(self):
+        return self.__touch(3)
+
+    @property
+    def touch_A4(self):
+        return self.__touch(4)
+
+    @property
+    def touch_A5(self):
+        return self.__touch(5)
+
+    @property
+    def touch_A6(self):
+        return self.__touch(6)
+
+    @property
+    def touch_A7(self):
+        return self.__touch(7)
+
+    def adjust_touch_threshold(self, adjustement):
+        """Not implemented!
+        The CPX Simulator doesn't use capacitive touch threshold.
+        """
+        raise NotImplementedError(
+            "this method is not supported by the simulator")
 
     def shake(self, shake_threshold=30):
         return self.__state['shake']

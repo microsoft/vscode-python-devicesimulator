@@ -1,7 +1,8 @@
 import * as React from "react";
+import { TOOLBAR_ICON_LABEL } from "../components/toolbar/sensorModalUtils";
 import "../styles/Button.css";
 
-export const EDGE_SVG = (
+export const LEFT_EDGE_SVG = (
   <svg
     width="4"
     height="16"
@@ -9,6 +10,27 @@ export const EDGE_SVG = (
     version="1.1"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={TOOLBAR_ICON_LABEL.LEFT_EDGE}
+  >
+    <rect y="2.17143" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="4.34286" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="6.51428" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="8.68571" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="10.8571" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="13.0286" width="4" height="0.8" rx="0.4" fill="#292929" />
+    <rect y="15.2" width="4" height="0.8" rx="0.4" fill="#292929" />
+  </svg>
+);
+export const RIGHT_EDGE_SVG = (
+  <svg
+    width="4"
+    height="16"
+    viewBox="0 0 4 16"
+    version="1.1"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={TOOLBAR_ICON_LABEL.RIGHT_EDGE}
   >
     <rect y="2.17143" width="4" height="0.8" rx="0.4" fill="#292929" />
     <rect width="4" height="0.8" rx="0.4" fill="#292929" />
@@ -85,6 +107,8 @@ export const LIGHT_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
+    <title>{TOOLBAR_ICON_LABEL.LIGHT}</title>
+
     <g
       id="light_sensor"
       stroke="none"
@@ -197,7 +221,7 @@ export const PUSH_BUTTON_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    \ <title>push_btn</title>
+    <title>{TOOLBAR_ICON_LABEL.PUSH_BUTTON}</title>
     <desc>Created with Sketch.</desc>
     <g
       id="push_btn"
@@ -233,7 +257,7 @@ export const RED_LED_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    <title>red_LED</title>
+    <title>{TOOLBAR_ICON_LABEL.RED_LED}</title>
     <desc>Created with Sketch.</desc>
     <g
       id="red_LED"
@@ -272,7 +296,7 @@ export const SLIDER_SWITCH_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    <title>slider_switch</title>
+    <title>{TOOLBAR_ICON_LABEL.SWITCH}</title>
     <desc>Created with Sketch.</desc>
     <g
       id="slider_switch"
@@ -308,7 +332,7 @@ export const SOUND_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    <title>sound_sensor</title>
+    <title>{TOOLBAR_ICON_LABEL.SOUND}</title>
     <desc>Created with Sketch.</desc>
     <g
       id="sound_sensor"
@@ -355,7 +379,7 @@ export const SPEAKER_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    <title>speaker</title>
+    <title>{TOOLBAR_ICON_LABEL.SPEAKER}</title>
     <desc>Created with Sketch.</desc>
     <g
       id="speaker"
@@ -380,46 +404,6 @@ export const SPEAKER_SVG = (
   </svg>
 );
 
-export const TAG_INPUT_SVG = (
-  <svg
-    width="43"
-    height="14"
-    viewBox="0 0 43 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M7.97754 10.75V3.7041H6.88379V10.75H7.97754ZM10.8096 10.75V5.74512H10.8877L14.5059 10.75H15.4922V3.7041H14.4277V8.70898H14.3496L10.7314 3.7041H9.74512V10.75H10.8096ZM17.2646 3.7041V10.75H18.3584V8.37695H19.9893C21.3711 8.37695 22.3477 7.42969 22.3477 6.05273C22.3477 4.65625 21.4004 3.7041 20.0234 3.7041H17.2646ZM18.3584 4.6709H19.7354C20.6973 4.6709 21.2295 5.15918 21.2295 6.05273C21.2295 6.92676 20.6777 7.41504 19.7354 7.41504H18.3584V4.6709ZM24.8721 3.7041H23.7783V8.32324C23.7783 9.85156 24.8623 10.9209 26.6299 10.9209C28.3975 10.9209 29.4863 9.85156 29.4863 8.32324V3.7041H28.3926V8.22559C28.3926 9.21191 27.7529 9.89551 26.6299 9.89551C25.5117 9.89551 24.8721 9.21191 24.8721 8.22559V3.7041ZM34.1494 10.75V4.7002H36.3613V3.7041H30.8389V4.7002H33.0557V10.75H34.1494Z"
-      fill="#29B8DB"
-    />
-    <rect
-      x="0.6"
-      y="0.6"
-      width="40.8"
-      height="12.8"
-      rx="6.4"
-      stroke="#29B8DB"
-      stroke-width="1.2"
-    />
-  </svg>
-);
-
-export const TAG_OUTPUT_SVG = (
-  <svg
-    width="56"
-    height="14"
-    viewBox="0 0 56 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M9.88672 3.7832C7.86523 3.7832 6.5957 5.19922 6.5957 7.47461C6.5957 9.74512 7.84082 11.1709 9.88672 11.1709C11.9277 11.1709 13.168 9.74023 13.168 7.47461C13.168 5.2041 11.918 3.7832 9.88672 3.7832ZM9.88672 4.80371C11.2246 4.80371 12.0498 5.83887 12.0498 7.47461C12.0498 9.10059 11.2246 10.1504 9.88672 10.1504C8.53418 10.1504 7.71387 9.10059 7.71387 7.47461C7.71387 5.83887 8.55859 4.80371 9.88672 4.80371ZM15.7607 3.9541H14.667V8.57324C14.667 10.1016 15.751 11.1709 17.5186 11.1709C19.2861 11.1709 20.375 10.1016 20.375 8.57324V3.9541H19.2812V8.47559C19.2812 9.46191 18.6416 10.1455 17.5186 10.1455C16.4004 10.1455 15.7607 9.46191 15.7607 8.47559V3.9541ZM25.0381 11V4.9502H27.25V3.9541H21.7275V4.9502H23.9443V11H25.0381ZM28.5928 3.9541V11H29.6865V8.62695H31.3174C32.6992 8.62695 33.6758 7.67969 33.6758 6.30273C33.6758 4.90625 32.7285 3.9541 31.3516 3.9541H28.5928ZM29.6865 4.9209H31.0635C32.0254 4.9209 32.5576 5.40918 32.5576 6.30273C32.5576 7.17676 32.0059 7.66504 31.0635 7.66504H29.6865V4.9209ZM36.2002 3.9541H35.1064V8.57324C35.1064 10.1016 36.1904 11.1709 37.958 11.1709C39.7256 11.1709 40.8145 10.1016 40.8145 8.57324V3.9541H39.7207V8.47559C39.7207 9.46191 39.0811 10.1455 37.958 10.1455C36.8398 10.1455 36.2002 9.46191 36.2002 8.47559V3.9541ZM45.4775 11V4.9502H47.6895V3.9541H42.167V4.9502H44.3838V11H45.4775Z"
-      fill="#D670D6"
-    />
-    <rect x="0.5" y="0.5" width="53" height="13" rx="6.5" stroke="#D670D6" />
-  </svg>
-);
-
 export const TEMPERATURE_SVG = (
   <svg
     width="16px"
@@ -429,6 +413,8 @@ export const TEMPERATURE_SVG = (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
+    <title>{TOOLBAR_ICON_LABEL.TEMPERATURE}</title>
+
     <g
       id="temperature"
       stroke="none"
@@ -458,4 +444,4 @@ export const TEMPERATURE_SVG = (
     </g>
   </svg>
 );
-export default EDGE_SVG;
+export default LEFT_EDGE_SVG;

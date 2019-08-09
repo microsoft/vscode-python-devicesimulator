@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ISensorButtonProps } from "./ToolbarUtils";
+import { ISensorButtonProps } from "../../viewUtils";
 import "../../styles/SensorButton.css";
 
 const SensorButton: React.FC<ISensorButtonProps> = props => {

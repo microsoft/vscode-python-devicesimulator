@@ -7,6 +7,13 @@ export const CONSTANTS = {
     BUTTON_A: "BTN_A_OUTER",
     BUTTON_AB: "BTN_AB_OUTER",
     BUTTON_B: "BTN_B_OUTER",
+    PIN_A1: "PIN_A1",
+    PIN_A2: "PIN_A2",
+    PIN_A3: "PIN_A3",
+    PIN_A4: "PIN_A4",
+    PIN_A5: "PIN_A5",
+    PIN_A6: "PIN_A6",
+    PIN_A7: "PIN_A7",
     PLAY_BUTTON: "play-button",
     REFRESH_BUTTON: "refresh-button",
     STOP_BUTTON: "stop-button",
@@ -18,8 +25,23 @@ export const CONSTANTS = {
     CAPITAL_R: "R",
     CAPITAL_F: "F",
     ENTER: "Enter",
-    S: "KeyS"
-  }
-}
+    S: "KeyS",
+    NUMERIC_ONE: "1",
+    NUMERIC_TWO: "2",
+    NUMERIC_THREE: "3",
+    NUMERIC_FOUR: "4",
+    NUMERIC_FIVE: "5",
+    NUMERIC_SIX: "6",
+    NUMERIC_SEVEN: "7"
+  },
+  REDIRECT: {
+    link:
+      "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+    privacy: "https://www.adafruit.com/privacy",
+    description:
+      "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
+  },
+  TOOLBAR_INFO: `Explore what's on the board:`
+};
 
 export default CONSTANTS;

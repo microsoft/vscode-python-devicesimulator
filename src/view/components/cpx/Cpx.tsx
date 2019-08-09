@@ -30,6 +30,7 @@ const Cpx: React.FC<IProps> = props => {
     if (firstTime) {
       initSvgStyle(svgElement, props.brightness);
       setupButtons(props);
+      setupPins(props);
       setupKeyPresses(props.onKeyEvent);
       setupSwitch(props);
       firstTime = false;
@@ -256,6 +257,36 @@ const setupButtons = (props: IProps): void => {
   });
 };
 
+const setupPins = (props: IProps): void => {
+  const pins = [
+    "PIN_A1",
+    "PIN_A2",
+    "PIN_A3",
+    "PIN_A4",
+    "PIN_A5",
+    "PIN_A6",
+    "PIN_A7"
+  ];
+  pins.forEach(pinName => {
+    const pin = window.document.getElementById(pinName);
+
+    if (pin) {
+      const svgPin = (pin as unknown) as SVGElement;
+      svg.addClass(svgPin, `sim-${pinName}-touch`);
+      accessibility.makeFocusable(svgPin);
+      svgPin.onmouseup = e => props.onMouseUp(pin, e);
+      svgPin.onkeyup = e => props.onKeyEvent(e, false);
+      svgPin.onmousedown = e => props.onMouseDown(pin, e);
+      svgPin.onkeydown = e => props.onKeyEvent(e, true);
+      accessibility.setAria(
+        svgPin,
+        "Pin",
+        `Touch pin ${pinName.substr(pinName.length - 2)}`
+      );
+    }
+  });
+};
+
 const addButtonLabels = (button: HTMLElement) => {
   let label = "";
   if (button.id.match(/AB/) !== null) {
@@ -340,6 +371,13 @@ export const updateSwitch = (switchState: boolean): void => {
       switchInner.removeAttribute("transform");
     }
     switchElement.setAttribute("aria-pressed", switchState.toString());
+  }
+};
+export const updatePinTouch = (pinState: boolean, id: string): void => {
+  console.log(`updating ${id} with ${pinState}`);
+  const pinElement = window.document.getElementById(id);
+  if (pinElement) {
+    pinElement.setAttribute("aria-pressed", pinState.toString());
   }
 };
 

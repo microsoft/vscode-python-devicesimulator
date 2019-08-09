@@ -6,6 +6,7 @@ export interface ISliderProps {
   maxLabel: string;
   minLabel: string;
   type: string;
+  axisLabel: string;
 }
 
 export interface ISensorButtonProps {
