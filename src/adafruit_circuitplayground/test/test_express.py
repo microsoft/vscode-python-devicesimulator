@@ -63,6 +63,34 @@ class TestExpress(object):
         self.cpx._Express__state['shake'] = True
         assert True == self.cpx.shake()
 
+    def test_touch_A1(self):
+        self.cpx.__Express__state['touch'][0] = True
+        assert True == self.cpx.touch_A1
+
+    def test_touch_A2(self):
+        self.cpx.__Express__state['touch'][1] = True
+        assert True == self.cpx.touch_A2
+
+    def test_touch_A3(self):
+        self.cpx.__Express__state['touch'][2] = True
+        assert True == self.cpx.touch_A3
+        
+    def test_touch_A4(self):
+        self.cpx.__Express__state['touch'][3] = True
+        assert True == self.cpx.touch_A4
+
+    def test_touch_A5(self):
+        self.cpx.__Express__state['touch'][4] = True
+        assert True == self.cpx.touch_A5
+        
+    def test_touch_A6(self):
+        self.cpx.__Express__state['touch'][5] = True
+        assert True == self.cpx.touch_A6
+
+    def test_touch_A7(self):
+        self.cpx.__Express__state['touch'][6] = True
+        assert True == self.cpx.touch_A7
+
     def test_play_file_mp4(self):
         with pytest.raises(TypeError):
             self.cpx.play_file('sample.mp4')
