@@ -12,7 +12,6 @@ import {
   Z_SLIDER_INDEX,
   Y_SLIDER_INDEX
 } from "../../viewUtils";
-
 import "../../styles/MotionSensorBar.css";
 import { CONSTANTS } from "../../constants";
 
@@ -27,20 +26,20 @@ const sendMessage = (state: any) => {
 };
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Left",
+  axisLabel: "X",
   maxLabel: "Right",
-  type: "motion_x",
-  axisLabel: "X"
+  maxValue: 125,
+  minLabel: "Left",
+  minValue: -55,
+  type: "motion_x"
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
-  minLabel: "Back",
+  axisLabel: "Y",
   maxLabel: "Front",
-  type: "motion_y",
-  axisLabel: "Y"
+  maxValue: 125,
+  minLabel: "Back",
+  minValue: -55,
+  type: "motion_y"
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
   maxValue: 125,

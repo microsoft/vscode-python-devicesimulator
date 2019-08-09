@@ -350,12 +350,12 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const deployCodeToDevice = () => {
+  const deployCodeToDevice = async () => {
     console.info("Sending code to device");
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    updateCurrentFileIfPython(vscode.window.activeTextEditor);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
