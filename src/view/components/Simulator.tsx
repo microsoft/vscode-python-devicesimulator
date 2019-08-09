@@ -3,9 +3,9 @@
 
 import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import Cpx, { updateSwitch } from "./cpx/Cpx";
+import Cpx, { updateSwitch, updatePinTouch } from "./cpx/Cpx";
 import Button from "./Button";
-import CONSTANTS from "../constants";
+import { CONSTANTS } from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
@@ -19,6 +19,7 @@ interface ICpxState {
   button_a: boolean;
   button_b: boolean;
   switch: boolean;
+  touch: boolean[];
 }
 
 interface IState {
@@ -46,7 +47,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
     [0, 0, 0]
   ],
   red_led: false,
-  switch: false
+  switch: false,
+  touch: [false, false, false, false, false, false, false]
 };
 
 const SIMULATOR_BUTTON_WIDTH = 60;
@@ -167,7 +169,7 @@ class Simulator extends React.Component<any, IState> {
   }
 
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
-    let button;
+    let element;
     const target = event.target as SVGElement;
     // Guard Clause
     if (target === undefined) {
@@ -175,26 +177,54 @@ class Simulator extends React.Component<any, IState> {
     }
 
     if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
-      button = window.document.getElementById(target.id);
+      element = window.document.getElementById(target.id);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)) {
-      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_A);
+      element = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_A);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)) {
-      button = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_B);
+      element = window.document.getElementById(CONSTANTS.ID_NAME.BUTTON_B);
     } else if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)) {
-      button = window.document.getElementById(CONSTANTS.ID_NAME.SWITCH);
+      element = window.document.getElementById(CONSTANTS.ID_NAME.SWITCH);
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
       this.togglePlayClick();
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
-    }
+    } else {
+      switch (event.key) {
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
+          break;
 
-    if (button) {
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_TWO:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A2);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_THREE:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A3);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FOUR:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A4);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FIVE:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A5);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SIX:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
+          break;
+
+        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
+          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A7);
+          break;
+      }
+    }
+    if (element) {
       event.preventDefault();
-      this.handleClick(button, active);
-      button.focus();
+      this.handleClick(element, active);
+      element.focus();
     }
   }
-
   protected onMouseDown(button: HTMLElement, event: Event) {
     event.preventDefault();
     this.handleClick(button, true);
@@ -214,18 +244,24 @@ class Simulator extends React.Component<any, IState> {
     }
   }
 
-  private handleClick(button: HTMLElement, active: boolean) {
+  private handleClick(element: HTMLElement, active: boolean) {
     let newState;
-    if (button.id.includes("BTN")) {
-      newState = this.handleButtonClick(button, active);
-    } else if (button.id.includes("SWITCH")) {
+    let message;
+    if (element.id.includes("BTN")) {
+      newState = this.handleButtonClick(element, active);
+      message = "button-press";
+    } else if (element.id.includes("SWITCH")) {
       newState = this.handleSwitchClick();
+      message = "button-press";
+    } else if (element.id.includes("PIN")) {
+      newState = this.handleTouchPinClick(element, active);
+      message = "sensor-changed";
     } else {
       return;
     }
 
-    if (newState) {
-      sendMessage("button-press", newState);
+    if (newState && message) {
+      sendMessage(message, newState);
     }
   }
 
@@ -278,6 +314,17 @@ class Simulator extends React.Component<any, IState> {
     cpxState = { ...cpxState, switch: switchIsOn };
     this.setState({ ...this.state, ...cpxState });
     return { switch: switchIsOn };
+  }
+
+  private handleTouchPinClick(pin: HTMLElement, active: boolean): any {
+    let cpxState = this.state.cpx;
+    const pinIndex = parseInt(pin.id.charAt(pin.id.length - 1)) - 1;
+    let pinState = cpxState.touch;
+    pinState[pinIndex] = active;
+    cpxState = { ...cpxState, touch: pinState };
+    this.setState({ ...this.state, ...cpxState });
+    updatePinTouch(active, pin.id);
+    return { touch: pinState };
   }
 }
 

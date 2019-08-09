@@ -12,7 +12,6 @@ import {
   Z_SLIDER_INDEX,
   Y_SLIDER_INDEX
 } from "./ToolbarUtils";
-
 import "../../styles/MotionSensorBar.css";
 import { CONSTANTS } from "../../constants";
 
