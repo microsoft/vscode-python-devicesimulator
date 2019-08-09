@@ -8,7 +8,7 @@ import time
 
 
 previousState = {}
-TIME_DELAY = 0.01
+TIME_DELAY = 0.03
 
 
 def show(state):
