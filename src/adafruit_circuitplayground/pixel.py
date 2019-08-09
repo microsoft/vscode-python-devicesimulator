@@ -27,7 +27,7 @@ class Pixel:
 
     def __setitem__(self, index, val):
         if not self.__valid_index(index):
-            raise IndexError((CONSTANTS.INDEX_ERROR))
+            raise IndexError(CONSTANTS.INDEX_ERROR)
         self.__state['pixels'][index] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
 

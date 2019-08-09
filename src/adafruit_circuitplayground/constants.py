@@ -13,4 +13,4 @@ NOT_SUITABLE_FILE_ERROR = "Your .wav file is not suitable for the Circuit Playgr
 
 PIXEL_RANGE_ERROR = "The pixel hexadicimal color value should be in range #000000 and #FFFFFF."
 
-VALID_PIXEL_ASSIGN_ERROR = "The pixel color value should be a tuple with three values between 0 and 255 or an hexadecimal color between 0x000000 and 0xFFFFFF."
+VALID_PIXEL_ASSIGN_ERROR = "The pixel color value should be a tuple with three values between 0 and 255 or a hexadecimal color between 0x000000 and 0xFFFFFF."
