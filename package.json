@@ -41,11 +41,6 @@
         "category": "%pacificaExtension.commands.label%"
       },
       {
-        "command": "pacifica.changeEnding",
-        "title": "%pacificaExtension.commands.changeEnding%",
-        "category": "%pacificaExtension.commands.label%"
-      },
-      {
         "command": "pacifica.closeSerialMonitor",
         "title": "%pacificaExtension.commands.closeSerialMonitor%",
         "category": "%pacificaExtension.commands.label%"

@@ -8,7 +8,7 @@ import { outChannel } from "./extension";
 import { logToOutputChannel } from "./extension_utils/utils";
 import { DeviceContext } from "./deviceContext";
 import CONSTANTS, { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
-import { SerialPortControl, SerialPortEnding } from "./serialPortControl";
+import { SerialPortControl } from "./serialPortControl";
 
 export interface ISerialPortDetail {
     comName: string;
@@ -20,7 +20,6 @@ export interface ISerialPortDetail {
 export class SerialMonitor implements vscode.Disposable {
 
     public static DEFAULT_BAUD_RATE: number = 115200;
-    public static DEFAULT_ENDING: SerialPortEnding = SerialPortEnding["No line ending"];
 
     public static listBaudRates(): number[] {
         return [300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 74880, 115200, 230400, 250000];
@@ -37,11 +36,9 @@ export class SerialMonitor implements vscode.Disposable {
 
     private _currentPort!: string;
     private _currentBaudRate!: number;
-    private _ending!: SerialPortEnding; 
     private _outputChannel!: vscode.OutputChannel;
     private _serialPortControl: SerialPortControl | null = null;
     private _baudRateStatusBar!: vscode.StatusBarItem;
-    private _endingStatusBar!: vscode.StatusBarItem;
     private _openPortStatusBar!: vscode.StatusBarItem;
     private _portsStatusBar!: vscode.StatusBarItem;
 
@@ -78,12 +75,6 @@ export class SerialMonitor implements vscode.Disposable {
         this._baudRateStatusBar.tooltip = "Baud Rate";
         this._baudRateStatusBar.text = defaultBaudRate.toString();
         this.updatePortListStatus(null);
-
-        this._endingStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.ENDING);
-        this._ending = SerialMonitor.DEFAULT_ENDING;
-        this._endingStatusBar.command = "pacifica.changeEnding";
-        this._endingStatusBar.tooltip = "Change Ending";
-        this._endingStatusBar.text = `No line ending`;
     }
 
     public async selectSerialPort(vid: string | null, pid: string | null) {
@@ -140,7 +131,7 @@ export class SerialMonitor implements vscode.Disposable {
                 return;
             }
         } else {
-            this._serialPortControl = new SerialPortControl(this._currentPort, this._currentBaudRate, this._ending, this._outputChannel);
+            this._serialPortControl = new SerialPortControl(this._currentPort, this._currentBaudRate, this._outputChannel);
         }
 
         if (!this._serialPortControl.currentPort) {
@@ -191,20 +182,6 @@ export class SerialMonitor implements vscode.Disposable {
         this._baudRateStatusBar.text = chosen;
     }
 
-    public async changeEnding() {
-        const endings: string[] = Object.keys(SerialPortEnding).filter((ending: any) => !isNaN(Number(SerialPortEnding[ending])))
-        const chosen: string | undefined = await vscode.window.showQuickPick(endings);
-        if (!chosen) {
-            return;
-        }
-        this._ending = SerialPortEnding[chosen];
-        
-        if (this._serialPortControl) {
-            this._serialPortControl.changeEnding(this._ending);
-        }
-        this._endingStatusBar.text = chosen;
-    }
-
     public async closeSerialMonitor(port: string, showWarning: boolean = true) {
         if (this._serialPortControl) {
             if (port && port !== this._serialPortControl.currentPort) {
@@ -226,13 +203,11 @@ export class SerialMonitor implements vscode.Disposable {
             this._openPortStatusBar.text = `$(x)`;
             this._openPortStatusBar.tooltip = "Close Serial Monitor";
             this._baudRateStatusBar.show();
-            this._endingStatusBar.show();
         } else {
             this._openPortStatusBar.command = "pacifica.openSerialMonitor";
             this._openPortStatusBar.text = `$(plug)`;
             this._openPortStatusBar.tooltip = "Open Serial Monitor";
             this._baudRateStatusBar.hide();
-            this._endingStatusBar.hide();
         }
     }
 

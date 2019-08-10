@@ -1,6 +1,5 @@
 {
   "pacificaExtension.commands.changeBaudRate": "Change Baud Rate",
-  "pacificaExtension.commands.changeEnding": "Change Ending",
   "pacificaExtension.commands.closeSerialMonitor": "Close Serial Monitor",
   "pacificaExtension.commands.label": "Pacifica",
   "pacificaExtension.commands.openSerialMonitor": "Open Serial Monitor",

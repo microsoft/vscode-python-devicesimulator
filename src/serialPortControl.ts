@@ -13,13 +13,6 @@ interface ISerialPortDetail {
     productId: string;
 }
 
-export enum SerialPortEnding {
-    "No line ending",
-    "Newline",
-    "Carriage return",
-    "Both NL & CR"
-}
-
 export class SerialPortControl {
     public static get serialport(): any {
         if (!SerialPortControl._serialport) {
@@ -45,12 +38,10 @@ export class SerialPortControl {
     private _currentPort: string;
     private _currentBaudRate: number;
     private _currentSerialPort: any;
-    private _ending: SerialPortEnding;
 
-    public constructor(port: string, baudRate: number, ending: SerialPortEnding, private _outputChannel: OutputChannel) {
+    public constructor(port: string, baudRate: number, private _outputChannel: OutputChannel) {
         this._currentPort = port;
         this._currentBaudRate = baudRate;
-        this._ending = ending;
     }
 
     public get isActive(): boolean {
@@ -109,7 +100,7 @@ export class SerialPortControl {
                 return;
             }
 
-            this._currentSerialPort.write(text, SerialPortEnding[this._ending], (error: any) => {
+            this._currentSerialPort.write(text, (error: any) => {
                 if (!error) {
                     resolve();
                 } else {
@@ -176,9 +167,5 @@ export class SerialPortControl {
                 }
             });
         });
-    }
-
-    public changeEnding(newEnding: SerialPortEnding)  {
-        this._ending = newEnding;
     }
 }
