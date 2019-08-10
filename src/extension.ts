@@ -251,7 +251,9 @@ export async function activate(context: vscode.ExtensionContext) {
           return hasAccepted;
         });
       // Don't run users code if they don't accept
-      if (shouldExitCommand) { return; }
+      if (shouldExitCommand) {
+        return;
+      }
     }
 
     openWebview();
@@ -328,6 +330,20 @@ export async function activate(context: vscode.ExtensionContext) {
                       command: "set-state",
                       state: JSON.parse(messageToWebview.data)
                     });
+                    break;
+
+                  case "print":
+                    console.log(
+                      `Process print statement output = ${
+                        messageToWebview.data
+                      }`
+                    );
+                    const msg: string = messageToWebview.data;
+                    console.error(msg);
+                    logToOutputChannel(
+                      outChannel,
+                      `[PRINT] ${messageToWebview.data}`
+                    );
                     break;
 
                   default:
@@ -501,7 +517,6 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
-
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
   const activeEditor = editors.find(
@@ -602,4 +617,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}

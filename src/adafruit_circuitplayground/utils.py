@@ -7,7 +7,7 @@ import json
 
 def show(state):
     message = {'type': 'state', 'data': json.dumps(state)}
-    print(json.dumps(message) + '\0', end='')
+    print(json.dumps(message) + '\0', end='', file=sys.__stdout__)
     sys.stdout.flush()
 
 
