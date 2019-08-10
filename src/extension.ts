@@ -338,8 +338,6 @@ export async function activate(context: vscode.ExtensionContext) {
                         messageToWebview.data
                       }`
                     );
-                    const msg: string = messageToWebview.data;
-                    console.error(msg);
                     logToOutputChannel(
                       outChannel,
                       `[PRINT] ${messageToWebview.data}`
