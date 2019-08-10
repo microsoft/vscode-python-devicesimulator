@@ -637,10 +637,3 @@ export async function deactivate() {
   UsbDetector.getInstance().stopListening();
   // log ext deactivatd
 }
-
-export interface ISerialPortDetail {
-  comName: string;
-  manufacturer: string;
-  vendorId: string;
-  productId: string;
-}

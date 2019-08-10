@@ -239,10 +239,6 @@ export const STATUS_BAR_PRIORITY = {
   PORT: 20,
   OPEN_PORT: 30,
   BAUD_RATE: 40,
-  BOARD: 60,
-  ENDING: 70,
-  SKETCH: 80,
-  PROGRAMMER: 90,
 };
 
 
