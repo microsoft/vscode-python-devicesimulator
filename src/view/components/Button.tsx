@@ -2,8 +2,9 @@ import * as React from "react";
 import "../styles/Button.css";
 
 export interface IButtonProps {
-  image: any;
   label: string;
+  image: any;
+  styleLabel: string;
   width: number;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
@@ -16,8 +17,8 @@ const Button: React.FC<IButtonProps> = props => {
   return (
     <button
       id={`${props.label}-button`}
-      className={`${props.label}-button button`}
-      aria-label={props.label}
+      className={`${props.styleLabel}-button button`}
+      aria-label={props.label.replace("-", " ")}
       role="button"
       onClick={props.onClick}
       style={buttonStyle}

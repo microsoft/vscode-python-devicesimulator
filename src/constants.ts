@@ -47,7 +47,7 @@ export const CONSTANTS = {
     ),
     NO_FILE_TO_RUN: localize(
       "error.noFileToRun",
-      '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New Project" command to get started and see useful links.\n'
+      '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
     ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
@@ -103,9 +103,9 @@ export const CONSTANTS = {
       "info.invalidFileNameDebug",
       'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
     ),
-    NEW_PROJECT: localize(
-      "info.newProject",
-      "New to Python or Circuit Playground Express project? We are here to help!"
+    NEW_FILE: localize(
+      "info.newFile",
+      "New to Python or the Circuit Playground Express? We are here to help!"
     ),
     PLEASE_OPEN_FOLDER: localize(
       "info.pleaseOpenFolder",
@@ -137,6 +137,10 @@ export const CONSTANTS = {
   },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
+    ACCEPT_AND_RUN: localize(
+      "warning.agreeAndRun",
+      "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+    ),
     NO_RATE_SELECTED: localize(
       "warning.noRateSelected",
       "No rate is selected, keep baud rate unchanged."
@@ -166,7 +170,7 @@ export enum TelemetryEventName {
 
   // Extension commands
   COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
-  COMMAND_NEW_PROJECT = "COMMAND.NEW.PROJECT",
+  COMMAND_NEW_FILE = "COMMAND.NEW.FILE",
   COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
   COMMAND_RUN_SIMULATOR = "COMMAND.RUN.SIMULATOR",
 
@@ -184,14 +188,14 @@ export enum TelemetryEventName {
 
   ERROR_PYTHON_DEVICE_PROCESS = "ERROR.PYTHON.DEVICE.PROCESS",
   ERROR_PYTHON_PROCESS = "ERROR.PYTHON.PROCESS",
-  ERROR_COMMAND_NEW_PROJECT = "ERROR.COMMAND.NEW.PROJECT",
+  ERROR_COMMAND_NEW_FILE = "ERROR.COMMAND.NEW.FILE",
   ERROR_DEPLOY_WITHOUT_DEVICE = "ERROR.DEPLOY.WITHOUT.DEVICE",
 
   SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE",
 
   // Performance
   PERFORMANCE_DEPLOY_DEVICE = "PERFORMANCE.DEPLOY.DEVICE",
-  PERFORMANCE_NEW_PROJECT = "PERFORMANCE.NEW.PROJECT",
+  PERFORMANCE_NEW_FILE = "PERFORMANCE.NEW.FILE",
   PERFORMANCE_OPEN_SIMULATOR = "PERFORMANCE.OPEN.SIMULATOR"
 }
 
@@ -204,6 +208,12 @@ export enum WebviewMessages {
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
+  export const ACCEPT_AND_RUN: MessageItem = {
+    title: localize("dialogResponses.agreeAndRun", "Agree and Run")
+  };
+  export const CANCEL: MessageItem = {
+    title: localize("dialogResponses.cancel", "Cancel")
+  }
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
   };

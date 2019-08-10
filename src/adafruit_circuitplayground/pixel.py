@@ -5,17 +5,18 @@ import json
 import sys
 from . import utils
 
+
 class Pixel:
     def __init__(self, state):
         self.__state = state
-        self.__auto_write = False
+        self.auto_write = True
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
         utils.show(self.__state)
 
     def __show_if_auto_write(self):
-        if self.__auto_write:
+        if self.auto_write:
             self.show()
 
     def __getitem__(self, index):

@@ -6,7 +6,7 @@
   "pacificaExtension.commands.openSerialMonitor": "Open Serial Monitor",
   "pacificaExtension.commands.openSimulator": "Open Simulator",
   "pacificaExtension.commands.runSimulator": "Run Simulator",
-  "pacificaExtension.commands.newProject": "New Project",
+  "pacificaExtension.commands.newFile": "New File",
   "pacificaExtension.commands.runDevice": "Deploy to Device",
   "pacificaExtension.commands.selectSerialPort": "Select Serial Port",
   "pacificaExtension.commands.sendMessageToSerialPort": "Send Message to Serial Port",

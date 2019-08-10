@@ -15,7 +15,7 @@ Through the Application Insights API, telemetry events are collected on Pacifica
 
 |     **Property**       | **Note**                                                                                             |
 | :-------------------:  | ---------------------------------------------------------------------------------------------------- |
-|    **Event Name**      | Unique event name/descriptor for the event. For ex: Pacifica/COMMAND_NEW_PROJECT                     |
+|    **Event Name**      | Unique event name/descriptor for the event. For ex: Pacifica/COMMAND_NEW_FILE                        |
 | **VS Code Session ID** | A unique identifier for the current session (changes each time the editor is started)                |
 | **VS Code Machine ID** | A unique identifier for the computer                                                                 |
 |  **VS Code Version**   | VS Code version being used by the user                                                               |

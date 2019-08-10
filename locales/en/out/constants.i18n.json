@@ -1,5 +1,7 @@
 {
+  "dialogResponses.agreeAndRun": "Agree and Run",
   "dialogResponses.acceptPrivacy": "Got it",
+  "dialogResponses.cancel": "Cancel",
   "dialogResponses.dontShowAgain": "Don't Show Again",
   "dialogResponses.exampleCode": "Example Code on GitHub",
   "dialogResponses.help": "I need help",
@@ -20,12 +22,13 @@
   "info.extensionActivated": "Congratulations, your extension Adafruit_Simulator is now active!",
   "info.firstTimeWebview": "To reopen the simulator click on the \"Open Simulator\" button on the upper right corner of the text editor, or select the command \"Open Simulator\" from command palette.",
   "error.invalidFileExtensionDebug": "The file you tried to run isn\\'t a Python file.",
-  "info.newProject": "New to Python or Circuit Playground Express project? We are here to help!",
+  "info.newFile": "New to Python or the Circuit Playground Express? We are here to help!",
   "info.redirect": "You are being redirected.",
   "info.runningCode": "Running user code",
   "info.privacyStatement": "Privacy Statement",
   "info.thirdPartyWebsite": "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:",
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
   "label.webviewPanel": "Adafruit CPX",
-  "name": "Pacifica Simulator"
+  "name": "Pacifica Simulator",
+  "warning.agreeAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
 }
