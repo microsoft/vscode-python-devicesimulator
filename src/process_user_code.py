@@ -69,7 +69,7 @@ user_input.start()
 def handle_user_prints():
     global user_stdout
     while True:
-        if len(user_stdout.getvalue()):
+        if user_stdout.getvalue():
             message = {'type': 'print', 'data': user_stdout.getvalue()}
             print(json.dumps(message), file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
