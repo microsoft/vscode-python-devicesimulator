@@ -14,14 +14,16 @@ import {
   WebviewMessages
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
-import * as utils from "./utils";
+import * as utils from "./extension_utils/utils";
 
 let currentFileAbsPath: string = "";
+let telemetryAI: TelemetryAI;
+let pythonExecutableName: string = "python";
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowNewProject: boolean = true;
+let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
-let telemetryAI: TelemetryAI;
+let shouldShowRunCodePopup: boolean = true;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -30,7 +32,7 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
 }
 
 // Extension activation
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
   telemetryAI = new TelemetryAI(context);
@@ -41,6 +43,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
+
+  pythonExecutableName = await utils.setPythonExectuableName();
+
+  if (pythonExecutableName === "") {
+    return;
+  }
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
@@ -156,17 +164,17 @@ export function activate(context: vscode.ExtensionContext) {
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
 
-    if (shouldShowNewProject) {
+    if (shouldShowNewFile) {
       vscode.window
         .showInformationMessage(
-          CONSTANTS.INFO.NEW_PROJECT,
+          CONSTANTS.INFO.NEW_FILE,
           DialogResponses.DONT_SHOW,
           DialogResponses.EXAMPLE_CODE,
           DialogResponses.TUTORIALS
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shouldShowNewProject = false;
+            shouldShowNewFile = false;
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
@@ -198,19 +206,19 @@ export function activate(context: vscode.ExtensionContext) {
       // tslint:disable-next-line: no-unused-expression
       (error: any) => {
         telemetryAI.trackFeatureUsage(
-          TelemetryEventName.ERROR_COMMAND_NEW_PROJECT
+          TelemetryEventName.ERROR_COMMAND_NEW_FILE
         );
         console.error(`Failed to open a new text document:  ${error}`);
       };
   };
 
-  const newProject: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.newProject",
+  const newFile: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.newFile",
     () => {
-      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_PROJECT);
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
       telemetryAI.runWithLatencyMeasure(
         openTemplateFile,
-        TelemetryEventName.PERFORMANCE_NEW_PROJECT
+        TelemetryEventName.PERFORMANCE_NEW_FILE
       );
     }
   );
@@ -228,6 +236,25 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   const runSimulatorCommand = async () => {
+    if (shouldShowRunCodePopup) {
+      const shouldExitCommand = await vscode.window
+        .showWarningMessage(
+          CONSTANTS.WARNING.ACCEPT_AND_RUN,
+          DialogResponses.ACCEPT_AND_RUN,
+          DialogResponses.CANCEL
+        )
+        .then((selection: vscode.MessageItem | undefined) => {
+          let hasAccepted = true;
+          if (selection === DialogResponses.ACCEPT_AND_RUN) {
+            shouldShowRunCodePopup = false;
+            hasAccepted = false;
+          }
+          return hasAccepted;
+        });
+      // Don't run users code if they don't accept
+      if (shouldExitCommand) { return; }
+    }
+
     openWebview();
 
     if (!currentPanel) {
@@ -272,7 +299,7 @@ export function activate(context: vscode.ExtensionContext) {
           });
       }
 
-      childProcess = cp.spawn("python", [
+      childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
       ]);
@@ -344,12 +371,12 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const deployCodeToDevice = () => {
+  const deployCodeToDevice = async () => {
     console.info("Sending code to device");
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    updateCurrentFileIfPython(vscode.window.activeTextEditor);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
 
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
@@ -370,7 +397,7 @@ export function activate(context: vscode.ExtensionContext) {
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
 
-      const deviceProcess = cp.spawn("python", [
+      const deviceProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "device.py"),
         currentFileAbsPath
       ]);
@@ -467,13 +494,14 @@ export function activate(context: vscode.ExtensionContext) {
     openSimulator,
     runSimulator,
     runDevice,
-    newProject,
+    newFile,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
     )
   );
 }
+
 
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
@@ -593,4 +621,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

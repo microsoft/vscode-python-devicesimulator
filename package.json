@@ -26,7 +26,7 @@
   "activationEvents": [
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
-    "onCommand:pacifica.newProject",
+    "onCommand:pacifica.newFile",
     "onCommand:pacifica.runDevice",
     "onDebug"
   ],
@@ -52,8 +52,8 @@
         }
       },
       {
-        "command": "pacifica.newProject",
-        "title": "%pacificaExtension.commands.newProject%",
+        "command": "pacifica.newFile",
+        "title": "%pacificaExtension.commands.newFile%",
         "category": "%pacificaExtension.commands.label%"
       },
       {
@@ -241,10 +241,13 @@
   },
   "dependencies": {
     "@types/open": "^6.1.0",
+    "compare-versions": "^3.5.1",
     "open": "^6.4.0",
+    "os": "^0.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "svg-inline-react": "^3.1.0",
+    "util": "^0.12.1",
     "vscode-extension-telemetry": "^0.1.1",
     "vscode-nls": "^4.1.0"
   },

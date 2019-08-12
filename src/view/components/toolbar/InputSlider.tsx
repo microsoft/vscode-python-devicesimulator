@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { ISliderProps } from "./Toolbar_utils";
 import "../../styles/InputSlider.css";
+import { ISliderProps } from "../../viewUtils";
 
 interface vscode {
   postMessage(message: any): void;
@@ -54,6 +54,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   render() {
     return (
       <div className="inputSlider">
+        <span>{this.props.axisLabel}</span>
         <input
           type="text"
           className="sliderValue"
@@ -62,7 +63,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           defaultValue={this.props.minValue.toLocaleString()}
           pattern="^-?[0-9]{0,3}$"
           onKeyUp={this.validateRange}
-          aria-label={`${this.props.type} sensor input`}
+          aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
         />
         <span className="sliderArea">
           <span className="upLabelArea">
