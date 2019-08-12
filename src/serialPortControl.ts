@@ -93,23 +93,6 @@ export class SerialPortControl {
         });
     }
 
-    public sendMessage(text: string | undefined): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (!text || !this._currentSerialPort || !this.isActive) {
-                resolve();
-                return;
-            }
-
-            this._currentSerialPort.write(text, (error: any) => {
-                if (!error) {
-                    resolve();
-                } else {
-                    return reject(error);
-                }
-            });
-        });
-    }
-
     public changePort(newPort: string): Promise<any> {
         return new Promise((resolve, reject) => {
             if (newPort === this._currentPort) {

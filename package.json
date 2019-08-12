@@ -86,11 +86,6 @@
         "command": "pacifica.selectSerialPort",
         "title": "%pacificaExtension.commands.selectSerialPort%",
         "category": "%pacificaExtension.commands.label%"
-      },
-      {
-        "command": "pacifica.sendMessageToSerialPort",
-        "title": "%pacificaExtension.commands.sendMessageToSerialPort%",
-        "category": "%pacificaExtension.commands.label%"
       }
     ],
     "menus": {
