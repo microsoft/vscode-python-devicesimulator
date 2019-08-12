@@ -11,9 +11,9 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   DEPENDENCY_CHECKER: {
-    PYTHON: 'python',
-    PYTHON3: 'python3',
-    PYTHON_LAUNCHER: 'py -3'
+    PYTHON: "python",
+    PYTHON3: "python3",
+    PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
@@ -40,7 +40,10 @@ export const CONSTANTS = {
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
     ),
-    NO_PYTHON_PATH: localize("error.noPythonPath", "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
+    NO_PYTHON_PATH: localize(
+      "error.noPythonPath",
+      "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
@@ -116,7 +119,10 @@ export const CONSTANTS = {
   },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
-    ACCEPT_AND_RUN: localize("warning.agreeAndRun", "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."),
+    ACCEPT_AND_RUN: localize(
+      "warning.agreeAndRun",
+      "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+    )
   }
 };
 
@@ -137,14 +143,11 @@ export enum TelemetryEventName {
   SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
 
   //Sensors
-  TEMPERATURE_SENSOR = "TEMPERATURE_SENSOR",
-  LIGHT_SENSOR = " LIGHT_SENSOR",
-  MOTION_SENSOR = "MOTION_SENSOR",
-  SHAKE = "SHAKE",
-  PLAY_TONE = "PLAY_TONE",
-  START_TONE = "START_TONE",
-  STOP_TONE = "STOP_TONE",
-  CAPACITIVE_TOUCH = "CAPACITIVE_TOUCH",
+  SIMULATOR_TEMPERATURE_SENSOR = "SIMULATOR.TEMPERATURE",
+  SIMULATOR_LIGHT_SENSOR = " SIMULATOR.LIGHT_SENSOR",
+  SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION_SENSOR",
+  SIMULATOR_SHAKE = "SIMULATOR.SHAKE",
+  SIMULATOR_CAPACITIVE_TOUCH = "SIMULATOR.CAPACITIVE_TOUCH",
 
   // Pop-up dialog
   CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
@@ -179,7 +182,7 @@ export namespace DialogResponses {
   };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")
-  }
+  };
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
   };
@@ -200,7 +203,7 @@ export namespace DialogResponses {
   };
   export const INSTALL_PYTHON: MessageItem = {
     title: localize("dialogResponses.installPython", "Install from python.org")
-  }
+  };
 }
 
 export const USER_CODE_NAMES = {

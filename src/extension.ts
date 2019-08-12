@@ -252,7 +252,9 @@ export async function activate(context: vscode.ExtensionContext) {
           return hasAccepted;
         });
       // Don't run users code if they don't accept
-      if (shouldExitCommand) { return; }
+      if (shouldExitCommand) {
+        return;
+      }
     }
 
     openWebview();
@@ -502,7 +504,6 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
-
 const getActivePythonFile = () => {
   const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
   const activeEditor = editors.find(
@@ -554,19 +555,23 @@ const handleButtonPressTelemetry = (buttonState: any) => {
 
 const handleSensorTelemetry = (sensorState: any) => {
   if (sensorState["temperarture"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.TEMPERATURE_SENSOR);
+    telemetryAI.trackFeatureUsage(
+      TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
+    );
   } else if (sensorState["light"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.LIGHT_SENSOR);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_LIGHT_SENSOR);
   } else if (
     sensorState["motion_x"] ||
     sensorState["motion_y"] ||
     sensorState["motion_z"]
   ) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.MOTION_SENSOR);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
   } else if (sensorState["shake"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
-  } else (sensorState["shake"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+  } else if (sensorState["touch"]) {
+    telemetryAI.trackFeatureUsage(
+      TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
+    );
   }
 };
 
@@ -621,4 +626,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
