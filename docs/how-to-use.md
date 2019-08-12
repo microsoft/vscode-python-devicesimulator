@@ -9,7 +9,7 @@ Commands are accessible through :
 
 - **Open Simulator** : opens the webview of the simulator.
 
-- **New Project** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
+- **New File** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
 - **Run Simulator** : run the code you have open on the simulator (make sure you've clicked on a valid code file).  
@@ -22,7 +22,7 @@ Commands are accessible through :
 
 - We currently support the [Adafruit Circuit Playground Express board](https://www.adafruit.com/product/3333)
 - Access to auto-completion and Python error flagging
-- Output panel for the simulator (without print statements)
+- Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Device's features :
   - NeoPixels
@@ -35,8 +35,6 @@ Commands are accessible through :
 
 ## Not supported yet
 
-- User print statements
-- Updating the simulator's state without needing to call the`show` method
 - Auto-detect/format the device
 - Serial monitor for the device
 - Debugger for the simulator
