@@ -35,11 +35,11 @@ export const CONSTANTS = {
     NUMERIC_SEVEN: "7"
   },
   REDIRECT: {
-    link:
+    DESCRIPTION:
+      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy.",
+    LINK:
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
-    privacy: "https://www.adafruit.com/privacy",
-    description:
-      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy."
+    PRIVACY: "https://www.adafruit.com/privacy"
   },
   TOOLBAR_INFO: `Explore what's on the board:`
 };
