@@ -89,7 +89,7 @@ def execute_user_code(abs_path_to_code_file):
         user_code = file.read()
         try:
             codeObj = compile(user_code, abs_path_to_code_file, 'exec')
-            exec(codeObj)
+            exec(codeObj, {})
             sys.stdout.flush()
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
