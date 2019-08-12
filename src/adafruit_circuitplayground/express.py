@@ -157,19 +157,14 @@ class Express:
             os.path.join(self.__abs_path_to_code_file, os.pardir))
         abs_path_wav_file = os.path.normpath(
             os.path.join(abs_path_parent_dir, file_name))
-
-
-<< << << < HEAD
         utils.play_wave_file(abs_path_wav_file)
 
     def play_tone(self, frequency, duration):
-        self.toner.set_frequency(frequency)
-        self.toner.set_duration(duration)
-        self.toner.play_tone()
+
+        self.toner.play_tone(frequency, duration)
 
     def start_tone(self, frequency):
-        self.toner.set_frequency(frequency)
-        self.toner.start_tone()
+        self.toner.start_tone(frequency)
 
     def stop_tone(self):
         self.toner.stop_tone()
@@ -178,40 +173,6 @@ class Express:
         self.toner.join
 
 
-cpx = Express()
-=======
-        if sys.implementation.version[0] >= 3:
-            if file_name.endswith(".wav"):
-                try:
-                    playsound(abs_path_wav_file)
-                except:
-                    # TODO TASK: 29054 Verfication of a "valid" .wav file
-                    raise EnvironmentError(
-                        "Your .wav file is not suitable for the Circuit Playground Express.")
-            else:
-                raise TypeError(file_name + " is not a path to a .wav file.")
-        else:
-            raise NotImplementedError("Please use Python 3 or higher.")
-
-    def play_tone(self, frequency, duration):
-        """ Not Implemented!
-        """
-        raise NotImplementedError(
-            "This method is not implemented by the simulator")
-
-    def start_tone(self, frequency):
-        """ Not Implemented!
-        """
-        raise NotImplementedError(
-            "This method is not implemented by the simulator")
-
-    def stop_tone(self):
-        """ Not Implemented!
-        """
-        # Stop playing any tones.
-        raise NotImplementedError(
-            "This method is not implemented by the simulator")
-
+5
 
 cpx = Express()
->>>>>>> dev
