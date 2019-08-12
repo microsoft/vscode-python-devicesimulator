@@ -35,7 +35,7 @@ export class UsbDetector {
 
     public async startListening() {
         const workspaceConfig = vscode.workspace.getConfiguration();
-        const enableUSBDetection = workspaceConfig.get(CONFIG_KEYS.ENABLE_USB_DETECTiON);
+        const enableUSBDetection = workspaceConfig.get(CONFIG_KEYS.ENABLE_USB_DETECTION);
 
         if (os.platform() === "linux" || !enableUSBDetection) {
             return;

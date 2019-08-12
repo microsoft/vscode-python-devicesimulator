@@ -161,7 +161,7 @@ export const CONSTANTS = {
 };
 
 export enum CONFIG_KEYS {
-  ENABLE_USB_DETECTiON = "pacifica.enableUSBDetection"
+  ENABLE_USB_DETECTION = "pacifica.enableUSBDetection"
 }
 
 // Need the different events we want to track and the name of it
