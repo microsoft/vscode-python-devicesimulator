@@ -167,6 +167,9 @@ export namespace DialogResponses {
   export const ACCEPT_AND_RUN: MessageItem = {
     title: localize("dialogResponses.agreeAndRun", "Agree and Run")
   };
+  export const AGREE_AND_PROCEED: MessageItem = {
+    title: localize("dialogResponses.agreeAndProceed", "Agree and Proceed")
+  };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")
   }
