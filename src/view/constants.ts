@@ -39,7 +39,7 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
     privacy: "https://www.adafruit.com/privacy",
     description:
-      "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
+      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy."
   },
   TOOLBAR_INFO: `Explore what's on the board:`
 };
