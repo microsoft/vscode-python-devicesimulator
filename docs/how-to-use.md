@@ -35,7 +35,6 @@ Commands are accessible through :
 
 ## Not supported yet
 
-- Updating the simulator's state without needing to call the`show` method
 - Auto-detect/format the device
 - Serial monitor for the device
 - Debugger for the simulator
