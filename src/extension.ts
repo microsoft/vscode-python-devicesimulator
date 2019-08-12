@@ -318,12 +318,25 @@ export async function activate(context: vscode.ExtensionContext) {
             if (currentPanel && message.length > 0 && message != oldMessage) {
               oldMessage = message;
               let messageToWebview;
+              let previousCall = "";
               // Check the message is a JSON
               try {
                 messageToWebview = JSON.parse(message);
                 // Check the JSON is a state
                 switch (messageToWebview.type) {
                   case "state":
+                    let state = JSON.parse(messageToWebview.data);
+                    console.log(
+                      `state has changed ${previousCall} ${
+                        state["latest_call"]
+                      }`
+                    );
+                    if (
+                      state["latest_call"] !== previousCall &&
+                      state["latest_call"] !== "None"
+                    ) {
+                      sendPythonTelemetry(state["latest_call"]);
+                    }
                     console.log(
                       `Process state output = ${messageToWebview.data}`
                     );
@@ -554,7 +567,7 @@ const handleButtonPressTelemetry = (buttonState: any) => {
 };
 
 const handleSensorTelemetry = (sensorState: any) => {
-  if (sensorState["temperarture"]) {
+  if (sensorState["temperature"]) {
     telemetryAI.trackFeatureUsage(
       TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
     );
@@ -605,6 +618,37 @@ const logToOutputChannel = (
   }
 };
 
+const sendPythonTelemetry = (latestCall: string) => {
+  console.log(`in the latest call ${latestCall}`);
+  switch (latestCall) {
+    case CONSTANTS.PYTHON_TRACKED_CALLS.ADJUST_THRESHOLD:
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_ADJUST_THRESHOLD
+      );
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.DETECT_TAPS:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_DETECT_TAPS);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.PLAY_FILE:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_PLAY_FILE);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.START_TONE:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_START_TONE);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.STOP_TONE:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_STOP_TONE);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.PLAY_TONE:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_PLAY_TONE);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.TAPPED:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_TAPPED);
+      break;
+    case CONSTANTS.PYTHON_TRACKED_CALLS.PIXELS:
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_PIXELS);
+      break;
+  }
+};
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
           <html lang="en">

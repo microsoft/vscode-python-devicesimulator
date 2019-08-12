@@ -42,6 +42,7 @@ class Express:
             'detect_taps': 1,
             'tapped': False,
             'shake': False,
+            'latest_call': 'None'
         }
 
         self.pixels = Pixel(self.__state)
@@ -61,19 +62,20 @@ class Express:
 
     @property
     def detect_taps(self):
+        self.__state['latest_call'] = 'detect_taps'
         return self.__state['detect_taps']
 
     @detect_taps.setter
     def detect_taps(self, value):
         value_int = int(value)
-        self.__state['detect_taps'] = value_int if (
+        self.__state['C'] = value_int if (
             value_int == 1 or value_int == 2) else 1
 
     @property
     def tapped(self):
+        self.__state['latest_call'] = 'tapped'
         """  Not Implemented!
         """
-
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
@@ -136,6 +138,7 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
+        self.__state['latest_call'] = 'adjust_touch_threshold'
         raise NotImplementedError(
             "this method is not supported by the simulator")
 
@@ -143,6 +146,7 @@ class Express:
         return self.__state['shake']
 
     def play_file(self, file_name):
+        self.__state['latest_call'] = 'play_file'
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
@@ -165,19 +169,21 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
+        self.__state['latest_call'] = 'play_tone'
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
+        self.__state['latest_call'] = 'start_tone'
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        # Stop playing any tones.
+        self.__state['latest_call'] = 'stop_tone'
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 

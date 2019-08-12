@@ -118,6 +118,16 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
   NAME: localize("name", "Pacifica Simulator"),
+  PYTHON_TRACKED_CALLS: {
+    ADJUST_THRESHOLD: "adjust_touch_threshold",
+    DETECT_TAPS: "detect_taps",
+    PLAY_FILE: "play_file",
+    PLAY_TONE: "play_tone",
+    START_TONE: "start_tone",
+    STOP_TONE: "stop_tone",
+    PIXELS: "pixels",
+    TAPPED: "tapped"
+  },
   WARNING: {
     ACCEPT_AND_RUN: localize(
       "warning.agreeAndRun",
@@ -148,6 +158,16 @@ export enum TelemetryEventName {
   SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION_SENSOR",
   SIMULATOR_SHAKE = "SIMULATOR.SHAKE",
   SIMULATOR_CAPACITIVE_TOUCH = "SIMULATOR.CAPACITIVE_TOUCH",
+
+  //Mock calls
+  SIMULATOR_ADJUST_THRESHOLD = "SIMULATOR.ADJUST_THRESHOLD",
+  SIMULATOR_DETECT_TAPS = "SIMULATOR.DETECT_TAPS",
+  SIMULATOR_PLAY_TONE = "SIMULATOR.PLAY_TONE ",
+  SIMULATOR_PLAY_FILE = "SIMULATOR.PLAY_FILE",
+  SIMULATOR_START_TONE = "SIMULATOR.START_TONE",
+  SIMULATOR_STOP_TONE = "SIMULATOR.STOP_TONE",
+  SIMULATOR_TAPPED = "SIMULATOR.TAPPED",
+  SIMULATOR_PIXELS = "SIMULATOR.PIXELS",
 
   // Pop-up dialog
   CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
