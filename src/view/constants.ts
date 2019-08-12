@@ -36,7 +36,7 @@ export const CONSTANTS = {
   },
   REDIRECT: {
     DESCRIPTION:
-      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy.",
+      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
     LINK:
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
     PRIVACY: "https://www.adafruit.com/privacy"

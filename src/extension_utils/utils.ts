@@ -28,7 +28,7 @@ export const validCodeFileName = (filePath: string) => {
 
 export const showPrivacyModal = (okAction: () => void) => {
   window.showInformationMessage(
-    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE} ${CONSTANTS.LINKS.PRIVACY}`,
+    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
     DialogResponses.AGREE_AND_PROCEED,
     DialogResponses.CANCEL,
   )
