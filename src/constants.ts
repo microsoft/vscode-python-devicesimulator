@@ -17,10 +17,11 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: 'py -3'
   },
   ERROR: {
+    COMPORT_UNKNOWN_ERROR: "Writing to COM port (GetOverlappedResult): Unknown error code 121",
     FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
       return localize(
         "error.failedToOpenSerialPort",
-        `Failed to open serial port ${port}.`
+        `[ERROR] Failed to open serial port ${port}.`
       )
     },
     FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
@@ -84,7 +85,6 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
-
     FILE_SELECTED: (filePath: string) => {
       return localize(
         "info.fileSelected",
@@ -107,6 +107,12 @@ export const CONSTANTS = {
       "info.newFile",
       "New to Python or the Circuit Playground Express? We are here to help!"
     ),
+    OPENED_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.OpenedSerialPort",
+        `[INFO] Opened the serial port ${port}`
+      );
+    },
     PLEASE_OPEN_FOLDER: localize(
       "info.pleaseOpenFolder",
       "Please open a folder first."

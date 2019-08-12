@@ -3,6 +3,7 @@
 
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
+import { CONSTANTS } from "./constants";
 import * as os from "os";
 import { OutputChannel } from "vscode";
 
@@ -72,11 +73,11 @@ export class SerialPortControl {
                 this._outputChannel.show();
                 this._currentSerialPort.on("open", () => {
                     this._currentSerialPort.write("msft", "Both NL & CR", (err: any) => {
-                        if (err && !(err.message.indexOf("Writing to COM port (GetOverlappedResult): Unknown error code 121") >= 0)) {
-                            this._outputChannel.appendLine(`[Error] Failed to open the serial port - ${this._currentPort}`);
+                        if (err && !(err.message.indexOf(CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR) >= 0)) {
+                            this._outputChannel.appendLine(CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
                             reject(err);
                         } else {
-                            this._outputChannel.appendLine(`[Info] Opened the serial port - ${this._currentPort}`);
+                            this._outputChannel.appendLine(CONSTANTS.INFO.OPENED_SERIAL_PORT(this._currentPort));
                             resolve();
                         }
                     });
