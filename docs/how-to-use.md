@@ -36,7 +36,7 @@ Commands are accessible through :
     - Acceleration detection
     - Board shake detection
   - Temperature sensor
-  - Touch sensor
+  - Touch sensors
 
 ## Not supported yet
 
