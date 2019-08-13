@@ -191,7 +191,7 @@ class Simulator extends React.Component<any, IState> {
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
     } else {
-      switch (event.code) {
+      switch (event.key) {
         case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
           element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
           break;
