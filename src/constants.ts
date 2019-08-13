@@ -11,9 +11,9 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   DEPENDENCY_CHECKER: {
-    PYTHON: 'python',
-    PYTHON3: 'python3',
-    PYTHON_LAUNCHER: 'py -3'
+    PYTHON: "python",
+    PYTHON3: "python3",
+    PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
@@ -40,7 +40,10 @@ export const CONSTANTS = {
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
     ),
-    NO_PYTHON_PATH: localize("error.noPythonPath", "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
+    NO_PYTHON_PATH: localize(
+      "error.noPythonPath",
+      "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
@@ -115,8 +118,21 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
   NAME: localize("name", "Pacifica Simulator"),
+  PYTHON_TRACKED_CALLS: {
+    ADJUST_THRESHOLD: "adjust_touch_threshold",
+    DETECT_TAPS: "detect_taps",
+    PLAY_FILE: "play_file",
+    PLAY_TONE: "play_tone",
+    START_TONE: "start_tone",
+    STOP_TONE: "stop_tone",
+    PIXELS: "pixels",
+    TAPPED: "tapped"
+  },
   WARNING: {
-    ACCEPT_AND_RUN: localize("warning.agreeAndRun", "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."),
+    ACCEPT_AND_RUN: localize(
+      "warning.agreeAndRun",
+      "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+    )
   }
 };
 
@@ -135,6 +151,23 @@ export enum TelemetryEventName {
   SIMULATOR_BUTTON_B = "SIMULATOR.BUTTON.B",
   SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
   SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
+
+  //Sensors
+  SIMULATOR_TEMPERATURE_SENSOR = "SIMULATOR.TEMPERATURE",
+  SIMULATOR_LIGHT_SENSOR = " SIMULATOR.LIGHT",
+  SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION",
+  SIMULATOR_SHAKE = "SIMULATOR.SHAKE",
+  SIMULATOR_CAPACITIVE_TOUCH = "SIMULATOR.CAPACITIVE.TOUCH",
+
+  //Mock calls
+  SIMULATOR_ADJUST_THRESHOLD = "SIMULATOR.ADJUST.THRESHOLD",
+  SIMULATOR_DETECT_TAPS = "SIMULATOR.DETECT.TAPS",
+  SIMULATOR_PLAY_TONE = "SIMULATOR.PLAY.TONE ",
+  SIMULATOR_PLAY_FILE = "SIMULATOR.PLAY.FILE",
+  SIMULATOR_START_TONE = "SIMULATOR.START.TONE",
+  SIMULATOR_STOP_TONE = "SIMULATOR.STOP.TONE",
+  SIMULATOR_TAPPED = "SIMULATOR.TAPPED",
+  SIMULATOR_PIXELS = "SIMULATOR.PIXELS",
 
   // Pop-up dialog
   CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
@@ -172,7 +205,7 @@ export namespace DialogResponses {
   };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")
-  }
+  };
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
   };
@@ -193,7 +226,7 @@ export namespace DialogResponses {
   };
   export const INSTALL_PYTHON: MessageItem = {
     title: localize("dialogResponses.installPython", "Install from python.org")
-  }
+  };
 }
 
 export const USER_CODE_NAMES = {
