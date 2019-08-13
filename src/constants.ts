@@ -94,7 +94,7 @@ export const CONSTANTS = {
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
-      "You will be redirect to adafruit.com, a website outside Microsoft. Read the privacy statement on Adafruit:"
+      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
@@ -166,6 +166,9 @@ export enum WebviewMessages {
 export namespace DialogResponses {
   export const ACCEPT_AND_RUN: MessageItem = {
     title: localize("dialogResponses.agreeAndRun", "Agree and Run")
+  };
+  export const AGREE_AND_PROCEED: MessageItem = {
+    title: localize("dialogResponses.agreeAndProceed", "Agree and Proceed")
   };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")

@@ -255,14 +255,14 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       <span>
         <div className="redirect-modal">
           <div className="redirect-description">{`${
-            CONSTANTS.REDIRECT.description
-          } : \n ${CONSTANTS.REDIRECT.privacy}`}</div>
+            CONSTANTS.REDIRECT.DESCRIPTION
+          } : \n ${CONSTANTS.REDIRECT.PRIVACY}`}</div>
           <a
             className="redirect-button"
             id="redirect"
             aria-label={"Information pop-up"}
             onClick={this.handleOnClickButton}
-            href={CONSTANTS.REDIRECT.link}
+            href={CONSTANTS.REDIRECT.LINK}
           >
             {`Got it`}
           </a>
@@ -285,7 +285,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
     );
     const linkAnchor = (
       <span className="redirect-learn-link">
-        <a href={CONSTANTS.REDIRECT.link}>Learn More</a>
+        <a href={CONSTANTS.REDIRECT.LINK}>Learn More</a>
       </span>
     );
     return this.state.doNotShowAgain ? linkAnchor : linkString;
@@ -300,7 +300,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
     if (this.state.doNotShowAgain) {
       const ref = window.document.getElementById("redirect");
       if (ref) {
-        window.location.assign(CONSTANTS.REDIRECT.link);
+        window.location.assign(CONSTANTS.REDIRECT.LINK);
       }
     }
   };
