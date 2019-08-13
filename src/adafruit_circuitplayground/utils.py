@@ -15,7 +15,8 @@ def show(state):
     global previousState
     if state != previousState:
         message = {'type': 'state', 'data': json.dumps(state)}
-        print(json.dumps(message) + '\0', end='', flush=True)
+        print(json.dumps(message) + '\0', end='',
+              file=sys.__stdout__, flush=True)
         previousState = copy.deepcopy(state)
         time.sleep(TIME_DELAY)
 

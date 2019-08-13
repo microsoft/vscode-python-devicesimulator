@@ -22,7 +22,7 @@ Commands are accessible through :
 
 - We currently support the [Adafruit Circuit Playground Express board](https://www.adafruit.com/product/3333)
 - Access to auto-completion and Python error flagging
-- Output panel for the simulator (without print statements)
+- Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Device's features :
   - NeoPixels
@@ -35,7 +35,6 @@ Commands are accessible through :
 
 ## Not supported yet
 
-- User print statements
 - Auto-detect/format the device
 - Serial monitor for the device
 - Debugger for the simulator

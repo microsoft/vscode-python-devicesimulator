@@ -30,14 +30,17 @@ export const validCodeFileName = (filePath: string) => {
 
 export const showPrivacyModal = (okAction: () => void) => {
   window.showInformationMessage(
-    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE} ${CONSTANTS.LINKS.PRIVACY}`,
-    DialogResponses.MESSAGE_UNDERSTOOD
+    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
+    DialogResponses.AGREE_AND_PROCEED,
+    DialogResponses.CANCEL,
   )
     .then((privacySelection: MessageItem | undefined) => {
-      if (privacySelection === DialogResponses.MESSAGE_UNDERSTOOD) {
+      if (privacySelection === DialogResponses.AGREE_AND_PROCEED) {
         okAction();
+      } else if (privacySelection === DialogResponses.CANCEL) {
+        // do nothing
       }
-    })
+    });
 }
 
 export const logToOutputChannel = (
