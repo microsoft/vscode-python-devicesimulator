@@ -24,7 +24,10 @@
 
 .sensor_modal {
   vertical-align: middle;
-  width: 320px;
+  width: 360px;
+  max-height: 296px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
   height: fit-content;
   padding-left: 16px;
