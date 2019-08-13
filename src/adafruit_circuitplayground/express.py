@@ -8,8 +8,11 @@ from playsound import playsound
 from .pixel import Pixel
 from . import utils
 from collections import namedtuple
+from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
+
+tc = TelemetryClient('58c03a53-0506-46fc-afd0-c75f193bce2f')
 
 
 class Express:
@@ -114,6 +117,8 @@ class Express:
 
     @property
     def touch_A3(self):
+        tc.track_event("touch_A3")
+        tc.flush()
         return self.__touch(3)
 
     @property
@@ -169,6 +174,8 @@ class Express:
             "This method is not implemented by the simulator")
 
     def start_tone(self, frequency):
+        tc.track_event("start_tone")
+        tc.flush()
         """ Not Implemented!
         """
         raise NotImplementedError(
