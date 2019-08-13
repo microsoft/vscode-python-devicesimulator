@@ -12,7 +12,8 @@ from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
-tc = TelemetryClient('58c03a53-0506-46fc-afd0-c75f193bce2f')
+TELEMETRY_CLIENT = TelemetryClient('58c03a53-0506-46fc-afd0-c75f193bce2f')
+EXTENSION_NAME = 'EXTENSION_NAME'
 
 
 class Express:
@@ -64,20 +65,22 @@ class Express:
 
     @property
     def detect_taps(self):
-        self.__state['latest_call'] = 'detect_taps'
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/detect_taps')
+        TELEMETRY_CLIENT.flush()
         return self.__state['detect_taps']
 
     @detect_taps.setter
     def detect_taps(self, value):
         value_int = int(value)
-        self.__state['latest_call'] = value_int if (
+        self.__state['detect_taps'] = value_int if (
             value_int == 1 or value_int == 2) else 1
 
     @property
     def tapped(self):
-        self.__state['latest_call'] = 'tapped'
         """  Not Implemented!
         """
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/tapped')
+        TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
@@ -118,8 +121,6 @@ class Express:
 
     @property
     def touch_A3(self):
-        tc.track_event("touch_A3")
-        tc.flush()
         return self.__touch(3)
 
     @property
@@ -142,7 +143,9 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
-        self.__state['latest_call'] = 'adjust_touch_threshold'
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/adjust_touch_threshold')
+        TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
             "this method is not supported by the simulator")
 
@@ -150,7 +153,8 @@ class Express:
         return self.__state['shake']
 
     def play_file(self, file_name):
-        self.__state['latest_call'] = 'play_file'
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/file_name')
+        TELEMETRY_CLIENT.flush()
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
@@ -173,23 +177,24 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        self.__state['latest_call'] = 'play_tone'
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/play_tone')
+        TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
     def start_tone(self, frequency):
-        tc.track_event("start_tone")
-        tc.flush()
         """ Not Implemented!
         """
-        self.__state['latest_call'] = 'start_tone'
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/start_tone')
+        TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        self.__state['latest_call'] = 'stop_tone'
+        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/stop_tone')
+        TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
             "This method is not implemented by the simulator")
 
