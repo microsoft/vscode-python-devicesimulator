@@ -312,6 +312,9 @@ export async function activate(context: vscode.ExtensionContext) {
           });
       }
 
+      // Activate the run webview button
+      currentPanel.webview.postMessage({ command: "activate-play" });
+
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath
@@ -520,6 +523,9 @@ export async function activate(context: vscode.ExtensionContext) {
     // Set up the webview
     killProcessIfRunning();
     openWebview();
+    if (currentPanel) {
+      currentPanel.webview.postMessage({ command: "activate-play" });
+    }
     console.log("Debug Started");
     inDebugMode = true;
     communicationHandler = new CommunicationHandlerServer(currentPanel);
