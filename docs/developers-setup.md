@@ -26,6 +26,10 @@
 
   - Run the command in a console : `pip install pywin32`
 
+- Python-Socketio
+
+  - Run the command in a console : `pip install python-socketio`
+
 - VS Code
 
 - Python extension for VS Code (download from VS Code market place)

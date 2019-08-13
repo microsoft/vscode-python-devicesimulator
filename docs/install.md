@@ -26,6 +26,7 @@ _Note: You need to install all the dependencies in order to use the extension._
   - `python -m pip install --upgrade pip`
   - `pip install playsound`
 - Pywin32 : `pip install pywin32`
+- Python-Socketio : `pip install python-socketio`
 
 ## How to use the Extension
 
