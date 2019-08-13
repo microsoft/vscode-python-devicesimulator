@@ -75,7 +75,7 @@
         },
         {
           "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
-          "command": "pacifica.runSimulator",
+          "command": "pacifica.runSimulatorEditorButton",
           "group": "navigation@2"
         },
         {

@@ -101,6 +101,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 console.log("Play button");
                 console.log(messageJson + "\n");
                 if (message.text as boolean) {
+                  telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
@@ -263,7 +264,6 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     console.info(CONSTANTS.INFO.RUNNING_CODE);
-    telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
     logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
@@ -335,7 +335,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                        messageToWebview.data
+                      messageToWebview.data
                       }`
                     );
                     logToOutputChannel(
@@ -376,10 +376,17 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   };
 
+  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand("pacifica.runSimulatorEditorButton",
+    () => {
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
+      runSimulatorCommand();
+    })
+
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_PALLETTE);
       runSimulatorCommand();
     }
   );
@@ -506,6 +513,7 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     openSimulator,
     runSimulator,
+    runSimulatorEditorButton,
     runDevice,
     newFile,
     vscode.debug.registerDebugConfigurationProvider(
@@ -615,4 +623,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
