@@ -241,6 +241,7 @@
   },
   "dependencies": {
     "@types/open": "^6.1.0",
+    "@types/socket.io": "^2.1.2",
     "compare-versions": "^3.5.1",
     "open": "^6.4.0",
     "os": "^0.1.1",
