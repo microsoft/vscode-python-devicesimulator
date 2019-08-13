@@ -45,7 +45,6 @@ class Express:
             'detect_taps': 1,
             'tapped': False,
             'shake': False,
-            'latest_call': 'None'
         }
 
         self.pixels = Pixel(self.__state)

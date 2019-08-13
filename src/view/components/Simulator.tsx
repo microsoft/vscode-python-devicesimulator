@@ -23,7 +23,6 @@ interface ICpxState {
   detect_taps: 1;
   tapped: boolean;
   shake: boolean;
-  latest_call: string;
 }
 
 interface IState {
@@ -55,8 +54,7 @@ const DEFAULT_CPX_STATE: ICpxState = {
   touch: [false, false, false, false, false, false, false],
   detect_taps: 1,
   tapped: false,
-  shake: false,
-  latest_call: "None"
+  shake: false
 };
 
 const SIMULATOR_BUTTON_WIDTH = 60;
