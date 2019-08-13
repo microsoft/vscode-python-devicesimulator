@@ -25,7 +25,6 @@ Commands are accessible through :
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Device's features :
-
   - NeoPixels
   - Buttons (A & B)
   - Sound - .wav files
