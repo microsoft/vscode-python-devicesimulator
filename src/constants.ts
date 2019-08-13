@@ -18,6 +18,10 @@ export const CONSTANTS = {
   },
   ERROR: {
     COMPORT_UNKNOWN_ERROR: "Writing to COM port (GetOverlappedResult): Unknown error code 121",
+    CPX_FILE_ERROR: localize(
+      "error.cpxFileFormat",
+      "The cpx.json file format is not correct."
+    ),
     FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
       return localize(
         "error.failedToOpenSerialPort",
@@ -64,6 +68,12 @@ export const CONSTANTS = {
     )
   },
   INFO: {
+    CLOSED_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.closedSerialPort",
+        `[DONE] Closed the serial port - ${port} \n`
+      );
+    },
     COMPLETED_MESSAGE: "Completed",
     CPX_JSON_ALREADY_GENERATED: localize(
       "info.cpxJsonAlreadyGenerated",
@@ -109,8 +119,14 @@ export const CONSTANTS = {
     ),
     OPENED_SERIAL_PORT: (port: string) => {
       return localize(
-        "info.OpenedSerialPort",
-        `[INFO] Opened the serial port ${port}`
+        "info.openedSerialPort",
+        `[INFO] Opened the serial port - ${port} \n`
+      );
+    },
+    OPENING_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.openingSerialPort",
+        `[STARTING] Opening the serial port - ${port} \n`
       );
     },
     PLEASE_OPEN_FOLDER: localize(
@@ -147,22 +163,28 @@ export const CONSTANTS = {
       "warning.agreeAndRun",
       "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
     ),
+    INVALID_BAUD_RATE: localize(
+      "warning.invalidBaudRate",
+      "Invalid baud rate, keep baud rate unchanged."
+    ),
     NO_RATE_SELECTED: localize(
       "warning.noRateSelected",
       "No rate is selected, keep baud rate unchanged."
     ),
-    INVALID_BAUD_RATE: localize(
-      "warning.invalidBaudRate",
-      "Invalid baud rate, keep baud rate unchanged."
+    SERIAL_MONITOR_ALREADY_OPENED: (port: string) => {
+      return localize(
+        "warning.serialMonitorAlreadyOpened",
+        `Serial monitor is already opened for ${port} \n`
+      )
+    },
+    SERIAL_MONITOR_NOT_STARTED: localize(
+      "warning.serialMonitorNotStarted",
+      "Serial monitor has not been started."
     ),
     SERIAL_PORT_NOT_STARTED: localize(
       "warning.serialPortNotStarted",
       "Serial port has not been started."
     ),
-    SERIAL_MONITOR_NOT_STARTED: localize(
-      "warning.serialMonitorNotStarted",
-      "Serial monitor has not been started."
-    )
   }
 };
 

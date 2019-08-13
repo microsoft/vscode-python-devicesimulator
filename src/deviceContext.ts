@@ -47,7 +47,7 @@ export class DeviceContext implements vscode.Disposable {
                         this._port = cpxConfigJson.port;
                         this._onDidChange.fire();
                     } else {
-                        // Logger.notifyUserError("arduinoFileError", new Error(constants.messages.ARDUINO_FILE_ERROR));
+                        console.error(CONSTANTS.ERROR.CPX_FILE_ERROR);
                     }
                 } else {
                     this._port = null;
@@ -55,15 +55,8 @@ export class DeviceContext implements vscode.Disposable {
                 }
                 return this;
             }, (reason) => {
-                // Workaround for change in API.
-                // vscode.workspace.findFiles() for some reason now throws an error ehn path does not exist
-                // vscode.window.showErrorMessage(reason.toString());
-                // Logger.notifyUserError("arduinoFileUnhandleError", new Error(reason.toString()));
-
-                 // Workaround for change in API, populate required props for arduino.json
                 this._port = null;
                 this._onDidChange.fire();
-
                 return this;
             });
     }

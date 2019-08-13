@@ -6,6 +6,7 @@
 import { CONSTANTS } from "./constants";
 import * as os from "os";
 import { OutputChannel } from "vscode";
+import { logToOutputChannel } from "./extension_utils/utils";
 
 interface ISerialPortDetail {
     comName: string;
@@ -54,7 +55,7 @@ export class SerialPortControl {
     }
 
     public open(): Promise<any> {
-        this._outputChannel.appendLine(`[Starting] Opening the serial port - ${this._currentPort}`); 
+        logToOutputChannel(this._outputChannel, CONSTANTS.INFO.OPENING_SERIAL_PORT(this._currentPort));
         return new Promise((resolve, reject) => {
             if (this._currentSerialPort && this._currentSerialPort.isOpen()) {
                 this._currentSerialPort.close((err: any) => {
@@ -74,10 +75,10 @@ export class SerialPortControl {
                 this._currentSerialPort.on("open", () => {
                     this._currentSerialPort.write("msft", "Both NL & CR", (err: any) => {
                         if (err && !(err.message.indexOf(CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR) >= 0)) {
-                            this._outputChannel.appendLine(CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
+                            logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
                             reject(err);
                         } else {
-                            this._outputChannel.appendLine(CONSTANTS.INFO.OPENED_SERIAL_PORT(this._currentPort));
+                            logToOutputChannel(this._outputChannel, CONSTANTS.INFO.OPENED_SERIAL_PORT(this._currentPort));
                             resolve();
                         }
                     });
@@ -85,11 +86,11 @@ export class SerialPortControl {
             }
 
             this._currentSerialPort.on("data", (event: any) => {
-                this._outputChannel.append(event.toString());
+                logToOutputChannel(this._outputChannel, event.toString());
             });
 
             this._currentSerialPort.on("error", (error: any) => {
-                this._outputChannel.appendLine("[Error]" + error.toString());
+                logToOutputChannel(this._outputChannel, "[ERROR]" + error.toString());
             });
         });
     }
@@ -124,7 +125,7 @@ export class SerialPortControl {
           }
           this._currentSerialPort.close((error: any) => {
             if (this._outputChannel) {
-              this._outputChannel.appendLine(`[Done] Closed the serial port ${os.EOL}`);
+              logToOutputChannel(this._outputChannel, CONSTANTS.INFO.CLOSED_SERIAL_PORT(this._currentPort));
             }
             this._currentSerialPort = null;
             if (error) {

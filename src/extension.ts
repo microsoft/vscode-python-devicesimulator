@@ -42,7 +42,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   telemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
-  // let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
