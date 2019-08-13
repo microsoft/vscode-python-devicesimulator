@@ -7,6 +7,6 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  padding-top: 20px;
   justify-content: center;
 }

@@ -13,16 +13,16 @@
   width: 48px;
   height: 32px;
   background-color: var(--vscode-editor-background);
-  color: white;
-  border: 0;
   margin-right: 15px;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 5px;
   color: var(--badge-foreground);
-  border-radius: 2px;
   font-size: 16px;
   font-weight: bold;
+  border-width: 1px;
+  border-radius: 2px;
+  border-color: var(--vscode-contrastBorder);
 }
 
 .slider {
