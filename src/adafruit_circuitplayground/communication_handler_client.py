@@ -40,11 +40,6 @@ def update_state(state):
 
 ## Events Handlers ##
 
-# Event : connection
-@sio.event
-def connect():
-    print("I'm connected!")
-
 
 # Event : Button pressed (A, B, A+B, Switch)
 @sio.on('button_press')
