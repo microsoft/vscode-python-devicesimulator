@@ -102,8 +102,15 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   }
 
   private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    return this.props.type && this.state.value && event.target.value
-      ? { [this.props.type]: parseInt(event.target.value, 10) }
+    let value = parseInt(event.target.value, 10);
+    if (value > this.props.maxValue) {
+      value = this.props.maxValue;
+    } else if (value < this.props.minValue) {
+      value = this.props.minValue;
+    }
+
+    return this.props.type && this.state.value
+      ? { [this.props.type]: value }
       : undefined;
   }
 

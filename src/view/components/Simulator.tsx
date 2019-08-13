@@ -190,38 +190,6 @@ class Simulator extends React.Component<any, IState> {
       this.togglePlayClick();
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
-    } else {
-      if (event.shiftKey) {
-        switch (event.code) {
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_TWO:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A2);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_THREE:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A3);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FOUR:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A4);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FIVE:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A5);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SIX:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
-            break;
-
-          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
-            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A7);
-            break;
-        }
-      }
     }
     if (element) {
       event.preventDefault();
