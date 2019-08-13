@@ -13,7 +13,7 @@ from applicationinsights import TelemetryClient
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
 TELEMETRY_CLIENT = TelemetryClient('__AIKEY__')
-EXTENSION_NAME = 'EXTENSION_NAME'
+EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 class Express:
