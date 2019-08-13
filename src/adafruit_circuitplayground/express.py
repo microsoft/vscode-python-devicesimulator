@@ -44,8 +44,9 @@ class Express:
             'shake': False,
         }
 
-        self.pixels = Pixel(self.__state)
+        self.__debug_mode = False
         self.__abs_path_to_code_file = ''
+        self.pixels = Pixel(self.__state, self.__debug_mode)
 
     @property
     def acceleration(self):
@@ -99,7 +100,7 @@ class Express:
         return self.__state['light']
 
     def __show(self):
-        utils.show(self.__state)
+        utils.show(self.__state, self.__debug_mode)
 
     def __touch(self, i):
         return self.__state['touch'][i-1]

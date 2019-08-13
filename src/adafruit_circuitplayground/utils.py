@@ -5,20 +5,24 @@ import sys
 import json
 import copy
 import time
+from . import communication_handler_client
 
 
 previousState = {}
 TIME_DELAY = 0.03
 
 
-def show(state):
+def show(state, debug_mode=False):
     global previousState
     if state != previousState:
-        message = {'type': 'state', 'data': json.dumps(state)}
-        print(json.dumps(message) + '\0', end='',
-              file=sys.__stdout__, flush=True)
         previousState = copy.deepcopy(state)
-        time.sleep(TIME_DELAY)
+        message = {'type': 'state', 'data': json.dumps(state)}
+        if debug_mode:
+            communication_handler_client.update_state(json.dumps(message))
+        else:
+            print(json.dumps(message) + '\0', end='',
+                  file=sys.__stdout__, flush=True)
+            time.sleep(TIME_DELAY)
 
 
 def remove_leading_slashes(string):

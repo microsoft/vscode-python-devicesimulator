@@ -15,10 +15,13 @@ import {
 } from "./constants";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import * as utils from "./extension_utils/utils";
+import { CommunicationHandlerServer } from "./communicationHandlerServer";
 
 let currentFileAbsPath: string = "";
 let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
+let inDebugMode: boolean = false;
+let communicationHandler: CommunicationHandlerServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewFile: boolean = true;
@@ -91,15 +94,15 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.BUTTON_PRESS:
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
-                console.log("About to write");
-                console.log(messageJson + "\n");
-                if (childProcess) {
+                console.log(`About to write ${messageJson} \n`);
+                if (inDebugMode) {
+                  communicationHandler.emitButtonPress(messageJson);
+                } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
-                console.log("Play button");
-                console.log(messageJson + "\n");
+                console.log(`Play button ${messageJson} \n`);
                 if (message.text as boolean) {
                   runSimulatorCommand();
                 } else {
@@ -107,9 +110,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
-                console.log("sensor changed");
-                console.log(messageJson + "\n");
-                if (childProcess) {
+                console.log(`Sensor changed ${messageJson} \n`);
+                if (inDebugMode) {
+                  communicationHandler.emitSensorChanged(messageJson);
+                } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
@@ -132,6 +136,7 @@ export async function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          communicationHandler.setWebview(undefined);
           killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
@@ -235,6 +240,13 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const runSimulatorCommand = async () => {
+    // Prevent running new code if a debug session is active
+    if (inDebugMode) {
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.DEBUGGING_SESSION_IN_PROGESS
+      );
+      return;
+    }
     if (shouldShowRunCodePopup) {
       const shouldExitCommand = await vscode.window
         .showWarningMessage(
@@ -500,8 +512,30 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Debugger configuration
   const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
-    utils.getPathToScript(context, "out", "process_user_code.py")
+    utils.getPathToScript(context, "out/", "debug_user_code.py")
   );
+
+  // On Debug Session Start: Init comunication
+  const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
+    // Set up the webview
+    killProcessIfRunning();
+    openWebview();
+    console.log("Debug Started");
+    inDebugMode = true;
+    communicationHandler = new CommunicationHandlerServer(currentPanel);
+  });
+
+  // On Debug Session Stop: Stop communiation
+  const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
+    console.log("Debug Stopped");
+    inDebugMode = false;
+    if (communicationHandler) {
+      communicationHandler.closeConnection();
+    }
+    if (currentPanel) {
+      currentPanel.webview.postMessage({ command: "reset-state" });
+    }
+  });
 
   context.subscriptions.push(
     openSimulator,
@@ -511,7 +545,9 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
-    )
+    ),
+    debugSessionsStarted,
+    debugSessionStopped
   );
 }
 
