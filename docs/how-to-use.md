@@ -25,13 +25,19 @@ Commands are accessible through :
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Device's features :
+
   - NeoPixels
   - Buttons (A & B)
   - Sound - .wav files
   - Red LED
   - Switch
   - Green LED
+  - Light sensor
+  - Motion sensor
+    - Acceleration detection
+    - Board shake detection
   - Temperature sensor
+  - Touch sensor
 
 ## Not supported yet
 
@@ -39,12 +45,10 @@ Commands are accessible through :
 - Serial monitor for the device
 - Debugger for the simulator
 - Device's features
-  - Light sensor
-  - Motion sensors
-  - Sound sensor
-  - Touch sensors
   - Sound - tones
   - IR transmitter
+  - Motion sensor
+    - Tap detection
 
 ## Troubleshooting Tips
 
