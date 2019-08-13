@@ -32,7 +32,7 @@ Commands are accessible through :
   - Switch
   - Green LED
   - Light sensor
-  - Motion sensor
+  - Motion sensors
     - Acceleration detection
     - Board shake detection
   - Temperature sensor
@@ -46,7 +46,7 @@ Commands are accessible through :
 - Device's features
   - Sound - tones
   - IR transmitter
-  - Motion sensor
+  - Motion sensors
     - Tap detection
 
 ## Troubleshooting Tips
