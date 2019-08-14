@@ -289,4 +289,9 @@ export const SVG_STYLE = `
         stroke:#4D90FE;
         stroke-width:2px;
     }
+
+    .pin-pressed{
+        stroke:orange !important;
+        stroke-width:1px;
+    }
 `;
