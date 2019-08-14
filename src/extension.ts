@@ -17,6 +17,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import * as utils from "./extension_utils/utils";
 
 let currentFileAbsPath: string = "";
+let currentTextEditor: vscode.TextEditor;
 let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
 // Notification booleans
@@ -274,6 +275,8 @@ export async function activate(context: vscode.ExtensionContext) {
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else {
+      // Save on run
+      await currentTextEditor.document.save();
       logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
@@ -335,7 +338,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                        messageToWebview.data
+                      messageToWebview.data
                       }`
                     );
                     logToOutputChannel(
@@ -394,6 +397,8 @@ export async function activate(context: vscode.ExtensionContext) {
     if (currentFileAbsPath === "") {
       logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
+      // Save on run
+      await currentTextEditor.document.save();
       // Output panel
       logToOutputChannel(
         outChannel,
@@ -520,6 +525,9 @@ const getActivePythonFile = () => {
   const activeEditor = editors.find(
     editor => editor.document.languageId === "python"
   );
+  if (activeEditor) {
+    currentTextEditor = activeEditor
+  }
   return activeEditor ? activeEditor.document.fileName : "";
 };
 
@@ -546,6 +554,7 @@ const updateCurrentFileIfPython = async (
 ) => {
   if (activeTextEditor && activeTextEditor.document.languageId === "python") {
     currentFileAbsPath = activeTextEditor.document.fileName;
+    currentTextEditor = activeTextEditor;
   } else if (currentFileAbsPath === "") {
     currentFileAbsPath =
       getActivePythonFile() || (await getFileFromFilePicker()) || "";
@@ -615,4 +624,4 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
