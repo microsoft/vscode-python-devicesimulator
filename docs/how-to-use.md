@@ -59,6 +59,6 @@ Commands are accessible through :
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
 
-Note:
+### Note
 
 \* Sensors not suppoerted by the adafruit_circuit_playground Express library.
