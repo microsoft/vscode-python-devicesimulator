@@ -27,7 +27,7 @@ Commands are accessible through :
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
-  - Sound - .wav files
+  - - .wav files
   - Red LED
   - Switch
   - Green LED
@@ -44,8 +44,10 @@ Commands are accessible through :
 - Serial monitor for the device
 - Debugger for the simulator
 - Device's features
-  - Sound - tones
-  - IR transmitter
+  - Sound sensor
+    - Tones
+    - Sound detection\*
+  - IR transmitter\*
   - Motion sensors
     - Tap detection
 
@@ -56,3 +58,7 @@ Commands are accessible through :
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
+
+Notes:
+
+\*Sensors not suppoerted by the adafruit_circuit_playground Express library.
