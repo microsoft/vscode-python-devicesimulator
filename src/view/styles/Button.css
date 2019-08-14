@@ -10,12 +10,12 @@
 
 .play-button {
   border-radius: 8px 0px 0px 8px;
-  border-color: var(--vscode-contrastBorder);
+  border-color: var(--vscode-newHighContrastButton-color);
 }
 
 .refresh-button {
   border-radius: 0px 8px 8px 0px;
-  border-color: var(--vscode-contrastBorder);
+  border-color: var(--vscode-newHighContrastButton-color);
 }
 
 .button:hover {
