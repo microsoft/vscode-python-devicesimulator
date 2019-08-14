@@ -380,13 +380,13 @@ export async function activate(context: vscode.ExtensionContext) {
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
       runSimulatorCommand();
-    })
+    });
 
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
-      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_PALLETTE);
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_PALETTE);
       runSimulatorCommand();
     }
   );
