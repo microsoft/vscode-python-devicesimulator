@@ -9,7 +9,7 @@ from . import constants as CONSTANTS
 
 
 # Create Socket Client
-sio = socketio.Client()
+sio = socketio.Client(reconnection_attempts=2)
 
 # TODO: Get port from process_user_code.py via childprocess communication
 
