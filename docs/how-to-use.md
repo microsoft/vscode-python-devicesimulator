@@ -61,4 +61,4 @@ Commands are accessible through :
 
 ### Note
 
-\* Sensors not suppoerted by the adafruit_circuit_playground Express library.
+\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).
