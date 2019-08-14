@@ -9,6 +9,7 @@ import json
 import threading
 import traceback
 from pathlib import Path
+import python_constants as CONSTANTS
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground import communication_handler_client
 
@@ -18,8 +19,7 @@ communication_handler_client.init_connection()
 
 # Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-library_name = "adafruit_circuitplayground"
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, library_name)
+abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
 
 
@@ -32,12 +32,13 @@ def execute_user_code(abs_path_to_code_file):
     with open(abs_path_to_code_file) as file:
         user_code = file.read()
         try:
-            codeObj = compile(user_code, abs_path_to_code_file, 'exec')
+            codeObj = compile(user_code, abs_path_to_code_file,
+                              CONSTANTS.EXEC_COMMAND)
             exec(codeObj)
             sys.stdout.flush()
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
-            errorMessage = '\n\tTraceback of code execution : \n'
+            errorMessage = CONSTANTS.ERROR_TRACEBACK
             stackTrace = traceback.format_exception(
                 exc_type, exc_value, exc_traceback)
 
