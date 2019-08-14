@@ -62,7 +62,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           onInput={this.handleOnChange}
           defaultValue={this.props.minValue.toLocaleString()}
           pattern="^-?[0-9]{0,3}$"
-          onKeyUp={this.validateRange}
+          onKeyUp={this.handleOnKeyup}
           aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
         />
         <span className="sliderArea">
@@ -92,43 +92,52 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     );
   }
 
-  private handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.updateValue(event);
-    this.validateRange();
-    const newSensorState = this.writeMessage(event);
+  private handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const validatedValue = this.validateRange(this.updateValue(event));
+
+    const newSensorState = this.writeMessage(validatedValue);
     if (newSensorState) {
       sendMessage(newSensorState);
     }
-  }
+  };
 
-  private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    let value = parseInt(event.target.value, 10);
+  private handleOnKeyup = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    this.validateRange(this.state.value);
+  };
+
+  private writeMessage = (valueTowrite: number) => {
+    let value = valueTowrite;
     if (value > this.props.maxValue) {
-      value = this.props.maxValue;
+      value = parseInt(this.state.value, 10);
     } else if (value < this.props.minValue) {
-      value = this.props.minValue;
+      value = parseInt(this.state.value, 10);
     }
 
     return this.props.type && this.state.value
       ? { [this.props.type]: value }
       : undefined;
-  }
+  };
 
-  private updateValue(event: React.ChangeEvent<HTMLInputElement>) {
+  private updateValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
     this.setState({ value: newValue });
-  }
+    return newValue;
+  };
 
-  private validateRange() {
-    if (this.state.value < this.props.minValue) {
-      this.setState({ value: this.props.minValue });
+  private validateRange = (valueString: string) => {
+    let valueInt = parseInt(valueString, 10);
+    if (valueInt < this.props.minValue) {
+      valueInt = this.props.minValue;
+      this.setState({ value: valueInt });
     }
-    if (this.state.value > this.props.maxValue) {
-      this.setState({ value: this.props.maxValue });
+    if (valueInt > this.props.maxValue) {
+      valueInt = this.props.maxValue;
+      this.setState({ value: valueInt });
     }
-  }
+    return valueInt;
+  };
 }
 
 export default InputSlider;
