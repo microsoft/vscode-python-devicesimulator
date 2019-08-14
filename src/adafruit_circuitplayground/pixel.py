@@ -3,6 +3,7 @@
 
 import json
 import sys
+from . import constants as CONSTANTS
 from . import utils
 
 
@@ -25,12 +26,12 @@ class Pixel:
 
     def __getitem__(self, index):
         if not self.__valid_index(index):
-            raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
+            raise IndexError(CONSTANTS.INDEX_ERROR)
         return self.__state['pixels'][index]
-    
+
     def __setitem__(self, index, val):
         if not self.__valid_index(index):
-            raise IndexError('The index is not a valid number, you can access the Neopixels from 0 to 9.')
+            raise IndexError(CONSTANTS.INDEX_ERROR)
         self.__state['pixels'][index] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
 
@@ -51,24 +52,24 @@ class Pixel:
         elif type(val) is tuple:
             rgb_value = val
         else:
-            raise ValueError('The pixel color value type should be tuple, list or hexadecimal.')
+            raise ValueError(CONSTANTS.ASSIGN_PIXEL_TYPE_ERROR)
         # Values validation
         if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
-            raise ValueError('The pixel color value should be a tuple with three values between 0 and 255 or an hexadecimal color between 0x000000 and 0xFFFFFF.')
+            raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
 
         return rgb_value
 
     def __hex_to_rgb(self, hexValue):
         if hexValue[0:2] == '0x' and len(hexValue) <= 8:
-            hexToRgbValue = [0,0,0]
+            hexToRgbValue = [0, 0, 0]
             hexColor = hexValue[2:].zfill(6)
-            hexToRgbValue[0] = int(hexColor[0:2], 16) # R
-            hexToRgbValue[1] = int(hexColor[2:4], 16) # G
-            hexToRgbValue[2] = int(hexColor[4:6], 16) # B
+            hexToRgbValue[0] = int(hexColor[0:2], 16)  # R
+            hexToRgbValue[1] = int(hexColor[2:4], 16)  # G
+            hexToRgbValue[2] = int(hexColor[4:6], 16)  # B
 
             return tuple(hexToRgbValue)
         else:
-            raise ValueError('The pixel hexadicimal color value should be in range #000000 and #FFFFFF.')
+            raise ValueError(CONSTANTS.PIXEL_RANGE_ERROR)
 
     def __valid_rgb_value(self, pixValue):
         return type(pixValue) is int and pixValue >= 0 and pixValue <= 255
@@ -80,7 +81,7 @@ class Pixel:
     @brightness.setter
     def brightness(self, brightness):
         if not self.__valid_brightness(brightness):
-            raise ValueError('The brightness value should be a number between 0 and 1.')
+            raise ValueError(CONSTANTS.BRIGHTNESS_RANGE_ERROR)
         self.__state['brightness'] = brightness
         self.__show_if_auto_write()
 
