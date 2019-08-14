@@ -11,11 +11,11 @@ import traceback
 from pathlib import Path
 import python_constants as CONSTANTS
 from adafruit_circuitplayground.express import cpx
-from adafruit_circuitplayground import communication_handler_client
+from adafruit_circuitplayground import debugger_communication_client
 
 
 # Init Communication
-communication_handler_client.init_connection()
+debugger_communication_client.init_connection()
 
 # Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))

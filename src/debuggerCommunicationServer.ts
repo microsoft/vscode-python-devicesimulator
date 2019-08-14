@@ -5,7 +5,7 @@ import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
 import { DEFAULT_SERVER_PORT } from "./constants";
 
-export class CommunicationHandlerServer {
+export class DebuggerCommunicationServer {
   // TODO: Port as a constants + user setting
   private port: number;
   private serverIo: socketio.Server;
@@ -51,36 +51,27 @@ export class CommunicationHandlerServer {
 
       socket.on("disconnect", () => {
         console.log("Socket disconnected");
-        // TODO : send reset state ?
+        if (this.simulatorWebview) {
+          this.simulatorWebview.webview.postMessage({ command: "reset-state" });
+        }
       });
     });
   }
 
   private handleState(data: any): void {
     try {
-      // TODO: JSON or string ??
-      // TODO: keep switch case (we know always case in that event) ??
       const messageToWebview = JSON.parse(data);
-      switch (messageToWebview.type) {
-        case "state":
-          console.log(`State recieved: ${messageToWebview.data}`);
-          if (this.simulatorWebview) {
-            this.simulatorWebview.webview.postMessage({
-              command: "set-state",
-              state: JSON.parse(messageToWebview.data)
-            });
-          }
-          break;
-
-        default:
-          console.log(
-            `Non-state JSON output from the process : ${messageToWebview}`
-          );
-          break;
+      if (messageToWebview.type === "state") {
+        console.log(`State recieved: ${messageToWebview.data}`);
+        if (this.simulatorWebview) {
+          this.simulatorWebview.webview.postMessage({
+            command: "set-state",
+            state: JSON.parse(messageToWebview.data)
+          });
+        }
       }
     } catch (err) {
-      console.log(`Non-JSON output from the process :  ${data}`);
-      console.log(err);
+      console.error(`Error: Non-JSON output from the process :  ${data}`);
     }
   }
 }
