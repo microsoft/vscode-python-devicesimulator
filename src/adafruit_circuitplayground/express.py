@@ -7,6 +7,7 @@ import os
 from playsound import playsound
 from .pixel import Pixel
 from . import utils
+from . import constants as CONSTANTS
 from collections import namedtuple
 from applicationinsights import TelemetryClient
 
@@ -65,7 +66,8 @@ class Express:
 
     @property
     def detect_taps(self):
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/detect_taps')
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT.TAPS"]}')
         TELEMETRY_CLIENT.flush()
         return self.__state['detect_taps']
 
@@ -79,10 +81,11 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/tapped')
+        print()
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["TAPPED"]}')
         TELEMETRY_CLIENT.flush()
-        raise NotImplementedError(
-            "This method is not implemented by the simulator")
+        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
@@ -144,16 +147,18 @@ class Express:
         The CPX Simulator doesn't use capacitive touch threshold.
         """
         TELEMETRY_CLIENT.track_event(
-            f'{EXTENSION_NAME}/adjust_touch_threshold')
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["ADJUST_THRESHOLD"]}')
         TELEMETRY_CLIENT.flush()
+
         raise NotImplementedError(
-            "this method is not supported by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def shake(self, shake_threshold=30):
         return self.__state['shake']
 
     def play_file(self, file_name):
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/file_name')
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]}')
         TELEMETRY_CLIENT.flush()
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
@@ -167,8 +172,7 @@ class Express:
                     playsound(abs_path_wav_file)
                 except:
                     # TODO TASK: 29054 Verfication of a "valid" .wav file
-                    raise EnvironmentError(
-                        "Your .wav file is not suitable for the Circuit Playground Express.")
+                    raise EnvironmentError(CONSTANTS.NOT_SUITABLE_FILE_ERROR)
             else:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
@@ -177,26 +181,29 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/play_tone')
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}${CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_TONE"]}')
         TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/start_tone')
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["START_TONE"]}')
         TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(f'{EXTENSION_NAME}/stop_tone')
+        TELEMETRY_CLIENT.track_event(
+            f'{EXTENSION_NAME}/${CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]}')
         TELEMETRY_CLIENT.flush()
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
 
 cpx = Express()
