@@ -27,7 +27,7 @@ Commands are accessible through :
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
-  - - .wav files
+  - Playing .wav files
   - Red LED
   - Switch
   - Green LED
