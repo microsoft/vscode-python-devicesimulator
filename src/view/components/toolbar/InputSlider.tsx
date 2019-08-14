@@ -102,7 +102,12 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
   };
 
   private handleOnKeyup = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    this.validateRange(this.state.value);
+    const validatedValue = this.validateRange(this.updateValue(event));
+
+    const newSensorState = this.writeMessage(validatedValue);
+    if (newSensorState) {
+      sendMessage(newSensorState);
+    }
   };
 
   private writeMessage = (valueTowrite: number) => {
@@ -118,7 +123,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
       : undefined;
   };
 
-  private updateValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private updateValue = (event: any) => {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
