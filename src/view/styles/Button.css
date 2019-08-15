@@ -16,14 +16,8 @@
   border-radius: 0px 8px 8px 0px;
 }
 
+.button:focus,
 .button:hover {
-  background-color: var(--vscode-terminal-selectionBackground);
-}
-
-.play-button:focus,
-.play-button:hover,
-.refresh-button:focus,
-.refresh-button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
