@@ -82,7 +82,8 @@
         "defaults": {
           "dark": "debugToolBar.background",
           "light": "debugToolBar.background",
-          "highContrast": "#6FC3DF"
+          "highContrast": "#6FC3DF",
+          "tomorrowNightBlue": "#6FC3DF"
         }
       }
     ],

@@ -248,8 +248,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <br />
         <div className="description">{content["descriptionText"]}</div>
         <div className="try_area">
-          {/* <div className="title"> {content["tryItTitle"]}</div> */}
-          <br />
           <div className="description">{content["tryItDescriptrion"]}</div>
           <div>{component}</div>
         </div>
