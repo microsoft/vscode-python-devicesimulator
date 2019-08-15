@@ -130,6 +130,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
+                handleSensorTelemetry(message.text);
                 console.log(`Sensor changed ${messageJson} \n`);
                 if (inDebugMode) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
