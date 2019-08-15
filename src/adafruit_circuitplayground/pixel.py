@@ -91,7 +91,6 @@ class Pixel:
             if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
                 raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
             extracted_values.append(rgb_value)
-
         return rgb_value if not is_slice else extracted_values
 
     def __hex_to_rgb(self, hexValue):
@@ -101,7 +100,6 @@ class Pixel:
             hexToRgbValue[0] = int(hexColor[0:2], 16)  # R
             hexToRgbValue[1] = int(hexColor[2:4], 16)  # G
             hexToRgbValue[2] = int(hexColor[4:6], 16)  # B
-
             return tuple(hexToRgbValue)
         else:
             raise ValueError(CONSTANTS.PIXEL_RANGE_ERROR)
@@ -116,7 +114,6 @@ class Pixel:
     @brightness.setter
     def brightness(self, brightness):
         if not self.__valid_brightness(brightness):
-
             raise ValueError(CONSTANTS.BRIGHTNESS_RANGE_ERROR)
         self.__state['brightness'] = brightness
         self.__show_if_auto_write()
