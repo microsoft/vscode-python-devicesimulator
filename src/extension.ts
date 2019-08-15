@@ -344,7 +344,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         messageToWebview.data
                       }`
                     );
-                    logToOutputChannel(
+                    utils.logToOutputChannel(
                       outChannel,
                       `[PRINT] ${messageToWebview.data}`
                     );

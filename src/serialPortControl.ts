@@ -90,7 +90,7 @@ export class SerialPortControl {
             });
 
             this._currentSerialPort.on("error", (error: any) => {
-                logToOutputChannel(this._outputChannel, "[ERROR]" + error.toString());
+                logToOutputChannel(this._outputChannel, error.toString());
             });
         });
     }

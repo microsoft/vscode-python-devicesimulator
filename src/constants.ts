@@ -157,6 +157,24 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
+  MISC: {
+    NO: localize(
+      "misc.no",
+      "No"
+    ),
+    SELECT_PORT_PLACEHOLDER: localize(
+      "misc.selectPortPlaceholder",
+      "Select a serial port"
+    ),
+    SERIAL_MONITOR_NAME: localize(
+      "misc.serialMonitorName",
+      "Pacifica Serial Monitor"
+    ),
+    YES: localize(
+      "misc.yes",
+      "Yes"
+    ),
+  },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
     ACCEPT_AND_RUN: localize(
@@ -170,6 +188,10 @@ export const CONSTANTS = {
     NO_RATE_SELECTED: localize(
       "warning.noRateSelected",
       "No rate is selected, keep baud rate unchanged."
+    ),
+    NO_SERIAL_PORT_SELECTED: localize(
+      "warning.noSerialPortSelected",
+      "No serial port was selected, please select a serial port first"
     ),
     SERIAL_MONITOR_ALREADY_OPENED: (port: string) => {
       return localize(
@@ -192,7 +214,6 @@ export enum CONFIG_KEYS {
   ENABLE_USB_DETECTION = "pacifica.enableUSBDetection"
 }
 
-// Need the different events we want to track and the name of it
 export enum TelemetryEventName {
   FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
 
@@ -269,7 +290,6 @@ export namespace DialogResponses {
 }
 
 export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
-export const SERIAL_MONITOR_NAME = "CPX Serial Monitor";
 
 export const USER_CODE_NAMES = {
   CODE_PY: "code.py",
@@ -281,6 +301,5 @@ export const STATUS_BAR_PRIORITY = {
   OPEN_PORT: 30,
   BAUD_RATE: 40,
 };
-
 
 export default CONSTANTS;

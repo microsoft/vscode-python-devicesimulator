@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { outChannel } from "./extension";
 import { logToOutputChannel } from "./extension_utils/utils";
 import { DeviceContext } from "./deviceContext";
-import CONSTANTS, { STATUS_BAR_PRIORITY, SERIAL_MONITOR_NAME } from "./constants";
+import CONSTANTS, { STATUS_BAR_PRIORITY } from "./constants";
 import { SerialPortControl } from "./serialPortControl";
 
 export interface ISerialPortDetail {
@@ -56,7 +56,7 @@ export class SerialMonitor implements vscode.Disposable {
 
     public initialize() {
         const defaultBaudRate: number = SerialMonitor.DEFAULT_BAUD_RATE;
-        this._outputChannel = vscode.window.createOutputChannel(SERIAL_MONITOR_NAME);
+        this._outputChannel = vscode.window.createOutputChannel(CONSTANTS.MISC.SERIAL_MONITOR_NAME);
         this._outputChannel.show(true);
         this._currentBaudRate = defaultBaudRate;
         this._portsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.PORT);
@@ -97,14 +97,14 @@ export class SerialMonitor implements vscode.Disposable {
                 this.updatePortListStatus(foundPort.comName);
             }
         } else {
-            const chosen = await vscode.window.showQuickPick(<vscode.QuickPickItem[]>lists.map((port: ISerialPortDetail): vscode.QuickPickItem => {
+            const chosen = await vscode.window.showQuickPick(lists.map((port: ISerialPortDetail): vscode.QuickPickItem => {
                 return {
                     description: port.manufacturer,
                     label: port.comName
                 };
             }).sort((a, b): number => {
                 return a.label === b.label ? 0 : (a.label > b.label ? 1 : -1);
-            }), { placeHolder: "Select a serial port"});
+            }) as vscode.QuickPickItem[], { placeHolder: CONSTANTS.MISC.SELECT_PORT_PLACEHOLDER});
 
             if (chosen && chosen.label) {
                 this.updatePortListStatus(chosen.label);
@@ -114,8 +114,12 @@ export class SerialMonitor implements vscode.Disposable {
 
     public async openSerialMonitor() {
         if (!this._currentPort) {
-            const ans = await vscode.window.showInformationMessage("No serial port was selected, please select a serial port first", "Yes", "No");
-            if (ans === "Yes") {
+            const ans = await vscode.window.showInformationMessage(
+                CONSTANTS.WARNING.NO_SERIAL_PORT_SELECTED,
+                CONSTANTS.MISC.YES,
+                CONSTANTS.MISC.NO
+            );
+            if (ans === CONSTANTS.MISC.YES) {
                 await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
