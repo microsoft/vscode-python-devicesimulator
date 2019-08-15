@@ -12,7 +12,7 @@
 .toolbar,
 .toolbar-icon {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
-  border-color: var(--vscode-highContrastButtonBorderOverwrite-color);
+  border-color: var(--vscode-highContrastButtonBorderOverride-color);
   border-width: 1px;
   border-style: solid;
 }

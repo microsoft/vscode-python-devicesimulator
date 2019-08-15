@@ -96,7 +96,7 @@
     ],
     "colors": [
       {
-        "id": "highContrastButtonBorderOverwrite.color",
+        "id": "highContrastButtonBorderOverride.color",
         "description": "Color for the high contrast border updated",
         "defaults": {
           "dark": "debugToolBar.background",
