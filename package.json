@@ -24,15 +24,33 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
+    "onCommand:pacifica.openSerialMonitor",
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newFile",
     "onCommand:pacifica.runDevice",
+    "onCommand:pacifica.runSimulatorEditorButton",
+    "onCommand:pacifica.selectSerialPort",
     "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "pacifica.changeBaudRate",
+        "title": "%pacificaExtension.commands.changeBaudRate%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.closeSerialMonitor",
+        "title": "%pacificaExtension.commands.closeSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.openSerialMonitor",
+        "title": "%pacificaExtension.commands.openSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
       {
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
@@ -44,6 +62,11 @@
       },
       {
         "command": "pacifica.runSimulator",
+        "title": "%pacificaExtension.commands.runSimulator%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.runSimulatorEditorButton",
         "title": "%pacificaExtension.commands.runSimulator%",
         "category": "%pacificaExtension.commands.label%",
         "icon": {
@@ -64,9 +87,20 @@
           "light": "./assets/light-theme/save-to-board.svg",
           "dark": "./assets/dark-theme/save-to-board.svg"
         }
+      },
+      {
+        "command": "pacifica.selectSerialPort",
+        "title": "%pacificaExtension.commands.selectSerialPort%",
+        "category": "%pacificaExtension.commands.label%"
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "pacifica.runSimulatorEditorButton",
+          "when": "false"
+        }
+      ],
       "editor/title": [
         {
           "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
@@ -75,7 +109,7 @@
         },
         {
           "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
-          "command": "pacifica.runSimulator",
+          "command": "pacifica.runSimulatorEditorButton",
           "group": "navigation@2"
         },
         {
@@ -89,6 +123,10 @@
       "type": "object",
       "title": "%pacificaExtension.configuration.title%",
       "properties": {
+        "pacifica.enableUSBDetection": {
+          "type": "boolean",
+          "default": true
+        },
         "pacifica.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
@@ -241,11 +279,14 @@
   },
   "dependencies": {
     "@types/open": "^6.1.0",
+    "@types/socket.io": "^2.1.2",
     "compare-versions": "^3.5.1",
+    "eventemitter2": "^5.0.1",
     "open": "^6.4.0",
     "os": "^0.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "socket.io": "^2.2.0",
     "svg-inline-react": "^3.1.0",
     "util": "^0.12.1",
     "vscode-extension-telemetry": "^0.1.1",
