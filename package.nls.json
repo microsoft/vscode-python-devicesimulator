@@ -1,9 +1,13 @@
 {
+  "pacificaExtension.commands.changeBaudRate": "Change Baud Rate",
+  "pacificaExtension.commands.closeSerialMonitor": "Close Serial Monitor",
   "pacificaExtension.commands.label": "Pacifica",
+  "pacificaExtension.commands.openSerialMonitor": "Open Serial Monitor",
   "pacificaExtension.commands.openSimulator": "Open Simulator",
   "pacificaExtension.commands.runSimulator": "Run Simulator",
   "pacificaExtension.commands.newFile": "New File",
   "pacificaExtension.commands.runDevice": "Deploy to Device",
+  "pacificaExtension.commands.selectSerialPort": "Select Serial Port",
   "pacificaExtension.configuration.title": "Pacfica configuration",
   "pacificaExtension.configuration.properties.open": "Whether to show 'Open Simulator' icon in editor title menu.",
   "pacificaExtension.configuration.properties.device": "Whether to show 'Run Device' icon in editor title menu.",
