@@ -86,6 +86,9 @@ class Express:
 
     @property
     def red_led(self):
+        telemetry_client.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["RED_LED"]}')
+        telemetry_client.flush()
         return self.__state['red_led']
 
     @red_led.setter

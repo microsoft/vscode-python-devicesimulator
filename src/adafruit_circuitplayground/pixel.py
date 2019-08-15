@@ -5,6 +5,12 @@ import json
 import sys
 from . import constants as CONSTANTS
 from . import utils
+from applicationinsights import TelemetryClient
+from . import constants as CONSTANTS
+
+
+telemetry_client = TelemetryClient('__AIKEY__')
+EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 class Pixel:
@@ -21,6 +27,9 @@ class Pixel:
             self.show()
 
     def __getitem__(self, index):
+        telemetry_client.track_event(
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]}')
+        telemetry_client.flush()
         if not self.__valid_index(index):
             raise IndexError(CONSTANTS.INDEX_ERROR)
         return self.__state['pixels'][index]
