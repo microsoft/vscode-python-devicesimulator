@@ -24,6 +24,7 @@ Commands are accessible through :
 - Access to auto-completion and Python error flagging
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
+- Debugger for the simulator
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
@@ -42,7 +43,6 @@ Commands are accessible through :
 
 - Auto-detect/format the device
 - Serial monitor for the device
-- Debugger for the simulator
 - Device's features
   - Sound sensor
     - Tones
@@ -61,4 +61,5 @@ Commands are accessible through :
 
 ### Note
 
-\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).
+\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
+\** The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5678.
