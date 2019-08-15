@@ -94,6 +94,17 @@
         "category": "%pacificaExtension.commands.label%"
       }
     ],
+    "colors": [
+      {
+        "id": "badgeForegroundOverwrite",
+        "description": "Color that fixes the issue with midnight blue ",
+        "defaults": {
+          "dark": "#FFFFFF",
+          "light": "badge.foreground",
+          "highContrast": "#FFFFFF"
+        }
+      }
+    ],
     "menus": {
       "commandPalette": [
         {
