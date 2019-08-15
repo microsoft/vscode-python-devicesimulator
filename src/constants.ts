@@ -19,7 +19,8 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
-    COMPORT_UNKNOWN_ERROR: "Writing to COM port (GetOverlappedResult): Unknown error code 121",
+    COMPORT_UNKNOWN_ERROR:
+      "Writing to COM port (GetOverlappedResult): Unknown error code 121",
     CPX_FILE_ERROR: localize(
       "error.cpxFileFormat",
       "The cpx.json file format is not correct."
@@ -32,13 +33,13 @@ export const CONSTANTS = {
       return localize(
         "error.failedToOpenSerialPort",
         `[ERROR] Failed to open serial port ${port}.`
-      )
+      );
     },
     FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
       return localize(
         "error.failedToOpenSerialPortDueTo",
         `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
-      )
+      );
     },
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
@@ -198,7 +199,7 @@ export const CONSTANTS = {
       return localize(
         "warning.serialMonitorAlreadyOpened",
         `Serial monitor is already opened for ${port} \n`
-      )
+      );
     },
     SERIAL_MONITOR_NOT_STARTED: localize(
       "warning.serialMonitorNotStarted",
@@ -262,7 +263,8 @@ export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator",
   SENSOR_CHANGED = "sensor-changed",
-  REFRESH_SIMULATOR = "refresh-simulator"
+  REFRESH_SIMULATOR = "refresh-simulator",
+  SLIDER_TELEMETRY = "slider-telemetry"
 }
 
 // tslint:disable-next-line: no-namespace
@@ -315,7 +317,7 @@ export const USER_CODE_NAMES = {
 export const STATUS_BAR_PRIORITY = {
   PORT: 20,
   OPEN_PORT: 30,
-  BAUD_RATE: 40,
+  BAUD_RATE: 40
 };
 
 export default CONSTANTS;

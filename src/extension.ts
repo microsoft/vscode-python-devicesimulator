@@ -130,7 +130,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
-                handleSensorTelemetry(message.text);
+                checkForTelemetry(message.text);
                 console.log(`Sensor changed ${messageJson} \n`);
                 if (inDebugMode) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
@@ -141,6 +141,9 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.REFRESH_SIMULATOR:
                 console.log("Refresh button");
                 runSimulatorCommand();
+                break;
+              case WebviewMessages.SLIDER_TELEMETRY:
+                handleSensorTelemetry(message.text);
                 break;
               default:
                 vscode.window.showInformationMessage(
@@ -718,25 +721,42 @@ const handleButtonPressTelemetry = (buttonState: any) => {
   }
 };
 
-const handleSensorTelemetry = (sensorState: any) => {
-  if (sensorState["temperature"]) {
-    telemetryAI.trackFeatureUsage(
-      TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
-    );
-  } else if (sensorState["light"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_LIGHT_SENSOR);
-  } else if (
-    sensorState["motion_x"] ||
-    sensorState["motion_y"] ||
-    sensorState["motion_z"]
-  ) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
-  } else if (sensorState["shake"]) {
-    telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+const handleSensorTelemetry = (sensor: string) => {
+  switch (sensor) {
+    case "temperature":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
+      );
+      break;
+    case "light":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_LIGHT_SENSOR);
+      break;
+    case "motion_x":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_y":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_z":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "shake":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+      break;
+    case "touch":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
+      );
+      break;
+  }
+};
+
+const checkForTelemetry = (sensorState: any) => {
+  if (sensorState["shake"]) {
+    console.log(`telemtry sending`);
+    handleSensorTelemetry("shake");
   } else if (sensorState["touch"]) {
-    telemetryAI.trackFeatureUsage(
-      TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
-    );
+    handleSensorTelemetry("touch");
   }
 };
 
