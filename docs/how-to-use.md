@@ -24,27 +24,32 @@ Commands are accessible through :
 - Access to auto-completion and Python error flagging
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
+- Debugger for the simulator
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
-  - Sound - .wav files
+  - Playing .wav files
   - Red LED
   - Switch
   - Green LED
+  - Light sensor
+  - Motion sensors
+    - Acceleration detection
+    - Board shake detection
   - Temperature sensor
+  - Touch sensors
 
 ## Not supported yet
 
 - Auto-detect/format the device
 - Serial monitor for the device
-- Debugger for the simulator
 - Device's features
-  - Light sensor
-  - Motion sensors
   - Sound sensor
-  - Touch sensors
-  - Sound - tones
-  - IR transmitter
+    - Tones
+    - Sound detection\*
+  - IR transmitter\*
+  - Motion sensors
+    - Tap detection
 
 ## Troubleshooting Tips
 
@@ -53,3 +58,8 @@ Commands are accessible through :
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
+
+### Note
+
+\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
+\** The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5678.

@@ -7,6 +7,7 @@ import os
 from playsound import playsound
 from .pixel import Pixel
 from . import utils
+from . import constants as CONSTANTS
 from collections import namedtuple
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
@@ -44,8 +45,9 @@ class Express:
             'shake': False,
         }
 
-        self.pixels = Pixel(self.__state)
+        self.__debug_mode = False
         self.__abs_path_to_code_file = ''
+        self.pixels = Pixel(self.__state, self.__debug_mode)
 
     @property
     def acceleration(self):
@@ -74,8 +76,7 @@ class Express:
         """  Not Implemented!
         """
 
-        raise NotImplementedError(
-            "This method is not implemented by the simulator")
+        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
@@ -99,7 +100,7 @@ class Express:
         return self.__state['light']
 
     def __show(self):
-        utils.show(self.__state)
+        utils.show(self.__state, self.__debug_mode)
 
     def __touch(self, i):
         return self.__state['touch'][i-1]
@@ -155,8 +156,7 @@ class Express:
                     playsound(abs_path_wav_file)
                 except:
                     # TODO TASK: 29054 Verfication of a "valid" .wav file
-                    raise EnvironmentError(
-                        "Your .wav file is not suitable for the Circuit Playground Express.")
+                    raise EnvironmentError(CONSTANTS.NOT_SUITABLE_FILE_ERROR)
             else:
                 raise TypeError(file_name + " is not a path to a .wav file.")
         else:
@@ -166,20 +166,20 @@ class Express:
         """ Not Implemented!
         """
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
         # Stop playing any tones.
         raise NotImplementedError(
-            "This method is not implemented by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
 
 cpx = Express()
