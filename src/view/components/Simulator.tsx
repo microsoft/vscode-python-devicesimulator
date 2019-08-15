@@ -132,6 +132,7 @@ class Simulator extends React.Component<any, IState> {
         <div className="buttons">
           <Button
             onClick={this.togglePlayClick}
+            focusable={true}
             image={image}
             styleLabel="play"
             label="play"
@@ -139,6 +140,7 @@ class Simulator extends React.Component<any, IState> {
           />
           <Button
             onClick={this.refreshSimulatorClick}
+            focusable={true}
             image={RefreshLogo}
             styleLabel="refresh"
             label="refresh"
