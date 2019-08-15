@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { outChannel } from "./extension";
 import { logToOutputChannel } from "./extension_utils/utils";
 import { DeviceContext } from "./deviceContext";
-import CONSTANTS, { STATUS_BAR_PRIORITY } from "./constants";
+import CONSTANTS, { STATUS_BAR_PRIORITY, DialogResponses } from "./constants";
 import { SerialPortControl } from "./serialPortControl";
 
 export interface ISerialPortDetail {
@@ -116,10 +116,10 @@ export class SerialMonitor implements vscode.Disposable {
         if (!this._currentPort) {
             const ans = await vscode.window.showInformationMessage(
                 CONSTANTS.WARNING.NO_SERIAL_PORT_SELECTED,
-                CONSTANTS.MISC.YES,
-                CONSTANTS.MISC.NO
+                DialogResponses.YES,
+                DialogResponses.NO,
             );
-            if (ans === CONSTANTS.MISC.YES) {
+            if (ans === DialogResponses.YES) {
                 await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
