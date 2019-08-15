@@ -16,7 +16,7 @@ sio = socketio.Client(reconnection_attempts=2)
 
 # Initialize connection
 def init_connection(port=CONSTANTS.DEFAULT_PORT):
-    sio.connect(f'http://localhost:{port}')
+    sio.connect('http://localhost:{}'.format(port))
 
 
 # Transfer the user's inputs to the API
