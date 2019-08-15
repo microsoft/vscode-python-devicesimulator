@@ -1,5 +1,5 @@
 .sensor-button {
-  color: var(--vscode-newBadgeForeground);
+  color: var(--vscode-badgeForegroundOverwrite);
   text-align: center;
   background-color: var(--vscode-button-background);
   width: 320px;

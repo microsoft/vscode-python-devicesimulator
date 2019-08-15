@@ -68,7 +68,7 @@
     ],
     "colors": [
       {
-        "id": "newBadgeForeground",
+        "id": "badgeForegroundOverwrite",
         "description": "Color that fixes the issue with midnight blue ",
         "defaults": {
           "dark": "#FFFFFF",
