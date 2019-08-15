@@ -9,7 +9,7 @@
   padding-left: 20px;
   margin-bottom: 20px;
   margin-top: 20px;
-  border-color: var(--vscode-newHighContrastButton-color);
+  border-color: var(--vscode-highContrastButtonBorderOverwrite-color);
   border-width: 1px;
   border-style: solid;
 }

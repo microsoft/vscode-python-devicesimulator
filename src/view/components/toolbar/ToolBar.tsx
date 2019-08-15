@@ -129,6 +129,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.NEO_PIXEL_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button

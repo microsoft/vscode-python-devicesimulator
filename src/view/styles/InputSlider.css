@@ -22,7 +22,7 @@
   font-weight: bold;
   border-width: 1px;
   border-radius: 2px;
-  border-color: var(--vscode-newHighContrastButton-color);
+  border-color: var(--vscode-highContrastButtonBorderOverwrite-color);
 }
 
 .slider {
