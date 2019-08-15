@@ -282,6 +282,11 @@ export async function activate(context: vscode.ExtensionContext) {
       // Save on run
       await currentTextDocument.save();
 
+      if (!currentTextDocument.fileName.endsWith(".py")) {
+        logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+        return;
+      }
+
       logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
