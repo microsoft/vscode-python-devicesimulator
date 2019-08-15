@@ -26,13 +26,13 @@ export const CONSTANTS = {
     CAPITAL_F: "F",
     ENTER: "Enter",
     S: "KeyS",
-    NUMERIC_ONE: "1",
-    NUMERIC_TWO: "2",
-    NUMERIC_THREE: "3",
-    NUMERIC_FOUR: "4",
-    NUMERIC_FIVE: "5",
-    NUMERIC_SIX: "6",
-    NUMERIC_SEVEN: "7"
+    NUMERIC_ONE: "Digit1",
+    NUMERIC_TWO: "Digit2",
+    NUMERIC_THREE: "Digit3",
+    NUMERIC_FOUR: "Digit4",
+    NUMERIC_FIVE: "Digit5",
+    NUMERIC_SIX: "Digit6",
+    NUMERIC_SEVEN: "Digit7"
   },
   REDIRECT: {
     DESCRIPTION:
