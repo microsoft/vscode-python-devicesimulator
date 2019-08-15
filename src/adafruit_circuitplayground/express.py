@@ -65,7 +65,7 @@ class Express:
     @property
     def detect_taps(self):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT.TAPS"]}')
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT_TAPS"]}')
         telemetry_client.flush()
         return self.__state['detect_taps']
 
@@ -158,7 +158,7 @@ class Express:
 
     def play_file(self, file_name):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY.FILE"]}')
+            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_FILE"]}')
         telemetry_client.flush()
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
