@@ -14,3 +14,12 @@ NOT_SUITABLE_FILE_ERROR = "Your .wav file is not suitable for the Circuit Playgr
 PIXEL_RANGE_ERROR = "The pixel hexadicimal color value should be in range #000000 and #FFFFFF."
 
 VALID_PIXEL_ASSIGN_ERROR = "The pixel color value should be a tuple with three values between 0 and 255 or a hexadecimal color between 0x000000 and 0xFFFFFF."
+
+ERROR_SENDING_EVENT = "Error trying to send event to the process : "
+
+TIME_DELAY = 0.03
+
+DEFAULT_PORT = 5678
+EVENTS_BUTTON_PRESS = ['button_a', 'button_b', 'switch']
+EVENTS_SENSOR_CHANGED = ['temperature',
+                         'light', 'motion_x', 'motion_y', 'motion_z']

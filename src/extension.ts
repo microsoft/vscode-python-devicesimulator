@@ -19,11 +19,14 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import { SerialMonitor } from "./serialMonitor";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
+import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
 let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
+let inDebugMode: boolean = false;
+let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowNewFile: boolean = true;
@@ -102,25 +105,27 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.BUTTON_PRESS:
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
-                console.log("About to write");
-                console.log(messageJson + "\n");
-                if (childProcess) {
+                console.log(`About to write ${messageJson} \n`);
+                if (inDebugMode) {
+                  debuggerCommunicationHandler.emitButtonPress(messageJson);
+                } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
-                console.log("Play button");
-                console.log(messageJson + "\n");
+                console.log(`Play button ${messageJson} \n`);
                 if (message.text as boolean) {
+                  telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
-                console.log("sensor changed");
-                console.log(messageJson + "\n");
-                if (childProcess) {
+                console.log(`Sensor changed ${messageJson} \n`);
+                if (inDebugMode) {
+                  debuggerCommunicationHandler.emitSensorChanged(messageJson);
+                } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
                 }
                 break;
@@ -143,6 +148,7 @@ export async function activate(context: vscode.ExtensionContext) {
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
+          debuggerCommunicationHandler.setWebview(undefined);
           killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
@@ -246,6 +252,13 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const runSimulatorCommand = async () => {
+    // Prevent running new code if a debug session is active
+    if (inDebugMode) {
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.DEBUGGING_SESSION_IN_PROGESS
+      );
+      return;
+    }
     if (shouldShowRunCodePopup) {
       const shouldExitCommand = await vscode.window
         .showWarningMessage(
@@ -274,7 +287,6 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     console.info(CONSTANTS.INFO.RUNNING_CODE);
-    telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR);
 
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
@@ -313,6 +325,9 @@ export async function activate(context: vscode.ExtensionContext) {
             }
           });
       }
+
+      // Activate the run webview button
+      currentPanel.webview.postMessage({ command: "activate-play" });
 
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
@@ -390,10 +405,17 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   };
 
+  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand("pacifica.runSimulatorEditorButton",
+    () => {
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
+      runSimulatorCommand();
+    });
+
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.runSimulator",
     () => {
+      telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_PALETTE);
       runSimulatorCommand();
     }
   );
@@ -559,8 +581,35 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Debugger configuration
   const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
-    utils.getPathToScript(context, "out", "process_user_code.py")
+    utils.getPathToScript(context, "out/", "debug_user_code.py")
   );
+
+  // On Debug Session Start: Init comunication
+  const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
+    // Set up the webview
+    killProcessIfRunning();
+    openWebview();
+    if (currentPanel) {
+      currentPanel.webview.postMessage({ command: "activate-play" });
+    }
+    console.log("Debug Started");
+    inDebugMode = true;
+    debuggerCommunicationHandler = new DebuggerCommunicationServer(
+      currentPanel
+    );
+  });
+
+  // On Debug Session Stop: Stop communiation
+  const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
+    console.log("Debug Stopped");
+    inDebugMode = false;
+    if (debuggerCommunicationHandler) {
+      debuggerCommunicationHandler.closeConnection();
+    }
+    if (currentPanel) {
+      currentPanel.webview.postMessage({ command: "reset-state" });
+    }
+  });
 
   context.subscriptions.push(
     changeBaudRate,
@@ -569,12 +618,15 @@ export async function activate(context: vscode.ExtensionContext) {
     openSimulator,
     newFile,
     runSimulator,
+    runSimulatorEditorButton,
     runDevice,
     selectSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
-    )
+    ),
+    debugSessionsStarted,
+    debugSessionStopped
   );
 }
 

@@ -5,6 +5,8 @@ import * as nls from "vscode-nls";
 import * as path from "path";
 import { MessageItem } from "vscode";
 
+export const DEFAULT_SERVER_PORT: number = 5678;
+
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
 })();
@@ -12,15 +14,19 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
   DEPENDENCY_CHECKER: {
-    PYTHON: 'python',
-    PYTHON3: 'python3',
-    PYTHON_LAUNCHER: 'py -3'
+    PYTHON: "python",
+    PYTHON3: "python3",
+    PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
     COMPORT_UNKNOWN_ERROR: "Writing to COM port (GetOverlappedResult): Unknown error code 121",
     CPX_FILE_ERROR: localize(
       "error.cpxFileFormat",
       "The cpx.json file format is not correct."
+    ),
+    DEBUGGING_SESSION_IN_PROGESS: localize(
+      "error.debuggingSessionInProgress",
+      "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
     ),
     FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
       return localize(
@@ -58,7 +64,10 @@ export const CONSTANTS = {
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
     ),
-    NO_PYTHON_PATH: localize("error.noPythonPath", "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."),
+    NO_PYTHON_PATH: localize(
+      "error.noPythonPath",
+      "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
@@ -198,7 +207,7 @@ export const CONSTANTS = {
     SERIAL_PORT_NOT_STARTED: localize(
       "warning.serialPortNotStarted",
       "Serial port has not been started."
-    ),
+    )
   }
 };
 
@@ -213,7 +222,9 @@ export enum TelemetryEventName {
   COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
   COMMAND_NEW_FILE = "COMMAND.NEW.FILE",
   COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
-  COMMAND_RUN_SIMULATOR = "COMMAND.RUN.SIMULATOR",
+  COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
+  COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",
+  COMMAND_RUN_EDITOR_ICON = "COMMAND.RUN.EDITOR_ICON",
 
   // Simulator interaction
   SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",
@@ -257,7 +268,7 @@ export namespace DialogResponses {
   };
   export const CANCEL: MessageItem = {
     title: localize("dialogResponses.cancel", "Cancel")
-  }
+  };
   export const HELP: MessageItem = {
     title: localize("dialogResponses.help", "I need help")
   };
@@ -266,7 +277,7 @@ export namespace DialogResponses {
   };
   export const NO: MessageItem = {
     title: localize("dialogResponses.No", "No")
-  }
+  };
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")
   };
@@ -281,10 +292,10 @@ export namespace DialogResponses {
   };
   export const INSTALL_PYTHON: MessageItem = {
     title: localize("dialogResponses.installPython", "Install from python.org")
-  }
+  };
   export const YES: MessageItem = {
     title: localize("dialogResponses.Yes", "Yes")
-  }
+  };
 }
 
 export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
