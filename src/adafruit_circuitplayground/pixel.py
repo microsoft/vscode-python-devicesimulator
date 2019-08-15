@@ -14,17 +14,21 @@ EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 class Pixel:
-    def __init__(self, state):
+    def __init__(self, state, debug_mode=False):
         self.__state = state
         self.auto_write = True
+        self.__debug_mode = debug_mode
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
-        utils.show(self.__state)
+        utils.show(self.__state, self.__debug_mode)
 
     def __show_if_auto_write(self):
         if self.auto_write:
             self.show()
+
+    def __set_debug_mode(self, debug_mode):
+        self.__debug_mode = debug_mode
 
     def __getitem__(self, index):
 

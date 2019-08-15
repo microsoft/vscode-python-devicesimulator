@@ -4,6 +4,8 @@
 import * as nls from "vscode-nls";
 import { MessageItem } from "vscode";
 
+export const DEFAULT_SERVER_PORT: number = 5678;
+
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
 })();
@@ -16,6 +18,10 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
+    DEBUGGING_SESSION_IN_PROGESS: localize(
+      "error.debuggingSessionInProgress",
+      "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
+    ),
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
       '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
@@ -134,7 +140,9 @@ export enum TelemetryEventName {
   COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
   COMMAND_NEW_FILE = "COMMAND.NEW.FILE",
   COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
-  COMMAND_RUN_SIMULATOR = "COMMAND.RUN.SIMULATOR",
+  COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
+  COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",
+  COMMAND_RUN_EDITOR_ICON = "COMMAND.RUN.EDITOR_ICON",
 
   // Simulator interaction
   SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",

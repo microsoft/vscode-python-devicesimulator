@@ -97,6 +97,9 @@ class Simulator extends React.Component<any, IState> {
         console.log("Setting the state: " + JSON.stringify(message.state));
         this.setState({ ...this.state, cpx: message.state, play_button: true });
         break;
+      case "activate-play":
+        this.setState({ ...this.state, play_button: !this.state.play_button });
+        break;
       default:
         console.log("Invalid message received from the extension.");
         this.setState({ ...this.state, cpx: DEFAULT_CPX_STATE });
@@ -155,7 +158,6 @@ class Simulator extends React.Component<any, IState> {
 
   protected togglePlayClick() {
     sendMessage("play-simulator", !this.state.play_button);
-    this.setState({ ...this.state, play_button: !this.state.play_button });
     const button =
       window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
       window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
