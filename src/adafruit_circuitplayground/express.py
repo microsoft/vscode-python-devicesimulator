@@ -13,7 +13,7 @@ from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
-TELEMETRY_CLIENT = TelemetryClient('__AIKEY__')
+telemetry_client = TelemetryClient('__AIKEY__')
 EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
@@ -66,9 +66,9 @@ class Express:
 
     @property
     def detect_taps(self):
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT.TAPS"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         return self.__state['detect_taps']
 
     @detect_taps.setter
@@ -81,10 +81,9 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-        print()
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["TAPPED"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
@@ -146,9 +145,9 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["ADJUST_THRESHOLD"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
 
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
@@ -157,9 +156,9 @@ class Express:
         return self.__state['shake']
 
     def play_file(self, file_name):
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
@@ -181,27 +180,27 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}${CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_TONE"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["START_TONE"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        TELEMETRY_CLIENT.track_event(
+        telemetry_client.track_event(
             f'{EXTENSION_NAME}/${CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]}')
-        TELEMETRY_CLIENT.flush()
+        telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 

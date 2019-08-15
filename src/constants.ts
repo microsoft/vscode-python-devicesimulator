@@ -97,7 +97,7 @@ export const CONSTANTS = {
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
-      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
+      'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
@@ -118,16 +118,6 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
   NAME: localize("name", "Pacifica Simulator"),
-  PYTHON_TRACKED_CALLS: {
-    ADJUST_THRESHOLD: "adjust_touch_threshold",
-    DETECT_TAPS: "detect_taps",
-    PLAY_FILE: "play_file",
-    PLAY_TONE: "play_tone",
-    START_TONE: "start_tone",
-    STOP_TONE: "stop_tone",
-    PIXELS: "pixels",
-    TAPPED: "tapped"
-  },
   WARNING: {
     ACCEPT_AND_RUN: localize(
       "warning.agreeAndRun",

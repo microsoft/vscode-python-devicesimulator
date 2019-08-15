@@ -324,7 +324,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 // Check the JSON is a state
                 switch (messageToWebview.type) {
                   case "state":
-                    let state = JSON.parse(messageToWebview.data);
                     console.log(
                       `Process state output = ${messageToWebview.data}`
                     );

@@ -35,7 +35,6 @@ class Pixel:
         return type(index) is int and index >= -len(self.__state['pixels']) and index < len(self.__state['pixels'])
 
     def fill(self, val):
-        self.__state['latest_call'] = 'pixels'
         for index in range(len(self.__state['pixels'])):
             self.__state['pixels'][index] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
