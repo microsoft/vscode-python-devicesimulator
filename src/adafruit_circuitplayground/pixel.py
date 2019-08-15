@@ -27,18 +27,38 @@ class Pixel:
             self.show()
 
     def __getitem__(self, index):
+
         telemetry_client.track_event(
             '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]))
         telemetry_client.flush()
-        if not self.__valid_index(index):
-            raise IndexError(CONSTANTS.INDEX_ERROR)
+
+        if type(index) is not slice:
+            if not self.__valid_index(index):
+                raise IndexError(CONSTANTS.INDEX_ERROR)
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
-        if not self.__valid_index(index):
-            raise IndexError(CONSTANTS.INDEX_ERROR)
-        self.__state['pixels'][index] = self.__extract_pixel_value(val)
+        is_slice = False
+        if type(index) is slice:
+            is_slice = True
+        else:
+            if not self.__valid_index(index):
+                raise IndexError(CONSTANTS.INDEX_ERROR)
+        self.__state['pixels'][index] = self.__extract_pixel_value(
+            val, is_slice)
         self.__show_if_auto_write()
+
+    def __iter__(self):
+        yield from self.__state["pixels"]
+
+    def __enter__(self):
+        return self
+
+    def __repr__(self):
+        return "[" + ", ".join([str(x) for x in self]) + "]"
+
+    def __len__(self):
+        return len(self.__state["pixels"])
 
     def __valid_index(self, index):
         return type(index) is int and index >= -len(self.__state['pixels']) and index < len(self.__state['pixels'])
@@ -48,20 +68,27 @@ class Pixel:
             self.__state['pixels'][index] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
 
-    def __extract_pixel_value(self, val):
+    def __extract_pixel_value(self, val, is_slice=False):
+        extracted_values = []
+        values = val
+        if not is_slice:
+            values = [val]
         # Type validation
-        if type(val) is list:
-            rgb_value = tuple(val)
-        elif type(val) is int:
-            rgb_value = self.__hex_to_rgb(hex(val))
-        elif type(val) is tuple:
-            rgb_value = val
-        else:
-            raise ValueError(CONSTANTS.ASSIGN_PIXEL_TYPE_ERROR)
-        # Values validation
-        if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
-            raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
-        return rgb_value
+        for v in values:
+            if type(v) is list:
+                rgb_value = tuple(v)
+            elif type(v) is int:
+                rgb_value = self.__hex_to_rgb(hex(v))
+            elif type(v) is tuple:
+                rgb_value = v
+            else:
+                raise ValueError(CONSTANTS.ASSIGN_PIXEL_TYPE_ERROR)
+            # Values validation
+            if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
+                raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
+            extracted_values.append(rgb_value)
+
+        return rgb_value if not is_slice else extracted_values
 
     def __hex_to_rgb(self, hexValue):
         if hexValue[0:2] == '0x' and len(hexValue) <= 8:
