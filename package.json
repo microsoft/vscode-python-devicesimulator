@@ -68,15 +68,6 @@
     ],
     "colors": [
       {
-        "id": "newHighContrast.color",
-        "description": "Color for the high contrast border updated",
-        "defaults": {
-          "dark": "editor.background",
-          "light": "editor.background",
-          "highContrast": "#6FC3DF"
-        }
-      },
-      {
         "id": "newHighContrastButton.color",
         "description": "Color for the high contrast border updated",
         "defaults": {
