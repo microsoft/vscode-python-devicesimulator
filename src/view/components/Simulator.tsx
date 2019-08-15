@@ -95,6 +95,9 @@ class Simulator extends React.Component<any, IState> {
         console.log("Setting the state: " + JSON.stringify(message.state));
         this.setState({ ...this.state, cpx: message.state, play_button: true });
         break;
+      case "activate-play":
+        this.setState({ ...this.state, play_button: !this.state.play_button });
+        break;
       default:
         console.log("Invalid message received from the extension.");
         this.setState({ ...this.state, cpx: DEFAULT_CPX_STATE });
@@ -132,6 +135,7 @@ class Simulator extends React.Component<any, IState> {
         <div className="buttons">
           <Button
             onClick={this.togglePlayClick}
+            focusable={true}
             image={image}
             styleLabel="play"
             label="play"
@@ -139,6 +143,7 @@ class Simulator extends React.Component<any, IState> {
           />
           <Button
             onClick={this.refreshSimulatorClick}
+            focusable={true}
             image={RefreshLogo}
             styleLabel="refresh"
             label="refresh"
@@ -151,7 +156,6 @@ class Simulator extends React.Component<any, IState> {
 
   protected togglePlayClick() {
     sendMessage("play-simulator", !this.state.play_button);
-    this.setState({ ...this.state, play_button: !this.state.play_button });
     const button =
       window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
       window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
@@ -191,34 +195,36 @@ class Simulator extends React.Component<any, IState> {
     } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
       this.refreshSimulatorClick();
     } else {
-      switch (event.key) {
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
-          break;
+      if (event.shiftKey) {
+        switch (event.code) {
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_ONE:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A1);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_TWO:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A2);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_TWO:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A2);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_THREE:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A3);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_THREE:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A3);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FOUR:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A4);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FOUR:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A4);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FIVE:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A5);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_FIVE:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A5);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SIX:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SIX:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A6);
+            break;
 
-        case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
-          element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A7);
-          break;
+          case CONSTANTS.KEYBOARD_KEYS.NUMERIC_SEVEN:
+            element = window.document.getElementById(CONSTANTS.ID_NAME.PIN_A7);
+            break;
+        }
       }
     }
     if (element) {

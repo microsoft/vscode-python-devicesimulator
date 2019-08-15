@@ -18,14 +18,8 @@
   border-color: var(--vscode-newHighContrastButton-color);
 }
 
+.button:focus,
 .button:hover {
-  background-color: var(--vscode-terminal-selectionBackground);
-}
-
-.play-button:focus,
-.play-button:hover,
-.refresh-button:focus,
-.refresh-button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 

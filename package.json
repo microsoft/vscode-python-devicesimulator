@@ -28,6 +28,7 @@
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newFile",
     "onCommand:pacifica.runDevice",
+    "onCommand:pacifica.runSimulatorEditorButton",
     "onDebug"
   ],
   "main": "./out/extension.js",
@@ -44,6 +45,11 @@
       },
       {
         "command": "pacifica.runSimulator",
+        "title": "%pacificaExtension.commands.runSimulator%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.runSimulatorEditorButton",
         "title": "%pacificaExtension.commands.runSimulator%",
         "category": "%pacificaExtension.commands.label%",
         "icon": {
@@ -78,6 +84,12 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "pacifica.runSimulatorEditorButton",
+          "when": "false"
+        }
+      ],
       "editor/title": [
         {
           "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
@@ -86,7 +98,7 @@
         },
         {
           "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
-          "command": "pacifica.runSimulator",
+          "command": "pacifica.runSimulatorEditorButton",
           "group": "navigation@2"
         },
         {
@@ -252,11 +264,13 @@
   },
   "dependencies": {
     "@types/open": "^6.1.0",
+    "@types/socket.io": "^2.1.2",
     "compare-versions": "^3.5.1",
     "open": "^6.4.0",
     "os": "^0.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "socket.io": "^2.2.0",
     "svg-inline-react": "^3.1.0",
     "util": "^0.12.1",
     "vscode-extension-telemetry": "^0.1.1",

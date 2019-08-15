@@ -53,6 +53,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               onClick={() => {}}
               image={TOOLBAR_SVG.LEFT_EDGE_SVG}
               styleLabel="edge"
+              focusable={false}
             />
             <Button
               label={TOOLBAR_ICON_ID.SWITCH}
@@ -62,6 +63,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.SLIDER_SWITCH_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -72,6 +74,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.PUSH_BUTTON_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -82,6 +85,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.RED_LED_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -92,6 +96,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.SOUND_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -102,6 +107,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.TEMPERATURE_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -112,6 +118,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.LIGHT_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -132,6 +139,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.SPEAKER_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -142,6 +150,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.MOTION_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -152,6 +161,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.IR_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -162,6 +172,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               }}
               image={TOOLBAR_SVG.GPIO_SVG}
               styleLabel="toolbar"
+              focusable={true}
             />
 
             <Button
@@ -170,6 +181,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               onClick={() => {}}
               image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
               styleLabel="edge"
+              focusable={false}
             />
           </div>
 
