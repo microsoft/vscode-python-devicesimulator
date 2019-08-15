@@ -21,6 +21,7 @@ import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 
 let currentFileAbsPath: string = "";
+let currentTextDocument: vscode.TextDocument;
 let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
 // Notification booleans
@@ -60,6 +61,10 @@ export async function activate(context: vscode.ExtensionContext) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
   }
+
+  vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
+    await updateCurrentFileIfPython(document);
+  });
 
   const openWebview = () => {
     if (currentPanel) {
@@ -275,11 +280,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
     killProcessIfRunning();
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else {
+      // Save on run
+      await currentTextDocument.save();
+
       utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
@@ -320,7 +328,7 @@ export async function activate(context: vscode.ExtensionContext) {
         if (currentPanel) {
           // Process the data from the process and send one state at a time
           dataFromTheProcess.split("\0").forEach(message => {
-            if (currentPanel && message.length > 0 && message != oldMessage) {
+            if (currentPanel && message.length > 0 && message !== oldMessage) {
               oldMessage = message;
               let messageToWebview;
               // Check the message is a JSON
@@ -341,7 +349,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                        messageToWebview.data
+                      messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -395,11 +403,13 @@ export async function activate(context: vscode.ExtensionContext) {
 
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
+      // Save on run
+      await currentTextDocument.save();
       // Output panel
       utils.logToOutputChannel(
         outChannel,
@@ -573,6 +583,9 @@ const getActivePythonFile = () => {
   const activeEditor = editors.find(
     editor => editor.document.languageId === "python"
   );
+  if (activeEditor) {
+    currentTextDocument = activeEditor.document
+  }
   return activeEditor ? activeEditor.document.fileName : "";
 };
 
@@ -595,13 +608,17 @@ const getFileFromFilePicker = () => {
 };
 
 const updateCurrentFileIfPython = async (
-  activeTextEditor: vscode.TextEditor | undefined
+  activeTextDocument: vscode.TextDocument | undefined
 ) => {
-  if (activeTextEditor && activeTextEditor.document.languageId === "python") {
-    currentFileAbsPath = activeTextEditor.document.fileName;
+  if (activeTextDocument && activeTextDocument.languageId === "python") {
+    currentFileAbsPath = activeTextDocument.fileName;
+    currentTextDocument = activeTextDocument;
   } else if (currentFileAbsPath === "") {
     currentFileAbsPath =
       getActivePythonFile() || (await getFileFromFilePicker()) || "";
+  }
+  if (currentFileAbsPath) {
+    await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
 
@@ -654,7 +671,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
           </html>`;
 }
 
-// this method is called when your extension is deactivated
 export async function deactivate() {
   const monitor: SerialMonitor = SerialMonitor.getInstance();
   await monitor.closeSerialMonitor(null, false); 
