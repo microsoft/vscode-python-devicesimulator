@@ -28,7 +28,7 @@ class Pixel:
 
     def __getitem__(self, index):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]))
         telemetry_client.flush()
         if not self.__valid_index(index):
             raise IndexError(CONSTANTS.INDEX_ERROR)

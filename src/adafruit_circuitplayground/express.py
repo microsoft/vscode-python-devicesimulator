@@ -65,7 +65,7 @@ class Express:
     @property
     def detect_taps(self):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT_TAPS"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT_TAPS"]))
         telemetry_client.flush()
         return self.__state['detect_taps']
 
@@ -80,14 +80,14 @@ class Express:
         """  Not Implemented!
         """
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["TAPPED"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["TAPPED"]))
         telemetry_client.flush()
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["RED_LED"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["RED_LED"]))
         telemetry_client.flush()
         return self.__state['red_led']
 
@@ -147,7 +147,7 @@ class Express:
         The CPX Simulator doesn't use capacitive touch threshold.
         """
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["ADJUST_THRESHOLD"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["ADJUST_THRESHOLD"]))
         telemetry_client.flush()
 
         raise NotImplementedError(
@@ -158,7 +158,7 @@ class Express:
 
     def play_file(self, file_name):
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_FILE"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_FILE"]))
         telemetry_client.flush()
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
@@ -182,7 +182,7 @@ class Express:
         """ Not Implemented!
         """
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}${CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_TONE"]}')
+            "{}/{}".format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_TONE"]))
         telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
@@ -191,7 +191,7 @@ class Express:
         """ Not Implemented!
         """
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/{CONSTANTS.TELEMETRY_EVENT_NAMES["START_TONE"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["START_TONE"]))
         telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
@@ -200,7 +200,7 @@ class Express:
         """ Not Implemented!
         """
         telemetry_client.track_event(
-            f'{EXTENSION_NAME}/${CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]}')
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]))
         telemetry_client.flush()
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
