@@ -44,8 +44,6 @@ class Express:
             'motion_y': 0,
             'motion_z': 0,
             'touch': [False]*7,
-            'detect_taps': 1,
-            'tapped': False,
             'shake': False,
         }
 

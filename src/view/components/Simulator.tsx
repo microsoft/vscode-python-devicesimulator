@@ -20,8 +20,6 @@ interface ICpxState {
   button_b: boolean;
   switch: boolean;
   touch: boolean[];
-  detect_taps: 1;
-  tapped: boolean;
   shake: boolean;
 }
 
@@ -52,8 +50,6 @@ const DEFAULT_CPX_STATE: ICpxState = {
   red_led: false,
   switch: false,
   touch: [false, false, false, false, false, false, false],
-  detect_taps: 1,
-  tapped: false,
   shake: false
 };
 
