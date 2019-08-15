@@ -158,10 +158,6 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
   MISC: {
-    NO: localize(
-      "misc.no",
-      "No"
-    ),
     SELECT_PORT_PLACEHOLDER: localize(
       "misc.selectPortPlaceholder",
       "Select a serial port"
@@ -169,11 +165,7 @@ export const CONSTANTS = {
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
       "Pacifica Serial Monitor"
-    ),
-    YES: localize(
-      "misc.yes",
-      "Yes"
-    ),
+    )
   },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
@@ -272,6 +264,9 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
+  export const NO: MessageItem = {
+    title: localize("dialogResponses.No", "No")
+  }
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")
   };
@@ -286,6 +281,9 @@ export namespace DialogResponses {
   };
   export const INSTALL_PYTHON: MessageItem = {
     title: localize("dialogResponses.installPython", "Install from python.org")
+  }
+  export const YES: MessageItem = {
+    title: localize("dialogResponses.Yes", "Yes")
   }
 }
 
