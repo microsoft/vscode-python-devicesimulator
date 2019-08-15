@@ -546,9 +546,10 @@ const getFileFromFilePicker = () => {
     openLabel: "Run File"
   };
 
-  return vscode.window.showOpenDialog(options).then(fileUri => {
+  return vscode.window.showOpenDialog(options).then(async (fileUri) => {
     if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
       console.log(`Selected file: ${fileUri[0].fsPath}`);
+      currentTextDocument = await vscode.workspace.openTextDocument(fileUri[0])
       return fileUri[0].fsPath;
     }
   });
