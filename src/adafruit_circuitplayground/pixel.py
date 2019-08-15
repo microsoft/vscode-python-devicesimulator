@@ -38,6 +38,10 @@ class Pixel:
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
+        telemetry_client.track_event(
+            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]))
+        telemetry_client.flush()
+
         is_slice = False
         if type(index) is slice:
             is_slice = True
