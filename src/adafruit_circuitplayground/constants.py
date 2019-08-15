@@ -19,7 +19,8 @@ ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 
 TIME_DELAY = 0.03
 
-DEFAULT_PORT = 5678
+DEFAULT_PORT = "5678"
+
 EVENTS_BUTTON_PRESS = ['button_a', 'button_b', 'switch']
 EVENTS_SENSOR_CHANGED = ['temperature',
                          'light', 'motion_x', 'motion_y', 'motion_z']

@@ -144,6 +144,12 @@
           "default": true,
           "description": "%pacificaExtension.configuration.properties.device%",
           "scope": "resource"
+        },
+        "pacifica.debuggerServerPort": {
+          "type": "number",
+          "default": 5678,
+          "description": "%pacificaExtension.configuration.properties.debuggerPort%",
+          "scope": "resource"
         }
       }
     },
@@ -180,7 +186,8 @@
                 "description": "Command line arguments passed to the program.",
                 "default": [],
                 "items": {
-                  "type": "string"
+                  "filePath": "string",
+                  "serverPort": "string"
                 }
               },
               "rules": {

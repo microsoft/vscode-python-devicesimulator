@@ -35,3 +35,5 @@ NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"
+
+DEFAULT_PORT = "5678"
