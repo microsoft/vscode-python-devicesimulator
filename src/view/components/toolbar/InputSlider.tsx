@@ -125,8 +125,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     if (valueInt < this.props.minValue) {
       valueInt = this.props.minValue;
       this.setState({ value: valueInt });
-    }
-    if (valueInt > this.props.maxValue) {
+    } else if (valueInt > this.props.maxValue) {
       valueInt = this.props.maxValue;
       this.setState({ value: valueInt });
     }
