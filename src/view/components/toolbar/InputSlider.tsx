@@ -62,7 +62,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           onInput={this.handleOnChange}
           defaultValue={this.props.minValue.toLocaleString()}
           pattern="^-?[0-9]{0,3}$"
-          onKeyUp={this.handleOnKeyup}
+          onKeyUp={this.handleOnChange}
           aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
         />
         <span className="sliderArea">
@@ -92,16 +92,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     );
   }
 
-  private handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const validatedValue = this.validateRange(this.updateValue(event));
-
-    const newSensorState = this.writeMessage(validatedValue);
-    if (newSensorState) {
-      sendMessage(newSensorState);
-    }
-  };
-
-  private handleOnKeyup = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  private handleOnChange = (event: any) => {
     const validatedValue = this.validateRange(this.updateValue(event));
 
     const newSensorState = this.writeMessage(validatedValue);
