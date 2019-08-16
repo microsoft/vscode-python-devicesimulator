@@ -40,7 +40,7 @@
   -webkit-appearance: none;
   font-size: 16px;
   font-weight: bolder;
-  color: var(--vscode-badge-foreground);
+  color: var(--vscode-badgeForegroundOverwrite);
   text-align: left;
   margin-right: 40px;
   position: absolute;
