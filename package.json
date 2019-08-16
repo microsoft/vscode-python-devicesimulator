@@ -147,7 +147,7 @@
         },
         "pacifica.debuggerServerPort": {
           "type": "number",
-          "default": 5678,
+          "default": 5577,
           "description": "%pacificaExtension.configuration.properties.debuggerPort%",
           "scope": "resource"
         }

@@ -7,7 +7,7 @@ import { MessageItem } from "vscode";
 
 // Debugger Server
 export const SERVER_INFO = {
-  DEFAULT_SERVER_PORT: 5678,
+  DEFAULT_SERVER_PORT: 5577,
   ERROR_CODE_INIT_SERVER: "ERROR_INIT_SERVER",
   SERVER_PORT_CONFIGURATION: "pacifica.debuggerServerPort"
 };
