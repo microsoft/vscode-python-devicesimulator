@@ -298,7 +298,7 @@ export namespace DialogResponses {
   };
 }
 
-export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
+export const CPX_CONFIG_FILE = path.resolve(__dirname, ".vscode/cpx.json");
 
 export const USER_CODE_NAMES = {
   CODE_PY: "code.py",
