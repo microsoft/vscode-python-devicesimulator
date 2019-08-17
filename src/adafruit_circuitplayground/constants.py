@@ -7,6 +7,8 @@ BRIGHTNESS_RANGE_ERROR = "The brightness value should be a number between 0 and 
 
 INDEX_ERROR = "The index is not a valid number, you can access the Neopixels from 0 to 9."
 
+MAC_OS = "darwin"
+
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
 NOT_SUITABLE_FILE_ERROR = "Your .wav file is not suitable for the Circuit Playground Express."
