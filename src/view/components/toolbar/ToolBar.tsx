@@ -12,6 +12,7 @@ import {
 } from "./sensorModalUtils";
 import { INFO_SVG } from "../../svgs/info_svg";
 import { CONSTANTS } from "../../constants";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IToolbarState {
   currentOpenedLabel: string;
@@ -242,17 +243,35 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       <div className="sensor_modal">
         <div className="title_group">
           <span className="title">
-            {content["descriptionTitle"]}
+            <FormattedMessage
+              id="modal.description.title"
+              defaultMessage={content["descriptionTitle"]}
+            />
             {content["tagInput"]}
             {content["tagOutput"]}
           </span>
         </div>
         <br />
-        <div className="description">{content["descriptionText"]}</div>
+        <div className="description">
+          <FormattedMessage
+            id="modal.description.description"
+            defaultMessage={content["descriptionText"]}
+          />
+        </div>
         <div className="try_area">
-          <div className="title"> {content["tryItTitle"]}</div>
+          <div className="title">
+            <FormattedMessage
+              id="modal.description.tryItTitle"
+              defaultMessage={content["tryItTitle"]}
+            />
+          </div>
           <br />
-          <div className="description">{content["tryItDescriptrion"]}</div>
+          <div className="description">
+            <FormattedMessage
+              id="modal.tryItDescriptrion."
+              defaultMessage={content["tryItDescriptrion"]}
+            />
+          </div>
           <div>{component}</div>
         </div>
       </div>
