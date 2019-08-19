@@ -96,6 +96,15 @@
     ],
     "colors": [
       {
+        "id": "highContrastButtonBorderOverride.color",
+        "description": "Color for the high contrast border updated",
+        "defaults": {
+          "dark": "debugToolBar.background",
+          "light": "debugToolBar.background",
+          "highContrast": "#6FC3DF"
+        }
+      },
+      {
         "id": "badgeForegroundOverwrite",
         "description": "Color that fixes the issue with midnight blue ",
         "defaults": {
