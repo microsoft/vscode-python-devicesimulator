@@ -34,6 +34,7 @@ export const CONSTANTS = {
     NUMERIC_SIX: "Digit6",
     NUMERIC_SEVEN: "Digit7"
   },
+  NO_FILES_AVAILABLE: "Choose a .py file to run on the Simulator",
   REDIRECT: {
     DESCRIPTION:
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy',

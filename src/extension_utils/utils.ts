@@ -189,5 +189,6 @@ export const filterForPythonFiles = (textEditors: vscode.TextEditor[]) => {
 }
 
 export const getActiveEditorFromPath = (filePath: string): vscode.TextDocument => {
-  return vscode.window.visibleTextEditors.find((editor: vscode.TextEditor) => editor.document.fileName === filePath).document
+  const activeEditor = vscode.window.visibleTextEditors.find((editor: vscode.TextEditor) => editor.document.fileName === filePath);
+  return activeEditor ? activeEditor.document : undefined;
 }

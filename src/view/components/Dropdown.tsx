@@ -1,5 +1,9 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as React from "react";
-import "../styles/Button.css";
+import CONSTANTS from "../constants";
+import "../styles/Dropdown.css";
 
 export interface IDropdownProps {
   label: string;
@@ -11,13 +15,14 @@ export interface IDropdownProps {
 }
 
 const Dropdown: React.FC<IDropdownProps> = props => {
+  const parsedPath = parsePath(props.lastChosen);
   const defaultText =
     props.lastChosen !== ""
-      ? `${parsePath(props.lastChosen)[1]}: ${parsePath(props.lastChosen)[0]}`
-      : "Choose a .py file to run on the Simulator";
+      ? `${parsedPath[1]} : ${parsedPath[0]}`
+      : CONSTANTS.NO_FILES_AVAILABLE;
   return (
     <div>
-      <select id={props.label} onBlur={props.onBlur}>
+      <select id={props.label} className={"dropdown"} onBlur={props.onBlur}>
         <option value="" disabled selected>
           {defaultText}
         </option>
@@ -30,10 +35,10 @@ const Dropdown: React.FC<IDropdownProps> = props => {
 const renderOptions = (options: string[]) => {
   return options.map((name, index) => {
     const key = `option-${index}`;
-    const filePath = parsePath(name);
+    const parsedPath = parsePath(name);
     return (
       <option key={key} value={name}>
-        {`${filePath[1]}: ${filePath[0]}`}
+        {`${parsedPath[1]} : ${parsedPath[0]}`}
       </option>
     );
   });
@@ -45,13 +50,6 @@ const parsePath = (filePath: string) => {
       ? filePath.lastIndexOf("/")
       : filePath.lastIndexOf("\\");
   return [filePath.slice(0, lastSlash), filePath.substr(lastSlash + 1)];
-};
-
-const styleDropdownOptions = (classA:string, classB:string, pathToParse:string) => {
-  const parsedPath = parsePath(pathToParse);
-  return (
-    <p className={classA}>{parsedPath[1]}</p> <p className={classB}>{parsedPath[0]}</p> 
-  );
 };
 
 export default Dropdown;

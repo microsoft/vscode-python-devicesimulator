@@ -25,7 +25,8 @@ interface ICpxState {
 
 interface IState {
   active_editors: string[];
-  chosen_editor: string;
+  running_file: string;
+  selected_file: string;
   cpx: ICpxState;
   play_button: boolean;
 }
@@ -69,9 +70,10 @@ class Simulator extends React.Component<any, IState> {
     super(props);
     this.state = {
       active_editors: [],
-      chosen_editor: "",
       cpx: DEFAULT_CPX_STATE,
-      play_button: false
+      play_button: false,
+      running_file: "",
+      selected_file: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -107,18 +109,16 @@ class Simulator extends React.Component<any, IState> {
           "Setting active editors",
           message.state.activePythonEditors
         );
-        if (message.state.activePythonEditors.length > 0) {
-          this.setState({
-            ...this.state,
-            active_editors: message.state.activePythonEditors
-          });
-        }
-        break;
-      case "current-file":
-        console.log("Setting current file", message.state.chosen_editor);
         this.setState({
           ...this.state,
-          chosen_editor: message.state.chosen_editor
+          active_editors: message.state.activePythonEditors
+        });
+        break;
+      case "current-file":
+        console.log("Setting current file", message.state.running_file);
+        this.setState({
+          ...this.state,
+          running_file: message.state.running_file
         });
         break;
       default:
@@ -142,15 +142,17 @@ class Simulator extends React.Component<any, IState> {
     const image = this.state.play_button ? StopLogo : PlayLogo;
     return (
       <div className="simulator">
-        <div>
+        <div className="file-selector">
           <Dropdown
             label={"hi"}
             styleLabel={"hi"}
-            lastChosen={this.state.chosen_editor}
+            lastChosen={this.state.running_file}
             width={300}
             textOptions={this.state.active_editors}
             onBlur={this.onSelectBlur}
           />
+        </div>
+        <div>
           <Cpx
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
@@ -187,7 +189,7 @@ class Simulator extends React.Component<any, IState> {
 
   protected togglePlayClick() {
     sendMessage("play-simulator", {
-      chosen_editor: this.state.chosen_editor,
+      selected_file: this.state.selected_file,
       state: !this.state.play_button
     });
     const button =
@@ -210,7 +212,7 @@ class Simulator extends React.Component<any, IState> {
 
   protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
     console.log("BLURR", event.currentTarget.value);
-    this.setState({ ...this.state, chosen_editor: event.currentTarget.value });
+    this.setState({ ...this.state, selected_file: event.currentTarget.value });
   }
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
     let element;

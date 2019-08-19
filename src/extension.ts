@@ -44,7 +44,7 @@ const setPathAndSendMessage = (currentPanel: vscode.WebviewPanel, newFilePath: s
   currentFileAbsPath = newFilePath;
   currentPanel.webview.postMessage({
     command: "current-file",
-    state: { chosen_editor: newFilePath }
+    state: { running_file: newFilePath }
   });
 }
 
@@ -132,9 +132,12 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log(`Play button ${messageJson} \n`);
                 if (message.text.state as boolean) {
-                  currentFileAbsPath = message.text.chosen_editor
+                  setPathAndSendMessage(currentPanel, message.text.selected_file);
                   if (currentFileAbsPath) {
-                    currentTextDocument = utils.getActiveEditorFromPath(currentFileAbsPath);
+                    const foundDocument = utils.getActiveEditorFromPath(currentFileAbsPath);
+                    if (foundDocument !== undefined) {
+                      currentTextDocument = foundDocument;
+                    }
                   }
                   telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
                   runSimulatorCommand();
@@ -319,6 +322,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      vscode.window
+        .showErrorMessage(
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          DialogResponses.MESSAGE_UNDERSTOOD
+        )
     } else {
       // Save on run
       await currentTextDocument.save();
@@ -452,6 +460,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      vscode.window
+        .showErrorMessage(
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          DialogResponses.MESSAGE_UNDERSTOOD
+        );
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
       // Save on run
       await currentTextDocument.save();
@@ -664,24 +677,6 @@ const getActivePythonFile = () => {
   return activeEditor ? activeEditor.document.fileName : "";
 };
 
-const getFileFromFilePicker = () => {
-  const options: vscode.OpenDialogOptions = {
-    canSelectMany: false,
-    filters: {
-      "All files": ["*"],
-      "Python files": ["py"]
-    },
-    openLabel: "Run File"
-  };
-
-  return vscode.window.showOpenDialog(options).then(fileUri => {
-    if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
-      console.log(`Selected file: ${fileUri[0].fsPath}`);
-      return fileUri[0].fsPath;
-    }
-  });
-};
-
 const updateCurrentFileIfPython = async (
   activeTextDocument: vscode.TextDocument | undefined,
   currentPanel: vscode.WebviewPanel
@@ -691,9 +686,9 @@ const updateCurrentFileIfPython = async (
     currentTextDocument = activeTextDocument;
   } else if (currentFileAbsPath === "") {
     setPathAndSendMessage(currentPanel,
-      getActivePythonFile() || (await getFileFromFilePicker()) || "");
+      getActivePythonFile() || "");
   }
-  if (utils.getActiveEditorFromPath(activeTextDocument.fileName) === undefined) {
+  if (utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
     await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
