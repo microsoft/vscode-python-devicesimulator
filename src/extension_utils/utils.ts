@@ -5,8 +5,21 @@ import * as fs from "fs";
 import * as path from "path";
 import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
-import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
-import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
+import {
+  ExtensionContext,
+  MessageItem,
+  OutputChannel,
+  Uri,
+  window,
+  workspace
+} from "vscode";
+import {
+  CONSTANTS,
+  CPX_CONFIG_FILE,
+  DialogResponses,
+  USER_CODE_NAMES,
+  SERVER_INFO
+} from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
 
 // tslint:disable-next-line: export-name
@@ -30,11 +43,12 @@ export const validCodeFileName = (filePath: string) => {
 };
 
 export const showPrivacyModal = (okAction: () => void) => {
-  window.showInformationMessage(
-    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
-    DialogResponses.AGREE_AND_PROCEED,
-    DialogResponses.CANCEL,
-  )
+  window
+    .showInformationMessage(
+      `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
+      DialogResponses.AGREE_AND_PROCEED,
+      DialogResponses.CANCEL
+    )
     .then((privacySelection: MessageItem | undefined) => {
       if (privacySelection === DialogResponses.AGREE_AND_PROCEED) {
         okAction();
@@ -42,7 +56,7 @@ export const showPrivacyModal = (okAction: () => void) => {
         // do nothing
       }
     });
-}
+};
 
 export const logToOutputChannel = (
   outChannel: OutputChannel | undefined,
@@ -61,9 +75,9 @@ export function tryParseJSON(jsonString: string): any | boolean {
   try {
     const jsonObj = JSON.parse(jsonString);
     if (jsonObj && typeof jsonObj === "object") {
-        return jsonObj;
+      return jsonObj;
     }
-  } catch (exception) { }
+  } catch (exception) {}
 
   return false;
 }
@@ -104,25 +118,29 @@ export function directoryExistsSync(dirPath: string): boolean {
  * so that the resulting string reaches the given length.
  * The padding is applied from the start (left) of the current string.
  */
-export function padStart(sourceString: string, targetLength: number, padString?: string): string {
+export function padStart(
+  sourceString: string,
+  targetLength: number,
+  padString?: string
+): string {
   if (!sourceString) {
-      return sourceString;
+    return sourceString;
   }
 
   if (!(String.prototype as any).padStart) {
-      // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
-      padString = String(padString || " ");
-      if (sourceString.length > targetLength) {
-          return sourceString;
-      } else {
-          targetLength = targetLength - sourceString.length;
-          if (targetLength > padString.length) {
-              padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
-          }
-          return padString.slice(0, targetLength) + sourceString;
+    // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
+    padString = String(padString || " ");
+    if (sourceString.length > targetLength) {
+      return sourceString;
+    } else {
+      targetLength = targetLength - sourceString.length;
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
       }
+      return padString.slice(0, targetLength) + sourceString;
+    }
   } else {
-      return (sourceString as any).padStart(targetLength, padString);
+    return (sourceString as any).padStart(targetLength, padString);
   }
 }
 
@@ -135,15 +153,20 @@ export function generateCPXConfig(): void {
   const cpxJson = {
     port: deviceContext.port
   };
-  const cpxConfigFilePath: string = path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE);
+  const cpxConfigFilePath: string = path.join(
+    CPXWorkspace.rootPath,
+    CPX_CONFIG_FILE
+  );
   mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
   fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
 }
 export const checkPythonDependency = async () => {
   const dependencyChecker: DependencyChecker = new DependencyChecker();
-  const result = await dependencyChecker.checkDependency(CONSTANTS.DEPENDENCY_CHECKER.PYTHON);
+  const result = await dependencyChecker.checkDependency(
+    CONSTANTS.DEPENDENCY_CHECKER.PYTHON
+  );
   return result.payload;
-}
+};
 
 export const setPythonExectuableName = async () => {
   // Find our what command is the PATH for python
@@ -152,8 +175,11 @@ export const setPythonExectuableName = async () => {
   if (dependencyCheck.installed) {
     executableName = dependencyCheck.dependency;
   } else {
-    window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
-      DialogResponses.INSTALL_PYTHON)
+    window
+      .showErrorMessage(
+        CONSTANTS.ERROR.NO_PYTHON_PATH,
+        DialogResponses.INSTALL_PYTHON
+      )
       .then((selection: MessageItem | undefined) => {
         if (selection === DialogResponses.INSTALL_PYTHON) {
           const okAction = () => {
@@ -165,4 +191,14 @@ export const setPythonExectuableName = async () => {
   }
 
   return executableName;
-}
+};
+
+export const getServerPortConfig = (): number => {
+  // tslint:disable: no-backbone-get-set-outside-model prefer-type-cast
+  if (workspace.getConfiguration().has(SERVER_INFO.SERVER_PORT_CONFIGURATION)) {
+    return workspace
+      .getConfiguration()
+      .get(SERVER_INFO.SERVER_PORT_CONFIGURATION) as number;
+  }
+  return SERVER_INFO.DEFAULT_SERVER_PORT;
+};

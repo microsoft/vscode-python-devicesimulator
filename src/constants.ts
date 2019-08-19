@@ -5,7 +5,12 @@ import * as nls from "vscode-nls";
 import * as path from "path";
 import { MessageItem } from "vscode";
 
-export const DEFAULT_SERVER_PORT: number = 5678;
+// Debugger Server
+export const SERVER_INFO = {
+  DEFAULT_SERVER_PORT: 5577,
+  ERROR_CODE_INIT_SERVER: "ERROR_INIT_SERVER",
+  SERVER_PORT_CONFIGURATION: "pacifica.debuggerServerPort"
+};
 
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
@@ -19,11 +24,18 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
-    COMPORT_UNKNOWN_ERROR: "Writing to COM port (GetOverlappedResult): Unknown error code 121",
+    COMPORT_UNKNOWN_ERROR:
+      "Writing to COM port (GetOverlappedResult): Unknown error code 121",
     CPX_FILE_ERROR: localize(
       "error.cpxFileFormat",
       "The cpx.json file format is not correct."
     ),
+    DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
+      return localize(
+        "error.debuggerServerInitFailed",
+        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
+      );
+    },
     DEBUGGING_SESSION_IN_PROGESS: localize(
       "error.debuggingSessionInProgress",
       "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
@@ -32,13 +44,13 @@ export const CONSTANTS = {
       return localize(
         "error.failedToOpenSerialPort",
         `[ERROR] Failed to open serial port ${port}.`
-      )
+      );
     },
     FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
       return localize(
         "error.failedToOpenSerialPortDueTo",
         `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
-      )
+      );
     },
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
@@ -146,7 +158,7 @@ export const CONSTANTS = {
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
-      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
+      'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
@@ -198,7 +210,7 @@ export const CONSTANTS = {
       return localize(
         "warning.serialMonitorAlreadyOpened",
         `Serial monitor is already opened for ${port} \n`
-      )
+      );
     },
     SERIAL_MONITOR_NOT_STARTED: localize(
       "warning.serialMonitorNotStarted",
@@ -308,7 +320,7 @@ export const USER_CODE_NAMES = {
 export const STATUS_BAR_PRIORITY = {
   PORT: 20,
   OPEN_PORT: 30,
-  BAUD_RATE: 40,
+  BAUD_RATE: 40
 };
 
 export default CONSTANTS;

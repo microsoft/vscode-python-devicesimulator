@@ -10,22 +10,31 @@ from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground import debugger_communication_client
 
 
-# Init Communication
-debugger_communication_client.init_connection()
-
 # Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
 
 
-# Execute User Code
+## Execute User Code ##
+
+
+# Get user's code path
 abs_path_to_code_file = ''
 if len(sys.argv) > 1 and sys.argv[1]:
     abs_path_to_code_file = sys.argv[1]
 else:
     raise FileNotFoundError(CONSTANTS.ERROR_NO_FILE)
 
+# Get Debugger Server Port
+server_port = CONSTANTS.DEFAULT_PORT
+if len(sys.argv) > 2:
+    server_port = sys.argv[2]
+
+# Init Communication
+debugger_communication_client.init_connection(server_port)
+
+# Init API variables
 cpx._Express__abs_path_to_code_file = abs_path_to_code_file
 cpx._Express__debug_mode = True
 cpx.pixels._Pixel__set_debug_mode(True)
