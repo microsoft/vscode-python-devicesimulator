@@ -316,6 +316,14 @@ export async function activate(context: vscode.ExtensionContext) {
       // Save on run
       await currentTextDocument.save();
 
+      if (!currentTextDocument.fileName.endsWith(".py")) {
+        utils.logToOutputChannel(
+          outChannel,
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          true
+        );
+        return;
+      }
       utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
@@ -598,7 +606,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   UsbDetector.getInstance().initialize(context.extensionPath);
   UsbDetector.getInstance().startListening();
-
   if (
     CPXWorkspace.rootPath &&
     (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) ||
@@ -683,9 +690,10 @@ const getFileFromFilePicker = () => {
     openLabel: "Run File"
   };
 
-  return vscode.window.showOpenDialog(options).then(fileUri => {
+  return vscode.window.showOpenDialog(options).then(async fileUri => {
     if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
       console.log(`Selected file: ${fileUri[0].fsPath}`);
+      currentTextDocument = await vscode.workspace.openTextDocument(fileUri[0]);
       return fileUri[0].fsPath;
     }
   });
