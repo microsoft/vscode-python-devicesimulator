@@ -78,7 +78,7 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
     "8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
+    "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7",
   component: TRY_IT_MAKE_CODE,
   id: "GPIO"
 };
@@ -114,7 +114,7 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
     "Detects acceleration in XYZ orientations. And can also detect 'tap' and 'double tap' strikes on the board and when the board is shaken.",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion:
-    "Change the acceleration here and click on the sensor on the board to simulate the “tap”!",
+    "Change the acceleration here and click or click on the button to simulate a shake.The tap feature is not supported by pacifica. You can try it on MakeCode!",
   component: <MotionSensorBar />,
   id: "motion_sensor"
 };
@@ -165,7 +165,7 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
   id: "sound_sensor"
 };
 export const SWITCH_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Slide Switch ",
+  descriptionTitle: "Slider Switch",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
   descriptionText:
@@ -176,7 +176,7 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
   id: "slider_switch"
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Speaker ",
+  descriptionTitle: "Speaker",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText:

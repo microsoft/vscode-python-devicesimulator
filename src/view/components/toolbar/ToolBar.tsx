@@ -175,6 +175,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               focusable={false}
             />
           </div>
+          <FormattedMessage id="test" defaultMessage="test" />
 
           {this.getIconModal()}
         </div>
