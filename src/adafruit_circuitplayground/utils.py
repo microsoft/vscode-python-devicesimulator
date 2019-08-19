@@ -36,7 +36,6 @@ def remove_leading_slashes(string):
 
 
 def send_telemetry(event_name):
-    print(f"calling with tstate {event_name}", flush=True)
     telemetry_client.track_event(
         '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES[event_name]))
     telemetry_client.flush()

@@ -100,6 +100,9 @@ class Express:
 
     @red_led.setter
     def red_led(self, value):
+        if(not self.telemetry_state["RED_LED"]):
+            utils.send_telemetry("RED_LED")
+            self.telemetry_state["RED_LED"] = True
         self.__state['red_led'] = bool(value)
         self.__show()
 
