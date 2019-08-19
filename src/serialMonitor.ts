@@ -57,7 +57,6 @@ export class SerialMonitor implements vscode.Disposable {
     public initialize() {
         const defaultBaudRate: number = SerialMonitor.DEFAULT_BAUD_RATE;
         this._outputChannel = vscode.window.createOutputChannel(CONSTANTS.MISC.SERIAL_MONITOR_NAME);
-        this._outputChannel.show(true);
         this._currentBaudRate = defaultBaudRate;
         this._portsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.PORT);
         this._portsStatusBar.command = "pacifica.selectSerialPort";

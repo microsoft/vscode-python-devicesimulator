@@ -5,15 +5,17 @@
 }
 
 .button-icon {
-  fill: var(--vscode-badge-foreground);
+  fill: var(--vscode-badgeForegroundOverwrite);
 }
 
 .play-button {
   border-radius: 8px 0px 0px 8px;
+  border-color: var(--vscode-highContrastButtonBorderOverride-color);
 }
 
 .refresh-button {
   border-radius: 0px 8px 8px 0px;
+  border-color: var(--vscode-highContrastButtonBorderOverride-color);
 }
 
 .button:focus,
