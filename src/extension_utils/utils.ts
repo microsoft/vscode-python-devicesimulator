@@ -7,6 +7,7 @@ import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
 import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
+import { CPXWorkspace } from "../cpxWorkspace";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
@@ -134,7 +135,7 @@ export function generateCPXConfig(): void {
   const cpxJson = {
     port: deviceContext.port
   };
-  const cpxConfigFilePath: string = CPX_CONFIG_FILE;
+  const cpxConfigFilePath: string = path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE);
   mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
   fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
 }
