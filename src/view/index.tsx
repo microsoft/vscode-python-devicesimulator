@@ -8,7 +8,7 @@ import { IntlProvider } from "react-intl";
 
 import "./index.css";
 
-const locale = "en-US";
+const locale = "en";
 
 ReactDOM.render(
   <IntlProvider locale={locale}>
