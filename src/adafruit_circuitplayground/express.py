@@ -13,9 +13,6 @@ from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
-telemetry_client = TelemetryClient('__AIKEY__')
-EXTENSION_NAME = '__EXTENSIONNAME__'
-
 
 class Express:
     def __init__(self):
@@ -46,7 +43,16 @@ class Express:
             'touch': [False]*7,
             'shake': False,
         }
-
+        self.telemetry_state = {
+            "DETECT_TAPS": False,
+            "TAPPED": False,
+            "RED_LED": False,
+            "ADJUST_THRESHOLD": False,
+            "PLAY_FILE": False,
+            "PLAY_TONE": False,
+            "START_TONE": False,
+            "STOP_TONE": False,
+        }
         self.__debug_mode = False
         self.__abs_path_to_code_file = ''
         self.pixels = Pixel(self.__state, self.__debug_mode)
@@ -65,9 +71,9 @@ class Express:
 
     @property
     def detect_taps(self):
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["DETECT_TAPS"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["DETECT_TAPS"]):
+            utils.send_telemetry("DETECT_TAPS")
+            self.telemetry_state["DETECT_TAPS"] = True
         return self.__state['detect_taps']
 
     @detect_taps.setter
@@ -80,16 +86,16 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["TAPPED"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["TAPPED"]):
+            utils.send_telemetry("TAPPED")
+            self.telemetry_state["TAPPED"] = True
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["RED_LED"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["RED_LED"]):
+            utils.send_telemetry("RED_LED")
+            self.telemetry_state["RED_LED"] = True
         return self.__state['red_led']
 
     @red_led.setter
@@ -147,9 +153,9 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["ADJUST_THRESHOLD"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["ADJUST_THRESHOLD"]):
+            utils.send_telemetry("ADJUST_THRESHOLD")
+            self.telemetry_state["ADJUST_THRESHOLD"] = True
 
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
@@ -158,9 +164,9 @@ class Express:
         return self.__state['shake']
 
     def play_file(self, file_name):
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_FILE"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["PLAY_FILE"]):
+            utils.send_telemetry("PLAY_FILE")
+            self.telemetry_state["PLAY_FILE"] = True
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
@@ -182,27 +188,27 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        telemetry_client.track_event(
-            "{}/{}".format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PLAY_TONE"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["PLAY_TONE"]):
+            utils.send_telemetry("PLAY_TONE")
+            self.telemetry_state["PLAY_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["START_TONE"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["START_TONE"]):
+            utils.send_telemetry("START_TONE")
+            self.telemetry_state["START_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["STOP_TONE"]))
-        telemetry_client.flush()
+        if(not self.telemetry_state["STOP_TONE"]):
+            utils.send_telemetry("STOP_TONE")
+            self.telemetry_state["STOP_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 

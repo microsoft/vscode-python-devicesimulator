@@ -9,15 +9,12 @@ from applicationinsights import TelemetryClient
 from . import constants as CONSTANTS
 
 
-telemetry_client = TelemetryClient('__AIKEY__')
-EXTENSION_NAME = '__EXTENSIONNAME__'
-
-
 class Pixel:
     def __init__(self, state, debug_mode=False):
         self.__state = state
         self.auto_write = True
         self.__debug_mode = debug_mode
+        self.telemetry_state = False
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
@@ -31,21 +28,18 @@ class Pixel:
         self.__debug_mode = debug_mode
 
     def __getitem__(self, index):
-
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]))
-        telemetry_client.flush()
-
         if type(index) is not slice:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
+        if(not self.telemetry_state):
+            utils.send_telemetry("PIXELS")
+            self.telemetry_state = True
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
-        telemetry_client.track_event(
-            '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES["PIXELS"]))
-        telemetry_client.flush()
-
+        if(not self.telemetry_state):
+            utils.send_telemetry("PIXELS")
+            self.telemetry_state = True
         is_slice = False
         if type(index) is slice:
             is_slice = True
