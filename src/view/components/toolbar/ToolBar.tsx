@@ -341,4 +341,4 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   };
 }
 
-export default ToolBar;
+export default injectIntl(ToolBar);
