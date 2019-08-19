@@ -12,7 +12,8 @@ import {
   CPX_CONFIG_FILE,
   DialogResponses,
   TelemetryEventName,
-  WebviewMessages
+  WebviewMessages,
+  SERVER_INFO
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
@@ -112,7 +113,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log(`About to write ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitButtonPress(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -132,7 +133,7 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.SENSOR_CHANGED:
                 checkForTelemetry(message.text);
                 console.log(`Sensor changed ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -606,6 +607,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   UsbDetector.getInstance().initialize(context.extensionPath);
   UsbDetector.getInstance().startListening();
+
   if (
     CPXWorkspace.rootPath &&
     (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) ||
@@ -625,17 +627,33 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Start: Init comunication
   const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
-    // Set up the webview
+    // Reinitialize process
     killProcessIfRunning();
-    openWebview();
-    if (currentPanel) {
-      currentPanel.webview.postMessage({ command: "activate-play" });
-    }
     console.log("Debug Started");
     inDebugMode = true;
-    debuggerCommunicationHandler = new DebuggerCommunicationServer(
-      currentPanel
-    );
+
+    try {
+      debuggerCommunicationHandler = new DebuggerCommunicationServer(
+        currentPanel,
+        utils.getServerPortConfig()
+      );
+      openWebview();
+      if (currentPanel) {
+        debuggerCommunicationHandler.setWebview(currentPanel);
+        currentPanel.webview.postMessage({ command: "activate-play" });
+      }
+    } catch (err) {
+      if (err.message === SERVER_INFO.ERROR_CODE_INIT_SERVER) {
+        console.error(
+          `Error trying to init the server on port ${utils.getServerPortConfig()}`
+        );
+        vscode.window.showErrorMessage(
+          CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
+            utils.getServerPortConfig()
+          )
+        );
+      }
+    }
   });
 
   // On Debug Session Stop: Stop communiation

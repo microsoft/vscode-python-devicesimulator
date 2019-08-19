@@ -5,7 +5,12 @@ import * as nls from "vscode-nls";
 import * as path from "path";
 import { MessageItem } from "vscode";
 
-export const DEFAULT_SERVER_PORT: number = 5678;
+// Debugger Server
+export const SERVER_INFO = {
+  DEFAULT_SERVER_PORT: 5577,
+  ERROR_CODE_INIT_SERVER: "ERROR_INIT_SERVER",
+  SERVER_PORT_CONFIGURATION: "pacifica.debuggerServerPort"
+};
 
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
@@ -25,6 +30,12 @@ export const CONSTANTS = {
       "error.cpxFileFormat",
       "The cpx.json file format is not correct."
     ),
+    DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
+      return localize(
+        "error.debuggerServerInitFailed",
+        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
+      );
+    },
     DEBUGGING_SESSION_IN_PROGESS: localize(
       "error.debuggingSessionInProgress",
       "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
