@@ -15,7 +15,7 @@ import { CONSTANTS } from "../../constants";
 import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IToolbarState {
-  currentOpenedLabel: string;
+  currentOpenedId: string;
   doNotShowAgain: boolean;
   showModal: boolean;
   showRedirectModal: boolean;
@@ -28,7 +28,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      currentOpenedLabel: "",
+      currentOpenedId: "",
       doNotShowAgain: false,
       showModal: false,
       showRedirectModal: false
@@ -188,13 +188,13 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   ) => {
     if (
       !this.state.showModal &&
-      this.state.currentOpenedLabel === "" &&
-      this.state.currentOpenedLabel !== label
+      this.state.currentOpenedId === "" &&
+      this.state.currentOpenedId !== label
     ) {
       this.openModal(label);
     } else {
       this.closeCurrentModal();
-      if (this.state.currentOpenedLabel !== label) {
+      if (this.state.currentOpenedId !== label) {
         this.openModal(label);
       }
     }
@@ -209,16 +209,16 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
     }
   }
   private closeCurrentModal = () => {
-    this.changePressedState(this.state.currentOpenedLabel, false);
+    this.changePressedState(this.state.currentOpenedId, false);
     this.setState({
-      currentOpenedLabel: "",
+      currentOpenedId: "",
       showModal: false
     });
   };
 
   private openModal = (label: string) => {
     this.setState({
-      currentOpenedLabel: label,
+      currentOpenedId: label,
       showModal: true
     });
     this.changePressedState(label, true);
@@ -227,13 +227,13 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
   private getIconModal() {
     if (
       !this.state.showModal ||
-      !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpenedLabel)
+      !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpenedId)
     ) {
       return null;
     }
 
     const content = LABEL_TO_MODAL_CONTENT.get(
-      this.state.currentOpenedLabel
+      this.state.currentOpenedId
     ) as IModalContent;
 
     const component = content
@@ -244,7 +244,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <div className="title_group">
           <span className="title">
             <FormattedMessage
-              id="modal.description.title"
+              id={`${this.state.currentOpenedId}.description.title`}
               defaultMessage={content["descriptionTitle"]}
             />
             {content["tagInput"]}
@@ -254,21 +254,21 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <br />
         <div className="description">
           <FormattedMessage
-            id="modal.description.description"
+            id={`${this.state.currentOpenedId}.description.description`}
             defaultMessage={content["descriptionText"]}
           />
         </div>
         <div className="try_area">
           <div className="title">
             <FormattedMessage
-              id="modal.description.tryItTitle"
+              id={`${this.state.currentOpenedId}.description.tryItTitle`}
               defaultMessage={content["tryItTitle"]}
             />
           </div>
           <br />
           <div className="description">
             <FormattedMessage
-              id="modal.tryItDescriptrion."
+              id={`${this.state.currentOpenedId}.tryItDescriptrion`}
               defaultMessage={content["tryItDescriptrion"]}
             />
           </div>
