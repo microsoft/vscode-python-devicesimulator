@@ -5,6 +5,7 @@ import * as React from "react";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import Cpx, { updateSwitch, updatePinTouch } from "./cpx/Cpx";
 import Button from "./Button";
+import Dropdown from "./Dropdown";
 import { CONSTANTS } from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
@@ -23,6 +24,8 @@ interface ICpxState {
 }
 
 interface IState {
+  active_editors: string[];
+  chosen_editor: string;
   cpx: ICpxState;
   play_button: boolean;
 }
@@ -51,8 +54,6 @@ const DEFAULT_CPX_STATE: ICpxState = {
   touch: [false, false, false, false, false, false, false]
 };
 
-const SIMULATOR_BUTTON_WIDTH = 60;
-
 interface vscode {
   postMessage(message: any): void;
 }
@@ -67,6 +68,8 @@ class Simulator extends React.Component<any, IState> {
   constructor(props: IMyProps) {
     super(props);
     this.state = {
+      active_editors: [],
+      chosen_editor: "",
       cpx: DEFAULT_CPX_STATE,
       play_button: false
     };
@@ -78,6 +81,7 @@ class Simulator extends React.Component<any, IState> {
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.togglePlayClick = this.togglePlayClick.bind(this);
     this.refreshSimulatorClick = this.refreshSimulatorClick.bind(this);
+    this.onSelectBlur = this.onSelectBlur.bind(this);
   }
 
   handleMessage = (event: any): void => {
@@ -97,6 +101,25 @@ class Simulator extends React.Component<any, IState> {
         break;
       case "activate-play":
         this.setState({ ...this.state, play_button: !this.state.play_button });
+        break;
+      case "visible-editors":
+        console.log(
+          "Setting active editors",
+          message.state.activePythonEditors
+        );
+        if (message.state.activePythonEditors.length > 0) {
+          this.setState({
+            ...this.state,
+            active_editors: message.state.activePythonEditors
+          });
+        }
+        break;
+      case "current-file":
+        console.log("Setting current file", message.state.chosen_editor);
+        this.setState({
+          ...this.state,
+          chosen_editor: message.state.chosen_editor
+        });
         break;
       default:
         console.log("Invalid message received from the extension.");
@@ -120,6 +143,14 @@ class Simulator extends React.Component<any, IState> {
     return (
       <div className="simulator">
         <div>
+          <Dropdown
+            label={"hi"}
+            styleLabel={"hi"}
+            lastChosen={this.state.chosen_editor}
+            width={300}
+            textOptions={this.state.active_editors}
+            onBlur={this.onSelectBlur}
+          />
           <Cpx
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
@@ -139,7 +170,7 @@ class Simulator extends React.Component<any, IState> {
             image={image}
             styleLabel="play"
             label="play"
-            width={SIMULATOR_BUTTON_WIDTH}
+            width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
           />
           <Button
             onClick={this.refreshSimulatorClick}
@@ -147,7 +178,7 @@ class Simulator extends React.Component<any, IState> {
             image={RefreshLogo}
             styleLabel="refresh"
             label="refresh"
-            width={SIMULATOR_BUTTON_WIDTH}
+            width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
           />
         </div>
       </div>
@@ -155,7 +186,10 @@ class Simulator extends React.Component<any, IState> {
   }
 
   protected togglePlayClick() {
-    sendMessage("play-simulator", !this.state.play_button);
+    sendMessage("play-simulator", {
+      chosen_editor: this.state.chosen_editor,
+      state: !this.state.play_button
+    });
     const button =
       window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
       window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
@@ -174,6 +208,10 @@ class Simulator extends React.Component<any, IState> {
     }
   }
 
+  protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
+    console.log("BLURR", event.currentTarget.value);
+    this.setState({ ...this.state, chosen_editor: event.currentTarget.value });
+  }
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {
     let element;
     const target = event.target as SVGElement;

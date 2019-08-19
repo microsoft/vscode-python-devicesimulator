@@ -5,16 +5,16 @@ import * as fs from "fs";
 import * as path from "path";
 import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
-import { ExtensionContext, MessageItem, OutputChannel, Uri, window } from "vscode";
+import * as vscode from "vscode";
 import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
-  context: ExtensionContext,
+  context: vscode.ExtensionContext,
   folderName: string,
   fileName: string
 ) => {
-  const onDiskPath = Uri.file(
+  const onDiskPath = vscode.Uri.file(
     path.join(context.extensionPath, folderName, fileName)
   );
   const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
@@ -29,12 +29,12 @@ export const validCodeFileName = (filePath: string) => {
 };
 
 export const showPrivacyModal = (okAction: () => void) => {
-  window.showInformationMessage(
+  vscode.window.showInformationMessage(
     `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
     DialogResponses.AGREE_AND_PROCEED,
     DialogResponses.CANCEL,
   )
-    .then((privacySelection: MessageItem | undefined) => {
+    .then((privacySelection: vscode.MessageItem | undefined) => {
       if (privacySelection === DialogResponses.AGREE_AND_PROCEED) {
         okAction();
       } else if (privacySelection === DialogResponses.CANCEL) {
@@ -44,7 +44,7 @@ export const showPrivacyModal = (okAction: () => void) => {
 }
 
 export const logToOutputChannel = (
-  outChannel: OutputChannel | undefined,
+  outChannel: vscode.OutputChannel | undefined,
   message: string,
   show: boolean = false
 ): void => {
@@ -60,7 +60,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
   try {
     const jsonObj = JSON.parse(jsonString);
     if (jsonObj && typeof jsonObj === "object") {
-        return jsonObj;
+      return jsonObj;
     }
   } catch (exception) { }
 
@@ -105,23 +105,23 @@ export function directoryExistsSync(dirPath: string): boolean {
  */
 export function padStart(sourceString: string, targetLength: number, padString?: string): string {
   if (!sourceString) {
-      return sourceString;
+    return sourceString;
   }
 
   if (!(String.prototype as any).padStart) {
-      // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
-      padString = String(padString || " ");
-      if (sourceString.length > targetLength) {
-          return sourceString;
-      } else {
-          targetLength = targetLength - sourceString.length;
-          if (targetLength > padString.length) {
-              padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
-          }
-          return padString.slice(0, targetLength) + sourceString;
+    // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
+    padString = String(padString || " ");
+    if (sourceString.length > targetLength) {
+      return sourceString;
+    } else {
+      targetLength = targetLength - sourceString.length;
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
       }
+      return padString.slice(0, targetLength) + sourceString;
+    }
   } else {
-      return (sourceString as any).padStart(targetLength, padString);
+    return (sourceString as any).padStart(targetLength, padString);
   }
 }
 
@@ -151,9 +151,9 @@ export const setPythonExectuableName = async () => {
   if (dependencyCheck.installed) {
     executableName = dependencyCheck.dependency;
   } else {
-    window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
+    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
       DialogResponses.INSTALL_PYTHON)
-      .then((selection: MessageItem | undefined) => {
+      .then((selection: vscode.MessageItem | undefined) => {
         if (selection === DialogResponses.INSTALL_PYTHON) {
           const okAction = () => {
             open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
@@ -164,4 +164,30 @@ export const setPythonExectuableName = async () => {
   }
 
   return executableName;
+}
+
+export const addVisibleTextEditorCallback = (currentPanel: vscode.WebviewPanel, context: vscode.ExtensionContext): vscode.Disposable => {
+  const initialPythonEditors = filterForPythonFiles(vscode.window.visibleTextEditors);
+  currentPanel.webview.postMessage({
+    command: "visible-editors",
+    state: { activePythonEditors: initialPythonEditors }
+  });
+  return vscode.window.onDidChangeVisibleTextEditors((textEditors: vscode.TextEditor[]) => {
+    const activePythonEditors = filterForPythonFiles(textEditors);
+    console.log("python", textEditors[0].document.fileName, activePythonEditors);
+    currentPanel.webview.postMessage({
+      command: "visible-editors",
+      state: { activePythonEditors }
+    });
+  }, {}, context.subscriptions)
+}
+
+export const filterForPythonFiles = (textEditors: vscode.TextEditor[]) => {
+  return textEditors.filter(
+    editor => editor.document.languageId === "python"
+  ).map(editor => editor.document.fileName);
+}
+
+export const getActiveEditorFromPath = (filePath: string): vscode.TextDocument => {
+  return vscode.window.visibleTextEditors.find((editor: vscode.TextEditor) => editor.document.fileName === filePath).document
 }

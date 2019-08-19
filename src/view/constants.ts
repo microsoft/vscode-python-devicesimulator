@@ -41,7 +41,8 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
     PRIVACY: "https://www.adafruit.com/privacy"
   },
-  TOOLBAR_INFO: `Explore what's on the board:`
+  SIMULATOR_BUTTON_WIDTH: 60,
+  TOOLBAR_INFO: `Explore what's on the board:`,
 };
 
 export default CONSTANTS;

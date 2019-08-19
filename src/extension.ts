@@ -40,6 +40,14 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
     .toString()}"></script>`;
 }
 
+const setPathAndSendMessage = (currentPanel: vscode.WebviewPanel, newFilePath: string) => {
+  currentFileAbsPath = newFilePath;
+  currentPanel.webview.postMessage({
+    command: "current-file",
+    state: { chosen_editor: newFilePath }
+  });
+}
+
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
@@ -48,6 +56,7 @@ export async function activate(context: vscode.ExtensionContext) {
   let currentPanel: vscode.WebviewPanel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
+  let activeEditorListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
@@ -66,7 +75,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
-    await updateCurrentFileIfPython(document);
+    await updateCurrentFileIfPython(document, currentPanel);
   });
 
   const openWebview = () => {
@@ -76,7 +85,7 @@ export async function activate(context: vscode.ExtensionContext) {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
         CONSTANTS.LABEL.WEBVIEW_PANEL,
-        { preserveFocus: true, viewColumn: vscode.ViewColumn.Two },
+        { preserveFocus: true, viewColumn: vscode.ViewColumn.Beside },
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
@@ -91,6 +100,14 @@ export async function activate(context: vscode.ExtensionContext) {
       if (messageListener !== undefined) {
         messageListener.dispose();
         const index = context.subscriptions.indexOf(messageListener);
+        if (index > -1) {
+          context.subscriptions.splice(index, 1);
+        }
+      }
+
+      if (activeEditorListener !== undefined) {
+        activeEditorListener.dispose();
+        const index = context.subscriptions.indexOf(activeEditorListener);
         if (index > -1) {
           context.subscriptions.splice(index, 1);
         }
@@ -114,7 +131,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log(`Play button ${messageJson} \n`);
-                if (message.text as boolean) {
+                if (message.text.state as boolean) {
+                  currentFileAbsPath = message.text.chosen_editor
+                  if (currentFileAbsPath) {
+                    currentTextDocument = utils.getActiveEditorFromPath(currentFileAbsPath);
+                  }
                   telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
                   runSimulatorCommand();
                 } else {
@@ -143,6 +164,8 @@ export async function activate(context: vscode.ExtensionContext) {
           undefined,
           context.subscriptions
         );
+
+        activeEditorListener = utils.addVisibleTextEditorCallback(currentPanel, context);
       }
 
       currentPanel.onDidDispose(
@@ -292,7 +315,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     killProcessIfRunning();
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
@@ -425,7 +448,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
 
     if (currentFileAbsPath === "") {
       utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
@@ -570,13 +593,13 @@ export async function activate(context: vscode.ExtensionContext) {
   UsbDetector.getInstance().initialize(context.extensionPath);
   UsbDetector.getInstance().startListening();
 
-  if (CPXWorkspace.rootPath && 
+  if (CPXWorkspace.rootPath &&
     (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) || vscode.window.activeTextEditor)) {
-      (() => {
-        if (!SerialMonitor.getInstance().initialized) {
-          SerialMonitor.getInstance().initialize();
-        }
-      })();
+    (() => {
+      if (!SerialMonitor.getInstance().initialized) {
+        SerialMonitor.getInstance().initialize();
+      }
+    })();
   }
 
   // Debugger configuration
@@ -660,16 +683,17 @@ const getFileFromFilePicker = () => {
 };
 
 const updateCurrentFileIfPython = async (
-  activeTextDocument: vscode.TextDocument | undefined
+  activeTextDocument: vscode.TextDocument | undefined,
+  currentPanel: vscode.WebviewPanel
 ) => {
   if (activeTextDocument && activeTextDocument.languageId === "python") {
-    currentFileAbsPath = activeTextDocument.fileName;
+    setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
     currentTextDocument = activeTextDocument;
   } else if (currentFileAbsPath === "") {
-    currentFileAbsPath =
-      getActivePythonFile() || (await getFileFromFilePicker()) || "";
+    setPathAndSendMessage(currentPanel,
+      getActivePythonFile() || (await getFileFromFilePicker()) || "");
   }
-  if (currentFileAbsPath) {
+  if (utils.getActiveEditorFromPath(activeTextDocument.fileName) === undefined) {
     await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
@@ -725,6 +749,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 
 export async function deactivate() {
   const monitor: SerialMonitor = SerialMonitor.getInstance();
-  await monitor.closeSerialMonitor(null, false); 
+  await monitor.closeSerialMonitor(null, false);
   UsbDetector.getInstance().stopListening();
 }
