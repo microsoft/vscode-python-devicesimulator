@@ -46,7 +46,7 @@ export const TOOLBAR_ICON_ID = {
   SOUND: "toolbar-sound-sensor",
   SPEAKER: "toolbar-speaker",
   SWITCH: "toolbar-slider-switch",
-  TEMPERATURE: "toolbar-temperatur-sensor"
+  TEMPERATURE: "toolbar-temperature-sensor"
 };
 
 export interface IModalContent {

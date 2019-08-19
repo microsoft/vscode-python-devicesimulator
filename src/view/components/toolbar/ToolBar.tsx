@@ -244,7 +244,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <div className="title_group">
           <span className="title">
             <FormattedMessage
-              id={`${this.state.currentOpenedId}.description.title`}
+              id={`${this.state.currentOpenedId}.title`}
               defaultMessage={content["descriptionTitle"]}
             />
             {content["tagInput"]}
@@ -254,14 +254,14 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <br />
         <div className="description">
           <FormattedMessage
-            id={`${this.state.currentOpenedId}.description.description`}
+            id={`${this.state.currentOpenedId}.description`}
             defaultMessage={content["descriptionText"]}
           />
         </div>
         <div className="try_area">
           <div className="title">
             <FormattedMessage
-              id={`${this.state.currentOpenedId}.description.tryItTitle`}
+              id="description.tryItTitle"
               defaultMessage={content["tryItTitle"]}
             />
           </div>
