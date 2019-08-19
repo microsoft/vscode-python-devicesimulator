@@ -9,7 +9,7 @@ export const CPX_SVG = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     id="cpx_svg"
-    // width="360"
+    width="45%"
     // height="360"
     viewBox="0 0 180.094 179.229"
   >
