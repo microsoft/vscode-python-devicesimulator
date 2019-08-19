@@ -13,8 +13,8 @@ from applicationinsights import TelemetryClient
 previous_state = {}
 
 
-telemetry_client = TelemetryClient('aba8e4b2-8ed2-4c89-b0a1-1595fbf8e833')
-EXTENSION_NAME = '__EXTENSIONNAMEtest__'
+telemetry_client = TelemetryClient('__AIKEY__')
+EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 def show(state, debug_mode=False):
