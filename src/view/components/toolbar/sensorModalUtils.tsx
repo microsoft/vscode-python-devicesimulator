@@ -132,7 +132,7 @@ export const PUSHB_MODAL_CONTENT: IModalContent = {
   id: "push_btn"
 };
 export const RED_LED_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "toolbar-push-button.title",
+  descriptionTitle: "toolbar-red-led.title",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-red-led.description",
