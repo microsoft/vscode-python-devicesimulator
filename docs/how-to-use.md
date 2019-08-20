@@ -58,8 +58,9 @@ Commands are accessible through :
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
+- If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
 
 ### Note
 
 \* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
-\** The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5678.
+\*\* The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.

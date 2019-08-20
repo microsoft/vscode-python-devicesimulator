@@ -96,6 +96,15 @@
     ],
     "colors": [
       {
+        "id": "highContrastButtonBorderOverride.color",
+        "description": "Color for the high contrast border updated",
+        "defaults": {
+          "dark": "debugToolBar.background",
+          "light": "debugToolBar.background",
+          "highContrast": "#6FC3DF"
+        }
+      },
+      {
         "id": "badgeForegroundOverwrite",
         "description": "Color that fixes the issue with midnight blue ",
         "defaults": {
@@ -155,6 +164,12 @@
           "default": true,
           "description": "%pacificaExtension.configuration.properties.device%",
           "scope": "resource"
+        },
+        "pacifica.debuggerServerPort": {
+          "type": "number",
+          "default": 5577,
+          "description": "%pacificaExtension.configuration.properties.debuggerPort%",
+          "scope": "resource"
         }
       }
     },
@@ -191,7 +206,8 @@
                 "description": "Command line arguments passed to the program.",
                 "default": [],
                 "items": {
-                  "type": "string"
+                  "filePath": "string",
+                  "serverPort": "string"
                 }
               },
               "rules": {
