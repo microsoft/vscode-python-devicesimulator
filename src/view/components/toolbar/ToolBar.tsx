@@ -271,10 +271,15 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
           />
         </div>
         <div className="try_area">
-          <FormattedMessage
-            id={`${this.state.currentOpenedId}.tryItDescriptrion`}
-            defaultMessage={content["tryItDescriptrion"]}
-          />
+          <br />
+          <span className="description">
+            <FormattedMessage
+              id={`${this.state.currentOpenedId}.tryItDescriptrion`}
+              defaultMessage={content["tryItDescriptrion"]}
+            />
+          </span>
+          <br />
+
           <div>{component}</div>
         </div>
       </div>

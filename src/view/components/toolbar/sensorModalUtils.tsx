@@ -79,7 +79,7 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
   tryItTitle: "Simulation Coming Soon!",
   tryItDescriptrion:
     "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7",
-  component: TRY_IT_MAKE_CODE,
+  component: undefined,
   id: "GPIO"
 };
 

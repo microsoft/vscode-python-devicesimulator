@@ -8,11 +8,10 @@ import { IntlProvider } from "react-intl";
 
 import "./index.css";
 
-const messageEn = require("./translations/en.json");
 const locale = "en";
 
 ReactDOM.render(
-  <IntlProvider locale={locale} messages={messageEn}>
+  <IntlProvider locale={locale}>
     <App />
   </IntlProvider>,
   document.getElementById("root")
