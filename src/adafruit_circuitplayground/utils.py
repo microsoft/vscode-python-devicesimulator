@@ -31,6 +31,6 @@ def remove_leading_slashes(string):
     return string
 
 def escape_if_OSX(file_name):
-    if os.name == CONSTANTS.MAC_OS:
+    if sys.platform.startswith(CONSTANTS.MAC_OS):
         file_name = file_name.replace(" ", "%20")
     return file_name
