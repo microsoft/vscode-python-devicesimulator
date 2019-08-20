@@ -41,6 +41,14 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
     .toString()}"></script>`;
 }
 
+const setPathAndSendMessage = (currentPanel: vscode.WebviewPanel, newFilePath: string) => {
+  currentFileAbsPath = newFilePath;
+  currentPanel.webview.postMessage({
+    command: "current-file",
+    state: { running_file: newFilePath }
+  });
+}
+
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
   console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
@@ -49,6 +57,7 @@ export async function activate(context: vscode.ExtensionContext) {
   let currentPanel: vscode.WebviewPanel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
+  let activeEditorListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
@@ -70,20 +79,18 @@ export async function activate(context: vscode.ExtensionContext) {
     );
   }
 
-  vscode.workspace.onDidSaveTextDocument(
-    async (document: vscode.TextDocument) => {
-      await updateCurrentFileIfPython(document);
-    }
-  );
+  vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
+    await updateCurrentFileIfPython(document, currentPanel);
+  });
 
   const openWebview = () => {
     if (currentPanel) {
-      currentPanel.reveal(vscode.ViewColumn.Two);
+      currentPanel.reveal(vscode.ViewColumn.Beside);
     } else {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
         CONSTANTS.LABEL.WEBVIEW_PANEL,
-        { preserveFocus: true, viewColumn: vscode.ViewColumn.Two },
+        { preserveFocus: true, viewColumn: vscode.ViewColumn.Beside },
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
@@ -98,6 +105,14 @@ export async function activate(context: vscode.ExtensionContext) {
       if (messageListener !== undefined) {
         messageListener.dispose();
         const index = context.subscriptions.indexOf(messageListener);
+        if (index > -1) {
+          context.subscriptions.splice(index, 1);
+        }
+      }
+
+      if (activeEditorListener !== undefined) {
+        activeEditorListener.dispose();
+        const index = context.subscriptions.indexOf(activeEditorListener);
         if (index > -1) {
           context.subscriptions.splice(index, 1);
         }
@@ -121,10 +136,15 @@ export async function activate(context: vscode.ExtensionContext) {
                 break;
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log(`Play button ${messageJson} \n`);
-                if (message.text as boolean) {
-                  telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON
-                  );
+                if (message.text.state as boolean) {
+                  setPathAndSendMessage(currentPanel, message.text.selected_file);
+                  if (currentFileAbsPath) {
+                    const foundDocument = utils.getActiveEditorFromPath(currentFileAbsPath);
+                    if (foundDocument !== undefined) {
+                      currentTextDocument = foundDocument;
+                    }
+                  }
+                  telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
@@ -156,6 +176,9 @@ export async function activate(context: vscode.ExtensionContext) {
           undefined,
           context.subscriptions
         );
+
+        activeEditorListener = utils.addVisibleTextEditorCallback(currentPanel, context);
+        console.log("sent");
       }
 
       currentPanel.onDidDispose(
@@ -305,14 +328,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
     killProcessIfRunning();
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
 
     if (currentFileAbsPath === "") {
-      utils.logToOutputChannel(
-        outChannel,
-        CONSTANTS.ERROR.NO_FILE_TO_RUN,
-        true
-      );
+      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      vscode.window
+        .showErrorMessage(
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          DialogResponses.MESSAGE_UNDERSTOOD
+        )
     } else {
       // Save on run
       await currentTextDocument.save();
@@ -389,7 +413,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                        messageToWebview.data
+                      messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -456,14 +480,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
+    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
 
     if (currentFileAbsPath === "") {
-      utils.logToOutputChannel(
-        outChannel,
-        CONSTANTS.ERROR.NO_FILE_TO_RUN,
-        true
-      );
+      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      vscode.window
+        .showErrorMessage(
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          DialogResponses.MESSAGE_UNDERSTOOD
+        );
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
       // Save on run
       await currentTextDocument.save();
@@ -698,40 +723,19 @@ const getActivePythonFile = () => {
   return activeEditor ? activeEditor.document.fileName : "";
 };
 
-const getFileFromFilePicker = () => {
-  const options: vscode.OpenDialogOptions = {
-    canSelectMany: false,
-    filters: {
-      "All files": ["*"],
-      "Python files": ["py"]
-    },
-    openLabel: "Run File"
-  };
-
-  return vscode.window.showOpenDialog(options).then(async fileUri => {
-    if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
-      console.log(`Selected file: ${fileUri[0].fsPath}`);
-      currentTextDocument = await vscode.workspace.openTextDocument(fileUri[0]);
-      return fileUri[0].fsPath;
-    }
-  });
-};
-
 const updateCurrentFileIfPython = async (
-  activeTextDocument: vscode.TextDocument | undefined
+  activeTextDocument: vscode.TextDocument | undefined,
+  currentPanel: vscode.WebviewPanel
 ) => {
   if (activeTextDocument && activeTextDocument.languageId === "python") {
-    currentFileAbsPath = activeTextDocument.fileName;
+    setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
     currentTextDocument = activeTextDocument;
   } else if (currentFileAbsPath === "") {
-    currentFileAbsPath =
-      getActivePythonFile() || (await getFileFromFilePicker()) || "";
+    setPathAndSendMessage(currentPanel,
+      getActivePythonFile() || "");
   }
-  if (currentFileAbsPath) {
-    await vscode.window.showTextDocument(
-      currentTextDocument,
-      vscode.ViewColumn.One
-    );
+  if (utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
+    await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
 
