@@ -151,6 +151,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
+                checkForTelemetry(message.text);
                 console.log(`Sensor changed ${messageJson} \n`);
                 if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
@@ -161,6 +162,9 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.REFRESH_SIMULATOR:
                 console.log("Refresh button");
                 runSimulatorCommand();
+                break;
+              case WebviewMessages.SLIDER_TELEMETRY:
+                handleSensorTelemetry(message.text);
                 break;
               default:
                 vscode.window.showInformationMessage(
@@ -747,6 +751,45 @@ const handleButtonPressTelemetry = (buttonState: any) => {
   }
 };
 
+const handleSensorTelemetry = (sensor: string) => {
+  switch (sensor) {
+    case "temperature":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
+      );
+      break;
+    case "light":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_LIGHT_SENSOR);
+      break;
+    case "motion_x":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_y":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_z":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "shake":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+      break;
+    case "touch":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
+      );
+      break;
+  }
+};
+
+const checkForTelemetry = (sensorState: any) => {
+  if (sensorState["shake"]) {
+    console.log(`telemtry sending`);
+    handleSensorTelemetry("shake");
+  } else if (sensorState["touch"]) {
+    handleSensorTelemetry("touch");
+  }
+};
+
 const updatePythonExtraPaths = () => {
   const pathToLib: string = __dirname;
   const currentExtraPaths: string[] =
@@ -784,6 +827,7 @@ function getWebviewContent(context: vscode.ExtensionContext) {
           </html>`;
 }
 
+// this method is called when your extension is deactivated
 export async function deactivate() {
   const monitor: SerialMonitor = SerialMonitor.getInstance();
   await monitor.closeSerialMonitor(null, false);

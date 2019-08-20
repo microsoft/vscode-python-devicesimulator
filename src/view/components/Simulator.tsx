@@ -21,6 +21,7 @@ interface ICpxState {
   button_b: boolean;
   switch: boolean;
   touch: boolean[];
+  shake: boolean;
 }
 
 interface IState {
@@ -52,7 +53,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
   ],
   red_led: false,
   switch: false,
-  touch: [false, false, false, false, false, false, false]
+  touch: [false, false, false, false, false, false, false],
+  shake: false
 };
 
 interface vscode {
@@ -152,7 +154,7 @@ class Simulator extends React.Component<any, IState> {
             onBlur={this.onSelectBlur}
           />
         </div>
-        <div>
+        <div className="cpx-container">
           <Cpx
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}

@@ -15,11 +15,23 @@ PIXEL_RANGE_ERROR = "The pixel hexadicimal color value should be in range #00000
 
 VALID_PIXEL_ASSIGN_ERROR = "The pixel color value should be a tuple with three values between 0 and 255 or a hexadecimal color between 0x000000 and 0xFFFFFF."
 
+TELEMETRY_EVENT_NAMES = {
+    'TAPPED': "API.TAPPED",
+    'PLAY_FILE': "API.PLAY.FILE",
+    'PLAY_TONE': "API.PLAY.TONE",
+    'START_TONE': "API.START.TONE",
+    'STOP_TONE': "API.STOP.TONE",
+    'DETECT_TAPS': "API.DETECT.TAPS",
+    'ADJUST_THRESHOLD': "API.ADJUST.THRESHOLD",
+    'RED_LED': "API.RED.LED",
+    'PIXELS': "API.PIXELS"
+}
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 
 TIME_DELAY = 0.03
 
 DEFAULT_PORT = "5577"
+
 
 EVENTS_BUTTON_PRESS = ['button_a', 'button_b', 'switch']
 EVENTS_SENSOR_CHANGED = ['temperature',

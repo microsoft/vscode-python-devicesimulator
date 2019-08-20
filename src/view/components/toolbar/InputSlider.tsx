@@ -78,6 +78,8 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             min={this.props.minValue}
             max={this.props.maxValue}
             onChange={this.handleOnChange}
+            onKeyUp={this.sendTelemetry}
+            onMouseUp={this.sendTelemetry}
             aria-valuenow={this.state.value}
             value={this.state.value}
             aria-label={`${this.props.type} sensor slider`}
@@ -118,6 +120,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
       : this.state.value;
     this.setState({ value: newValue });
     return newValue;
+  };
+
+  private sendTelemetry = () => {
+    vscode.postMessage({ command: "slider-telemetry", text: this.props.type });
   };
 
   private validateRange = (valueString: string) => {
