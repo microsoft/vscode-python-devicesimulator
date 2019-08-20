@@ -7,6 +7,9 @@
 .button-icon {
   fill: var(--vscode-badgeForegroundOverride);
 }
+.button-rectangle {
+  stroke: var(--vscode-badgeForegroundOverride);
+}
 
 .play-button {
   border-radius: 8px 0px 0px 8px;
@@ -18,12 +21,15 @@
   border-color: var(--vscode-highContrastButtonBorderOverride-color);
 }
 
-.button:focus,
-.button:hover {
+.play-button:focus,
+.play-button:hover,
+.refresh-button:focus,
+.play-button:hover {
   background-color: var(--vscode-terminal-selectionBackground);
 }
 
-.button:active {
+.play-button:active,
+.refresh-button:active {
   background-color: var(--vscode-editor-selectionHighlightBackground);
 }
 
@@ -31,9 +37,9 @@
   border: none;
 }
 
-.toolbar-button:focus,
 .toolbar-button:hover {
   outline: none;
+  background-color: var(--vscode-terminal-selectionBackground);
 }
 
 .edge-button {
@@ -44,4 +50,8 @@
 .button-pressed {
   background-color: var(--vscode-button-background);
   outline: none;
+}
+
+.sound-svg {
+  padding-top: 1px;
 }
