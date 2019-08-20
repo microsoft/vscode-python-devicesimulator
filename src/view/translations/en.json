@@ -17,7 +17,7 @@
   "toolbar-neo-pixels.tryItDescriptrion": "Run your code and see the cool effects on the simulator!",
   "toolbar-push-button.description": "Two push buttons A and B are connected to digital pin #4 (Left) and #5 (Right) each.",
   "toolbar-push-button.title": "Push Buttons",
-  "toolbar-push-button.tryItDescriptrion": "Two push buttons A and B are connected to digital pin #4 (Left) and #5 (Right) each.",
+  "toolbar-push-button.tryItDescriptrion": "Click them with your mouse or pressing “A” “B” on your keyboard!",
   "toolbar-red-led.description": "This Red LED is connected to the digital #13 GPIO pin. It can be very handy when you want an indicator LED.",
   "toolbar-red-led.title": "Red LED",
   "toolbar-red-led.tryItDescriptrion": "Run your code and see the cool effects on the simulator!",
@@ -30,7 +30,7 @@
   "toolbar-speaker.description": "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
   "toolbar-speaker.title": "Speaker",
   "toolbar-speaker.tryItDescriptrion": "Run your code and you’ll hear the music!",
-  "toolbar-temperature-sensor.description": "You can set the temperature range from your code",
+  "toolbar-temperature-sensor.description": "This sensor uses an NTC thermistor to sense temperature an calculate it with the analog voltage on analog pin #A9.",
   "toolbar-temperature-sensor.title": "Temperature Sensor",
   "toolbar-temperature-sensor.tryItDescriptrion": "You can set the temperature range from your code!"
 }
