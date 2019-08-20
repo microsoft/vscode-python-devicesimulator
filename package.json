@@ -266,7 +266,6 @@
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "manage:translations": "node scripts/manageTranslations.js",
     "package": "vsce package"
   },
   "devDependencies": {
@@ -289,7 +288,6 @@
     "less-loader": "^4.1.0",
     "mocha": "^6.1.4",
     "npm-run-all": "^4.1.3",
-    "react-intl-translations-manager": "^5.0.3",
     "react-scripts": "3.0.1",
     "style-loader": "^0.21.0",
     "ts-import-plugin": "^1.5.4",
