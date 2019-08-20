@@ -39,3 +39,6 @@ def send_telemetry(event_name):
     telemetry_client.track_event(
         '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES[event_name]))
     telemetry_client.flush()
+
+def telemetry_available():
+    return telemetry_client.context.instrumentation_key != '__AIKEY__'

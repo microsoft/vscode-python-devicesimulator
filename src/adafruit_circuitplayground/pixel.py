@@ -31,13 +31,13 @@ class Pixel:
         if type(index) is not slice:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
-        if(not self.telemetry_state):
+        if(utils.telemetry_available() and not self.telemetry_state):
             utils.send_telemetry("PIXELS")
             self.telemetry_state = True
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
-        if(not self.telemetry_state):
+        if(utils.telemetry_available() and not self.telemetry_state):
             utils.send_telemetry("PIXELS")
             self.telemetry_state = True
         is_slice = False

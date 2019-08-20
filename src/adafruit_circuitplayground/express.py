@@ -71,7 +71,7 @@ class Express:
 
     @property
     def detect_taps(self):
-        if(not self.telemetry_state["DETECT_TAPS"]):
+        if(utils.telemetry_available() and not self.telemetry_state["DETECT_TAPS"]):
             utils.send_telemetry("DETECT_TAPS")
             self.telemetry_state["DETECT_TAPS"] = True
         return self.__state['detect_taps']
@@ -86,21 +86,21 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-        if(not self.telemetry_state["TAPPED"]):
+        if(utils.telemetry_available() and not self.telemetry_state["TAPPED"]):
             utils.send_telemetry("TAPPED")
             self.telemetry_state["TAPPED"] = True
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
-        if(not self.telemetry_state["RED_LED"]):
+        if(utils.telemetry_available() and not self.telemetry_state["RED_LED"]):
             utils.send_telemetry("RED_LED")
             self.telemetry_state["RED_LED"] = True
         return self.__state['red_led']
 
     @red_led.setter
     def red_led(self, value):
-        if(not self.telemetry_state["RED_LED"]):
+        if(utils.telemetry_available() and not self.telemetry_state["RED_LED"]):
             utils.send_telemetry("RED_LED")
             self.telemetry_state["RED_LED"] = True
         self.__state['red_led'] = bool(value)
@@ -156,7 +156,7 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
-        if(not self.telemetry_state["ADJUST_THRESHOLD"]):
+        if(utils.telemetry_available() and not self.telemetry_state["ADJUST_THRESHOLD"]):
             utils.send_telemetry("ADJUST_THRESHOLD")
             self.telemetry_state["ADJUST_THRESHOLD"] = True
 
@@ -167,7 +167,7 @@ class Express:
         return self.__state['shake']
 
     def play_file(self, file_name):
-        if(not self.telemetry_state["PLAY_FILE"]):
+        if(utils.telemetry_available() and not self.telemetry_state["PLAY_FILE"]):
             utils.send_telemetry("PLAY_FILE")
             self.telemetry_state["PLAY_FILE"] = True
         file_name = utils.remove_leading_slashes(file_name)
@@ -192,7 +192,7 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        if(not self.telemetry_state["PLAY_TONE"]):
+        if(utils.telemetry_available() and not self.telemetry_state["PLAY_TONE"]):
             utils.send_telemetry("PLAY_TONE")
             self.telemetry_state["PLAY_TONE"] = True
         raise NotImplementedError(
@@ -201,7 +201,7 @@ class Express:
     def start_tone(self, frequency):
         """ Not Implemented!
         """
-        if(not self.telemetry_state["START_TONE"]):
+        if(utils.telemetry_available() and not self.telemetry_state["START_TONE"]):
             utils.send_telemetry("START_TONE")
             self.telemetry_state["START_TONE"] = True
         raise NotImplementedError(
@@ -210,7 +210,7 @@ class Express:
     def stop_tone(self):
         """ Not Implemented!
         """
-        if(not self.telemetry_state["STOP_TONE"]):
+        if(utils.telemetry_available() and not self.telemetry_state["STOP_TONE"]):
             utils.send_telemetry("STOP_TONE")
             self.telemetry_state["STOP_TONE"] = True
         raise NotImplementedError(
