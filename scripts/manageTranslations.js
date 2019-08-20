@@ -6,7 +6,7 @@
 
 const DEFAULT_LANGUAGE = "en"; // for the default language, everything is automatically whitelisted
 const LANGUAGES = []; // translations to generate---don't include the default language
-const TARGET_DIRECTORY = "src/translations";
+const TARGET_DIRECTORY = "src/view/translations";
 const EXTRACT_MESSAGE_FILE_PATTERN = "src/**/*.@(tsx|ts)";
 
 const TEMP_DIR = "./temp";
