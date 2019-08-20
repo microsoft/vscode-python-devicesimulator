@@ -3,7 +3,7 @@
 Commands are accessible through :
 
 - **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
-- **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open
+- **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open\*
 
 ## Available commands
 
@@ -56,8 +56,8 @@ Commands are accessible through :
 - Device's features
   - Sound sensor
     - Tones
-    - Sound detection\*
-  - IR transmitter\*
+    - Sound detection\*\*
+  - IR transmitter\*\*
   - Motion sensors
     - Tap detection
 
@@ -65,7 +65,15 @@ Commands are accessible through :
 
 Here are the settings you can change in the Pacifica configuration:
 
-- **Debugger Server Port:** Allow you to change the port used to communicate with
+- **Debugger Server Port:** allow you to change the port used to communicate with the debugger.Default value is _5577_.
+
+- **Enable USBDetection:** when disabled, prevents the serial monitor from listennig messages from the serial port.
+
+- **Show Device Icon In Editor Title Menu:** allow you to chose whether the _`deploy to device`_ button should be in the editor title.
+
+- \*\*
+
+- ***
 
 ## Troubleshooting Tips
 
@@ -78,5 +86,6 @@ Here are the settings you can change in the Pacifica configuration:
 
 ### Note
 
-\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
-\*\* The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
+\* Can be changed in settings.
+\*\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
+\*\*\* The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
