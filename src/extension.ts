@@ -626,6 +626,12 @@ export async function activate(context: vscode.ExtensionContext) {
       inDebugMode = true;
 
       try {
+        // Shut down existing server on debug restart
+        if (debuggerCommunicationHandler) {
+          debuggerCommunicationHandler.closeConnection();
+          debuggerCommunicationHandler = undefined;
+        }
+
         debuggerCommunicationHandler = new DebuggerCommunicationServer(
           currentPanel,
           utils.getServerPortConfig()
@@ -658,6 +664,7 @@ export async function activate(context: vscode.ExtensionContext) {
       simulatorDebugConfiguration.pacificaDebug = false;
       if (debuggerCommunicationHandler) {
         debuggerCommunicationHandler.closeConnection();
+        debuggerCommunicationHandler = undefined;
       }
       if (currentPanel) {
         currentPanel.webview.postMessage({ command: "reset-state" });
