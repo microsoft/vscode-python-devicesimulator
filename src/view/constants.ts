@@ -3,6 +3,9 @@
 
 // Key events
 export const CONSTANTS = {
+  CURRENTLY_RUNNING: (file: string) => {
+    return `Currently running: ${file}`
+  },
   ID_NAME: {
     BUTTON_A: "BTN_A_OUTER",
     BUTTON_AB: "BTN_AB_OUTER",
@@ -34,6 +37,7 @@ export const CONSTANTS = {
     NUMERIC_SIX: "Digit6",
     NUMERIC_SEVEN: "Digit7"
   },
+  NO_FILES_AVAILABLE: "Choose a .py file to run on the Simulator",
   REDIRECT: {
     DESCRIPTION:
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy',
@@ -41,7 +45,8 @@ export const CONSTANTS = {
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
     PRIVACY: "https://www.adafruit.com/privacy"
   },
-  TOOLBAR_INFO: `Explore what's on the board:`
+  SIMULATOR_BUTTON_WIDTH: 60,
+  TOOLBAR_INFO: `Explore what's on the board:`,
 };
 
 export default CONSTANTS;
