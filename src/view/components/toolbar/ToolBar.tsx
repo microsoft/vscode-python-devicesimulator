@@ -186,8 +186,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               focusable={false}
             />
           </div>
-          <FormattedMessage id="test" defaultMessage="test" />
-
           {this.getIconModal()}
         </div>
       </div>
@@ -255,28 +253,19 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       <div className="sensor_modal">
         <div className="title_group">
           <span className="title">
-            <FormattedMessage
-              id={`${this.state.currentOpenedId}.title`}
-              defaultMessage={content["descriptionTitle"]}
-            />
+            <FormattedMessage id={content["descriptionTitle"]} />
             {content["tagInput"]}
             {content["tagOutput"]}
           </span>
         </div>
         <br />
         <div className="description">
-          <FormattedMessage
-            id={`${this.state.currentOpenedId}.description`}
-            defaultMessage={content["descriptionText"]}
-          />
+          <FormattedMessage id={content["descriptionText"]} />
         </div>
         <div className="try_area">
           <br />
           <span className="description">
-            <FormattedMessage
-              id={`${this.state.currentOpenedId}.tryItDescriptrion`}
-              defaultMessage={content["tryItDescriptrion"]}
-            />
+            <FormattedMessage id={content["tryItDescriptrion"]} />
           </span>
           <br />
 

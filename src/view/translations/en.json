@@ -4,7 +4,7 @@
   "toolbar-gpio.tryItDescriptrion": "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7”",
   "toolbar-ir-sensor.description": "Allows you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light.",
   "toolbar-ir-sensor.title": "IR Transmit & Receiver",
-  "toolbar-ir-sensor.tryItDescriptrion": "",
+  "toolbar-ir-sensor.tryItDescriptrion": "Allows you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light.",
   "toolbar-ir-sensor.tryItTitle": "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   "toolbar-light-sensor.description": "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
   "toolbar-light-sensor.title": "Light Sensor",
@@ -30,7 +30,7 @@
   "toolbar-speaker.description": "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
   "toolbar-speaker.title": "Speaker",
   "toolbar-speaker.tryItDescriptrion": "Run your code and you’ll hear the music!",
-  "toolbar-temperature-sensor.description": "",
+  "toolbar-temperature-sensor.description": "You can set the temperature range from your code",
   "toolbar-temperature-sensor.title": "Temperature Sensor",
   "toolbar-temperature-sensor.tryItDescriptrion": "You can set the temperature range from your code!"
 }

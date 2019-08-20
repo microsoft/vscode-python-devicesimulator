@@ -71,130 +71,114 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
   id: "none"
 };
 export const GPIO_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "GPIO",
+  descriptionTitle: "toolbar-gpio.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    "8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
+  descriptionText: "toolbar-gpio.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion:
-    "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7",
+  tryItDescriptrion: "toolbar-gpio.tryItDescriptrion",
   component: undefined,
   id: "GPIO"
 };
 
 export const IR_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "IR Transmit & Receiver",
+  descriptionTitle: "toolbar-ir-sensor.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    "Allows you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light.",
+  descriptionText: "toolbar-ir-sensor.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
+  tryItDescriptrion: "toolbar-ir-sensor.tryItDescriptrion",
   component: TRY_IT_MAKE_CODE,
   id: "IR"
 };
 export const LIGHT_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Light Sensor",
+  descriptionTitle: "toolbar-light-sensor.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  descriptionText:
-    "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
+  descriptionText: "toolbar-light-sensor.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Change the brightness from 0 - 255 here!",
+  tryItDescriptrion: "toolbar-light-sensor.tryItDescriptrion",
   component: <LightSensorBar />,
   id: "light_sensor"
 };
 export const MOTION_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Motion Sensor",
+  descriptionTitle: "toolbar-motion-sensor.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  descriptionText:
-    "Detects acceleration in XYZ orientations. And can also detect 'tap' and 'double tap' strikes on the board and when the board is shaken.",
+  descriptionText: "toolbar-motion-sensor.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion:
-    "Change the acceleration here and click or click on the button to simulate a shake.The tap feature is not supported by pacifica. You can try it on MakeCode!",
+  tryItDescriptrion: "toolbar-motion-sensor.tryItDescriptrion",
   component: <MotionSensorBar />,
   id: "motion_sensor"
 };
 export const NEOP_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "NeoPixels",
+  descriptionTitle: "toolbar-neo-pixels.title",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
+  descriptionText: "toolbar-neo-pixels.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
+  tryItDescriptrion: "toolbar-neo-pixels.tryItDescriptrion",
   component: TRY_IT_MAKE_CODE,
   id: "neon_pixel"
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Push Buttons",
+  descriptionTitle: "toolbar-push-button.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  descriptionText:
-    "Two push buttons A and B are connected to digital pin #4 (Left) and #5 (Right) each.",
+  descriptionText: "toolbar-push-button.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion:
-    "Click them with your mouse or pressing “A” “B” on your keyboard!",
+  tryItDescriptrion: "toolbar-push-button.tryItDescriptrion",
   component: undefined,
   id: "push_btn"
 };
 export const RED_LED_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Red LED",
+  descriptionTitle: "toolbar-push-button.title",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    "This Red LED is connected to the digital #13 GPIO pin. It can be very handy when you want an indicator LED.",
+  descriptionText: "toolbar-red-led.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
+  tryItDescriptrion: "toolbar-red-led.tryItDescriptrion",
   component: undefined,
   id: "red_LED"
 };
 export const SOUND_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Sound Sensor",
+  descriptionTitle: "toolbar-sound-sensor.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  descriptionText:
-    "A digital microphone can detect audio volume and even perform basic FFT functions but cannot read it like an analog voltage.",
+  descriptionText: "toolbar-sound-sensor.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion:
-    "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
+  tryItDescriptrion: "toolbar-sound-sensor.tryItDescriptrion",
   component: TRY_IT_MAKE_CODE,
   id: "sound_sensor"
 };
 export const SWITCH_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Slider Switch",
+  descriptionTitle: "toolbar-slider-switch.title",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  descriptionText:
-    "This slide switch returns True or False depending on whether it's ON or OFF and can be used as a toggle switch in your code!",
+  descriptionText: "toolbar-slider-switch.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Click it with your mouse to switch it ON and OFF!",
+  tryItDescriptrion: "toolbar-slider-switch.tryItDescriptrion",
   component: undefined,
   id: "slider_switch"
 };
 export const SPEAKER_MODAL_CONTENT: IModalContent = {
-  descriptionTitle: "Speaker",
+  descriptionTitle: "toolbar-speaker.title",
   tagInput: undefined,
   tagOutput: TAG_OUTPUT_SVG,
-  descriptionText:
-    "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
+  descriptionText: "toolbar-speaker.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "Run your code and you’ll hear music!",
+  tryItDescriptrion: "toolbar-speaker.tryItDescriptrion",
   component: undefined,
   id: "speaker"
 };
 export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
   component: <TemperatureSensorBar />,
-  descriptionText:
-    "This sensor uses an NTC thermistor to sense temperature an calculate it with the analog voltage on analog pin #A9.",
-  descriptionTitle: "Temperature Sensor",
+  descriptionText: "toolbar-temperature-sensor.description",
+  descriptionTitle: "toolbar-temperature-sensor.title",
   id: "temperature",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  tryItDescriptrion: "You can set the temperature range from your code!",
+  tryItDescriptrion: "toolbar-temperature-sensor.tryItDescriptrion",
   tryItTitle: "Try it on the Simulator!"
 };
 
