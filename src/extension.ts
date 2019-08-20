@@ -12,7 +12,8 @@ import {
   CPX_CONFIG_FILE,
   DialogResponses,
   TelemetryEventName,
-  WebviewMessages
+  WebviewMessages,
+  SERVER_INFO
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
@@ -71,7 +72,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
-    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
+    utils.logToOutputChannel(
+      outChannel,
+      CONSTANTS.INFO.WELCOME_OUTPUT_TAB,
+      true
+    );
   }
 
   vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
@@ -123,7 +128,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log(`About to write ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitButtonPress(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -147,7 +152,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 break;
               case WebviewMessages.SENSOR_CHANGED:
                 console.log(`Sensor changed ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -333,7 +338,11 @@ export async function activate(context: vscode.ExtensionContext) {
       await currentTextDocument.save();
 
       if (!currentTextDocument.fileName.endsWith(".py")) {
-        utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+        utils.logToOutputChannel(
+          outChannel,
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          true
+        );
         return;
       }
       utils.logToOutputChannel(
@@ -427,7 +436,11 @@ export async function activate(context: vscode.ExtensionContext) {
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
         telemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
-        utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
+        utils.logToOutputChannel(
+          outChannel,
+          CONSTANTS.ERROR.STDERR(data),
+          true
+        );
         if (currentPanel) {
           console.log("Sending clearing state command");
           currentPanel.webview.postMessage({ command: "reset-state" });
@@ -441,11 +454,13 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   };
 
-  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand("pacifica.runSimulatorEditorButton",
+  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runSimulatorEditorButton",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
       runSimulatorCommand();
-    });
+    }
+  );
 
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
@@ -509,7 +524,10 @@ export async function activate(context: vscode.ExtensionContext) {
               telemetryAI.trackFeatureUsage(
                 TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
               );
-              utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+              utils.logToOutputChannel(
+                outChannel,
+                CONSTANTS.INFO.DEPLOY_SUCCESS
+              );
               break;
 
             case "no-device":
@@ -611,8 +629,11 @@ export async function activate(context: vscode.ExtensionContext) {
   UsbDetector.getInstance().initialize(context.extensionPath);
   UsbDetector.getInstance().startListening();
 
-  if (CPXWorkspace.rootPath &&
-    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) || vscode.window.activeTextEditor)) {
+  if (
+    CPXWorkspace.rootPath &&
+    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) ||
+      vscode.window.activeTextEditor)
+  ) {
     (() => {
       if (!SerialMonitor.getInstance().initialized) {
         SerialMonitor.getInstance().initialize();
@@ -627,17 +648,33 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Start: Init comunication
   const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
-    // Set up the webview
+    // Reinitialize process
     killProcessIfRunning();
-    openWebview();
-    if (currentPanel) {
-      currentPanel.webview.postMessage({ command: "activate-play" });
-    }
     console.log("Debug Started");
     inDebugMode = true;
-    debuggerCommunicationHandler = new DebuggerCommunicationServer(
-      currentPanel
-    );
+
+    try {
+      debuggerCommunicationHandler = new DebuggerCommunicationServer(
+        currentPanel,
+        utils.getServerPortConfig()
+      );
+      openWebview();
+      if (currentPanel) {
+        debuggerCommunicationHandler.setWebview(currentPanel);
+        currentPanel.webview.postMessage({ command: "activate-play" });
+      }
+    } catch (err) {
+      if (err.message === SERVER_INFO.ERROR_CODE_INIT_SERVER) {
+        console.error(
+          `Error trying to init the server on port ${utils.getServerPortConfig()}`
+        );
+        vscode.window.showErrorMessage(
+          CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
+            utils.getServerPortConfig()
+          )
+        );
+      }
+    }
   });
 
   // On Debug Session Stop: Stop communiation
@@ -677,7 +714,7 @@ const getActivePythonFile = () => {
     editor => editor.document.languageId === "python"
   );
   if (activeEditor) {
-    currentTextDocument = activeEditor.document
+    currentTextDocument = activeEditor.document;
   }
   return activeEditor ? activeEditor.document.fileName : "";
 };

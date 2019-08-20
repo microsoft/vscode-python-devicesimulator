@@ -122,6 +122,17 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
             />
 
             <Button
+              label={TOOLBAR_ICON_ID.NEO_PIXEL}
+              width={this.TOOLBAR_BUTTON_WIDTH}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                this.handleOnClick(e, TOOLBAR_ICON_ID.NEO_PIXEL);
+              }}
+              image={TOOLBAR_SVG.NEO_PIXEL_SVG}
+              styleLabel="toolbar"
+              focusable={true}
+            />
+
+            <Button
               label={TOOLBAR_ICON_ID.SPEAKER}
               width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -250,8 +261,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <br />
         <div className="description">{content["descriptionText"]}</div>
         <div className="try_area">
-          <div className="title"> {content["tryItTitle"]}</div>
-          <br />
           <div className="description">{content["tryItDescriptrion"]}</div>
           <div>{component}</div>
         </div>

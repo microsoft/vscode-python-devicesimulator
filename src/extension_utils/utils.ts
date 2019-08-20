@@ -6,7 +6,14 @@ import * as path from "path";
 import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import * as vscode from "vscode";
-import { CONSTANTS, CPX_CONFIG_FILE, DialogResponses, USER_CODE_NAMES } from "../constants";
+import {
+  CONSTANTS,
+  CPX_CONFIG_FILE,
+  DialogResponses,
+  USER_CODE_NAMES,
+  SERVER_INFO
+} from "../constants";
+import { CPXWorkspace } from "../cpxWorkspace";
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
@@ -41,7 +48,7 @@ export const showPrivacyModal = (okAction: () => void) => {
         // do nothing
       }
     });
-}
+};
 
 export const logToOutputChannel = (
   outChannel: vscode.OutputChannel | undefined,
@@ -65,7 +72,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
   } catch (exception) { }
 
   return false;
-}
+};
 
 export function fileExistsSync(filePath: string): boolean {
   try {
@@ -73,7 +80,7 @@ export function fileExistsSync(filePath: string): boolean {
   } catch (error) {
     return false;
   }
-}
+};
 
 export function mkdirRecursivelySync(dirPath: string): void {
   if (directoryExistsSync(dirPath)) {
@@ -88,7 +95,7 @@ export function mkdirRecursivelySync(dirPath: string): void {
     mkdirRecursivelySync(dirname);
     fs.mkdirSync(dirPath);
   }
-}
+};
 
 export function directoryExistsSync(dirPath: string): boolean {
   try {
@@ -96,14 +103,18 @@ export function directoryExistsSync(dirPath: string): boolean {
   } catch (e) {
     return false;
   }
-}
+};
 
 /**
  * This method pads the current string with another string (repeated, if needed)
  * so that the resulting string reaches the given length.
  * The padding is applied from the start (left) of the current string.
  */
-export function padStart(sourceString: string, targetLength: number, padString?: string): string {
+export function padStart(
+  sourceString: string,
+  targetLength: number,
+  padString?: string
+): string {
   if (!sourceString) {
     return sourceString;
   }
@@ -123,26 +134,31 @@ export function padStart(sourceString: string, targetLength: number, padString?:
   } else {
     return (sourceString as any).padStart(targetLength, padString);
   }
-}
+};
 
 export function convertToHex(num: number, width = 0): string {
   return padStart(num.toString(16), width, "0");
-}
+};
 
 export function generateCPXConfig(): void {
   const deviceContext: DeviceContext = DeviceContext.getInstance();
   const cpxJson = {
     port: deviceContext.port
   };
-  const cpxConfigFilePath: string = CPX_CONFIG_FILE;
+  const cpxConfigFilePath: string = path.join(
+    CPXWorkspace.rootPath,
+    CPX_CONFIG_FILE
+  );
   mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
   fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
-}
+};
 export const checkPythonDependency = async () => {
   const dependencyChecker: DependencyChecker = new DependencyChecker();
-  const result = await dependencyChecker.checkDependency(CONSTANTS.DEPENDENCY_CHECKER.PYTHON);
+  const result = await dependencyChecker.checkDependency(
+    CONSTANTS.DEPENDENCY_CHECKER.PYTHON
+  );
   return result.payload;
-}
+};
 
 export const setPythonExectuableName = async () => {
   // Find our what command is the PATH for python
@@ -164,7 +180,7 @@ export const setPythonExectuableName = async () => {
   }
 
   return executableName;
-}
+};
 
 export const addVisibleTextEditorCallback = (currentPanel: vscode.WebviewPanel, context: vscode.ExtensionContext): vscode.Disposable => {
   const initialPythonEditors = filterForPythonFiles(vscode.window.visibleTextEditors);
@@ -179,15 +195,25 @@ export const addVisibleTextEditorCallback = (currentPanel: vscode.WebviewPanel, 
       state: { activePythonEditors }
     });
   }, {}, context.subscriptions)
-}
+};
 
 export const filterForPythonFiles = (textEditors: vscode.TextEditor[]) => {
   return textEditors.filter(
     editor => editor.document.languageId === "python"
   ).map(editor => editor.document.fileName);
-}
+};
 
 export const getActiveEditorFromPath = (filePath: string): vscode.TextDocument => {
   const activeEditor = vscode.window.visibleTextEditors.find((editor: vscode.TextEditor) => editor.document.fileName === filePath);
   return activeEditor ? activeEditor.document : undefined;
-}
+};
+
+export const getServerPortConfig = (): number => {
+  // tslint:disable: no-backbone-get-set-outside-model prefer-type-cast
+  if (vscode.workspace.getConfiguration().has(SERVER_INFO.SERVER_PORT_CONFIGURATION)) {
+    return vscode.workspace
+      .getConfiguration()
+      .get(SERVER_INFO.SERVER_PORT_CONFIGURATION) as number;
+  }
+  return SERVER_INFO.DEFAULT_SERVER_PORT;
+};
