@@ -174,7 +174,6 @@ export const addVisibleTextEditorCallback = (currentPanel: vscode.WebviewPanel, 
   });
   return vscode.window.onDidChangeVisibleTextEditors((textEditors: vscode.TextEditor[]) => {
     const activePythonEditors = filterForPythonFiles(textEditors);
-    console.log("python", textEditors[0].document.fileName, activePythonEditors);
     currentPanel.webview.postMessage({
       command: "visible-editors",
       state: { activePythonEditors }
