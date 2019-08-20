@@ -675,7 +675,7 @@ export async function activate(context: vscode.ExtensionContext) {
     runDevice,
     selectSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
-      "python",
+      "pacifica",
       simulatorDebugConfiguration
     ),
     debugSessionsStarted,

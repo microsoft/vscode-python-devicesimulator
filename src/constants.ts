@@ -17,7 +17,7 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONSTANTS = {
-  DEBUG_CONFIGURATION_NAME: "Pacifica Simulator Debugger",
+  DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {
     PYTHON: "python",
     PYTHON3: "python3",

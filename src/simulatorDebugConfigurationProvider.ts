@@ -22,8 +22,8 @@ export class SimulatorDebugConfigurationProvider
     config: vscode.DebugConfiguration,
     token?: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.DebugConfiguration> {
-    // Check config name
-    if (config.name === CONSTANTS.DEBUG_CONFIGURATION_NAME) {
+    // Check config type
+    if (config.type === CONSTANTS.DEBUG_CONFIGURATION_TYPE) {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (activeTextEditor) {
         const currentFilePath = activeTextEditor.document.fileName;
@@ -50,6 +50,8 @@ export class SimulatorDebugConfigurationProvider
               }
             });
         }
+        // Set the new configuration type so the python debugger can take over
+        config.type = "python";
         // Set process_user_code path as program
         config.program = this.pathToScript;
         // Set user's code path and server's port as args

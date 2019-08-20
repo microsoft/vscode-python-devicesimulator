@@ -180,10 +180,8 @@
     ],
     "debuggers": [
       {
-        "type": "python",
+        "type": "pacifica",
         "label": "Pacifica Simulator Debugger",
-        "program": "./out/debugAdapter.js",
-        "runtime": "node",
         "configurationAttributes": {
           "launch": {
             "properties": {
@@ -224,7 +222,7 @@
         },
         "initialConfigurations": [
           {
-            "type": "python",
+            "type": "pacifica",
             "request": "launch",
             "name": "Pacifica Simulator Debugger",
             "program": "${file}",
@@ -237,7 +235,7 @@
             "label": "Pacifica Simulator Debugger : Launch",
             "description": "Pacifica Simulator Debugger - A configuration for debugging a python code file for the Pacifica simulator.",
             "body": {
-              "type": "python",
+              "type": "pacifica",
               "request": "launch",
               "name": "Pacifica Simulator Debugger",
               "program": "${file}",
