@@ -3,6 +3,9 @@
 
 // Key events
 export const CONSTANTS = {
+  CURRENTLY_RUNNING: (file: string) => {
+    return `Currently running: ${file}`
+  },
   ID_NAME: {
     BUTTON_A: "BTN_A_OUTER",
     BUTTON_AB: "BTN_AB_OUTER",

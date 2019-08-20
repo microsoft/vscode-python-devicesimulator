@@ -144,8 +144,8 @@ class Simulator extends React.Component<any, IState> {
       <div className="simulator">
         <div className="file-selector">
           <Dropdown
-            label={"hi"}
-            styleLabel={"hi"}
+            label={"file-dropdown"}
+            styleLabel={"dropdown"}
             lastChosen={this.state.running_file}
             width={300}
             textOptions={this.state.active_editors}
@@ -211,7 +211,6 @@ class Simulator extends React.Component<any, IState> {
   }
 
   protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
-    console.log("BLURR", event.currentTarget.value);
     this.setState({ ...this.state, selected_file: event.currentTarget.value });
   }
   protected onKeyEvent(event: KeyboardEvent, active: boolean) {

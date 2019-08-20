@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import CONSTANTS from "../constants";
+import { CONSTANTS } from "../constants";
 import "../styles/Dropdown.css";
 
 export interface IDropdownProps {
@@ -18,11 +18,15 @@ const Dropdown: React.FC<IDropdownProps> = props => {
   const parsedPath = parsePath(props.lastChosen);
   const defaultText =
     props.lastChosen !== ""
-      ? `Currently running: ${parsedPath[1]}`
+      ? CONSTANTS.CURRENTLY_RUNNING(parsedPath[1])
       : CONSTANTS.NO_FILES_AVAILABLE;
   return (
     <div>
-      <select id={props.label} className={"dropdown"} onBlur={props.onBlur}>
+      <select
+        id={props.label}
+        className={props.styleLabel}
+        onBlur={props.onBlur}
+      >
         <option value="" disabled selected>
           {defaultText}
         </option>

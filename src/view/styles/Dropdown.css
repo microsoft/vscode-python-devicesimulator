@@ -18,10 +18,6 @@ select.dropdown:active {
   outline-offset: 1px;
 }
 
-option:disabled {
-  background: var(--vscode-editor-selectionHighlightBackground);
-}
-
 option {
   height: 32px;
   background: var(--vscode-debugToolBar-background);
