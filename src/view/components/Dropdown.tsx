@@ -18,7 +18,7 @@ const Dropdown: React.FC<IDropdownProps> = props => {
   const parsedPath = parsePath(props.lastChosen);
   const defaultText =
     props.lastChosen !== ""
-      ? `${parsedPath[1]} : ${parsedPath[0]}`
+      ? `Currently running: ${parsedPath[1]}`
       : CONSTANTS.NO_FILES_AVAILABLE;
   return (
     <div>

@@ -19,7 +19,7 @@ select.dropdown:active {
 }
 
 option:disabled {
-  background: grey;
+  background: var(--vscode-editor-selectionHighlightBackground);
 }
 
 option {
@@ -27,5 +27,5 @@ option {
   background: var(--vscode-debugToolBar-background);
   align-items: center;
   font-size: 14px;
-  color: white;
+  color: var(--vscode-foreground);
 }

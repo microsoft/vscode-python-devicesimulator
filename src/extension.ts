@@ -80,7 +80,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const openWebview = () => {
     if (currentPanel) {
-      currentPanel.reveal(vscode.ViewColumn.Two);
+      currentPanel.reveal(vscode.ViewColumn.Beside);
     } else {
       currentPanel = vscode.window.createWebviewPanel(
         "adafruitSimulator",
@@ -169,6 +169,7 @@ export async function activate(context: vscode.ExtensionContext) {
         );
 
         activeEditorListener = utils.addVisibleTextEditorCallback(currentPanel, context);
+        console.log("sent");
       }
 
       currentPanel.onDidDispose(
