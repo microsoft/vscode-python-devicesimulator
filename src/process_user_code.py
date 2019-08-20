@@ -32,7 +32,6 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        from adafruit_circuitplayground.express import cpx
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()

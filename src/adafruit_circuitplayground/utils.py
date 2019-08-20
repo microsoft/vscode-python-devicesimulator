@@ -7,9 +7,14 @@ import copy
 import time
 from . import constants as CONSTANTS
 from . import debugger_communication_client
+from applicationinsights import TelemetryClient
 
 
 previous_state = {}
+
+
+telemetry_client = TelemetryClient('__AIKEY__')
+EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 def show(state, debug_mode=False):
@@ -28,3 +33,9 @@ def show(state, debug_mode=False):
 def remove_leading_slashes(string):
     string = string.lstrip('\\/')
     return string
+
+
+def send_telemetry(event_name):
+    telemetry_client.track_event(
+        '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES[event_name]))
+    telemetry_client.flush()

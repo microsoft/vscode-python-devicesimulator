@@ -5,7 +5,7 @@
 }
 
 .button-icon {
-  fill: var(--vscode-badgeForegroundOverwrite);
+  fill: var(--vscode-badgeForegroundOverride);
 }
 
 .play-button {
