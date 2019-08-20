@@ -18,6 +18,16 @@ Commands are accessible through :
 - **Deploy to Device** : saves the code to a Circuit Playground Express.  
   _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
 
+- **Select Serial Port** : selects the serial port connect to the board you want the serial monitor to interact with.  
+  _(**Note :** USB detection must be enabled in the extension settings.)_
+
+- **Open Serial Monitor** : opens the serial monitor.  
+  _(**Note :** .A serial port must have been selected already)_.
+
+- **Change Baud Rate** : changes the baud rate of the serial monitor.
+
+- **Close Serial Montitor** : closes the serial monitor.
+
 ## Available features
 
 - We currently support the [Adafruit Circuit Playground Express board](https://www.adafruit.com/product/3333)
@@ -50,6 +60,12 @@ Commands are accessible through :
   - IR transmitter\*
   - Motion sensors
     - Tap detection
+
+## Pacifica configuration
+
+Here are the settings you can change in the Pacifica configuration:
+
+- **Debugger Server Port:** Allow you to change the port used to communicate with
 
 ## Troubleshooting Tips
 
