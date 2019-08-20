@@ -72,11 +72,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
-    utils.logToOutputChannel(
-      outChannel,
-      CONSTANTS.INFO.WELCOME_OUTPUT_TAB,
-      true
-    );
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB);
   }
 
   vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
@@ -324,7 +320,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     console.info(CONSTANTS.INFO.RUNNING_CODE);
 
-    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR, true);
 
     killProcessIfRunning();
 
@@ -478,7 +474,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const deployCodeToDevice = async () => {
     console.info("Sending code to device");
 
-    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE, true);
 
     await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
 
@@ -652,44 +648,56 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Start: Init comunication
   const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
-    // Reinitialize process
-    killProcessIfRunning();
-    console.log("Debug Started");
-    inDebugMode = true;
+    if (simulatorDebugConfiguration.pacificaDebug) {
+      // Reinitialize process
+      killProcessIfRunning();
+      console.log("Debug Started");
+      inDebugMode = true;
 
-    try {
-      debuggerCommunicationHandler = new DebuggerCommunicationServer(
-        currentPanel,
-        utils.getServerPortConfig()
-      );
-      openWebview();
-      if (currentPanel) {
-        debuggerCommunicationHandler.setWebview(currentPanel);
-        currentPanel.webview.postMessage({ command: "activate-play" });
-      }
-    } catch (err) {
-      if (err.message === SERVER_INFO.ERROR_CODE_INIT_SERVER) {
-        console.error(
-          `Error trying to init the server on port ${utils.getServerPortConfig()}`
+      try {
+        // Shut down existing server on debug restart
+        if (debuggerCommunicationHandler) {
+          debuggerCommunicationHandler.closeConnection();
+          debuggerCommunicationHandler = undefined;
+        }
+
+        debuggerCommunicationHandler = new DebuggerCommunicationServer(
+          currentPanel,
+          utils.getServerPortConfig()
         );
-        vscode.window.showErrorMessage(
-          CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
-            utils.getServerPortConfig()
-          )
-        );
+        openWebview();
+        if (currentPanel) {
+          debuggerCommunicationHandler.setWebview(currentPanel);
+          currentPanel.webview.postMessage({ command: "activate-play" });
+        }
+      } catch (err) {
+        if (err.message === SERVER_INFO.ERROR_CODE_INIT_SERVER) {
+          console.error(
+            `Error trying to init the server on port ${utils.getServerPortConfig()}`
+          );
+          vscode.window.showErrorMessage(
+            CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
+              utils.getServerPortConfig()
+            )
+          );
+        }
       }
     }
   });
 
   // On Debug Session Stop: Stop communiation
   const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
-    console.log("Debug Stopped");
-    inDebugMode = false;
-    if (debuggerCommunicationHandler) {
-      debuggerCommunicationHandler.closeConnection();
-    }
-    if (currentPanel) {
-      currentPanel.webview.postMessage({ command: "reset-state" });
+    if (simulatorDebugConfiguration.pacificaDebug) {
+      console.log("Debug Stopped");
+      inDebugMode = false;
+      simulatorDebugConfiguration.pacificaDebug = false;
+      if (debuggerCommunicationHandler) {
+        debuggerCommunicationHandler.closeConnection();
+        debuggerCommunicationHandler = undefined;
+      }
+      if (currentPanel) {
+        currentPanel.webview.postMessage({ command: "reset-state" });
+      }
     }
   });
 
@@ -704,7 +712,7 @@ export async function activate(context: vscode.ExtensionContext) {
     runDevice,
     selectSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
-      "python",
+      CONSTANTS.DEBUG_CONFIGURATION_TYPE,
       simulatorDebugConfiguration
     ),
     debugSessionsStarted,

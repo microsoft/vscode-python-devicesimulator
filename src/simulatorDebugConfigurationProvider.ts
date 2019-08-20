@@ -12,7 +12,11 @@ let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
-  constructor(private pathToScript: string) {}
+  public pacificaDebug: boolean;
+
+  constructor(private pathToScript: string) {
+    this.pacificaDebug = false;
+  }
 
   /**
    * Modify the debug configuration just before a debug session is being launched.
@@ -22,9 +26,23 @@ export class SimulatorDebugConfigurationProvider
     config: vscode.DebugConfiguration,
     token?: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.DebugConfiguration> {
-    // Check config name
-    if (config.name === CONSTANTS.DEBUG_CONFIGURATION_NAME) {
-      const activeTextEditor = vscode.window.activeTextEditor;
+    const activeTextEditor = vscode.window.activeTextEditor;
+
+    // Create a configuration if no launch.json exists or if it's empty
+    if (!config.type && !config.request && !config.name) {
+      if (
+        activeTextEditor &&
+        activeTextEditor.document.languageId === "python"
+      ) {
+        config.type = "pacifica";
+        config.request = "launch";
+        config.name = "Pacifica Simulator Debugger";
+        config.console = "integratedTerminal";
+      }
+    }
+    // Check config type
+    if (config.type === CONSTANTS.DEBUG_CONFIGURATION_TYPE) {
+      this.pacificaDebug = true;
       if (activeTextEditor) {
         const currentFilePath = activeTextEditor.document.fileName;
 
@@ -50,6 +68,8 @@ export class SimulatorDebugConfigurationProvider
               }
             });
         }
+        // Set the new configuration type so the python debugger can take over
+        config.type = "python";
         // Set process_user_code path as program
         config.program = this.pathToScript;
         // Set user's code path and server's port as args
@@ -68,7 +88,7 @@ export class SimulatorDebugConfigurationProvider
     // Abort / show error message if can't find process_user_code.py
     if (!config.program) {
       return vscode.window
-        .showInformationMessage(CONSTANTS.ERROR.NO_PROGRAM_FOUND_DEBUG)
+        .showErrorMessage(CONSTANTS.ERROR.NO_PROGRAM_FOUND_DEBUG)
         .then(() => {
           return undefined; // Abort launch
         });

@@ -180,10 +180,11 @@
     ],
     "debuggers": [
       {
-        "type": "python",
+        "type": "pacifica",
         "label": "Pacifica Simulator Debugger",
-        "program": "./out/debugAdapter.js",
-        "runtime": "node",
+        "languages": [
+          "python"
+        ],
         "configurationAttributes": {
           "launch": {
             "properties": {
@@ -195,11 +196,16 @@
               "stopOnEntry": {
                 "type": "boolean",
                 "description": "Automatically stop after launch.",
-                "default": false
-              },
-              "justMyCode": {
-                "type": "boolean",
                 "default": true
+              },
+              "console": {
+                "enum": [
+                  "internalConsole",
+                  "integratedTerminal",
+                  "externalTerminal"
+                ],
+                "description": "Where to launch the debug target: internal console, integrated terminal, or external terminal.",
+                "default": "integratedTerminal"
               },
               "args": {
                 "type": "array",
@@ -224,12 +230,10 @@
         },
         "initialConfigurations": [
           {
-            "type": "python",
+            "type": "pacifica",
             "request": "launch",
             "name": "Pacifica Simulator Debugger",
-            "program": "${file}",
-            "stopOnEntry": false,
-            "justMyCode": true
+            "console": "integratedTerminal"
           }
         ],
         "configurationSnippets": [
@@ -237,12 +241,10 @@
             "label": "Pacifica Simulator Debugger : Launch",
             "description": "Pacifica Simulator Debugger - A configuration for debugging a python code file for the Pacifica simulator.",
             "body": {
-              "type": "python",
+              "type": "pacifica",
               "request": "launch",
               "name": "Pacifica Simulator Debugger",
-              "program": "${file}",
-              "stopOnEntry": false,
-              "justMyCode": true
+              "console": "integratedTerminal"
             }
           }
         ]
