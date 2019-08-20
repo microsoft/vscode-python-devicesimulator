@@ -56,7 +56,7 @@ export interface IModalContent {
   id: string;
   tagInput: any;
   tagOutput: any;
-  tryItDescriptrion: string;
+  tryItDescription: string;
   tryItTitle: string;
 }
 
@@ -66,7 +66,7 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "none",
   tryItTitle: "none",
-  tryItDescriptrion: "none",
+  tryItDescription: "none",
   component: undefined,
   id: "none"
 };
@@ -76,7 +76,7 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-gpio.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion: "toolbar-gpio.tryItDescriptrion",
+  tryItDescription: "toolbar-gpio.tryItDescription",
   component: undefined,
   id: "GPIO"
 };
@@ -87,7 +87,7 @@ export const IR_MODAL_CONTENT: IModalContent = {
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-ir-sensor.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion: "toolbar-ir-sensor.tryItDescriptrion",
+  tryItDescription: "toolbar-ir-sensor.tryItDescription",
   component: TRY_IT_MAKE_CODE,
   id: "IR"
 };
@@ -97,7 +97,7 @@ export const LIGHT_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "toolbar-light-sensor.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-light-sensor.tryItDescriptrion",
+  tryItDescription: "toolbar-light-sensor.tryItDescription",
   component: <LightSensorBar />,
   id: "light_sensor"
 };
@@ -107,7 +107,7 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "toolbar-motion-sensor.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-motion-sensor.tryItDescriptrion",
+  tryItDescription: "toolbar-motion-sensor.tryItDescription",
   component: <MotionSensorBar />,
   id: "motion_sensor"
 };
@@ -117,7 +117,7 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-neo-pixels.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-neo-pixels.tryItDescriptrion",
+  tryItDescription: "toolbar-neo-pixels.tryItDescription",
   component: TRY_IT_MAKE_CODE,
   id: "neon_pixel"
 };
@@ -127,7 +127,7 @@ export const PUSHB_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "toolbar-push-button.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-push-button.tryItDescriptrion",
+  tryItDescription: "toolbar-push-button.tryItDescription",
   component: undefined,
   id: "push_btn"
 };
@@ -137,7 +137,7 @@ export const RED_LED_MODAL_CONTENT: IModalContent = {
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-red-led.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-red-led.tryItDescriptrion",
+  tryItDescription: "toolbar-red-led.tryItDescription",
   component: undefined,
   id: "red_LED"
 };
@@ -147,7 +147,7 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "toolbar-sound-sensor.description",
   tryItTitle: "Simulation Coming Soon!",
-  tryItDescriptrion: "toolbar-sound-sensor.tryItDescriptrion",
+  tryItDescription: "toolbar-sound-sensor.tryItDescription",
   component: TRY_IT_MAKE_CODE,
   id: "sound_sensor"
 };
@@ -157,7 +157,7 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
   tagOutput: undefined,
   descriptionText: "toolbar-slider-switch.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-slider-switch.tryItDescriptrion",
+  tryItDescription: "toolbar-slider-switch.tryItDescription",
   component: undefined,
   id: "slider_switch"
 };
@@ -167,7 +167,7 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
   tagOutput: TAG_OUTPUT_SVG,
   descriptionText: "toolbar-speaker.description",
   tryItTitle: "Try it on the Simulator!",
-  tryItDescriptrion: "toolbar-speaker.tryItDescriptrion",
+  tryItDescription: "toolbar-speaker.tryItDescription",
   component: undefined,
   id: "speaker"
 };
@@ -178,7 +178,7 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
   id: "temperature",
   tagInput: TAG_INPUT_SVG,
   tagOutput: undefined,
-  tryItDescriptrion: "toolbar-temperature-sensor.tryItDescriptrion",
+  tryItDescription: "toolbar-temperature-sensor.tryItDescription",
   tryItTitle: "Try it on the Simulator!"
 };
 

@@ -265,7 +265,7 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <div className="try_area">
           <br />
           <span className="description">
-            <FormattedMessage id={content["tryItDescriptrion"]} />
+            <FormattedMessage id={content["tryItDescription"]} />
           </span>
           <br />
 
