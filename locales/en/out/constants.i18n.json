@@ -7,6 +7,7 @@
   "dialogResponses.help": "I need help",
   "dialogResponses.installPython": "Install from python.org",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
+  "error.debuggerServerInitFailed": "Warning : The Debugger Server cannot be opened. Please try to free the port {0} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.",
   "error.debuggingSessionInProgress": "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n",
   "error.incorrectFileNameForDevice": "[ERROR] Can\\'t deploy to your Circuit Playground Express device, please rename your file to \"code.py\" or \"main.py\". \n",
   "error.incorrectFileNameForDevicePopup": "Seems like you have a different file name than what the CPX requires, please rename it to \"code.py\" or \"main.py\".",
