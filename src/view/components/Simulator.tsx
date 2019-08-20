@@ -121,7 +121,7 @@ class Simulator extends React.Component<any, IState> {
     const image = this.state.play_button ? StopLogo : PlayLogo;
     return (
       <div className="simulator">
-        <div>
+        <div className="cpx-container">
           <Cpx
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
