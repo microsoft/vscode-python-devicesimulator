@@ -182,6 +182,9 @@
       {
         "type": "pacifica",
         "label": "Pacifica Simulator Debugger",
+        "languages": [
+          "python"
+        ],
         "configurationAttributes": {
           "launch": {
             "properties": {
@@ -193,11 +196,16 @@
               "stopOnEntry": {
                 "type": "boolean",
                 "description": "Automatically stop after launch.",
-                "default": false
-              },
-              "justMyCode": {
-                "type": "boolean",
                 "default": true
+              },
+              "console": {
+                "enum": [
+                  "internalConsole",
+                  "integratedTerminal",
+                  "externalTerminal"
+                ],
+                "description": "Where to launch the debug target: internal console, integrated terminal, or external terminal.",
+                "default": "integratedTerminal"
               },
               "args": {
                 "type": "array",
@@ -225,9 +233,7 @@
             "type": "pacifica",
             "request": "launch",
             "name": "Pacifica Simulator Debugger",
-            "program": "${file}",
-            "stopOnEntry": false,
-            "justMyCode": true
+            "console": "integratedTerminal"
           }
         ],
         "configurationSnippets": [
@@ -238,9 +244,7 @@
               "type": "pacifica",
               "request": "launch",
               "name": "Pacifica Simulator Debugger",
-              "program": "${file}",
-              "stopOnEntry": false,
-              "justMyCode": true
+              "console": "integratedTerminal"
             }
           }
         ]
