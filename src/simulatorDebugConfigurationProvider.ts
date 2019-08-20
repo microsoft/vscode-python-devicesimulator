@@ -2,14 +2,17 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { validCodeFileName } from "./extension_utils/utils";
+import {
+  validCodeFileName,
+  getServerPortConfig
+} from "./extension_utils/utils";
 import { CONSTANTS, DialogResponses } from "./constants";
 
 let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
-  constructor(private pathToScript: string) { }
+  constructor(private pathToScript: string) {}
 
   /**
    * Modify the debug configuration just before a debug session is being launched.
@@ -26,21 +29,21 @@ export class SimulatorDebugConfigurationProvider
         const currentFilePath = activeTextEditor.document.fileName;
 
         // Check file type and name
-        if (
-          !(activeTextEditor.document.languageId === "python")
-        ) {
+        if (!(activeTextEditor.document.languageId === "python")) {
           return vscode.window
             .showErrorMessage(CONSTANTS.ERROR.INVALID_FILE_EXTENSION_DEBUG)
             .then(() => {
               return undefined; // Abort launch
             });
-        } else if (!validCodeFileName(currentFilePath) && shouldShowInvalidFileNamePopup) {
+        } else if (
+          !validCodeFileName(currentFilePath) &&
+          shouldShowInvalidFileNamePopup
+        ) {
           vscode.window
-            .showInformationMessage(CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
-              ...[
-                DialogResponses.DONT_SHOW,
-                DialogResponses.MESSAGE_UNDERSTOOD
-              ])
+            .showInformationMessage(
+              CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
+              ...[DialogResponses.DONT_SHOW, DialogResponses.MESSAGE_UNDERSTOOD]
+            )
             .then((selection: vscode.MessageItem | undefined) => {
               if (selection === DialogResponses.DONT_SHOW) {
                 shouldShowInvalidFileNamePopup = false;
@@ -49,8 +52,8 @@ export class SimulatorDebugConfigurationProvider
         }
         // Set process_user_code path as program
         config.program = this.pathToScript;
-        // Set user's code path as args
-        config.args = [currentFilePath];
+        // Set user's code path and server's port as args
+        config.args = [currentFilePath, getServerPortConfig().toString()];
         // Set rules
         config.rules = [
           { path: this.pathToScript, include: false },

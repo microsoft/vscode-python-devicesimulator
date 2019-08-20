@@ -68,9 +68,6 @@ class MotionSensorBar extends React.Component {
   render() {
     return (
       <div className="MotionSensorBar">
-        <div className="header">
-          <div className="title">{MOTION_SENSOR_PROPERTIES.LABEL}</div>
-        </div>
         <SensorButton
           label="Shake"
           type="shake"

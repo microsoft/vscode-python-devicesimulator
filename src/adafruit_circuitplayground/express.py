@@ -9,6 +9,7 @@ from .pixel import Pixel
 from . import utils
 from . import constants as CONSTANTS
 from collections import namedtuple
+from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
@@ -40,11 +41,18 @@ class Express:
             'motion_y': 0,
             'motion_z': 0,
             'touch': [False]*7,
-            'detect_taps': 1,
-            'tapped': False,
             'shake': False,
         }
-
+        self.telemetry_state = {
+            "DETECT_TAPS": False,
+            "TAPPED": False,
+            "RED_LED": False,
+            "ADJUST_THRESHOLD": False,
+            "PLAY_FILE": False,
+            "PLAY_TONE": False,
+            "START_TONE": False,
+            "STOP_TONE": False,
+        }
         self.__debug_mode = False
         self.__abs_path_to_code_file = ''
         self.pixels = Pixel(self.__state, self.__debug_mode)
@@ -63,6 +71,9 @@ class Express:
 
     @property
     def detect_taps(self):
+        if(not self.telemetry_state["DETECT_TAPS"]):
+            utils.send_telemetry("DETECT_TAPS")
+            self.telemetry_state["DETECT_TAPS"] = True
         return self.__state['detect_taps']
 
     @detect_taps.setter
@@ -75,15 +86,23 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-
+        if(not self.telemetry_state["TAPPED"]):
+            utils.send_telemetry("TAPPED")
+            self.telemetry_state["TAPPED"] = True
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
+        if(not self.telemetry_state["RED_LED"]):
+            utils.send_telemetry("RED_LED")
+            self.telemetry_state["RED_LED"] = True
         return self.__state['red_led']
 
     @red_led.setter
     def red_led(self, value):
+        if(not self.telemetry_state["RED_LED"]):
+            utils.send_telemetry("RED_LED")
+            self.telemetry_state["RED_LED"] = True
         self.__state['red_led'] = bool(value)
         self.__show()
 
@@ -137,13 +156,20 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
+        if(not self.telemetry_state["ADJUST_THRESHOLD"]):
+            utils.send_telemetry("ADJUST_THRESHOLD")
+            self.telemetry_state["ADJUST_THRESHOLD"] = True
+
         raise NotImplementedError(
-            "this method is not supported by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def shake(self, shake_threshold=30):
         return self.__state['shake']
 
     def play_file(self, file_name):
+        if(not self.telemetry_state["PLAY_FILE"]):
+            utils.send_telemetry("PLAY_FILE")
+            self.telemetry_state["PLAY_FILE"] = True
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
@@ -166,19 +192,27 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
+        if(not self.telemetry_state["PLAY_TONE"]):
+            utils.send_telemetry("PLAY_TONE")
+            self.telemetry_state["PLAY_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
+        if(not self.telemetry_state["START_TONE"]):
+            utils.send_telemetry("START_TONE")
+            self.telemetry_state["START_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        # Stop playing any tones.
+        if(not self.telemetry_state["STOP_TONE"]):
+            utils.send_telemetry("STOP_TONE")
+            self.telemetry_state["STOP_TONE"] = True
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 

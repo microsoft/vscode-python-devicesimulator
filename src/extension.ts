@@ -1,20 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import * as vscode from "vscode";
-import * as path from "path";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
-import TelemetryAI from "./telemetry/telemetryAI";
+import * as path from "path";
+import * as utils from "./extension_utils/utils";
+import * as vscode from "vscode";
 import {
   CONSTANTS,
+  CPX_CONFIG_FILE,
   DialogResponses,
   TelemetryEventName,
-  WebviewMessages
+  WebviewMessages,
+  SERVER_INFO
 } from "./constants";
+import { CPXWorkspace } from "./cpxWorkspace";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
-import * as utils from "./extension_utils/utils";
+import { SerialMonitor } from "./serialMonitor";
+import TelemetryAI from "./telemetry/telemetryAI";
+import { UsbDetector } from "./usbDetector";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 
 let currentFileAbsPath: string = "";
@@ -28,6 +33,7 @@ let firstTimeClosed: boolean = true;
 let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
   return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
@@ -41,13 +47,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
   telemetryAI = new TelemetryAI(context);
   let currentPanel: vscode.WebviewPanel | undefined;
-  let outChannel: vscode.OutputChannel | undefined;
   let childProcess: cp.ChildProcess | undefined;
   let messageListener: vscode.Disposable;
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
+  // Generate cpx.json
+  utils.generateCPXConfig();
   pythonExecutableName = await utils.setPythonExectuableName();
 
   if (pythonExecutableName === "") {
@@ -56,12 +63,18 @@ export async function activate(context: vscode.ExtensionContext) {
 
   if (outChannel === undefined) {
     outChannel = vscode.window.createOutputChannel(CONSTANTS.NAME);
-    logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB, true);
+    utils.logToOutputChannel(
+      outChannel,
+      CONSTANTS.INFO.WELCOME_OUTPUT_TAB,
+      true
+    );
   }
 
-  vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
-    await updateCurrentFileIfPython(document);
-  });
+  vscode.workspace.onDidSaveTextDocument(
+    async (document: vscode.TextDocument) => {
+      await updateCurrentFileIfPython(document);
+    }
+  );
 
   const openWebview = () => {
     if (currentPanel) {
@@ -100,7 +113,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 // Send input to the Python process
                 handleButtonPressTelemetry(message.text);
                 console.log(`About to write ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitButtonPress(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -109,15 +122,18 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log(`Play button ${messageJson} \n`);
                 if (message.text as boolean) {
-                  telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
+                  telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON
+                  );
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
                 }
                 break;
               case WebviewMessages.SENSOR_CHANGED:
+                checkForTelemetry(message.text);
                 console.log(`Sensor changed ${messageJson} \n`);
-                if (inDebugMode) {
+                if (inDebugMode && debuggerCommunicationHandler) {
                   debuggerCommunicationHandler.emitSensorChanged(messageJson);
                 } else if (childProcess) {
                   childProcess.stdin.write(messageJson + "\n");
@@ -126,6 +142,9 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.REFRESH_SIMULATOR:
                 console.log("Refresh button");
                 runSimulatorCommand();
+                break;
+              case WebviewMessages.SLIDER_TELEMETRY:
+                handleSensorTelemetry(message.text);
                 break;
               default:
                 vscode.window.showInformationMessage(
@@ -282,19 +301,31 @@ export async function activate(context: vscode.ExtensionContext) {
 
     console.info(CONSTANTS.INFO.RUNNING_CODE);
 
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SIMULATOR);
 
     killProcessIfRunning();
 
     await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
 
     if (currentFileAbsPath === "") {
-      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      utils.logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        true
+      );
     } else {
       // Save on run
       await currentTextDocument.save();
 
-      logToOutputChannel(
+      if (!currentTextDocument.fileName.endsWith(".py")) {
+        utils.logToOutputChannel(
+          outChannel,
+          CONSTANTS.ERROR.NO_FILE_TO_RUN,
+          true
+        );
+        return;
+      }
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
@@ -358,10 +389,10 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                      messageToWebview.data
+                        messageToWebview.data
                       }`
                     );
-                    logToOutputChannel(
+                    utils.logToOutputChannel(
                       outChannel,
                       `[PRINT] ${messageToWebview.data}`
                     );
@@ -385,7 +416,11 @@ export async function activate(context: vscode.ExtensionContext) {
       childProcess.stderr.on("data", data => {
         console.error(`Error from the Python process through stderr: ${data}`);
         telemetryAI.trackFeatureUsage(TelemetryEventName.ERROR_PYTHON_PROCESS);
-        logToOutputChannel(outChannel, CONSTANTS.ERROR.STDERR(data), true);
+        utils.logToOutputChannel(
+          outChannel,
+          CONSTANTS.ERROR.STDERR(data),
+          true
+        );
         if (currentPanel) {
           console.log("Sending clearing state command");
           currentPanel.webview.postMessage({ command: "reset-state" });
@@ -399,11 +434,13 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   };
 
-  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand("pacifica.runSimulatorEditorButton",
+  const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.runSimulatorEditorButton",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
       runSimulatorCommand();
-    });
+    }
+  );
 
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
@@ -417,17 +454,21 @@ export async function activate(context: vscode.ExtensionContext) {
   const deployCodeToDevice = async () => {
     console.info("Sending code to device");
 
-    logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
+    utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE);
 
     await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document);
 
     if (currentFileAbsPath === "") {
-      logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
+      utils.logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        true
+      );
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
       // Save on run
       await currentTextDocument.save();
       // Output panel
-      logToOutputChannel(
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
         true
@@ -437,7 +478,7 @@ export async function activate(context: vscode.ExtensionContext) {
         CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
       );
     } else {
-      logToOutputChannel(
+      utils.logToOutputChannel(
         outChannel,
         CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
       );
@@ -462,7 +503,10 @@ export async function activate(context: vscode.ExtensionContext) {
               telemetryAI.trackFeatureUsage(
                 TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
               );
-              logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_SUCCESS);
+              utils.logToOutputChannel(
+                outChannel,
+                CONSTANTS.INFO.DEPLOY_SUCCESS
+              );
               break;
 
             case "no-device":
@@ -509,7 +553,7 @@ export async function activate(context: vscode.ExtensionContext) {
         console.error(
           `Error from the Python device process through stderr: ${data}`
         );
-        logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
+        utils.logToOutputChannel(outChannel, `[ERROR] ${data} \n`, true);
       });
 
       // When the process is done
@@ -530,6 +574,52 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const serialMonitor: SerialMonitor = SerialMonitor.getInstance();
+  context.subscriptions.push(serialMonitor);
+  const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.selectSerialPort",
+    () => {
+      // todo add telemetry after
+      serialMonitor.selectSerialPort(null, null);
+    }
+  );
+
+  const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.openSerialMonitor",
+    () => {
+      serialMonitor.openSerialMonitor();
+    }
+  );
+
+  const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.changeBaudRate",
+    () => {
+      serialMonitor.changeBaudRate();
+    }
+  );
+
+  const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+    "pacifica.closeSerialMonitor",
+    (port, showWarning = true) => {
+      serialMonitor.closeSerialMonitor(port, showWarning);
+    }
+  );
+
+  UsbDetector.getInstance().initialize(context.extensionPath);
+  UsbDetector.getInstance().startListening();
+
+  if (
+    CPXWorkspace.rootPath &&
+    (utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)) ||
+      vscode.window.activeTextEditor)
+  ) {
+    (() => {
+      if (!SerialMonitor.getInstance().initialized) {
+        SerialMonitor.getInstance().initialize();
+      }
+    })();
+  }
+
   // Debugger configuration
   const simulatorDebugConfiguration = new SimulatorDebugConfigurationProvider(
     utils.getPathToScript(context, "out/", "debug_user_code.py")
@@ -537,17 +627,33 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Start: Init comunication
   const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
-    // Set up the webview
+    // Reinitialize process
     killProcessIfRunning();
-    openWebview();
-    if (currentPanel) {
-      currentPanel.webview.postMessage({ command: "activate-play" });
-    }
     console.log("Debug Started");
     inDebugMode = true;
-    debuggerCommunicationHandler = new DebuggerCommunicationServer(
-      currentPanel
-    );
+
+    try {
+      debuggerCommunicationHandler = new DebuggerCommunicationServer(
+        currentPanel,
+        utils.getServerPortConfig()
+      );
+      openWebview();
+      if (currentPanel) {
+        debuggerCommunicationHandler.setWebview(currentPanel);
+        currentPanel.webview.postMessage({ command: "activate-play" });
+      }
+    } catch (err) {
+      if (err.message === SERVER_INFO.ERROR_CODE_INIT_SERVER) {
+        console.error(
+          `Error trying to init the server on port ${utils.getServerPortConfig()}`
+        );
+        vscode.window.showErrorMessage(
+          CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
+            utils.getServerPortConfig()
+          )
+        );
+      }
+    }
   });
 
   // On Debug Session Stop: Stop communiation
@@ -563,11 +669,15 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(
+    changeBaudRate,
+    closeSerialMonitor,
+    openSerialMonitor,
     openSimulator,
+    newFile,
     runSimulator,
     runSimulatorEditorButton,
     runDevice,
-    newFile,
+    selectSerialPort,
     vscode.debug.registerDebugConfigurationProvider(
       "python",
       simulatorDebugConfiguration
@@ -583,7 +693,7 @@ const getActivePythonFile = () => {
     editor => editor.document.languageId === "python"
   );
   if (activeEditor) {
-    currentTextDocument = activeEditor.document
+    currentTextDocument = activeEditor.document;
   }
   return activeEditor ? activeEditor.document.fileName : "";
 };
@@ -598,9 +708,10 @@ const getFileFromFilePicker = () => {
     openLabel: "Run File"
   };
 
-  return vscode.window.showOpenDialog(options).then(fileUri => {
+  return vscode.window.showOpenDialog(options).then(async fileUri => {
     if (fileUri && fileUri[0] && fileUri[0].fsPath.endsWith(".py")) {
       console.log(`Selected file: ${fileUri[0].fsPath}`);
+      currentTextDocument = await vscode.workspace.openTextDocument(fileUri[0]);
       return fileUri[0].fsPath;
     }
   });
@@ -617,7 +728,10 @@ const updateCurrentFileIfPython = async (
       getActivePythonFile() || (await getFileFromFilePicker()) || "";
   }
   if (currentFileAbsPath) {
-    await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
+    await vscode.window.showTextDocument(
+      currentTextDocument,
+      vscode.ViewColumn.One
+    );
   }
 };
 
@@ -630,6 +744,45 @@ const handleButtonPressTelemetry = (buttonState: any) => {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
   } else if (buttonState["switch"]) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+  }
+};
+
+const handleSensorTelemetry = (sensor: string) => {
+  switch (sensor) {
+    case "temperature":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
+      );
+      break;
+    case "light":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_LIGHT_SENSOR);
+      break;
+    case "motion_x":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_y":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "motion_z":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_MOTION_SENSOR);
+      break;
+    case "shake":
+      telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+      break;
+    case "touch":
+      telemetryAI.trackFeatureUsage(
+        TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
+      );
+      break;
+  }
+};
+
+const checkForTelemetry = (sensorState: any) => {
+  if (sensorState["shake"]) {
+    console.log(`telemtry sending`);
+    handleSensorTelemetry("shake");
+  } else if (sensorState["touch"]) {
+    handleSensorTelemetry("touch");
   }
 };
 
@@ -648,19 +801,6 @@ const updatePythonExtraPaths = () => {
       currentExtraPaths,
       vscode.ConfigurationTarget.Global
     );
-};
-
-const logToOutputChannel = (
-  outChannel: vscode.OutputChannel | undefined,
-  message: string,
-  show: boolean = false
-) => {
-  if (outChannel) {
-    if (show) {
-      outChannel.show(true);
-    }
-    outChannel.append(message);
-  }
 };
 
 function getWebviewContent(context: vscode.ExtensionContext) {
@@ -684,4 +824,8 @@ function getWebviewContent(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export async function deactivate() {
+  const monitor: SerialMonitor = SerialMonitor.getInstance();
+  await monitor.closeSerialMonitor(null, false);
+  UsbDetector.getInstance().stopListening();
+}

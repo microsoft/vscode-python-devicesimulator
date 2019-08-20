@@ -2,9 +2,15 @@
 // Licensed under the MIT license.
 
 import * as nls from "vscode-nls";
+import * as path from "path";
 import { MessageItem } from "vscode";
 
-export const DEFAULT_SERVER_PORT: number = 5678;
+// Debugger Server
+export const SERVER_INFO = {
+  DEFAULT_SERVER_PORT: 5577,
+  ERROR_CODE_INIT_SERVER: "ERROR_INIT_SERVER",
+  SERVER_PORT_CONFIGURATION: "pacifica.debuggerServerPort"
+};
 
 const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
@@ -18,10 +24,34 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
+    COMPORT_UNKNOWN_ERROR:
+      "Writing to COM port (GetOverlappedResult): Unknown error code 121",
+    CPX_FILE_ERROR: localize(
+      "error.cpxFileFormat",
+      "The cpx.json file format is not correct."
+    ),
+    DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
+      return localize(
+        "error.debuggerServerInitFailed",
+        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
+      );
+    },
     DEBUGGING_SESSION_IN_PROGESS: localize(
       "error.debuggingSessionInProgress",
       "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
     ),
+    FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
+      return localize(
+        "error.failedToOpenSerialPort",
+        `[ERROR] Failed to open serial port ${port}.`
+      );
+    },
+    FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
+      return localize(
+        "error.failedToOpenSerialPortDueTo",
+        `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
+      );
+    },
     INCORRECT_FILE_NAME_FOR_DEVICE: localize(
       "error.incorrectFileNameForDevice",
       '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
@@ -59,7 +89,17 @@ export const CONSTANTS = {
     )
   },
   INFO: {
+    CLOSED_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.closedSerialPort",
+        `[DONE] Closed the serial port - ${port} \n`
+      );
+    },
     COMPLETED_MESSAGE: "Completed",
+    CPX_JSON_ALREADY_GENERATED: localize(
+      "info.cpxJsonAlreadyGenerated",
+      "cpx.json has already been generated."
+    ),
     DEPLOY_DEVICE: localize(
       "info.deployDevice",
       "\n[INFO] Deploying code to the device...\n"
@@ -76,7 +116,6 @@ export const CONSTANTS = {
       "info.extensionActivated",
       "Congratulations, your extension Adafruit_Simulator is now active!"
     ),
-
     FILE_SELECTED: (filePath: string) => {
       return localize(
         "info.fileSelected",
@@ -99,11 +138,27 @@ export const CONSTANTS = {
       "info.newFile",
       "New to Python or the Circuit Playground Express? We are here to help!"
     ),
+    OPENED_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.openedSerialPort",
+        `[INFO] Opened the serial port - ${port} \n`
+      );
+    },
+    OPENING_SERIAL_PORT: (port: string) => {
+      return localize(
+        "info.openingSerialPort",
+        `[STARTING] Opening the serial port - ${port} \n`
+      );
+    },
+    PLEASE_OPEN_FOLDER: localize(
+      "info.pleaseOpenFolder",
+      "Please open a folder first."
+    ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
-      "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
+      'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
@@ -123,16 +178,55 @@ export const CONSTANTS = {
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
   },
+  MISC: {
+    SELECT_PORT_PLACEHOLDER: localize(
+      "misc.selectPortPlaceholder",
+      "Select a serial port"
+    ),
+    SERIAL_MONITOR_NAME: localize(
+      "misc.serialMonitorName",
+      "Pacifica Serial Monitor"
+    )
+  },
   NAME: localize("name", "Pacifica Simulator"),
   WARNING: {
     ACCEPT_AND_RUN: localize(
       "warning.agreeAndRun",
       "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+    ),
+    INVALID_BAUD_RATE: localize(
+      "warning.invalidBaudRate",
+      "Invalid baud rate, keep baud rate unchanged."
+    ),
+    NO_RATE_SELECTED: localize(
+      "warning.noRateSelected",
+      "No rate is selected, keep baud rate unchanged."
+    ),
+    NO_SERIAL_PORT_SELECTED: localize(
+      "warning.noSerialPortSelected",
+      "No serial port was selected, please select a serial port first"
+    ),
+    SERIAL_MONITOR_ALREADY_OPENED: (port: string) => {
+      return localize(
+        "warning.serialMonitorAlreadyOpened",
+        `Serial monitor is already opened for ${port} \n`
+      );
+    },
+    SERIAL_MONITOR_NOT_STARTED: localize(
+      "warning.serialMonitorNotStarted",
+      "Serial monitor has not been started."
+    ),
+    SERIAL_PORT_NOT_STARTED: localize(
+      "warning.serialPortNotStarted",
+      "Serial port has not been started."
     )
   }
 };
 
-// Need the different events we want to track and the name of it
+export enum CONFIG_KEYS {
+  ENABLE_USB_DETECTION = "pacifica.enableUSBDetection"
+}
+
 export enum TelemetryEventName {
   FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
 
@@ -149,6 +243,13 @@ export enum TelemetryEventName {
   SIMULATOR_BUTTON_B = "SIMULATOR.BUTTON.B",
   SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
   SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
+
+  //Sensors
+  SIMULATOR_TEMPERATURE_SENSOR = "SIMULATOR.TEMPERATURE",
+  SIMULATOR_LIGHT_SENSOR = " SIMULATOR.LIGHT",
+  SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION",
+  SIMULATOR_SHAKE = "SIMULATOR.SHAKE",
+  SIMULATOR_CAPACITIVE_TOUCH = "SIMULATOR.CAPACITIVE.TOUCH",
 
   // Pop-up dialog
   CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
@@ -173,7 +274,8 @@ export enum WebviewMessages {
   BUTTON_PRESS = "button-press",
   PLAY_SIMULATOR = "play-simulator",
   SENSOR_CHANGED = "sensor-changed",
-  REFRESH_SIMULATOR = "refresh-simulator"
+  REFRESH_SIMULATOR = "refresh-simulator",
+  SLIDER_TELEMETRY = "slider-telemetry"
 }
 
 // tslint:disable-next-line: no-namespace
@@ -193,6 +295,9 @@ export namespace DialogResponses {
   export const DONT_SHOW: MessageItem = {
     title: localize("dialogResponses.dontShowAgain", "Don't Show Again")
   };
+  export const NO: MessageItem = {
+    title: localize("dialogResponses.No", "No")
+  };
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")
   };
@@ -208,11 +313,22 @@ export namespace DialogResponses {
   export const INSTALL_PYTHON: MessageItem = {
     title: localize("dialogResponses.installPython", "Install from python.org")
   };
+  export const YES: MessageItem = {
+    title: localize("dialogResponses.Yes", "Yes")
+  };
 }
+
+export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
 
 export const USER_CODE_NAMES = {
   CODE_PY: "code.py",
   MAIN_PY: "main.py"
+};
+
+export const STATUS_BAR_PRIORITY = {
+  PORT: 20,
+  OPEN_PORT: 30,
+  BAUD_RATE: 40
 };
 
 export default CONSTANTS;

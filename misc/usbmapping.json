@@ -1,0 +1,18 @@
+[
+    {
+        "index_file": "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json",
+        "boards": [
+            {
+                "vid": "239a",
+                "pid": [
+                    "8019"
+                ],
+                "name": "Adafruit Circuit Playground Express",
+                "package": "adafruit",
+                "architecture": "samd",
+                "id": "cpx"
+            }
+
+        ]
+    }
+]

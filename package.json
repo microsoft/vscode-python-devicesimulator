@@ -24,16 +24,33 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
+    "onCommand:pacifica.openSerialMonitor",
     "onCommand:pacifica.openSimulator",
     "onCommand:pacifica.runSimulator",
     "onCommand:pacifica.newFile",
     "onCommand:pacifica.runDevice",
     "onCommand:pacifica.runSimulatorEditorButton",
+    "onCommand:pacifica.selectSerialPort",
     "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "pacifica.changeBaudRate",
+        "title": "%pacificaExtension.commands.changeBaudRate%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.closeSerialMonitor",
+        "title": "%pacificaExtension.commands.closeSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
+      {
+        "command": "pacifica.openSerialMonitor",
+        "title": "%pacificaExtension.commands.openSerialMonitor%",
+        "category": "%pacificaExtension.commands.label%"
+      },
       {
         "command": "pacifica.openSimulator",
         "title": "%pacificaExtension.commands.openSimulator%",
@@ -70,6 +87,31 @@
           "light": "./assets/light-theme/save-to-board.svg",
           "dark": "./assets/dark-theme/save-to-board.svg"
         }
+      },
+      {
+        "command": "pacifica.selectSerialPort",
+        "title": "%pacificaExtension.commands.selectSerialPort%",
+        "category": "%pacificaExtension.commands.label%"
+      }
+    ],
+    "colors": [
+      {
+        "id": "highContrastButtonBorderOverride.color",
+        "description": "Color for the high contrast border updated",
+        "defaults": {
+          "dark": "debugToolBar.background",
+          "light": "debugToolBar.background",
+          "highContrast": "#6FC3DF"
+        }
+      },
+      {
+        "id": "badgeForegroundOverride",
+        "description": "Color that fixes the issue with midnight blue ",
+        "defaults": {
+          "dark": "#FFFFFF",
+          "light": "badge.foreground",
+          "highContrast": "#FFFFFF"
+        }
       }
     ],
     "menus": {
@@ -101,6 +143,10 @@
       "type": "object",
       "title": "%pacificaExtension.configuration.title%",
       "properties": {
+        "pacifica.enableUSBDetection": {
+          "type": "boolean",
+          "default": true
+        },
         "pacifica.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
@@ -117,6 +163,12 @@
           "type": "boolean",
           "default": true,
           "description": "%pacificaExtension.configuration.properties.device%",
+          "scope": "resource"
+        },
+        "pacifica.debuggerServerPort": {
+          "type": "number",
+          "default": 5577,
+          "description": "%pacificaExtension.configuration.properties.debuggerPort%",
           "scope": "resource"
         }
       }
@@ -154,7 +206,8 @@
                 "description": "Command line arguments passed to the program.",
                 "default": [],
                 "items": {
-                  "type": "string"
+                  "filePath": "string",
+                  "serverPort": "string"
                 }
               },
               "rules": {
@@ -255,6 +308,7 @@
     "@types/open": "^6.1.0",
     "@types/socket.io": "^2.1.2",
     "compare-versions": "^3.5.1",
+    "eventemitter2": "^5.0.1",
     "open": "^6.4.0",
     "os": "^0.1.1",
     "react": "^16.8.6",

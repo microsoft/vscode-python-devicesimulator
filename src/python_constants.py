@@ -13,7 +13,8 @@ EXPECTED_INPUT_EVENTS = [
     "shake",
     "motion_x",
     "motion_y",
-    "motion_z"
+    "motion_z",
+    "touch"
 ]
 
 EXEC_COMMAND = "exec"
@@ -35,3 +36,5 @@ NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"
+
+DEFAULT_PORT = "5577"

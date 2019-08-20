@@ -1,27 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import * as http from "http";
 import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
-import { DEFAULT_SERVER_PORT } from "./constants";
+import { SERVER_INFO } from "./constants";
 
 export class DebuggerCommunicationServer {
-  // TODO: Port as a constants + user setting
   private port: number;
+  private serverHttp: http.Server;
   private serverIo: socketio.Server;
   private simulatorWebview: WebviewPanel | undefined;
 
   constructor(
     webviewPanel: WebviewPanel | undefined,
-    port = DEFAULT_SERVER_PORT
+    port = SERVER_INFO.DEFAULT_SERVER_PORT
   ) {
     this.port = port;
-    this.serverIo = socketio(this.port);
+    this.serverHttp = new http.Server();
+    this.initHttpServer();
+
+    this.serverIo = socketio(this.serverHttp);
     this.simulatorWebview = webviewPanel;
     this.initEventsHandlers();
+    console.info(`Server running on port ${this.port}`);
   }
 
   public closeConnection(): void {
+    this.serverHttp.close();
     this.serverIo.close();
   }
 
@@ -39,6 +45,13 @@ export class DebuggerCommunicationServer {
   public emitSensorChanged(newState: string): void {
     console.log(`Emit Sensor Changed: ${newState} \n`);
     this.serverIo.emit("sensor_changed", newState);
+  }
+
+  private initHttpServer(): void {
+    this.serverHttp.listen(this.port);
+    if (!this.serverHttp.listening) {
+      throw new Error(SERVER_INFO.ERROR_CODE_INIT_SERVER);
+    }
   }
 
   private initEventsHandlers(): void {

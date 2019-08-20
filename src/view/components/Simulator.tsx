@@ -20,6 +20,7 @@ interface ICpxState {
   button_b: boolean;
   switch: boolean;
   touch: boolean[];
+  shake: boolean;
 }
 
 interface IState {
@@ -48,7 +49,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
   ],
   red_led: false,
   switch: false,
-  touch: [false, false, false, false, false, false, false]
+  touch: [false, false, false, false, false, false, false],
+  shake: false
 };
 
 const SIMULATOR_BUTTON_WIDTH = 60;
