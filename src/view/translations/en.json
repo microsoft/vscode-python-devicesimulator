@@ -26,7 +26,7 @@
   "toolbar-sound-sensor.tryItDescriptrion": "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   "toolbar-slider-switch.description": "This slide switch returns True or False depending on whether it's ON or OFF and can be used as a toggle switch in your code!",
   "toolbar-slider-switch.title": "Slider Switch",
-  "toolbar-slider-switch.tryItDescriptrion": "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
+  "toolbar-slider-switch.tryItDescriptrion": "Click it with your mouse to switch it ON and OFF!",
   "toolbar-speaker.description": "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
   "toolbar-speaker.title": "Speaker",
   "toolbar-speaker.tryItDescriptrion": "Run your code and you’ll hear the music!",
