@@ -75,10 +75,6 @@ Here are the settings you can change in the Pacifica configuration:
 
 - **Show Simulator Icon In Editor Title Menu:** allow you to chose whether the _`Run Simulator`_ button should be in the editor title.
 
-- \*\*
-
-- ***
-
 ## Troubleshooting Tips
 
 - The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
