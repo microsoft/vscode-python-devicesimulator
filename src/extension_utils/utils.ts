@@ -280,8 +280,9 @@ export const installPythonDependencies = async (context: vscode.ExtensionContext
     const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
     const { stdout } = await exec(`pip3 install -r ${requirementsPath}`);
     installed = true;
+    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL)
   } catch (err) {
-    console.error("err", err);
+    console.error(err);
     installed = false;
   }
   return installed

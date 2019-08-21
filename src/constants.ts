@@ -169,6 +169,7 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
+    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
