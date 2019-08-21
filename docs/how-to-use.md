@@ -18,7 +18,7 @@ Commands are accessible through :
 - **Deploy to Device** : saves the code to a Circuit Playground Express.  
   _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
 
-- **Select Serial Port** : selects the serial port connect to the board you want the serial monitor to interact with.  
+- **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with.
   _(**Note :** USB detection must be enabled in the extension settings.)_
 
 - **Open Serial Monitor** : opens the serial monitor.  
