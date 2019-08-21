@@ -802,6 +802,7 @@ const updateCurrentFileIfPython = async (
     setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
   }
   if (
+    currentTextDocument &&
     utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined
   ) {
     await vscode.window.showTextDocument(
