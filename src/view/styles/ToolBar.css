@@ -76,13 +76,20 @@
 .try_area {
   position: relative;
   padding-bottom: 30px;
+  text-align: left;
+  line-height: 17px;
+  font-weight: 100;
+  opacity: 50%;
+  font-size: 14px;
+  word-wrap: break-word;
 }
 
 .link-parent {
+  padding-top: 12px;
   -webkit-appearance: none;
   padding-left: 150px;
   color: var(--vscode-textLink-activeForeground);
-  text-align: left;
+  text-align: right;
   text-decoration: none;
   font-weight: bold;
 }
