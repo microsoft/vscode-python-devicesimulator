@@ -3,10 +3,13 @@
 
 import json
 import sys
+import gettext
 from . import constants as CONSTANTS
 from . import utils
 from applicationinsights import TelemetryClient
 from . import constants as CONSTANTS
+translation = gettext.translation('Pacifica', 'locale', fallback=True)
+_ = translation.ugettext
 
 
 class Pixel:
@@ -30,7 +33,7 @@ class Pixel:
     def __getitem__(self, index):
         if type(index) is not slice:
             if not self.__valid_index(index):
-                raise IndexError(CONSTANTS.INDEX_ERROR)
+                raise IndexError(_("CONSTANTS.INDEX_ERROR"))
         if(utils.telemetry_available() and not self.telemetry_state):
             utils.send_telemetry("PIXELS")
             self.telemetry_state = True
@@ -45,7 +48,7 @@ class Pixel:
             is_slice = True
         else:
             if not self.__valid_index(index):
-                raise IndexError(CONSTANTS.INDEX_ERROR)
+                raise IndexError(_("CONSTANTS.INDEX_ERROR"))
         self.__state['pixels'][index] = self.__extract_pixel_value(
             val, is_slice)
         self.__show_if_auto_write()
@@ -84,10 +87,10 @@ class Pixel:
             elif type(v) is tuple:
                 rgb_value = v
             else:
-                raise ValueError(CONSTANTS.ASSIGN_PIXEL_TYPE_ERROR)
+                raise ValueError(_("CONSTANTS.ASSIGN_PIXEL_TYPE_ERROR"))
             # Values validation
             if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
-                raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
+                raise ValueError(_("CONSTANTS.VALID_PIXEL_ASSIGN_ERROR"))
             extracted_values.append(rgb_value)
         return rgb_value if not is_slice else extracted_values
 
@@ -100,7 +103,7 @@ class Pixel:
             hexToRgbValue[2] = int(hexColor[4:6], 16)  # B
             return tuple(hexToRgbValue)
         else:
-            raise ValueError(CONSTANTS.PIXEL_RANGE_ERROR)
+            raise ValueError(_("CONSTANTS.PIXEL_RANGE_ERROR"))
 
     def __valid_rgb_value(self, pixValue):
         return type(pixValue) is int and pixValue >= 0 and pixValue <= 255
@@ -112,7 +115,7 @@ class Pixel:
     @brightness.setter
     def brightness(self, brightness):
         if not self.__valid_brightness(brightness):
-            raise ValueError(CONSTANTS.BRIGHTNESS_RANGE_ERROR)
+            raise ValueError(_("CONSTANTS.BRIGHTNESS_RANGE_ERROR"))
         self.__state['brightness'] = brightness
         self.__show_if_auto_write()
 
