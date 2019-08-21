@@ -35,6 +35,7 @@ Commands are accessible through :
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Debugger for the simulator
+- Serial Monitor
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
@@ -52,7 +53,6 @@ Commands are accessible through :
 ## Not supported yet
 
 - Auto-detect/format the device
-- Serial monitor for the device
 - Device's features
   - Sound sensor
     - Tones
@@ -87,5 +87,5 @@ Here are the settings you can change in the Pacifica configuration:
 ### Note
 
 \* Can be changed in settings.
-\*\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
+\*\* Sensors currently not supported by the official adafruit_circuit_playground.express library (v2.1.2).  
 \*\*\* The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
