@@ -75,4 +75,4 @@
     - `components/`
     - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
     - `toolbar/` : contains the React components used in the toolbar and the modal.
-    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additionnal files with constant sharing the same id that _en.json_ but with the translated value.
+    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated value.
