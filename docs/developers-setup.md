@@ -34,13 +34,13 @@
 
   - Run the command in a console : `ppip install applicationinsights`
 
-* Requests
+- Requests
 
   - Run the command in a console : `pip install requests`
 
-* VS Code
+- VS Code
 
-* Python extension for VS Code (download from VS Code market place)
+- Python extension for VS Code (download from VS Code market place)
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
