@@ -67,7 +67,7 @@ Here are the settings you can change in the Pacifica configuration:
 
 - **Debugger Server Port:** allow you to change the port used to communicate with the debugger.Default value is _5577_.
 
-- **Enable USBDetection:** when disabled, prevents the serial monitor from listennig messages from the serial port.
+- **Enable USBDetection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
 
 - **Show Device Icon In Editor Title Menu:** allows you to choose whether the _`Deploy to Device`_ button should be in the editor title.
 
