@@ -26,10 +26,10 @@
   "toolbar-sound-sensor.tryItDescription": "We’re working hard to support this sensor on the simulator in the Pacifica. You can try it on MakeCode!",
   "toolbar-slider-switch.description": "This slide switch returns True or False depending on whether it's ON or OFF and can be used as a toggle switch in your code!",
   "toolbar-slider-switch.title": "Slider Switch",
-  "toolbar-slider-switch.tryItDescription": "Click it with your mouse to switch it ON and OFF!",
+  "toolbar-slider-switch.tryItDescription": "Click it with your mouse or press 'S' on your keyboard to switch it ON and OFF!",
   "toolbar-speaker.description": "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
   "toolbar-speaker.title": "Speaker",
-  "toolbar-speaker.tryItDescription": "Run your code and you’ll hear the music!",
+  "toolbar-speaker.tryItDescription": "Right now the tones are not supported yet on the simulator, but you can play it on your CPX!",
   "toolbar-temperature-sensor.description": "This sensor uses an NTC thermistor to sense temperature an calculate it with the analog voltage on analog pin #A9.",
   "toolbar-temperature-sensor.title": "Temperature Sensor",
   "toolbar-temperature-sensor.tryItDescription": "You can set the temperature range from your code!"

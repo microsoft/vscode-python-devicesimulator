@@ -118,7 +118,7 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
   descriptionText: "toolbar-neo-pixels.description",
   tryItTitle: "Try it on the Simulator!",
   tryItDescription: "toolbar-neo-pixels.tryItDescription",
-  component: TRY_IT_MAKE_CODE,
+  component: undefined,
   id: "neon_pixel"
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {
