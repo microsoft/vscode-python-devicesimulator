@@ -7,6 +7,7 @@ import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import * as vscode from "vscode";
 import {
+  CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
@@ -229,10 +230,19 @@ export const getServerPortConfig = (): number => {
   return SERVER_INFO.DEFAULT_SERVER_PORT;
 };
 
+export const checkConfig = (configName: string): boolean => {
+  return vscode.workspace.getConfiguration().get(configName) === true;
+}
+
 export const checkPythonDependencies = async (context: vscode.ExtensionContext) => {
   let hasInstalledDependencies: boolean = false;
   if (checkPipDependency() && checkPythonDependency()) {
-    hasInstalledDependencies = await promptInstallPythonDependencies(context);
+    if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+      hasInstalledDependencies = await promptInstallPythonDependencies(context);
+      if (hasInstalledDependencies) {
+        await vscode.workspace.getConfiguration().update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
+      }
+    }
   } else {
     hasInstalledDependencies = false;
   }

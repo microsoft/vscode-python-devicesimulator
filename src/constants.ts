@@ -16,6 +16,10 @@ const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
 })();
 
+export const CONFIG = {
+  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
+}
+
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {

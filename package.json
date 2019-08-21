@@ -165,6 +165,11 @@
           "description": "%pacificaExtension.configuration.properties.device%",
           "scope": "resource"
         },
+        "pacifica.showDependencyInstall": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource"
+        },
         "pacifica.debuggerServerPort": {
           "type": "number",
           "default": 5577,
