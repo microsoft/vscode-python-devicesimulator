@@ -19,6 +19,7 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {
+    PIP3: "pip3",
     PYTHON: "python",
     PYTHON3: "python3",
     PYTHON_LAUNCHER: "py -3"
@@ -89,6 +90,10 @@ export const CONSTANTS = {
     )
   },
   INFO: {
+    ARE_YOU_SURE: localize(
+      "info.areYouSure",
+      "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+    ),
     CLOSED_SERIAL_PORT: (port: string) => {
       return localize(
         "info.closedSerialPort",
@@ -129,6 +134,10 @@ export const CONSTANTS = {
     INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
       "info.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
+    ),
+    INSTALL_PYTHON_DEPENDENCIES: localize(
+      "info.installPythonDependencies",
+      "Do you want us to try and install this extensions dependencies for you?"
     ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",
@@ -297,6 +306,12 @@ export namespace DialogResponses {
   };
   export const NO: MessageItem = {
     title: localize("dialogResponses.No", "No")
+  };
+  export const INSTALL_NOW: MessageItem = {
+    title: localize("dialogResponses.installNow", "Install Now")
+  };
+  export const DONT_INSTALL: MessageItem = {
+    title: localize("dialogResponses.dontInstall", "Don't Install")
   };
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")
