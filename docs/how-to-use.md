@@ -88,4 +88,4 @@ Here are the settings you can change in the Pacifica configuration:
 
 \* Can be changed in settings.
 \*\* Sensors currently not supported by the official adafruit_circuit_playground Express library (v2.1.2).  
-\*\*\* The regular communication is using the stdout and stdin of the Pyhton process. But when you debug your code, it will use a communication over sockets on the port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
+\*\*\* The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
