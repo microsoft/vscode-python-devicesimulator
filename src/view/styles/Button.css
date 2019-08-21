@@ -7,6 +7,9 @@
 .button-icon {
   fill: var(--vscode-badgeForegroundOverride);
 }
+.button-rectangle {
+  stroke: var(--vscode-badgeForegroundOverride);
+}
 
 .play-button {
   border-radius: 8px 0px 0px 8px;
@@ -31,7 +34,6 @@
   border: none;
 }
 
-.toolbar-button:focus,
 .toolbar-button:hover {
   outline: none;
 }
