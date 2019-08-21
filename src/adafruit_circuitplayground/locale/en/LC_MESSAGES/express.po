@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 11:57-0700\n"
+"POT-Creation-Date: 2019-08-21 14:18-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 
 #: express.py:190
 msgid " is not a path to a .wav file."
-msgstr ""
+msgstr "is not a path to a .wav file."
 
 #: express.py:192
 msgid "Please use Python 3 or higher."
-msgstr ""
+msgstr "Please use Python 3 or higher."
