@@ -22,7 +22,7 @@ Commands are accessible through :
   _(**Note :** USB detection must be enabled in the extension settings.)_
 
 - **Open Serial Monitor** : opens the serial monitor.  
-  _(**Note :** .A serial port must have been selected already)_.
+  _(**Note :** A serial port must have been selected already)_.
 
 - **Change Baud Rate** : changes the baud rate of the serial monitor.
 
