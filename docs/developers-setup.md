@@ -30,7 +30,7 @@
 
   - Run the command in a console : `pip install python-socketio`
 
-- Application insight
+- Application Insights
 
   - Run the command in a console : `pip install applicationinsights`
 
