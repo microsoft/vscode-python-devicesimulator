@@ -32,7 +32,7 @@
 
 - Application insight
 
-  - Run the command in a console : `ppip install applicationinsights`
+  - Run the command in a console : `pip install applicationinsights`
 
 - Requests
 
