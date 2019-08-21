@@ -73,7 +73,7 @@ Here are the settings you can change in the Pacifica configuration:
 
 - **Show Open Icon In Editor Title Menu:** allow you to chose whether the _`Open Simulator`_ button should be in the editor title.
 
-- **Show Simulator Icon In Editor Title Menu:** allow you to chose whether the _`Run Simulator`_ button should be in the editor title.
+- **Show Simulator Icon In Editor Title Menu:** allows you to choose whether the _`Run Simulator`_ button should be in the editor title.
 
 ## Troubleshooting Tips
 
