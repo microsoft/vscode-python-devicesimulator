@@ -742,7 +742,7 @@ const updateCurrentFileIfPython = async (
     setPathAndSendMessage(currentPanel,
       getActivePythonFile() || "");
   }
-  if (utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
+  if (currentTextDocument && utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
     await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
