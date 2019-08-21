@@ -601,28 +601,40 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       // todo add telemetry after
-      serialMonitor.selectSerialPort(null, null);
+      telemetryAI.runWithLatencyMeasure(
+        () => { serialMonitor.selectSerialPort(null, null); },
+        TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
+      );
     }
   );
 
   const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSerialMonitor",
     () => {
-      serialMonitor.openSerialMonitor();
+      telemetryAI.runWithLatencyMeasure(
+        serialMonitor.openSerialMonitor,
+        TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
+      );
     }
   );
 
   const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.changeBaudRate",
     () => {
-      serialMonitor.changeBaudRate();
+      telemetryAI.runWithLatencyMeasure(
+        serialMonitor.changeBaudRate,
+        TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
+      );
     }
   );
 
   const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
-      serialMonitor.closeSerialMonitor(port, showWarning);
+      telemetryAI.runWithLatencyMeasure(
+        () => { serialMonitor.closeSerialMonitor(port, showWarning); },
+        TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
+      )
     }
   );
 
