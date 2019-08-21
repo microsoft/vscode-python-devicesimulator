@@ -1,6 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+import gettext
 import json
 import sys
 import os
@@ -12,7 +13,8 @@ from collections import namedtuple
 from applicationinsights import TelemetryClient
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
-
+translation = gettext.translation('Pacifica', 'locale', fallback=True)
+_ = translation.ugettext
 
 class Express:
     def __init__(self):
@@ -185,9 +187,9 @@ class Express:
                     # TODO TASK: 29054 Verfication of a "valid" .wav file
                     raise EnvironmentError(CONSTANTS.NOT_SUITABLE_FILE_ERROR)
             else:
-                raise TypeError(file_name + " is not a path to a .wav file.")
+                raise TypeError(file_name + _(" is not a path to a .wav file."))
         else:
-            raise NotImplementedError("Please use Python 3 or higher.")
+            raise NotImplementedError(_("Please use Python 3 or higher."))
 
     def play_tone(self, frequency, duration):
         """ Not Implemented!
@@ -214,7 +216,7 @@ class Express:
             utils.send_telemetry("STOP_TONE")
             self.telemetry_state["STOP_TONE"] = True
         raise NotImplementedError(
-            CONSTANTS.NOT_IMPLEMENTED_ERROR)
+            _(CONSTANTS.NOT_IMPLEMENTED_ERROR))
 
 
 cpx = Express()
