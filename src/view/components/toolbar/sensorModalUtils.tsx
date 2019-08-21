@@ -126,7 +126,7 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
     "The 10 full color RGB LEDs surrounding the outer edge of the boards can be set to any color. Great for beautiful lighting effects!",
   tryItTitle: "Try it on the Simulator!",
   tryItDescriptrion: "Run your code and see the cool effects on the simulator!",
-  component: TRY_IT_MAKE_CODE,
+  component: undefined,
   id: "neon_pixel"
 };
 export const PUSHB_MODAL_CONTENT: IModalContent = {

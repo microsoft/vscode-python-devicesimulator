@@ -22,11 +22,14 @@
   - pytest
     - Run the command in a console : `pip install pytest`
   - Pywin32
+    - **Note:** This is only needed for Windows computers
     - Run the command in a console : `pip install pywin32`
   - Python-Socketio
     - Run the command in a console : `pip install python-socketio`
   - Requests
     - Run the command in a console : `pip install requests`
+  - Application Insights
+    - Run the command in a console : `pip install applicationinsights`
 
 - VS Code
 

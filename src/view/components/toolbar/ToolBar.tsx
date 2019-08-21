@@ -10,14 +10,10 @@ import {
   IModalContent,
   TOOLBAR_ICON_ID
 } from "./sensorModalUtils";
-import { INFO_SVG } from "../../svgs/info_svg";
-import { CONSTANTS } from "../../constants";
 
 interface IToolbarState {
   currentOpenedLabel: string;
-  doNotShowAgain: boolean;
   showModal: boolean;
-  showRedirectModal: boolean;
 }
 
 class ToolBar extends React.Component<any, IToolbarState, any> {
@@ -28,23 +24,13 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
     super(props);
     this.state = {
       currentOpenedLabel: "",
-      doNotShowAgain: false,
-      showModal: false,
-      showRedirectModal: false
+      showModal: false
     };
   }
 
   render() {
     return (
       <div className="toolbar-parent" id="toolbar-parent">
-        <div className="info">
-          <div className="redirect-link">
-            <span className="info-icon">{INFO_SVG}</span>
-            <span className="info-text">{CONSTANTS.TOOLBAR_INFO}</span>
-            {this.getLearnLink()}
-          </div>
-          {this.getRedirectModal()}
-        </div>
         <div className="toolbar">
           <div className="toolbar-icon">
             <Button
@@ -267,68 +253,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       </div>
     );
   }
-
-  private getRedirectModal() {
-    if (this.state.doNotShowAgain || !this.state.showRedirectModal) {
-      return null;
-    }
-    return (
-      <span>
-        <div className="redirect-modal">
-          <div className="redirect-description">{`${
-            CONSTANTS.REDIRECT.DESCRIPTION
-          } : \n ${CONSTANTS.REDIRECT.PRIVACY}`}</div>
-          <a
-            className="redirect-button"
-            id="redirect"
-            aria-label={"Information pop-up"}
-            onClick={this.handleOnClickButton}
-            href={CONSTANTS.REDIRECT.LINK}
-          >
-            {`Got it`}
-          </a>
-          <span className="redirect-button" onClick={this.handleOnClickButton}>
-            {`close`}
-          </span>
-          <span className="redirect-button" onClick={this.handleDoNotShow}>
-            {`Do Not Show Again`}
-          </span>
-        </div>
-      </span>
-    );
-  }
-
-  private getLearnLink() {
-    const linkString = (
-      <span className="redirect-learn-link">
-        <span onClick={this.handleOnClickLink}>Learn More</span>
-      </span>
-    );
-    const linkAnchor = (
-      <span className="redirect-learn-link">
-        <a href={CONSTANTS.REDIRECT.LINK}>Learn More</a>
-      </span>
-    );
-    return this.state.doNotShowAgain ? linkAnchor : linkString;
-  }
-
-  private handleOnClickButton = (event: React.MouseEvent<HTMLElement>) => {
-    this.setState({ showRedirectModal: false });
-  };
-
-  private handleOnClickLink = (event: React.MouseEvent<HTMLElement>) => {
-    this.setState({ showRedirectModal: true });
-    if (this.state.doNotShowAgain) {
-      const ref = window.document.getElementById("redirect");
-      if (ref) {
-        window.location.assign(CONSTANTS.REDIRECT.LINK);
-      }
-    }
-  };
-
-  private handleDoNotShow = (event: React.MouseEvent<HTMLElement>) => {
-    this.setState({ doNotShowAgain: true });
-  };
 }
 
 export default ToolBar;
