@@ -26,6 +26,7 @@ let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
 let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
+let configFileCreated: boolean = false;
 let inDebugMode: boolean = false;
 let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
@@ -41,13 +42,16 @@ function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
     .toString()}"></script>`;
 }
 
-const setPathAndSendMessage = (currentPanel: vscode.WebviewPanel, newFilePath: string) => {
+const setPathAndSendMessage = (
+  currentPanel: vscode.WebviewPanel,
+  newFilePath: string
+) => {
   currentFileAbsPath = newFilePath;
   currentPanel.webview.postMessage({
     command: "current-file",
     state: { running_file: newFilePath }
   });
-}
+};
 
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
@@ -63,7 +67,14 @@ export async function activate(context: vscode.ExtensionContext) {
   updatePythonExtraPaths();
 
   // Generate cpx.json
-  utils.generateCPXConfig();
+  try {
+    utils.generateCPXConfig();
+    configFileCreated = true;
+  } catch (err) {
+    console.info("Failed to create the CPX config file.");
+    configFileCreated = false;
+  }
+
   pythonExecutableName = await utils.setPythonExectuableName();
 
   if (pythonExecutableName === "") {
@@ -75,9 +86,11 @@ export async function activate(context: vscode.ExtensionContext) {
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.WELCOME_OUTPUT_TAB);
   }
 
-  vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
-    await updateCurrentFileIfPython(document, currentPanel);
-  });
+  vscode.workspace.onDidSaveTextDocument(
+    async (document: vscode.TextDocument) => {
+      await updateCurrentFileIfPython(document, currentPanel);
+    }
+  );
 
   const openWebview = () => {
     if (currentPanel) {
@@ -133,14 +146,21 @@ export async function activate(context: vscode.ExtensionContext) {
               case WebviewMessages.PLAY_SIMULATOR:
                 console.log(`Play button ${messageJson} \n`);
                 if (message.text.state as boolean) {
-                  setPathAndSendMessage(currentPanel, message.text.selected_file);
+                  setPathAndSendMessage(
+                    currentPanel,
+                    message.text.selected_file
+                  );
                   if (currentFileAbsPath) {
-                    const foundDocument = utils.getActiveEditorFromPath(currentFileAbsPath);
+                    const foundDocument = utils.getActiveEditorFromPath(
+                      currentFileAbsPath
+                    );
                     if (foundDocument !== undefined) {
                       currentTextDocument = foundDocument;
                     }
                   }
-                  telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON);
+                  telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON
+                  );
                   runSimulatorCommand();
                 } else {
                   killProcessIfRunning();
@@ -173,14 +193,19 @@ export async function activate(context: vscode.ExtensionContext) {
           context.subscriptions
         );
 
-        activeEditorListener = utils.addVisibleTextEditorCallback(currentPanel, context);
+        activeEditorListener = utils.addVisibleTextEditorCallback(
+          currentPanel,
+          context
+        );
         console.log("sent");
       }
 
       currentPanel.onDidDispose(
         () => {
           currentPanel = undefined;
-          debuggerCommunicationHandler.setWebview(undefined);
+          if (debuggerCommunicationHandler) {
+            debuggerCommunicationHandler.setWebview(undefined);
+          }
           killProcessIfRunning();
           if (firstTimeClosed) {
             vscode.window.showInformationMessage(
@@ -324,15 +349,21 @@ export async function activate(context: vscode.ExtensionContext) {
 
     killProcessIfRunning();
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
+    await updateCurrentFileIfPython(
+      vscode.window.activeTextEditor!.document,
+      currentPanel
+    );
 
     if (currentFileAbsPath === "") {
-      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
-      vscode.window
-        .showErrorMessage(
-          CONSTANTS.ERROR.NO_FILE_TO_RUN,
-          DialogResponses.MESSAGE_UNDERSTOOD
-        )
+      utils.logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        true
+      );
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        DialogResponses.MESSAGE_UNDERSTOOD
+      );
     } else {
       // Save on run
       await currentTextDocument.save();
@@ -409,7 +440,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                      messageToWebview.data
+                        messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -476,15 +507,21 @@ export async function activate(context: vscode.ExtensionContext) {
 
     utils.logToOutputChannel(outChannel, CONSTANTS.INFO.DEPLOY_DEVICE, true);
 
-    await updateCurrentFileIfPython(vscode.window.activeTextEditor!.document, currentPanel);
+    await updateCurrentFileIfPython(
+      vscode.window.activeTextEditor!.document,
+      currentPanel
+    );
 
     if (currentFileAbsPath === "") {
-      utils.logToOutputChannel(outChannel, CONSTANTS.ERROR.NO_FILE_TO_RUN, true);
-      vscode.window
-        .showErrorMessage(
-          CONSTANTS.ERROR.NO_FILE_TO_RUN,
-          DialogResponses.MESSAGE_UNDERSTOOD
-        );
+      utils.logToOutputChannel(
+        outChannel,
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        true
+      );
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERROR.NO_FILE_TO_RUN,
+        DialogResponses.MESSAGE_UNDERSTOOD
+      );
     } else if (!utils.validCodeFileName(currentFileAbsPath)) {
       // Save on run
       await currentTextDocument.save();
@@ -595,34 +632,57 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const serialMonitor: SerialMonitor = SerialMonitor.getInstance();
-  context.subscriptions.push(serialMonitor);
+  let serialMonitor: SerialMonitor | undefined;
+  if (configFileCreated) {
+    serialMonitor = SerialMonitor.getInstance();
+    context.subscriptions.push(serialMonitor);
+  }
+
   const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.selectSerialPort",
     () => {
-      // todo add telemetry after
-      serialMonitor.selectSerialPort(null, null);
+      if (serialMonitor) {
+        serialMonitor.selectSerialPort(null, null);
+      } else {
+        vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
+        console.info("Serial monitor is not defined.");
+      }
     }
   );
 
   const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.openSerialMonitor",
     () => {
-      serialMonitor.openSerialMonitor();
+      if (serialMonitor) {
+        serialMonitor.openSerialMonitor();
+      } else {
+        vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
+        console.info("Serial monitor is not defined.");
+      }
     }
   );
 
   const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.changeBaudRate",
     () => {
-      serialMonitor.changeBaudRate();
+      if (serialMonitor) {
+        serialMonitor.changeBaudRate();
+      } else {
+        vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
+        console.info("Serial monitor is not defined.");
+      }
     }
   );
 
   const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
-      serialMonitor.closeSerialMonitor(port, showWarning);
+      if (serialMonitor) {
+        serialMonitor.closeSerialMonitor(port, showWarning);
+      } else {
+        vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
+        console.info("Serial monitor is not defined.");
+      }
     }
   );
 
@@ -739,11 +799,15 @@ const updateCurrentFileIfPython = async (
     setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
     currentTextDocument = activeTextDocument;
   } else if (currentFileAbsPath === "") {
-    setPathAndSendMessage(currentPanel,
-      getActivePythonFile() || "");
+    setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
   }
-  if (utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
-    await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
+  if (
+    utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined
+  ) {
+    await vscode.window.showTextDocument(
+      currentTextDocument,
+      vscode.ViewColumn.One
+    );
   }
 };
 
