@@ -65,7 +65,7 @@ Commands are accessible through :
 
 Here are the settings you can change in the Pacifica configuration:
 
-- **Debugger Server Port:** allow you to change the port used to communicate with the debugger.Default value is _5577_.
+- **Debugger Server Port:** allows you to change the port used to communicate with the debugger. Default value is _5577_.
 
 - **Enable USBDetection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
 
