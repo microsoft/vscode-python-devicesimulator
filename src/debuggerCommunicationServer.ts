@@ -27,8 +27,9 @@ export class DebuggerCommunicationServer {
   }
 
   public closeConnection(): void {
-    this.serverHttp.close();
     this.serverIo.close();
+    this.serverHttp.close();
+    console.info("Closing the server");
   }
 
   public setWebview(webviewPanel: WebviewPanel | undefined) {

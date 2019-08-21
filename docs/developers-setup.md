@@ -34,6 +34,10 @@
 
   - Run the command in a console : `pip install requests`
 
+- Application Insights
+
+  - Run the command in a console : `pip install applicationinsights`
+
 - VS Code
 
 - Python extension for VS Code (download from VS Code market place)
