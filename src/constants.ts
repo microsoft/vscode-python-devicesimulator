@@ -16,10 +16,6 @@ const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
 })();
 
-export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
-}
-
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {
@@ -98,10 +94,6 @@ export const CONSTANTS = {
     )
   },
   INFO: {
-    ARE_YOU_SURE: localize(
-      "info.areYouSure",
-      "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
-    ),
     CLOSED_SERIAL_PORT: (port: string) => {
       return localize(
         "info.closedSerialPort",
@@ -173,7 +165,6 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
@@ -315,12 +306,6 @@ export namespace DialogResponses {
   };
   export const NO: MessageItem = {
     title: localize("dialogResponses.No", "No")
-  };
-  export const INSTALL_NOW: MessageItem = {
-    title: localize("dialogResponses.installNow", "Install Now")
-  };
-  export const DONT_INSTALL: MessageItem = {
-    title: localize("dialogResponses.dontInstall", "Don't Install")
   };
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")

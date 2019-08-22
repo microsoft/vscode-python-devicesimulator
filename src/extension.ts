@@ -66,8 +66,6 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
-  await utils.checkPythonDependencies(context)
-
   // Generate cpx.json
   try {
     utils.generateCPXConfig();

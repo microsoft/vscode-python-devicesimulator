@@ -23,7 +23,6 @@ _Note: You need to install all the dependencies in order to use the extension._
 - Python VS Code extension (downloaded from VS Code Marketplace)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
 - Python Modules
-  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
   - Playsound : `pip install playsound`
   - Pywin32 :
     - **Note:** This is only needed for Windows computers

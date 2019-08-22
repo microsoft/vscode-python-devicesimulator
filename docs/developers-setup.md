@@ -16,7 +16,6 @@
 
 - Python Modules
 
-  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
   - Playsound
     - Run the command in a console : `pip install playsound`
   - pytest
