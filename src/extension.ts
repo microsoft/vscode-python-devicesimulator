@@ -442,7 +442,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                        messageToWebview.data
+                      messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -644,7 +644,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       if (serialMonitor) {
-        serialMonitor.selectSerialPort(null, null);
+        telemetryAI.runWithLatencyMeasure(
+          () => { serialMonitor.selectSerialPort(null, null); },
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -656,7 +659,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.openSerialMonitor",
     () => {
       if (serialMonitor) {
-        serialMonitor.openSerialMonitor();
+        telemetryAI.runWithLatencyMeasure(
+          serialMonitor.openSerialMonitor.bind(serialMonitor),
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -668,7 +674,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.changeBaudRate",
     () => {
       if (serialMonitor) {
-        serialMonitor.changeBaudRate();
+        telemetryAI.runWithLatencyMeasure(
+          serialMonitor.changeBaudRate.bind(serialMonitor),
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -680,7 +689,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
-        serialMonitor.closeSerialMonitor(port, showWarning);
+        telemetryAI.runWithLatencyMeasure(
+          () => { serialMonitor.closeSerialMonitor(port, showWarning); },
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
+        )
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
