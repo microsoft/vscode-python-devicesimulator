@@ -16,6 +16,7 @@ interface IDependency {
 }
 
 const PYTHON3_REGEX = RegExp("^(Python )(3\\.[0-9]+\\.[0-9]+)");
+const MINIMUM_PYTHON_VERSION = "3.5.0"
 
 export class DependencyChecker {
     constructor() { }
@@ -27,23 +28,33 @@ export class DependencyChecker {
             const userOnWin: boolean = userOS.indexOf("win") === 0;
 
             if (
-                await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON3)
+                await this.runCommandVersion(CONSTANTS.DEPENDENCY_CHECKER.PYTHON3, MINIMUM_PYTHON_VERSION)
             ) {
                 state = true;
                 dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON3;
             } else if (
-                await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON)
+                await this.runCommandVersion(CONSTANTS.DEPENDENCY_CHECKER.PYTHON, MINIMUM_PYTHON_VERSION)
             ) {
                 state = true;
                 dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON;
             } else if (
                 userOnWin &&
-                (await this.runPythonVersionCommand(
-                    CONSTANTS.DEPENDENCY_CHECKER.PYTHON_LAUNCHER
+                (await this.runCommandVersion(
+                    CONSTANTS.DEPENDENCY_CHECKER.PYTHON_LAUNCHER,
+                    MINIMUM_PYTHON_VERSION
                 ))
             ) {
                 state = true;
                 dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON;
+            } else {
+                state = false;
+            }
+        } else if (dependencyName === CONSTANTS.DEPENDENCY_CHECKER.PIP3) {
+            if (
+                await this.runCommandVersion(CONSTANTS.DEPENDENCY_CHECKER.PIP3)
+            ) {
+                state = true;
+                dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON3;
             } else {
                 state = false;
             }
@@ -56,12 +67,16 @@ export class DependencyChecker {
         };
     }
 
-    private async runPythonVersionCommand(command: string) {
-        let installed: boolean;
+    private async runCommandVersion(command: string, versionDependency?: string) {
+        let installed: boolean = false;
         try {
             const { stdout } = await exec(command + " --version");
             const matches = PYTHON3_REGEX.exec(stdout);
-            installed = matches ? compareVersions(matches[2], "3.5.0") >= 0 : false;
+            if (versionDependency) {
+                installed = matches ? compareVersions(matches[2], versionDependency) >= 0 : false;
+            } else {
+                installed = true
+            }
         } catch (err) {
             installed = false;
         }

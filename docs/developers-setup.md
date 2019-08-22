@@ -14,33 +14,22 @@
     (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
   - Run in a console `python -m pip install --upgrade pip`
 
-- Playsound
+- Python Modules
 
-  - Run the command in a console : `pip install playsound`
-
-- pytest
-
-  - Run the command in a console : `pip install pytest`
-
-- Pywin32
-
-  - Run the command in a console : `pip install pywin32`
-
-- Python-Socketio
-
-  - Run the command in a console : `pip install python-socketio`
-
-- Application Insights
-
-  - Run the command in a console : `pip install applicationinsights`
-
-- Requests
-
-  - Run the command in a console : `pip install requests`
-
-- Application Insights
-
-  - Run the command in a console : `pip install applicationinsights`
+  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - Playsound
+    - Run the command in a console : `pip install playsound`
+  - pytest
+    - Run the command in a console : `pip install pytest`
+  - Pywin32
+    - **Note:** This is only needed for Windows computers
+    - Run the command in a console : `pip install pywin32`
+  - Python-Socketio
+    - Run the command in a console : `pip install python-socketio`
+  - Requests
+    - Run the command in a console : `pip install requests`
+  - Application Insights
+    - Run the command in a console : `pip install applicationinsights`
 
 - VS Code
 

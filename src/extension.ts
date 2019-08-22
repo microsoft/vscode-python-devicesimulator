@@ -62,6 +62,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
+  await utils.checkPythonDependencies(context)
+
   // Generate cpx.json
   utils.generateCPXConfig();
   pythonExecutableName = await utils.setPythonExectuableName();
@@ -742,7 +744,7 @@ const updateCurrentFileIfPython = async (
     setPathAndSendMessage(currentPanel,
       getActivePythonFile() || "");
   }
-  if (utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
+  if (currentTextDocument && utils.getActiveEditorFromPath(currentTextDocument.fileName) === undefined) {
     await vscode.window.showTextDocument(currentTextDocument, vscode.ViewColumn.One);
   }
 };
