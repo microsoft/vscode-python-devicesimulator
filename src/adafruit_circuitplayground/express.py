@@ -154,7 +154,7 @@ class Express:
 
     def adjust_touch_threshold(self, adjustement):
         """Not implemented!
-        The CPX Simulator doesn't use capacitive touch threshold.
+        The Pacifica Simulator doesn't use capacitive touch threshold.
         """
         if(utils.telemetry_available() and not self.telemetry_state["ADJUST_THRESHOLD"]):
             utils.send_telemetry("ADJUST_THRESHOLD")

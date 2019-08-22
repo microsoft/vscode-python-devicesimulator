@@ -3,7 +3,6 @@
 Commands are accessible through :
 
 - **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
-- # **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open\*
 - **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open (1)
 
 ## Available commands
@@ -19,24 +18,15 @@ Commands are accessible through :
 - **Deploy to Device** : saves the code to a Circuit Playground Express.  
   _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
 
-- **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with.
+* **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with. (2)
   _(**Note :** USB detection must be enabled in the extension settings.)_
 
-- **Open Serial Monitor** : opens the serial monitor.  
+* **Open Serial Monitor** : opens the serial monitor. (2)  
   _(**Note :** A serial port must have been selected already)_.
 
-- **Change Baud Rate** : changes the baud rate of the serial monitor.
+* **Change Baud Rate** : changes the baud rate of the serial monitor. (2)
 
-- # **Close Serial Montitor** : closes the serial monitor.
-- **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with. (2)
-  _(**Note :** USB detection must be enabled in the extension settings.)_
-
-- **Open Serial Monitor** : opens the serial monitor. (2)  
-  _(**Note :** A serial port must have been selected already)_.
-
-- **Change Baud Rate** : changes the baud rate of the serial monitor. (2)
-
-- **Close Serial Montitor** : closes the serial monitor. (2)
+* **Close Serial Montitor** : closes the serial monitor. (2)
 
 ## Available features
 
@@ -45,7 +35,7 @@ Commands are accessible through :
 - Output panel for the simulator
 - Deploy to the physical device (if correctly formatted)
 - Debugger for the simulator
-- Serial Monitor
+- Serial Monitor (available on Windows and Mac only)
 - Device's features :
   - NeoPixels
   - Buttons (A & B)
@@ -64,14 +54,12 @@ Commands are accessible through :
 
 - Auto-detect/format the device
 - Device's features
-  - Sound sensor - Tones
-    <<<<<<< HEAD - Sound detection\*\*
-  - # IR transmitter\*\*
-        - Sound detection (3)
-  - IR transmitter (3)
-    > > > > > > > dev
-  - Motion sensors
-    - Tap detection
+  - Sound sensor
+  - Tones
+- Sound detection (3)
+- IR transmitter (3)
+- Motion sensors
+  - Tap detection
 
 ## Pacifica configuration
 
@@ -79,7 +67,7 @@ Here are the settings you can change in the Pacifica configuration:
 
 - **Debugger Server Port:** allows you to change the port used to communicate with the debugger. Default value is _5577_. (4)
 
-- **Enable USBDetection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
+- **Enable USB Detection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
 
 - **Show Device Icon In Editor Title Menu:** allows you to choose whether the _`Deploy to Device`_ button should be in the editor title.
 
@@ -88,7 +76,6 @@ Here are the settings you can change in the Pacifica configuration:
 - **Show Simulator Icon In Editor Title Menu:** allows you to choose whether the _`Run Simulator`_ button should be in the editor title.
 
 - **Show Dependency Install:** allows you to choose whether you want to be prompted to install the Python dependencies.
-  > > > > > > > dev
 
 ## Troubleshooting Tips
 

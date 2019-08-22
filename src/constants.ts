@@ -21,225 +21,237 @@ export const CONFIG = {
 }
 
 export const CONSTANTS = {
-  DEBUG_CONFIGURATION_TYPE: "pacifica",
-  DEPENDENCY_CHECKER: {
-    PIP3: "pip3",
-    PYTHON: "python",
-    PYTHON3: "python3",
-    PYTHON_LAUNCHER: "py -3"
-  },
-  ERROR: {
-    COMPORT_UNKNOWN_ERROR:
-      "Writing to COM port (GetOverlappedResult): Unknown error code 121",
-    CPX_FILE_ERROR: localize(
-      "error.cpxFileFormat",
-      "The cpx.json file format is not correct."
-    ),
-    DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
-      return localize(
-        "error.debuggerServerInitFailed",
-        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
-      );
-    },
-    DEBUGGING_SESSION_IN_PROGESS: localize(
-      "error.debuggingSessionInProgress",
-      "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
-    ),
-    FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
-      return localize(
-        "error.failedToOpenSerialPort",
-        `[ERROR] Failed to open serial port ${port}.`
-      );
-    },
-    FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (port: string, error: any) => {
-      return localize(
-        "error.failedToOpenSerialPortDueTo",
-        `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
-      );
-    },
-    INCORRECT_FILE_NAME_FOR_DEVICE: localize(
-      "error.incorrectFileNameForDevice",
-      '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
-    ),
-    INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
-      "error.incorrectFileNameForDevicePopup",
-      'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
-    ),
-    INVALID_FILE_EXTENSION_DEBUG: localize(
-      "error.invalidFileExtensionDebug",
-      "The file you tried to run isn't a Python file."
-    ),
-    NO_DEVICE: localize(
-      "error.noDevice",
-      "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
-    ),
-    NO_FILE_TO_RUN: localize(
-      "error.noFileToRun",
-      '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
-    ),
-    NO_FOLDER_OPENED: localize(
-      "error.noFolderCreated",
-      "In order to use the Serial Monitor, you need to open a folder and reload VS Code."
-    ),
-    NO_PROGRAM_FOUND_DEBUG: localize(
-      "error.noProgramFoundDebug",
-      "Cannot find a program to debug."
-    ),
-    NO_PYTHON_PATH: localize(
-      "error.noPythonPath",
-      "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
-    ),
-    STDERR: (data: string) => {
-      return localize("error.stderr", `\n[ERROR] ${data} \n`);
-    },
-    UNEXPECTED_MESSAGE: localize(
-      "error.unexpectedMessage",
-      "Webview sent an unexpected message"
-    )
-  },
-  INFO: {
-    ARE_YOU_SURE: localize(
-      "info.areYouSure",
-      "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
-    ),
-    CLOSED_SERIAL_PORT: (port: string) => {
-      return localize(
-        "info.closedSerialPort",
-        `[DONE] Closed the serial port - ${port} \n`
-      );
-    },
-    COMPLETED_MESSAGE: "Completed",
-    CPX_JSON_ALREADY_GENERATED: localize(
-      "info.cpxJsonAlreadyGenerated",
-      "cpx.json has already been generated."
-    ),
-    DEPLOY_DEVICE: localize(
-      "info.deployDevice",
-      "\n[INFO] Deploying code to the device...\n"
-    ),
-    DEPLOY_SIMULATOR: localize(
-      "info.deploySimulator",
-      "\n[INFO] Deploying code to the simulator...\n"
-    ),
-    DEPLOY_SUCCESS: localize(
-      "info.deploySuccess",
-      "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
-    ),
-    EXTENSION_ACTIVATED: localize(
-      "info.extensionActivated",
-      "Congratulations, your extension Adafruit_Simulator is now active!"
-    ),
-    FILE_SELECTED: (filePath: string) => {
-      return localize(
-        "info.fileSelected",
-        `[INFO] File selected : ${filePath} \n`
-      );
-    },
-    FIRST_TIME_WEBVIEW: localize(
-      "info.firstTimeWebview",
-      'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
-    ),
-    INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
-      "info.incorrectFileNameForSimulatorPopup",
-      'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
-    ),
-    INSTALL_PYTHON_DEPENDENCIES: localize(
-      "info.installPythonDependencies",
-      "Do you want us to try and install this extensions dependencies for you?"
-    ),
-    INVALID_FILE_NAME_DEBUG: localize(
-      "info.invalidFileNameDebug",
-      'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
-    ),
-    NEW_FILE: localize(
-      "info.newFile",
-      "New to Python or the Circuit Playground Express? We are here to help!"
-    ),
-    OPENED_SERIAL_PORT: (port: string) => {
-      return localize(
-        "info.openedSerialPort",
-        `[INFO] Opened the serial port - ${port} \n`
-      );
-    },
-    OPENING_SERIAL_PORT: (port: string) => {
-      return localize(
-        "info.openingSerialPort",
-        `[STARTING] Opening the serial port - ${port} \n`
-      );
-    },
-    PLEASE_OPEN_FOLDER: localize(
-      "info.pleaseOpenFolder",
-      "Please open a folder first."
-    ),
-    REDIRECT: localize("info.redirect", "You are being redirected."),
-    RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
-    THIRD_PARTY_WEBSITE: localize(
-      "info.thirdPartyWebsite",
-      'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
-    ),
-    WELCOME_OUTPUT_TAB: localize(
-      "info.welcomeOutputTab",
-      "Welcome to the Adafruit Simulator output tab !\n\n"
-    )
-  },
-  LABEL: {
-    WEBVIEW_PANEL: localize("label.webviewPanel", "Adafruit CPX")
-  },
-  LINKS: {
-    DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
-    EXAMPLE_CODE:
-      "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
-    HELP:
-      "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
-    PRIVACY: "https://www.adafruit.com/privacy",
-    TUTORIALS:
-      "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
-  },
-  MISC: {
-    SELECT_PORT_PLACEHOLDER: localize(
-      "misc.selectPortPlaceholder",
-      "Select a serial port"
-    ),
-    SERIAL_MONITOR_NAME: localize(
-      "misc.serialMonitorName",
-      "Pacifica Serial Monitor"
-    )
-  },
-  NAME: localize("name", "Pacifica Simulator"),
-  WARNING: {
-    ACCEPT_AND_RUN: localize(
-      "warning.agreeAndRun",
-      "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
-    ),
-    INVALID_BAUD_RATE: localize(
-      "warning.invalidBaudRate",
-      "Invalid baud rate, keep baud rate unchanged."
-    ),
-    NO_RATE_SELECTED: localize(
-      "warning.noRateSelected",
-      "No rate is selected, keep baud rate unchanged."
-    ),
-    NO_SERIAL_PORT_SELECTED: localize(
-      "warning.noSerialPortSelected",
-      "No serial port was selected, please select a serial port first"
-    ),
-    SERIAL_MONITOR_ALREADY_OPENED: (port: string) => {
-      return localize(
-        "warning.serialMonitorAlreadyOpened",
-        `Serial monitor is already opened for ${port} \n`
-      );
-    },
-    SERIAL_MONITOR_NOT_STARTED: localize(
-      "warning.serialMonitorNotStarted",
-      "Serial monitor has not been started."
-    ),
-    SERIAL_PORT_NOT_STARTED: localize(
-      "warning.serialPortNotStarted",
-      "Serial port has not been started.\n"
-    )
-  }
-};
+         DEBUG_CONFIGURATION_TYPE: "pacifica",
+         DEPENDENCY_CHECKER: {
+           PIP3: "pip3",
+           PYTHON: "python",
+           PYTHON3: "python3",
+           PYTHON_LAUNCHER: "py -3"
+         },
+         ERROR: {
+           COMPORT_UNKNOWN_ERROR:
+             "Writing to COM port (GetOverlappedResult): Unknown error code 121",
+           CPX_FILE_ERROR: localize(
+             "error.cpxFileFormat",
+             "The cpx.json file format is not correct."
+           ),
+           DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
+             return localize(
+               "error.debuggerServerInitFailed",
+               `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
+             );
+           },
+           DEBUGGING_SESSION_IN_PROGESS: localize(
+             "error.debuggingSessionInProgress",
+             "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
+           ),
+           FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
+             return localize(
+               "error.failedToOpenSerialPort",
+               `[ERROR] Failed to open serial port ${port}.`
+             );
+           },
+           FAILED_TO_OPEN_SERIAL_PORT_DUE_TO: (
+             port: string,
+             error: any
+           ) => {
+             return localize(
+               "error.failedToOpenSerialPortDueTo",
+               `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
+             );
+           },
+           INCORRECT_FILE_NAME_FOR_DEVICE: localize(
+             "error.incorrectFileNameForDevice",
+             '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
+           ),
+           INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
+             "error.incorrectFileNameForDevicePopup",
+             'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
+           ),
+           INVALID_FILE_EXTENSION_DEBUG: localize(
+             "error.invalidFileExtensionDebug",
+             "The file you tried to run isn't a Python file."
+           ),
+           NO_DEVICE: localize(
+             "error.noDevice",
+             "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+           ),
+           NO_FILE_TO_RUN: localize(
+             "error.noFileToRun",
+             '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
+           ),
+           NO_FOLDER_OPENED: localize(
+             "error.noFolderCreated",
+             "In order to use the Serial Monitor, you need to open a folder and reload VS Code."
+           ),
+           NO_PROGRAM_FOUND_DEBUG: localize(
+             "error.noProgramFoundDebug",
+             "Cannot find a program to debug."
+           ),
+           NO_PYTHON_PATH: localize(
+             "error.noPythonPath",
+             "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+           ),
+           STDERR: (data: string) => {
+             return localize("error.stderr", `\n[ERROR] ${data} \n`);
+           },
+           UNEXPECTED_MESSAGE: localize(
+             "error.unexpectedMessage",
+             "Webview sent an unexpected message"
+           )
+         },
+         INFO: {
+           ARE_YOU_SURE: localize(
+             "info.areYouSure",
+             "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+           ),
+           CLOSED_SERIAL_PORT: (port: string) => {
+             return localize(
+               "info.closedSerialPort",
+               `[DONE] Closed the serial port - ${port} \n`
+             );
+           },
+           COMPLETED_MESSAGE: "Completed",
+           CPX_JSON_ALREADY_GENERATED: localize(
+             "info.cpxJsonAlreadyGenerated",
+             "cpx.json has already been generated."
+           ),
+           DEPLOY_DEVICE: localize(
+             "info.deployDevice",
+             "\n[INFO] Deploying code to the device...\n"
+           ),
+           DEPLOY_SIMULATOR: localize(
+             "info.deploySimulator",
+             "\n[INFO] Deploying code to the simulator...\n"
+           ),
+           DEPLOY_SUCCESS: localize(
+             "info.deploySuccess",
+             "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
+           ),
+           EXTENSION_ACTIVATED: localize(
+             "info.extensionActivated",
+             "Congratulations, your extension Adafruit_Simulator is now active!"
+           ),
+           FILE_SELECTED: (filePath: string) => {
+             return localize(
+               "info.fileSelected",
+               `[INFO] File selected : ${filePath} \n`
+             );
+           },
+           FIRST_TIME_WEBVIEW: localize(
+             "info.firstTimeWebview",
+             'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
+           ),
+           INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
+             "info.incorrectFileNameForSimulatorPopup",
+             'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
+           ),
+           INSTALL_PYTHON_DEPENDENCIES: localize(
+             "info.installPythonDependencies",
+             "Do you want us to try and install this extensions dependencies for you?"
+           ),
+           INVALID_FILE_NAME_DEBUG: localize(
+             "info.invalidFileNameDebug",
+             'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
+           ),
+           NEW_FILE: localize(
+             "info.newFile",
+             "New to Python or the Circuit Playground Express? We are here to help!"
+           ),
+           OPENED_SERIAL_PORT: (port: string) => {
+             return localize(
+               "info.openedSerialPort",
+               `[INFO] Opened the serial port - ${port} \n`
+             );
+           },
+           OPENING_SERIAL_PORT: (port: string) => {
+             return localize(
+               "info.openingSerialPort",
+               `[STARTING] Opening the serial port - ${port} \n`
+             );
+           },
+           PLEASE_OPEN_FOLDER: localize(
+             "info.pleaseOpenFolder",
+             "Please open a folder first."
+           ),
+           REDIRECT: localize(
+             "info.redirect",
+             "You are being redirected."
+           ),
+           RUNNING_CODE: localize(
+             "info.runningCode",
+             "Running user code"
+           ),
+           SUCCESSFUL_INSTALL: localize(
+             "info.successfulInstall",
+             "Successfully installed Python dependencies."
+           ),
+           THIRD_PARTY_WEBSITE: localize(
+             "info.thirdPartyWebsite",
+             'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
+           ),
+           WELCOME_OUTPUT_TAB: localize(
+             "info.welcomeOutputTab",
+             "Welcome to the Pacifica Simulator output tab !\n\n"
+           )
+         },
+         LABEL: {
+           WEBVIEW_PANEL: localize("label.webviewPanel", "Pacifica Simulator")
+         },
+         LINKS: {
+           DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
+           EXAMPLE_CODE:
+             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
+           HELP:
+             "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+           PRIVACY: "https://www.adafruit.com/privacy",
+           TUTORIALS:
+             "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
+         },
+         MISC: {
+           SELECT_PORT_PLACEHOLDER: localize(
+             "misc.selectPortPlaceholder",
+             "Select a serial port"
+           ),
+           SERIAL_MONITOR_NAME: localize(
+             "misc.serialMonitorName",
+             "Pacifica Serial Monitor"
+           )
+         },
+         NAME: localize("name", "Pacifica Simulator"),
+         WARNING: {
+           ACCEPT_AND_RUN: localize(
+             "warning.agreeAndRun",
+             "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
+           ),
+           INVALID_BAUD_RATE: localize(
+             "warning.invalidBaudRate",
+             "Invalid baud rate, keep baud rate unchanged."
+           ),
+           NO_RATE_SELECTED: localize(
+             "warning.noRateSelected",
+             "No rate is selected, keep baud rate unchanged."
+           ),
+           NO_SERIAL_PORT_SELECTED: localize(
+             "warning.noSerialPortSelected",
+             "No serial port was selected, please select a serial port first"
+           ),
+           SERIAL_MONITOR_ALREADY_OPENED: (port: string) => {
+             return localize(
+               "warning.serialMonitorAlreadyOpened",
+               `Serial monitor is already opened for ${port} \n`
+             );
+           },
+           SERIAL_MONITOR_NOT_STARTED: localize(
+             "warning.serialMonitorNotStarted",
+             "Serial monitor has not been started."
+           ),
+           SERIAL_PORT_NOT_STARTED: localize(
+             "warning.serialPortNotStarted",
+             "Serial port has not been started.\n"
+           )
+         }
+       };
 
 export enum CONFIG_KEYS {
   ENABLE_USB_DETECTION = "pacifica.enableUSBDetection"
