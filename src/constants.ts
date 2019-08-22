@@ -77,6 +77,10 @@ export const CONSTANTS = {
       "error.noFileToRun",
       '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
     ),
+    NO_FOLDER_OPENED: localize(
+      "error.noFolderCreated",
+      "In order to use the Serial Monitor, you need to open a folder and reload VS Code."
+    ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
@@ -232,7 +236,7 @@ export const CONSTANTS = {
     ),
     SERIAL_PORT_NOT_STARTED: localize(
       "warning.serialPortNotStarted",
-      "Serial port has not been started."
+      "Serial port has not been started.\n"
     )
   }
 };
