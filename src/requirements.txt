@@ -1,3 +1,5 @@
 playsound
 pytest
-
+applicationinsights
+python-socketio
+requests

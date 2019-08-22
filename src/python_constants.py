@@ -13,12 +13,14 @@ EXPECTED_INPUT_EVENTS = [
     "shake",
     "motion_x",
     "motion_y",
-    "motion_z"
+    "motion_z",
+    "touch"
 ]
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 ERROR_TRACEBACK = "\n\tTraceback of code execution : \n"
+ERROR_NO_FILE = "Error : No file was passed to the process to execute.\n"
 
 LIBRARY_NAME = "adafruit_circuitplayground"
 LINUX_OS = "linux"
@@ -34,3 +36,5 @@ NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"
+
+DEFAULT_PORT = "5577"

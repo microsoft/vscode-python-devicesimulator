@@ -62,7 +62,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
           onInput={this.handleOnChange}
           defaultValue={this.props.minValue.toLocaleString()}
           pattern="^-?[0-9]{0,3}$"
-          onKeyUp={this.validateRange}
+          onKeyUp={this.handleOnChange}
           aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
         />
         <span className="sliderArea">
@@ -78,6 +78,8 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             min={this.props.minValue}
             max={this.props.maxValue}
             onChange={this.handleOnChange}
+            onKeyUp={this.sendTelemetry}
+            onMouseUp={this.sendTelemetry}
             aria-valuenow={this.state.value}
             value={this.state.value}
             aria-label={`${this.props.type} sensor slider`}
@@ -92,36 +94,49 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     );
   }
 
-  private handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.updateValue(event);
-    this.validateRange();
-    const newSensorState = this.writeMessage(event);
+  private handleOnChange = (event: any) => {
+    const validatedValue = this.validateRange(this.updateValue(event));
+
+    const newSensorState = this.writeMessage(validatedValue);
     if (newSensorState) {
       sendMessage(newSensorState);
     }
-  }
+  };
 
-  private writeMessage(event: React.ChangeEvent<HTMLInputElement>) {
-    return this.props.type && this.state.value && event.target.value
-      ? { [this.props.type]: parseInt(event.target.value, 10) }
+  private writeMessage = (valueTowrite: number) => {
+    let value = valueTowrite;
+    if (value > this.props.maxValue || value < this.props.minValue) {
+      value = parseInt(this.state.value, 10);
+    }
+
+    return this.props.type && this.state.value
+      ? { [this.props.type]: value }
       : undefined;
-  }
+  };
 
-  private updateValue(event: React.ChangeEvent<HTMLInputElement>) {
+  private updateValue = (event: any) => {
     const newValue = event.target.validity.valid
       ? event.target.value
       : this.state.value;
     this.setState({ value: newValue });
-  }
+    return newValue;
+  };
 
-  private validateRange() {
-    if (this.state.value < this.props.minValue) {
-      this.setState({ value: this.props.minValue });
+  private sendTelemetry = () => {
+    vscode.postMessage({ command: "slider-telemetry", text: this.props.type });
+  };
+
+  private validateRange = (valueString: string) => {
+    let valueInt = parseInt(valueString, 10);
+    if (valueInt < this.props.minValue) {
+      valueInt = this.props.minValue;
+      this.setState({ value: valueInt });
+    } else if (valueInt > this.props.maxValue) {
+      valueInt = this.props.maxValue;
+      this.setState({ value: valueInt });
     }
-    if (this.state.value > this.props.maxValue) {
-      this.setState({ value: this.props.maxValue });
-    }
-  }
+    return valueInt;
+  };
 }
 
 export default InputSlider;
