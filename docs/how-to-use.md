@@ -69,11 +69,13 @@ Here are the settings you can change in the Pacifica configuration:
 
 - **Enable USBDetection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
 
-- **Show Device Icon In Editor Title Menu:** allows you to chose whether the _`Deploy to Device`_ button should be in the editor title.
+- **Show Device Icon In Editor Title Menu:** allows you to choose whether the _`Deploy to Device`_ button should be in the editor title.
 
-- **Show Open Icon In Editor Title Menu:** allows you to chose whether the _`Open Simulator`_ button should be in the editor title.
+- **Show Open Icon In Editor Title Menu:** allows you to choose whether the _`Open Simulator`_ button should be in the editor title.
 
-- **Show Simulator Icon In Editor Title Menu:** allows you to chose whether the _`Run Simulator`_ button should be in the editor title.
+- **Show Simulator Icon In Editor Title Menu:** allows you to choose whether the _`Run Simulator`_ button should be in the editor title.
+
+- **Show Dependency Install:** allows you to choose whether you want to be prompted to install the Python dependencies.
 
 ## Troubleshooting Tips
 
