@@ -29,7 +29,11 @@ gulp.task("clean", () => {
   );
 });
 
-const pythonToMove = ["./src/adafruit_circuitplayground/*.*", "./src/*.py"];
+const pythonToMove = [
+  "./src/adafruit_circuitplayground/*.*",
+  "./src/*.py",
+  "./src/requirements.txt"
+];
 
 gulp.task("python-compile", () => {
   // the base option sets the relative root for the set of files,
