@@ -7,6 +7,7 @@ import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import * as vscode from "vscode";
 import {
+  CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
@@ -14,6 +15,9 @@ import {
   SERVER_INFO
 } from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
+import * as cp from "child_process";
+import * as util from "util";
+const exec = util.promisify(cp.exec);
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
@@ -160,6 +164,14 @@ export const checkPythonDependency = async () => {
   return result.payload;
 };
 
+export const checkPipDependency = async () => {
+  const dependencyChecker: DependencyChecker = new DependencyChecker();
+  const result = await dependencyChecker.checkDependency(
+    CONSTANTS.DEPENDENCY_CHECKER.PIP3
+  );
+  return result.payload;
+}
+
 export const setPythonExectuableName = async () => {
   // Find our what command is the PATH for python
   let executableName: string = "";
@@ -217,3 +229,61 @@ export const getServerPortConfig = (): number => {
   }
   return SERVER_INFO.DEFAULT_SERVER_PORT;
 };
+
+export const checkConfig = (configName: string): boolean => {
+  return vscode.workspace.getConfiguration().get(configName) === true;
+}
+
+export const checkPythonDependencies = async (context: vscode.ExtensionContext) => {
+  let hasInstalledDependencies: boolean = false;
+  if (checkPipDependency() && checkPythonDependency()) {
+    if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+      hasInstalledDependencies = await promptInstallPythonDependencies(context);
+      if (hasInstalledDependencies) {
+        await vscode.workspace.getConfiguration().update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
+      }
+    }
+  } else {
+    hasInstalledDependencies = false;
+  }
+  return hasInstalledDependencies;
+}
+
+
+export const promptInstallPythonDependencies = (context: vscode.ExtensionContext) => {
+  return vscode.window.showInformationMessage(
+    CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
+    DialogResponses.YES,
+    DialogResponses.NO)
+    .then((selection: vscode.MessageItem | undefined) => {
+      if (selection === DialogResponses.YES) {
+        return installPythonDependencies(context);
+      } else if (selection === DialogResponses.NO) {
+        return vscode.window.showInformationMessage(
+          CONSTANTS.INFO.ARE_YOU_SURE,
+          DialogResponses.INSTALL_NOW,
+          DialogResponses.DONT_INSTALL
+        ).then((installChoice: vscode.MessageItem | undefined) => {
+          if (installChoice === DialogResponses.INSTALL_NOW) {
+            return installPythonDependencies(context);
+          } else {
+            return false;
+          }
+        })
+      }
+    });
+}
+
+export const installPythonDependencies = async (context: vscode.ExtensionContext) => {
+  let installed: boolean = false;
+  try {
+    const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
+    const { stdout } = await exec(`pip3 install -r ${requirementsPath}`);
+    installed = true;
+    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL)
+  } catch (err) {
+    console.error(err);
+    installed = false;
+  }
+  return installed
+}

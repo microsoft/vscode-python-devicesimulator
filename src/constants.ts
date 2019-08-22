@@ -16,9 +16,14 @@ const localize: nls.LocalizeFunc = nls.config({
   messageFormat: nls.MessageFormat.file
 })();
 
+export const CONFIG = {
+  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
+}
+
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {
+    PIP3: "pip3",
     PYTHON: "python",
     PYTHON3: "python3",
     PYTHON_LAUNCHER: "py -3"
@@ -72,6 +77,10 @@ export const CONSTANTS = {
       "error.noFileToRun",
       '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
     ),
+    NO_FOLDER_OPENED: localize(
+      "error.noFolderCreated",
+      "In order to use the Serial Monitor, you need to open a folder and reload VS Code."
+    ),
     NO_PROGRAM_FOUND_DEBUG: localize(
       "error.noProgramFoundDebug",
       "Cannot find a program to debug."
@@ -89,6 +98,10 @@ export const CONSTANTS = {
     )
   },
   INFO: {
+    ARE_YOU_SURE: localize(
+      "info.areYouSure",
+      "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+    ),
     CLOSED_SERIAL_PORT: (port: string) => {
       return localize(
         "info.closedSerialPort",
@@ -130,6 +143,10 @@ export const CONSTANTS = {
       "info.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
     ),
+    INSTALL_PYTHON_DEPENDENCIES: localize(
+      "info.installPythonDependencies",
+      "Do you want us to try and install this extensions dependencies for you?"
+    ),
     INVALID_FILE_NAME_DEBUG: localize(
       "info.invalidFileNameDebug",
       'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
@@ -156,6 +173,7 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
+    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
@@ -218,7 +236,7 @@ export const CONSTANTS = {
     ),
     SERIAL_PORT_NOT_STARTED: localize(
       "warning.serialPortNotStarted",
-      "Serial port has not been started."
+      "Serial port has not been started.\n"
     )
   }
 };
@@ -301,6 +319,12 @@ export namespace DialogResponses {
   };
   export const NO: MessageItem = {
     title: localize("dialogResponses.No", "No")
+  };
+  export const INSTALL_NOW: MessageItem = {
+    title: localize("dialogResponses.installNow", "Install Now")
+  };
+  export const DONT_INSTALL: MessageItem = {
+    title: localize("dialogResponses.dontInstall", "Don't Install")
   };
   export const PRIVACY_STATEMENT: MessageItem = {
     title: localize("info.privacyStatement", "Privacy Statement")
