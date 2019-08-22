@@ -28,22 +28,22 @@ const sendMessage = (state: any) => {
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
   axisLabel: "X",
   maxLabel: "Right",
-  maxValue: 125,
+  maxValue: 78,
   minLabel: "Left",
-  minValue: -55,
+  minValue: -78,
   type: "motion_x"
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
   axisLabel: "Y",
   maxLabel: "Front",
-  maxValue: 125,
+  maxValue: 78,
   minLabel: "Back",
-  minValue: -55,
+  minValue: -78,
   type: "motion_y"
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
-  maxValue: 125,
-  minValue: -55,
+  maxValue: 78,
+  minValue: -78,
   minLabel: "Up",
   maxLabel: "Down",
   type: "motion_z",

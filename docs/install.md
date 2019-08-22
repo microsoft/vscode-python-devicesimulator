@@ -22,12 +22,15 @@ _Note: You need to install all the dependencies in order to use the extension._
     _(Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python` in a terminal, the command is recognized.)_
 - Python VS Code extension (downloaded from VS Code Marketplace)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
-- Playsound :
-  - `python -m pip install --upgrade pip`
-  - `pip install playsound`
-- Pywin32 : `pip install pywin32`
-- Python-Socketio : `pip install python-socketio`
-- Requests : `pip install requests`
+- Python Modules
+  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - Playsound : `pip install playsound`
+  - Pywin32 :
+    - **Note:** This is only needed for Windows computers
+    - `pip install pywin32`
+  - Python-Socketio : `pip install python-socketio`
+  - Requests : `pip install requests`
+  - Application Insights: `pip install applicationinsights`
 
 ## How to use the Extension
 

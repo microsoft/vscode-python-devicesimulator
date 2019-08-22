@@ -5,6 +5,7 @@
   "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
   "instrumentationKey": "__AIKEY__",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.34.0"
   },
@@ -165,6 +166,11 @@
           "description": "%pacificaExtension.configuration.properties.device%",
           "scope": "resource"
         },
+        "pacifica.showDependencyInstall": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource"
+        },
         "pacifica.debuggerServerPort": {
           "type": "number",
           "default": 5577,
@@ -299,6 +305,8 @@
     "tslint-react": "^3.6.0",
     "tslint-react-hooks": "^2.0.0",
     "typescript": "^3.3.1",
+    "typescript-react-intl": "^0.4.0",
+    "version-from-git": "^1.1.1",
     "vsce": "^1.47.0",
     "vscode-nls-dev": "^3.2.6",
     "vscode-test": "^1.0.0",
@@ -315,6 +323,7 @@
     "os": "^0.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-intl": "^3.1.9",
     "socket.io": "^2.2.0",
     "svg-inline-react": "^3.1.0",
     "util": "^0.12.1",

@@ -14,33 +14,26 @@
     (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
   - Run in a console `python -m pip install --upgrade pip`
 
-- Playsound
+* Python Modules
 
-  - Run the command in a console : `pip install playsound`
+  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - Playsound
+    - Run the command in a console : `pip install playsound`
+  - pytest
+    - Run the command in a console : `pip install pytest`
+  - Pywin32
+    - **Note:** This is only needed for Windows computers
+    - Run the command in a console : `pip install pywin32`
+  - Python-Socketio
+    - Run the command in a console : `pip install python-socketio`
+  - Requests
+    - Run the command in a console : `pip install requests`
+  - Application Insights
+    - Run the command in a console : `pip install applicationinsights`
 
-- pytest
+* VS Code
 
-  - Run the command in a console : `pip install pytest`
-
-- Pywin32
-
-  - Run the command in a console : `pip install pywin32`
-
-- Python-Socketio
-
-  - Run the command in a console : `pip install python-socketio`
-
-- Application Insights
-
-  - Run the command in a console : `pip install applicationinsights`
-
-- Requests
-
-  - Run the command in a console : `pip install requests`
-
-- VS Code
-
-- Python extension for VS Code (download from VS Code market place)
+* Python extension for VS Code (download from VS Code market place)
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
@@ -75,4 +68,4 @@
     - `components/`
     - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
     - `toolbar/` : contains the React components used in the toolbar and the modal.
-    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated value.
+    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated values.

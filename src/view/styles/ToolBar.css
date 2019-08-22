@@ -76,32 +76,20 @@
 .try_area {
   position: relative;
   padding-bottom: 30px;
-}
-
-.info {
-  background: var(--vscode-editor-background);
   text-align: left;
-  margin-left: 0;
-  padding-bottom: 10px;
-  border: none;
-  box-shadow: none;
-}
-
-.info-icon {
-  margin-right: 8px;
-}
-
-.info-text {
-  font-weight: 500;
-  font-size: 16px;
-  padding-right: 13px;
+  line-height: 17px;
+  font-weight: 100;
+  opacity: 50%;
+  font-size: 14px;
+  word-wrap: break-word;
 }
 
 .link-parent {
+  padding-top: 12px;
   -webkit-appearance: none;
   padding-left: 150px;
   color: var(--vscode-textLink-activeForeground);
-  text-align: left;
+  text-align: right;
   text-decoration: none;
   font-weight: bold;
 }
@@ -110,55 +98,6 @@
   padding-left: 150px;
   color: var(--vscode-textLink-activeForeground);
   text-decoration: none;
-}
-
-.info-icon-svg {
-  fill: var(--vscode-foreground);
-}
-
-.redirect-link {
-  color: var(--vscode-foreground);
-}
-.redirect-modal {
-  background: var(--vscode-debugToolBar-background);
-  position: absolute;
-  right: 50px;
-  bottom: 50px;
-  color: var(--vscode-foreground);
-  /* word-wrap: break-word; */
-  width: 450px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
-  text-align: center;
-  font-weight: 700;
-  font-optical-sizing: 16px;
-  height: 100px;
-}
-
-.redirect-button {
-  text-decoration: none;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 17px;
-  color: var(--vscode-button-background);
-  padding-right: 15px;
-}
-
-.redirect-description {
-  word-wrap: break-word;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  text-align: center;
-  line-height: 17px;
-  opacity: 50%;
-  vertical-align: middle;
-}
-
-.redirect-learn-link {
-  text-decoration: none;
-  color: var(--vscode-textLink-activeForeground);
-  font-size: 16px;
-  text-align: right;
-  padding-left: 16px;
 }
 
 .link {

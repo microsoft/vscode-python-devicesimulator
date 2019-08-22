@@ -3,7 +3,8 @@
 Commands are accessible through :
 
 - **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
-- **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open\*
+- # **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open\*
+- **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open (1)
 
 ## Available commands
 
@@ -26,7 +27,16 @@ Commands are accessible through :
 
 - **Change Baud Rate** : changes the baud rate of the serial monitor.
 
-- **Close Serial Montitor** : closes the serial monitor.
+- # **Close Serial Montitor** : closes the serial monitor.
+- **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with. (2)
+  _(**Note :** USB detection must be enabled in the extension settings.)_
+
+- **Open Serial Monitor** : opens the serial monitor. (2)  
+  _(**Note :** A serial port must have been selected already)_.
+
+- **Change Baud Rate** : changes the baud rate of the serial monitor. (2)
+
+- **Close Serial Montitor** : closes the serial monitor. (2)
 
 ## Available features
 
@@ -54,10 +64,12 @@ Commands are accessible through :
 
 - Auto-detect/format the device
 - Device's features
-  - Sound sensor
-    - Tones
-    - Sound detection\*\*
-  - IR transmitter\*\*
+  - Sound sensor - Tones
+    <<<<<<< HEAD - Sound detection\*\*
+  - # IR transmitter\*\*
+        - Sound detection (3)
+  - IR transmitter (3)
+    > > > > > > > dev
   - Motion sensors
     - Tap detection
 
@@ -65,15 +77,18 @@ Commands are accessible through :
 
 Here are the settings you can change in the Pacifica configuration:
 
-- **Debugger Server Port:** allows you to change the port used to communicate with the debugger. Default value is _5577_.
+- **Debugger Server Port:** allows you to change the port used to communicate with the debugger. Default value is _5577_. (4)
 
 - **Enable USBDetection:** when disabled, prevents the serial monitor from listening to messages from the serial port.
 
-- **Show Device Icon In Editor Title Menu:** allows you to chose whether the _`Deploy to Device`_ button should be in the editor title.
+- **Show Device Icon In Editor Title Menu:** allows you to choose whether the _`Deploy to Device`_ button should be in the editor title.
 
-- **Show Open Icon In Editor Title Menu:** allows you to chose whether the _`Open Simulator`_ button should be in the editor title.
+- **Show Open Icon In Editor Title Menu:** allows you to choose whether the _`Open Simulator`_ button should be in the editor title.
 
-- **Show Simulator Icon In Editor Title Menu:** allows you to chose whether the _`Run Simulator`_ button should be in the editor title.
+- **Show Simulator Icon In Editor Title Menu:** allows you to choose whether the _`Run Simulator`_ button should be in the editor title.
+
+- **Show Dependency Install:** allows you to choose whether you want to be prompted to install the Python dependencies.
+  > > > > > > > dev
 
 ## Troubleshooting Tips
 
@@ -84,8 +99,9 @@ Here are the settings you can change in the Pacifica configuration:
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
 - If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
 
-### Note
+### Notes
 
-\* Can be changed in settings.
-\*\* Sensors currently not supported by the official adafruit_circuit_playground.express library (v2.1.2).  
-\*\*\* The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
+(1) Can be changed in settings.  
+(2) To use the Serial Monitor commands, you'll need to open a folder because this saves the configuration file for the serial communication. You can still use the rest of the extension without opening a folder.  
+(3) Sensors currently not supported by the official adafruit_circuit_playground.express library (v2.1.2).  
+(4) The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
