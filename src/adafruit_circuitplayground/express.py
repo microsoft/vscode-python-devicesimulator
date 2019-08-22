@@ -43,6 +43,7 @@ class Express:
             'touch': [False]*7,
             'shake': False,
         }
+        self.enable_telemetry = True
         self.telemetry_state = {
             "DETECT_TAPS": False,
             "TAPPED": False,

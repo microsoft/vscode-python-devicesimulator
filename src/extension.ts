@@ -66,7 +66,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
-  await utils.checkPythonDependencies(context)
+  await utils.checkPythonDependencies(context);
 
   // Generate cpx.json
   try {
@@ -412,6 +412,11 @@ export async function activate(context: vscode.ExtensionContext) {
         currentFileAbsPath
       ]);
 
+      if (childProcess) {
+        const message = { enable_telemtry: getTelemetryState() };
+        childProcess.stdin.write(message + "\n");
+      }
+
       let dataFromTheProcess = "";
       let oldMessage = "";
 
@@ -442,7 +447,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                      messageToWebview.data
+                        messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -644,10 +649,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.selectSerialPort(null, null); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
-        );
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.selectSerialPort(null, null);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -689,10 +693,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.closeSerialMonitor(port, showWarning); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
-        )
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.closeSerialMonitor(port, showWarning);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -866,6 +869,13 @@ const handleSensorTelemetry = (sensor: string) => {
       );
       break;
   }
+};
+
+const getTelemetryState = () => {
+  const isEnabled = vscode.workspace
+    .getConfiguration()
+    .get("telemetry.enableTelemetry");
+  return isEnabled === undefined ? true : false;
 };
 
 const checkForTelemetry = (sensorState: any) => {
