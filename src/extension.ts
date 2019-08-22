@@ -612,7 +612,7 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.openSerialMonitor",
     () => {
       telemetryAI.runWithLatencyMeasure(
-        serialMonitor.openSerialMonitor,
+        serialMonitor.openSerialMonitor.bind(serialMonitor),
         TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
       );
     }
@@ -622,7 +622,7 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.changeBaudRate",
     () => {
       telemetryAI.runWithLatencyMeasure(
-        serialMonitor.changeBaudRate,
+        serialMonitor.changeBaudRate.bind(serialMonitor),
         TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
       );
     }
