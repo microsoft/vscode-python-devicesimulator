@@ -116,8 +116,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
 
-![](assets/readmeFiles/slider_basedSensor.gif?raw=true)
-![](assets/readmeFiles/otherSensors.gif?raw=true)
+![](assets/readmeFiles/slider_basedSensor.gif?raw=true) ![](assets/readmeFiles/otherSensors.gif?raw=true)
 
 - **Switch, push buttons and capacitive touch:** click directly on the corresponding element on the device or use the keybindings.
 - **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
