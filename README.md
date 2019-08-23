@@ -74,7 +74,7 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 
 ### 1. Start with the “New File” Command.
 
-1. Type in “Pacifica: New File” in the command palette(`CTRL + SHIFT + P` ).  
+1. Type in “Pacifica: New File” in the command palette(`CTRL+SHIFT+P`to open the command palette).  
    ![](assets/readmeFiles/newFile.gif?raw=true)
 2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
