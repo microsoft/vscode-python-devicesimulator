@@ -204,6 +204,10 @@ export const CONSTANTS = {
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
       "Pacifica Serial Monitor"
+    ),
+    SERIAL_MONITOR_TEST_IF_OPEN: localize(
+      "misc.testIfPortOpen",
+      "Test if serial port is open"
     )
   },
   NAME: localize("name", "Pacifica Simulator"),

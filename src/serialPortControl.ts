@@ -73,7 +73,7 @@ export class SerialPortControl {
                 this._currentSerialPort = new SerialPortControl.serialport(this._currentPort, { baudRate: this._currentBaudRate });
                 this._outputChannel.show();
                 this._currentSerialPort.on("open", () => {
-                    this._currentSerialPort.write("msft", "Both NL & CR", (err: any) => {
+                    this._currentSerialPort.write(CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN, "Both NL & CR", (err: any) => {
                         if (err && !(err.message.indexOf(CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR) >= 0)) {
                             logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
                             reject(err);
