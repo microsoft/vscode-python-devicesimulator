@@ -1,9 +1,11 @@
 # Project Pacifica
 
-Make without limit! Pacifica , a Microsoft Garage project, allows you to code in CircuitPython for your awesome‘s
+Make without limit! Pacifica, a Microsoft Garage project, allows you to code in CircuitPython for your awesome‘s
 Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
+
+![](assets/readmeFiles/img1.jpg?raw=true)
 
 ## Features
 
@@ -44,16 +46,16 @@ You will be prompted to install the Python dependencies during the first use.
 The following dependecies can be installed for your by the extension by clicking yes when you are prompted to. (2)
 
 - _**Playsound**_  
-  install by typing the following commands in a console : `pip install playsound`
+  install by typing the following commands in a console: `pip install playsound`
 
 - _**Pywin 32**_  
-  install by typing the following commands in a console : `pip install pywin32`
+  install by typing the following commands in a console: `pip install pywin32`
 - _**Python-Socketio**_  
-   install by typing the following commands in a console : `pip install python-socketio`
+   install by typing the following commands in a console: `pip install python-socketio`
 - _**Requests**_  
-   install by typing the following commands in a console : `pip install requests`
+   install by typing the following commands in a console: `pip install requests`
 - _**Application Insights**_  
-  install by typing the following commands in a console : `pip install applicationinsights`
+  install by typing the following commands in a console: `pip install applicationinsights`
 
 ## Usefuls Links
 
@@ -64,7 +66,7 @@ The following dependecies can be installed for your by the extension by clicking
 - Format Adafruit CPX device:
   - Tutorial for formatting Adafruit CPX for CircuitPython (https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython)
   - Download Firmware .uf2 file (https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
-  - Download the latest version of the Adafruit CPX library (link : https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
+  - Download the latest version of the Adafruit CPX library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
 
 ## How to use
 
@@ -76,8 +78,9 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
    `gif #1 for the keyboard short cut & select the New File command(DONE)`
 2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
-   as well as in the notification pop up when you run the “New Project” Command.  
-   `[Static image #1 of the “New File” Command (DONE)]`
+   as well as in the notification pop up when you run the “New Project” Command.
+
+![](assets/readmeFiles/img2.jpg?raw=true)
 
 ### 2. Start from an existing python file.
 
@@ -93,11 +96,11 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 
 Before deploying the python code to your CPX device, you need to format your device following these tutorials:
 
-1. Download the firmware with the .uf2 file (link : https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
-2. Download the lastest version of the cpx library (link : https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
-   **_Note:_** Make sure you name your file main.py or code.py : the device automatically runs the first file that is likely named.
+1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
+2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
+   **_Note:_** Make sure you name your file main.py or code.py: the device automatically runs the first file that is likely named.
 
-`[Static Image #2 showing this [DONE]]`
+![](assets/readmeFiles/img3.png?raw=true)
 
 ### 5. Use the Serial Monitor for your Adafruit CPX device(available Windows and Mac only)
 
@@ -112,7 +115,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
 
-- **Switch, push buttons and capacitive touch :** click directly on the corresponding element on the device or use the keybindings.
+- **Switch, push buttons and capacitive touch:** click directly on the corresponding element on the device or use the keybindings.
 - **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
 - **Shake detection:** go to the motion sensor section in the toolbar and click on the shake button.
 
@@ -145,12 +148,12 @@ In Pacifica, you can use keyboard to interact with the device:
 
 ## Provide feedback
 
-To report issues, provide feedback or requests, please use this link : [Provide Feedback](https://aka.ms/AA5xpxx).  
+To report issues, provide feedback or requests, please use this link: [Provide Feedback](https://aka.ms/AA5xpxx).  
 We would love to hear from you about your experience to keep improving our project.
 
 ## Privacy and Telemetry Notice
 
-Our extension is collecting anonymous data about your usage of our features to help us improve our product. You can find the Privacy Notice here : [Data collection](PRIVACY.md), as well as instructions on how to turn it off.
+Our extension is collecting anonymous data about your usage of our features to help us improve our product. You can find the Privacy Notice here: [Data collection](PRIVACY.md), as well as instructions on how to turn it off.
 
 ## Third Party Notice
 
