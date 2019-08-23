@@ -16,7 +16,7 @@
 
 * Python Modules
 
-  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
   - Playsound
     - Run the command in a console : `pip install playsound`
   - pytest
