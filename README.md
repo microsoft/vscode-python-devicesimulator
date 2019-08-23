@@ -30,7 +30,7 @@ monitor allows you to observe the device output.
 
 The simulator supports most of the sensors on CPX excepted **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
 The code related to these sensors can still run on the actual CPX board and be deployed using Pacifica.  
-As we only support CPX library now, other libraries (I.e. simpleio) can’t run on the simulator. But they will work on the actual device!
+As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
 ## Prerequisites
 
@@ -66,7 +66,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 ## How to use
 
-To use Pacifica, install the extension from the market place and reload VS Code.
+To use Pacifica, install the extension from the marketplace and reload VS Code.
 
 ### 1. Start with the “New File” Command.
 
@@ -80,11 +80,11 @@ To use Pacifica, install the extension from the market place and reload VS Code.
 ### 2. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
-2. Run the `open Simulator` from the command palette or icon in the editor toolbar.
+2. Run `open Simulator` from the command palette or icon in the editor toolbar.
 
 ### 3. Run your code on the simulator .
 
-- Run the `Run Simulator` from the command palette or icon in the editor toolbar.
+- Run `Run Simulator` from the command palette or icon in the editor toolbar.
 - You can use the `Play` or `Refresh` button on the simulator webview.
 
 ### 4. Deploy your code to the physical device
@@ -117,11 +117,11 @@ or by using the toolbar.
 ### 7. Debug your project on the simulator
 
 1. Add breakpoints in your code
-2. Press F5 entering the debugging mode, and you can start debugging line by line!
+2. Press F5 to enter the debugging mode, and you can start debugging line by line!
 
 ## Commands
 
-Pacifica provides serval commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
+Pacifica provides sereval commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
 - `Pacifica: New File:` Opens an unsaved .py file with template code, also open the simulator.
 - `Pacifica: Open Simulator`: Opens the simulator in the webView
@@ -161,7 +161,7 @@ Our extension is collecting anonymous data about your usage of our features to h
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
