@@ -7,7 +7,7 @@ when you deploy it to your actual microcontroller!
 
 ## Features
 
-- IntelliSense and syntax highlighting for Circuit Python code (only supports CPX library)
+- IntelliSense and syntax highlighting for CircuitPython code (only supports CPX library)
 - Template file generation
 - Integrated Python Debugging for the Simulator
 - Serial monitor (available on Windows and Mac only)
@@ -132,6 +132,17 @@ In Pacifica, you can use keyboard to interact with the board:
 - Capacitive Touch Sensor `A1 – A7: SHIFT + 1~7`
 - Slider Switch: `SHIFT + S`
 - Refresh the simulator: `SHIFT + R`
+
+## Usefuls Links
+
+- Tutorials and Example Code for Adafruit CPX:
+  - Adafruit CPX library tutorial: (https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library)
+  - Adafruit CPX Examples on GitHub: (https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples)
+  - Adafruit CPX Guided Tour (Intro for the Hardware) (https://learn.adafruit.com/adafruit-circuit-playground-express/guided-tour)
+- Format Adafruit CPX Device:
+  - Tutorial for formatting Adafruit CPX for CircuitPython (https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython)
+  - Download Firmware .uf2 file (https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
+  - Download the latest version of the Adafruit CPX library (link : https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
 
 ## Provide feedback
 
