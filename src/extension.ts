@@ -410,7 +410,7 @@ export async function activate(context: vscode.ExtensionContext) {
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
         currentFileAbsPath,
-        JSON.stringify({ enable_telemetry: getTelemetryState() })
+        JSON.stringify({ enable_telemetry: utils.getTelemetryState() })
       ]);
 
       let dataFromTheProcess = "";
@@ -865,13 +865,6 @@ const handleSensorTelemetry = (sensor: string) => {
       );
       break;
   }
-};
-
-const getTelemetryState = () => {
-  const isEnabled = vscode.workspace
-    .getConfiguration()
-    .get("telemetry.enableTelemetry", true);
-  return isEnabled;
 };
 
 const checkForTelemetry = (sensorState: any) => {
