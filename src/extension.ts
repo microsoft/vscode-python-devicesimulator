@@ -31,7 +31,6 @@ let inDebugMode: boolean = false;
 let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 export let outChannel: vscode.OutputChannel | undefined;
@@ -238,8 +237,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const fileName = "template.py";
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
+    const shouldShowNewFilePopup: boolean = context.globalState.get("shouldShowNewFilePopup", true);
 
-    if (shouldShowNewFile) {
+    if (shouldShowNewFilePopup) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_FILE,
@@ -249,7 +249,7 @@ export async function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shouldShowNewFile = false;
+            context.globalState.update("shouldShowNewFilePopup", false);
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
