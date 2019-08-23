@@ -26,8 +26,7 @@ export const CONSTANTS = {
   DEPENDENCY_CHECKER: {
     PIP3: "pip3",
     PYTHON: "python",
-    PYTHON3: "python3",
-    PYTHON_LAUNCHER: "py -3"
+    PYTHON3: "python3.7",
   },
   ERROR: {
     COMPORT_UNKNOWN_ERROR:
@@ -147,6 +146,10 @@ export const CONSTANTS = {
     INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
       "info.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
+    ),
+    INSTALLING_PYTHON_DEPENDENCIES: localize(
+      "info.installingPythonDependencies",
+      "The Python packages are currently being installed. You will be prompt a message telling you when the installation is done."
     ),
     INSTALL_PYTHON_DEPENDENCIES: localize(
       "info.installPythonDependencies",

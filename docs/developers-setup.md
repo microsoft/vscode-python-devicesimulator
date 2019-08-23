@@ -8,21 +8,21 @@
 
 - Python 3.7.4 (or latest)
 
-  - Download link : https://www.python.org/downloads/
-  - **NOTE :** Make sure Python is in your path under an environment variable named `python` (during installation or insert it manually afterwards)
-  - **NOTE :** Make sure pip is added to your environment variables as well
-    (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
-  - Run in a console `python -m pip install --upgrade pip`
+- Download link : https://www.python.org/downloads/
+- **NOTE :** Make sure Python is in your path under an environment variable named `python` or `python3.7` (during installation or insert it manually afterwards)
+- **NOTE :** Make sure pip is added to your environment variables as well
+  (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
+- Run in a console `python -m pip install --upgrade pip`
 
 * Python Modules
 
-  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
   - Playsound
     - Run the command in a console : `pip install playsound`
   - pytest
     - Run the command in a console : `pip install pytest`
   - Pywin32
-    - **Note:** This is only needed for Windows computers
+    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
     - Run the command in a console : `pip install pywin32`
   - Python-Socketio
     - Run the command in a console : `pip install python-socketio`

@@ -43,13 +43,13 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
 
-The following dependecies can be installed for you by the extension by clicking yes when you are prompted to. (2)
+The following dependecies can be installed for you by the extension by clicking yes when you are prompted to (**except** `pywin32` which is needed only on Windows platform). (2)
 
 - _**Playsound**_  
   install by typing the following commands in a console: `pip install playsound`
 
 - _**Pywin 32**_  
-  install by typing the following commands in a console: `pip install pywin32`
+  install by typing the following commands in a console (only for Windows computers, you must run it manually): `pip install pywin32`
 - _**Python-Socketio**_  
    install by typing the following commands in a console: `pip install python-socketio`
 - _**Requests**_  
