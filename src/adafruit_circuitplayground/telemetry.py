@@ -15,6 +15,7 @@ class Telemetry:
             "PLAY_TONE": False,
             "START_TONE": False,
             "STOP_TONE": False,
+            "PIXELS": False
         }
         self.telemetry_client = TelemetryClient(
             'aba8e4b2-8ed2-4c89-b0a1-1595fbf8e833')
