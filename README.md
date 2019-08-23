@@ -1,8 +1,7 @@
 # Project Pacifica
 
-Make without limit! Pacifica , a Microsoft Garage project, allows you to code in CircuitPython for your awesome
-microcontroller projects regardless if you have a device or not. Start using CircuitPython for Adafruit
-‘s Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same
+Make without limit! Pacifica , a Microsoft Garage project, allows you to code in CircuitPython for your awesome‘s
+Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
@@ -24,7 +23,7 @@ monitor allows you to observe the device output.
   - Light sensor
   - Motion sensors
   - Acceleration detection
-  - device shake detection
+  - Device shake detection
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
@@ -75,7 +74,7 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 
 1. Type in “Pacifica: New File” in the command palette.  
    `gif #1 for the keyboard short cut & select the New File command(DONE)`
-2. Name and save your file somewhere, and we’re good to go!(2)
+2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
    as well as in the notification pop up when you run the “New Project” Command.  
    `[Static image #1 of the “New File” Command (DONE)]`
@@ -131,7 +130,7 @@ Pacifica provides several commands in the Command Palette (F1 or Ctrl + Shift + 
 - `Pacifica: Run on Simulator`: Runs python code on the simulator
 - `Pacifica: Deploy to Board`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
 - `Pacifica: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
-- `Pacifica: Close Serial Monitor`: Stops the serial monitor and release the serial port.
+- `Pacifica: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Pacifica: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
 - `Pacifica: Select Serial Port`: Changes the current serial port.
 
@@ -196,5 +195,5 @@ Our extension is collecting anonymous data about your usage of our features to h
 ## Notes
 
 (1) Note: the easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually, but make sure that when you type _python_ in a terminal, the command is recognized and have the correct version.
-(2) You can chose to see to be prompted or not to install those libraries
+(2) You can chose to see to see the prompt or not by changing the extension configirations.
 (3) To be able to run the file from your physical device, it should either be named code.py or main.py.
