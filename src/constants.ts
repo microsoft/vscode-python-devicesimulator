@@ -17,7 +17,8 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
+  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall",
+  SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
 }
 
 export const CONSTANTS = {
