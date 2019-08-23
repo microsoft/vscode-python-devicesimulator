@@ -3,6 +3,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import * as os from "os";
 import { DependencyChecker } from "./dependencyChecker";
 import { DeviceContext } from "../deviceContext";
 import * as vscode from "vscode";
@@ -278,7 +279,9 @@ export const installPythonDependencies = async (context: vscode.ExtensionContext
   let installed: boolean = false;
   try {
     const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
-    const { stdout } = await exec(`pip3 install -r ${requirementsPath}`);
+    const pathToLibs: string = getPathToScript(context, "out", "python_libs");
+    const { stdout } = await exec(`python -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
+    console.info(stdout);
     installed = true;
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL)
   } catch (err) {
