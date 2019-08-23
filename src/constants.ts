@@ -17,7 +17,8 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
+  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall",
+  SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
 }
 
 export const CONSTANTS = {
@@ -88,6 +89,10 @@ export const CONSTANTS = {
     NO_PYTHON_PATH: localize(
       "error.noPythonPath",
       "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+    ),
+    RECONNECT_DEVICE: localize(
+      "error.reconnectDevice",
+      "Please disconnect your Circuit Playground Express and try again."
     ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
@@ -204,6 +209,10 @@ export const CONSTANTS = {
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
       "Pacifica Serial Monitor"
+    ),
+    SERIAL_MONITOR_TEST_IF_OPEN: localize(
+      "misc.testIfPortOpen",
+      "Test if serial port is open"
     )
   },
   NAME: localize("name", "Pacifica Simulator"),
