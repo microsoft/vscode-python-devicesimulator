@@ -9,7 +9,7 @@ import { MessageItem } from "vscode";
 export const SERVER_INFO = {
   DEFAULT_SERVER_PORT: 5577,
   ERROR_CODE_INIT_SERVER: "ERROR_INIT_SERVER",
-  SERVER_PORT_CONFIGURATION: "pacifica.debuggerServerPort"
+  SERVER_PORT_CONFIGURATION: "deviceSimulatorExpress.debuggerServerPort"
 };
 
 const localize: nls.LocalizeFunc = nls.config({
@@ -17,11 +17,11 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
-}
+  SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall"
+};
 
 export const CONSTANTS = {
-  DEBUG_CONFIGURATION_TYPE: "pacifica",
+  DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
   DEPENDENCY_CHECKER: {
     PIP3: "pip3",
     PYTHON: "python",
@@ -38,7 +38,7 @@ export const CONSTANTS = {
     DEBUGGER_SERVER_INIT_FAILED: (port: number) => {
       return localize(
         "error.debuggerServerInitFailed",
-        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
+        `Warning : The Debugger Server cannot be opened. Please try to free the port ${port} if it's already in use or select another one in your Settings 'Device Simulator Express: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.`
       );
     },
     DEBUGGING_SESSION_IN_PROGESS: localize(
@@ -173,7 +173,10 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
+    SUCCESSFUL_INSTALL: localize(
+      "info.successfulInstall",
+      "Successfully installed Python dependencies."
+    ),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
@@ -184,7 +187,7 @@ export const CONSTANTS = {
     )
   },
   LABEL: {
-    WEBVIEW_PANEL: localize("label.webviewPanel", "Adafruit CPX")
+    WEBVIEW_PANEL: localize("label.webviewPanel", "Device Simulator Express")
   },
   LINKS: {
     DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
@@ -203,10 +206,10 @@ export const CONSTANTS = {
     ),
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
-      "Pacifica Serial Monitor"
+      "Device Simulator Express Serial Monitor"
     )
   },
-  NAME: localize("name", "Pacifica Simulator"),
+  NAME: localize("name", "Device Simulator Express"),
   WARNING: {
     ACCEPT_AND_RUN: localize(
       "warning.agreeAndRun",
@@ -242,7 +245,7 @@ export const CONSTANTS = {
 };
 
 export enum CONFIG_KEYS {
-  ENABLE_USB_DETECTION = "pacifica.enableUSBDetection"
+  ENABLE_USB_DETECTION = "deviceSimulatorExpress.enableUSBDetection"
 }
 
 export enum TelemetryEventName {

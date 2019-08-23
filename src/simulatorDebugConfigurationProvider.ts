@@ -12,10 +12,10 @@ let shouldShowInvalidFileNamePopup: boolean = true;
 
 export class SimulatorDebugConfigurationProvider
   implements vscode.DebugConfigurationProvider {
-  public pacificaDebug: boolean;
+  public deviceSimulatorExpressDebug: boolean;
 
   constructor(private pathToScript: string) {
-    this.pacificaDebug = false;
+    this.deviceSimulatorExpressDebug = false;
   }
 
   /**
@@ -34,15 +34,15 @@ export class SimulatorDebugConfigurationProvider
         activeTextEditor &&
         activeTextEditor.document.languageId === "python"
       ) {
-        config.type = "pacifica";
+        config.type = "deviceSimulatorExpress";
         config.request = "launch";
-        config.name = "Pacifica Simulator Debugger";
+        config.name = "Device Simulator Express Debugger";
         config.console = "integratedTerminal";
       }
     }
     // Check config type
     if (config.type === CONSTANTS.DEBUG_CONFIGURATION_TYPE) {
-      this.pacificaDebug = true;
+      this.deviceSimulatorExpressDebug = true;
       if (activeTextEditor) {
         const currentFilePath = activeTextEditor.document.fileName;
 

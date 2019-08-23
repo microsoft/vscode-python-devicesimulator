@@ -59,18 +59,18 @@ export class SerialMonitor implements vscode.Disposable {
         this._outputChannel = vscode.window.createOutputChannel(CONSTANTS.MISC.SERIAL_MONITOR_NAME);
         this._currentBaudRate = defaultBaudRate;
         this._portsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.PORT);
-        this._portsStatusBar.command = "pacifica.selectSerialPort";
+        this._portsStatusBar.command = "deviceSimulatorExpress.selectSerialPort";
         this._portsStatusBar.tooltip = "Select Serial Port";
         this._portsStatusBar.show();
 
         this._openPortStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.OPEN_PORT);
-        this._openPortStatusBar.command = "pacifica.openSerialMonitor";
+        this._openPortStatusBar.command = "deviceSimulatorExpress.openSerialMonitor";
         this._openPortStatusBar.text = `$(plug)`;
         this._openPortStatusBar.tooltip = "Open Serial Monitor";
         this._openPortStatusBar.show();
 
         this._baudRateStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.BAUD_RATE);
-        this._baudRateStatusBar.command = "pacifica.changeBaudRate";
+        this._baudRateStatusBar.command = "deviceSimulatorExpress.changeBaudRate";
         this._baudRateStatusBar.tooltip = "Baud Rate";
         this._baudRateStatusBar.text = defaultBaudRate.toString();
         this.updatePortListStatus(null);
@@ -202,12 +202,12 @@ export class SerialMonitor implements vscode.Disposable {
 
     private updatePortStatus(isOpened: boolean) {
         if (isOpened) {
-            this._openPortStatusBar.command = "pacifica.closeSerialMonitor";
+            this._openPortStatusBar.command = "deviceSimulatorExpress.closeSerialMonitor";
             this._openPortStatusBar.text = `$(x)`;
             this._openPortStatusBar.tooltip = "Close Serial Monitor";
             this._baudRateStatusBar.show();
         } else {
-            this._openPortStatusBar.command = "pacifica.openSerialMonitor";
+            this._openPortStatusBar.command = "deviceSimulatorExpress.openSerialMonitor";
             this._openPortStatusBar.text = `$(plug)`;
             this._openPortStatusBar.tooltip = "Open Serial Monitor";
             this._baudRateStatusBar.hide();
