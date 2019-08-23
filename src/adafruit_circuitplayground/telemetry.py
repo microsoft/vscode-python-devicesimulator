@@ -20,7 +20,7 @@ class Telemetry:
         self.extension_name = '__EXTENSIONNAME__'
 
     def send_telemetry(self, event_name):
-        if self.telemetry_available() and not self.telemetry_state[event_name] and self.__enable_telemetry:
+        if self.__enable_telemetry and self.telemetry_available() and not self.telemetry_state[event_name]:
             self.telemetry_client.track_event(
                 '{}/{}'.format(self.extension_name, CONSTANTS.TELEMETRY_EVENT_NAMES[event_name]))
             self.telemetry_client.flush()
