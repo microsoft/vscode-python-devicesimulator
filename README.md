@@ -1,7 +1,7 @@
 # Project Pacifica
 
-Make without limit! Pacifica, a Microsoft Garage project, allows you to code in CircuitPython for your awesome‘s
-Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same
+Make without limit! Pacifica, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
+Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
@@ -43,7 +43,7 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
 
-The following dependecies can be installed for your by the extension by clicking yes when you are prompted to. (2)
+The following dependecies can be installed for you by the extension by clicking yes when you are prompted to. (2)
 
 - _**Playsound**_  
   install by typing the following commands in a console: `pip install playsound`
