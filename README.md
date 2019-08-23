@@ -144,7 +144,7 @@ In Pacifica, you can use keyboard to interact with the device:
 ## Provide feedback
 
 To report issues, provide feedback or requests, please use this link : [Provide Feedback](https://aka.ms/AA5xpxx).  
-We would love to hear from your experience to keep improving our project.
+We would love to hear from you about your experience to keep improving our project.
 
 ## Privacy and Telemetry Notice
 
