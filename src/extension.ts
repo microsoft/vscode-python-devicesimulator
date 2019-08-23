@@ -237,9 +237,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const fileName = "template.py";
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
-    const shouldShowNewFile: boolean = context.globalState.get("shouldShowNewFile", true);
+    const shouldShowNewFilePopup: boolean = context.globalState.get("shouldShowNewFilePopup", true);
 
-    if (shouldShowNewFile) {
+    if (shouldShowNewFilePopup) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_FILE,
@@ -249,7 +249,7 @@ export async function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            context.globalState.update("shouldShowNewFile", false);
+            context.globalState.update("shouldShowNewFilePopup", false);
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
@@ -270,7 +270,6 @@ export async function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    context.globalState.update("shouldShowNewFile", true);
     // tslint:disable-next-line: ban-comma-operator
     vscode.workspace
       .openTextDocument({ content: file, language: "python" })
