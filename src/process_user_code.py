@@ -11,6 +11,7 @@ import traceback
 import python_constants as CONSTANTS
 from pathlib import Path
 from adafruit_circuitplayground.express import cpx
+from adafruit_circuitplayground.telemetry import telemetry_py
 
 read_val = ""
 threads = []
@@ -40,6 +41,9 @@ class UserInput(threading.Thread):
                 for event in CONSTANTS.EXPECTED_INPUT_EVENTS:
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])
+
+                telemetry_py._Telemetry__enable_telemetry = new_state.get(
+                    CONSTANTS.ENABLE_TELEMETRY, True)
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT,

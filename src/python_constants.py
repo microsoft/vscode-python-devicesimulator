@@ -3,7 +3,7 @@
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
-ENABLE_TELEMERY = 'enable_telemetry'
+ENABLE_TELEMETRY = 'enable_telemetry'
 EXPECTED_INPUT_EVENTS = [
     "button_a",
     "button_b",

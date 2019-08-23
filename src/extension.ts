@@ -412,9 +412,10 @@ export async function activate(context: vscode.ExtensionContext) {
         currentFileAbsPath
       ]);
 
+      const enableTelemetry = getTelemetryState();
       if (childProcess) {
-        const message = { enable_telemtry: getTelemetryState() };
-        childProcess.stdin.write(message + "\n");
+        const message = { enable_telemetry: enableTelemetry };
+        childProcess.stdin.write(JSON.stringify(message) + "\n");
       }
 
       let dataFromTheProcess = "";
@@ -874,13 +875,12 @@ const handleSensorTelemetry = (sensor: string) => {
 const getTelemetryState = () => {
   const isEnabled = vscode.workspace
     .getConfiguration()
-    .get("telemetry.enableTelemetry");
-  return isEnabled === undefined ? true : false;
+    .get("telemetry.enableTelemetry", true);
+  return isEnabled;
 };
 
 const checkForTelemetry = (sensorState: any) => {
   if (sensorState["shake"]) {
-    console.log(`telemtry sending`);
     handleSensorTelemetry("shake");
   } else if (sensorState["touch"]) {
     handleSensorTelemetry("touch");
