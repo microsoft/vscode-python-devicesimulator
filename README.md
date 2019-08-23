@@ -1,6 +1,6 @@
 # Project Pacifica
 
-_Pacifica_ is a Visual Studio Code Extension that allows you to realize awesome microcontroller projects using use Python regardless if you have a device or not.
+_**Pacifica**_ is a Visual Studio Code Extension that allows you to realize awesome microcontroller projects using Python regardless of if you have a device or not.
 Start using CircuitPython for Adafruit Circuit Playground Express (CPX)! Never worry about not having your board in hand,
 with Pacifica you can test your code anywhere and anytime and see the same result on the Simulator than
 when you deploy it to your actual microcontroller!
@@ -62,11 +62,11 @@ To use Pacifica, install the extension from the market place and reload VS Code.
 
 ### Start with the “New File” Command.
 
-1. Type in “Pacifica: New File” in the command palette.
+1. Type in “Pacifica: New File” in the command palette.  
    `gif #1 for the keyboard short cut & select the New File command(DONE)`
 2. Name and save your file somewhere, and we’re good to go!(2)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
-   as well as in the notification pop up when you run the “New Project” Command.
+   as well as in the notification pop up when you run the “New Project” Command.  
    `[Static image #1 of the “New File” Command (DONE)]`
 
 ### Start from an existing python file instead.
@@ -103,10 +103,10 @@ Generating input for the sensors can be done by interacting directly with board 
 or by using the toolbar under the board.
 
 - **Switch, push buttons and capacitive touch :** click directly on the corresponding element on the board or use the keybindings.
-- **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box next attached to it.
-- **Shake detection:** click on the motin sensor button in the toolbar and click on the shake button.
+- **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
+- **Shake detection:** go to the motion sensor section in the toolbar and click on the shake button.
 
-### Debug your project on the simulator
+### Debugging your project on the simulator
 
 1. Add breakpoints in your code
 2. Press F5 entering the debugging mode, and you can start debugging line by line!
@@ -174,4 +174,5 @@ Our extension is collecting anonymous data about your usage of our features to h
 
 ## Notes
 
-(1) Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type python in a terminal, the command is recognized and have the correct version.
+(1) Note: the easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually, but make sure that when you type _python_ in a terminal, the command is recognized and have the correct version.
+(2) To be able to run the file from your physical device, it should either be named code.py or main.py.
