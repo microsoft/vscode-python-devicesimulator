@@ -11,6 +11,7 @@ from applicationinsights import TelemetryClient
 
 previous_state = {}
 
+
 def show(state, debug_mode=False):
     global previous_state
     if state != previous_state:

@@ -33,6 +33,8 @@ NO_CPX_DETECTED_ERROR_DETAIL = "Could not find drive with name 'CIRCUITPYTHON'. 
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
+PYTHON_LIBS_DIR = "python_libs"
+
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"

@@ -19,15 +19,14 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONFIG = {
   SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall",
   SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
-}
+};
 
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
   DEPENDENCY_CHECKER: {
     PIP3: "pip3",
     PYTHON: "python",
-    PYTHON3: "python3",
-    PYTHON_LAUNCHER: "py -3"
+    PYTHON3: "python3.7",
   },
   ERROR: {
     COMPORT_UNKNOWN_ERROR:
@@ -148,6 +147,10 @@ export const CONSTANTS = {
       "info.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
     ),
+    INSTALLING_PYTHON_DEPENDENCIES: localize(
+      "info.installingPythonDependencies",
+      "The Python packages are currently being installed. You will be prompt a message telling you when the installation is done."
+    ),
     INSTALL_PYTHON_DEPENDENCIES: localize(
       "info.installPythonDependencies",
       "Do you want us to try and install this extensions dependencies for you?"
@@ -178,7 +181,10 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
+    SUCCESSFUL_INSTALL: localize(
+      "info.successfulInstall",
+      "Successfully installed Python dependencies."
+    ),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'

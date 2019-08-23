@@ -35,8 +35,8 @@
   "info.privacyStatement": "Privacy Statement",
   "info.successfulInstall": "Successfully installed Python dependencies.",
   "info.thirdPartyWebsite": "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
-  "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
-  "label.webviewPanel": "Adafruit CPX",
+  "info.welcomeOutputTab": "Welcome to the Pacifica Simulator output tab !\n\n",
+  "label.webviewPanel": "Pacifica Simulator",
   "name": "Pacifica Simulator",
   "warning.agreeAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
 }
