@@ -46,10 +46,12 @@ const setPathAndSendMessage = (
   newFilePath: string
 ) => {
   currentFileAbsPath = newFilePath;
-  currentPanel.webview.postMessage({
-    command: "current-file",
-    state: { running_file: newFilePath }
-  });
+  if (currentPanel) {
+    currentPanel.webview.postMessage({
+      command: "current-file",
+      state: { running_file: newFilePath }
+    });
+  }
 };
 
 // Extension activation
