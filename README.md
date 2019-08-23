@@ -121,7 +121,7 @@ or by using the toolbar.
 
 ## Commands
 
-Pacifica provides serval commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
+Pacifica provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
 - `Pacifica: New File:` Opens an unsaved .py file with template code, also open the simulator.
 - `Pacifica: Open Simulator`: Opens the simulator in the webView
