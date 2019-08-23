@@ -42,9 +42,6 @@ class UserInput(threading.Thread):
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])
 
-                # telemetry_py._Telemetry__enable_telemetry = new_state.get(
-                #     CONSTANTS.ENABLE_TELEMETRY, True)
-
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT,
                       e, file=sys.stderr, flush=True)
