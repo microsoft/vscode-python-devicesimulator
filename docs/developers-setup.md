@@ -8,13 +8,11 @@
 
 - Python 3.7.4 (or latest)
 
-  - **Windows:** The easiest way to get Python 3.7 and the executable `python3.7` in your path is to install Python 3.7 from the Windows Store as it adds to the path for you
-  - **Otherwise:**
-    - Download link : https://www.python.org/downloads/
-    - **NOTE :** Make sure Python is in your path under an environment variable named `python3.7` (during installation or insert it manually afterwards)
-    - **NOTE :** Make sure pip is added to your environment variables as well
-      (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
-  - Run in a console `python3.7 -m pip install --upgrade pip`
+- Download link : https://www.python.org/downloads/
+- **NOTE :** Make sure Python is in your path under an environment variable named `python` or `python3.7` (during installation or insert it manually afterwards)
+- **NOTE :** Make sure pip is added to your environment variables as well
+  (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
+- Run in a console `python -m pip install --upgrade pip`
 
 - Python Modules
 

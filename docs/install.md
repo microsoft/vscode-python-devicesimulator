@@ -18,9 +18,8 @@ _Note: You need to install all the dependencies in order to use the extension._
 - [VS Code](https://code.visualstudio.com/Download)
 - [Node](https://nodejs.org/en/download/)
 - [Python 3.7.4 (or latest)](https://www.python.org/downloads/)
-  - **Warning :** Make sure you've included `python3.7` and `pip` to your `PATH` in your **environment variables**.
-  - **Windows:** The easiset way to make sure that `python3.7` is in your path is to install Python3.7 from the Windows store as this installation will do it for you
-  - **Mac/Linux:** the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python3.7` in a terminal, the command is recognized.
+  - **Warning :** Make sure you've included `python` or `python3.7` and `pip` to your `PATH` in your **environment variables**.  
+    _(Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python` or `python3.7` in a terminal, the command is recognized.)_
 - Python VS Code extension (downloaded from VS Code Marketplace)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
 - Python Modules
