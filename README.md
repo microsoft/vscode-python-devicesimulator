@@ -41,6 +41,9 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Node](https://nodejs.org/en/download/)**_
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH to your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
+
+The following dependecies can be installed for your by the extension by clicking yes when you are prompted to. (2)
+
 - _**Playsound**_  
   install by typing the following commands in a console : `pip install playsound`
 
@@ -193,4 +196,5 @@ Our extension is collecting anonymous data about your usage of our features to h
 ## Notes
 
 (1) Note: the easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually, but make sure that when you type _python_ in a terminal, the command is recognized and have the correct version.
-(2) To be able to run the file from your physical device, it should either be named code.py or main.py.
+(2) You can chose to see to be prompted or not to install those libraries
+(3) To be able to run the file from your physical device, it should either be named code.py or main.py.
