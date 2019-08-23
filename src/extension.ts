@@ -8,6 +8,7 @@ import * as path from "path";
 import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import {
+  CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
@@ -239,9 +240,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const fileName = "template.py";
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
-    const shouldShowNewFilePopup: boolean = context.globalState.get("shouldShowNewFilePopup", true);
+    const showNewFilePopup: boolean = vscode.workspace.getConfiguration().get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-    if (shouldShowNewFilePopup) {
+    if (showNewFilePopup) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_FILE,
@@ -251,7 +252,7 @@ export async function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            context.globalState.update("shouldShowNewFilePopup", false);
+            vscode.workspace.getConfiguration().update(CONFIG.SHOW_NEW_FILE_POPUP, false);
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
