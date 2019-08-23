@@ -14,7 +14,7 @@ EXPECTED_INPUT_EVENTS = [
     "motion_x",
     "motion_y",
     "motion_z",
-    "touch",
+    "touch"
 ]
 
 EXEC_COMMAND = "exec"
