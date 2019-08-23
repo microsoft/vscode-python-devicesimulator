@@ -409,14 +409,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
-        currentFileAbsPath
+        currentFileAbsPath,
+        JSON.stringify({ enable_telemetry: getTelemetryState() })
       ]);
-
-      const enableTelemetry = getTelemetryState();
-      if (childProcess) {
-        const message = { enable_telemetry: enableTelemetry };
-        childProcess.stdin.write(JSON.stringify(message) + "\n");
-      }
 
       let dataFromTheProcess = "";
       let oldMessage = "";

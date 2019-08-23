@@ -48,7 +48,6 @@ class Express:
         self.__abs_path_to_code_file = ''
         self.pixels = Pixel(self.__state, self.__debug_mode)
 
-
     @property
     def acceleration(self):
         return Acceleration(self.__state['motion_x'], self.__state['motion_y'], self.__state['motion_z'])

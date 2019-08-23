@@ -42,8 +42,8 @@ class UserInput(threading.Thread):
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event])
 
-                telemetry_py._Telemetry__enable_telemetry = new_state.get(
-                    CONSTANTS.ENABLE_TELEMETRY, True)
+                # telemetry_py._Telemetry__enable_telemetry = new_state.get(
+                #     CONSTANTS.ENABLE_TELEMETRY, True)
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT,
@@ -94,6 +94,9 @@ def execute_user_code(abs_path_to_code_file):
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
+telemetry_state = json.loads(sys.argv[2])
+telemetry_py.Telemetry__enable_telemetry = telemetry_state.get(
+    CONSTANTS.ENABLE_TELEMETRY, True)
 threads.append(user_code)
 user_code.start()
 
