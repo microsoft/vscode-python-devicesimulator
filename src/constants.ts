@@ -25,7 +25,7 @@ export const CONSTANTS = {
   DEPENDENCY_CHECKER: {
     PIP3: "pip3",
     PYTHON: "python",
-    PYTHON3: "python3",
+    PYTHON3: "python3.7",
     PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
