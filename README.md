@@ -8,7 +8,7 @@ monitor allows you to observe the device output.
 
 ## Features
 
-- IntelliSense and syntax highlighting for CircuitPython code (only supports CPX library)
+- IntelliSense and syntax highlighting for CircuitPython code (only supports CPX Express library)
 - Template file generation
 - Integrated Python Debugging for the Simulator
 - Serial monitor (available on Windows and Mac only)
@@ -121,7 +121,7 @@ or by using the toolbar.
 
 ## Commands
 
-Pacifica provides sereval commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
+Pacifica provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
 - `Pacifica: New File:` Opens an unsaved .py file with template code, also open the simulator.
 - `Pacifica: Open Simulator`: Opens the simulator in the webView
