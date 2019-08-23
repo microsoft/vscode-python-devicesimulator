@@ -278,12 +278,13 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
 export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let installed: boolean = false;
   try {
+    vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_DEPENDENCIES);
     const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
     const pathToLibs: string = getPathToScript(context, "out", "python_libs");
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
     console.info(stdout);
     installed = true;
-    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL)
+    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
   } catch (err) {
     console.error(err);
     installed = false;

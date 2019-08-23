@@ -142,6 +142,10 @@ export const CONSTANTS = {
       "info.incorrectFileNameForSimulatorPopup",
       'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
     ),
+    INSTALLING_PYTHON_DEPENDENCIES: localize(
+      "info.installingPythonDependencies",
+      "The Python packages are currently being installed. You will be prompt a message telling you when the installation is done."
+    ),
     INSTALL_PYTHON_DEPENDENCIES: localize(
       "info.installPythonDependencies",
       "Do you want us to try and install this extensions dependencies for you?"
