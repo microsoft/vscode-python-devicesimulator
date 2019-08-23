@@ -57,7 +57,7 @@ The following dependecies can be installed for your by the extension by clicking
 - _**Application Insights**_  
   install by typing the following commands in a console: `pip install applicationinsights`
 
-## Usefuls Links
+## Useful Links
 
 - Tutorials and Example Code for Adafruit CPX:
   - Adafruit CPX library tutorial: (https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library)
@@ -74,11 +74,11 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 
 ### 1. Start with the “New File” Command.
 
-1. Type in “Pacifica: New File” in the command palette.  
+1. Type in “Pacifica: New File” in the command palette(`CTRL + SHIFT + P` ).  
    ![](assets/readmeFiles/newFile.gif?raw=true)
 2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
-   as well as in the notification pop up when you run the “New Project” Command.
+   as well as in the notification pop up when you run the `“Pacifica: New File”` Command.
 
 ![](assets/readmeFiles/findExamples.jpg?raw=true)
 
@@ -131,7 +131,7 @@ or by using the toolbar.
 
 Pacifica provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
-- `Pacifica: New File:` Opens an unsaved .py file with template code, also open the simulator.
+- `Pacifica: New File`: Opens an unsaved .py file with template code, also open the simulator.
 - `Pacifica: Open Simulator`: Opens the simulator in the webView
 - `Pacifica: Run on Simulator`: Runs python code on the simulator
 - `Pacifica: Deploy to Board`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
