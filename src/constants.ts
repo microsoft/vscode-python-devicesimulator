@@ -26,7 +26,6 @@ export const CONSTANTS = {
     PIP3: "pip3",
     PYTHON: "python",
     PYTHON3: "python3.7",
-    PYTHON_LAUNCHER: "py -3"
   },
   ERROR: {
     COMPORT_UNKNOWN_ERROR:

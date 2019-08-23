@@ -235,11 +235,11 @@ export const checkConfig = (configName: string): boolean => {
   return vscode.workspace.getConfiguration().get(configName) === true;
 }
 
-export const checkPythonDependencies = async (context: vscode.ExtensionContext) => {
+export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
   if (checkPipDependency() && checkPythonDependency()) {
     if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-      hasInstalledDependencies = await promptInstallPythonDependencies(context);
+      hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
       if (hasInstalledDependencies) {
         await vscode.workspace.getConfiguration().update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
       }
@@ -251,14 +251,14 @@ export const checkPythonDependencies = async (context: vscode.ExtensionContext) 
 }
 
 
-export const promptInstallPythonDependencies = (context: vscode.ExtensionContext) => {
+export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string) => {
   return vscode.window.showInformationMessage(
     CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
     DialogResponses.YES,
     DialogResponses.NO)
     .then((selection: vscode.MessageItem | undefined) => {
       if (selection === DialogResponses.YES) {
-        return installPythonDependencies(context);
+        return installPythonDependencies(context, pythonExecutable);
       } else if (selection === DialogResponses.NO) {
         return vscode.window.showInformationMessage(
           CONSTANTS.INFO.ARE_YOU_SURE,
@@ -266,7 +266,7 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
           DialogResponses.DONT_INSTALL
         ).then((installChoice: vscode.MessageItem | undefined) => {
           if (installChoice === DialogResponses.INSTALL_NOW) {
-            return installPythonDependencies(context);
+            return installPythonDependencies(context, pythonExecutable);
           } else {
             return false;
           }
@@ -275,12 +275,12 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
     });
 }
 
-export const installPythonDependencies = async (context: vscode.ExtensionContext) => {
+export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let installed: boolean = false;
   try {
     const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
     const pathToLibs: string = getPathToScript(context, "out", "python_libs");
-    const { stdout } = await exec(`python3.7 -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
+    const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
     console.info(stdout);
     installed = true;
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL)

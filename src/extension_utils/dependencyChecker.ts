@@ -24,8 +24,6 @@ export class DependencyChecker {
     public async checkDependency(dependencyName: string): Promise<IPayloadResponse> {
         let state: boolean = false;
         if (dependencyName === CONSTANTS.DEPENDENCY_CHECKER.PYTHON) {
-            const userOS: string = os.platform();
-            const userOnWin: boolean = userOS.indexOf("win") === 0;
 
             if (
                 await this.runCommandVersion(CONSTANTS.DEPENDENCY_CHECKER.PYTHON3, MINIMUM_PYTHON_VERSION)
@@ -37,24 +35,6 @@ export class DependencyChecker {
             ) {
                 state = true;
                 dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON;
-            } else if (
-                userOnWin &&
-                (await this.runCommandVersion(
-                    CONSTANTS.DEPENDENCY_CHECKER.PYTHON_LAUNCHER,
-                    MINIMUM_PYTHON_VERSION
-                ))
-            ) {
-                state = true;
-                dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON;
-            } else {
-                state = false;
-            }
-        } else if (dependencyName === CONSTANTS.DEPENDENCY_CHECKER.PIP3) {
-            if (
-                await this.runCommandVersion(CONSTANTS.DEPENDENCY_CHECKER.PIP3)
-            ) {
-                state = true;
-                dependencyName = CONSTANTS.DEPENDENCY_CHECKER.PYTHON3;
             } else {
                 state = false;
             }
