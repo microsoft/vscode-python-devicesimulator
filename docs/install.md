@@ -26,7 +26,7 @@ _Note: You need to install all the dependencies in order to use the extension._
   - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you.
   - Playsound : `pip install playsound`
   - Pywin32 : `pip install pywin32`
-    - **Note:** This is only needed for Windows computers
+    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
   - Python-Socketio : `pip install python-socketio`
   - Requests : `pip install requests`
   - Application Insights: `pip install applicationinsights`

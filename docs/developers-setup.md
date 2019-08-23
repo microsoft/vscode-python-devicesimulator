@@ -22,7 +22,7 @@
   - pytest
     - Run the command in a console : `pip install pytest`
   - Pywin32
-    - **Note:** This is only needed for Windows computers
+    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
     - Run the command in a console : `pip install pywin32`
   - Python-Socketio
     - Run the command in a console : `pip install python-socketio`
