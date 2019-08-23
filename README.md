@@ -38,7 +38,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 - _**[Visual Studio Code](https://code.visualstudio.com/)**_
 - _**[Node](https://nodejs.org/en/download/)**_
-- _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH to your environment variables. (1)
+- _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
 
 The following dependecies can be installed for your by the extension by clicking yes when you are prompted to. (2)
