@@ -17,8 +17,7 @@ class Telemetry:
             "STOP_TONE": False,
             "PIXELS": False
         }
-        self.telemetry_client = TelemetryClient(
-            'aba8e4b2-8ed2-4c89-b0a1-1595fbf8e833')
+        self.telemetry_client = TelemetryClient('__AIKEY__')
         self.extension_name = '__EXTENSIONNAME__'
 
     def send_telemetry(self, event_name):
