@@ -5,7 +5,7 @@ Circuit Playground Express (CPX)! Test and debug your code on the device simulat
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
-![](assets/readmeFiles/img1.jpg?raw=true)
+![](assets/readmeFiles/cpx.jpg?raw=true)
 
 ## Features
 
@@ -75,12 +75,12 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 ### 1. Start with the “New File” Command.
 
 1. Type in “Pacifica: New File” in the command palette.  
-   `gif #1 for the keyboard short cut & select the New File command(DONE)`
+   ![](assets/readmeFiles/newFile.gif?raw=true)
 2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
    as well as in the notification pop up when you run the “New Project” Command.
 
-![](assets/readmeFiles/img2.jpg?raw=true)
+![](assets/readmeFiles/findExamples.jpg?raw=true)
 
 ### 2. Start from an existing python file.
 
@@ -88,6 +88,8 @@ To use Pacifica, install the extension from the marketplace and reload VS Code.
 2. Run `open Simulator` from the command palette or icon in the editor toolbar.
 
 ### 3. Run your code on the simulator .
+
+![](assets/readmeFiles/run.gif?raw=true)
 
 - Run `Run Simulator` from the command palette or icon in the editor toolbar.
 - You can use the `Play` or `Refresh` button on the simulator webview.
@@ -100,20 +102,22 @@ Before deploying the python code to your CPX device, you need to format your dev
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
    **_Note:_** Make sure you name your file main.py or code.py: the device automatically runs the first file that is likely named.
 
-![](assets/readmeFiles/img3.png?raw=true)
+![](assets/readmeFiles/deployToBoard.png?raw=true)
 
 ### 5. Use the Serial Monitor for your Adafruit CPX device(available Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already)
 2. Run the command `Device Simulator Express: Open Serial Monitor`
 3. Select your baud rate for the serial port
-4. The print() statements in your code will show in the output console  
-   `[gif#3 coming soon, after merged!]`
+4. The print() statements in your code will show in the output console
 
 ### 6. Use the sensors in the Pacifica Simulator
 
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
+
+![](assets/readmeFiles/slider_basedSensor.gif?raw=true)
+![](assets/readmeFiles/otherSensors.gif?raw=true)
 
 - **Switch, push buttons and capacitive touch:** click directly on the corresponding element on the device or use the keybindings.
 - **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
