@@ -15,7 +15,7 @@ monitor allows you to observe the device output.
 - Serial monitor (available on Windows and Mac only)
 - Output panel for the simulator
 - Deploy CircuitPython code to the physical device.
-- Simulation for the Adafruit Circuit Playground Express device, including:
+- Simulation of the Adafruit Circuit Playground Express device, including:
   - Green LED
   - Red LED
   - Push Buttons A and B
@@ -29,7 +29,7 @@ monitor allows you to observe the device output.
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-The simulator supports most of the sensors on CPX excepted **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
+The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
 The code related to these sensors can still run on the actual CPX board and be deployed using Pacifica.  
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
