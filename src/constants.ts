@@ -17,8 +17,9 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall"
-}
+  SHOW_DEPENDENCY_INSTALL: "pacifica.showDependencyInstall",
+  SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
+};
 
 export const CONSTANTS = {
   DEBUG_CONFIGURATION_TYPE: "pacifica",
@@ -87,6 +88,10 @@ export const CONSTANTS = {
     NO_PYTHON_PATH: localize(
       "error.noPythonPath",
       "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
+    ),
+    RECONNECT_DEVICE: localize(
+      "error.reconnectDevice",
+      "Please disconnect your Circuit Playground Express and try again."
     ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
@@ -176,7 +181,10 @@ export const CONSTANTS = {
     ),
     REDIRECT: localize("info.redirect", "You are being redirected."),
     RUNNING_CODE: localize("info.runningCode", "Running user code"),
-    SUCCESSFUL_INSTALL: localize("info.successfulInstall", "Successfully installed Python dependencies."),
+    SUCCESSFUL_INSTALL: localize(
+      "info.successfulInstall",
+      "Successfully installed Python dependencies."
+    ),
     THIRD_PARTY_WEBSITE: localize(
       "info.thirdPartyWebsite",
       'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
@@ -207,6 +215,10 @@ export const CONSTANTS = {
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
       "Pacifica Serial Monitor"
+    ),
+    SERIAL_MONITOR_TEST_IF_OPEN: localize(
+      "misc.testIfPortOpen",
+      "Test if serial port is open"
     )
   },
   NAME: localize("name", "Pacifica Simulator"),
@@ -258,6 +270,10 @@ export enum TelemetryEventName {
   COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
   COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",
   COMMAND_RUN_EDITOR_ICON = "COMMAND.RUN.EDITOR_ICON",
+  COMMAND_SERIAL_MONITOR_CHOOSE_PORT = "COMMAND.SERIAL_MONITOR.CHOOSE_PORT",
+  COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
+  COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
+  COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
 
   // Simulator interaction
   SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",

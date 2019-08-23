@@ -8,6 +8,7 @@ import * as path from "path";
 import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import {
+  CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
@@ -31,7 +32,6 @@ let inDebugMode: boolean = false;
 let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 export let outChannel: vscode.OutputChannel | undefined;
@@ -47,10 +47,12 @@ const setPathAndSendMessage = (
   newFilePath: string
 ) => {
   currentFileAbsPath = newFilePath;
-  currentPanel.webview.postMessage({
-    command: "current-file",
-    state: { running_file: newFilePath }
-  });
+  if (currentPanel) {
+    currentPanel.webview.postMessage({
+      command: "current-file",
+      state: { running_file: newFilePath }
+    });
+  }
 };
 
 // Extension activation
@@ -239,8 +241,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const fileName = "template.py";
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
+    const showNewFilePopup: boolean = vscode.workspace.getConfiguration().get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-    if (shouldShowNewFile) {
+    if (showNewFilePopup) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_FILE,
@@ -250,7 +253,7 @@ export async function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shouldShowNewFile = false;
+            vscode.workspace.getConfiguration().update(CONFIG.SHOW_NEW_FILE_POPUP, false);
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
@@ -645,7 +648,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       if (serialMonitor) {
-        serialMonitor.selectSerialPort(null, null);
+        telemetryAI.runWithLatencyMeasure(
+          () => { serialMonitor.selectSerialPort(null, null); },
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -657,7 +663,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.openSerialMonitor",
     () => {
       if (serialMonitor) {
-        serialMonitor.openSerialMonitor();
+        telemetryAI.runWithLatencyMeasure(
+          serialMonitor.openSerialMonitor.bind(serialMonitor),
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -669,7 +678,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.changeBaudRate",
     () => {
       if (serialMonitor) {
-        serialMonitor.changeBaudRate();
+        telemetryAI.runWithLatencyMeasure(
+          serialMonitor.changeBaudRate.bind(serialMonitor),
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
+        );
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -681,7 +693,10 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
-        serialMonitor.closeSerialMonitor(port, showWarning);
+        telemetryAI.runWithLatencyMeasure(
+          () => { serialMonitor.closeSerialMonitor(port, showWarning); },
+          TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
+        )
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
