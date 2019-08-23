@@ -1,8 +1,8 @@
 # Project Pacifica
 
 _Pacifica_ is a Visual Studio Code Extension that allows you to realize awesome microcontroller projects using use Python regardless if you have a device or not.
-Start using CircuitPython for Adafruit Circuit Playground Express(CPX)! Never worry about not having your board in hand,
-with Pacifica you can test your code anywhere and anytime and see the same result
+Start using CircuitPython for Adafruit Circuit Playground Express (CPX)! Never worry about not having your board in hand,
+with Pacifica you can test your code anywhere and anytime and see the same result on the Simulator than
 when you deploy it to your actual microcontroller!
 
 ## Features
@@ -16,7 +16,7 @@ when you deploy it to your actual microcontroller!
 - Device Simulation for the Adafruit Circuit Playground Express board, including:
   - Green LED
   - Red LED
-  - Push Button A and B
+  - Push Buttons A and B
   - Slider Switch
   - Speaker: Play .wav file
   - 10 NeoPixels
@@ -27,7 +27,7 @@ when you deploy it to your actual microcontroller!
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-Some functionalities available on the board and/or the CPX library are not supported by our simulator.
+Some functionalities available on the board and/or the CPX library are not supported by our Simulator.
 Code samples using these functionalities can still be deployed to the board using Pacifica:
 
 - IR transmitter & Receiver
@@ -37,24 +37,28 @@ Code samples using these functionalities can still be deployed to the board usin
 
 ## Prerequisites
 
-The following dependencies are required to install before launching Pacifica.
+The following dependencies are required to install before launching Pacifica.  
 You will be prompted to install the Python dependencies during the first use.
 
 - _**[Visual Studio Code](https://code.visualstudio.com/)**_
 - _**[Node](https://nodejs.org/en/download/)**_
-- _**[Python 3.7.4](https://www.python.org/downloads/) or lastest**_: Make sure you've added python and pip to your PATH to your environment variables.(1)
-- _Python VSCode extension_: This will be installed automatically from the marketplace when you install Pacifica.
+- _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH to your environment variables. (1)
+- _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
 - _**Playsound**_  
-  install by typing the following commands in a console :
-  - `python -m pip install --upgrade pip`
-  - `pip install playsound`
-- **Pywin 32**  
-  install by typing the following commands in a console :
-  - `pip install pywin 32`
+  install by typing the following commands in a console : `pip install playsound`
+
+- _**Pywin 32**_  
+  install by typing the following commands in a console : `pip install pywin32`
+- _**Python-Socketio**_  
+   install by typing the following commands in a console : `pip install python-socketio`
+- _**Requests**_  
+   install by typing the following commands in a console : `pip install requests`
+- _**Application Insights**_  
+  install by typing the following commands in a console : `pip install applicationinsights`
 
 ## How to use
 
-To use Pacifica, install the extension from the market place then reload VS Code.
+To use Pacifica, install the extension from the market place and reload VS Code.
 
 ### Start with the “New File” Command.
 
@@ -95,12 +99,12 @@ Before deploying the python code to your CPX device, you need to format your boa
 
 ### Using the sensors in the Pacifica Simulator
 
-Generating input for the sensors can  be done by interacting directly with board on the webview
-or by using the toolbar under the board. 
+Generating input for the sensors can be done by interacting directly with board on the webview
+or by using the toolbar under the board.
 
-- **Switch, push buttons and capacitive touch :** click directly on the corresponding element on the  board or use the keybindings.
-- **Temperature sensor, Light sensor, acceleration:**  click on the corresponding button in the toolbar and change the value using the slider or the input box next attached to it. 
-- **Shake detection:**  click on the motin sensor button in the toolbar and click on the shake button. 
+- **Switch, push buttons and capacitive touch :** click directly on the corresponding element on the board or use the keybindings.
+- **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box next attached to it.
+- **Shake detection:** click on the motin sensor button in the toolbar and click on the shake button.
 
 ### Debug your project on the simulator
 
@@ -129,13 +133,45 @@ In Pacifica, you can use keyboard to interact with the board:
 - Slider Switch: `SHIFT + S`
 - Refresh the simulator: `SHIFT + R`
 
+## Provide feedback
+
+To report issues, provide feedback or requests, please use this link : [Provide Feedback](https://aka.ms/AA5xpxx).  
+We would love to hear from your experience to keep improving our project.
+
 ## Privacy and Telemetry Notice
 
-- [Data collection](PRIVACY.md)
+Our extension is collecting anonymous data about your usage of our features to help us improve our product. You can find the Privacy Notice here : [Data collection](PRIVACY.md), as well as instructions on how to turn it off.
 
 ## Third Party Notice
 
 - [Third Party Notice](ThirdPartyNotices.txt)
 
-  (Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually,
-  but make sure that when you type python in a terminal, the command is recognized.)
+## License
+
+    Project Pacifica
+
+    Copyright (c) Microsoft Corporation. All rights reserved.
+
+    MIT License
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+## Notes
+
+(1) Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type python in a terminal, the command is recognized and have the correct version.
