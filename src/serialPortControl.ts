@@ -76,6 +76,7 @@ export class SerialPortControl {
                     this._currentSerialPort.write(CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN, "Both NL & CR", (err: any) => {
                         if (err && !(err.message.indexOf(CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR) >= 0)) {
                             logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
+                            logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.RECONNECT_DEVICE);
                             reject(err);
                         } else {
                             logToOutputChannel(this._outputChannel, CONSTANTS.INFO.OPENED_SERIAL_PORT(this._currentPort));

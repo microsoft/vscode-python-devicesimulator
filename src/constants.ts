@@ -89,6 +89,10 @@ export const CONSTANTS = {
       "error.noPythonPath",
       "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
     ),
+    RECONNECT_DEVICE: localize(
+      "error.reconnectDevice",
+      "Please disconnect your Circuit Playground Express and try again."
+    ),
     STDERR: (data: string) => {
       return localize("error.stderr", `\n[ERROR] ${data} \n`);
     },
