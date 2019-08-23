@@ -1,10 +1,10 @@
 # Project Pacifica
 
-Make without limit! _**Pacifica**_ , a Microsoft Garage project, allows you to code in CircuitPython for your awesome microcontroller projects
-regardless if you have a device or not. Start using CircuitPython for Adafruit ‘s Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same result when you plug in your actual microcontroller. Curious about the output of the device, the serial monitor allows you to observe the device output. is a Visual Studio Code Extension that allows you to realize awesome microcontroller projects using Python regardless of if you have a device or not.
-Start using CircuitPython for Adafruit Circuit Playground Express (CPX)! Never worry about not having your device in hand,
-with Pacifica you can test your code anywhere and anytime and see the same result on the Simulator than
-when you deploy it to your actual microcontroller!
+Make without limit! Pacifica , a Microsoft Garage project, allows you to code in CircuitPython for your awesome
+microcontroller projects regardless if you have a device or not. Start using CircuitPython for Adafruit
+‘s Circuit Playground Express (CPX)! Test and debug your code on the device simulator and see the same
+result when you plug in your actual microcontroller. Curious about the output of the device, the serial
+monitor allows you to observe the device output.
 
 ## Features
 
@@ -13,7 +13,7 @@ when you deploy it to your actual microcontroller!
 - Integrated Python Debugging for the Simulator
 - Serial monitor (available on Windows and Mac only)
 - Output panel for the simulator
-- Deployment to the physical device (if correctly formatted)
+- Deploy CircuitPython code to the physical device.
 - Simulation for the Adafruit Circuit Playground Express device, including:
   - Green LED
   - Red LED
@@ -28,13 +28,9 @@ when you deploy it to your actual microcontroller!
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-Some functionalities available on the device and/or the CPX library are not supported by our Simulator.
-Code samples using these functionalities can still be deployed to the device using Pacifica:
-
-- IR transmitter & Receiver
-- Sound Sensor (microphone)
-- Tone support
-- Tap detection
+The simulator supports most of the sensors on CPX excepted **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
+The code related to these sensors can still run on the actual CPX board and be deployed using Pacifica.  
+As we only support CPX library now, other libraries (I.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
 ## Prerequisites
 
@@ -72,7 +68,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 To use Pacifica, install the extension from the market place and reload VS Code.
 
-### Start with the “New File” Command.
+### 1. Start with the “New File” Command.
 
 1. Type in “Pacifica: New File” in the command palette.  
    `gif #1 for the keyboard short cut & select the New File command(DONE)`
@@ -81,17 +77,17 @@ To use Pacifica, install the extension from the market place and reload VS Code.
    as well as in the notification pop up when you run the “New Project” Command.  
    `[Static image #1 of the “New File” Command (DONE)]`
 
-### Start from an existing python file instead.
+### 2. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run the `open Simulator` from the command palette or icon in the editor toolbar.
 
-### Running your code on the simulator .
+### 3. Run your code on the simulator .
 
 - Run the `Run Simulator` from the command palette or icon in the editor toolbar.
 - You can use the `Play` or `Refresh` button on the simulator webview.
 
-### Deploying code to the physical device
+### 4. Deploy your code to the physical device
 
 Before deploying the python code to your CPX device, you need to format your device following these tutorials:
 
@@ -101,7 +97,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 
 `[Static Image #2 showing this [DONE]]`
 
-### Using the Serial Monitor for your Adafruit CPX device(Windows and Mac only)
+### 5. Use the Serial Monitor for your Adafruit CPX device(available Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already)
 2. Run the command `Device Simulator Express: Open Serial Monitor`
@@ -109,7 +105,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 4. The print() statements in your code will show in the output console  
    `[gif#3 coming soon, after merged!]`
 
-### Using the sensors in the Pacifica Simulator
+### 6. Use the sensors in the Pacifica Simulator
 
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
@@ -118,7 +114,7 @@ or by using the toolbar.
 - **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
 - **Shake detection:** go to the motion sensor section in the toolbar and click on the shake button.
 
-### Debugging your project on the simulator
+### 7. Debug your project on the simulator
 
 1. Add breakpoints in your code
 2. Press F5 entering the debugging mode, and you can start debugging line by line!
@@ -162,7 +158,7 @@ Our extension is collecting anonymous data about your usage of our features to h
 
 - The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
-- To open the output panel again after closing it go to VS Code menu : `View->Output`.
+- To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
 - If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
