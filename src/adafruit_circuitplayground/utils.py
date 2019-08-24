@@ -10,8 +10,6 @@ from . import debugger_communication_client
 from applicationinsights import TelemetryClient
 
 previous_state = {}
-telemetry_client = TelemetryClient('__AIKEY__')
-EXTENSION_NAME = '__EXTENSIONNAME__'
 
 
 def show(state, debug_mode=False):
@@ -36,13 +34,3 @@ def escape_if_OSX(file_name):
     if sys.platform.startswith(CONSTANTS.MAC_OS):
         file_name = file_name.replace(" ", "%20")
     return file_name
-
-
-def send_telemetry(event_name):
-    telemetry_client.track_event(
-        '{}/{}'.format(EXTENSION_NAME, CONSTANTS.TELEMETRY_EVENT_NAMES[event_name]))
-    telemetry_client.flush()
-
-
-def telemetry_available():
-    return telemetry_client.context.instrumentation_key != '__AIKEY__'

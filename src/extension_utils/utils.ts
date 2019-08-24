@@ -41,11 +41,12 @@ export const validCodeFileName = (filePath: string) => {
 };
 
 export const showPrivacyModal = (okAction: () => void) => {
-  vscode.window.showInformationMessage(
-    `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
-    DialogResponses.AGREE_AND_PROCEED,
-    DialogResponses.CANCEL,
-  )
+  vscode.window
+    .showInformationMessage(
+      `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
+      DialogResponses.AGREE_AND_PROCEED,
+      DialogResponses.CANCEL
+    )
     .then((privacySelection: vscode.MessageItem | undefined) => {
       if (privacySelection === DialogResponses.AGREE_AND_PROCEED) {
         okAction();
@@ -74,10 +75,10 @@ export function tryParseJSON(jsonString: string): any | boolean {
     if (jsonObj && typeof jsonObj === "object") {
       return jsonObj;
     }
-  } catch (exception) { }
+  } catch (exception) {}
 
   return false;
-};
+}
 
 export function fileExistsSync(filePath: string): boolean {
   try {
@@ -85,7 +86,7 @@ export function fileExistsSync(filePath: string): boolean {
   } catch (error) {
     return false;
   }
-};
+}
 
 export function mkdirRecursivelySync(dirPath: string): void {
   if (directoryExistsSync(dirPath)) {
@@ -100,7 +101,7 @@ export function mkdirRecursivelySync(dirPath: string): void {
     mkdirRecursivelySync(dirname);
     fs.mkdirSync(dirPath);
   }
-};
+}
 
 export function directoryExistsSync(dirPath: string): boolean {
   try {
@@ -108,7 +109,7 @@ export function directoryExistsSync(dirPath: string): boolean {
   } catch (e) {
     return false;
   }
-};
+}
 
 /**
  * This method pads the current string with another string (repeated, if needed)
@@ -139,11 +140,11 @@ export function padStart(
   } else {
     return (sourceString as any).padStart(targetLength, padString);
   }
-};
+}
 
 export function convertToHex(num: number, width = 0): string {
   return padStart(num.toString(16), width, "0");
-};
+}
 
 export function generateCPXConfig(): void {
   const deviceContext: DeviceContext = DeviceContext.getInstance();
@@ -156,7 +157,7 @@ export function generateCPXConfig(): void {
   );
   mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
   fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
-};
+}
 export const checkPythonDependency = async () => {
   const dependencyChecker: DependencyChecker = new DependencyChecker();
   const result = await dependencyChecker.checkDependency(
@@ -171,7 +172,7 @@ export const checkPipDependency = async () => {
     CONSTANTS.DEPENDENCY_CHECKER.PIP3
   );
   return result.payload;
-}
+};
 
 export const setPythonExectuableName = async () => {
   // Find our what command is the PATH for python
@@ -180,8 +181,11 @@ export const setPythonExectuableName = async () => {
   if (dependencyCheck.installed) {
     executableName = dependencyCheck.dependency;
   } else {
-    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_PYTHON_PATH,
-      DialogResponses.INSTALL_PYTHON)
+    vscode.window
+      .showErrorMessage(
+        CONSTANTS.ERROR.NO_PYTHON_PATH,
+        DialogResponses.INSTALL_PYTHON
+      )
       .then((selection: vscode.MessageItem | undefined) => {
         if (selection === DialogResponses.INSTALL_PYTHON) {
           const okAction = () => {
@@ -195,35 +199,52 @@ export const setPythonExectuableName = async () => {
   return executableName;
 };
 
-export const addVisibleTextEditorCallback = (currentPanel: vscode.WebviewPanel, context: vscode.ExtensionContext): vscode.Disposable => {
-  const initialPythonEditors = filterForPythonFiles(vscode.window.visibleTextEditors);
+export const addVisibleTextEditorCallback = (
+  currentPanel: vscode.WebviewPanel,
+  context: vscode.ExtensionContext
+): vscode.Disposable => {
+  const initialPythonEditors = filterForPythonFiles(
+    vscode.window.visibleTextEditors
+  );
   currentPanel.webview.postMessage({
     command: "visible-editors",
     state: { activePythonEditors: initialPythonEditors }
   });
-  return vscode.window.onDidChangeVisibleTextEditors((textEditors: vscode.TextEditor[]) => {
-    const activePythonEditors = filterForPythonFiles(textEditors);
-    currentPanel.webview.postMessage({
-      command: "visible-editors",
-      state: { activePythonEditors }
-    });
-  }, {}, context.subscriptions)
+  return vscode.window.onDidChangeVisibleTextEditors(
+    (textEditors: vscode.TextEditor[]) => {
+      const activePythonEditors = filterForPythonFiles(textEditors);
+      currentPanel.webview.postMessage({
+        command: "visible-editors",
+        state: { activePythonEditors }
+      });
+    },
+    {},
+    context.subscriptions
+  );
 };
 
 export const filterForPythonFiles = (textEditors: vscode.TextEditor[]) => {
-  return textEditors.filter(
-    editor => editor.document.languageId === "python"
-  ).map(editor => editor.document.fileName);
+  return textEditors
+    .filter(editor => editor.document.languageId === "python")
+    .map(editor => editor.document.fileName);
 };
 
-export const getActiveEditorFromPath = (filePath: string): vscode.TextDocument => {
-  const activeEditor = vscode.window.visibleTextEditors.find((editor: vscode.TextEditor) => editor.document.fileName === filePath);
+export const getActiveEditorFromPath = (
+  filePath: string
+): vscode.TextDocument => {
+  const activeEditor = vscode.window.visibleTextEditors.find(
+    (editor: vscode.TextEditor) => editor.document.fileName === filePath
+  );
   return activeEditor ? activeEditor.document : undefined;
 };
 
 export const getServerPortConfig = (): number => {
   // tslint:disable: no-backbone-get-set-outside-model prefer-type-cast
-  if (vscode.workspace.getConfiguration().has(SERVER_INFO.SERVER_PORT_CONFIGURATION)) {
+  if (
+    vscode.workspace
+      .getConfiguration()
+      .has(SERVER_INFO.SERVER_PORT_CONFIGURATION)
+  ) {
     return vscode.workspace
       .getConfiguration()
       .get(SERVER_INFO.SERVER_PORT_CONFIGURATION) as number;
@@ -233,7 +254,7 @@ export const getServerPortConfig = (): number => {
 
 export const checkConfig = (configName: string): boolean => {
   return vscode.workspace.getConfiguration().get(configName) === true;
-}
+};
 
 export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
@@ -241,15 +262,16 @@ export const checkPythonDependencies = async (context: vscode.ExtensionContext, 
     if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
       hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
       if (hasInstalledDependencies) {
-        await vscode.workspace.getConfiguration().update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
+        await vscode.workspace
+          .getConfiguration()
+          .update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
       }
     }
   } else {
     hasInstalledDependencies = false;
   }
   return hasInstalledDependencies;
-}
-
+};
 
 export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string) => {
   return vscode.window.showInformationMessage(
@@ -273,7 +295,12 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
         })
       }
     });
-}
+};
+export const getTelemetryState = () => {
+  return vscode.workspace
+    .getConfiguration()
+    .get("telemetry.enableTelemetry", true);
+};
 
 export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let installed: boolean = false;

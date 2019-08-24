@@ -413,7 +413,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
-        currentFileAbsPath
+        currentFileAbsPath,
+        JSON.stringify({ enable_telemetry: utils.getTelemetryState() })
       ]);
 
       let dataFromTheProcess = "";
@@ -446,7 +447,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                      messageToWebview.data
+                        messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -648,10 +649,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.selectSerialPort",
     () => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.selectSerialPort(null, null); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
-        );
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.selectSerialPort(null, null);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -693,10 +693,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "pacifica.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.closeSerialMonitor(port, showWarning); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
-        )
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.closeSerialMonitor(port, showWarning);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -874,7 +873,6 @@ const handleSensorTelemetry = (sensor: string) => {
 
 const checkForTelemetry = (sensorState: any) => {
   if (sensorState["shake"]) {
-    console.log(`telemtry sending`);
     handleSensorTelemetry("shake");
   } else if (sensorState["touch"]) {
     handleSensorTelemetry("touch");

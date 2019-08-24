@@ -7,6 +7,7 @@ from . import constants as CONSTANTS
 from . import utils
 from applicationinsights import TelemetryClient
 from . import constants as CONSTANTS
+from .telemetry import telemetry_py
 
 
 class Pixel:
@@ -31,15 +32,11 @@ class Pixel:
         if type(index) is not slice:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
-        if(utils.telemetry_available() and not self.telemetry_state):
-            utils.send_telemetry("PIXELS")
-            self.telemetry_state = True
+        telemetry_py.send_telemetry("PIXELS")
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
-        if(utils.telemetry_available() and not self.telemetry_state):
-            utils.send_telemetry("PIXELS")
-            self.telemetry_state = True
+        telemetry_py.send_telemetry("PIXELS")
         is_slice = False
         if type(index) is slice:
             is_slice = True
