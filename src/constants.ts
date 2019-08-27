@@ -17,8 +17,8 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-  SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall"
-
+  SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
+  SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
 };
 
 export const CONSTANTS = {
@@ -215,6 +215,10 @@ export const CONSTANTS = {
     SERIAL_MONITOR_NAME: localize(
       "misc.serialMonitorName",
       "Device Simulator Express Serial Monitor"
+    ),
+    SERIAL_MONITOR_TEST_IF_OPEN: localize(
+      "misc.testIfPortOpen",
+      "Test if serial port is open"
     )
   },
   NAME: localize("name", "Device Simulator Express"),
