@@ -1,4 +1,4 @@
-# Project Pacifica
+# Project Device Simulator Express
 
 Make without limit! Pacifica, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
 Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same

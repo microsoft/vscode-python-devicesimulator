@@ -66,7 +66,7 @@ gulp.task("vsce:publish", () => {
 
 gulp.task("vsce:package", () => {
   return vsce.createVSIX({
-    packagePath: "../../dist/pacifica-0.0.0-UNTRACKEDVERSION.vsix"
+    packagePath: "../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix"
   });
 });
 

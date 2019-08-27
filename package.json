@@ -25,74 +25,74 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:pacifica.openSerialMonitor",
-    "onCommand:pacifica.openSimulator",
-    "onCommand:pacifica.runSimulator",
-    "onCommand:pacifica.newFile",
-    "onCommand:pacifica.runDevice",
-    "onCommand:pacifica.runSimulatorEditorButton",
-    "onCommand:pacifica.selectSerialPort",
+    "onCommand:deviceSimulatorExpress.openSerialMonitor",
+    "onCommand:deviceSimulatorExpress.openSimulator",
+    "onCommand:deviceSimulatorExpress.runSimulator",
+    "onCommand:deviceSimulatorExpress.newFile",
+    "onCommand:deviceSimulatorExpress.runDevice",
+    "onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
+    "onCommand:deviceSimulatorExpress.selectSerialPort",
     "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "pacifica.changeBaudRate",
-        "title": "%pacificaExtension.commands.changeBaudRate%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.changeBaudRate",
+        "title": "%deviceSimulatorExpressExtension.commands.changeBaudRate%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.closeSerialMonitor",
-        "title": "%pacificaExtension.commands.closeSerialMonitor%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.closeSerialMonitor",
+        "title": "%deviceSimulatorExpressExtension.commands.closeSerialMonitor%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.openSerialMonitor",
-        "title": "%pacificaExtension.commands.openSerialMonitor%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.openSerialMonitor",
+        "title": "%deviceSimulatorExpressExtension.commands.openSerialMonitor%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.openSimulator",
-        "title": "%pacificaExtension.commands.openSimulator%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.openSimulator",
+        "title": "%deviceSimulatorExpressExtension.commands.openSimulator%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/open-simulator.svg",
           "dark": "./assets/dark-theme/open-simulator.svg"
         }
       },
       {
-        "command": "pacifica.runSimulator",
-        "title": "%pacificaExtension.commands.runSimulator%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.runSimulator",
+        "title": "%deviceSimulatorExpressExtension.commands.runSimulator%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.runSimulatorEditorButton",
-        "title": "%pacificaExtension.commands.runSimulator%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.runSimulatorEditorButton",
+        "title": "%deviceSimulatorExpressExtension.commands.runSimulator%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/run-on-simulator.svg",
           "dark": "./assets/dark-theme/run-on-simulator.svg"
         }
       },
       {
-        "command": "pacifica.newFile",
-        "title": "%pacificaExtension.commands.newFile%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.newFile",
+        "title": "%deviceSimulatorExpressExtension.commands.newFile%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       },
       {
-        "command": "pacifica.runDevice",
-        "title": "%pacificaExtension.commands.runDevice%",
-        "category": "%pacificaExtension.commands.label%",
+        "command": "deviceSimulatorExpress.runDevice",
+        "title": "%deviceSimulatorExpressExtension.commands.runDevice%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%",
         "icon": {
           "light": "./assets/light-theme/save-to-board.svg",
           "dark": "./assets/dark-theme/save-to-board.svg"
         }
       },
       {
-        "command": "pacifica.selectSerialPort",
-        "title": "%pacificaExtension.commands.selectSerialPort%",
-        "category": "%pacificaExtension.commands.label%"
+        "command": "deviceSimulatorExpress.selectSerialPort",
+        "title": "%deviceSimulatorExpressExtension.commands.selectSerialPort%",
+        "category": "%deviceSimulatorExpressExtension.commands.label%"
       }
     ],
     "colors": [
@@ -118,68 +118,64 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "pacifica.runSimulatorEditorButton",
+          "command": "deviceSimulatorExpress.runSimulatorEditorButton",
           "when": "false"
         }
       ],
       "editor/title": [
         {
-          "when": "editorLangId==python  && config.pacifica.showOpenIconInEditorTitleMenu",
-          "command": "pacifica.openSimulator",
+          "when": "editorLangId==python  && config.deviceSimulatorExpress.showOpenIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.openSimulator",
           "group": "navigation@1"
         },
         {
-          "when": "editorLangId==python && config.pacifica.showSimulatorIconInEditorTitleMenu",
-          "command": "pacifica.runSimulatorEditorButton",
+          "when": "editorLangId==python && config.deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.runSimulatorEditorButton",
           "group": "navigation@2"
         },
         {
-          "when": "editorLangId==python && config.pacifica.showDeviceIconInEditorTitleMenu",
-          "command": "pacifica.runDevice",
+          "when": "editorLangId==python && config.deviceSimulatorExpress.showDeviceIconInEditorTitleMenu",
+          "command": "deviceSimulatorExpress.runDevice",
           "group": "navigation@3"
         }
       ]
     },
     "configuration": {
       "type": "object",
-      "title": "%pacificaExtension.configuration.title%",
+      "title": "%deviceSimulatorExpressExtension.configuration.title%",
       "properties": {
-        "pacifica.enableUSBDetection": {
+        "deviceSimulatorExpress.enableUSBDetection": {
           "type": "boolean",
           "default": true
         },
-        "pacifica.showOpenIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showOpenIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.open%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.open%",
           "scope": "resource"
         },
-        "pacifica.showSimulatorIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.simulator%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.simulator%",
           "scope": "resource"
         },
-        "pacifica.showDeviceIconInEditorTitleMenu": {
+        "deviceSimulatorExpress.showDeviceIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "%pacificaExtension.configuration.properties.device%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.device%",
           "scope": "resource"
         },
-        "pacifica.showDependencyInstall": {
-          "type": "boolean",
-          "default": true,
-          "scope": "resource"
-        },
-        "pacifica.showNewFilePopup": {
+        "deviceSimulatorExpress.showDependencyInstall": {
           "type": "boolean",
           "default": true,
           "scope": "resource"
         },
-        "pacifica.debuggerServerPort": {
+        "deviceSimulatorExpress.debuggerServerPort": {
+
           "type": "number",
           "default": 5577,
-          "description": "%pacificaExtension.configuration.properties.debuggerPort%",
+          "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",
           "scope": "resource"
         }
       }
@@ -191,8 +187,8 @@
     ],
     "debuggers": [
       {
-        "type": "pacifica",
-        "label": "Pacifica Simulator Debugger",
+        "type": "deviceSimulatorExpress",
+        "label": "Device Simulator Express Debugger",
         "languages": [
           "python"
         ],
@@ -241,20 +237,20 @@
         },
         "initialConfigurations": [
           {
-            "type": "pacifica",
+            "type": "deviceSimulatorExpress",
             "request": "launch",
-            "name": "Pacifica Simulator Debugger",
+            "name": "Device Simulator Express Debugger",
             "console": "integratedTerminal"
           }
         ],
         "configurationSnippets": [
           {
-            "label": "Pacifica Simulator Debugger : Launch",
-            "description": "Pacifica Simulator Debugger - A configuration for debugging a python code file for the Pacifica simulator.",
+            "label": "Device Simulator Express Debugger : Launch",
+            "description": "Device Simulator Express Debugger - A configuration for debugging a python code file for the Device Simulator Express simulator.",
             "body": {
-              "type": "pacifica",
+              "type": "deviceSimulatorExpress",
               "request": "launch",
-              "name": "Pacifica Simulator Debugger",
+              "name": "Device Simulator Express Debugger",
               "console": "integratedTerminal"
             }
           }

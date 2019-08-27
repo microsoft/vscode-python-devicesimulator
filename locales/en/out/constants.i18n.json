@@ -9,7 +9,7 @@
   "dialogResponses.installNow": "Install Now",
   "dialogResponses.dontInstall": "Don't Install",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
-  "error.debuggerServerInitFailed": "Warning : The Debugger Server cannot be opened. Please try to free the port {0} if it's already in use or select another one in your Settings 'Pacifica: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.",
+  "error.debuggerServerInitFailed": "Warning : The Debugger Server cannot be opened. Please try to free the port {0} if it's already in use or select another one in your Settings 'Device Simulator Express: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.",
   "error.debuggingSessionInProgress": "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n",
   "error.incorrectFileNameForDevice": "[ERROR] Can\\'t deploy to your Circuit Playground Express device, please rename your file to \"code.py\" or \"main.py\". \n",
   "error.incorrectFileNameForDevicePopup": "Seems like you have a different file name than what the CPX requires, please rename it to \"code.py\" or \"main.py\".",
@@ -35,8 +35,9 @@
   "info.privacyStatement": "Privacy Statement",
   "info.successfulInstall": "Successfully installed Python dependencies.",
   "info.thirdPartyWebsite": "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
-  "info.welcomeOutputTab": "Welcome to the Pacifica Simulator output tab !\n\n",
-  "label.webviewPanel": "Pacifica Simulator",
-  "name": "Pacifica Simulator",
+  "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
+  "label.webviewPanel": "Device Simulator Express",
+  "name": "Device Simulator Express",
+
   "warning.agreeAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
 }

@@ -227,7 +227,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Open Simulator on the webview
   const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.openSimulator",
+    "deviceSimulatorExpress.openSimulator",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_OPEN_SIMULATOR);
       telemetryAI.runWithLatencyMeasure(
@@ -292,7 +292,7 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const newFile: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.newFile",
+    "deviceSimulatorExpress.newFile",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
       telemetryAI.runWithLatencyMeasure(
@@ -493,7 +493,7 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.runSimulatorEditorButton",
+    "deviceSimulatorExpress.runSimulatorEditorButton",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_EDITOR_ICON);
       runSimulatorCommand();
@@ -502,7 +502,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Send message to the webview
   const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.runSimulator",
+    "deviceSimulatorExpress.runSimulator",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_RUN_PALETTE);
       runSimulatorCommand();
@@ -629,7 +629,7 @@ export async function activate(context: vscode.ExtensionContext) {
   };
 
   const runDevice: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.runDevice",
+    "deviceSimulatorExpress.runDevice",
     () => {
       telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_DEPLOY_DEVICE);
       telemetryAI.runWithLatencyMeasure(
@@ -646,7 +646,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.selectSerialPort",
+    "deviceSimulatorExpress.selectSerialPort",
     () => {
       if (serialMonitor) {
         telemetryAI.runWithLatencyMeasure(() => {
@@ -660,7 +660,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.openSerialMonitor",
+    "deviceSimulatorExpress.openSerialMonitor",
     () => {
       if (serialMonitor) {
         telemetryAI.runWithLatencyMeasure(
@@ -675,7 +675,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.changeBaudRate",
+    "deviceSimulatorExpress.changeBaudRate",
     () => {
       if (serialMonitor) {
         telemetryAI.runWithLatencyMeasure(
@@ -690,7 +690,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-    "pacifica.closeSerialMonitor",
+    "deviceSimulatorExpress.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
         telemetryAI.runWithLatencyMeasure(() => {
@@ -725,7 +725,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Start: Init comunication
   const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
-    if (simulatorDebugConfiguration.pacificaDebug) {
+    if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
       // Reinitialize process
       killProcessIfRunning();
       console.log("Debug Started");
@@ -764,10 +764,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // On Debug Session Stop: Stop communiation
   const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
-    if (simulatorDebugConfiguration.pacificaDebug) {
+    if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
       console.log("Debug Stopped");
       inDebugMode = false;
-      simulatorDebugConfiguration.pacificaDebug = false;
+      simulatorDebugConfiguration.deviceSimulatorExpressDebug = false;
       if (debuggerCommunicationHandler) {
         debuggerCommunicationHandler.closeConnection();
         debuggerCommunicationHandler = undefined;

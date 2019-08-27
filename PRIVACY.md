@@ -6,7 +6,7 @@ The software may collect information about you and your use of the software and 
 
 ## Disable Telemetry
 
-The Microsoft Pacifica Extension for Visual Studio Code collects usage
+The Microsoft Device Simulator Express Extension for Visual Studio Code collects usage
 data and sends it to Microsoft to help improve our products and
 services. Read our
 [privacy statement](https://privacy.microsoft.com/privacystatement) to

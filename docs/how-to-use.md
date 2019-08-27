@@ -2,7 +2,7 @@
 
 Commands are accessible through :
 
-- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Pacifica : `command_name`'
+- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Device Simulator Express : `command_name`'
 - **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open (1)
 
 ## Available commands
@@ -61,9 +61,9 @@ Commands are accessible through :
 - Motion sensors
   - Tap detection
 
-## Pacifica configuration
+## Device Simulator Express configuration
 
-Here are the settings you can change in the Pacifica configuration:
+Here are the settings you can change in the Device Simulator Express configuration:
 
 - **Debugger Server Port:** allows you to change the port used to communicate with the debugger. Default value is _5577_. (4)
 
@@ -84,11 +84,11 @@ Here are the settings you can change in the Pacifica configuration:
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Device Simulator Express: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
 
 ### Notes
 
 (1) Can be changed in settings.  
 (2) To use the Serial Monitor commands, you'll need to open a folder because this saves the configuration file for the serial communication. You can still use the rest of the extension without opening a folder.  
 (3) Sensors currently not supported by the official adafruit_circuit_playground.express library (v2.1.2).  
-(4) The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Pacifica: Debugger Server Port'`.
+(4) The regular communication is using the stdout and stdin of the Python process. But when you debug your code, it will communicate over sockets on port 5577. This is the default port that you can change in your `Settings` : `'Device Simulator Express: Debugger Server Port'`.
