@@ -1,6 +1,6 @@
-# Project Device Simulator Express
+# Device Simulator Express, a Microsoft Garage project
 
-Make without limit! Pacifica, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
+Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
 Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
@@ -30,18 +30,18 @@ monitor allows you to observe the device output.
   - 7 Capacitive Touch sensors
 
 The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
-The code related to these sensors can still run on the actual CPX board and be deployed using Pacifica.  
+The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.  
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
 ## Prerequisites
 
-The following dependencies are required to install before launching Pacifica.  
+The following dependencies are required to install before launching Device Simulator Express.  
 You will be prompted to install the Python dependencies during the first use.
 
 - _**[Visual Studio Code](https://code.visualstudio.com/)**_
 - _**[Node](https://nodejs.org/en/download/)**_
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
-- _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Pacifica.
+- _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
 The following dependecies can be installed for you by the extension by clicking yes when you are prompted to (**except** `pywin32` which is needed only on Windows platform). (2)
 
@@ -70,15 +70,15 @@ The following dependecies can be installed for you by the extension by clicking 
 
 ## How to use
 
-To use Pacifica, install the extension from the marketplace and reload VS Code.
+To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
 ### 1. Start with the “New File” Command.
 
-1. Type in “Pacifica: New File” in the command palette(`CTRL+SHIFT+P`to open the command palette).  
+1. Type in Device Simulator Express: New File” in the command palette(`CTRL+SHIFT+P`to open the command palette).  
    ![](assets/readmeFiles/newFile.gif?raw=true)
 2. Name and save your file somewhere, and we’re good to go!(3)
 3. Start with some examples: you can find examples files and tutorials inside the comments,
-   as well as in the notification pop up when you run the `“Pacifica: New File”` Command.
+   as well as in the notification pop up when you run the `“Device Simulator Express: New File”` Command.
 
 ![](assets/readmeFiles/findExamples.jpg?raw=true)
 
@@ -111,7 +111,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 3. Select your baud rate for the serial port
 4. The print() statements in your code will show in the output console
 
-### 6. Use the sensors in the Pacifica Simulator
+### 6. Use the sensors in the Device Simulator Express
 
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
@@ -129,20 +129,20 @@ or by using the toolbar.
 
 ## Commands
 
-Pacifica provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
+Device Simulator Express provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
-- `Pacifica: New File`: Opens an unsaved .py file with template code, also open the simulator.
-- `Pacifica: Open Simulator`: Opens the simulator in the webView
-- `Pacifica: Run on Simulator`: Runs python code on the simulator
-- `Pacifica: Deploy to Board`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
-- `Pacifica: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
-- `Pacifica: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
-- `Pacifica: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
-- `Pacifica: Select Serial Port`: Changes the current serial port.
+- `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also open the simulator.
+- `Device Simulator Express: Open Simulator`: Opens the simulator in the webView
+- `Device Simulator Express: Run on Simulator`: Runs python code on the simulator
+- `Device Simulator Express: Deploy to Board`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
+- `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
+- `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
+- `Device Simulator Express: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
+- `Device Simulator Express: Select Serial Port`: Changes the current serial port.
 
 ## Keybindings
 
-In Pacifica, you can use keyboard to interact with the device:
+In Device Simulator Express, you can use keyboard to interact with the device:
 
 - Push Button `A & B: A B`
 - Capacitive Touch Sensor `A1 – A7: SHIFT + 1~7`
@@ -169,12 +169,12 @@ Our extension is collecting anonymous data about your usage of our features to h
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `'Pacifica: Debugger Server Port'`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `'Device Simulator Express: Debugger Server Port'`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
 
-    Project Pacifica
+    Device Simulator Express, a Microsoft Garage project
 
     Copyright (c) Microsoft Corporation. All rights reserved.
 
