@@ -24,7 +24,11 @@ const languages = [{ folderName: "en", id: "en" }];
 
 gulp.task("clean", () => {
   return del(
-    ["out/**", "package.nls.*.json", "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"],
+    [
+      "out/!(python_libs)",
+      "package.nls.*.json",
+      "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"
+    ],
     { force: true }
   );
 });

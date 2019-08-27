@@ -38,5 +38,6 @@
   "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab !\n\n",
   "label.webviewPanel": "Device Simulator Express",
   "name": "Device Simulator Express",
+
   "warning.agreeAndRun": "By selecting ‘Agree and Run’, you understand the extension executes Python code on your local computer, which may be a potential security risk."
 }

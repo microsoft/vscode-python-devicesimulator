@@ -172,6 +172,7 @@
           "scope": "resource"
         },
         "deviceSimulatorExpress.debuggerServerPort": {
+
           "type": "number",
           "default": 5577,
           "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",

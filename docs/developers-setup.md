@@ -8,21 +8,21 @@
 
 - Python 3.7.4 (or latest)
 
-  - Download link : https://www.python.org/downloads/
-  - **NOTE :** Make sure Python is in your path under an environment variable named `python` (during installation or insert it manually afterwards)
-  - **NOTE :** Make sure pip is added to your environment variables as well
-    (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
-  - Run in a console `python -m pip install --upgrade pip`
+- Download link : https://www.python.org/downloads/
+- **NOTE :** Make sure Python is in your path under an environment variable named `python` or `python3.7` (during installation or insert it manually afterwards)
+- **NOTE :** Make sure pip is added to your environment variables as well
+  (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
+- Run in a console `python -m pip install --upgrade pip`
 
-- Python Modules
+* Python Modules
 
-  - **Note:** On extension activation you will be prompted asking if you want the modules to be automatically installed for you
+  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
   - Playsound
     - Run the command in a console : `pip install playsound`
   - pytest
     - Run the command in a console : `pip install pytest`
   - Pywin32
-    - **Note:** This is only needed for Windows computers
+    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
     - Run the command in a console : `pip install pywin32`
   - Python-Socketio
     - Run the command in a console : `pip install python-socketio`
@@ -31,9 +31,9 @@
   - Application Insights
     - Run the command in a console : `pip install applicationinsights`
 
-- VS Code
+* VS Code
 
-- Python extension for VS Code (download from VS Code market place)
+* Python extension for VS Code (download from VS Code market place)
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
@@ -68,4 +68,4 @@
     - `components/`
     - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
     - `toolbar/` : contains the React components used in the toolbar and the modal.
-    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated value.
+    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated values.

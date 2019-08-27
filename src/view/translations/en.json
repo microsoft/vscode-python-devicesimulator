@@ -1,8 +1,8 @@
 {
-  "toolbar-gpio.description": "8 GPIOs on CPX! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
+  "toolbar-gpio.description": "8 GPIOs on the device! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
   "toolbar-gpio.title": "GPIO",
   "toolbar-gpio.tryItDescription": "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7”",
-  "toolbar-ir-sensor.description": "Allows you to send commands to the CPX with a remote control, or even send messages between multiple CPXs! You can also do very simple proximity sensing since it reads the reflected light.",
+  "toolbar-ir-sensor.description": "Allows you to send commands to the device with a remote control, or even send messages between multiple devices! You can also do very simple proximity sensing since it reads the reflected light.",
   "toolbar-ir-sensor.title": "IR Transmit & Receiver",
   "toolbar-ir-sensor.tryItDescription": "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
   "toolbar-ir-sensor.tryItTitle": "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
@@ -29,7 +29,7 @@
   "toolbar-slider-switch.tryItDescription": "Click it with your mouse or press 'S' on your keyboard to switch it ON and OFF!",
   "toolbar-speaker.description": "This speaker can play .wav file and different tones and also has a class D amplifier that is connected to an output A0 pin built in! You can turn it off using the shutdown control on pin #11 on the physical device.",
   "toolbar-speaker.title": "Speaker",
-  "toolbar-speaker.tryItDescription": "Right now the tones are not supported yet on the simulator, but you can play it on your CPX!",
+  "toolbar-speaker.tryItDescription": "Right now the tones are not supported yet on the simulator, but you can play it on your device!",
   "toolbar-temperature-sensor.description": "This sensor uses an NTC thermistor to sense temperature an calculate it with the analog voltage on analog pin #A9.",
   "toolbar-temperature-sensor.title": "Temperature Sensor",
   "toolbar-temperature-sensor.tryItDescription": "You can set the temperature range from your code!"

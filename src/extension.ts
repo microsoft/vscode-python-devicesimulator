@@ -8,6 +8,7 @@ import * as path from "path";
 import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import {
+  CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
@@ -31,7 +32,6 @@ let inDebugMode: boolean = false;
 let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowNewFile: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 export let outChannel: vscode.OutputChannel | undefined;
@@ -47,10 +47,12 @@ const setPathAndSendMessage = (
   newFilePath: string
 ) => {
   currentFileAbsPath = newFilePath;
-  currentPanel.webview.postMessage({
-    command: "current-file",
-    state: { running_file: newFilePath }
-  });
+  if (currentPanel) {
+    currentPanel.webview.postMessage({
+      command: "current-file",
+      state: { running_file: newFilePath }
+    });
+  }
 };
 
 // Extension activation
@@ -66,7 +68,9 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
-  await utils.checkPythonDependencies(context)
+  pythonExecutableName = await utils.setPythonExectuableName();
+
+  await utils.checkPythonDependencies(context, pythonExecutableName)
 
   // Generate cpx.json
   try {
@@ -77,7 +81,6 @@ export async function activate(context: vscode.ExtensionContext) {
     configFileCreated = false;
   }
 
-  pythonExecutableName = await utils.setPythonExectuableName();
 
   if (pythonExecutableName === "") {
     return;
@@ -238,8 +241,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const fileName = "template.py";
     const filePath = __dirname + path.sep + fileName;
     const file = fs.readFileSync(filePath, "utf8");
+    const showNewFilePopup: boolean = vscode.workspace.getConfiguration().get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-    if (shouldShowNewFile) {
+    if (showNewFilePopup) {
       vscode.window
         .showInformationMessage(
           CONSTANTS.INFO.NEW_FILE,
@@ -249,7 +253,7 @@ export async function activate(context: vscode.ExtensionContext) {
         )
         .then((selection: vscode.MessageItem | undefined) => {
           if (selection === DialogResponses.DONT_SHOW) {
-            shouldShowNewFile = false;
+            vscode.workspace.getConfiguration().update(CONFIG.SHOW_NEW_FILE_POPUP, false);
             telemetryAI.trackFeatureUsage(
               TelemetryEventName.CLICK_DIALOG_DONT_SHOW
             );
@@ -409,7 +413,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
       childProcess = cp.spawn(pythonExecutableName, [
         utils.getPathToScript(context, "out", "process_user_code.py"),
-        currentFileAbsPath
+        currentFileAbsPath,
+        JSON.stringify({ enable_telemetry: utils.getTelemetryState() })
       ]);
 
       let dataFromTheProcess = "";
@@ -442,7 +447,7 @@ export async function activate(context: vscode.ExtensionContext) {
                   case "print":
                     console.log(
                       `Process print statement output = ${
-                      messageToWebview.data
+                        messageToWebview.data
                       }`
                     );
                     utils.logToOutputChannel(
@@ -644,10 +649,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "deviceSimulatorExpress.selectSerialPort",
     () => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.selectSerialPort(null, null); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT
-        );
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.selectSerialPort(null, null);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -689,10 +693,9 @@ export async function activate(context: vscode.ExtensionContext) {
     "deviceSimulatorExpress.closeSerialMonitor",
     (port, showWarning = true) => {
       if (serialMonitor) {
-        telemetryAI.runWithLatencyMeasure(
-          () => { serialMonitor.closeSerialMonitor(port, showWarning); },
-          TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE
-        )
+        telemetryAI.runWithLatencyMeasure(() => {
+          serialMonitor.closeSerialMonitor(port, showWarning);
+        }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE);
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_FOLDER_OPENED);
         console.info("Serial monitor is not defined.");
@@ -870,7 +873,6 @@ const handleSensorTelemetry = (sensor: string) => {
 
 const checkForTelemetry = (sensorState: any) => {
   if (sensorState["shake"]) {
-    console.log(`telemtry sending`);
     handleSensorTelemetry("shake");
   } else if (sensorState["touch"]) {
     handleSensorTelemetry("touch");

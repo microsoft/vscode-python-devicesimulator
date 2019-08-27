@@ -3,7 +3,7 @@
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
-
+ENABLE_TELEMETRY = 'enable_telemetry'
 EXPECTED_INPUT_EVENTS = [
     "button_a",
     "button_b",
@@ -32,6 +32,8 @@ NO_CPX_DETECTED_ERROR_TITLE = "No Circuit Playground Express detected"
 NO_CPX_DETECTED_ERROR_DETAIL = "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
+
+PYTHON_LIBS_DIR = "python_libs"
 
 UTF_FORMAT = "utf-8"
 

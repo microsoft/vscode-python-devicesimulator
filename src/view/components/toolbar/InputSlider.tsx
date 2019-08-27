@@ -96,7 +96,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
   private handleOnChange = (event: any) => {
     const validatedValue = this.validateRange(this.updateValue(event));
-
     const newSensorState = this.writeMessage(validatedValue);
     if (newSensorState) {
       sendMessage(newSensorState);
@@ -109,7 +108,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
       value = parseInt(this.state.value, 10);
     }
 
-    return this.props.type && this.state.value
+    return this.props.type && this.state.value !== undefined
       ? { [this.props.type]: value }
       : undefined;
   };

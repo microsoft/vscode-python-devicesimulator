@@ -10,7 +10,12 @@ import threading
 import traceback
 import python_constants as CONSTANTS
 from pathlib import Path
-from adafruit_circuitplayground.express import cpx
+
+# Insert absolute path to python libraries into sys.path
+abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
+abs_path_to_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.PYTHON_LIBS_DIR)
+sys.path.insert(0, abs_path_to_lib)
 
 read_val = ""
 threads = []
@@ -23,6 +28,11 @@ abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 abs_path_to_lib = os.path.join(
     abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
+
+# This import must happen after the sys.path is modified
+from adafruit_circuitplayground.express import cpx
+from adafruit_circuitplayground.telemetry import telemetry_py
+
 
 
 # Handle User Inputs Thread
@@ -90,6 +100,9 @@ def execute_user_code(abs_path_to_code_file):
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
+telemetry_state = json.loads(sys.argv[2])
+telemetry_py._Telemetry__enable_telemetry = telemetry_state.get(
+    CONSTANTS.ENABLE_TELEMETRY, True)
 threads.append(user_code)
 user_code.start()
 
