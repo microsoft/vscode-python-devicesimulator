@@ -171,6 +171,11 @@
           "default": true,
           "scope": "resource"
         },
+        "pacifica.showNewFilePopup": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource"
+        },
         "deviceSimulatorExpress.debuggerServerPort": {
 
           "type": "number",
