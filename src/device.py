@@ -12,7 +12,7 @@ if sys.platform == "win32":
     import win32api
 
 
-class Adafruit:
+class Device:
     def __init__(self):
         self.connected = False
         self.error_message = None
@@ -58,7 +58,7 @@ class Adafruit:
 if __name__ == "__main__":
     import shutil
 
-    cpx = Adafruit()
+    cpx = Device()
     device_directory = cpx.find_device_directory()
     if cpx.error_message:
         print("{}:\t{}".format(

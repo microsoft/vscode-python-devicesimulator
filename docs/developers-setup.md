@@ -8,27 +8,32 @@
 
 - Python 3.7.4 (or latest)
 
-  - Download link : https://www.python.org/downloads/
-  - **NOTE :** Make sure Python is in your path under an environment variable named `python` (during installation or insert it manually afterwards)
-  - **NOTE :** Make sure pip is added to your environment variables as well
-    (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
-  - Run in a console `python -m pip install --upgrade pip`
+- Download link : https://www.python.org/downloads/
+- **NOTE :** Make sure Python is in your path under an environment variable named `python` or `python3.7` (during installation or insert it manually afterwards)
+- **NOTE :** Make sure pip is added to your environment variables as well
+  (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
+- Run in a console `python -m pip install --upgrade pip`
 
-- Playsound
+* Python Modules
 
-  - Run the command in a console : `pip install playsound`
+  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
+  - Playsound
+    - Run the command in a console : `pip install playsound`
+  - pytest
+    - Run the command in a console : `pip install pytest`
+  - Pywin32
+    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
+    - Run the command in a console : `pip install pywin32`
+  - Python-Socketio
+    - Run the command in a console : `pip install python-socketio`
+  - Requests
+    - Run the command in a console : `pip install requests`
+  - Application Insights
+    - Run the command in a console : `pip install applicationinsights`
 
-- pytest
+* VS Code
 
-  - Run the command in a console : `pip install pytest`
-
-- Pywin32
-
-  - Run the command in a console : `pip install pywin32`
-
-- VS Code
-
-- Python extension for VS Code (download from VS Code market place)
+* Python extension for VS Code (download from VS Code market place)
 
 ## Steps to Get Started Running the Extension in Debug Mode
 
@@ -50,7 +55,7 @@
 - Debugging the extension opens a new VS Code window with the extension installed
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
-  listed as 'Pacifica : ...'
+  listed as 'Device Simulator Express : ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
 
 ## Repository Structure (important files)
@@ -62,3 +67,5 @@
   - `view` : React side
     - `components/`
     - `cpx/` and `Simulator.tsx` : contain the React components and objects to display and handle the simulator webview
+    - `toolbar/` : contains the React components used in the toolbar and the modal.
+    - `translation/en.json`: contains the constants that should be localized. To internationalize the extension you can add additional files with constants sharing the same id found in _en.json_, but with the translated values.

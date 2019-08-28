@@ -355,13 +355,13 @@ export const SOUND_SVG = (
             />
             <rect
               id="Rectangle-2"
-              stroke="#FFFFFF"
               stroke-width="1.2"
               x="3.40000068"
               y="1.1"
               width="3.8"
               height="9.3"
               rx="1.9"
+              className="button-rectangle"
             />
           </g>
         </g>

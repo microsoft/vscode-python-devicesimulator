@@ -1,3 +1,6 @@
-playsound
-pytest
-
+playsound==1.2.2
+pytest==5.0.1
+applicationinsights==0.11.9
+python-socketio==4.3.1
+requests==2.22.0
+pywin32==224

@@ -10,7 +10,12 @@ import threading
 import traceback
 import python_constants as CONSTANTS
 from pathlib import Path
-from adafruit_circuitplayground.express import cpx
+
+# Insert absolute path to python libraries into sys.path
+abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
+abs_path_to_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.PYTHON_LIBS_DIR)
+sys.path.insert(0, abs_path_to_lib)
 
 read_val = ""
 threads = []
@@ -24,6 +29,11 @@ abs_path_to_lib = os.path.join(
     abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
 
+# This import must happen after the sys.path is modified
+from adafruit_circuitplayground.express import cpx
+from adafruit_circuitplayground.telemetry import telemetry_py
+
+
 
 # Handle User Inputs Thread
 class UserInput(threading.Thread):
@@ -32,7 +42,6 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        from adafruit_circuitplayground.express import cpx
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
@@ -72,8 +81,8 @@ user_prints.start()
 def execute_user_code(abs_path_to_code_file):
     cpx._Express__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file
-    with open(abs_path_to_code_file) as file:
-        user_code = file.read()
+    with open(abs_path_to_code_file) as user_code_file:
+        user_code = user_code_file.read()
         try:
             codeObj = compile(user_code, abs_path_to_code_file,
                               CONSTANTS.EXEC_COMMAND)
@@ -91,6 +100,9 @@ def execute_user_code(abs_path_to_code_file):
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
+telemetry_state = json.loads(sys.argv[2])
+telemetry_py._Telemetry__enable_telemetry = telemetry_state.get(
+    CONSTANTS.ENABLE_TELEMETRY, True)
 threads.append(user_code)
 user_code.start()
 

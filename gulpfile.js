@@ -24,12 +24,20 @@ const languages = [{ folderName: "en", id: "en" }];
 
 gulp.task("clean", () => {
   return del(
-    ["out/**", "package.nls.*.json", "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"],
+    [
+      "out/!(python_libs)",
+      "package.nls.*.json",
+      "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"
+    ],
     { force: true }
   );
 });
 
-const pythonToMove = ["./src/adafruit_circuitplayground/*.*", "./src/*.py"];
+const pythonToMove = [
+  "./src/adafruit_circuitplayground/*.*",
+  "./src/*.py",
+  "./src/requirements.txt"
+];
 
 gulp.task("python-compile", () => {
   // the base option sets the relative root for the set of files,
@@ -58,7 +66,7 @@ gulp.task("vsce:publish", () => {
 
 gulp.task("vsce:package", () => {
   return vsce.createVSIX({
-    packagePath: "../../dist/pacifica-0.0.0-UNTRACKEDVERSION.vsix"
+    packagePath: "../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix"
   });
 });
 

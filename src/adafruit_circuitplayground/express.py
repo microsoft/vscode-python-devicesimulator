@@ -9,6 +9,8 @@ from .pixel import Pixel
 from . import utils
 from . import constants as CONSTANTS
 from collections import namedtuple
+from applicationinsights import TelemetryClient
+from .telemetry import telemetry_py
 
 Acceleration = namedtuple('acceleration', ['x', 'y', 'z'])
 
@@ -40,13 +42,11 @@ class Express:
             'motion_y': 0,
             'motion_z': 0,
             'touch': [False]*7,
-            'detect_taps': 1,
-            'tapped': False,
             'shake': False,
         }
-
-        self.pixels = Pixel(self.__state)
+        self.__debug_mode = False
         self.__abs_path_to_code_file = ''
+        self.pixels = Pixel(self.__state, self.__debug_mode)
 
     @property
     def acceleration(self):
@@ -62,6 +62,7 @@ class Express:
 
     @property
     def detect_taps(self):
+        telemetry_py.send_telemetry("DETECT_TAPS")
         return self.__state['detect_taps']
 
     @detect_taps.setter
@@ -74,15 +75,17 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-
+        telemetry_py.send_telemetry("TAPPED")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
+        telemetry_py.send_telemetry("RED_LED")
         return self.__state['red_led']
 
     @red_led.setter
     def red_led(self, value):
+        telemetry_py.send_telemetry("RED_LED")
         self.__state['red_led'] = bool(value)
         self.__show()
 
@@ -99,7 +102,7 @@ class Express:
         return self.__state['light']
 
     def __show(self):
-        utils.show(self.__state)
+        utils.show(self.__state, self.__debug_mode)
 
     def __touch(self, i):
         return self.__state['touch'][i-1]
@@ -134,20 +137,23 @@ class Express:
 
     def adjust_touch_threshold(self, adjustement):
         """Not implemented!
-        The CPX Simulator doesn't use capacitive touch threshold.
+        The Pacifica Simulator doesn't use capacitive touch threshold.
         """
+        telemetry_py.send_telemetry("ADJUST_THRESHOLD")
         raise NotImplementedError(
-            "this method is not supported by the simulator")
+            CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def shake(self, shake_threshold=30):
         return self.__state['shake']
 
     def play_file(self, file_name):
+        telemetry_py.send_telemetry("PLAY_FILE")
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir))
         abs_path_wav_file = os.path.normpath(
             os.path.join(abs_path_parent_dir, file_name))
+        abs_path_wav_file = utils.escape_if_OSX(abs_path_wav_file)
 
         if sys.implementation.version[0] >= 3:
             if file_name.endswith(".wav"):
@@ -164,19 +170,21 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
+        telemetry_py.send_telemetry("PLAY_TONE")
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
+        telemetry_py.send_telemetry("START_TONE")
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        # Stop playing any tones.
+        telemetry_py.send_telemetry("STOP_TONE")
         raise NotImplementedError(
             CONSTANTS.NOT_IMPLEMENTED_ERROR)
 

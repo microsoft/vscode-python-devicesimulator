@@ -5,28 +5,38 @@ import json
 import sys
 from . import constants as CONSTANTS
 from . import utils
+from applicationinsights import TelemetryClient
+from . import constants as CONSTANTS
+from .telemetry import telemetry_py
 
 
 class Pixel:
-    def __init__(self, state):
+    def __init__(self, state, debug_mode=False):
         self.__state = state
         self.auto_write = True
+        self.__debug_mode = debug_mode
+        self.telemetry_state = False
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
-        utils.show(self.__state)
+        utils.show(self.__state, self.__debug_mode)
 
     def __show_if_auto_write(self):
         if self.auto_write:
             self.show()
 
+    def __set_debug_mode(self, debug_mode):
+        self.__debug_mode = debug_mode
+
     def __getitem__(self, index):
         if type(index) is not slice:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
+        telemetry_py.send_telemetry("PIXELS")
         return self.__state['pixels'][index]
 
     def __setitem__(self, index, val):
+        telemetry_py.send_telemetry("PIXELS")
         is_slice = False
         if type(index) is slice:
             is_slice = True
@@ -76,7 +86,6 @@ class Pixel:
             if len(rgb_value) != 3 or any(not self.__valid_rgb_value(pix) for pix in rgb_value):
                 raise ValueError(CONSTANTS.VALID_PIXEL_ASSIGN_ERROR)
             extracted_values.append(rgb_value)
-
         return rgb_value if not is_slice else extracted_values
 
     def __hex_to_rgb(self, hexValue):
@@ -86,7 +95,6 @@ class Pixel:
             hexToRgbValue[0] = int(hexColor[0:2], 16)  # R
             hexToRgbValue[1] = int(hexColor[2:4], 16)  # G
             hexToRgbValue[2] = int(hexColor[4:6], 16)  # B
-
             return tuple(hexToRgbValue)
         else:
             raise ValueError(CONSTANTS.PIXEL_RANGE_ERROR)

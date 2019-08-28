@@ -3,7 +3,7 @@
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
-
+ENABLE_TELEMETRY = 'enable_telemetry'
 EXPECTED_INPUT_EVENTS = [
     "button_a",
     "button_b",
@@ -13,12 +13,14 @@ EXPECTED_INPUT_EVENTS = [
     "shake",
     "motion_x",
     "motion_y",
-    "motion_z"
+    "motion_z",
+    "touch"
 ]
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 ERROR_TRACEBACK = "\n\tTraceback of code execution : \n"
+ERROR_NO_FILE = "Error : No file was passed to the process to execute.\n"
 
 LIBRARY_NAME = "adafruit_circuitplayground"
 LINUX_OS = "linux"
@@ -31,6 +33,10 @@ NO_CPX_DETECTED_ERROR_DETAIL = "Could not find drive with name 'CIRCUITPYTHON'. 
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
+PYTHON_LIBS_DIR = "python_libs"
+
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"
+
+DEFAULT_PORT = "5577"
