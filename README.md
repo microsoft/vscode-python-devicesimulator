@@ -116,8 +116,6 @@ Before deploying the python code to your CPX device, you need to format your dev
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
 
-![Using a slider to control sensors in the simulator animation](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/slider_basedSensor.gif)
-
 - **Switch, push buttons and capacitive touch:** click directly on the corresponding element on the device or use the keybindings.
 - **Temperature sensor, Light sensor, acceleration:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
 - **Shake detection:** go to the motion sensor section in the toolbar and click on the shake button.
