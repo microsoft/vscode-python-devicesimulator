@@ -13,17 +13,7 @@
     "Other"
   ],
   "preview": true,
-  "homepage": "https://github.com/microsoft/vscode-python-embedded/blob/master/README.md",
-  "bugs": {
-    "url": "https://github.com/microsoft/vscode-python-embedded/issues"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/microsoft/vscode-python-embedded",
-    "vsce": "^1.57.1",
-    "vscode-nls": "^4.0.0"
-  },
+  "license": "MIT",
   "activationEvents": [
     "onCommand:deviceSimulatorExpress.openSerialMonitor",
     "onCommand:deviceSimulatorExpress.openSimulator",
