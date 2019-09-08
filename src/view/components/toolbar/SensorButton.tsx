@@ -8,6 +8,7 @@ import "../../styles/SensorButton.css";
 const SensorButton: React.FC<ISensorButtonProps> = props => {
   return (
     <button
+      id={`${props.label}-button`}
       onMouseUp={props.onMouseUp}
       onMouseDown={props.onMouseDown}
       onKeyUp={props.onKeyUp}

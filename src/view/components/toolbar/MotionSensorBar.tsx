@@ -4,6 +4,7 @@
 import * as React from "react";
 import InputSlider from "./InputSlider";
 import SensorButton from "./SensorButton";
+import svg from "../cpx/Svg_utils";
 
 import {
   ISensorProps,
@@ -138,7 +139,10 @@ class MotionSensorBar extends React.Component {
     );
   }
 
-  private onMouseDown = () => this.handleOnclick(true, "shake");
+  private onMouseDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    this.updateShakePress(true, event.currentTarget.id);
+    this.handleOnclick(true, "shake");
+  };
 
   private onKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) =>
     this.onKeyEvent(event, false);
@@ -146,7 +150,10 @@ class MotionSensorBar extends React.Component {
   private onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) =>
     this.onKeyEvent(event, true);
 
-  private onMouseUp = () => this.handleOnclick(false, "shake");
+  private onMouseUp = (event: React.PointerEvent<HTMLButtonElement>) => {
+    this.updateShakePress(false, event.currentTarget.id);
+    this.handleOnclick(false, "shake");
+  };
 
   private handleOnclick = (active: boolean, type: string) => {
     const messageState = { [type]: active };
@@ -161,6 +168,19 @@ class MotionSensorBar extends React.Component {
       this.handleOnclick(active, "shake");
     }
   }
+
+  private updateShakePress = (shakeState: boolean, id: string): void => {
+    const svgElement = window.document.getElementById("cpx_svg");
+    const buttonElement = window.document.getElementById(id);
+    const cpxSvg: SVGElement = (svgElement as unknown) as SVGElement;
+
+    if (svgElement && cpxSvg && buttonElement) {
+      buttonElement.setAttribute("aria-pressed", shakeState.toString());
+      shakeState
+        ? svg.addClass(cpxSvg, "shake-pressed")
+        : svg.removeClass(cpxSvg, "shake-pressed");
+    }
+  };
 }
 
 export default MotionSensorBar;
