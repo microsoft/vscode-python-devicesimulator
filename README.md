@@ -132,7 +132,7 @@ Device Simulator Express provides several commands in the Command Palette (F1 or
 - `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also open the simulator.
 - `Device Simulator Express: Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: Run on Simulator`: Runs python code on the simulator
-- `Device Simulator Express: Deploy to Board`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
+- `Device Simulator Express: Deploy to Device`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
 - `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Device Simulator Express: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
