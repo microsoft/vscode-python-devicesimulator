@@ -36,7 +36,7 @@
 			"onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
 			"onCommand:deviceSimulatorExpress.selectSerialPort",
 			"onDebug"
-  ],
+	],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
