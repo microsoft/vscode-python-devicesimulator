@@ -28,14 +28,14 @@
 			"Adafruit"
 	],
 	"activationEvents": [
-    "onCommand:deviceSimulatorExpress.openSerialMonitor",
-    "onCommand:deviceSimulatorExpress.openSimulator",
-    "onCommand:deviceSimulatorExpress.runSimulator",
-    "onCommand:deviceSimulatorExpress.newFile",
-    "onCommand:deviceSimulatorExpress.runDevice",
-    "onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
-    "onCommand:deviceSimulatorExpress.selectSerialPort",
-    "onDebug"
+			"onCommand:deviceSimulatorExpress.openSerialMonitor",
+			"onCommand:deviceSimulatorExpress.openSimulator",
+			"onCommand:deviceSimulatorExpress.runSimulator",
+			"onCommand:deviceSimulatorExpress.newFile",
+			"onCommand:deviceSimulatorExpress.runDevice",
+			"onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
+			"onCommand:deviceSimulatorExpress.selectSerialPort",
+			"onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
