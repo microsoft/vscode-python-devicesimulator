@@ -30,6 +30,7 @@ interface IState {
   selected_file: string;
   cpx: ICpxState;
   play_button: boolean;
+  currentToolId:number
 }
 interface IMyProps {
   children?: any;
@@ -62,7 +63,7 @@ interface vscode {
 }
 
 declare const vscode: vscode;
-
+const deviceOptions =['option1','option2']
 const sendMessage = (type: string, state: any) => {
   vscode.postMessage({ command: type, text: state });
 };
@@ -75,7 +76,8 @@ class Simulator extends React.Component<any, IState> {
       cpx: DEFAULT_CPX_STATE,
       play_button: false,
       running_file: "",
-      selected_file: ""
+      selected_file: "",
+      currentToolId:0,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -150,22 +152,36 @@ class Simulator extends React.Component<any, IState> {
             styleLabel={"dropdown"}
             lastChosen={this.state.running_file}
             width={300}
+            textOptions={deviceOptions}
+            onBlur={this.onSelectBlur}
+          />
+          <Dropdown
+            label={"file-dropdown"}
+            styleLabel={"dropdown"}
+            lastChosen={this.state.running_file}
+            width={300}
             textOptions={this.state.active_editors}
             onBlur={this.onSelectBlur}
           />
         </div>
+     
         <div className="cpx-container">
-          <Cpx
-            pixels={this.state.cpx.pixels}
-            brightness={this.state.cpx.brightness}
-            red_led={this.state.cpx.red_led}
-            switch={this.state.cpx.switch}
-            on={this.state.play_button}
-            onKeyEvent={this.onKeyEvent}
-            onMouseUp={this.onMouseUp}
-            onMouseDown={this.onMouseDown}
-            onMouseLeave={this.onMouseLeave}
-          />
+        {this.state.currentToolId?
+                  <Cpx
+                  pixels={this.state.cpx.pixels}
+                  brightness={this.state.cpx.brightness}
+                  red_led={this.state.cpx.red_led}
+                  switch={this.state.cpx.switch}
+                  on={this.state.play_button}
+                  onKeyEvent={this.onKeyEvent}
+                  onMouseUp={this.onMouseUp}
+                  onMouseDown={this.onMouseDown}
+                  onMouseLeave={this.onMouseLeave}
+                />
+        :
+        <text>Microbits</text>
+        }
+
         </div>
         <div className="buttons">
           <Button
@@ -182,6 +198,14 @@ class Simulator extends React.Component<any, IState> {
             image={RefreshLogo}
             styleLabel="refresh"
             label="refresh"
+            width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
+          />
+                   <Button
+            onClick={()=>{if(this.state.currentToolId){this.setState({currentToolId:0})}else{this.setState({currentToolId:1})}}}
+            focusable={true}
+            image={RefreshLogo}
+            styleLabel="refresh"
+            label="change"
             width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
           />
         </div>
