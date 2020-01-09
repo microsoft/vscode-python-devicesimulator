@@ -549,7 +549,7 @@ export async function activate(context: vscode.ExtensionContext) {
       );
 
       const deviceProcess = cp.spawn(pythonExecutableName, [
-        utils.getPathToScript(context, "out", "device.py"),
+        utils.getPathToScript(context, "out", "microbit.py"),
         currentFileAbsPath
       ]);
 
