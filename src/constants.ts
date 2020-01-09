@@ -191,7 +191,7 @@ export const CONSTANTS = {
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
-      "Welcome to the Adafruit Simulator output tab !\n\n"
+      "Welcome to the Adafruit Simulator output tab !!!!!!!!!!\n\n"
     )
   },
   LABEL: {
@@ -274,6 +274,7 @@ export enum TelemetryEventName {
   COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
   COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
   COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
+  COMMAND_SERIAL_MONITOR_SELECT_DEVICE = "COMMAND.SERIAL_MONITOR.SELECT_DEVICE",
 
   // Simulator interaction
   SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",
@@ -369,6 +370,7 @@ export const USER_CODE_NAMES = {
 };
 
 export const STATUS_BAR_PRIORITY = {
+  DEVICE: 10,
   PORT: 20,
   OPEN_PORT: 30,
   BAUD_RATE: 40

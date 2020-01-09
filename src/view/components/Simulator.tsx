@@ -64,7 +64,6 @@ interface vscode {
 }
 
 declare const vscode: vscode;
-const deviceOptions = ['option1', 'option2']
 const sendMessage = (type: string, state: any) => {
   vscode.postMessage({ command: type, text: state });
 };

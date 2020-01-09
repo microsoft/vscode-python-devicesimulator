@@ -256,20 +256,23 @@ export const checkConfig = (configName: string): boolean => {
   return vscode.workspace.getConfiguration().get(configName) === true;
 };
 
+// >>>>>>>>>>>>>>  Remove dependency check here?
+//
 export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
-  if (checkPipDependency() && checkPythonDependency()) {
-    if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-      hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
-      if (hasInstalledDependencies) {
-        await vscode.workspace
-          .getConfiguration()
-          .update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
-      }
-    }
-  } else {
-    hasInstalledDependencies = false;
-  }
+  // if (checkPipDependency() && checkPythonDependency()) {
+  //   if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+  //     hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
+  //     if (hasInstalledDependencies) {
+  //       await vscode.workspace
+  //         .getConfiguration()
+  //         .update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
+  //     }
+  //   }
+  // } else {
+  //   hasInstalledDependencies = false;
+  // }
+  hasInstalledDependencies = true;
   return hasInstalledDependencies;
 };
 
@@ -295,6 +298,7 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
         })
       }
     });
+  // return true;
 };
 export const getTelemetryState = () => {
   return vscode.workspace

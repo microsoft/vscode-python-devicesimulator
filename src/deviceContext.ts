@@ -21,6 +21,7 @@ export class DeviceContext implements vscode.Disposable {
     private _watcher: vscode.FileSystemWatcher;
     private _vscodeWatcher: vscode.FileSystemWatcher;
     private _port!: string;
+    private _device!: string;
     
     private constructor() {
         if (vscode.workspace && CPXWorkspace.rootPath) {
@@ -117,6 +118,15 @@ export class DeviceContext implements vscode.Disposable {
 
     public set port(value: string) {
         this._port = value;
+        this.saveContext();
+    }
+
+    public get device() {
+        return this._device;
+    }
+
+    public set device(value: string) {
+        this._device = value;
         this.saveContext();
     }
 }

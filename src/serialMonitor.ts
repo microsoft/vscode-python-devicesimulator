@@ -35,12 +35,14 @@ export class SerialMonitor implements vscode.Disposable {
     private static _serialMonitor: SerialMonitor | null = null;
 
     private _currentPort!: string;
+    private _currentDevice!: string;
     private _currentBaudRate!: number;
     private _outputChannel!: vscode.OutputChannel;
     private _serialPortControl: SerialPortControl | null = null;
     private _baudRateStatusBar!: vscode.StatusBarItem;
     private _openPortStatusBar!: vscode.StatusBarItem;
     private _portsStatusBar!: vscode.StatusBarItem;
+    private _deviceSelectionBar!: vscode.StatusBarItem;
 
     private constructor() {
         const deviceContext = DeviceContext.getInstance();
@@ -63,6 +65,11 @@ export class SerialMonitor implements vscode.Disposable {
         this._portsStatusBar.tooltip = "Select Serial Port";
         this._portsStatusBar.show();
 
+        this._deviceSelectionBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.DEVICE);
+        this._deviceSelectionBar.command = "deviceSimulatorExpress.selectDevice";
+        this._deviceSelectionBar.tooltip = "Select Device";
+        this._deviceSelectionBar.show();
+        
         this._openPortStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, STATUS_BAR_PRIORITY.OPEN_PORT);
         this._openPortStatusBar.command = "deviceSimulatorExpress.openSerialMonitor";
         this._openPortStatusBar.text = `$(plug)`;
@@ -74,6 +81,20 @@ export class SerialMonitor implements vscode.Disposable {
         this._baudRateStatusBar.tooltip = "Baud Rate";
         this._baudRateStatusBar.text = defaultBaudRate.toString();
         this.updatePortListStatus(null);
+        this.updateDeviceSelection(null);
+    }
+
+    public async selectDevice() {
+        const DeviceOptions: string[] = ["Adafruit Playground", "Microbit"];
+        const chosen = await vscode.window.showQuickPick(<vscode.QuickPickItem[]>DeviceOptions.map((l: string): vscode.QuickPickItem => {
+        return {
+                description: l,
+                label: l,
+            };
+        }), { placeHolder: "Select Device" });
+        if (chosen && chosen.label) {
+            this.updateDeviceSelection(chosen.label);
+        }
     }
 
     public async selectSerialPort(vid: string | null, pid: string | null) {
@@ -226,5 +247,23 @@ export class SerialMonitor implements vscode.Disposable {
         } else {
             this._portsStatusBar.text = "<Select Serial Port>";
         }
+    }
+
+    private updateDeviceSelection(device: string | null) {
+        const deviceContext = DeviceContext.getInstance();
+        if (device) {
+            deviceContext.device = device;
+        }
+        this._currentDevice = deviceContext.device;
+        console.info("Updating Device in Serial Monitor to " + this._currentDevice);
+        if (deviceContext.device) {
+            this._deviceSelectionBar.text = deviceContext.device;
+        } else {
+            this._deviceSelectionBar.text = "<Select Device>";
+        }
+    }
+
+    public get currentDevice() {
+        return this._currentDevice;
     }
 }
