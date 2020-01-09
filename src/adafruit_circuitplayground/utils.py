@@ -12,11 +12,14 @@ from applicationinsights import TelemetryClient
 previous_state = {}
 
 
-def show(state, debug_mode=False):
+def show(state, debug_mode=False, microbit=False):
     global previous_state
     if state != previous_state:
         previous_state = copy.deepcopy(state)
-        message = {'type': 'state', 'data': json.dumps(state)}
+        if microbit:
+            message = {'device':'mb', 'type': 'state', 'data': json.dumps(state)}
+        else:
+            message = {'device':'cpx', 'type': 'state', 'data': json.dumps(state)}
         if debug_mode:
             debugger_communication_client.update_state(json.dumps(message))
         else:

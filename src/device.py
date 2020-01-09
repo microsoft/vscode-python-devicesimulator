@@ -7,13 +7,16 @@ import os
 import sys
 import json
 import python_constants as CONSTANTS
+import uflash
 if sys.platform == "win32":
     # pylint: disable=import-error
     import win32api
 
 
 class Device:
-    def __init__(self):
+    def __init__(self, file_path, name):
+        self._name = name
+        self._file_path = file_path
         self.connected = False
         self.error_message = None
 
@@ -54,20 +57,42 @@ class Device:
             self.error_message = None
         return found_directory
 
+    def _connectToCpx(self):
+        self.find_device_directory()
+
+        if cpx.error_message:
+            print("{}:\t{}".format(
+                cpx.error_message[0], cpx.error_message[1]), file=sys.stderr, flush=True)
+        import shutil
+        if cpx.connected:
+            dest_path = os.path.join(
+                device_directory, self._file_path.rsplit(os.sep, 1)[-1])
+            shutil.copyfile(self._file_path, dest_path)
+            message = {'type': 'complete'}
+        else:
+            message = {'type': 'no-device'}
+        
+        return message
+
+    def _connectToMicrobit(self):
+        try:
+            uflash.flash(path_to_python=self._file_path)
+            message = {'type': 'complete'}
+        except:
+            message = {'type': 'no-device'}
+        
+        return message
+    
+    def deploy(self):
+        if self._name == "Microbit":
+            return self._connectToMicrobit()
+        elif self._name == "Adafruit Playground":
+            return self._connectToCpx()
+        else:
+            return {'type': 'no-device'}
 
 if __name__ == "__main__":
-    import shutil
-
-    cpx = Device()
-    device_directory = cpx.find_device_directory()
-    if cpx.error_message:
-        print("{}:\t{}".format(
-            cpx.error_message[0], cpx.error_message[1]), file=sys.stderr, flush=True)
-    if cpx.connected:
-        dest_path = os.path.join(
-            device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
-        shutil.copyfile(sys.argv[1], dest_path)
-        message = {'type': 'complete'}
-    else:
-        message = {'type': 'no-device'}
+    device = Device(sys.argv[1], sys.argv[2])
+    message = device.deploy()
+    
     print(json.dumps(message), flush=True)
