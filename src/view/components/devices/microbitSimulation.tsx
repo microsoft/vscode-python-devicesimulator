@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Fragment, Component } from "react"
+import { Component } from "react"
 
 class MicrobitSimulation extends Component{
     render(){
