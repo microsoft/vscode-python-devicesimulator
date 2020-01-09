@@ -77,9 +77,19 @@ class Microbit:
                 [False, False, False, False, False],
                 [False, False, False, False, False]
             ],
+            'button_a': False,
+            'button_b': False,
         }
         self.__debug_mode = False
         self.__abs_path_to_code_file = ''
+
+    @property
+    def button_a(self):
+        return self.__state['button_a']
+
+    @property
+    def button_b(self):
+        return self.__state['button_b']
 
     def __show(self):
         utils.show(self.__state, self.__debug_mode)
