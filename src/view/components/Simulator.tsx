@@ -10,6 +10,7 @@ import { CONSTANTS } from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import RefreshLogo from "../svgs/refresh_svg";
+import MicrobitSimulation from "./devices/microbitSimulation"
 
 import "../styles/Simulator.css";
 
@@ -179,7 +180,7 @@ class Simulator extends React.Component<any, IState> {
                   onMouseLeave={this.onMouseLeave}
                 />
         :
-        <text>Microbits</text>
+        <MicrobitSimulation/>
         }
 
         </div>
