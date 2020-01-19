@@ -35,14 +35,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
         <div className="toolbar">
           <div className="toolbar-icon">
             <Button
-              label=""
-              width={this.TOOLBAR_EDGE_WIDTH}
-              onClick={() => {}}
-              image={TOOLBAR_SVG.LEFT_EDGE_SVG}
-              styleLabel="edge"
-              focusable={false}
-            />
-            <Button
               label={TOOLBAR_ICON_ID.SWITCH}
               width={this.TOOLBAR_BUTTON_WIDTH}
               onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -163,14 +155,6 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
               focusable={true}
             />
 
-            <Button
-              label=""
-              width={this.TOOLBAR_EDGE_WIDTH}
-              onClick={() => {}}
-              image={TOOLBAR_SVG.RIGHT_EDGE_SVG}
-              styleLabel="edge"
-              focusable={false}
-            />
           </div>
           {this.getIconModal()}
         </div>
