@@ -23,7 +23,7 @@ interface IProps {
 let firstTime = true;
 
 // Functional Component render
-const Cpx: React.FC<IProps> = props => {
+const CpxImage: React.FC<IProps> = props => {
   const svgElement = window.document.getElementById("cpx_svg");
 
   if (svgElement) {
@@ -386,4 +386,4 @@ export const updatePinTouch = (pinState: boolean, id: string): void => {
   }
 };
 
-export default Cpx;
+export default CpxImage;
