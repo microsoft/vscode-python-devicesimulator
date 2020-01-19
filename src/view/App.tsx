@@ -3,8 +3,7 @@
 
 "use strict";
 import * as React from "react";
-import Simulator from "./components/Simulator";
-import ToolBar from "./components/toolbar/ToolBar";
+import Device from "./container/device/device"
 import "./App.css";
 
 class App extends React.Component {
@@ -12,8 +11,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <main className="App-main">
-          <Simulator />
-          <ToolBar />
+          <Device/>
         </main>
       </div>
     );
