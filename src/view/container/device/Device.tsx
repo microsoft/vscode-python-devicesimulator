@@ -1,11 +1,14 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import Simulator from "../../components/Simulator";
 import ToolBar from "../../components/toolbar/ToolBar";
 import * as React from "react";
 
-class Device extends React.Component<any,any>{
+class Device extends React.Component{
     render(){
         return(
-            <div>
+            <div className="device-container">
             <Simulator />
             <ToolBar />
             </div>

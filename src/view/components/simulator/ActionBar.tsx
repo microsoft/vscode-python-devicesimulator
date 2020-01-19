@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import RefreshLogo from "../../svgs/refresh_svg";
 import Button from "../Button";
@@ -8,8 +10,8 @@ interface IProps{
     onToggleRefresh: (event: React.MouseEvent<HTMLElement>) => void,
     playStopImage:JSX.Element
 }
-class ActionBar extends React.Component<IProps,any>{
-    render(){
+class ActionBar extends React.Component<IProps>{
+    public render(){
         const {onTogglePlay,onToggleRefresh,playStopImage}=this.props;
         return(
             <div className="buttons">
