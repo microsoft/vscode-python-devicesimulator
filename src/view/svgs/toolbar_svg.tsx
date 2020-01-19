@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TOOLBAR_ICON_LABEL } from "../components/toolbar/sensorModalUtils";
+import { TOOLBAR_ICON_LABEL } from "../components/toolbar/SensorModalUtils";
 import "../styles/Button.css";
 
 export const LEFT_EDGE_SVG = (

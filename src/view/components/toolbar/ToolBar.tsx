@@ -9,7 +9,7 @@ import {
   DEFAULT_MODAL_CONTENT,
   IModalContent,
   TOOLBAR_ICON_ID
-} from "./sensorModalUtils";
+} from "./SensorModalUtils";
 import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IToolbarState {
