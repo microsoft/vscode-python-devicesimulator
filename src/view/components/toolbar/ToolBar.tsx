@@ -2,32 +2,30 @@
 // Licensed under the MIT license.
 import * as React from "react";
 import Button from "../Button";
-import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import "../../styles/ToolBar.css";
 import {
   LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent,
-  TOOLBAR_ICON_ID
 } from "./SensorModalUtils";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 interface IToolbarState {
   currentOpenedId: string;
   showModal: boolean;
 }
 
-// interface IProps {
-//   buttonList: [{
-//     label: any,
-//     image: any
-//   }]
-// }
+interface IProps extends WrappedComponentProps {
+  buttonList: Array<{
+    label: any,
+    image: any
+  }>
+}
 
-class ToolBar extends React.Component<any, IToolbarState, any> {
+class ToolBar extends React.Component<IProps, IToolbarState, any> {
   private readonly TOOLBAR_BUTTON_WIDTH: number = 32;
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       currentOpenedId: "",
@@ -41,19 +39,19 @@ class ToolBar extends React.Component<any, IToolbarState, any> {
       <div className="toolbar-parent" id="toolbar-parent">
         <div className="toolbar">
           <div className="toolbar-icon">
-            {buttonList.map((currrentButton: any,index:number) => {
-              return(
-              <Button
-                key={index}
-                label={currrentButton.label}
-                width={this.TOOLBAR_BUTTON_WIDTH}
-                onClick={(e: React.MouseEvent<HTMLElement>) => {
-                  this.handleOnClick(e, currrentButton.label);
-                }}
-                image={currrentButton.image}
-                styleLabel="toolbar"
-                focusable={true}
-              />)
+            {buttonList.map((currrentButton: any, index: number) => {
+              return (
+                <Button
+                  key={index}
+                  label={currrentButton.label}
+                  width={this.TOOLBAR_BUTTON_WIDTH}
+                  onClick={(e: React.MouseEvent<HTMLElement>) => {
+                    this.handleOnClick(e, currrentButton.label);
+                  }}
+                  image={currrentButton.image}
+                  styleLabel="toolbar"
+                  focusable={true}
+                />)
             })}
           </div>
           {this.getIconModal()}

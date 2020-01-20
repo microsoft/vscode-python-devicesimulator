@@ -9,7 +9,7 @@ import {
     TOOLBAR_ICON_ID
 } from "../../components/toolbar/SensorModalUtils";
 
-const CPX_TOOLBAR_BUTTONS: any = [{
+const CPX_TOOLBAR_BUTTONS: Array<{ label: any, image: any }> = [{
     label: TOOLBAR_ICON_ID.SWITCH,
     image: TOOLBAR_SVG.SLIDER_SWITCH_SVG
 }, {
@@ -54,7 +54,7 @@ class Device extends React.Component {
         return (
             <div className="device-container">
                 <Simulator />
-                <ToolBar buttonList={CPX_TOOLBAR_BUTTONS}/>
+                <ToolBar buttonList={CPX_TOOLBAR_BUTTONS} />
             </div>
         )
     }
