@@ -12,7 +12,7 @@ Commands are accessible through :
 - **New File** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
-- **Run Simulator** : runs the code you have opened on the simulator (make sure you've clicked on a valid code file).  
+- **Run Simulator** : runs the code you have opened in the simulator (make sure you've clicked on a valid code file).  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
 - **Deploy to Device** : saves the code to a Circuit Playground Express.  

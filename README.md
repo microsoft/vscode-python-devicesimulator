@@ -74,7 +74,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 ### 1. Start with the “New File” Command.
 
-1. Type in Device Simulator Express: New File” in the command palette (`CTRL+SHIFT+P` to open the command palette).  
+1. Type in `"Device Simulator Express: New File”` in the command palette (`CTRL+SHIFT+P` to open the command palette).  
    <img alt='"New File" animation' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/newFile.gif>
 2. Name and save your file somewhere, and we’re good to go! (3)
 3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `“Device Simulator Express: New File”` Command.
@@ -106,7 +106,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 ### 5. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already)
-2. Run the command `Device Simulator Express: Open Serial Monitor`
+2. Run the command `"Device Simulator Express: Open Serial Monitor"`
 3. Select your baud rate for the serial port
 4. The print() statements in your code will show in the output console
 
@@ -185,7 +185,7 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `'Device Simulator Express: Debugger Server Port'`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
