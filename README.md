@@ -29,7 +29,7 @@ monitor allows you to observe the device output.
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
+The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **"tap" on Motion Sensor**.
 The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.  
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
@@ -72,12 +72,12 @@ The following dependecies can be installed for you by the extension by clicking 
 
 To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
-### 1. Start with the “New File” Command.
+### 1. Start with the "New File" Command.
 
-1. Type in `"Device Simulator Express: New File”` in the command palette (`CTRL+SHIFT+P` to open the command palette).  
+1. Type in `"Device Simulator Express: New File"` in the command palette (`CTRL+SHIFT+P` to open the command palette).  
    <img alt='"New File" animation' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/newFile.gif>
 2. Name and save your file somewhere, and we’re good to go! (3)
-3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `“Device Simulator Express: New File”` Command.
+3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: New File"` Command.
 
 <img alt='How to find example code screenshot' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/findExamples.jpg>
 
