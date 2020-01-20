@@ -22,7 +22,11 @@ _Note: You need to install all the dependencies in order to use the extension._
     _(Note: the easiest way to do it might be when you install Python, you can select the "Add to PATH" option directly. Otherwise you can search how to insert it manually, but make sure that when you type `python` (or `python3.7`) in a terminal, the command is recognized.)_
 - [Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
-- Python Modules
+
+- Python Modules for Deploy to Device
+    - If you're on Windows, use the following command in the console to install pywin32: `pip install pywin32`
+
+- Python Modules for Simulation
   - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
     - Playsound : `pip install playsound`
     - Pywin32 : `pip install pywin32`
