@@ -36,7 +36,8 @@ gulp.task("clean", () => {
 const pythonToMove = [
   "./src/adafruit_circuitplayground/*.*",
   "./src/*.py",
-  "./src/requirements.txt"
+  "./src/requirements.txt",
+  "./src/requirements-windows.txt"
 ];
 
 gulp.task("python-compile", () => {

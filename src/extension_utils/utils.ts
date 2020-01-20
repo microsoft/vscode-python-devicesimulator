@@ -258,14 +258,12 @@ export const checkConfig = (configName: string): boolean => {
 
 export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
+  const pathToLibs: string = getPathToScript(context, "out", "python_libs");
   if (checkPipDependency() && checkPythonDependency()) {
     if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-      hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
-      if (hasInstalledDependencies) {
-        await vscode.workspace
-          .getConfiguration()
-          .update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
-      }
+      // check if ./out/python_libs exists; if not, the dependencies 
+      // for adafruit_circuitpython are not (successfully) installed yet
+      hasInstalledDependencies = fs.existsSync(pathToLibs) || await promptInstallPythonDependencies(context, pythonExecutable, pathToLibs);
     }
   } else {
     hasInstalledDependencies = false;
@@ -273,14 +271,14 @@ export const checkPythonDependencies = async (context: vscode.ExtensionContext, 
   return hasInstalledDependencies;
 };
 
-export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string) => {
+export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string, pathToLibs: string) => {
   return vscode.window.showInformationMessage(
     CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
     DialogResponses.YES,
     DialogResponses.NO)
     .then((selection: vscode.MessageItem | undefined) => {
       if (selection === DialogResponses.YES) {
-        return installPythonDependencies(context, pythonExecutable);
+        return installPythonDependencies(context, pythonExecutable, pathToLibs);
       } else if (selection === DialogResponses.NO) {
         return vscode.window.showInformationMessage(
           CONSTANTS.INFO.ARE_YOU_SURE,
@@ -288,7 +286,7 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
           DialogResponses.DONT_INSTALL
         ).then((installChoice: vscode.MessageItem | undefined) => {
           if (installChoice === DialogResponses.INSTALL_NOW) {
-            return installPythonDependencies(context, pythonExecutable);
+            return installPythonDependencies(context, pythonExecutable, pathToLibs);
           } else {
             return false;
           }
@@ -302,18 +300,24 @@ export const getTelemetryState = () => {
     .get("telemetry.enableTelemetry", true);
 };
 
-export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
+export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string, pathToLibs: string) => {
   let installed: boolean = false;
   try {
     vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_DEPENDENCIES);
-    const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
-    const pathToLibs: string = getPathToScript(context, "out", "python_libs");
+
+    // only use requirements file with pywin32 if on windows
+    const requirementsFileName = (process.platform === "win32") ? "requirements-windows.txt" : "requirements.txt";
+    const requirementsPath: string = getPathToScript(context, "out", requirementsFileName);
+    
+    // run command to download dependencies to out/python_libs
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
-    console.info(stdout);
     installed = true;
+    
+    console.log(stdout)
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
   } catch (err) {
-    console.error(err);
+    vscode.window.showErrorMessage(CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR);
+    console.error(err)
     installed = false;
   }
   return installed

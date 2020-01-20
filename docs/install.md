@@ -23,13 +23,13 @@ _Note: You need to install all the dependencies in order to use the extension._
 - [Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
 - Python Modules
-  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
-  - Playsound : `pip install playsound`
-  - Pywin32 : `pip install pywin32`
-    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
-  - Python-Socketio : `pip install python-socketio`
-  - Requests : `pip install requests`
-  - Application Insights: `pip install applicationinsights`
+  - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
+    - Playsound : `pip install playsound`
+    - Pywin32 : `pip install pywin32`
+      - **Note:** This is only needed for Windows computers.
+    - Python-Socketio : `pip install python-socketio`
+    - Requests : `pip install requests`
+    - Application Insights: `pip install applicationinsights`
 
 ## How to use the Extension
 

@@ -43,19 +43,15 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
-The following dependecies can be installed for you by the extension by clicking yes when you are prompted to (**except** `pywin32` which is needed only on Windows platform). (2)
+- Python Modules
+  - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following Python modules should be downloaded when you select "yes" on prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
+    - Playsound : `pip install playsound`
+    - Pywin32 : `pip install pywin32`
+      - **Note:** This is only needed for Windows computers.
+    - Python-Socketio : `pip install python-socketio`
+    - Requests : `pip install requests`
+    - Application Insights: `pip install applicationinsights`
 
-- _**Playsound**_  
-  install by typing the following commands in a console: `pip install playsound`
-
-- _**Pywin 32**_  
-  install by typing the following commands in a console (only for Windows computers, you must run it manually): `pip install pywin32`
-- _**Python-Socketio**_  
-   install by typing the following commands in a console: `pip install python-socketio`
-- _**Requests**_  
-   install by typing the following commands in a console: `pip install requests`
-- _**Application Insights**_  
-  install by typing the following commands in a console: `pip install applicationinsights`
 
 ## Useful Links
 
