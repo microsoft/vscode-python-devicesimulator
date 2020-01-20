@@ -23,7 +23,7 @@ _Note: You need to install all the dependencies in order to use the extension._
 - [Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
   - **Note:** This extension is installed automatically from the marketplace when you install our extension
 - Python Modules
-  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
+  - **Note:** On extension activation a popup will be prompted asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
   - Playsound : `pip install playsound`
   - Pywin32 : `pip install pywin32`
     - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
