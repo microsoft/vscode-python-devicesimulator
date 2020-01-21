@@ -279,7 +279,7 @@
     "pretest": "npm run compile",
     "test": "npm-run-all test:*",
     "test:extension-tests": "node ./out/test/runTest.js",
-    "test:api-tests": "pytest src",
+    "test:api-tests": "pytest test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
