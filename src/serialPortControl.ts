@@ -3,9 +3,9 @@
 
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
-import { CONSTANTS } from "./constants";
 import * as os from "os";
 import { OutputChannel } from "vscode";
+import { CONSTANTS } from "./constants";
 import { logToOutputChannel } from "./extension_utils/utils";
 
 interface ISerialPortDetail {

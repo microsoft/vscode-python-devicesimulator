@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import InputSlider from "./InputSlider";
-import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
 import "../../styles/TemperatureSensorBar.css";
+import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
+import InputSlider from "./InputSlider";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
   axisLabel: " ",

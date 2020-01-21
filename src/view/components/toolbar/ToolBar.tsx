@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import * as React from "react";
-import Button from "../Button";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import "../../styles/ToolBar.css";
+import Button from "../Button";
 import {
-  LABEL_TO_MODAL_CONTENT,
   DEFAULT_MODAL_CONTENT,
   IModalContent,
+  LABEL_TO_MODAL_CONTENT,
 } from "./SensorModalUtils";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 interface IToolbarState {
   currentOpenedId: string;

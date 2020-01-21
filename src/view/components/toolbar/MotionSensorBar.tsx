@@ -5,15 +5,15 @@ import * as React from "react";
 import InputSlider from "./InputSlider";
 import SensorButton from "./SensorButton";
 
+import { CONSTANTS } from "../../constants";
+import "../../styles/MotionSensorBar.css";
 import {
   ISensorProps,
   ISliderProps,
   X_SLIDER_INDEX,
-  Z_SLIDER_INDEX,
-  Y_SLIDER_INDEX
+  Y_SLIDER_INDEX,
+  Z_SLIDER_INDEX
 } from "../../viewUtils";
-import "../../styles/MotionSensorBar.css";
-import { CONSTANTS } from "../../constants";
 
 interface vscode {
   postMessage(message: any): void;

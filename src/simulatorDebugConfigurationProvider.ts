@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import {
-  validCodeFileName,
-  getServerPortConfig
-} from "./extension_utils/utils";
 import { CONSTANTS, DialogResponses } from "./constants";
+import {
+  getServerPortConfig,
+  validCodeFileName
+} from "./extension_utils/utils";
 
 let shouldShowInvalidFileNamePopup: boolean = true;
 

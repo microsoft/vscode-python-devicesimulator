@@ -3,8 +3,8 @@
 
 "use strict";
 import * as React from "react";
-import Device from "./container/device/Device"
 import "./App.css";
+import Device from "./container/device/Device"
 
 class App extends React.Component {
   render() {

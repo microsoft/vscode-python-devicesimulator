@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import * as nls from "vscode-nls";
 import * as path from "path";
 import { MessageItem } from "vscode";
+import * as nls from "vscode-nls";
 
 // Debugger Server
 export const SERVER_INFO = {
@@ -281,7 +281,7 @@ export enum TelemetryEventName {
   SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
   SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
 
-  //Sensors
+  // Sensors
   SIMULATOR_TEMPERATURE_SENSOR = "SIMULATOR.TEMPERATURE",
   SIMULATOR_LIGHT_SENSOR = " SIMULATOR.LIGHT",
   SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION",

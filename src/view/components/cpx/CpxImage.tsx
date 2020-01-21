@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import CONSTANTS from "../../constants";
+import accessibility from "./Accessibility_utils";
 import CPX_SVG from "./Cpx_svg";
 import * as SvgStyle from "./Cpx_svg_style";
-import CONSTANTS from "../../constants";
 import svg from "./Svg_utils";
-import accessibility from "./Accessibility_utils";
 
 interface IProps {
   pixels: number[][];
@@ -79,7 +79,7 @@ const makeButton = (
 };
 
 const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
-  let style: SVGStyleElement = svg.child(
+  const style: SVGStyleElement = svg.child(
     svgElement,
     "style",
     {}

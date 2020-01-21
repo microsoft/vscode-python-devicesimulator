@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import Simulator from "../../components/Simulator";
-import ToolBar from "../../components/toolbar/ToolBar";
 import * as React from "react";
-import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
+import Simulator from "../../components/Simulator";
 import {
     TOOLBAR_ICON_ID
 } from "../../components/toolbar/SensorModalUtils";
+import ToolBar from "../../components/toolbar/ToolBar";
+import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 
 const CPX_TOOLBAR_BUTTONS: Array<{ label: any, image: any }> = [{
     label: TOOLBAR_ICON_ID.SWITCH,

@@ -4,10 +4,10 @@
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
 import * as vscode from "vscode";
+import CONSTANTS, { DialogResponses, STATUS_BAR_PRIORITY } from "./constants";
+import { DeviceContext } from "./deviceContext";
 import { outChannel } from "./extension";
 import { logToOutputChannel } from "./extension_utils/utils";
-import { DeviceContext } from "./deviceContext";
-import CONSTANTS, { STATUS_BAR_PRIORITY, DialogResponses } from "./constants";
 import { SerialPortControl } from "./serialPortControl";
 
 export interface ISerialPortDetail {

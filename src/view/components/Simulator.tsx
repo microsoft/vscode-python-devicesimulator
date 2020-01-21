@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import CpxImage, { updateSwitch, updatePinTouch } from "./cpx/CpxImage";
+import { CONSTANTS } from "../constants";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
+import CpxImage, { updatePinTouch, updateSwitch } from "./cpx/CpxImage";
 import Dropdown from "./Dropdown";
-import { CONSTANTS } from "../constants";
 import ActionBar from "./simulator/ActionBar"
 
 
@@ -351,7 +351,7 @@ class Simulator extends React.Component<any, IState> {
   private handleTouchPinClick(pin: HTMLElement, active: boolean): any {
     let cpxState = this.state.cpx;
     const pinIndex = parseInt(pin.id.charAt(pin.id.length - 1)) - 1;
-    let pinState = cpxState.touch;
+    const pinState = cpxState.touch;
     pinState[pinIndex] = active;
     cpxState = { ...cpxState, touch: pinState };
     this.setState({ ...this.state, ...cpxState });
