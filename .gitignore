@@ -10,6 +10,7 @@ package.nls.*.json
 
 # testing
 .vscode-test 
+htmlcov
 
 # User-specific files
 *.suo

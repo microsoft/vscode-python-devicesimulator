@@ -1,7 +1,11 @@
 import pytest
+from unittest import mock
+import sys
 
-from ..express import Express
-from ..pixel import Pixel
+import playsound
+
+from src.adafruit_circuitplayground.express import Express
+from src.adafruit_circuitplayground.pixel import Pixel
 
 
 class TestExpress(object):
@@ -18,6 +22,15 @@ class TestExpress(object):
         }
         self.pixels = Pixel(self.__state)
         self.__speaker_enabled = False
+
+    def test_acceleration(self):
+        self.cpx._Express__state["motion_x"] = 10
+        self.cpx._Express__state["motion_y"] = -10
+        self.cpx._Express__state["motion_z"] = -20
+        accel = self.cpx.acceleration
+        assert accel[0] == 10
+        assert accel[1] == -10
+        assert accel[2] == -20
 
     def test_button_a(self):
         self.cpx._Express__state['button_a'] = True
@@ -43,21 +56,12 @@ class TestExpress(object):
         self.cpx._Express__state['switch'] = True
         assert True == self.cpx.switch
 
-    def test_set_item_tuple(self):
-        self.cpx.pixels[0] = (255, 255, 255)
-        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
+    def test_temperature(self):
+        self.cpx._Express__state['temperature'] = 31
+        assert 31 == self.cpx.temperature
 
-    def test_set_item_list(self):
-        self.cpx.pixels[0] = [255, 255, 255]
-        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
-
-    def test_set_item_hex(self):
-        self.cpx.pixels[0] = 0xFFFFFF
-        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
-
-    def test_set_item_invalid(self):
-        with pytest.raises(ValueError):
-            self.cpx.pixels[0] = "hello"
+    def test_light(self):
+        self.cpx._Express__state['light'] = 255
 
     def test_shake(self):
         self.cpx._Express__state['shake'] = True
@@ -91,10 +95,24 @@ class TestExpress(object):
         self.cpx._Express__state['touch'][6] = True
         assert True == self.cpx.touch_A7
 
-    def test_play_file_mp4(self):
+    def test_play_file_mp_wrong_type(self):
         with pytest.raises(TypeError):
             self.cpx.play_file('sample.mp4')
 
+    # Mock playsound.playsound and check that it is called #TODO
+    @mock.patch('playsound.playsound')
+    def test_play_file_mp(self, mock_playsound):
+        if sys.platform == "win32":
+            mock_playsound.return_value = None
+            print(mock_playsound)
+            self.cpx.play_file("sample.wav")
+            assert True == playsound.playsound.called()
+
+            # with mock.patch('playsound.playsound') as mock_playsound:
+            #     self.cpx.play_file("sample.wav")
+            #     mock_playsound.assert_called_with("sample.wav")
+
+    # Pixels tests
     def test_fill(self):
         self.cpx.pixels.fill((0, 255, 0))
         expected_pixels = [(0, 255, 0)] * 10
@@ -121,3 +139,19 @@ class TestExpress(object):
     def test_extract_pixel_value_invalid_tuple_value(self):
         with pytest.raises(ValueError):
             self.cpx.pixels._Pixel__extract_pixel_value((0, 222, "hello"))
+
+    def test_set_item_tuple(self):
+        self.cpx.pixels[0] = (255, 255, 255)
+        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
+
+    def test_set_item_list(self):
+        self.cpx.pixels[0] = [255, 255, 255]
+        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
+
+    def test_set_item_hex(self):
+        self.cpx.pixels[0] = 0xFFFFFF
+        assert (255, 255, 255) == self.cpx._Express__state['pixels'][0]
+
+    def test_set_item_invalid(self):
+        with pytest.raises(ValueError):
+            self.cpx.pixels[0] = "hello"
