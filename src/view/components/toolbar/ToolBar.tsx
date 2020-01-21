@@ -33,7 +33,7 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
     };
   }
 
-  render() {
+  public render() {
     const { buttonList } = this.props
     return (
       <div className="toolbar-parent" id="toolbar-parent">
@@ -115,25 +115,25 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
     ) as IModalContent;
 
     const component = content
-      ? content["component"]
+      ? content.component
       : DEFAULT_MODAL_CONTENT.component;
     return (
       <div className="sensor_modal">
         <div className="title_group">
           <span className="title">
-            <FormattedMessage id={content["descriptionTitle"]} />
-            {content["tagInput"]}
-            {content["tagOutput"]}
+            <FormattedMessage id={content.descriptionTitle} />
+            {content.tagInput}
+            {content.tagOutput}
           </span>
         </div>
         <br />
         <div className="description">
-          <FormattedMessage id={content["descriptionText"]} />
+          <FormattedMessage id={content.descriptionText} />
         </div>
         <div className="try_area">
           <br />
           <span className="description">
-            <FormattedMessage id={content["tryItDescription"]} />
+            <FormattedMessage id={content.tryItDescription} />
           </span>
           <br />
 
