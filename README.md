@@ -128,7 +128,7 @@ or by using the toolbar.
 
 Device Simulator Express provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
-- `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also open the simulator.
+- `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: Run on Simulator`: Runs python code on the simulator
 - `Device Simulator Express: Deploy to Device`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
