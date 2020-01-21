@@ -23,7 +23,8 @@
     "ordered-imports": true,
     "import-name":false,
     "member-access":false,
-    "no-console":false
+    "no-console":false,
+    "jsx-boolean-value":false
   },
   "defaultSeverity": "warning"
 }
