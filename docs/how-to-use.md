@@ -2,7 +2,7 @@
 
 Commands are accessible through :
 
-- **The command palette** (`Ctrl+shift+P` or `View->Command Palette`) and type 'Device Simulator Express : `command_name`'
+- **The command palette** (`Ctrl+Shift+P` or `View->Command Palette`) and type 'Device Simulator Express : `command_name`'
 - **The extension buttons** available on the top right of the Text Editor Panel when you have a Python file open (1)
 
 ## Available commands
@@ -12,11 +12,11 @@ Commands are accessible through :
 - **New File** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
-- **Run Simulator** : run the code you have open on the simulator (make sure you've clicked on a valid code file).  
+- **Run Simulator** : runs the code you have opened in the simulator (make sure you've clicked on a valid code file).  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
 - **Deploy to Device** : saves the code to a Circuit Playground Express.  
-  _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first if it's not the case : [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython))_.
+  _(**Note :** the board needs to be correctly formatted to a `CIRCUITPY` drive first. If that's not the case check [Installing CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython) to correctly format it)_.
 
 * **Select Serial Port** : selects the serial port of the board you want the serial monitor to interact with. (2)
   _(**Note :** USB detection must be enabled in the extension settings.)_

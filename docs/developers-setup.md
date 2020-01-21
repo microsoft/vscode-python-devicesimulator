@@ -19,7 +19,7 @@
   - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
   - Playsound
     - Run the command in a console : `pip install playsound`
-  - pytest
+  - Pytest
     - Run the command in a console : `pip install pytest`
   - Pywin32
     - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
@@ -35,7 +35,7 @@
 
 * Python extension for VS Code (download from VS Code market place)
 
-## Steps to Get Started Running the Extension in Debug Mode
+## Steps to Get Started Running the Extension Locally
 
 1. Make sure you have all the dependencies installed (Node, Python, Playsound, VS Code, Python VS Code extension)
 
@@ -47,12 +47,12 @@
 
 5. Run the command : `npm run compile`
 
-6. Start debugging the extension by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
+6. Start running the extension locally by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
 
 ## Notes on how to use it
 
 - [Documentation to use the Extension](/docs/how-to-use.md)
-- Debugging the extension opens a new VS Code window with the extension installed
+- Debugging the extension opens a new VS Code window with the local build of the extension
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
   listed as 'Device Simulator Express : ...'
