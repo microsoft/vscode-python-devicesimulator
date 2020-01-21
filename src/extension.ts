@@ -68,7 +68,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
 
-  pythonExecutdableName = await utils.setPythonExectuableName();
+  pythonExecutableName = await utils.setPythonExectuableName();
 
   await utils.checkPythonDependencies(context, pythonExecutableName)
 
