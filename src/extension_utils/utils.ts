@@ -18,6 +18,7 @@ import {
 import { CPXWorkspace } from "../cpxWorkspace";
 import * as cp from "child_process";
 import * as util from "util";
+import * as open from "open";
 const exec = util.promisify(cp.exec);
 
 // tslint:disable-next-line: export-name
@@ -258,7 +259,7 @@ export const checkConfig = (configName: string): boolean => {
 
 export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
-  const pathToLibs: string = getPathToScript(context, "out", "python_libs");
+  const pathToLibs: string = getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR);
   if (checkPipDependency() && checkPythonDependency()) {
     if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
       // check if ./out/python_libs exists; if not, the dependencies 
@@ -304,20 +305,27 @@ export const installPythonDependencies = async (context: vscode.ExtensionContext
   let installed: boolean = false;
   try {
     vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_DEPENDENCIES);
-
-    // only use requirements file with pywin32 if on windows
-    const requirementsFileName = (process.platform === "win32") ? "requirements-windows.txt" : "requirements.txt";
-    const requirementsPath: string = getPathToScript(context, "out", requirementsFileName);
     
+    const requirementsPath: string = getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "requirements.txt");
+
     // run command to download dependencies to out/python_libs
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
+    console.log(stdout);
     installed = true;
     
-    console.log(stdout)
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
   } catch (err) {
-    vscode.window.showErrorMessage(CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR);
-    console.error(err)
+
+    vscode.window
+      .showErrorMessage(CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
+        DialogResponses.READ_INSTALL_MD)
+      .then((selection: vscode.MessageItem | undefined) => {
+        if (selection === DialogResponses.READ_INSTALL_MD) {
+          open(CONSTANTS.LINKS.INSTALL);
+        }
+      });
+
+    console.error(err);
     installed = false;
   }
   return installed

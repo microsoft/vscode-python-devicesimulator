@@ -43,11 +43,11 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
-- Python Modules for Deploy to Device
+- Python Modules for Deploying to Device
     - If you're on Windows, use the following command in the console to install pywin32: `pip install pywin32`
 
 - Python Modules for Simulation
-  - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following Python modules should be downloaded when you select "yes" on prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
+  - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following Python modules should be downloaded when you select "yes" on the prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
     - Playsound : `pip install playsound`
     - Pywin32 : `pip install pywin32`
       - **Note:** This is only needed for Windows computers.

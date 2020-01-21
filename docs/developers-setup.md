@@ -14,11 +14,11 @@
   (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
 - Run in a console `python -m pip install --upgrade pip`
 
-* Python Modules for Deploy to Device
+* Python Modules for Deploying to Device
     - If you're on Windows, use the following command in the console to install pywin32: `pip install pywin32`
     
 * Python Modules for Simulation
-  - **Note:** On extension activation, you will be prompted with a popup asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on prompt message.
+  - **Note:** On extension activation, you will be prompted with a popup asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on the prompt message.
     - playsound
     - pytest
     - python-socketio

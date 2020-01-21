@@ -46,7 +46,7 @@ export const CONSTANTS = {
       "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
     ),
     DEPENDENCY_DOWNLOAD_ERROR:
-      "Package downloads failed. Some functionality may not work. ",
+      "Package downloads failed. Some functionality may not work. Try restarting the simulator or review the installation docs.",
     FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
       return localize(
         "error.failedToOpenSerialPort",
@@ -102,6 +102,10 @@ export const CONSTANTS = {
       "error.unexpectedMessage",
       "Webview sent an unexpected message"
     )
+  },
+  FILESYSTEM: {
+    OUTPUT_DIRECTORY: "out",
+    PYTHON_LIBS_DIR: "python_libs"
   },
   INFO: {
     ARE_YOU_SURE: localize(
@@ -205,6 +209,7 @@ export const CONSTANTS = {
       "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
     HELP:
       "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+    INSTALL: "https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/docs/install.md",
     PRIVACY: "https://www.adafruit.com/privacy",
     TUTORIALS:
       "https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library"
@@ -360,6 +365,9 @@ export namespace DialogResponses {
   };
   export const YES: MessageItem = {
     title: localize("dialogResponses.Yes", "Yes")
+  };
+  export const READ_INSTALL_MD: MessageItem = {
+    title: localize("dialogResponses.readInstall", "Read installation docs")
   };
 }
 
