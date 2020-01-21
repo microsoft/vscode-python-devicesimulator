@@ -58,7 +58,6 @@ The following dependecies can be installed for you by the extension by clicking 
   install by typing the following commands in a console: `pip install applicationinsights`
 
 ## Useful Links
-
 - Tutorials and Example Code for Adafruit CPX:
   - [Adafruit CPX library tutorial](https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library)
   - [Adafruit CPX Examples on GitHub](https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples)
@@ -67,6 +66,8 @@ The following dependecies can be installed for you by the extension by clicking 
   - [Tutorial for formatting Adafruit CPX for CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython)
   - [Download Firmware .uf2 file](https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
   - [Download the latest version of the Adafruit CPX library](https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
+- For developers:
+  - [Steps to run the extension locally](/docs/developers-setup.md)
 
 ## How to use
 
@@ -99,7 +100,7 @@ Before deploying the python code to your CPX device, you need to format your dev
 
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
-   **_Note:_** Make sure you name your file `main.py` or `code.py`: the device automatically runs the first file that is likely named.
+   **_Note:_** Make sure you name your file `main.py` or `code.py`: the device automatically runs the first file that is likely named. This is the convention for CircuitPython ([source](https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file-7-32)).
 
 <img alt="Deploy to Device" src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/deployToBoard.png>
 
