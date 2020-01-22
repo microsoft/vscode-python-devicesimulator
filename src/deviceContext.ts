@@ -5,10 +5,10 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
-import { CPXWorkspace } from "./cpxWorkspace";
 import CONSTANTS, { CPX_CONFIG_FILE } from "./constants";
+import { CPXWorkspace } from "./cpxWorkspace";
+import * as utils from "./extension_utils/utils";
 
 export class DeviceContext implements vscode.Disposable {
     public static getInstance(): DeviceContext {

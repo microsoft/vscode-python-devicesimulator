@@ -1,8 +1,8 @@
-import { CONSTANTS } from "../constants";
 import * as cp from "child_process";
-import * as os from "os";
 import * as compareVersions from 'compare-versions';
+import * as os from "os";
 import * as util from "util";
+import { CONSTANTS } from "../constants";
 const exec = util.promisify(cp.exec);
 
 interface IPayloadResponse {
