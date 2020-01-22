@@ -67,6 +67,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
+  
+  // ignore import errors so that adafruit_circuitpython library
+  // doesn't trigger lint errors
+  updatePylintArgs();
 
   pythonExecutableName = await utils.setPythonExectuableName();
 
@@ -880,21 +884,30 @@ const checkForTelemetry = (sensorState: any) => {
 };
 
 const updatePythonExtraPaths = () => {
-  const pathToLib: string = __dirname;
-  const currentExtraPaths: string[] =
-    vscode.workspace.getConfiguration().get("python.autoComplete.extraPaths") ||
-    [];
-  if (!currentExtraPaths.includes(pathToLib)) {
-    currentExtraPaths.push(pathToLib);
+  updateConfigLists("python.autoComplete.extraPaths",[__dirname], vscode.ConfigurationTarget.Global)
+};
+
+const updatePylintArgs = () => {
+  updateConfigLists("python.linting.pylintArgs",["--disable=E0401"], vscode.ConfigurationTarget.Workspace)
+}
+
+const updateConfigLists = (section: string, newItems: string[], scope: vscode.ConfigurationTarget) => {
+  // function for adding elements to configuration arrays
+  const currentExtraItems: string[] = vscode.workspace.getConfiguration().get(section) || [];
+
+  for (const item of newItems) {
+    if (!currentExtraItems.includes(item)) {
+      currentExtraItems.push(item);
+    }
   }
   vscode.workspace
     .getConfiguration()
     .update(
-      "python.autoComplete.extraPaths",
-      currentExtraPaths,
-      vscode.ConfigurationTarget.Global
+      section,
+      currentExtraItems,
+      scope
     );
-};
+}
 
 function getWebviewContent(context: vscode.ExtensionContext) {
   return `<!DOCTYPE html>
