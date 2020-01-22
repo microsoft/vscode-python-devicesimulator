@@ -5,7 +5,7 @@ Circuit Playground Express (CPX) projects! Test and debug your code on the devic
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
-![CircuitPlayground Express](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/cpx.jpg)
+<img alt='CircuitPlayground Express' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx.jpg>
 
 ## Features
 
@@ -29,7 +29,7 @@ monitor allows you to observe the device output.
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **“tap” on Motion Sensor**.
+The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **"tap" on Motion Sensor**.
 The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.  
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
@@ -54,38 +54,38 @@ You will be prompted to install the Python dependencies during the first use.
 
 
 ## Useful Links
-
 - Tutorials and Example Code for Adafruit CPX:
-  - Adafruit CPX library tutorial: (https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library)
-  - Adafruit CPX Examples on GitHub: (https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples)
-  - Adafruit CPX Guided Tour (Intro for the Hardware) (https://learn.adafruit.com/adafruit-circuit-playground-express/guided-tour)
+  - [Adafruit CPX library tutorial](https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library)
+  - [Adafruit CPX Examples on GitHub](https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples)
+  - [Adafruit CPX Guided Tour (Intro for the Hardware)](https://learn.adafruit.com/adafruit-circuit-playground-express/guided-tour)
 - Format Adafruit CPX device:
-  - Tutorial for formatting Adafruit CPX for CircuitPython (https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython)
-  - Download Firmware .uf2 file (https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
-  - Download the latest version of the Adafruit CPX library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
+  - [Tutorial for formatting Adafruit CPX for CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython)
+  - [Download Firmware .uf2 file](https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
+  - [Download the latest version of the Adafruit CPX library](https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
+- For developers:
+  - [Steps to run the extension locally](/docs/developers-setup.md)
 
 ## How to use
 
 To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
-### 1. Start with the “New File” Command.
+### 1. Start with the "New File" Command.
 
-1. Type in Device Simulator Express: New File” in the command palette(`CTRL+SHIFT+P`to open the command palette).  
-   !["New File" animation](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/newFile.gif)
-2. Name and save your file somewhere, and we’re good to go!(3)
-3. Start with some examples: you can find examples files and tutorials inside the comments,
-   as well as in the notification pop up when you run the `“Device Simulator Express: New File”` Command.
+1. Type in `"Device Simulator Express: New File"` in the command palette (`CTRL+SHIFT+P` to open the command palette).  
+   <img alt='"New File" animation' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/newFile.gif>
+2. Name and save your file somewhere, and we’re good to go! (3)
+3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: New File"` Command.
 
-![How to find example code screenshot](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/findExamples.jpg)
+<img alt='How to find example code screenshot' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/findExamples.jpg>
 
 ### 2. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run `open Simulator` from the command palette or icon in the editor toolbar.
 
-### 3. Run your code on the simulator .
+### 3. Run your code on the simulator.
 
-![How to run the simulator animation](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/run.gif)
+<img alt='How to run the simulator animation' src='https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/assets/readmeFiles/run.gif?raw=true'>
 
 - Run `Run Simulator` from the command palette or icon in the editor toolbar.
 - You can use the `Play` or `Refresh` button on the simulator webview.
@@ -96,16 +96,16 @@ Before deploying the python code to your CPX device, you need to format your dev
 
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
-   **_Note:_** Make sure you name your file main.py or code.py: the device automatically runs the first file that is likely named.
+   **_Note:_** Make sure you name your file `main.py` or `code.py`: the device automatically runs the first file that is likely named. This is the convention for CircuitPython ([source](https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file-7-32)).
 
 Then, if you are on Windows, you will also need to install the Python Pywin32 package. Use the following command in the console: `pip install pywin32`
 
-!["Deploy to Device" example](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/deployToBoard.png)
+<img alt="Deploy to Device" src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/deployToBoard.png>
 
-### 5. Use the Serial Monitor for your Adafruit CPX device(available Windows and Mac only)
+### 5. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already)
-2. Run the command `Device Simulator Express: Open Serial Monitor`
+2. Run the command `"Device Simulator Express: Open Serial Monitor"`
 3. Select your baud rate for the serial port
 4. The print() statements in your code will show in the output console
 
@@ -127,7 +127,7 @@ or by using the toolbar.
 
 Device Simulator Express provides several commands in the Command Palette (F1 or Ctrl + Shift + P/ Cmd + Shift + P for Mac OS) for working with \*.py files:
 
-- `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also open the simulator.
+- `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: Run on Simulator`: Runs python code on the simulator
 - `Device Simulator Express: Deploy to Device`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
@@ -184,7 +184,7 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `'Device Simulator Express: Debugger Server Port'`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
@@ -215,6 +215,6 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 
 ## Notes
 
-(1) Note: the easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually, but make sure that when you type _python_ in a terminal, the command is recognized and have the correct version.
-(2) You can chose to see to see the prompt or not by changing the extension configirations.
-(3) To be able to run the file from your physical device, it should either be named code.py or main.py.
+1. Make sure that when you type _python_ in a terminal, the command is recognized and you have the correct version. The easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually.
+2. You can choose to see the prompt or not by changing the extension configurations.
+3. To be able to run the file on your physical device, it should either be named code.py or main.py.

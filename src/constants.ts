@@ -18,7 +18,7 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONFIG = {
   SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
-  SHOW_NEW_FILE_POPUP: "pacifica.showNewFilePopup"
+  SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
 };
 
 export const CONSTANTS = {
@@ -197,7 +197,7 @@ export const CONSTANTS = {
     ),
     WELCOME_OUTPUT_TAB: localize(
       "info.welcomeOutputTab",
-      "Welcome to the Adafruit Simulator output tab !\n\n"
+      "Welcome to the Adafruit Simulator output tab!\n\n"
     )
   },
   LABEL: {
