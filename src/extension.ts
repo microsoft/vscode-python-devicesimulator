@@ -108,7 +108,7 @@ export async function activate(context: vscode.ExtensionContext) {
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
-            vscode.Uri.file(path.join(context.extensionPath, "out"))
+            vscode.Uri.file(path.join(context.extensionPath, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY))
           ],
           enableScripts: true
         }
@@ -412,7 +412,7 @@ export async function activate(context: vscode.ExtensionContext) {
       currentPanel.webview.postMessage({ command: "activate-play" });
 
       childProcess = cp.spawn(pythonExecutableName, [
-        utils.getPathToScript(context, "out", "process_user_code.py"),
+        utils.getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "process_user_code.py"),
         currentFileAbsPath,
         JSON.stringify({ enable_telemetry: utils.getTelemetryState() })
       ]);
@@ -549,7 +549,7 @@ export async function activate(context: vscode.ExtensionContext) {
       );
 
       const deviceProcess = cp.spawn(pythonExecutableName, [
-        utils.getPathToScript(context, "out", "device.py"),
+        utils.getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "device.py"),
         currentFileAbsPath
       ]);
 

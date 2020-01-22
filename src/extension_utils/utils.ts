@@ -3,6 +3,7 @@
 
 import * as cp from "child_process";
 import * as fs from "fs";
+import * as open from "open";
 import * as os from "os";
 import * as path from "path";
 import * as util from "util";
@@ -18,6 +19,7 @@ import {
 import { CPXWorkspace } from "../cpxWorkspace";
 import { DeviceContext } from "../deviceContext";
 import { DependencyChecker } from "./dependencyChecker";
+
 const exec = util.promisify(cp.exec);
 
 // tslint:disable-next-line: export-name
@@ -75,7 +77,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
     if (jsonObj && typeof jsonObj === "object") {
       return jsonObj;
     }
-  } catch (exception) {}
+  } catch (exception) { }
 
   return false;
 }
@@ -258,14 +260,12 @@ export const checkConfig = (configName: string): boolean => {
 
 export const checkPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
   let hasInstalledDependencies: boolean = false;
+  const pathToLibs: string = getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR);
   if (checkPipDependency() && checkPythonDependency()) {
     if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-      hasInstalledDependencies = await promptInstallPythonDependencies(context, pythonExecutable);
-      if (hasInstalledDependencies) {
-        await vscode.workspace
-          .getConfiguration()
-          .update(CONFIG.SHOW_DEPENDENCY_INSTALL, false);
-      }
+      // check if ./out/python_libs exists; if not, the dependencies 
+      // for adafruit_circuitpython are not (successfully) installed yet
+      hasInstalledDependencies = fs.existsSync(pathToLibs) || await promptInstallPythonDependencies(context, pythonExecutable, pathToLibs);
     }
   } else {
     hasInstalledDependencies = false;
@@ -273,14 +273,14 @@ export const checkPythonDependencies = async (context: vscode.ExtensionContext, 
   return hasInstalledDependencies;
 };
 
-export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string) => {
+export const promptInstallPythonDependencies = (context: vscode.ExtensionContext, pythonExecutable: string, pathToLibs: string) => {
   return vscode.window.showInformationMessage(
     CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
     DialogResponses.YES,
     DialogResponses.NO)
     .then((selection: vscode.MessageItem | undefined) => {
       if (selection === DialogResponses.YES) {
-        return installPythonDependencies(context, pythonExecutable);
+        return installPythonDependencies(context, pythonExecutable, pathToLibs);
       } else if (selection === DialogResponses.NO) {
         return vscode.window.showInformationMessage(
           CONSTANTS.INFO.ARE_YOU_SURE,
@@ -288,7 +288,7 @@ export const promptInstallPythonDependencies = (context: vscode.ExtensionContext
           DialogResponses.DONT_INSTALL
         ).then((installChoice: vscode.MessageItem | undefined) => {
           if (installChoice === DialogResponses.INSTALL_NOW) {
-            return installPythonDependencies(context, pythonExecutable);
+            return installPythonDependencies(context, pythonExecutable, pathToLibs);
           } else {
             return false;
           }
@@ -302,17 +302,30 @@ export const getTelemetryState = () => {
     .get("telemetry.enableTelemetry", true);
 };
 
-export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string) => {
+export const installPythonDependencies = async (context: vscode.ExtensionContext, pythonExecutable: string, pathToLibs: string) => {
   let installed: boolean = false;
   try {
     vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_DEPENDENCIES);
-    const requirementsPath: string = getPathToScript(context, "out", "requirements.txt");
-    const pathToLibs: string = getPathToScript(context, "out", "python_libs");
+
+    const requirementsPath: string = getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "requirements.txt");
+
+    // run command to download dependencies to out/python_libs
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
     console.info(stdout);
     installed = true;
+
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
   } catch (err) {
+
+    vscode.window
+      .showErrorMessage(CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
+        DialogResponses.READ_INSTALL_MD)
+      .then((selection: vscode.MessageItem | undefined) => {
+        if (selection === DialogResponses.READ_INSTALL_MD) {
+          open(CONSTANTS.LINKS.INSTALL);
+        }
+      });
+
     console.error(err);
     installed = false;
   }
