@@ -43,14 +43,11 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
-- Python Modules for Deploying to Device
-    - If you're on Windows, use the following command in the console to install pywin32: `pip install pywin32`
-
 - Python Modules for Simulation
   - **Note:** On extension activation, you will be prompted with a popup message asking if you want the modules to be automatically installed for you. The following Python modules should be downloaded when you select "yes" on the prompt message. **If modules are not installed correctly, please use the "pip install" commands listed below.**
     - Playsound : `pip install playsound`
     - Pywin32 : `pip install pywin32`
-      - **Note:** This is only needed for Windows computers.
+      - On Windows, you need to use the above command in the console to manually install pywin32.
     - Python-Socketio : `pip install python-socketio`
     - Requests : `pip install requests`
     - Application Insights: `pip install applicationinsights`
@@ -100,6 +97,8 @@ Before deploying the python code to your CPX device, you need to format your dev
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
    **_Note:_** Make sure you name your file main.py or code.py: the device automatically runs the first file that is likely named.
+
+Then, if you are on Windows, you will also need to install the Python Pywin32 package. Use the following command in the console: `pip install pywin32`
 
 !["Deploy to Device" example](https://www.microsoft.com/en-us/garage/wp-content/uploads/sites/5/2019/08/deployToBoard.png)
 

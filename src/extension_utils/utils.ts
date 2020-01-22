@@ -310,7 +310,7 @@ export const installPythonDependencies = async (context: vscode.ExtensionContext
 
     // run command to download dependencies to out/python_libs
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
-    console.log(stdout);
+    console.info(stdout);
     installed = true;
     
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
