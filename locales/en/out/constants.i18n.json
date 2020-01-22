@@ -9,6 +9,7 @@
   "dialogResponses.installNow": "Install Now",
   "dialogResponses.dontInstall": "Don't Install",
   "dialogResponses.tutorials": "Tutorials on Adafruit",
+  "dialogResponses.readInstall": "Read installation docs",
   "error.debuggerServerInitFailed": "Warning : The Debugger Server cannot be opened. Please try to free the port {0} if it's already in use or select another one in your Settings 'Device Simulator Express: Debugger Server Port' and start another debug session.\n You can still debug your code but you won't be able to use the Simulator.",
   "error.debuggingSessionInProgress": "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n",
   "error.incorrectFileNameForDevice": "[ERROR] Can\\'t deploy to your Circuit Playground Express device, please rename your file to \"code.py\" or \"main.py\". \n",
