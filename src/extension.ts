@@ -68,7 +68,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
   
-  // ignore import errors so that adafruit_circuitpython library
+  // ignore import errors so that adafruit_circuitplayground library
   // doesn't trigger lint errors
   updatePylintArgs();
 
