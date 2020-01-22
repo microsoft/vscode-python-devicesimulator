@@ -3,15 +3,13 @@
 
 import * as React from "react";
 import { CONSTANTS } from "../constants";
+import "../styles/Simulator.css";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
 import CpxImage, { updatePinTouch, updateSwitch } from "./cpx/CpxImage";
 import Dropdown from "./Dropdown";
 import ActionBar from "./simulator/ActionBar"
-
-
-import "../styles/Simulator.css";
 
 interface ICpxState {
   pixels: number[][];

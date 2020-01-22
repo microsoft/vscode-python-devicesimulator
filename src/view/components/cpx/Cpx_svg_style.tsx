@@ -24,44 +24,43 @@ export const POWER_LED_OFF: string = "#FFFFFF";
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/simlib.ts
 export function rgbToHsl(
-  rgb: [number, number, number]
+    rgb: [number, number, number]
 ): [number, number, number] {
-  const [r, g, b] = rgb;
-  const [r$, g$, b$] = [r / 255, g / 255, b / 255];
-  const cMin = Math.min(r$, g$, b$);
-  const cMax = Math.max(r$, g$, b$);
-  const cDelta = cMax - cMin;
-  let h: number = 0,
-    s: number,
-    l: number;
-  const maxAndMin = cMax + cMin;
+    const [r, g, b] = rgb;
+    const [r$, g$, b$] = [r / 255, g / 255, b / 255];
+    const cMin = Math.min(r$, g$, b$);
+    const cMax = Math.max(r$, g$, b$);
+    const cDelta = cMax - cMin;
+    let h: number = 0,
+        s: number,
+        l: number;
+    const maxAndMin = cMax + cMin;
 
-  // Luminosity
-  l = (maxAndMin / 2) * 100;
+    // Luminosity
+    l = (maxAndMin / 2) * 100;
 
-  if (cDelta === 0) {
-    s = 0;
-    h = 0;
-  } else {
-    // Hue
-    switch (cMax) {
-      case r$:
-        h = 60 * (((g$ - b$) / cDelta) % 6);
-        break;
-      case g$:
-        h = 60 * ((b$ - r$) / cDelta + 2);
-        break;
-      case b$:
-        h = 60 * ((r$ - g$) / cDelta + 4);
-        break;
+    if (cDelta === 0) {
+        s = 0;
+        h = 0;
+    } else {
+        // Hue
+        switch (cMax) {
+            case r$:
+                h = 60 * (((g$ - b$) / cDelta) % 6);
+                break;
+            case g$:
+                h = 60 * ((b$ - r$) / cDelta + 2);
+                break;
+            case b$:
+                h = 60 * ((r$ - g$) / cDelta + 4);
+                break;
+        }
+
+        // Saturation
+        l > 50 ? s = 100 * (cDelta / (2 - maxAndMin)) : s = 100 * (cDelta / maxAndMin);
     }
 
-    // Saturation
-    if (l > 50) { s = 100 * (cDelta / (2 - maxAndMin)); }
-    else { s = 100 * (cDelta / maxAndMin); }
-  }
-
-  return [Math.floor(h), Math.floor(s), Math.floor(l)];
+    return [Math.floor(h), Math.floor(s), Math.floor(l)];
 }
 
 export const SVG_STYLE = `
