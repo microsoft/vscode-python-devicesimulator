@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+
 import { CONSTANTS } from "../constants";
 import "../styles/Dropdown.css";
 

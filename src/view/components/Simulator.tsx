@@ -167,7 +167,10 @@ class Simulator extends React.Component<any, IState> {
             onMouseLeave={this.onMouseLeave}
           />
         </div>
-       <ActionBar onTogglePlay={this.togglePlayClick} onToggleRefresh={this.refreshSimulatorClick} playStopImage={playStopImage}/>
+       <ActionBar 
+          onTogglePlay={this.togglePlayClick} 
+          onToggleRefresh={this.refreshSimulatorClick} 
+          playStopImage={playStopImage}/>
       </div>
     );
   }
