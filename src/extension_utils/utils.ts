@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import * as cp from "child_process";
 import * as fs from "fs";
-import * as path from "path";
+import * as open from "open";
 import * as os from "os";
-import { DependencyChecker } from "./dependencyChecker";
-import { DeviceContext } from "../deviceContext";
+import * as path from "path";
+import * as util from "util";
 import * as vscode from "vscode";
 import {
   CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
-  USER_CODE_NAMES,
-  SERVER_INFO
+  SERVER_INFO,
+  USER_CODE_NAMES
 } from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
-import * as cp from "child_process";
-import * as util from "util";
-import * as open from "open";
+import { DeviceContext } from "../deviceContext";
+import { DependencyChecker } from "./dependencyChecker";
+
 const exec = util.promisify(cp.exec);
 
 // tslint:disable-next-line: export-name
@@ -76,7 +77,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
     if (jsonObj && typeof jsonObj === "object") {
       return jsonObj;
     }
-  } catch (exception) {}
+  } catch (exception) { }
 
   return false;
 }
@@ -305,14 +306,14 @@ export const installPythonDependencies = async (context: vscode.ExtensionContext
   let installed: boolean = false;
   try {
     vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_DEPENDENCIES);
-    
+
     const requirementsPath: string = getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "requirements.txt");
 
     // run command to download dependencies to out/python_libs
     const { stdout } = await exec(`${pythonExecutable} -m pip install -r ${requirementsPath} -t ${pathToLibs}`);
     console.info(stdout);
     installed = true;
-    
+
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
   } catch (err) {
 

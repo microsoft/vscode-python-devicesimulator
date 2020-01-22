@@ -3,13 +3,13 @@
 
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
-import * as os from "os";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
-import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
-import { SerialMonitor } from "./serialMonitor";
 import { CONFIG_KEYS } from "./constants";
+import * as utils from "./extension_utils/utils";
+import { SerialMonitor } from "./serialMonitor";
 
 export class UsbDetector {
     public static getInstance(): UsbDetector {
