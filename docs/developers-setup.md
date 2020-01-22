@@ -13,24 +13,18 @@
 - **NOTE :** Make sure pip is added to your environment variables as well
   (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
 - Run in a console `python -m pip install --upgrade pip`
-
+    
 * Python Modules
+  - **Note:** On extension activation, you will be prompted with a popup asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on the prompt message.
+    - pywin32 **(on Windows only)**
+        - On Windows, you need to use the following command in the console to manually install pywin32: `pip install pywin32`
+    - *playsound*
+    - *pytest*
+    - *python-socketio*
+    - *requests*
+    - *applicationinsights*
 
-  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
-  - Playsound
-    - Run the command in a console : `pip install playsound`
-  - Pytest
-    - Run the command in a console : `pip install pytest`
-  - Pywin32
-    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
-    - Run the command in a console : `pip install pywin32`
-  - Python-Socketio
-    - Run the command in a console : `pip install python-socketio`
-  - Requests
-    - Run the command in a console : `pip install requests`
-  - Application Insights
-    - Run the command in a console : `pip install applicationinsights`
-
+    *italics*: used in simulation mode only
 * VS Code
 
 * Python extension for VS Code (download from VS Code market place)
