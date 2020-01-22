@@ -100,13 +100,13 @@ class TestExpress(object):
             self.cpx.play_file('sample.mp4')
 
     # Mock playsound.playsound and check that it is called #TODO
-    @mock.patch('playsound.playsound')
-    def test_play_file_mp(self, mock_playsound):
-        if sys.platform == "win32":
-            mock_playsound.return_value = None
-            print(mock_playsound)
-            self.cpx.play_file("sample.wav")
-            assert True == playsound.playsound.called()
+    # @mock.patch('playsound.playsound')
+    # def test_play_file_mp(self, mock_playsound):
+    #     if sys.platform == "win32":
+    #         mock_playsound.return_value = None
+    #         print(mock_playsound)
+    #         self.cpx.play_file("sample.wav")
+    #         assert True == playsound.playsound.called()
 
             # with mock.patch('playsound.playsound') as mock_playsound:
             #     self.cpx.play_file("sample.wav")
