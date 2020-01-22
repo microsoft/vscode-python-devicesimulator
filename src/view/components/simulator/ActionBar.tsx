@@ -9,7 +9,7 @@ import Button from "../Button";
 interface IProps{
     onTogglePlay: (event: React.MouseEvent<HTMLElement>) => void,
     onToggleRefresh: (event: React.MouseEvent<HTMLElement>) => void,
-    playStopImage:JSX.Element
+    playStopImage: JSX.Element
 }
 
 // Component including the actions done on the Simulator (play/stop, refresh)
