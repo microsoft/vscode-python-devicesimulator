@@ -46,7 +46,7 @@ class TestPixel(object):
 
     def test_set_item_invalid(self):
         with pytest.raises(ValueError):
-            self.cpx.pixels[0] = "hello"
+            self.pixel[0] = "hello"
     
     def test_len(self):
         assert 3 == len(self.pixel)
