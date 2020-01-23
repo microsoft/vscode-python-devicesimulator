@@ -21,10 +21,12 @@
     "object-literal-sort-keys": true,
     "react-hooks-nesting": "error",
     "ordered-imports": true,
-    "import-name":false,
-    "member-access":false,
-    "no-console":false,
-    "jsx-boolean-value":false
+    "import-name": false,
+    "member-access": false,
+    "no-console": false,
+    "jsx-boolean-value": false,
+    "no-unnecessary-semicolons": false,
+    "no-http-string": false
   },
   "defaultSeverity": "warning"
 }

@@ -279,9 +279,15 @@
     "test": "npm-run-all test:*",
     "test:extension-tests": "node ./out/test/runTest.js",
     "test:api-tests": "pytest src",
-    "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
-    "format": "prettier --write src/**/*.{ts,tsx}",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "lint": "npm-run-all lint:*",
+    "lint:ts": "tslint -c tslint.json src/**/*.{ts,tsx}",
+    "lint:python": "pylint src",
+    "format": "npm-run-all format:*",
+    "format:ts": "prettier --write src/**/*.{css,ts,tsx}",
+    "format:python": "black src",
+    "check": "npm-run-all check:*",
+    "check:ts": "tslint-config-prettier-check ./tslint.json",
+    "check:python": "black src --check",
     "package": "vsce package"
   },
   "devDependencies": {

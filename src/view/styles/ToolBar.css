@@ -1,113 +1,113 @@
 .toolbar-parent {
-  background: var(--vscode-debugToolBar-background);
-  width: fit-content;
-  border-radius: 2px;
-  height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 50px;
+    background: var(--vscode-debugToolBar-background);
+    width: fit-content;
+    border-radius: 2px;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    margin-bottom: 50px;
 }
 
-.toolbar{
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
-  border-color: var(--vscode-highContrastButtonBorderOverride-color);
-  border-width: 1px;
-  border-style: solid;
+.toolbar {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    border-width: 1px;
+    border-style: solid;
 }
 
 .toolbar-icon {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
-  border-color: var(--vscode-highContrastButtonBorderOverride-color);
-  border-width: 1px;
-  border-style: solid;
-  padding: 0px 8px 0px 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    border-width: 1px;
+    border-style: solid;
+    padding: 0px 8px 0px 8px;
 }
 
 .tag,
 .title {
-  display: inline;
+    display: inline;
 }
 
 .sensor_modal {
-  vertical-align: middle;
-  width: 360px;
-  max-height: 240px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  position: relative;
-  height: fit-content;
-  padding-left: 16px;
-  box-shadow: none;
-  background: var(--vscode-debugToolBar-background);
-  margin-left: 1px;
+    vertical-align: middle;
+    width: 360px;
+    max-height: 240px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    height: fit-content;
+    padding-left: 16px;
+    box-shadow: none;
+    background: var(--vscode-debugToolBar-background);
+    margin-left: 1px;
 }
 
 .title {
-  -webkit-appearance: none;
-  font-size: 16px;
-  font-weight: bolder;
-  color: var(--vscode-badgeForegroundOverride);
-  text-align: left;
-  margin-right: 40px;
-  position: absolute;
-  left: 0;
-  padding-left: inherit;
-  width: 320px;
+    -webkit-appearance: none;
+    font-size: 16px;
+    font-weight: bolder;
+    color: var(--vscode-badgeForegroundOverride);
+    text-align: left;
+    margin-right: 40px;
+    position: absolute;
+    left: 0;
+    padding-left: inherit;
+    width: 320px;
 }
 
 .tag {
-  position: absolute;
-  left: 200px;
+    position: absolute;
+    left: 200px;
 }
 
 .description {
-  -webkit-appearance: none;
-  font-size: 14px;
-  color: var(--vscode-foreground);
-  word-wrap: break-word;
-  width: 320px;
-  margin-top: 15px;
-  text-align: left;
-  line-height: 17px;
-  font-weight: 100;
-  opacity: 50%;
+    -webkit-appearance: none;
+    font-size: 14px;
+    color: var(--vscode-foreground);
+    word-wrap: break-word;
+    width: 320px;
+    margin-top: 15px;
+    text-align: left;
+    line-height: 17px;
+    font-weight: 100;
+    opacity: 50%;
 }
 
 .title_group {
-  margin-top: 20px;
-  width: fit-content;
-  padding-left: 16px;
+    margin-top: 20px;
+    width: fit-content;
+    padding-left: 16px;
 }
 
 .try_area {
-  position: relative;
-  padding-bottom: 30px;
-  text-align: left;
-  line-height: 17px;
-  font-weight: 100;
-  opacity: 50%;
-  font-size: 14px;
-  word-wrap: break-word;
+    position: relative;
+    padding-bottom: 30px;
+    text-align: left;
+    line-height: 17px;
+    font-weight: 100;
+    opacity: 50%;
+    font-size: 14px;
+    word-wrap: break-word;
 }
 
 .link-parent {
-  padding-top: 12px;
-  -webkit-appearance: none;
-  padding-left: 150px;
-  color: var(--vscode-textLink-activeForeground);
-  text-align: right;
-  text-decoration: none;
-  font-weight: bold;
+    padding-top: 12px;
+    -webkit-appearance: none;
+    padding-left: 150px;
+    color: var(--vscode-textLink-activeForeground);
+    text-align: right;
+    text-decoration: none;
+    font-weight: bold;
 }
 .link-parent:hover {
-  -webkit-appearance: none;
-  padding-left: 150px;
-  color: var(--vscode-textLink-activeForeground);
-  text-decoration: none;
+    -webkit-appearance: none;
+    padding-left: 150px;
+    color: var(--vscode-textLink-activeForeground);
+    text-decoration: none;
 }
 
 .link {
-  -webkit-appearance: none;
-  text-decoration: none;
+    -webkit-appearance: none;
+    text-decoration: none;
 }

@@ -1,16 +1,16 @@
 .title {
-  font-size: 14px;
-  text-align: left;
+    font-size: 14px;
+    text-align: left;
 }
 
 .header {
-  -webkit-appearance: none;
-  height: 30px;
-  margin-bottom: 2px;
+    -webkit-appearance: none;
+    height: 30px;
+    margin-bottom: 2px;
 }
 
 .MotionSensorBar {
-  width: 440px;
-  margin-left: auto;
-  margin-right: auto;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
 }
