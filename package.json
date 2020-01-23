@@ -14,29 +14,29 @@
   ],
   "preview": true,
   "license": "MIT",
-	"homepage": "https://github.com/microsoft/vscode-python-devicesimulator",
-	"repository": {
-			"type": "git",
-			"url": "https://github.com/microsoft/vscode-python-devicesimulator"
-	},
-	"bugs": {
-			"url": "https://github.com/microsoft/vscode-python-devicesimulator/issues"
-	},
-	"keywords": [
-			"python",
-			"CircuitPython",
-			"Adafruit"
-	],
-	"activationEvents": [
-			"onCommand:deviceSimulatorExpress.openSerialMonitor",
-			"onCommand:deviceSimulatorExpress.openSimulator",
-			"onCommand:deviceSimulatorExpress.runSimulator",
-			"onCommand:deviceSimulatorExpress.newFile",
-			"onCommand:deviceSimulatorExpress.runDevice",
-			"onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
-			"onCommand:deviceSimulatorExpress.selectSerialPort",
-			"onDebug"
-	],
+  "homepage": "https://github.com/microsoft/vscode-python-devicesimulator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-python-devicesimulator"
+  },
+  "bugs": {
+    "url": "https://github.com/microsoft/vscode-python-devicesimulator/issues"
+  },
+  "keywords": [
+    "python",
+    "CircuitPython",
+    "Adafruit"
+  ],
+  "activationEvents": [
+    "onCommand:deviceSimulatorExpress.openSerialMonitor",
+    "onCommand:deviceSimulatorExpress.openSimulator",
+    "onCommand:deviceSimulatorExpress.runSimulator",
+    "onCommand:deviceSimulatorExpress.newFile",
+    "onCommand:deviceSimulatorExpress.runDevice",
+    "onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
+    "onCommand:deviceSimulatorExpress.selectSerialPort",
+    "onDebug"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -174,13 +174,12 @@
           "default": true,
           "scope": "resource"
         },
-        "pacifica.showNewFilePopup": {
+        "deviceSimulatorExpress.showNewFilePopup": {
           "type": "boolean",
           "default": true,
           "scope": "resource"
         },
         "deviceSimulatorExpress.debuggerServerPort": {
-
           "type": "number",
           "default": 5577,
           "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",

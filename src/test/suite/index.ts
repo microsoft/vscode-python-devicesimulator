@@ -10,9 +10,9 @@
 // to report the results back to the caller. When the tests are finished, return
 // a possible error to the callback or null if none.
 
-import * as path from 'path';
-import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import * as Mocha from 'mocha';
+import * as path from 'path';
 
 // tslint:disable-next-line: export-name
 export function run(): Promise<void> {

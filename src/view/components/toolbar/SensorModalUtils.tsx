@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import LightSensorBar from "./LightSensorBar";
-import TemperatureSensorBar from "./TemperatureSensorBar";
-import MotionSensorBar from "./MotionSensorBar";
 import * as React from "react";
+import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
-import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
+import LightSensorBar from "./LightSensorBar";
+import MotionSensorBar from "./MotionSensorBar";
+import TemperatureSensorBar from "./TemperatureSensorBar";
 
 export const TRY_IT_MAKE_CODE = (
   <div className="link-parent">

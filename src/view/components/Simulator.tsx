@@ -2,16 +2,14 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import Cpx, { updateSwitch, updatePinTouch } from "./cpx/Cpx";
-import Button from "./Button";
-import Dropdown from "./Dropdown";
 import { CONSTANTS } from "../constants";
+import "../styles/Simulator.css";
 import PlayLogo from "../svgs/play_svg";
 import StopLogo from "../svgs/stop_svg";
-import RefreshLogo from "../svgs/refresh_svg";
-
-import "../styles/Simulator.css";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
+import CpxImage, { updatePinTouch, updateSwitch } from "./cpx/CpxImage";
+import Dropdown from "./Dropdown";
+import ActionBar from "./simulator/ActionBar"
 
 interface ICpxState {
   pixels: number[][];
@@ -141,7 +139,7 @@ class Simulator extends React.Component<any, IState> {
   }
 
   render() {
-    const image = this.state.play_button ? StopLogo : PlayLogo;
+    const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
     return (
       <div className="simulator">
         <div className="file-selector">
@@ -155,7 +153,7 @@ class Simulator extends React.Component<any, IState> {
           />
         </div>
         <div className="cpx-container">
-          <Cpx
+          <CpxImage
             pixels={this.state.cpx.pixels}
             brightness={this.state.cpx.brightness}
             red_led={this.state.cpx.red_led}
@@ -167,24 +165,10 @@ class Simulator extends React.Component<any, IState> {
             onMouseLeave={this.onMouseLeave}
           />
         </div>
-        <div className="buttons">
-          <Button
-            onClick={this.togglePlayClick}
-            focusable={true}
-            image={image}
-            styleLabel="play"
-            label="play"
-            width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
-          />
-          <Button
-            onClick={this.refreshSimulatorClick}
-            focusable={true}
-            image={RefreshLogo}
-            styleLabel="refresh"
-            label="refresh"
-            width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
-          />
-        </div>
+       <ActionBar 
+          onTogglePlay={this.togglePlayClick} 
+          onToggleRefresh={this.refreshSimulatorClick} 
+          playStopImage={playStopImage}/>
       </div>
     );
   }
@@ -368,7 +352,7 @@ class Simulator extends React.Component<any, IState> {
   private handleTouchPinClick(pin: HTMLElement, active: boolean): any {
     let cpxState = this.state.cpx;
     const pinIndex = parseInt(pin.id.charAt(pin.id.length - 1)) - 1;
-    let pinState = cpxState.touch;
+    const pinState = cpxState.touch;
     pinState[pinIndex] = active;
     cpxState = { ...cpxState, touch: pinState };
     this.setState({ ...this.state, ...cpxState });
