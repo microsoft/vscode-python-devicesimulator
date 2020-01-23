@@ -1,8 +1,5 @@
 import pytest
 from unittest import mock
-import sys
-
-from playsound import playsound
 
 from ..express import Express
 from ..pixel import Pixel
