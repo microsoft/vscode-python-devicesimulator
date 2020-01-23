@@ -1,6 +1,7 @@
 import pytest
 
-from pixel import Pixel
+from ..pixel import Pixel
+
 
 class TestPixel(object):
 
