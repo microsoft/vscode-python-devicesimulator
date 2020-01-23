@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { ISensorButtonProps } from "../../viewUtils";
 import "../../styles/SensorButton.css";
+import { ISensorButtonProps } from "../../viewUtils";
 
 const SensorButton: React.FC<ISensorButtonProps> = props => {
   return (

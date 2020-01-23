@@ -13,29 +13,23 @@
 - **NOTE :** Make sure pip is added to your environment variables as well
   (for example it could be found at : `c:\users\<...>\appdata\local\programs\python\python37\lib\site-packages\pip`)
 - Run in a console `python -m pip install --upgrade pip`
-
+    
 * Python Modules
+  - **Note:** On extension activation, you will be prompted with a popup asking if you want the modules to be automatically installed for you. The following python modules should be downloaded when you select "yes" on the prompt message.
+    - pywin32 **(on Windows only)**
+        - On Windows, you need to use the following command in the console to manually install pywin32: `pip install pywin32`
+    - *playsound*
+    - *pytest*
+    - *python-socketio*
+    - *requests*
+    - *applicationinsights*
 
-  - **Note:** On extension activation you will be prompted a popup asking if you want the modules to be automatically installed for you, **except** `pywin32` which is needed only on Windows platform.
-  - Playsound
-    - Run the command in a console : `pip install playsound`
-  - pytest
-    - Run the command in a console : `pip install pytest`
-  - Pywin32
-    - **Note:** This is only needed for Windows computers. You must install it manually with the above command!
-    - Run the command in a console : `pip install pywin32`
-  - Python-Socketio
-    - Run the command in a console : `pip install python-socketio`
-  - Requests
-    - Run the command in a console : `pip install requests`
-  - Application Insights
-    - Run the command in a console : `pip install applicationinsights`
-
+    *italics*: used in simulation mode only
 * VS Code
 
 * Python extension for VS Code (download from VS Code market place)
 
-## Steps to Get Started Running the Extension in Debug Mode
+## Steps to Get Started Running the Extension Locally
 
 1. Make sure you have all the dependencies installed (Node, Python, Playsound, VS Code, Python VS Code extension)
 
@@ -47,12 +41,12 @@
 
 5. Run the command : `npm run compile`
 
-6. Start debugging the extension by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
+6. Start running the extension locally by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
 
 ## Notes on how to use it
 
 - [Documentation to use the Extension](/docs/how-to-use.md)
-- Debugging the extension opens a new VS Code window with the extension installed
+- Debugging the extension opens a new VS Code window with the local build of the extension
 - From the original VS Code window (opened in our repository) you can see outputs in the Debug Console
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
   listed as 'Device Simulator Express : ...'

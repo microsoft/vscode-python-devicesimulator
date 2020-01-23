@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import InputSlider from "./InputSlider";
 import "../../styles/LightSensorBar.css";
 import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
+import InputSlider from "./InputSlider";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
   maxValue: 255,
