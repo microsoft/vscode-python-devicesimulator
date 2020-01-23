@@ -8,7 +8,7 @@ https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master
 """
 
 # import CPX library
-from adafruit_circuitplayground.express import cpx
+from adafruit_circuitplayground import cp
 
 while True:
     # start your code here

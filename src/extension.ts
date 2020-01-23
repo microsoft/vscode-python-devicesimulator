@@ -5,23 +5,23 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
 import * as path from "path";
-import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
 import {
   CONFIG,
   CONSTANTS,
   CPX_CONFIG_FILE,
   DialogResponses,
+  SERVER_INFO,
   TelemetryEventName,
-  WebviewMessages,
-  SERVER_INFO
+  WebviewMessages
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
-import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
+import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
+import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
-import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -108,7 +108,7 @@ export async function activate(context: vscode.ExtensionContext) {
         {
           // Only allow the webview to access resources in our extension's media directory
           localResourceRoots: [
-            vscode.Uri.file(path.join(context.extensionPath, "out"))
+            vscode.Uri.file(path.join(context.extensionPath, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY))
           ],
           enableScripts: true
         }
@@ -412,7 +412,7 @@ export async function activate(context: vscode.ExtensionContext) {
       currentPanel.webview.postMessage({ command: "activate-play" });
 
       childProcess = cp.spawn(pythonExecutableName, [
-        utils.getPathToScript(context, "out", "process_user_code.py"),
+        utils.getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "process_user_code.py"),
         currentFileAbsPath,
         JSON.stringify({ enable_telemetry: utils.getTelemetryState() })
       ]);
@@ -549,7 +549,7 @@ export async function activate(context: vscode.ExtensionContext) {
       );
 
       const deviceProcess = cp.spawn(pythonExecutableName, [
-        utils.getPathToScript(context, "out", "device.py"),
+        utils.getPathToScript(context, CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY, "device.py"),
         currentFileAbsPath
       ]);
 
@@ -830,13 +830,13 @@ const updateCurrentFileIfPython = async (
 };
 
 const handleButtonPressTelemetry = (buttonState: any) => {
-  if (buttonState["button_a"] && buttonState["button_b"]) {
+  if (buttonState.button_a && buttonState.button_b) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
-  } else if (buttonState["button_a"]) {
+  } else if (buttonState.button_a) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
-  } else if (buttonState["button_b"]) {
+  } else if (buttonState.button_b) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
-  } else if (buttonState["switch"]) {
+  } else if (buttonState.switch) {
     telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
   }
 };
@@ -872,9 +872,9 @@ const handleSensorTelemetry = (sensor: string) => {
 };
 
 const checkForTelemetry = (sensorState: any) => {
-  if (sensorState["shake"]) {
+  if (sensorState.shake) {
     handleSensorTelemetry("shake");
-  } else if (sensorState["touch"]) {
+  } else if (sensorState.touch) {
     handleSensorTelemetry("touch");
   }
 };
