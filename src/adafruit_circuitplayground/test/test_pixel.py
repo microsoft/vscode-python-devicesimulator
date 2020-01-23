@@ -43,6 +43,10 @@ class TestPixel(object):
     def test_set_item_out_of_bounds(self):
         with pytest.raises(IndexError):
             self.pixel[3] = (0, 0, 0)
+
+    def test_set_item_invalid(self):
+        with pytest.raises(ValueError):
+            self.cpx.pixels[0] = "hello"
     
     def test_len(self):
         assert 3 == len(self.pixel)
@@ -53,7 +57,7 @@ class TestPixel(object):
 
     def test_fill(self):
         self.pixel.fill((123, 123, 123))
-        assert True == all(p == (123, 123, 123) for p in self.pixel._Pixel__state["pixels"])
+        assert all(p == (123, 123, 123) for p in self.pixel._Pixel__state["pixels"])
 
     @pytest.mark.parametrize("val, expected", 
                             [([3, 4, 5], (3, 4, 5)),
@@ -98,7 +102,7 @@ class TestPixel(object):
 
     def test_get_brightness(self):
         self.pixel._Pixel__state['brightness'] = 0.4
-        assert 0.4 == self.pixel.brightness
+        assert 0.4 == pytest.approx(self.pixel.brightness)
     
     @pytest.mark.parametrize("brightness", [-0.1, 1.1])
     def test_set_brightness_fail(self, brightness):
@@ -108,4 +112,4 @@ class TestPixel(object):
     @pytest.mark.parametrize("brightness", [0, 1, 0.4, 0.333])
     def test_set_brightness(self, brightness):
         self.pixel.brightness = brightness
-        assert True == self.pixel._Pixel__valid_brightness(brightness)
+        assert self.pixel._Pixel__valid_brightness(brightness)
