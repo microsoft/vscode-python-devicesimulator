@@ -1,6 +1,5 @@
 import sys
 
-import pytest
 from unittest import mock
 
 from .. import utils
