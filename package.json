@@ -286,7 +286,7 @@
     "format:ts": "prettier --write src/**/*.{css,ts,tsx}",
     "format:python": "black src",
     "check": "npm-run-all check:*",
-    "check:ts": "tslint-config-prettier-check ./tslint.json",
+    "check:ts": "prettier --check src/**/*.{css,ts,tsx}",
     "check:python": "black src --check",
     "package": "vsce package"
   },
