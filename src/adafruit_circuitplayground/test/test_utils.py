@@ -3,7 +3,7 @@ import sys
 import pytest
 from unittest import mock
 
-import ..utils
+from .. import utils
 
 
 class TestUtils(object):
