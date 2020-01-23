@@ -1,5 +1,4 @@
 import pytest
-from unittest import mock
 
 from ..express import Express
 from ..pixel import Pixel
