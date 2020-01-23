@@ -3,7 +3,7 @@ import sys
 import pytest
 from unittest import mock
 
-from src.adafruit_circuitplayground import utils
+import utils
 
 class TestUtils(object):
 

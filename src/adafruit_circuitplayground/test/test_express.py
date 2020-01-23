@@ -2,10 +2,10 @@ import pytest
 from unittest import mock
 import sys
 
-import playsound
+from playsound import playsound
 
-from src.adafruit_circuitplayground.express import Express
-from src.adafruit_circuitplayground.pixel import Pixel
+from express import Express
+from pixel import Pixel
 
 
 class TestExpress(object):
@@ -40,6 +40,15 @@ class TestExpress(object):
         self.cpx._Express__state['button_b'] = True
         assert True == self.cpx.button_b
 
+    def test_taps(self):
+        self.cpx._Express__state["detect_taps"] = 2
+        assert 2 == self.cpx.detect_taps
+
+    @pytest.mark.parametrize("taps, expected", [(1, 1), (2, 2), (3, 1)])
+    def test_taps_setter(self, taps, expected):
+        self.cpx.detect_taps = taps
+        assert expected == self.cpx.detect_taps
+
     def test_red_led(self):
         self.cpx._Express__state['red_led'] = True
         assert True == self.cpx.red_led
@@ -62,6 +71,7 @@ class TestExpress(object):
 
     def test_light(self):
         self.cpx._Express__state['light'] = 255
+        assert 255 == self.cpx.light
 
     def test_shake(self):
         self.cpx._Express__state['shake'] = True
@@ -99,14 +109,13 @@ class TestExpress(object):
         with pytest.raises(TypeError):
             self.cpx.play_file('sample.mp4')
 
-    # Mock playsound.playsound and check that it is called #TODO
+    # TODO Mock playsound.playsound and check that it is called 
     # @mock.patch('playsound.playsound')
-    # def test_play_file_mp(self, mock_playsound):
-    #     if sys.platform == "win32":
-    #         mock_playsound.return_value = None
-    #         print(mock_playsound)
-    #         self.cpx.play_file("sample.wav")
-    #         assert True == playsound.playsound.called()
+    def test_play_file_mp(self):#, mock_playsound):
+        playsound = mock.Mock(return_value="mocked stuff")
+        if sys.platform == "win32":
+            self.cpx.play_file("sample.wav")
+            assert True == playsound.called()
 
             # with mock.patch('playsound.playsound') as mock_playsound:
             #     self.cpx.play_file("sample.wav")
