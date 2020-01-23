@@ -109,18 +109,6 @@ class TestExpress(object):
         with pytest.raises(TypeError):
             self.cpx.play_file('sample.mp4')
 
-    # TODO Mock playsound.playsound and check that it is called 
-    # @mock.patch('playsound.playsound')
-    def test_play_file_mp(self):#, mock_playsound):
-        playsound = mock.Mock(return_value="mocked stuff")
-        if sys.platform == "win32":
-            self.cpx.play_file("sample.wav")
-            assert True == playsound.called()
-
-            # with mock.patch('playsound.playsound') as mock_playsound:
-            #     self.cpx.play_file("sample.wav")
-            #     mock_playsound.assert_called_with("sample.wav")
-
     # Pixels tests
     def test_fill(self):
         self.cpx.pixels.fill((0, 255, 0))
