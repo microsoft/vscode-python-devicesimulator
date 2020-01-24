@@ -15,24 +15,24 @@ def main():
     # lines = read_in()
 
     openCmd = {
-            'pixels': [
-                (0, 0, 255),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-            ],
-            'button_a': False,
-            'button_b': False,
+        "pixels": [
+            (0, 0, 255),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+        ],
+        "button_a": False,
+        "button_b": False,
     }
     print(json.dumps(openCmd))
 
 
 # start process
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
