@@ -16,4 +16,3 @@ while True:
     else:
         cpx.pixels[7] = (0, 0, 0)
     cpx.pixels.show()
-

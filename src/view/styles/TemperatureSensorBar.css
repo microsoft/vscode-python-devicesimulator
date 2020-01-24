@@ -1,18 +1,18 @@
 .title {
-  font-size: 14px;
-  text-align: left;
-  font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    font-weight: bold;
 }
 
 .header {
-  -webkit-appearance: none;
-  height: 30px;
-  margin-bottom: 2px;
+    -webkit-appearance: none;
+    height: 30px;
+    margin-bottom: 2px;
 }
 .temperatureSensorBar {
-  margin-top: 10px;
-  width: 440px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 16px;
+    margin-top: 10px;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 16px;
 }
