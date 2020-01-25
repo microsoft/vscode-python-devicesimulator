@@ -70,7 +70,7 @@ export async function activate(context: vscode.ExtensionContext) {
   
   // ignore import errors so that adafruit_circuitplayground library
   // doesn't trigger lint errors
-  updatePylintArgs();
+  updatePylintArgs(context);
 
   pythonExecutableName = await utils.setPythonExectuableName();
 
@@ -887,24 +887,44 @@ const updatePythonExtraPaths = () => {
   updateConfigLists("python.autoComplete.extraPaths",[__dirname], vscode.ConfigurationTarget.Global)
 };
 
-const updatePylintArgs = () => {
-  updateConfigLists("python.linting.pylintArgs",["--disable=E0401"], vscode.ConfigurationTarget.Workspace)
+const updatePylintArgs = (context: vscode.ExtensionContext) => {
+  const outPath:string = createEscapedPath([
+                          context.extensionPath,
+                          CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
+                        ])
+  const pyLibsPath:string = createEscapedPath([
+                          context.extensionPath,
+                          CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+                          CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
+                        ])
+
+  // update pylint args to extend system path 
+  // to include python libs local to extention
+  updateConfigLists("python.linting.pylintArgs",
+                    [
+                        "--init-hook",
+                        `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`
+                    ], 
+                    vscode.ConfigurationTarget.Workspace)
+}
+
+const createEscapedPath = (pieces: string[]) => {
+  const initialPath:string = pieces.join("\\");
+
+  // escape all instances of backslashes
+  return initialPath.replace(/\\/g,"\\\\");
 }
 
 const updateConfigLists = (section: string, newItems: string[], scope: vscode.ConfigurationTarget) => {
   // function for adding elements to configuration arrays
   const currentExtraItems: string[] = vscode.workspace.getConfiguration().get(section) || [];
-
-  for (const item of newItems) {
-    if (!currentExtraItems.includes(item)) {
-      currentExtraItems.push(item);
-    }
-  }
+  const extraItemsSet:Set<string> = new Set(currentExtraItems.concat(newItems))
+  
   vscode.workspace
     .getConfiguration()
     .update(
       section,
-      currentExtraItems,
+      Array.from(extraItemsSet),
       scope
     );
 }
