@@ -31,11 +31,11 @@ class TestExpress(object):
         assert accel[2] == -20
 
     def test_button_a(self):
-        self.cpx._Express__state['button_a'] = True
+        self.cpx._Express__state["button_a"] = True
         assert self.cpx.button_a
 
     def test_button_b(self):
-        self.cpx._Express__state['button_b'] = True
+        self.cpx._Express__state["button_b"] = True
         assert self.cpx.button_b
 
     def test_taps(self):
@@ -48,7 +48,7 @@ class TestExpress(object):
         assert expected == self.cpx.detect_taps
 
     def test_red_led(self):
-        self.cpx._Express__state['red_led'] = True
+        self.cpx._Express__state["red_led"] = True
         assert self.cpx.red_led
 
     def test_red_led_int(self):
@@ -56,53 +56,53 @@ class TestExpress(object):
         assert self.cpx.red_led
 
     def test_red_led_string(self):
-        self.cpx.red_led = 'foo'
+        self.cpx.red_led = "foo"
         assert self.cpx.red_led
 
     def test_switch(self):
-        self.cpx._Express__state['switch'] = True
+        self.cpx._Express__state["switch"] = True
         assert self.cpx.switch
 
     def test_temperature(self):
-        self.cpx._Express__state['temperature'] = 31
+        self.cpx._Express__state["temperature"] = 31
         assert 31 == self.cpx.temperature
 
     def test_light(self):
-        self.cpx._Express__state['light'] = 255
+        self.cpx._Express__state["light"] = 255
         assert 255 == self.cpx.light
 
     def test_shake(self):
-        self.cpx._Express__state['shake'] = True
+        self.cpx._Express__state["shake"] = True
         assert self.cpx.shake()
 
     def test_touch_A1(self):
-        self.cpx._Express__state['touch'][0] = True
+        self.cpx._Express__state["touch"][0] = True
         assert self.cpx.touch_A1
 
     def test_touch_A2(self):
-        self.cpx._Express__state['touch'][1] = True
+        self.cpx._Express__state["touch"][1] = True
         assert self.cpx.touch_A2
 
     def test_touch_A3(self):
-        self.cpx._Express__state['touch'][2] = True
+        self.cpx._Express__state["touch"][2] = True
         assert self.cpx.touch_A3
-        
+
     def test_touch_A4(self):
-        self.cpx._Express__state['touch'][3] = True
+        self.cpx._Express__state["touch"][3] = True
         assert self.cpx.touch_A4
 
     def test_touch_A5(self):
-        self.cpx._Express__state['touch'][4] = True
+        self.cpx._Express__state["touch"][4] = True
         assert self.cpx.touch_A5
-        
+
     def test_touch_A6(self):
-        self.cpx._Express__state['touch'][5] = True
+        self.cpx._Express__state["touch"][5] = True
         assert self.cpx.touch_A6
 
     def test_touch_A7(self):
-        self.cpx._Express__state['touch'][6] = True
+        self.cpx._Express__state["touch"][6] = True
         assert self.cpx.touch_A7
 
     def test_play_file_mp_wrong_type(self):
         with pytest.raises(TypeError):
-            self.cpx.play_file('sample.mp4')
+            self.cpx.play_file("sample.mp4")
