@@ -1,20 +1,20 @@
 .simulator {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 700px;
-  max-height: 700px;
-  margin-left: auto;
-  margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 700px;
+    max-height: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .buttons {
-  display: flex;
-  flex-direction: row;
-  padding-top: 20px;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    justify-content: center;
 }
 
 .file-selector {
-  padding: 20px;
+    padding: 20px;
 }

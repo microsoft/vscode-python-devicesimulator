@@ -1,103 +1,103 @@
 :root {
-  --slider-gray-color: #cccccc;
-  --slider-width: 240px;
+    --slider-gray-color: #cccccc;
+    --slider-width: 240px;
 }
 .inputSlider {
-  height: 48px;
-  margin-bottom: 60px;
-  display: table-cell;
+    height: 48px;
+    margin-bottom: 60px;
+    display: table-cell;
 }
 .sliderValue {
-  -webkit-appearance: none;
-  text-align: center;
-  width: 48px;
-  height: 32px;
-  background-color: var(--vscode-editor-background);
-  margin-right: 15px;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 5px;
-  color: var(--badgeForegroundOverride);
-  border-radius: 2px;
-  font-size: 16px;
-  font-weight: bold;
-  border-width: 1px;
-  border-radius: 2px;
-  border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    -webkit-appearance: none;
+    text-align: center;
+    width: 48px;
+    height: 32px;
+    background-color: var(--vscode-editor-background);
+    margin-right: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+    color: var(--badgeForegroundOverride);
+    border-radius: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
 }
 
 .slider {
-  -webkit-appearance: none;
-  background-color: var(--slider-gray-color);
-  height: 1px;
-  width: var(--slider-width);
-  vertical-align: middle;
+    -webkit-appearance: none;
+    background-color: var(--slider-gray-color);
+    height: 1px;
+    width: var(--slider-width);
+    vertical-align: middle;
 }
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--vscode-textLink-activeForeground);
-  cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--vscode-textLink-activeForeground);
+    cursor: pointer;
 }
 
 .slider::-webkit-slider-runnable-track:focus,
 .inputSlider:focus,
 .slider:focus {
-  outline: none;
+    outline: none;
 }
 
 .sliderValue:focus,
 .sliderValue:hover {
-  -webkit-appearance: none;
-  color: var(--vscode-textLink-activeForeground);
-  outline: 1px solid var(--vscode-textLink-activeForeground);
+    -webkit-appearance: none;
+    color: var(--vscode-textLink-activeForeground);
+    outline: 1px solid var(--vscode-textLink-activeForeground);
 }
 .maxLabel,
 .minLabel {
-  display: inline-block;
-  position: absolute;
-  vertical-align: top;
+    display: inline-block;
+    position: absolute;
+    vertical-align: top;
 }
 
 .maxLabel {
-  right: 0;
+    right: 0;
 }
 
 .minLabel {
-  left: 0;
+    left: 0;
 }
 
 .sliderArea,
 .sliderValue {
-  display: inline-block;
-  vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .sliderArea {
-  width: var(--slider-width);
-  height: 49px;
+    width: var(--slider-width);
+    height: 49px;
 }
 .downLabelArea {
-  width: var(--slider-width);
-  height: 15px;
-  margin-top: 10px;
-  position: relative;
-  font-size: 14px;
+    width: var(--slider-width);
+    height: 15px;
+    margin-top: 10px;
+    position: relative;
+    font-size: 14px;
 }
 .upLabelArea {
-  width: var(--slider-width);
-  height: 15px;
-  margin-bottom: 10px;
-  position: relative;
-  font-weight: bolder;
-  font-size: 16px;
+    width: var(--slider-width);
+    height: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    font-weight: bolder;
+    font-size: 16px;
 }
 
 .slider,
 .upLabelArea,
 .downLabelArea {
-  display: block;
+    display: block;
 }

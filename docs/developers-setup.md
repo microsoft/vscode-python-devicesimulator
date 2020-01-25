@@ -52,6 +52,13 @@
   listed as 'Device Simulator Express : ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
 
+## Formatting
+
+- We use prettier to format the Typescript and CSS files, and we use black to format the Python files.
+    - You will need to install them, if they are not installed already. This can be done by running the command: `npm install prettier` and `pip install black` respectively.
+- To check that your files are formatted correctly, run the command: `npm run check`.
+- To format your files correctly, run the command: `npm run format`.
+
 ## Repository Structure (important files)
 
 - src
