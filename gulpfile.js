@@ -35,6 +35,7 @@ gulp.task("clean", () => {
 
 const pythonToMove = [
   "./src/adafruit_circuitplayground/*.*",
+  "./src/microbit/*.*",
   "./src/*.py",
   "./src/requirements.txt",
 ];
