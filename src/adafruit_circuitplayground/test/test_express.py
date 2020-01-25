@@ -1,5 +1,7 @@
 import pytest
+from unittest import mock
 
+import playsound
 from ..express import Express
 from ..pixel import Pixel
 
@@ -103,6 +105,11 @@ class TestExpress(object):
         self.cpx._Express__state["touch"][6] = True
         assert self.cpx.touch_A7
 
-    def test_play_file_mp_wrong_type(self):
+    def test_play_file_mp4_wrong_type(self):
         with pytest.raises(TypeError):
             self.cpx.play_file("sample.mp4")
+
+    def test_play_file_mp4(self):
+        playsound.playsound = mock.Mock()
+        self.cpx.play_file("sample.wav")
+        playsound.playsound.assert_called_once()

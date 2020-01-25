@@ -4,7 +4,7 @@
 import json
 import sys
 import os
-from playsound import playsound
+import playsound
 from .pixel import Pixel
 from . import utils
 from . import constants as CONSTANTS
@@ -162,7 +162,7 @@ class Express:
         if sys.implementation.version[0] >= 3:
             if file_name.endswith(".wav"):
                 try:
-                    playsound(abs_path_wav_file)
+                    playsound.playsound(abs_path_wav_file)
                 except:
                     # TODO TASK: 29054 Verfication of a "valid" .wav file
                     raise EnvironmentError(CONSTANTS.NOT_SUITABLE_FILE_ERROR)
