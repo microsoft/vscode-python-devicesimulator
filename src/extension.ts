@@ -65,17 +65,12 @@ export async function activate(context: vscode.ExtensionContext) {
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
 
-<<<<<<< HEAD
   // Add our library path to settings.json for autocomplete functionality
   updatePythonExtraPaths();
   
   // ignore import errors so that adafruit_circuitplayground library
   // doesn't trigger lint errors
   updatePylintArgs(context);
-=======
-    // Add our library path to settings.json for autocomplete functionality
-    updatePythonExtraPaths();
->>>>>>> dev
 
     pythonExecutableName = await utils.setPythonExectuableName();
 
@@ -982,7 +977,6 @@ const checkForTelemetry = (sensorState: any) => {
 };
 
 const updatePythonExtraPaths = () => {
-<<<<<<< HEAD
   updateConfigLists("python.autoComplete.extraPaths",[__dirname], vscode.ConfigurationTarget.Global)
 };
 
@@ -1027,24 +1021,6 @@ const updateConfigLists = (section: string, newItems: string[], scope: vscode.Co
       scope
     );
 }
-=======
-    const pathToLib: string = __dirname;
-    const currentExtraPaths: string[] =
-        vscode.workspace
-            .getConfiguration()
-            .get("python.autoComplete.extraPaths") || [];
-    if (!currentExtraPaths.includes(pathToLib)) {
-        currentExtraPaths.push(pathToLib);
-    }
-    vscode.workspace
-        .getConfiguration()
-        .update(
-            "python.autoComplete.extraPaths",
-            currentExtraPaths,
-            vscode.ConfigurationTarget.Global
-        );
-};
->>>>>>> dev
 
 function getWebviewContent(context: vscode.ExtensionContext) {
     return `<!DOCTYPE html>
