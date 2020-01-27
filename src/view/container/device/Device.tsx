@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Pivot, PivotItem, PivotLinkFormat } from "office-ui-fabric-react";
 import * as React from "react";
 import Simulator from "../../components/Simulator";
 import { TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
@@ -60,8 +61,15 @@ class Device extends React.Component {
     render() {
         return (
             <div className="device-container">
-                <Simulator />
-                <ToolBar buttonList={CPX_TOOLBAR_BUTTONS} />
+                <Pivot linkFormat={PivotLinkFormat.tabs}>
+                    <PivotItem headerText="CPX">
+                        <Simulator />
+                        <ToolBar buttonList={CPX_TOOLBAR_BUTTONS} />
+                    </PivotItem>
+                    <PivotItem headerText="Micro:bit">
+                        <p>Microbit</p>
+                    </PivotItem>
+                </Pivot>
             </div>
         );
     }
