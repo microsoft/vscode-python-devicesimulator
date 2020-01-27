@@ -284,10 +284,11 @@
     "lint:ts": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "lint:python": "pylint src",
     "format": "npm-run-all format:*",
-    "format:ts": "prettier --write src/**/*.{css,ts,tsx}",
+    "format:ts": "prettier --config .prettierrc.yaml --write src/**/*.{css,ts,tsx}",
     "format:python": "black src",
     "check": "npm-run-all check:*",
-    "check:ts": "prettier --trailing-comma es5 --tab-width 4 --end-of-line lf --print-width 80 --check src/**/*.{css,ts,tsx}",
+    "check:ts": "prettier --trailing-comma es5 --tab-width 4 --end-of-line auto --print-width 80 --check src/**/*.{css,ts,tsx}",
+    "check:ts1": "prettier --config .prettierrc.yaml --check src/**/*.{css,ts,tsx}",
     "check:python": "black src --check",
     "package": "vsce package"
   },
