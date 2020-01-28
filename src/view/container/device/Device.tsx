@@ -54,24 +54,71 @@ const CPX_TOOLBAR_BUTTONS: Array<{ label: any; image: any }> = [
         label: TOOLBAR_ICON_ID.GPIO,
     },
 ];
-
+interface IState {
+    currentDevice: string | undefined;
+}
+interface IProps {
+    children?: any;
+}
+const DEVICE_LIST_KEY = {
+    CPX: "cpx",
+    MICROBIT: "microbit",
+};
 // Container to switch between multiple devices
 
-class Device extends React.Component {
+class Device extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            currentDevice: DEVICE_LIST_KEY.MICROBIT,
+        };
+    }
     render() {
         return (
             <div className="device-container">
-                <Pivot linkFormat={PivotLinkFormat.tabs}>
-                    <PivotItem headerText="CPX">
+                <Pivot
+                    linkFormat={PivotLinkFormat.tabs}
+                    onLinkClick={this.handleTabClick}
+                >
+                    <PivotItem
+                        headerText="Micro:bit"
+                        itemKey={DEVICE_LIST_KEY.MICROBIT}
+                    />
+
+                    <PivotItem headerText="CPX" itemKey={DEVICE_LIST_KEY.CPX} />
+                </Pivot>
+                <div>
+                    <div
+                        style={{
+                            visibility:
+                                this.state.currentDevice ===
+                                DEVICE_LIST_KEY.MICROBIT
+                                    ? "visible"
+                                    : "hidden",
+                        }}
+                    >
+                        microbit
+                    </div>
+                    <div
+                        style={{
+                            visibility:
+                                this.state.currentDevice === DEVICE_LIST_KEY.CPX
+                                    ? "visible"
+                                    : "hidden",
+                        }}
+                    >
                         <Simulator />
                         <ToolBar buttonList={CPX_TOOLBAR_BUTTONS} />
-                    </PivotItem>
-                    <PivotItem headerText="Micro:bit">
-                        <p>Microbit</p>
-                    </PivotItem>
-                </Pivot>
+                    </div>
+                </div>
             </div>
         );
     }
+    private handleTabClick = (item: PivotItem | undefined): void => {
+        if (item) {
+            this.setState({ currentDevice: item.props.itemKey });
+            console.log(this.state.currentDevice);
+        }
+    };
 }
 export default Device;
