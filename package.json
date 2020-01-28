@@ -278,7 +278,7 @@
     "pretest": "npm run compile",
     "test": "npm-run-all test:*",
     "test:extension-tests": "node ./out/test/runTest.js",
-    "test:react": "jest",
+    "test:ts": "jest",
     "test:api-tests": "pytest src",
     "lint": "npm-run-all lint:*",
     "lint:ts": "tslint -c tslint.json src/**/*.{ts,tsx}",

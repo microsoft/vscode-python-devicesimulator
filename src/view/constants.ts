@@ -41,5 +41,9 @@ export const CONSTANTS = {
     SIMULATOR_BUTTON_WIDTH: 60,
     TOOLBAR_INFO: `Explore what's on the board:`,
 };
+export enum DEVICE_LIST_KEY {
+    CPX = "cpx",
+    MICROBIT = "microbit",
+}
 
 export default CONSTANTS;
