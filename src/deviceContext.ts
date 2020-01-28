@@ -5,10 +5,10 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
-import { CPXWorkspace } from "./cpxWorkspace";
 import CONSTANTS, { CPX_CONFIG_FILE } from "./constants";
+import { CPXWorkspace } from "./cpxWorkspace";
+import * as utils from "./extension_utils/utils";
 
 export class DeviceContext implements vscode.Disposable {
     public static getInstance(): DeviceContext {
@@ -21,11 +21,18 @@ export class DeviceContext implements vscode.Disposable {
     private _watcher: vscode.FileSystemWatcher;
     private _vscodeWatcher: vscode.FileSystemWatcher;
     private _port!: string;
-    
+
     private constructor() {
         if (vscode.workspace && CPXWorkspace.rootPath) {
-            this._watcher = vscode.workspace.createFileSystemWatcher(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE));
-            this._vscodeWatcher = vscode.workspace.createFileSystemWatcher(path.join(CPXWorkspace.rootPath, ".vscode"), true, true, false);
+            this._watcher = vscode.workspace.createFileSystemWatcher(
+                path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)
+            );
+            this._vscodeWatcher = vscode.workspace.createFileSystemWatcher(
+                path.join(CPXWorkspace.rootPath, ".vscode"),
+                true,
+                true,
+                false
+            );
 
             // Reloads the config into the code if the cpx config file has changed
             this._watcher.onDidCreate(() => this.loadContext());
@@ -37,12 +44,14 @@ export class DeviceContext implements vscode.Disposable {
     }
 
     public loadContext(): Thenable<object> {
-        return vscode.workspace.findFiles(CPX_CONFIG_FILE, null, 1)
-            .then((files) => {
+        return vscode.workspace.findFiles(CPX_CONFIG_FILE, null, 1).then(
+            files => {
                 let cpxConfigJson: any = {};
                 if (files && files.length > 0) {
                     const configFile = files[0];
-                    cpxConfigJson = utils.tryParseJSON(fs.readFileSync(configFile.fsPath, "utf8"));
+                    cpxConfigJson = utils.tryParseJSON(
+                        fs.readFileSync(configFile.fsPath, "utf8")
+                    );
                     if (cpxConfigJson) {
                         this._port = cpxConfigJson.port;
                         this._onDidChange.fire();
@@ -54,11 +63,13 @@ export class DeviceContext implements vscode.Disposable {
                     this._onDidChange.fire();
                 }
                 return this;
-            }, (reason) => {
+            },
+            reason => {
                 this._port = null;
                 this._onDidChange.fire();
                 return this;
-            });
+            }
+        );
     }
 
     public saveContext() {
@@ -68,7 +79,9 @@ export class DeviceContext implements vscode.Disposable {
         const cpxConfigFile = path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE);
         let cpxConfigJson: any = {};
         if (utils.fileExistsSync(cpxConfigFile)) {
-            cpxConfigJson = utils.tryParseJSON(fs.readFileSync(cpxConfigFile, "utf8"));
+            cpxConfigJson = utils.tryParseJSON(
+                fs.readFileSync(cpxConfigFile, "utf8")
+            );
         }
         if (!cpxConfigJson) {
             // log and notify user error
@@ -77,31 +90,47 @@ export class DeviceContext implements vscode.Disposable {
         cpxConfigJson.port = this.port;
 
         utils.mkdirRecursivelySync(path.dirname(cpxConfigFile));
-        fs.writeFileSync(cpxConfigFile, JSON.stringify(cpxConfigJson, (key, value) => {
-            if (value === null) {
-                return undefined;
-            }
-            return value;
-        }, 4));
+        fs.writeFileSync(
+            cpxConfigFile,
+            JSON.stringify(
+                cpxConfigJson,
+                (key, value) => {
+                    if (value === null) {
+                        return undefined;
+                    }
+                    return value;
+                },
+                4
+            )
+        );
     }
 
     public dispose() {
         if (this._watcher) {
             this._watcher.dispose();
         }
-        
+
         if (this._vscodeWatcher) {
             this._vscodeWatcher.dispose();
         }
     }
 
     public async initialize() {
-        if (CPXWorkspace.rootPath && utils.fileExistsSync(path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE))) {
-            vscode.window.showInformationMessage(CONSTANTS.INFO.CPX_JSON_ALREADY_GENERATED);
+        if (
+            CPXWorkspace.rootPath &&
+            utils.fileExistsSync(
+                path.join(CPXWorkspace.rootPath, CPX_CONFIG_FILE)
+            )
+        ) {
+            vscode.window.showInformationMessage(
+                CONSTANTS.INFO.CPX_JSON_ALREADY_GENERATED
+            );
             return;
         } else {
             if (!CPXWorkspace.rootPath) {
-                vscode.window.showInformationMessage(CONSTANTS.INFO.PLEASE_OPEN_FOLDER);
+                vscode.window.showInformationMessage(
+                    CONSTANTS.INFO.PLEASE_OPEN_FOLDER
+                );
                 return;
             }
         }

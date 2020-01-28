@@ -1,27 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 export interface ISliderProps {
-  minValue: number;
-  maxValue: number;
-  maxLabel: string;
-  minLabel: string;
-  type: string;
-  axisLabel: string;
+    minValue: number;
+    maxValue: number;
+    maxLabel: string;
+    minLabel: string;
+    type: string;
+    axisLabel: string;
 }
 
 export interface ISensorButtonProps {
-  label: string;
-  type: string;
-  onMouseUp: (event: React.PointerEvent<HTMLButtonElement>) => void;
-  onMouseDown: (event: React.PointerEvent<HTMLButtonElement>) => void;
-  onKeyUp: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    label: string;
+    type: string;
+    onMouseUp: (event: React.PointerEvent<HTMLButtonElement>) => void;
+    onMouseDown: (event: React.PointerEvent<HTMLButtonElement>) => void;
+    onKeyUp: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 export interface ISensorProps {
-  LABEL: string;
-  sliderProps: ISliderProps[];
-  unitLabel: string;
+    LABEL: string;
+    sliderProps: ISliderProps[];
+    unitLabel: string;
 }
 
 export const X_SLIDER_INDEX = 0;

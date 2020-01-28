@@ -3,7 +3,7 @@
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
-ENABLE_TELEMETRY = 'enable_telemetry'
+ENABLE_TELEMETRY = "enable_telemetry"
 EXPECTED_INPUT_EVENTS = [
     "button_a",
     "button_b",
@@ -14,7 +14,7 @@ EXPECTED_INPUT_EVENTS = [
     "motion_x",
     "motion_y",
     "motion_z",
-    "touch"
+    "touch",
 ]
 
 EXEC_COMMAND = "exec"
@@ -29,7 +29,9 @@ MAC_OS = "darwin"
 MOUNT_COMMAND = "mount"
 
 NO_CPX_DETECTED_ERROR_TITLE = "No Circuit Playground Express detected"
-NO_CPX_DETECTED_ERROR_DETAIL = "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
+NO_CPX_DETECTED_ERROR_DETAIL = (
+    "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
+)
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 

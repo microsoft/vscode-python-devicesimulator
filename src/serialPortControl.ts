@@ -3,9 +3,9 @@
 
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
-import { CONSTANTS } from "./constants";
 import * as os from "os";
 import { OutputChannel } from "vscode";
+import { CONSTANTS } from "./constants";
 import { logToOutputChannel } from "./extension_utils/utils";
 
 interface ISerialPortDetail {
@@ -18,20 +18,22 @@ interface ISerialPortDetail {
 export class SerialPortControl {
     public static get serialport(): any {
         if (!SerialPortControl._serialport) {
-            SerialPortControl._serialport = require("../vendor/node-usb-native").SerialPort
+            SerialPortControl._serialport = require("../vendor/node-usb-native").SerialPort;
         }
         return SerialPortControl._serialport;
     }
 
     public static list(): Promise<ISerialPortDetail[]> {
         return new Promise((resolve, reject) => {
-            SerialPortControl.serialport.list((error: any, ports: ISerialPortDetail[]) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(ports);
+            SerialPortControl.serialport.list(
+                (error: any, ports: ISerialPortDetail[]) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(ports);
+                    }
                 }
-            });
+            );
         });
     }
 
@@ -41,7 +43,11 @@ export class SerialPortControl {
     private _currentBaudRate: number;
     private _currentSerialPort: any;
 
-    public constructor(port: string, baudRate: number, private _outputChannel: OutputChannel) {
+    public constructor(
+        port: string,
+        baudRate: number,
+        private _outputChannel: OutputChannel
+    ) {
         this._currentPort = port;
         this._currentBaudRate = baudRate;
     }
@@ -55,7 +61,10 @@ export class SerialPortControl {
     }
 
     public open(): Promise<any> {
-        logToOutputChannel(this._outputChannel, CONSTANTS.INFO.OPENING_SERIAL_PORT(this._currentPort));
+        logToOutputChannel(
+            this._outputChannel,
+            CONSTANTS.INFO.OPENING_SERIAL_PORT(this._currentPort)
+        );
         return new Promise((resolve, reject) => {
             if (this._currentSerialPort && this._currentSerialPort.isOpen()) {
                 this._currentSerialPort.close((err: any) => {
@@ -63,26 +72,56 @@ export class SerialPortControl {
                         return reject(err);
                     }
                     this._currentSerialPort = null;
-                    return this.open().then(() => {
-                        resolve();
-                    }, (error) => {
-                        reject(error);
-                    });
+                    return this.open().then(
+                        () => {
+                            resolve();
+                        },
+                        error => {
+                            reject(error);
+                        }
+                    );
                 });
             } else {
-                this._currentSerialPort = new SerialPortControl.serialport(this._currentPort, { baudRate: this._currentBaudRate });
+                this._currentSerialPort = new SerialPortControl.serialport(
+                    this._currentPort,
+                    { baudRate: this._currentBaudRate }
+                );
                 this._outputChannel.show();
                 this._currentSerialPort.on("open", () => {
-                    this._currentSerialPort.write(CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN, "Both NL & CR", (err: any) => {
-                        if (err && !(err.message.indexOf(CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR) >= 0)) {
-                            logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(this._currentPort));
-                            logToOutputChannel(this._outputChannel, CONSTANTS.ERROR.RECONNECT_DEVICE);
-                            reject(err);
-                        } else {
-                            logToOutputChannel(this._outputChannel, CONSTANTS.INFO.OPENED_SERIAL_PORT(this._currentPort));
-                            resolve();
+                    this._currentSerialPort.write(
+                        CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN,
+                        "Both NL & CR",
+                        (err: any) => {
+                            if (
+                                err &&
+                                !(
+                                    err.message.indexOf(
+                                        CONSTANTS.ERROR.COMPORT_UNKNOWN_ERROR
+                                    ) >= 0
+                                )
+                            ) {
+                                logToOutputChannel(
+                                    this._outputChannel,
+                                    CONSTANTS.ERROR.FAILED_TO_OPEN_SERIAL_PORT(
+                                        this._currentPort
+                                    )
+                                );
+                                logToOutputChannel(
+                                    this._outputChannel,
+                                    CONSTANTS.ERROR.RECONNECT_DEVICE
+                                );
+                                reject(err);
+                            } else {
+                                logToOutputChannel(
+                                    this._outputChannel,
+                                    CONSTANTS.INFO.OPENED_SERIAL_PORT(
+                                        this._currentPort
+                                    )
+                                );
+                                resolve();
+                            }
                         }
-                    });
+                    );
                 });
             }
 
@@ -120,21 +159,24 @@ export class SerialPortControl {
 
     public stop(): Promise<any> {
         return new Promise((resolve, reject) => {
-          if (!this._currentSerialPort || !this.isActive) {
-            resolve(false);
-            return;
-          }
-          this._currentSerialPort.close((error: any) => {
-            if (this._outputChannel) {
-              logToOutputChannel(this._outputChannel, CONSTANTS.INFO.CLOSED_SERIAL_PORT(this._currentPort));
+            if (!this._currentSerialPort || !this.isActive) {
+                resolve(false);
+                return;
             }
-            this._currentSerialPort = null;
-            if (error) {
-              reject(error);
-            } else {
-              resolve(true);
-            }
-          });
+            this._currentSerialPort.close((error: any) => {
+                if (this._outputChannel) {
+                    logToOutputChannel(
+                        this._outputChannel,
+                        CONSTANTS.INFO.CLOSED_SERIAL_PORT(this._currentPort)
+                    );
+                }
+                this._currentSerialPort = null;
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(true);
+                }
+            });
         });
     }
 
@@ -145,13 +187,16 @@ export class SerialPortControl {
                 resolve();
                 return;
             }
-            this._currentSerialPort.update({ baudRate: this._currentBaudRate }, (error: any) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
+            this._currentSerialPort.update(
+                { baudRate: this._currentBaudRate },
+                (error: any) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve();
+                    }
                 }
-            });
+            );
         });
     }
 }

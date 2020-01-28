@@ -3,13 +3,13 @@
 
 // Credit: A majority of this code was taken from the Visual Studio Code Arduino extension with some modifications to suit our purposes.
 
-import * as os from "os";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
-import * as utils from "./extension_utils/utils";
 import * as vscode from "vscode";
-import { SerialMonitor } from "./serialMonitor";
 import { CONFIG_KEYS } from "./constants";
+import * as utils from "./extension_utils/utils";
+import { SerialMonitor } from "./serialMonitor";
 
 export class UsbDetector {
     public static getInstance(): UsbDetector {
@@ -27,7 +27,7 @@ export class UsbDetector {
 
     private _extensionRoot: string = null;
 
-    private constructor() { }
+    private constructor() {}
 
     public initialize(extensionRoot: string) {
         this._extensionRoot = extensionRoot;
@@ -35,7 +35,9 @@ export class UsbDetector {
 
     public async startListening() {
         const workspaceConfig = vscode.workspace.getConfiguration();
-        const enableUSBDetection = workspaceConfig.get(CONFIG_KEYS.ENABLE_USB_DETECTION);
+        const enableUSBDetection = workspaceConfig.get(
+            CONFIG_KEYS.ENABLE_USB_DETECTION
+        );
 
         if (os.platform() === "linux" || !enableUSBDetection) {
             return;
@@ -78,22 +80,33 @@ export class UsbDetector {
         }
     }
 
-    private getUsbDeviceDescriptor(vendorId: string, productId: string, extensionRoot: string): any {
+    private getUsbDeviceDescriptor(
+        vendorId: string,
+        productId: string,
+        extensionRoot: string
+    ): any {
         if (!this._boardDescriptors) {
             this._boardDescriptors = [];
-            const fileContent = fs.readFileSync(path.join(extensionRoot, "misc", "usbmapping.json"), "utf8");
+            const fileContent = fs.readFileSync(
+                path.join(extensionRoot, "misc", "usbmapping.json"),
+                "utf8"
+            );
             const boardIndexes: [] = JSON.parse(fileContent);
             boardIndexes.forEach((boardIndex: any) => {
                 boardIndex.boards.forEach((board: any) => {
-                    board.indexFile = boardIndex.index_file
+                    board.indexFile = boardIndex.index_file;
                 });
-                this._boardDescriptors = this._boardDescriptors.concat(boardIndex.boards);
+                this._boardDescriptors = this._boardDescriptors.concat(
+                    boardIndex.boards
+                );
             });
         }
         return this._boardDescriptors.find((obj: any) => {
-            return obj.vid === vendorId && 
-                   (obj.pid === productId || 
-                        (obj.pid.indexOf && obj.pid.indexOf(productId) >= 0));
+            return (
+                obj.vid === vendorId &&
+                (obj.pid === productId ||
+                    (obj.pid.indexOf && obj.pid.indexOf(productId) >= 0))
+            );
         });
     }
 }

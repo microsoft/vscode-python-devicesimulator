@@ -1,27 +1,27 @@
 .dropdown {
-  background: var(--vscode-debugToolBar-background);
-  border-color: var(--vscode-highContrastButtonBorderOverride-color);
-  border-radius: 2px;
-  max-width: 300px;
-  min-width: 240px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.22);
-  color: var(--vscode-foreground);
-  height: 32px;
-  padding-left: 8px;
-  padding-right: 4px;
+    background: var(--vscode-debugToolBar-background);
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    border-radius: 2px;
+    max-width: 300px;
+    min-width: 240px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.22);
+    color: var(--vscode-foreground);
+    height: 32px;
+    padding-left: 8px;
+    padding-right: 4px;
 }
 
 select.dropdown:hover,
 select.dropdown:focus,
 select.dropdown:active {
-  outline: 1px solid var(--vscode-button-background);
-  outline-offset: 1px;
+    outline: 1px solid var(--vscode-button-background);
+    outline-offset: 1px;
 }
 
 option {
-  height: 32px;
-  background: var(--vscode-debugToolBar-background);
-  align-items: center;
-  font-size: 14px;
-  color: var(--vscode-foreground);
+    height: 32px;
+    background: var(--vscode-debugToolBar-background);
+    align-items: center;
+    font-size: 14px;
+    color: var(--vscode-foreground);
 }
