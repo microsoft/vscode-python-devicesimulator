@@ -7,17 +7,10 @@ from . import constants as CONSTANTS
 def show_message(message):
     microbit_model.mb.show_message(message)
 
-# def Image(pattern = CONSTANTS.BLANK):
-#     img = image.Image(pattern)
-#     assign_constants(img)
-
-def assign_constants(obj):
-    obj.BOAT = image.MicrobitImage(CONSTANTS.BOAT)
 
 display = microbit_model.mb.display
+
+microbit = microbit_model.mb
 Image = image.Image
 
-
-# define "constants" here
-# Image.BOAT = image.Image(CONSTANTS.BOAT)
 
