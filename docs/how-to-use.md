@@ -82,7 +82,6 @@ Here are the settings you can change in the Device Simulator Express configurati
 - The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
 - To open the output panel again after closing it go to VS Code menu : `View->Output`.
-- If you have pylint enabled, it might underline the import of the adafruit_circuitplayground library, but it will work correctly.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
 - If you can't get the Simulator communication working while debugging, try to open you `Settings` and check the port used under `'Device Simulator Express: Debugger Server Port'`. You can either change it (usually ports above 5000 could work) or try to free it, then start debugging again.
 
