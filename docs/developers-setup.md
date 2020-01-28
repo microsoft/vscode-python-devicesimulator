@@ -43,6 +43,12 @@
 
 6. Start running the extension locally by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
 
+## Testing
+
+- To run unit tests, run the command: `npm run test` in the root level directory.
+    - You will need Pytest installed for the Python tests to run correctly
+- To run just the python tests, run the command: `pytest src` or `python -m pytest src` in the root level directory.
+
 ## Notes on how to use it
 
 - [Documentation to use the Extension](/docs/how-to-use.md)

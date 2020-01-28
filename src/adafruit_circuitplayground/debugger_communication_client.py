@@ -47,5 +47,5 @@ def button_press(data):
 
 # Event : Sensor changed (Temperature, light, Motion)
 @sio.on("sensor_changed")
-def button_press(data):
+def sensor_changed(data):
     __update_api_state(data, CONSTANTS.EVENTS_SENSOR_CHANGED)
