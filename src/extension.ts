@@ -985,15 +985,15 @@ const updatePythonExtraPaths = () => {
 };
 
 const updatePylintArgs = (context: vscode.ExtensionContext) => {
-    const outPath: string = createEscapedPath([
+    const outPath: string = createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
+    );
+    const pyLibsPath: string = createEscapedPath(
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-    ]);
-    const pyLibsPath: string = createEscapedPath([
-        context.extensionPath,
-        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR,
-    ]);
+        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
+    );
 
     // update pylint args to extend system path
     // to include python libs local to extention
@@ -1007,8 +1007,8 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
     );
 };
 
-const createEscapedPath = (pieces: string[]) => {
-    const initialPath: string = pieces.join("\\");
+const createEscapedPath = (...pieces: string[]) => {
+    const initialPath: string = path.join(...pieces);
 
     // escape all instances of backslashes
     return initialPath.replace(/\\/g, "\\\\");
