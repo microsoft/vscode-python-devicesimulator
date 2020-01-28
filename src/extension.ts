@@ -65,12 +65,12 @@ export async function activate(context: vscode.ExtensionContext) {
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
 
-  // Add our library path to settings.json for autocomplete functionality
-  updatePythonExtraPaths();
-  
-  // ignore import errors so that adafruit_circuitplayground library
-  // doesn't trigger lint errors
-  updatePylintArgs(context);
+    // Add our library path to settings.json for autocomplete functionality
+    updatePythonExtraPaths();
+
+    // ignore import errors so that adafruit_circuitplayground library
+    // doesn't trigger lint errors
+    updatePylintArgs(context);
 
     pythonExecutableName = await utils.setPythonExectuableName();
 
@@ -977,50 +977,59 @@ const checkForTelemetry = (sensorState: any) => {
 };
 
 const updatePythonExtraPaths = () => {
-  updateConfigLists("python.autoComplete.extraPaths",[__dirname], vscode.ConfigurationTarget.Global)
+    updateConfigLists(
+        "python.autoComplete.extraPaths",
+        [__dirname],
+        vscode.ConfigurationTarget.Global
+    );
 };
 
 const updatePylintArgs = (context: vscode.ExtensionContext) => {
-  const outPath:string = createEscapedPath([
-                          context.extensionPath,
-                          CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
-                        ])
-  const pyLibsPath:string = createEscapedPath([
-                          context.extensionPath,
-                          CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                          CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-                        ])
+    const outPath: string = createEscapedPath([
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+    ]);
+    const pyLibsPath: string = createEscapedPath([
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR,
+    ]);
 
-  // update pylint args to extend system path 
-  // to include python libs local to extention
-  updateConfigLists("python.linting.pylintArgs",
-                    [
-                        "--init-hook",
-                        `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`
-                    ], 
-                    vscode.ConfigurationTarget.Workspace)
-}
+    // update pylint args to extend system path
+    // to include python libs local to extention
+    updateConfigLists(
+        "python.linting.pylintArgs",
+        [
+            "--init-hook",
+            `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`,
+        ],
+        vscode.ConfigurationTarget.Workspace
+    );
+};
 
 const createEscapedPath = (pieces: string[]) => {
-  const initialPath:string = pieces.join("\\");
+    const initialPath: string = pieces.join("\\");
 
-  // escape all instances of backslashes
-  return initialPath.replace(/\\/g,"\\\\");
-}
+    // escape all instances of backslashes
+    return initialPath.replace(/\\/g, "\\\\");
+};
 
-const updateConfigLists = (section: string, newItems: string[], scope: vscode.ConfigurationTarget) => {
-  // function for adding elements to configuration arrays
-  const currentExtraItems: string[] = vscode.workspace.getConfiguration().get(section) || [];
-  const extraItemsSet:Set<string> = new Set(currentExtraItems.concat(newItems))
-  
-  vscode.workspace
-    .getConfiguration()
-    .update(
-      section,
-      Array.from(extraItemsSet),
-      scope
+const updateConfigLists = (
+    section: string,
+    newItems: string[],
+    scope: vscode.ConfigurationTarget
+) => {
+    // function for adding elements to configuration arrays
+    const currentExtraItems: string[] =
+        vscode.workspace.getConfiguration().get(section) || [];
+    const extraItemsSet: Set<string> = new Set(
+        currentExtraItems.concat(newItems)
     );
-}
+
+    vscode.workspace
+        .getConfiguration()
+        .update(section, Array.from(extraItemsSet), scope);
+};
 
 function getWebviewContent(context: vscode.ExtensionContext) {
     return `<!DOCTYPE html>
