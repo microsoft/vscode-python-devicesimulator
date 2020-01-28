@@ -68,6 +68,10 @@ export async function activate(context: vscode.ExtensionContext) {
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
 
+    // ignore import errors so that adafruit_circuitplayground library
+    // doesn't trigger lint errors
+    updatePylintArgs(context);
+
     pythonExecutableName = await utils.setPythonExectuableName();
 
     await utils.checkPythonDependencies(context, pythonExecutableName);
@@ -973,21 +977,58 @@ const checkForTelemetry = (sensorState: any) => {
 };
 
 const updatePythonExtraPaths = () => {
-    const pathToLib: string = __dirname;
-    const currentExtraPaths: string[] =
-        vscode.workspace
-            .getConfiguration()
-            .get("python.autoComplete.extraPaths") || [];
-    if (!currentExtraPaths.includes(pathToLib)) {
-        currentExtraPaths.push(pathToLib);
-    }
+    updateConfigLists(
+        "python.autoComplete.extraPaths",
+        [__dirname],
+        vscode.ConfigurationTarget.Global
+    );
+};
+
+const updatePylintArgs = (context: vscode.ExtensionContext) => {
+    const outPath: string = createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
+    );
+    const pyLibsPath: string = createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
+    );
+
+    // update pylint args to extend system path
+    // to include python libs local to extention
+    updateConfigLists(
+        "python.linting.pylintArgs",
+        [
+            "--init-hook",
+            `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`,
+        ],
+        vscode.ConfigurationTarget.Workspace
+    );
+};
+
+const createEscapedPath = (...pieces: string[]) => {
+    const initialPath: string = path.join(...pieces);
+
+    // escape all instances of backslashes
+    return initialPath.replace(/\\/g, "\\\\");
+};
+
+const updateConfigLists = (
+    section: string,
+    newItems: string[],
+    scope: vscode.ConfigurationTarget
+) => {
+    // function for adding elements to configuration arrays
+    const currentExtraItems: string[] =
+        vscode.workspace.getConfiguration().get(section) || [];
+    const extraItemsSet: Set<string> = new Set(
+        currentExtraItems.concat(newItems)
+    );
+
     vscode.workspace
         .getConfiguration()
-        .update(
-            "python.autoComplete.extraPaths",
-            currentExtraPaths,
-            vscode.ConfigurationTarget.Global
-        );
+        .update(section, Array.from(extraItemsSet), scope);
 };
 
 function getWebviewContent(context: vscode.ExtensionContext) {
