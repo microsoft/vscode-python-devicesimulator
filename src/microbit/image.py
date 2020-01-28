@@ -34,8 +34,8 @@ class Image:
         return self.LED[y][x]
     
     def copy(self):
-        return Image(list(self.LED))
-
+        return Image(self.LED)
+        
     def fill(self,value):
         for y in range(0,self.height):
             for x in range(0,self.width):
