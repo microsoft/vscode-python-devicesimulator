@@ -3,6 +3,7 @@ import pytest
 from .. import constants as CONSTANTS
 from ..display import Display
 from ..image import Image
+from .. import code_processing_shim
 
 
 class TestDisplay(object):
@@ -11,7 +12,7 @@ class TestDisplay(object):
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_get_pixel(self, x, y, brightness):
-        self.display._Display__LEDs[y][x] = brightness
+        self.display._Display__image._Image__LED[y][x] = brightness
         assert brightness == self.display.get_pixel(x, y)
 
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
@@ -22,7 +23,7 @@ class TestDisplay(object):
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_set_pixel(self, x, y, brightness):
         self.display.set_pixel(x, y, brightness)
-        assert brightness == self.display._Display__LEDs[y][x]
+        assert brightness == self.display._Display__image._Image__LED[y][x]
 
     @pytest.mark.parametrize(
         "x, y, brightness, err_msg",
@@ -37,9 +38,9 @@ class TestDisplay(object):
             self.display.set_pixel(x, y, brightness)
 
     def test_clear(self):
-        self.display._Display__LEDs[0][0] = 7
-        self.display._Display__LEDs[3][4] = 6
-        self.display._Display__LEDs[4][4] = 9
+        self.display._Display__image._Image__LED[2][3] = 7
+        self.display._Display__image._Image__LED[3][4] = 6
+        self.display._Display__image._Image__LED[4][4] = 9
         assert not self.__is_clear()
         self.display.clear()
         assert self.__is_clear()
@@ -59,18 +60,21 @@ class TestDisplay(object):
         self.display._Display__on = on
         assert on == self.display.is_on()
 
-    # Helpers
-    def __is_clear(self):
-        for y in range(CONSTANTS.LED_WIDTH):
-            for x in range(CONSTANTS.LED_HEIGHT):
-                if 0 != self.display._Display__LEDs[y][x]:
-                    return False
-        return True
-
-    def test_use_me(self):
-        img = Image(5, 5)
+    def test_show_one_image(self):
+        img = Image(CONSTANTS.BOAT)
         img.set_pixel(0, 0, 8)
         img.set_pixel(0, 1, 9)
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
         self.display.show(img)
+        assert img == self.display._Display__image
+
+    # Helpers
+    def __is_clear(self):
+        for y in range(CONSTANTS.LED_WIDTH):
+            for x in range(CONSTANTS.LED_HEIGHT):
+                if 0 != self.display._Display__image._Image__LED[y][x]:
+                    print(f"Not clear at x: {x}, y: {y}")
+                    return False
+        return True
+

@@ -5,8 +5,6 @@ from . import display
 
 class Image:
     def __init__(self, *args, **kwargs):
-        print("args")
-        print(args)
         # State in the Python process
         if len(args) == 0:
             self.__LED = CONSTANTS.BLANK
@@ -37,7 +35,6 @@ class Image:
                 sub_arr.append(int(elem))
         return arr
 
-
     def set_pixel(self, x, y, value):
         try:
             if not self.__valid_pos(x, y):
@@ -50,11 +47,10 @@ class Image:
             print(CONSTANTS.COPY_ERR_MESSAGE)
 
     def get_pixel(self, x, y):
-        if self.__valid_pos(x,y):
+        if self.__valid_pos(x, y):
             return self.__LED[y][x]
         else:
             raise ValueError(CONSTANTS.INDEX_ERR)
-
 
     def copy(self):
         return Image(self.__LED)
@@ -95,7 +91,6 @@ class Image:
         res.blit(self, x, y, w, h)
         return res
 
-    
     def __valid_pos(self, x, y):
         return 0 <= x and x < self.width() and 0 <= y and y < self.height()
 
@@ -181,4 +176,3 @@ class Image:
     def __valid_brightness(self, value):
         return 0 <= value and value <= 9
 
-    
