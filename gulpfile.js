@@ -25,7 +25,7 @@ const languages = [{ folderName: "en", id: "en" }];
 gulp.task("clean", () => {
   return del(
     [
-      "out/!(python_libs)",
+      "out/*",
       "package.nls.*.json",
       "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"
     ],
@@ -36,7 +36,7 @@ gulp.task("clean", () => {
 const pythonToMove = [
   "./src/adafruit_circuitplayground/*.*",
   "./src/*.py",
-  "./src/requirements.txt"
+  "./src/requirements.txt",
 ];
 
 gulp.task("python-compile", () => {

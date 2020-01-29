@@ -10,22 +10,22 @@
 // to report the results back to the caller. When the tests are finished, return
 // a possible error to the callback or null if none.
 
-import * as path from 'path';
-import * as Mocha from 'mocha';
-import * as glob from 'glob';
+import * as glob from "glob";
+import * as Mocha from "mocha";
+import * as path from "path";
 
 // tslint:disable-next-line: export-name
 export function run(): Promise<void> {
     // Create the mocha test
     const mocha = new Mocha({
-        ui: 'tdd',
+        ui: "tdd",
     });
     mocha.useColors(true);
 
-    const testsRoot = path.resolve(__dirname, '..');
+    const testsRoot = path.resolve(__dirname, "..");
 
     return new Promise((c, e) => {
-        glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+        glob("**/**.test.js", { cwd: testsRoot }, (err, files) => {
             if (err) {
                 return e(err);
             }
