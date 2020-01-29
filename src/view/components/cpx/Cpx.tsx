@@ -7,7 +7,6 @@ import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 // Component grouping the functionality for circuit playground express
 
 export class Cpx extends React.Component {
-    
     render() {
         return (
             <React.Fragment>

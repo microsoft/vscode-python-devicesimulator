@@ -6,6 +6,10 @@ export const CONSTANTS = {
     CURRENTLY_RUNNING: (file: string) => {
         return `Currently running: ${file}`;
     },
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "Micro:bit",
+    },
     ID_NAME: {
         BUTTON_A: "BTN_A_OUTER",
         BUTTON_AB: "BTN_AB_OUTER",
