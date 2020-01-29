@@ -59,44 +59,32 @@ class Image:
         return Image(self.LED)
         
     def invert(self,value):
-        for y in range(0,self.height):
-            for x in range(0,self.width):
+        for y in range(0,self.height()):
+            for x in range(0,self.width()):
                 self.set_pixel(x, y, 9-value)
     
     
     def fill(self,value):
-        for y in range(0,self.height):
-            for x in range(0,self.width):
+        for y in range(0,self.height()):
+            for x in range(0,self.width()):
                 self.set_pixel(x, y, value)
 
-    @property
     def width(self):
         if len(self.LED):
             return len(self.LED[0])
         else:
             return 0
 
-    @width.setter
-    def width(self):
-        # will name exception later
-        raise Exception
-
-    @property
     def height(self):
         return len(self.LED)
-    
-    @height.setter
-    def height(self):
-        # will name exception later
-        raise Exception
 
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
         for count_y in range(0, h):
             for count_x in range(0, w):
-                if (ydest + count_y < self.height and
-                    xdest + count_x < self.width and
-                    y + count_y < src.height and
-                    x + count_x < src.width):
+                if (ydest + count_y < self.height() and
+                    xdest + count_x < self.width() and
+                    y + count_y < src.height() and
+                    x + count_x < src.width()):
                     transfer_pixel = src.get_pixel(x + count_x, y + count_y)
                     self.set_pixel(xdest + count_x, ydest + count_y, transfer_pixel)
 
@@ -107,25 +95,25 @@ class Image:
 
     def shift_vertical(self,n):
         
-        res = Image(self.width, self.height)
+        res = Image(self.width(), self.height())
         if n > 0:
             # up
-            res.blit(self, 0, n, self.width, self.height-n, 0, 0)
+            res.blit(self, 0, n, self.width(), self.height()-n, 0, 0)
         else:
             # down
-            res.blit(self, 0, 0, self.width, self.height-abs(n), 0, abs(n))
+            res.blit(self, 0, 0, self.width(), self.height()-abs(n), 0, abs(n))
             
         return res
 
     
     def shift_horizontal(self,n):
-        res = Image(self.width, self.height)
+        res = Image(self.width(), self.height())
         if n > 0:
             # right
-            res.blit(self, 0, 0, self.width-n, self.height, n, 0)
+            res.blit(self, 0, 0, self.width()-n, self.height(), n, 0)
         else:
             # left
-            res.blit(self, n, 0, self.width-n, self.height, 0, 0)
+            res.blit(self, n, 0, self.width()-n, self.height(), 0, 0)
             
         return res
 
@@ -145,10 +133,9 @@ class Image:
 
     def row_to_str(self, y):
         new_str = ""
-        for x in range(0,self.width):
+        for x in range(0,self.width()):
             new_str = new_str + str(self.get_pixel(x,y))
         
         new_str = new_str + ":"
 
         return new_str
-
