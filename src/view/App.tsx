@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// "use strict";
 import { PivotItem } from "office-ui-fabric-react";
 import * as React from "react";
 import "./App.css";
