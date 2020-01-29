@@ -23,7 +23,6 @@ class Display:
                 if value.height() <= CONSTANTS.LED_HEIGHT
                 else CONSTANTS.LED_HEIGHT
             )
-            self.__LEDs = value.LED.copy()
             self.__print()
         elif isinstance(value, str):
             pass
