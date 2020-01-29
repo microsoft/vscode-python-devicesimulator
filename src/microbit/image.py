@@ -1,12 +1,12 @@
 from . import microbit_model
 from . import constants as CONSTANTS
 from . import display
-
+import copy 
 
 class Image:
     def __init__(self, *args, **kwargs):
         if len(args) == 0:
-            self.__LED = CONSTANTS.BLANK
+            self.__LED = copy.deepcopy(CONSTANTS.BLANK)
         elif len(args) == 1:
             pattern = args[0]
             if type(pattern) is str:
@@ -22,8 +22,12 @@ class Image:
                 # not in original, but ideally,
                 # image should fail non-silently
                 raise ValueError(CONSTANTS.INDEX_ERR)
+            if (len(args) == 3):
+                byte_arr = args[2]
+                self.__LED = self.__bytes_to_array(width,height,byte_arr)
+            else:
+                self.__LED = self.__create_leds(width,height)
 
-            self.__LED = self.__create_leds(width,height)
 
     def width(self):
         if len(self.__LED):
@@ -83,6 +87,10 @@ class Image:
 
 
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
+        
+        if (not self.__valid_pos(x,y) or not src.__valid_pos(xdest, ydest)):
+                raise ValueError(CONSTANTS.INDEX_ERR)
+
         for count_y in range(0, h):
             for count_x in range(0, w):
                 if (self.__valid_pos(xdest + count_x, ydest + count_y) and
@@ -130,6 +138,28 @@ class Image:
             arr.append(sub_arr)
         return arr
         
+    
+    def __bytes_to_array(self, height, width, byte_arr):
+        bytes_translated  = bytes(byte_arr)
+
+        if (not (len(bytes_translated)) == height*width):
+            raise ValueError(CONSTANTS.INCORR_IMAGE_SIZE)
+        
+        arr = []
+        sub_arr = []
+
+        for index,elem in enumerate(bytes_translated):
+            if index % width == 0 and not index is 0:
+                arr.append(sub_arr)
+                sub_arr = []
+
+            sub_arr.append(elem)
+        
+        arr.append(sub_arr)
+        return arr
+
+
+
     def __string_to_array(self, pattern):
         arr = []
         sub_arr = []

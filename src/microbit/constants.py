@@ -2,6 +2,7 @@ INDEX_ERR = "index out of bounds"
 BRIGHTNESS_ERR = "brightness out of bounds"
 SAME_SIZE_ERR = "images must be the same size"
 UNSUPPORTED_ADD_TYPE = "unsupported types for __add__:"
+INCORR_IMAGE_SIZE = "image data is incorrect size"
 LED_WIDTH = 5
 LED_HEIGHT = 5
 
