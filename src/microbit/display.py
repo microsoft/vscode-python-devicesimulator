@@ -45,7 +45,7 @@ class Display:
             #     pass
             # if not loop:
             #     break
-            pass
+            break
         if clear:
             self.clear()
 
