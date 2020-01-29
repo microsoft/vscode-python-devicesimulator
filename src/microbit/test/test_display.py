@@ -61,20 +61,46 @@ class TestDisplay(object):
         assert on == self.display.is_on()
 
     def test_show_one_image(self):
-        img = Image(CONSTANTS.BOAT)
+        img = Image()
         img.set_pixel(0, 0, 8)
         img.set_pixel(0, 1, 9)
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
         self.display.show(img)
-        assert img == self.display._Display__image
+        assert self.__same_image(img, self.display._Display__image)
+
+    def test_show_different_size_image(self):
+        img = Image(3, 7)
+        img.set_pixel(1, 1, 9)
+        img.set_pixel(2, 6, 9)  # Will not be on display
+        expected = Image(5, 5)
+        expected.set_pixel(1, 1, 9)
+        self.display.show(img)
+        assert self.__same_image(expected, self.display._Display__image)
+
+    def test_show_smaller_image(self):
+        img = Image(2, 2)
+        img.set_pixel(1, 1, 9)
+        expected = Image(5, 5)
+        expected.set_pixel(1, 1, 9)
+        self.display.show(img)
+        assert self.__same_image(expected, self.display._Display__image)
 
     # Helpers
     def __is_clear(self):
-        for y in range(CONSTANTS.LED_WIDTH):
-            for x in range(CONSTANTS.LED_HEIGHT):
-                if 0 != self.display._Display__image._Image__LED[y][x]:
-                    print(f"Not clear at x: {x}, y: {y}")
+        i = Image()
+        return self.__same_image(i, self.display._Display__image)
+
+    def __same_image(self, i1, i2):
+        if i1.width() != i2.width() or i1.height() != i2.height():
+            return False
+        for y in range(i1.height()):
+            for x in range(i1.width()):
+                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
                     return False
         return True
 
+    def __print(self, img):
+        print("")
+        for i in range(5):
+            print(img._Image__LED[i])

@@ -1,12 +1,13 @@
 from . import microbit_model
 from . import constants as CONSTANTS
 from . import display
+import copy
 
 
 class Image:
     def __init__(self, *args, **kwargs):
         if len(args) == 0:
-            self.__LED = CONSTANTS.BLANK
+            self.__LED = copy.deepcopy(CONSTANTS.BLANK)
         elif len(args) == 1:
             pattern = args[0]
             if type(pattern) is str:
@@ -23,7 +24,7 @@ class Image:
                 # image should fail non-silently
                 raise ValueError(CONSTANTS.INDEX_ERR)
 
-            self.__LED = self.__create_leds(width,height)
+            self.__LED = self.__create_leds(width, height)
 
     def width(self):
         if len(self.__LED):
@@ -46,7 +47,7 @@ class Image:
             print(CONSTANTS.COPY_ERR_MESSAGE)
 
     def get_pixel(self, x, y):
-        if self.__valid_pos(x,y):
+        if self.__valid_pos(x, y):
             return self.__LED[y][x]
         else:
             raise ValueError(CONSTANTS.INDEX_ERR)
@@ -81,12 +82,12 @@ class Image:
             for x in range(0, self.width()):
                 self.set_pixel(x, y, value)
 
-
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
         for count_y in range(0, h):
             for count_x in range(0, w):
-                if (self.__valid_pos(xdest + count_x, ydest + count_y) and
-                    src.__valid_pos(x + count_x, y + count_y)):
+                if self.__valid_pos(
+                    xdest + count_x, ydest + count_y
+                ) and src.__valid_pos(x + count_x, y + count_y):
                     transfer_pixel = src.get_pixel(x + count_x, y + count_y)
                     self.set_pixel(xdest + count_x, ydest + count_y, transfer_pixel)
 
@@ -99,7 +100,7 @@ class Image:
             raise ValueError(CONSTANTS.SAME_SIZE_ERR)
         else:
             res = Image(self.width(), self.height())
-    
+
             for y in range(0, self.height()):
                 for x in range(0, self.width()):
                     sum = other.get_pixel(x, y) + self.get_pixel(x, y)
@@ -123,13 +124,13 @@ class Image:
 
     def __create_leds(self, w, h):
         arr = []
-        for _ in range(0,h):
+        for _ in range(0, h):
             sub_arr = []
-            for _ in range(0,w):
+            for _ in range(0, w):
                 sub_arr.append(0)
             arr.append(sub_arr)
         return arr
-        
+
     def __string_to_array(self, pattern):
         arr = []
         sub_arr = []
@@ -149,7 +150,6 @@ class Image:
 
     def __valid_brightness(self, value):
         return 0 <= value and value <= 9
-
 
     def __valid_pos(self, x, y):
         return 0 <= x and x < self.width() and 0 <= y and y < self.height()
