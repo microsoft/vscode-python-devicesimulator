@@ -24,7 +24,7 @@ class Image:
             if width < 0 or height < 0:
                 raise Exception
 
-            self.__LED = self.create_leds(width, height)
+            self.__LED = [[0] * width] * height
 
     def convert_to_array(self, pattern):
         arr = []
@@ -37,25 +37,24 @@ class Image:
                 sub_arr.append(int(elem))
         return arr
 
-    def create_leds(self, w, h):
-        arr = []
-        for _ in range(0, h):
-            sub_arr = []
-            for _ in range(0, w):
-                sub_arr.append(0)
-
-            arr.append(sub_arr)
-
-        return arr
 
     def set_pixel(self, x, y, value):
         try:
-            self.__LED[y][x] = value
+            if not self.__valid_pos(x, y):
+                raise ValueError(CONSTANTS.INDEX_ERR)
+            elif not self.__valid_brightness(value):
+                raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
+            else:
+                self.__LED[y][x] = value
         except TypeError:
             print(CONSTANTS.COPY_ERR_MESSAGE)
 
     def get_pixel(self, x, y):
-        return self.__LED[y][x]
+        if self.__valid_pos(x,y):
+            return self.__LED[y][x]
+        else:
+            raise ValueError(CONSTANTS.INDEX_ERR)
+
 
     def copy(self):
         return Image(self.__LED)
@@ -95,6 +94,10 @@ class Image:
         res = Image(w, h)
         res.blit(self, x, y, w, h)
         return res
+
+    
+    def __valid_pos(self, x, y):
+        return 0 <= x and x < self.width() and 0 <= y and y < self.height()
 
     def shift_vertical(self, n):
 
@@ -174,3 +177,8 @@ class Image:
                 res.set_pixel(x, y, self.limit_result(9, product))
 
         return res
+
+    def __valid_brightness(self, value):
+        return 0 <= value and value <= 9
+
+    

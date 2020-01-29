@@ -5,7 +5,7 @@ from .image import Image
 class Display:
     def __init__(self):
         # State in the Python process
-        self.__LEDs = [[0] * 5] * 5
+        self.__image = Image()
         self.__on = True
 
     def scroll(self, message):
@@ -32,18 +32,10 @@ class Display:
             pass
 
     def get_pixel(self, x, y):
-        if self.__valid_pos(x, y):
-            return self.__LEDs[y][x]
-        else:
-            raise ValueError(CONSTANTS.INDEX_ERR)
+        return self.__image.get_pixel(x,y)
 
     def set_pixel(self, x, y, value):
-        if not self.__valid_pos(x, y):
-            raise ValueError(CONSTANTS.INDEX_ERR)
-        elif not self.__valid_brightness(value):
-            raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
-        else:
-            self.__LEDs[y][x] = value
+        self.__image.set_pixel(x, y, value)
 
     def clear(self):
         for y in range(CONSTANTS.LED_WIDTH):
@@ -65,9 +57,6 @@ class Display:
     # Helpers
     def __valid_pos(self, x, y):
         return 0 <= x and x <= 4 and 0 <= y and y <= 4
-
-    def __valid_brightness(self, value):
-        return 0 <= value and value <= 9
 
     def __print(self):
         for i in range(5):

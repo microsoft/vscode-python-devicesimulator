@@ -1,5 +1,4 @@
 INDEX_ERR = "index out of bounds"
-
 BRIGHTNESS_ERR = "brightness out of bounds"
 
 LED_WIDTH = 5
