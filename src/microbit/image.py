@@ -8,17 +8,22 @@ class Image:
         print(args)
         # State in the Python process
         if (len(args)==0): 
-            self.LED = CONSTANTS.BLANK
+            self.__LED = CONSTANTS.BLANK
         elif (len(args)==1):
             pattern = args[0]
             if type(pattern) is str:
-                self.LED = self.convert_to_array(pattern)
+                self.__LED = self.convert_to_array(pattern)
             else:
-                self.LED = pattern
+                self.__LED = pattern
         else:
+
             width = args[0]
             height = args[1]
-            self.LED = self.create_leds(width,height)
+            
+            if (width < 0 or height < 0):
+                raise Exception
+
+            self.__LED = self.create_leds(width,height)
 
     
 
@@ -26,11 +31,11 @@ class Image:
         arr = []
         sub_arr = []
         for elem in pattern:
-            sub_arr.append(elem)
             if elem == ":":
                 arr.append(sub_arr)
                 sub_arr = []
-            arr.append(sub_arr)
+            else:
+                sub_arr.append(int(elem))
         return arr
 
     def create_leds(self, w, h):
@@ -47,16 +52,16 @@ class Image:
 
     def set_pixel(self,x,y,value):
         try:
-            self.LED[y][x] = value
+            self.__LED[y][x] = value
         except TypeError:
             print(CONSTANTS.COPY_ERR_MESSAGE)
 
     
     def get_pixel(self,x,y):
-        return self.LED[y][x]
+        return self.__LED[y][x]
     
     def copy(self):
-        return Image(self.LED)
+        return Image(self.__LED)
         
     def invert(self,value):
         for y in range(0,self.height()):
@@ -70,13 +75,13 @@ class Image:
                 self.set_pixel(x, y, value)
 
     def width(self):
-        if len(self.LED):
-            return len(self.LED[0])
+        if len(self.__LED):
+            return len(self.__LED[0])
         else:
             return 0
 
     def height(self):
-        return len(self.LED)
+        return len(self.__LED)
 
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
         for count_y in range(0, h):
@@ -139,3 +144,40 @@ class Image:
         new_str = new_str + ":"
 
         return new_str
+
+    
+    def limit_result(self,limit,result):
+        if (result > limit):
+            return limit
+        else:
+            return result
+
+    def __add__(self, other):
+        if not (type(other) is Image):
+            raise TypeError(f"unsupported types for __add__: '{type(self)}', '{type(other)}'")
+        elif not (other.height() == self.height() and 
+                other.width() == self.width()):
+            raise ValueError("images must be the same size")
+        else:
+            res = Image(self.width(), self.height())
+
+            for y in range(0,self.height()):
+                for x in range(0,self.width()):
+                    sum = other.get_pixel(x,y) + self.get_pixel(x,y)
+                    display_result = self.limit_result(9, sum)
+                    res.set_pixel(x, y, display_result)
+
+            return res
+    
+    
+    def __mul__(self, other):
+        float_val = float(other)
+        res = Image(self.width(), self.height())
+
+        for y in range(0,self.height()):
+            for x in range(0,self.width()):
+                product = self.get_pixel(x,y) * float_val
+                res.set_pixel(x, y, self.limit_result(9, product))
+                
+        return res
+    
