@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { Cpx } from "../../components/cpx/Cpx";
-import { MicrobitImage } from "../../components/microbit/MicrobitImage";
+import { Microbit } from "../../components/microbit/Microbit";
 import { DEVICE_LIST_KEY } from "../../constants";
 
 interface IProps {
@@ -32,7 +32,7 @@ const loadSelectedDevice = (currentSelectedDevice: string) => {
         case DEVICE_LIST_KEY.CPX:
             return <Cpx />;
         case DEVICE_LIST_KEY.MICROBIT:
-            return <MicrobitImage />;
+            return <Microbit />;
         default:
             return null;
     }
