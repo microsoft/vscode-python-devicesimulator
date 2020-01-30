@@ -8,7 +8,7 @@ export const CONSTANTS = {
     },
     DEVICE_NAME: {
         CPX: "CPX",
-        MICROBIT: "Micro:bit",
+        MICROBIT: "micro:bit",
     },
     ID_NAME: {
         BUTTON_A: "BTN_A_OUTER",
