@@ -3,6 +3,8 @@
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/svg.ts
 
+/* tslint:disable */
+
 namespace svg {
     export function addClass(el: SVGElement, cls: string) {
         if (el.classList) el.classList.add(cls);
