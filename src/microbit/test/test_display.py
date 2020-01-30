@@ -86,6 +86,19 @@ class TestDisplay(object):
         self.display.show(img)
         assert self.__same_image(expected, self.display._Display__image)
 
+    def test_show_char(self):
+        expected = Image(
+            [
+                [0, 9, 0, 0, 0],
+                [0, 9, 0, 0, 0],
+                [0, 9, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 9, 0, 0, 0],
+            ]
+        )
+        self.display.show("!")
+        assert self.__same_image(expected, self.display._Display__image)
+
     # Helpers
     def __is_clear(self):
         i = Image()
@@ -104,3 +117,10 @@ class TestDisplay(object):
         print("")
         for i in range(5):
             print(img._Image__LED[i])
+
+    # def __convert_bytearray_to_image(self, byte_array):
+    #     print(byte_array)
+    #     arr = []
+    #     for b in byte_array:
+    #         print(f"b: {b} type: {type(b)}")
+    #     return Image(arr)

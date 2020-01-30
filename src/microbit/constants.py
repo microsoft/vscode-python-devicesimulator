@@ -33,7 +33,6 @@ BLANK = [
     [0, 0, 0, 0, 0],
 ]
 
-
 COPY_ERR_MESSAGE = "please copy() first"
 
 LED_MAX = 5

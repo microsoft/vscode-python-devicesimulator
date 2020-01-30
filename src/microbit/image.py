@@ -148,7 +148,7 @@ class Image:
         sub_arr = []
 
         for index, elem in enumerate(bytes_translated):
-            if index % width == 0 and not index is 0:
+            if index % width == 0 and index != 0:
                 arr.append(sub_arr)
                 sub_arr = []
 
