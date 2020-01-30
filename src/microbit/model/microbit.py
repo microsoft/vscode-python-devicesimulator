@@ -10,4 +10,5 @@ class MicrobitModel:
     def show_message(self, message):
         print("message!! " + message)
 
+
 mb = MicrobitModel()
