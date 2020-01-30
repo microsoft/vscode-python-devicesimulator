@@ -1,5 +1,6 @@
-from .button import Button
 import time
+
+from .button import Button
 
 
 class MicrobitModel:
@@ -10,11 +11,10 @@ class MicrobitModel:
         self.start_time = time.time()
 
     def sleep(self, n):
-        # time.sleep(n / 1000)
-        print("sleeping")
+        time.sleep(n / 1000)
 
     def running_time(self):
-        return time.time() - start_time()
+        return time.time() - self.start_time
 
 
 mb = MicrobitModel()
