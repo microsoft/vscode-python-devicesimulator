@@ -1,3 +1,4 @@
 from .model import microbit
 
-microbit = microbit.mb
+def show_message(message):
+    microbit.mb.show_message(message)
