@@ -1,6 +1,6 @@
 import { Pivot, PivotItem, PivotLinkFormat } from "office-ui-fabric-react";
 import * as React from "react";
-import { DEVICE_LIST_KEY, CONSTANTS } from "../../constants";
+import { CONSTANTS, DEVICE_LIST_KEY } from "../../constants";
 
 interface IProps {
     handleTabClick: (item?: PivotItem) => void;
