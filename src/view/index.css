@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Joti+One');
+@import url("https://fonts.googleapis.com/css?family=Joti+One");
 
 body {
     margin: 0;
@@ -6,7 +6,8 @@ body {
     font-family: sans-serif;
 }
 
-html, body {
+html,
+body {
     overflow: hidden;
     height: 100%;
 }
