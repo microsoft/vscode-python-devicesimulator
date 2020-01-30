@@ -66,6 +66,7 @@
 
 .microbit-container {
     max-width: 350px;
+    padding: 20px;
 }
 .cpx-container {
     width: 100%;
