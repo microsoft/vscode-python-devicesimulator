@@ -9,6 +9,7 @@ import * as React from "react";
 
 export const MICROBIT_SVG = (
     <svg
+        id="microbit_svg"
         version="1.0"
         viewBox="0 0 500 408"
         className="sim"
@@ -1375,6 +1376,7 @@ export const MICROBIT_SVG = (
             >
                 <rect
                     className="sim-button-outer"
+                    id="BTN_A_OUTER"
                     x="25.9"
                     y="176.4"
                     rx={4}
@@ -1413,6 +1415,7 @@ export const MICROBIT_SVG = (
             >
                 <rect
                     className="sim-button-outer"
+                    id="BTN_B_OUTER"
                     x="418.1"
                     y="176.4"
                     rx={4}
@@ -1457,10 +1460,11 @@ export const MICROBIT_SVG = (
                 tabIndex={0}
                 role="button"
                 aria-label="A+B"
-                style={{ visibility: "hidden", fill: "rgb(51, 51, 51)" }}
+                style={{ visibility: "visible", fill: "rgb(51, 51, 51)" }}
             >
                 <rect
                     className="sim-button-outer"
+                    id="BTN_AB_OUTER"
                     x={417}
                     y={250}
                     rx={4}
@@ -1484,7 +1488,7 @@ export const MICROBIT_SVG = (
                 cy={278}
                 r="16.5"
                 fill="#111"
-                style={{ visibility: "hidden", fill: "rgb(17, 17, 17)" }}
+                style={{ visibility: "visible", fill: "rgb(17, 17, 17)" }}
             />
             <path
                 className="sim-label"
