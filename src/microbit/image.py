@@ -13,7 +13,7 @@ class Image:
             if type(pattern) is str:
                 self.__LED = self.__string_to_array(pattern)
             else:
-                self.__LED = pattern
+                self.__LED = copy.deepcopy(pattern)
         else:
 
             width = args[0]

@@ -34,18 +34,21 @@ class Display:
                 # Check if iterable
                 try:
                     _ = iter(value)
-                    for elem in value:
-                        if isinstance(elem, Image):
-                            self.__image = elem.crop(
-                                0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
-                            )
-                        elif isinstance(elem, str) and len(elem) == 1:
-                            self.__image = self.__get_image_from_char(elem)
-                        else:
-                            break
-                        self.__print()
-                except TypeError:
-                    pass  # Not iterable
+                except TypeError as e:
+                    raise e
+
+                for elem in value:
+                    if isinstance(elem, Image):
+                        self.__image = elem.crop(
+                            0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
+                        )
+                    elif isinstance(elem, str) and len(elem) == 1:
+                        self.__image = self.__get_image_from_char(elem)
+                    # If elem is not char or image, break without iterating through rest of list
+                    else:
+                        break
+                    time.sleep(delay / 1000)
+                    self.__print()
             if not loop:
                 break
         if clear:
@@ -76,7 +79,7 @@ class Display:
 
     def __print(self):
         print("")
-        for i in range(5):
+        for i in range(CONSTANTS.LED_HEIGHT):
             print(self._Display__image._Image__LED[i])
 
     def __get_image_from_char(self, c):

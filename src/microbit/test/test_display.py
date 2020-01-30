@@ -4,6 +4,7 @@ from .. import constants as CONSTANTS
 from ..display import Display
 from ..image import Image
 from .. import code_processing_shim
+from . import image_constants as TEST_IMAGES
 
 
 class TestDisplay(object):
@@ -86,18 +87,38 @@ class TestDisplay(object):
         self.display.show(img)
         assert self.__same_image(expected, self.display._Display__image)
 
-    def test_show_char(self):
-        expected = Image(
-            [
-                [0, 9, 0, 0, 0],
-                [0, 9, 0, 0, 0],
-                [0, 9, 0, 0, 0],
-                [0, 0, 0, 0, 0],
-                [0, 9, 0, 0, 0],
-            ]
-        )
-        self.display.show("!")
+    @pytest.mark.parametrize(
+        "value, expected_arr",
+        [
+            ("!", TEST_IMAGES.EXCLAMATION_MARK),
+            ("A", TEST_IMAGES.A),
+            (" ", TEST_IMAGES.BLANK),
+            (6, TEST_IMAGES.SIX),
+            ("\x7F", TEST_IMAGES.QUESTION_MARK),  # Character is out of our ASCII range
+        ],
+    )
+    def test_show_char(self, value, expected_arr):
+        expected = Image(expected_arr)
+        self.display.show(value)
         assert self.__same_image(expected, self.display._Display__image)
+
+    def test_show_char_with_clear(self):
+        expected = Image(TEST_IMAGES.BLANK)
+        value = TEST_IMAGES.QUESTION_MARK
+        self.display.show(value, clear=True)
+        assert self.__same_image(expected, self.display._Display__image)
+
+    def test_show_iterable(self):
+        expected = Image(TEST_IMAGES.A)
+        value = [Image(TEST_IMAGES.EXCLAMATION_MARK), "A", "ab"]
+        self.display.show(value)
+        print("TEST IMAGE ACTUAL BELOW")
+        self.__print(self.display._Display__image)
+        assert self.__same_image(expected, self.display._Display__image)
+
+    def test_show_non_iterable(self):
+        with pytest.raises(TypeError):
+            self.display.show(TestDisplay())
 
     # Helpers
     def __is_clear(self):
@@ -117,10 +138,3 @@ class TestDisplay(object):
         print("")
         for i in range(5):
             print(img._Image__LED[i])
-
-    # def __convert_bytearray_to_image(self, byte_array):
-    #     print(byte_array)
-    #     arr = []
-    #     for b in byte_array:
-    #         print(f"b: {b} type: {type(b)}")
-    #     return Image(arr)
