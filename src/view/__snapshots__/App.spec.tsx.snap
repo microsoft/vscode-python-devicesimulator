@@ -56,10 +56,10 @@ exports[`App component should render correctly 1`] = `
           <button
             aria-selected={false}
             className="ms-Button ms-Button--action ms-Button--command ms-Pivot-link link-65"
-            data-content="Micro:bit"
+            data-content="micro:bit"
             data-is-focusable={true}
             id="Pivot1-Tab1"
-            name="Micro:bit"
+            name="micro:bit"
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyPress={[Function]}
@@ -80,7 +80,7 @@ exports[`App component should render correctly 1`] = `
                   className="ms-Pivot-text text-53"
                 >
                    
-                  Micro:bit
+                  micro:bit
                 </span>
               </span>
             </span>
