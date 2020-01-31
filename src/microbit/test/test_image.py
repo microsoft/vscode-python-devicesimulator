@@ -3,33 +3,26 @@ from ..model.image import Image
 
 from ..model import constants as CONSTANTS
 
-# TESTING FOR IMAGE CLASS
-
-
 class TestImage(object):
     def setup_method(self):
         self.image = Image()
         self.image_heart = Image(CONSTANTS.HEART)
 
-    # GET PIXEL
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_get_pixel(self, x, y, brightness):
         self.image._Image__LED[y][x] = brightness
         assert brightness == self.image.get_pixel(x, y)
 
-    # SET PIXEL
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_set_pixel(self, x, y, brightness):
         self.image.set_pixel(x, y, brightness)
         assert brightness == self.image._Image__LED[y][x]
 
-    # GET PIXEL - INDEX ERROR
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
     def test_get_pixel_error(self, x, y):
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             self.image.get_pixel(x, y)
 
-    # SET PIXEL - VARIOUS ERRORS
     @pytest.mark.parametrize(
         "x, y, brightness, err_msg",
         [
@@ -42,7 +35,6 @@ class TestImage(object):
         with pytest.raises(ValueError, match=err_msg):
             self.image.set_pixel(x, y, brightness)
 
-    # WIDTH & HEIGHT
     @pytest.mark.parametrize("image", [(Image()), (Image(3, 3)), (Image(""))])
     def test_width_and_height(self, image):
         assert image.height() == len(image._Image__LED)
@@ -53,7 +45,6 @@ class TestImage(object):
 
         assert image.height() == image.width()
 
-    # BLIT
     @pytest.mark.parametrize(
         "x, y, w, h, x_dest, y_dest, actual",
         [
@@ -83,7 +74,6 @@ class TestImage(object):
         result.blit(src, x, y, w, h, x_dest, y_dest)
         assert result._Image__LED == actual._Image__LED
 
-    # BLIT - VALUEERROR
     @pytest.mark.parametrize(
         "x, y, w, h, x_dest, y_dest", [(5, 6, 2, 4, 3, 3), (5, 0, 3, 3, 8, 8)]
     )
@@ -92,14 +82,12 @@ class TestImage(object):
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             result.blit(self.image_heart, x, y, w, h, x_dest, y_dest)
 
-    # BYTEARRAY
     @pytest.mark.parametrize(
         "image1, image2", [(Image(2, 2, bytearray([4, 4, 4, 4])), Image("44:44"))]
     )
     def test_constructor_bytearray(self, image1, image2):
         assert image1._Image__LED == image2._Image__LED
 
-    # CROP
     @pytest.mark.parametrize(
         "x, y, w, h, actual", [(1, 1, 2, 4, Image("99:99:99:09:"))]
     )
@@ -107,7 +95,6 @@ class TestImage(object):
         result = self.image_heart.crop(1, 1, 2, 4)
         assert result._Image__LED == actual._Image__LED
 
-    # FILL
     @pytest.mark.parametrize(
         "target, actual", [(Image("99:99:99:00:"), Image("22:22:22:22:"))]
     )
@@ -115,7 +102,6 @@ class TestImage(object):
         target.fill(2)
         assert target._Image__LED == actual._Image__LED
 
-    # INVERT
     @pytest.mark.parametrize(
         "target, actual", [(Image("012:345:678:900:"), Image("987:654:321:099:"))]
     )
@@ -123,7 +109,6 @@ class TestImage(object):
         target.invert()
         assert target._Image__LED == actual._Image__LED
 
-    # SHIFTS
     @pytest.mark.parametrize(
         "target, value, actual",
         [
@@ -172,13 +157,11 @@ class TestImage(object):
         result = target.shift_down(value)
         assert result._Image__LED == actual._Image__LED
 
-    # COPY
     @pytest.mark.parametrize("target", [(Image("012:345:678:900:"))])
     def test_copy(self, target):
         result = target.copy()
         assert result._Image__LED == target._Image__LED
 
-    # MULTIPLY
     @pytest.mark.parametrize(
         "target, multiplier, actual",
         [
@@ -190,7 +173,6 @@ class TestImage(object):
         result = target * multiplier
         assert result._Image__LED == actual._Image__LED
 
-    # MULTIPLY - TYPEERROR
     @pytest.mark.parametrize(
         "target, multiplier",
         [
@@ -205,7 +187,6 @@ class TestImage(object):
         ):
             target * multiplier
 
-    # ADD
     @pytest.mark.parametrize(
         "target, value, actual",
         [
@@ -225,7 +206,6 @@ class TestImage(object):
         result = target + value
         assert result._Image__LED == actual._Image__LED
 
-    # ADD - TYPEERRROR
     @pytest.mark.parametrize(
         "target, value, err_message",
         [
@@ -253,8 +233,6 @@ class TestImage(object):
         with pytest.raises(ValueError, match=CONSTANTS.SAME_SIZE_ERR):
             target + value
 
-    # STRING CONSTRUCTOR - UNEVEN WIDTHS
-
     @pytest.mark.parametrize(
         "initial, actual",
         [
@@ -265,7 +243,6 @@ class TestImage(object):
     def test_uneven_strings(self, initial, actual):
         assert initial._Image__LED == actual._Image__LED
 
-    # TEST CONVERT TO STRING
     @pytest.mark.parametrize(
         "image, repr_actual, str_actual",
         [

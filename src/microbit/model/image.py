@@ -1,10 +1,11 @@
-# implementing image model as described here:
-# https://microbit-micropython.readthedocs.io/en/latest/image.html
-
 from . import constants as CONSTANTS
 
 
 class Image:
+
+    # implementing image model as described here:
+    # https://microbit-micropython.readthedocs.io/en/latest/image.html
+
     def __init__(self, *args, **kwargs):
 
         # Depending on the number of arguments
@@ -12,7 +13,7 @@ class Image:
 
         if len(args) == 0:
             # default constructor
-            self.__LED = self.__string_to_array(CONSTANTS.BLANK)
+            self.__LED = self.__string_to_array(CONSTANTS.BLANK_5X5)
         elif len(args) == 1:
             pattern = args[0]
             if isinstance(pattern, str):
@@ -54,7 +55,7 @@ class Image:
             else:
                 self.__LED[y][x] = value
         except TypeError:
-            print(CONSTANTS.COPY_ERR_MESSAGE)
+             raise CONSTANTS.COPY_ERR_MESSAGE
 
     def get_pixel(self, x, y):
         if self.__valid_pos(x, y):
@@ -83,7 +84,7 @@ class Image:
         return Image(self.__create_string())
 
     # This inverts the brightness of each LED.
-    # ie: pixel that is at brightness 4 would become brightness 5
+    # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
         for y in range(0, self.height()):
@@ -96,9 +97,8 @@ class Image:
             for x in range(0, self.width()):
                 self.set_pixel(x, y, value)
 
-    # This transposes certain area (w x h) on src onto current image.
+    # This transposes a certain area (w x h) on src onto the current image.
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
-
         if not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
@@ -153,9 +153,9 @@ class Image:
     # width w and height h
     def __create_leds(self, w, h):
         arr = []
-        for _ in range(0, h):
+        for _ in range(h):
             sub_arr = []
-            for _ in range(0, w):
+            for _ in range(w):
                 sub_arr.append(0)
             arr.append(sub_arr)
 
@@ -165,7 +165,7 @@ class Image:
     def __bytes_to_array(self, width, height, byte_arr):
         bytes_translated = bytes(byte_arr)
 
-        if not (len(bytes_translated)) == height * width:
+        if not len(bytes_translated) == height * width:
             raise ValueError(CONSTANTS.INCORR_IMAGE_SIZE)
 
         arr = []
@@ -196,7 +196,7 @@ class Image:
 
     def __string_to_initial_array(self, pattern):
         # The result may have spaces in the 2D array
-        # and may unevent sub-array lengths
+        # and may uneven sub-array lengths
         arr = []
         sub_arr = []
 
@@ -230,7 +230,6 @@ class Image:
         return x >= 0 and x < self.width() and y >= 0 and y < self.height()
 
     def __shift_vertical(self, n):
-
         res = Image(self.width(), self.height())
 
         if n > 0:
