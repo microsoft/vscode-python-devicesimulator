@@ -5,33 +5,48 @@ import * as React from "react";
 import "../../styles/Microbit.css";
 import { MICROBIT_SVG } from "./Microbit_svg";
 
-interface IProps {}
+interface EventTriggers {
+    onMouseUp: (button: HTMLElement, event: Event) => void;
+    onMouseDown: (button: HTMLElement, event: Event) => void;
+    onMouseLeave: (button: HTMLElement, event: Event) => void;
+}
+interface IProps {
+    eventTriggers: EventTriggers;
+}
+
+// Displays the SVG and call necessary svg modification.
 export class MicrobitImage extends React.Component<IProps, any> {
     componentDidMount() {
         const svgElement = window.document.getElementById("microbit_svg");
         if (svgElement) {
-            setupAllButtons();
+            setupAllButtons(this.props.eventTriggers);
         }
     }
     render() {
         return MICROBIT_SVG;
     }
 }
-const setupAllButtons = () => {
+const setupButton = (
+    buttonElement: HTMLElement,
+    eventTriggers: EventTriggers
+) => {
+    buttonElement.onmousedown = e => {
+        eventTriggers.onMouseDown(buttonElement, e);
+    };
+    buttonElement.onmouseup = e => {
+        eventTriggers.onMouseUp(buttonElement, e);
+    };
+
+    buttonElement.onmouseleave = e => {
+        eventTriggers.onMouseLeave(buttonElement, e);
+    };
+};
+const setupAllButtons = (eventTriggers: EventTriggers) => {
     const buttonsId = ["BTN_A_OUTER", "BTN_B_OUTER", "BTN_AB_OUTER"];
     buttonsId.forEach(buttonId => {
         const buttonElement = window.document.getElementById(buttonId);
         if (buttonElement) {
-            setupButton(buttonElement);
+            setupButton(buttonElement, eventTriggers);
         }
     });
-};
-const setupButton = (buttonElement: HTMLElement) => {
-    buttonElement.onmousedown = e => {
-        console.log(e);
-    };
-    buttonElement.onmouseup = e => console.log(e);
-    buttonElement.onkeydown = e => console.log(e);
-    buttonElement.onkeyup = e => console.log(e);
-    buttonElement.onmouseleave = e => console.log(e);
 };
