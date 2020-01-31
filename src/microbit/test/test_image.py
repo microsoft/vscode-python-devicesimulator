@@ -1,12 +1,9 @@
 import pytest
+from ..model.image import Image
 
 from ..model import constants as CONSTANTS
-from ..model import Image as image
-
-Image = image.Image
 
 # TESTING FOR IMAGE CLASS
-
 
 class TestImage(object):
     def setup_method(self):

@@ -1,4 +1,4 @@
-import constants as CONSTANTS
+from . import constants as CONSTANTS
 
 
 class Image:
@@ -12,7 +12,7 @@ class Image:
             self.__LED = self.__string_to_array(CONSTANTS.BLANK)
         elif len(args) == 1:
             pattern = args[0]
-            if type(pattern) is str:
+            if isinstance(pattern, str):
                 self.__LED = self.__string_to_array(pattern)
             else:
                 raise TypeError("Image(s) takes a string")
@@ -34,7 +34,7 @@ class Image:
                 self.__LED = self.__create_leds(width, height)
 
     def width(self):
-        if len(self.__LED):
+        if len(self.__LED) > 0:
             return len(self.__LED[0])
         else:
             return 0
@@ -111,7 +111,7 @@ class Image:
     # This adds two images (if other object is not an image, throws error).
     # The images must be the same size.
     def __add__(self, other):
-        if not (type(other) is Image):
+        if not isinstance(other, Image):
             raise TypeError(
                 CONSTANTS.UNSUPPORTED_ADD_TYPE + f"'{type(self)}', '{type(other)}'"
             )
@@ -122,8 +122,8 @@ class Image:
 
             for y in range(0, self.height()):
                 for x in range(0, self.width()):
-                    sum = other.get_pixel(x, y) + self.get_pixel(x, y)
-                    display_result = self.__limit_result(9, sum)
+                    sum_value = other.get_pixel(x, y) + self.get_pixel(x, y)
+                    display_result = self.__limit_result(9, sum_value)
                     res.set_pixel(x, y, display_result)
 
             return res
@@ -159,7 +159,7 @@ class Image:
         return arr
 
     # This turns byte array to 2D array for LED field.
-    def __bytes_to_array(self, height, width, byte_arr):
+    def __bytes_to_array(self, width, height, byte_arr):
         bytes_translated = bytes(byte_arr)
 
         if not (len(bytes_translated)) == height * width:
@@ -208,7 +208,7 @@ class Image:
             else:
                 sub_arr.append(int(elem))
 
-        if len(pattern) and not str(pattern)[-1] == ":":
+        if len(pattern) > 0 and not str(pattern)[-1] == ":":
             arr.append(sub_arr)
 
         return arr, max_subarray_len
@@ -221,10 +221,10 @@ class Image:
             return result
 
     def __valid_brightness(self, value):
-        return 0 <= value and value <= 9
+        return value >= 0 and value <= 9
 
     def __valid_pos(self, x, y):
-        return 0 <= x and x < self.width() and 0 <= y and y < self.height()
+        return x >= 0 and x < self.width() and y >= 0 and y < self.height()
 
     def __shift_vertical(self, n):
 
@@ -255,10 +255,10 @@ class Image:
     def __create_string(self):
         ret_str = ""
         for index_y in range(0, self.height()):
-            ret_str += self.__row_to_str(index_y)
+            ret_str += self.row_to_str(index_y)
         return ret_str
 
-    def __row_to_str(self, y):
+    def row_to_str(self, y):
         new_str = ""
         for x in range(0, self.width()):
             new_str = new_str + str(self.get_pixel(x, y))
