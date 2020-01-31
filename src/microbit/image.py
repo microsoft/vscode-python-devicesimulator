@@ -87,7 +87,7 @@ class Image:
 
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
 
-        if not self.__valid_pos(x, y) or not src.__valid_pos(xdest, ydest):
+        if not src.__valid_pos(x, y) or not self.__valid_pos(xdest, ydest):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
         for count_y in range(0, h):

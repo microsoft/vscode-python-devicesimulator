@@ -112,13 +112,14 @@ class TestDisplay(object):
         expected = Image(TEST_IMAGES.A)
         value = [Image(TEST_IMAGES.EXCLAMATION_MARK), "A", "ab"]
         self.display.show(value)
-        print("TEST IMAGE ACTUAL BELOW")
-        self.__print(self.display._Display__image)
         assert self.__same_image(expected, self.display._Display__image)
 
     def test_show_non_iterable(self):
         with pytest.raises(TypeError):
             self.display.show(TestDisplay())
+
+    def test_scroll(self):
+        self.display.scroll("tasdf")
 
     # Helpers
     def __is_clear(self):

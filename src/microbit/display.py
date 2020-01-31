@@ -11,8 +11,86 @@ class Display:
         self.__image = Image()
         self.__on = True
 
-    def scroll(self, message):
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+    def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
+        # wait has no effect
+        # going to implement first with monospace = True. therefore every char is 5 wide
+        while True:
+            try:
+                value = str(value)
+            except TypeError as e:
+                raise e
+            letters = []
+            for c in value:
+                letters.append(self.__get_image_from_char(c))
+            appended_image = self.__create_scroll_image(letters, monospace)
+            for x in range(appended_image.width() - CONSTANTS.LED_WIDTH + 1):
+                self.__image.blit(
+                    appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
+                )
+                self.__print()
+                time.sleep(delay / 1000)
+            if not loop:
+                break
+
+    def __strip_image(self, image):
+        # Find column that contains first lit pixel. Call that column number: c1.
+        # Go reverse, and find number of columns seen until we see the last lit pixel. Call that number: c2.
+        return image.crop(c1, 0, image.width() - c1 - c2, image.height())
+
+    def __insert_blank_column(self, image):
+        for row in image._Image__LED:
+            row.append(0)
+
+    def __create_scroll_image(self, images, monospace):
+        blank_5x5_image = Image(CONSTANTS.BLANK)
+        front_image = blank_5x5_image.crop(
+            0, 0, CONSTANTS.LED_WIDTH - 1, CONSTANTS.LED_HEIGHT
+        )
+        images.insert(0, front_image)
+
+        scroll_image = self.__append_images(images)
+        end_image = Image()
+        # Insert columns of 0s until the ending is a 5x5 blank
+        end_image.blit(
+            scroll_image,
+            scroll_image.width() - CONSTANTS.LED_WIDTH,
+            0,
+            CONSTANTS.LED_WIDTH,
+            CONSTANTS.LED_HEIGHT,
+        )
+        while not self.__same_image(end_image, blank_5x5_image):
+            self.__insert_blank_column(scroll_image)
+            end_image.blit(
+                scroll_image,
+                scroll_image.width() - CONSTANTS.LED_WIDTH,
+                0,
+                CONSTANTS.LED_WIDTH,
+                CONSTANTS.LED_HEIGHT,
+            )
+
+        return scroll_image
+
+    def __same_image(self, i1, i2):
+        if i1.width() != i2.width() or i1.height() != i2.height():
+            return False
+        for y in range(i1.height()):
+            for x in range(i1.width()):
+                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
+                    return False
+        return True
+
+    def __append_images(self, images):
+        width = 0
+        height = 0
+        for image in images:
+            width += image.width()
+            height = max(height, image.height())
+        res = Image(width, height)
+        x_ind = 0
+        for image in images:
+            res.blit(image, 0, 0, image.width(), image.height(), xdest=x_ind)
+            x_ind += image.width()
+        return res
 
     def show(self, value, delay=400, wait=True, loop=False, clear=False):
         # wait has no effect
@@ -28,7 +106,6 @@ class Display:
                     chars = list(str(value))
                 for c in chars:
                     self.__image = self.__get_image_from_char(c)
-                    self.__print()
                     time.sleep(delay / 1000)
             else:
                 # Check if iterable
@@ -48,7 +125,6 @@ class Display:
                     else:
                         break
                     time.sleep(delay / 1000)
-                    self.__print()
             if not loop:
                 break
         if clear:
@@ -98,7 +174,7 @@ class Display:
             sub_arr = []
             while len(sub_arr) < 5:
                 # Iterate throught bits recursively
-                # If there is a 1 at x, then the pixel at column x is lit
+                # If there is a 1 at b, then the pixel at column b is lit
                 for bit in b_as_bits[::-1]:
                     if len(sub_arr) < 5:
                         sub_arr.insert(0, int(bit) * CONSTANTS.MAX_BRIGHTNESS)
@@ -109,3 +185,5 @@ class Display:
                     sub_arr.insert(0, 0)
             arr.append(sub_arr)
         return arr
+
+    # Can get stripped images by stripping the image, or creating a stripped image from the bits
