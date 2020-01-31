@@ -29,7 +29,7 @@ interface IState {
     cpx: ICpxState;
     play_button: boolean;
 }
-interface IMyProps {
+interface IProps {
     children?: any;
 }
 
@@ -65,8 +65,8 @@ const sendMessage = (type: string, state: any) => {
     vscode.postMessage({ command: type, text: state });
 };
 
-class Simulator extends React.Component<any, IState> {
-    constructor(props: IMyProps) {
+class Simulator extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             active_editors: [],
