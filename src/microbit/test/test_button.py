@@ -51,4 +51,3 @@ class TestButton(object):
         assert 2 == self.button.get_presses()
         # Presses is reset to 0 after get_presses() is called.
         assert 0 == self.button.get_presses()
-
