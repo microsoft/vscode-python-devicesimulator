@@ -1,4 +1,5 @@
 class Button:
+    # The implementation is based off of https://github.com/bbcmicrobit/micropython/blob/master/docs/button.rst.
     def __init__(self):
         self.__pressed = False
         self.__presses = 0
