@@ -20,8 +20,8 @@ class Button:
 
     def __press_down(self):
         self.__pressed = True
+        self.__prev_pressed = True
         self.__presses += 1
 
     def __release(self):
         self.__pressed = False
-        self.__prev_pressed = True
