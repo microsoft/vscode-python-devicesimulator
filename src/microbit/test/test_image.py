@@ -1,9 +1,9 @@
 import pytest
 
-from .. import constants as CONSTANTS
-from .. import code_processing_shim
-from ..display import Display
-from ..image import Image
+from ..model import constants as CONSTANTS
+from ..model import Image as image
+
+Image = image.Image
 
 # TESTING FOR IMAGE CLASS
 
