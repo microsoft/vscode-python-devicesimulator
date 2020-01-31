@@ -16,7 +16,7 @@ sio = socketio.Client(reconnection_attempts=2)
 
 # Initialize connection
 def init_connection(port=CONSTANTS.DEFAULT_PORT):
-    sio.connect('http://localhost:{}'.format(port))
+    sio.connect("http://localhost:{}".format(port))
 
 
 # Transfer the user's inputs to the API
@@ -25,27 +25,27 @@ def __update_api_state(data, expected_events):
         event_state = json.loads(data)
         for event in expected_events:
             express.cpx._Express__state[event] = event_state.get(
-                event, express.cpx._Express__state[event])
+                event, express.cpx._Express__state[event]
+            )
     except Exception as e:
-        print(CONSTANTS.ERROR_SENDING_EVENT,
-              e, file=sys.stderr, flush=True)
+        print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
 
 
 # Method : Update State
 def update_state(state):
-    sio.emit('updateState', state)
+    sio.emit("updateState", state)
 
 
 ## Events Handlers ##
 
 
 # Event : Button pressed (A, B, A+B, Switch)
-@sio.on('button_press')
+@sio.on("button_press")
 def button_press(data):
     __update_api_state(data, CONSTANTS.EVENTS_BUTTON_PRESS)
 
 
 # Event : Sensor changed (Temperature, light, Motion)
-@sio.on('sensor_changed')
-def button_press(data):
+@sio.on("sensor_changed")
+def sensor_changed(data):
     __update_api_state(data, CONSTANTS.EVENTS_SENSOR_CHANGED)

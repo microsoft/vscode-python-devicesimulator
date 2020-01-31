@@ -1,16 +1,16 @@
 .App {
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .App-main {
-  background-color: var(--vscode-editor-background);
-  padding: 0px 0.75em 0px 0.75em;
-  min-height: 100vh;
-  width: 100%;
-  margin-top: 24px;
-  margin-bottom: 53px;
-  max-height: 400px;
-  overflow: scroll;
+    background-color: var(--vscode-editor-background);
+    padding: 0px 0.75em 0px 0.75em;
+    min-height: 100vh;
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 53px;
+    max-height: 400px;
+    overflow: scroll;
 }
