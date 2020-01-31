@@ -1,3 +1,6 @@
+# implementing image model as described here:
+# https://microbit-micropython.readthedocs.io/en/latest/image.html
+
 from . import constants as CONSTANTS
 
 
@@ -255,10 +258,10 @@ class Image:
     def __create_string(self):
         ret_str = ""
         for index_y in range(0, self.height()):
-            ret_str += self.row_to_str(index_y)
+            ret_str += self.__row_to_str(index_y)
         return ret_str
 
-    def row_to_str(self, y):
+    def __row_to_str(self, y):
         new_str = ""
         for x in range(0, self.width()):
             new_str = new_str + str(self.get_pixel(x, y))
@@ -266,3 +269,21 @@ class Image:
         new_str = new_str + ":"
 
         return new_str
+
+    def __repr__(self):
+        ret_str = "Image('"
+        for index_y in range(0, self.height()):
+            ret_str += self.__row_to_str(index_y)
+
+        ret_str = ret_str + "')"
+
+        return ret_str
+
+    def __str__(self):
+        ret_str = "Image('\n"
+        for index_y in range(0, self.height()):
+            ret_str += "\t" + self.__row_to_str(index_y) + "\n"
+
+        ret_str = ret_str + "')"
+
+        return ret_str

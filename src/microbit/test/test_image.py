@@ -263,3 +263,31 @@ class TestImage(object):
     )
     def test_uneven_strings(self, initial, actual):
         assert initial._Image__LED == actual._Image__LED
+
+
+    # TEST CONVERT TO STRING
+    @pytest.mark.parametrize(
+        "image, repr_actual, str_actual",
+        [
+            (Image("05150:05050:05050:99999:09990:"),
+            "Image('05150:05050:05050:99999:09990:')",
+            "Image('\n	05150:\n	05050:\n	05050:\n	99999:\n	09990:\n')"),
+            
+            (Image(""),
+            "Image('')",
+            "Image('\n')"),
+
+            (Image("00000:00000:00000:00000:00000:"),
+            "Image('00000:00000:00000:00000:00000:')",
+            "Image('\n	00000:\n	00000:\n	00000:\n	00000:\n	00000:\n')"),
+
+            (Image("00:00:00:00:"),
+            "Image('00:00:00:00:')",
+            "Image('\n	00:\n	00:\n	00:\n	00:\n')"),
+        ],
+    )
+    def test_str(self, image, repr_actual, str_actual):
+        repr_output = repr(image)
+        str_output = str(image)
+        assert repr_actual == repr_output
+        assert str_actual == str_output
