@@ -1,6 +1,4 @@
-from . import microbit_model
-from . import constants as CONSTANTS
-import copy
+import constants as CONSTANTS
 
 
 class Image:
