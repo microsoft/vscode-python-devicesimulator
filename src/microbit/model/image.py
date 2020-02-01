@@ -1,8 +1,7 @@
 from . import constants as CONSTANTS
-
+from .producer_property import ProducerProperty
 
 class Image:
-
     # implementing image model as described here:
     # https://microbit-micropython.readthedocs.io/en/latest/image.html
 
@@ -37,6 +36,14 @@ class Image:
             else:
                 self.__LED = self.__create_leds(width, height)
 
+        self.read_only = False
+
+    @ProducerProperty
+    def HEART(self):
+        const_instance = Image(CONSTANTS.HEART)
+        const_instance.read_only = True
+        return const_instance
+        
     def width(self):
         if len(self.__LED) > 0:
             return len(self.__LED[0])
