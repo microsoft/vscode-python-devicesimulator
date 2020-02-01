@@ -203,15 +203,17 @@ class Image:
         max_subarray_len = 0
 
         for elem in pattern:
-            if elem == ":":
+            if elem == ":" or elem == "\n":
                 if len(sub_arr) > max_subarray_len:
                     max_subarray_len = len(sub_arr)
                 arr.append(sub_arr)
                 sub_arr = []
             else:
-                sub_arr.append(int(elem))
+                sub_arr.append(int(elem)) 
 
-        if len(pattern) > 0 and not str(pattern)[-1] == ":":
+        if len(pattern) > 0 and not str(pattern)[-1] == ":" and not str(pattern)[-1] == "\n" and len(sub_arr) != 0:
+            if len(sub_arr) > max_subarray_len:
+                max_subarray_len = len(sub_arr)
             arr.append(sub_arr)
 
         return arr, max_subarray_len
@@ -263,9 +265,9 @@ class Image:
     def __row_to_str(self, y):
         new_str = ""
         for x in range(0, self.width()):
-            new_str = new_str + str(self.get_pixel(x, y))
+            new_str += str(self.get_pixel(x, y))
 
-        new_str = new_str + ":"
+        new_str += ":"
 
         return new_str
 
@@ -274,7 +276,7 @@ class Image:
         for index_y in range(0, self.height()):
             ret_str += self.__row_to_str(index_y)
 
-        ret_str = ret_str + "')"
+        ret_str += "')"
 
         return ret_str
 
@@ -283,6 +285,6 @@ class Image:
         for index_y in range(0, self.height()):
             ret_str += "\t" + self.__row_to_str(index_y) + "\n"
 
-        ret_str = ret_str + "')"
+        ret_str += "')"
 
         return ret_str

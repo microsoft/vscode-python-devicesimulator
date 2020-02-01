@@ -35,15 +35,11 @@ class TestImage(object):
         with pytest.raises(ValueError, match=err_msg):
             self.image.set_pixel(x, y, brightness)
 
-    @pytest.mark.parametrize("image", [(Image()), (Image(3, 3)), (Image(""))])
-    def test_width_and_height(self, image):
-        assert image.height() == len(image._Image__LED)
-        if len(image._Image__LED) == 0:
-            assert image.width() == 0
-        else:
-            assert image.width() == len(image._Image__LED[0])
-
-        assert image.height() == image.width()
+    @pytest.mark.parametrize("image, height, width", [(Image(), 5, 5), (Image(3, 3), 3, 3), (Image(""), 0, 0), (Image("00:00000"), 2, 5),(Image("0000:0000"), 2, 4)])
+    def test_width_and_height(self, image, height, width):
+        print(str(image))
+        assert image.height() == height
+        assert image.width() == width
 
     @pytest.mark.parametrize(
         "x, y, w, h, x_dest, y_dest, actual",
@@ -269,3 +265,14 @@ class TestImage(object):
         str_output = str(image)
         assert repr_actual == repr_output
         assert str_actual == str_output
+
+    # @pytest.mark.parametrize(
+    #     "initial_img_string, actual",
+    #     [
+    #         ("0:000:00:0000:", Image("0000:0000:0000:0000:")),
+    #         ("0000\n0000\n0000\n0000\n", Image("0000:0000:0000:0000:")),
+    #         ("0\n000\n00\n0000\n", Image("0000:0000:0000:0000:")),
+    #     ],
+    # )
+    # def test_string_processing_constructor(self, initial_img_string, actual):
+    #     assert Image(initial_img_string)._Image__LED == actual._Image__LED
