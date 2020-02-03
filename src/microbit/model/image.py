@@ -13,11 +13,11 @@ class Image:
 
         if len(args) == 0:
             # default constructor
-            self.__LED = self.__string_to_array(CONSTANTS.BLANK_5X5)
+            self.__LED = self.__string_to_square_array(CONSTANTS.BLANK_5X5)
         elif len(args) == 1:
             pattern = args[0]
             if isinstance(pattern, str):
-                self.__LED = self.__string_to_array(pattern)
+                self.__LED = self.__string_to_square_array(pattern)
             else:
                 raise TypeError("Image(s) takes a string")
         else:
@@ -47,15 +47,12 @@ class Image:
         return len(self.__LED)
 
     def set_pixel(self, x, y, value):
-        try:
-            if not self.__valid_pos(x, y):
-                raise ValueError(CONSTANTS.INDEX_ERR)
-            elif not self.__valid_brightness(value):
-                raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
-            else:
-                self.__LED[y][x] = value
-        except TypeError:
-            raise CONSTANTS.COPY_ERR_MESSAGE
+        if not self.__valid_pos(x, y):
+            raise ValueError(CONSTANTS.INDEX_ERR)
+        elif not self.__valid_brightness(value):
+            raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
+        else:
+            self.__LED[y][x] = value
 
     def get_pixel(self, x, y):
         if self.__valid_pos(x, y):
@@ -64,7 +61,7 @@ class Image:
             raise ValueError(CONSTANTS.INDEX_ERR)
 
     def shift_up(self, n):
-        return self.__shift_vertical(n * -1)
+        return self.__shift_vertical(-n)
 
     def shift_down(self, n):
         return self.__shift_vertical(n)
@@ -73,7 +70,7 @@ class Image:
         return self.__shift_horizontal(n)
 
     def shift_left(self, n):
-        return self.__shift_horizontal(n * -1)
+        return self.__shift_horizontal(-n)
 
     def crop(self, x, y, w, h):
         res = Image(w, h)
@@ -87,14 +84,14 @@ class Image:
     # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
-        for y in range(0, self.height()):
-            for x in range(0, self.width()):
+        for y in range(self.height()):
+            for x in range(self.width()):
                 self.set_pixel(x, y, 9 - self.get_pixel(x, y))
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
-        for y in range(0, self.height()):
-            for x in range(0, self.width()):
+        for y in range(self.height()):
+            for x in range(self.width()):
                 self.set_pixel(x, y, value)
 
     # This transposes a certain area (w x h) on src onto the current image.
@@ -102,8 +99,11 @@ class Image:
         if not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
-        for count_y in range(0, h):
-            for count_x in range(0, w):
+        if self == src:
+            src = src.copy()
+
+        for count_y in range(h):
+            for count_x in range(w):
                 if self.__valid_pos(xdest + count_x, ydest + count_y):
                     if src.__valid_pos(x + count_x, y + count_y):
                         transfer_pixel = src.get_pixel(x + count_x, y + count_y)
@@ -123,10 +123,10 @@ class Image:
         else:
             res = Image(self.width(), self.height())
 
-            for y in range(0, self.height()):
-                for x in range(0, self.width()):
+            for y in range(self.height()):
+                for x in range(self.width()):
                     sum_value = other.get_pixel(x, y) + self.get_pixel(x, y)
-                    display_result = self.__limit_result(9, sum_value)
+                    display_result = min(9, sum_value)
                     res.set_pixel(x, y, display_result)
 
             return res
@@ -140,10 +140,10 @@ class Image:
 
         res = Image(self.width(), self.height())
 
-        for y in range(0, self.height()):
-            for x in range(0, self.width()):
+        for y in range(self.height()):
+            for x in range(self.width()):
                 product = self.get_pixel(x, y) * float_val
-                res.set_pixel(x, y, self.__limit_result(9, product))
+                res.set_pixel(x, y, min(9, product))
 
         return res
 
@@ -183,8 +183,8 @@ class Image:
 
     # This converts string (with different rows separated by ":")
     # to 2d array arrangement.
-    def __string_to_array(self, pattern):
-        initial_array, max_subarray_len = self.__string_to_initial_array(pattern)
+    def __string_to_square_array(self, pattern):
+        initial_array, max_subarray_len = self.__string_directly_to_array(pattern)
 
         # Fill in empty spaces in w x h matrix.
         for arr_y in initial_array:
@@ -194,7 +194,7 @@ class Image:
 
         return initial_array
 
-    def __string_to_initial_array(self, pattern):
+    def __string_directly_to_array(self, pattern):
         # The result may have spaces in the 2D array
         # and may uneven sub-array lengths
         arr = []
@@ -223,15 +223,8 @@ class Image:
 
         return arr, max_subarray_len
 
-    # This returns the limit if the result is too big.
-    def __limit_result(self, limit, result):
-        if result > limit:
-            return limit
-        else:
-            return result
-
     def __valid_brightness(self, value):
-        return value >= 0 and value <= 9
+        return value >= CONSTANTS.BRIGHTNESS_MIN and value <= CONSTANTS.BRIGHTNESS_MAX
 
     def __valid_pos(self, x, y):
         return x >= 0 and x < self.width() and y >= 0 and y < self.height()
@@ -263,13 +256,13 @@ class Image:
 
     def __create_string(self):
         ret_str = ""
-        for index_y in range(0, self.height()):
+        for index_y in range(self.height()):
             ret_str += self.__row_to_str(index_y)
         return ret_str
 
     def __row_to_str(self, y):
         new_str = ""
-        for x in range(0, self.width()):
+        for x in range(self.width()):
             new_str += str(self.get_pixel(x, y))
 
         new_str += ":"
@@ -278,7 +271,7 @@ class Image:
 
     def __repr__(self):
         ret_str = "Image('"
-        for index_y in range(0, self.height()):
+        for index_y in range(self.height()):
             ret_str += self.__row_to_str(index_y)
 
         ret_str += "')"
@@ -287,7 +280,7 @@ class Image:
 
     def __str__(self):
         ret_str = "Image('\n"
-        for index_y in range(0, self.height()):
+        for index_y in range(self.height()):
             ret_str += "\t" + self.__row_to_str(index_y) + "\n"
 
         ret_str += "')"

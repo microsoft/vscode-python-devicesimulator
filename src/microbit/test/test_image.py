@@ -10,14 +10,9 @@ class TestImage(object):
         self.image_heart = Image(CONSTANTS.HEART)
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_get_pixel(self, x, y, brightness):
-        self.image._Image__LED[y][x] = brightness
-        assert brightness == self.image.get_pixel(x, y)
-
-    @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_set_pixel(self, x, y, brightness):
+    def test_get_set_pixel(self, x, y, brightness):
         self.image.set_pixel(x, y, brightness)
-        assert brightness == self.image._Image__LED[y][x]
+        assert brightness == self.image.get_pixel(x, y)
 
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
     def test_get_pixel_error(self, x, y):
@@ -87,6 +82,17 @@ class TestImage(object):
         result = Image(CONSTANTS.HEART)
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             result.blit(self.image_heart, x, y, w, h, x_dest, y_dest)
+
+    @pytest.mark.parametrize(
+        "pattern, x, y, w, h, x_dest, y_dest, actual",
+        [("123:456:789", 0, 0, 2, 2, 1, 1, Image("123:412:745"))],
+    )
+    def test_blit_heart_same_src_and_self(
+        self, pattern, x, y, w, h, x_dest, y_dest, actual
+    ):
+        src = Image(pattern)
+        src.blit(src, x, y, w, h, x_dest, y_dest)
+        assert src._Image__LED == actual._Image__LED
 
     @pytest.mark.parametrize(
         "image1, image2", [(Image(2, 2, bytearray([4, 4, 4, 4])), Image("44:44"))]
@@ -275,14 +281,3 @@ class TestImage(object):
         str_output = str(image)
         assert repr_actual == repr_output
         assert str_actual == str_output
-
-    # @pytest.mark.parametrize(
-    #     "initial_img_string, actual",
-    #     [
-    #         ("0:000:00:0000:", Image("0000:0000:0000:0000:")),
-    #         ("0000\n0000\n0000\n0000\n", Image("0000:0000:0000:0000:")),
-    #         ("0\n000\n00\n0000\n", Image("0000:0000:0000:0000:")),
-    #     ],
-    # )
-    # def test_string_processing_constructor(self, initial_img_string, actual):
-    #     assert Image(initial_img_string)._Image__LED == actual._Image__LED

@@ -3,9 +3,11 @@ BLANK_5X5 = "00000:00000:00000:00000:00000:"
 BOAT = "05050:05050:05050:99999:09990:"
 HEART = "09090:99999:99999:09990:00900:"
 
-# numerical LED values
+# numerical max values
 LED_HEIGHT = 5
 LED_WIDTH = 5
+BRIGHTNESS_MIN = 0
+BRIGHTNESS_MAX = 9
 
 # error messages
 BRIGHTNESS_ERR = "brightness out of bounds"
