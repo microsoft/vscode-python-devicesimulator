@@ -55,7 +55,7 @@ class Image:
             else:
                 self.__LED[y][x] = value
         except TypeError:
-             raise CONSTANTS.COPY_ERR_MESSAGE
+            raise CONSTANTS.COPY_ERR_MESSAGE
 
     def get_pixel(self, x, y):
         if self.__valid_pos(x, y):
@@ -209,9 +209,14 @@ class Image:
                 arr.append(sub_arr)
                 sub_arr = []
             else:
-                sub_arr.append(int(elem)) 
+                sub_arr.append(int(elem))
 
-        if len(pattern) > 0 and not str(pattern)[-1] == ":" and not str(pattern)[-1] == "\n" and len(sub_arr) != 0:
+        if (
+            len(pattern) > 0
+            and not str(pattern)[-1] == ":"
+            and not str(pattern)[-1] == "\n"
+            and len(sub_arr) != 0
+        ):
             if len(sub_arr) > max_subarray_len:
                 max_subarray_len = len(sub_arr)
             arr.append(sub_arr)

@@ -3,6 +3,7 @@ from ..model.image import Image
 
 from ..model import constants as CONSTANTS
 
+
 class TestImage(object):
     def setup_method(self):
         self.image = Image()
@@ -35,7 +36,16 @@ class TestImage(object):
         with pytest.raises(ValueError, match=err_msg):
             self.image.set_pixel(x, y, brightness)
 
-    @pytest.mark.parametrize("image, height, width", [(Image(), 5, 5), (Image(3, 3), 3, 3), (Image(""), 0, 0), (Image("00:00000"), 2, 5),(Image("0000:0000"), 2, 4)])
+    @pytest.mark.parametrize(
+        "image, height, width",
+        [
+            (Image(), 5, 5),
+            (Image(3, 3), 3, 3),
+            (Image(""), 0, 0),
+            (Image("00:00000"), 2, 5),
+            (Image("0000:0000"), 2, 4),
+        ],
+    )
     def test_width_and_height(self, image, height, width):
         print(str(image))
         assert image.height() == height
