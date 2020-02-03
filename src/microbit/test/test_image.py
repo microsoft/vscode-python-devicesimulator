@@ -270,3 +270,15 @@ class TestImage(object):
         str_output = str(image)
         assert repr_actual == repr_output
         assert str_actual == str_output
+
+    @pytest.mark.parametrize(
+        "const, actual",
+        [
+            (Image.SNAKE, Image("99000:99099:09090:09990:00000:")),
+            (Image.PITCHFORK, Image("90909:90909:99999:00900:00900:")),
+        ],
+    )
+    def test_image_constants(self, const, actual):
+        assert const._Image__LED == actual._Image__LED
+        with pytest.raises(TypeError, match=CONSTANTS.COPY_ERR_MESSAGE):
+            const.set_pixel(0, 0, 5)

@@ -102,7 +102,7 @@ LED_WIDTH = 5
 
 # error messages
 BRIGHTNESS_ERR = "brightness out of bounds"
-COPY_ERR_MESSAGE = "please copy() first"
+COPY_ERR_MESSAGE = "please call copy function first"
 INCORR_IMAGE_SIZE = "image data is incorrect size"
 INDEX_ERR = "index out of bounds"
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"

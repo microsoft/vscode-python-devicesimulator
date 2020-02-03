@@ -117,15 +117,14 @@ class Image:
         return len(self.__LED)
 
     def set_pixel(self, x, y, value):
-        try:
-            if not self.__valid_pos(x, y):
-                raise ValueError(CONSTANTS.INDEX_ERR)
-            elif not self.__valid_brightness(value):
-                raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
-            else:
-                self.__LED[y][x] = value
-        except TypeError:
-            raise CONSTANTS.COPY_ERR_MESSAGE
+        if self.read_only:
+            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
+        elif not self.__valid_pos(x, y):
+            raise ValueError(CONSTANTS.INDEX_ERR)
+        elif not self.__valid_brightness(value):
+            raise ValueError(CONSTANTS.BRIGHTNESS_ERR)
+        else:
+            self.__LED[y][x] = value
 
     def get_pixel(self, x, y):
         if self.__valid_pos(x, y):
@@ -157,19 +156,27 @@ class Image:
     # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
+        if self.read_only:
+            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
+
         for y in range(0, self.height()):
             for x in range(0, self.width()):
                 self.set_pixel(x, y, 9 - self.get_pixel(x, y))
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
+        if self.read_only:
+            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
+
         for y in range(0, self.height()):
             for x in range(0, self.width()):
                 self.set_pixel(x, y, value)
 
     # This transposes a certain area (w x h) on src onto the current image.
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
-        if not src.__valid_pos(x, y):
+        if self.read_only:
+            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
+        elif not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
         for count_y in range(0, h):
