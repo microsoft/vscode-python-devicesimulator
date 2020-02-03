@@ -31,8 +31,6 @@ export class CpxImage extends React.Component<IProps, any> {
             setupKeyPresses(this.props.onKeyEvent);
             setupSwitch(this.props);
             this.updateImage();
-        } else {
-            console.log("Cannot find svg");
         }
     }
     componentDidUpdate() {
