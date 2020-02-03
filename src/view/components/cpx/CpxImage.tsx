@@ -20,30 +20,32 @@ interface IProps {
     onMouseLeave: (button: HTMLElement, event: Event) => void;
 }
 
-let firstTime = true;
-
-// Functional Component render
-const CpxImage: React.FC<IProps> = props => {
-    const svgElement = window.document.getElementById("cpx_svg");
-
-    if (svgElement) {
-        if (firstTime) {
-            initSvgStyle(svgElement, props.brightness);
-            setupButtons(props);
-            setupPins(props);
-            setupKeyPresses(props.onKeyEvent);
-            setupSwitch(props);
-            firstTime = false;
+//
+export class CpxImage extends React.Component<IProps, any> {
+    componentDidMount() {
+        const svgElement = window.document.getElementById("cpx_svg");
+        if (svgElement) {
+            initSvgStyle(svgElement, this.props.brightness);
+            setupButtons(this.props);
+            setupPins(this.props);
+            setupKeyPresses(this.props.onKeyEvent);
+            setupSwitch(this.props);
+            this.updateImage();
         }
-        // Update Neopixels and red LED state
-        updateNeopixels(props);
-        updateRedLED(props.red_led);
-        updatePowerLED(props.on);
-        updateSwitch(props.switch);
     }
-
-    return CPX_SVG;
-};
+    componentDidUpdate() {
+        this.updateImage();
+    }
+    render() {
+        return CPX_SVG;
+    }
+    private updateImage() {
+        updateNeopixels(this.props);
+        updateRedLED(this.props.red_led);
+        updatePowerLED(this.props.on);
+        updateSwitch(this.props.switch);
+    }
+}
 
 const makeButton = (
     g: SVGElement,

@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import svg from "../cpx/Svg_utils";
 import InputSlider from "./InputSlider";
 import SensorButton from "./SensorButton";
-import svg from "../cpx/Svg_utils";
 
 import { CONSTANTS } from "../../constants";
 import "../../styles/MotionSensorBar.css";
