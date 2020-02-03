@@ -9,13 +9,3 @@ exports[`Device component  should render correctly 1`] = `
   </p>
 </div>
 `;
-
-exports[`Device component should render correctly 1`] = `
-<div
-  className="device-container"
->
-  <p>
-    Microbit to be implemented!
-  </p>
-</div>
-`;
