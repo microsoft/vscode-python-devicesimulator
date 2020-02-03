@@ -14,6 +14,7 @@ exports[`Device component  should render correctly 1`] = `
         className="sim"
         fill="rgba(0,0,0,0)"
         height="100%"
+        id="microbit_svg"
         version="1.0"
         viewBox="0 0 500 408"
         width="100%"
@@ -2344,6 +2345,7 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
+              id="BTN_A_OUTER"
               rx={4}
               ry={4}
               width="56.2"
@@ -2400,6 +2402,7 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
+              id="BTN_B_OUTER"
               rx={4}
               ry={4}
               width="56.2"
@@ -2449,7 +2452,7 @@ exports[`Device component  should render correctly 1`] = `
             style={
               Object {
                 "fill": "rgb(51, 51, 51)",
-                "visibility": "hidden",
+                "visibility": "visible",
               }
             }
             tabIndex={0}
@@ -2457,6 +2460,7 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
+              id="BTN_AB_OUTER"
               rx={4}
               ry={4}
               width="56.2"
@@ -2497,7 +2501,7 @@ exports[`Device component  should render correctly 1`] = `
             style={
               Object {
                 "fill": "rgb(17, 17, 17)",
-                "visibility": "hidden",
+                "visibility": "visible",
               }
             }
           />
