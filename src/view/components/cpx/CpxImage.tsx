@@ -20,7 +20,6 @@ interface IProps {
     onMouseLeave: (button: HTMLElement, event: Event) => void;
 }
 
-//
 export class CpxImage extends React.Component<IProps, any> {
     componentDidMount() {
         const svgElement = window.document.getElementById("cpx_svg");
