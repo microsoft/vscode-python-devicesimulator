@@ -99,6 +99,8 @@ IMAGE_TUPLE_LOOKUP = {
 # numerical LED values
 LED_HEIGHT = 5
 LED_WIDTH = 5
+BRIGHTNESS_MIN = 0
+BRIGHTNESS_MAX = 9
 
 # error messages
 BRIGHTNESS_ERR = "brightness out of bounds"

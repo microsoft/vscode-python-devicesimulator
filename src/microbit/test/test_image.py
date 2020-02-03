@@ -10,14 +10,9 @@ class TestImage(object):
         self.image_heart = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_get_pixel(self, x, y, brightness):
-        self.image._Image__LED[y][x] = brightness
-        assert brightness == self.image.get_pixel(x, y)
-
-    @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_set_pixel(self, x, y, brightness):
+    def test_get_set_pixel(self, x, y, brightness):
         self.image.set_pixel(x, y, brightness)
-        assert brightness == self.image._Image__LED[y][x]
+        assert brightness == self.image.get_pixel(x, y)
 
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
     def test_get_pixel_error(self, x, y):
@@ -36,15 +31,20 @@ class TestImage(object):
         with pytest.raises(ValueError, match=err_msg):
             self.image.set_pixel(x, y, brightness)
 
-    @pytest.mark.parametrize("image", [(Image()), (Image(3, 3)), (Image(""))])
-    def test_width_and_height(self, image):
-        assert image.height() == len(image._Image__LED)
-        if len(image._Image__LED) == 0:
-            assert image.width() == 0
-        else:
-            assert image.width() == len(image._Image__LED[0])
-
-        assert image.height() == image.width()
+    @pytest.mark.parametrize(
+        "image, height, width",
+        [
+            (Image(), 5, 5),
+            (Image(3, 3), 3, 3),
+            (Image(""), 0, 0),
+            (Image("00:00000"), 2, 5),
+            (Image("0000:0000"), 2, 4),
+        ],
+    )
+    def test_width_and_height(self, image, height, width):
+        print(str(image))
+        assert image.height() == height
+        assert image.width() == width
 
     @pytest.mark.parametrize(
         "x, y, w, h, x_dest, y_dest, actual",
