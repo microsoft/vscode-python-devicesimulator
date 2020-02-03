@@ -86,7 +86,7 @@ class Image:
     def invert(self):
         for y in range(self.height()):
             for x in range(self.width()):
-                self.set_pixel(x, y, 9 - self.get_pixel(x, y))
+                self.set_pixel(x, y, CONSTANTS.BRIGHTNESS_MAX - self.get_pixel(x, y))
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
@@ -126,7 +126,7 @@ class Image:
             for y in range(self.height()):
                 for x in range(self.width()):
                     sum_value = other.get_pixel(x, y) + self.get_pixel(x, y)
-                    display_result = min(9, sum_value)
+                    display_result = min(CONSTANTS.BRIGHTNESS_MAX, sum_value)
                     res.set_pixel(x, y, display_result)
 
             return res
@@ -143,7 +143,7 @@ class Image:
         for y in range(self.height()):
             for x in range(self.width()):
                 product = self.get_pixel(x, y) * float_val
-                res.set_pixel(x, y, min(9, product))
+                res.set_pixel(x, y, min(CONSTANTS.BRIGHTNESS_MAX, product))
 
         return res
 
