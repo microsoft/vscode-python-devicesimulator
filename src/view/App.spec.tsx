@@ -4,8 +4,8 @@ import { IntlProvider } from "react-intl";
 import * as testRenderer from "react-test-renderer";
 import App from "./App";
 
-describe("App component should", () => {
-    it("render correctly", () => {
+describe("App component ", () => {
+    it("should render correctly", () => {
         const component = testRenderer
             .create(
                 <IntlProvider locale="en">
@@ -15,7 +15,7 @@ describe("App component should", () => {
             .toJSON();
         expect(component).toMatchSnapshot();
     });
-    it("render without crashing", () => {
+    it("should render without crashing", () => {
         const div = document.createElement("div");
         ReactDOM.render(
             <IntlProvider locale="en">

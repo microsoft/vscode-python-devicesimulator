@@ -5,7 +5,7 @@ import * as testRenderer from "react-test-renderer";
 import { Cpx } from "./Cpx";
 
 describe("Device component", () => {
-    it("renders correctly", () => {
+    it("should render correctly", () => {
         const component = testRenderer
             .create(
                 <IntlProvider locale="en">
@@ -16,7 +16,7 @@ describe("Device component", () => {
         expect(component).toMatchSnapshot();
     });
 
-    it("renders without crashing", () => {
+    it("should render without crashing", () => {
         const div = document.createElement("div");
         ReactDOM.render(
             <IntlProvider locale="en">

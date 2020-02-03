@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Device component  should render correctly 1`] = `
+<div
+  className="device-container"
+>
+  <p>
+    Microbit to be implemented!
+  </p>
+</div>
+`;
+
 exports[`Device component should render correctly 1`] = `
 <div
   className="device-container"

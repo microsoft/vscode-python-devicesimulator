@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { PivotItem } from "office-ui-fabric-react";
+
 import * as React from "react";
 import "./App.css";
 import { Tab } from "./components/tab/Tab";
@@ -9,13 +10,18 @@ import { DEVICE_LIST_KEY } from "./constants";
 import { Device } from "./container/device/Device";
 
 interface IState {
-    currentDevice?: string;
+    currentDevice: string;
 }
 
+const defaultState = {
+    currentDevice: DEVICE_LIST_KEY.CPX,
+};
+
 class App extends React.Component<{}, IState> {
-    state = {
-        currentDevice: DEVICE_LIST_KEY.CPX,
-    };
+    constructor() {
+        super({});
+        this.state = defaultState;
+    }
 
     render() {
         return (
@@ -29,7 +35,7 @@ class App extends React.Component<{}, IState> {
     }
 
     handleDeviceChange = (item?: PivotItem) => {
-        if (item) {
+        if (item && item.props && item.props.itemKey) {
             this.setState({ currentDevice: item.props.itemKey });
         }
     };
