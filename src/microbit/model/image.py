@@ -1,7 +1,76 @@
 from . import constants as CONSTANTS
 from .producer_property import ProducerProperty
 
+
 class Image:
+    # Attributes assigned (to functions) later;
+    # having this here helps the pylint.
+    HEART = None
+    HEART_SMALL = None
+    HAPPY = None
+    SMILE = None
+    SAD = None
+    CONFUSED = None
+    ANGRY = None
+    ASLEEP = None
+    SURPRISED = None
+    SILLY = None
+    FABULOUS = None
+    MEH = None
+    YES = None
+    NO = None
+    CLOCK12 = None
+    CLOCK11 = None
+    CLOCK10 = None
+    CLOCK9 = None
+    CLOCK8 = None
+    CLOCK7 = None
+    CLOCK6 = None
+    CLOCK5 = None
+    CLOCK4 = None
+    CLOCK3 = None
+    CLOCK2 = None
+    CLOCK1 = None
+    ARROW_N = None
+    ARROW_NE = None
+    ARROW_E = None
+    ARROW_SE = None
+    ARROW_S = None
+    ARROW_SW = None
+    ARROW_W = None
+    ARROW_NW = None
+    TRIANGLE = None
+    TRIANGLE_LEFT = None
+    CHESSBOARD = None
+    DIAMOND = None
+    DIAMOND_SMALL = None
+    SQUARE = None
+    SQUARE_SMALL = None
+    RABBIT = None
+    COW = None
+    MUSIC_CROTCHET = None
+    MUSIC_QUAVER = None
+    MUSIC_QUAVERS = None
+    PITCHFORK = None
+    XMAS = None
+    PACMAN = None
+    TARGET = None
+    TSHIRT = None
+    ROLLERSKATE = None
+    DUCK = None
+    HOUSE = None
+    TORTOISE = None
+    BUTTERFLY = None
+    STICKFIGURE = None
+    GHOST = None
+    SWORD = None
+    GIRAFFE = None
+    SKULL = None
+    UMBRELLA = None
+    SNAKE = None
+    ALL_CLOCKS = None
+    ALL_ARROWS = None
+
     # implementing image model as described here:
     # https://microbit-micropython.readthedocs.io/en/latest/image.html
 
@@ -38,12 +107,6 @@ class Image:
 
         self.read_only = False
 
-    @ProducerProperty
-    def HEART(self):
-        const_instance = Image(CONSTANTS.HEART)
-        const_instance.read_only = True
-        return const_instance
-        
     def width(self):
         if len(self.__LED) > 0:
             return len(self.__LED[0])
@@ -62,7 +125,7 @@ class Image:
             else:
                 self.__LED[y][x] = value
         except TypeError:
-             raise CONSTANTS.COPY_ERR_MESSAGE
+            raise CONSTANTS.COPY_ERR_MESSAGE
 
     def get_pixel(self, x, y):
         if self.__valid_pos(x, y):
@@ -293,3 +356,39 @@ class Image:
         ret_str = ret_str + "')"
 
         return ret_str
+
+
+# This is for generating functions like Image.HEART
+# that return a new read-only Image
+def create_const_func(func_name):
+    def func(*args):
+        const_instance = Image(CONSTANTS.IMAGE_PATTERNS[func_name])
+        const_instance.read_only = True
+        return const_instance
+
+    func.__name__ = func_name
+    return ProducerProperty(func)
+
+
+# for attributes like Image.ALL_CLOCKS
+# that return tuples
+def create_const_list_func(func_name):
+    def func(*args):
+        collection_names = CONSTANTS.IMAGE_TUPLE_LOOKUP[func_name]
+        ret_list = []
+        for image_name in collection_names:
+            const_instance = Image(CONSTANTS.IMAGE_PATTERNS[image_name])
+            const_instance.read_only = True
+            ret_list.append(const_instance)
+
+        return tuple(ret_list)
+
+    func.__name__ = func_name
+    return ProducerProperty(func)
+
+
+for name in CONSTANTS.IMAGE_PATTERNS.keys():
+    setattr(Image, name, create_const_func(name))
+
+for name in CONSTANTS.IMAGE_TUPLE_LOOKUP.keys():
+    setattr(Image, name, create_const_list_func(name))

@@ -3,10 +3,11 @@ from ..model.image import Image
 
 from ..model import constants as CONSTANTS
 
+
 class TestImage(object):
     def setup_method(self):
         self.image = Image()
-        self.image_heart = Image(CONSTANTS.HEART)
+        self.image_heart = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_get_pixel(self, x, y, brightness):
@@ -63,14 +64,14 @@ class TestImage(object):
         "x, y, w, h, x_dest, y_dest, actual",
         [
             (1, 1, 2, 4, 3, 3, Image("09090:99999:99999:09999:00999:")),
-            (0, 0, 3, 3, 8, 8, Image(CONSTANTS.HEART)),
-            (0, 0, 7, 7, 0, 0, Image(CONSTANTS.HEART)),
+            (0, 0, 3, 3, 8, 8, Image(CONSTANTS.IMAGE_PATTERNS["HEART"])),
+            (0, 0, 7, 7, 0, 0, Image(CONSTANTS.IMAGE_PATTERNS["HEART"])),
             (3, 0, 7, 7, 0, 0, Image("90000:99000:99000:90000:00000:")),
         ],
     )
     def test_blit_heart_nonblank(self, x, y, w, h, x_dest, y_dest, actual):
-        result = Image(CONSTANTS.HEART)
-        src = Image(CONSTANTS.HEART)
+        result = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
+        src = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
         result.blit(src, x, y, w, h, x_dest, y_dest)
         assert result._Image__LED == actual._Image__LED
 
@@ -78,7 +79,7 @@ class TestImage(object):
         "x, y, w, h, x_dest, y_dest", [(5, 6, 2, 4, 3, 3), (5, 0, 3, 3, 8, 8)]
     )
     def test_blit_heart_valueerror(self, x, y, w, h, x_dest, y_dest):
-        result = Image(CONSTANTS.HEART)
+        result = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             result.blit(self.image_heart, x, y, w, h, x_dest, y_dest)
 
