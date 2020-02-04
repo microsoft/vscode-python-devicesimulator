@@ -6,17 +6,12 @@ from ..model import constants as CONSTANTS
 class TestImage(object):
     def setup_method(self):
         self.image = Image()
-        self.image_heart = Image(CONSTANTS.HEART)
+        self.image_heart = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_get_pixel(self, x, y, brightness):
-        self.image._Image__LED[y][x] = brightness
-        assert brightness == self.image.get_pixel(x, y)
-
-    @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_set_pixel(self, x, y, brightness):
+    def test_get_set_pixel(self, x, y, brightness):
         self.image.set_pixel(x, y, brightness)
-        assert brightness == self.image._Image__LED[y][x]
+        assert brightness == self.image.get_pixel(x, y)
 
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
     def test_get_pixel_error(self, x, y):
@@ -35,7 +30,16 @@ class TestImage(object):
         with pytest.raises(ValueError, match=err_msg):
             self.image.set_pixel(x, y, brightness)
 
-    @pytest.mark.parametrize("image, height, width", [(Image(), 5, 5), (Image(3, 3), 3, 3), (Image(""), 0, 0), (Image("00:00000"), 2, 5),(Image("0000:0000"), 2, 4)])
+    @pytest.mark.parametrize(
+        "image, height, width",
+        [
+            (Image(), 5, 5),
+            (Image(3, 3), 3, 3),
+            (Image(""), 0, 0),
+            (Image("00:00000"), 2, 5),
+            (Image("0000:0000"), 2, 4),
+        ],
+    )
     def test_width_and_height(self, image, height, width):
         print(str(image))
         assert image.height() == height
@@ -59,14 +63,14 @@ class TestImage(object):
         "x, y, w, h, x_dest, y_dest, actual",
         [
             (1, 1, 2, 4, 3, 3, Image("09090:99999:99999:09999:00999:")),
-            (0, 0, 3, 3, 8, 8, Image(CONSTANTS.HEART)),
-            (0, 0, 7, 7, 0, 0, Image(CONSTANTS.HEART)),
+            (0, 0, 3, 3, 8, 8, Image(CONSTANTS.IMAGE_PATTERNS["HEART"])),
+            (0, 0, 7, 7, 0, 0, Image(CONSTANTS.IMAGE_PATTERNS["HEART"])),
             (3, 0, 7, 7, 0, 0, Image("90000:99000:99000:90000:00000:")),
         ],
     )
     def test_blit_heart_nonblank(self, x, y, w, h, x_dest, y_dest, actual):
-        result = Image(CONSTANTS.HEART)
-        src = Image(CONSTANTS.HEART)
+        result = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
+        src = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
         result.blit(src, x, y, w, h, x_dest, y_dest)
         assert result._Image__LED == actual._Image__LED
 
@@ -74,7 +78,7 @@ class TestImage(object):
         "x, y, w, h, x_dest, y_dest", [(5, 6, 2, 4, 3, 3), (5, 0, 3, 3, 8, 8)]
     )
     def test_blit_heart_valueerror(self, x, y, w, h, x_dest, y_dest):
-        result = Image(CONSTANTS.HEART)
+        result = Image(CONSTANTS.IMAGE_PATTERNS["HEART"])
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             result.blit(self.image_heart, x, y, w, h, x_dest, y_dest)
 
@@ -221,7 +225,6 @@ class TestImage(object):
         with pytest.raises(TypeError, match=err_message):
             target + value
 
-    # ADD - VALUEERROR
     @pytest.mark.parametrize(
         "target, value", [(Image(2, 3), Image(3, 3)), (Image(2, 1), Image(0, 0))]
     )
@@ -266,13 +269,14 @@ class TestImage(object):
         assert repr_actual == repr_output
         assert str_actual == str_output
 
-    # @pytest.mark.parametrize(
-    #     "initial_img_string, actual",
-    #     [
-    #         ("0:000:00:0000:", Image("0000:0000:0000:0000:")),
-    #         ("0000\n0000\n0000\n0000\n", Image("0000:0000:0000:0000:")),
-    #         ("0\n000\n00\n0000\n", Image("0000:0000:0000:0000:")),
-    #     ],
-    # )
-    # def test_string_processing_constructor(self, initial_img_string, actual):
-    #     assert Image(initial_img_string)._Image__LED == actual._Image__LED
+    @pytest.mark.parametrize(
+        "const, actual",
+        [
+            (Image.SNAKE, Image(CONSTANTS.IMAGE_PATTERNS["SNAKE"])),
+            (Image.PITCHFORK, Image(CONSTANTS.IMAGE_PATTERNS["PITCHFORK"])),
+        ],
+    )
+    def test_image_constants(self, const, actual):
+        assert const._Image__LED == actual._Image__LED
+        with pytest.raises(TypeError, match=CONSTANTS.COPY_ERR_MESSAGE):
+            const.set_pixel(0, 0, 5)

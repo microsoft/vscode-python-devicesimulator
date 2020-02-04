@@ -6,6 +6,10 @@ export const CONSTANTS = {
     CURRENTLY_RUNNING: (file: string) => {
         return `Currently running: ${file}`;
     },
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "micro:bit",
+    },
     ID_NAME: {
         BUTTON_A: "BTN_A_OUTER",
         BUTTON_AB: "BTN_AB_OUTER",
@@ -41,5 +45,9 @@ export const CONSTANTS = {
     SIMULATOR_BUTTON_WIDTH: 60,
     TOOLBAR_INFO: `Explore what's on the board:`,
 };
+export enum DEVICE_LIST_KEY {
+    CPX = "cpx",
+    MICROBIT = "microbit",
+}
 
 export default CONSTANTS;
