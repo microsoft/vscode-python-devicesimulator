@@ -156,14 +156,12 @@ class Image:
     # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
-
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, CONSTANTS.BRIGHTNESS_MAX - self.get_pixel(x, y))
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
-
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, value)
