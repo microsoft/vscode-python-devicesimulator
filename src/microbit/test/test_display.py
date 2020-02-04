@@ -1,4 +1,5 @@
 import pytest
+import threading
 
 from ..model import constants as CONSTANTS
 from ..model.display import Display
@@ -73,7 +74,7 @@ class TestDisplay(object):
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
         self.display.show(img)
-        assert Display._Display__same_image(img, self.display._Display__image)
+        assert Image._Image__same_image(img, self.display._Display__image)
 
     def test_show_different_size_image(self):
         img = Image(3, 7)
@@ -82,7 +83,7 @@ class TestDisplay(object):
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
         self.display.show(img)
-        assert Display._Display__same_image(expected, self.display._Display__image)
+        assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_smaller_image(self):
         img = Image(2, 2)
@@ -90,7 +91,7 @@ class TestDisplay(object):
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
         self.display.show(img)
-        assert Display._Display__same_image(expected, self.display._Display__image)
+        assert Image._Image__same_image(expected, self.display._Display__image)
 
     @pytest.mark.parametrize(
         "value, expected_str",
@@ -105,7 +106,7 @@ class TestDisplay(object):
     def test_show_char(self, value, expected_str):
         expected = Image(expected_str)
         self.display.show(value)
-        assert Display._Display__same_image(expected, self.display._Display__image)
+        assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
         expected = Image(CONSTANTS.BLANK_5X5)
@@ -113,13 +114,13 @@ class TestDisplay(object):
         self.display.show(image, clear=True)
         print(expected._Image__LED)
         print(self.display._Display__image._Image__LED)
-        assert Display._Display__same_image(expected, self.display._Display__image)
+        assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_iterable(self):
         expected = Image(STR_A)
         value = [Image(STR_EXCLAMATION_MARK), "A", "ab"]
         self.display.show(value)
-        assert Display._Display__same_image(expected, self.display._Display__image)
+        assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_non_iterable(self):
         with pytest.raises(TypeError):
@@ -131,7 +132,7 @@ class TestDisplay(object):
     # Helpers
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)
-        return Display._Display__same_image(i, self.display._Display__image)
+        return Image._Image__same_image(i, self.display._Display__image)
 
     def __print(self, img):
         print("")
