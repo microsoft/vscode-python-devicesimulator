@@ -7,7 +7,7 @@ import * as React from "react";
 
 /* tslint:disable */
 
-export const MICROBIT_SVG =(ref:any)=> {
+export const MICROBIT_SVG =(ref:React.RefObject<SVGSVGElement>)=> {
     return(
     <svg
         id="microbit_svg"

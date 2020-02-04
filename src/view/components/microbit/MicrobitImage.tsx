@@ -14,7 +14,7 @@ interface IProps {
     eventTriggers: EventTriggers;
 }
 interface IState {
-    microbitImageReference: React.RefObject<HTMLElement>;
+    microbitImageReference: React.RefObject<SVGSVGElement>;
 }
 
 // Displays the SVG and call necessary svg modification.
