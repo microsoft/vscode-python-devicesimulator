@@ -205,4 +205,3 @@ class Display:
             )
 
         return scroll_image
-
