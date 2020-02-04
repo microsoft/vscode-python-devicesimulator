@@ -39,6 +39,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        current_device = ""
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
@@ -48,7 +49,10 @@ class UserInput(threading.Thread):
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event]
                     )
-                # tab_state = new_state.get(CONSTANTS.TAB_CHANGE_EVENT)
+                print("new state:")
+                print(new_state)
+                new_device = new_state.get(CONSTANTS.TAB_CHANGE_EVENT)
+                if 
                 # if tab_state == "microbit":
                 # else:
 
