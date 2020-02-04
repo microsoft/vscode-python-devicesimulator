@@ -145,7 +145,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             selected_file: event.currentTarget.value,
         });
     }
-    protected refreshSimulatorClick = () => {};
+    protected refreshSimulatorClick = () => {
+        sendMessage("refresh-simulator", true);
+    };
     protected onMouseUp(button: HTMLElement, event: Event) {
         event.preventDefault();
         console.log("To implement onMouseUp");
