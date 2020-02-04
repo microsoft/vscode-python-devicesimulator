@@ -88,6 +88,8 @@ class Simulator extends React.Component<IProps, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
+        console.log("cpxmessage");
+        console.log(JSON.stringify(message));
         switch (message.command) {
             case "reset-state":
                 console.log("Clearing the state");

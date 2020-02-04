@@ -44,11 +44,16 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
+        console.log("microbitmessage");
+        console.log(JSON.stringify(message));
+
         switch (message.command) {
             case "reset-state":
                 console.log("Reset the state");
                 this.setState({
+                    ...this.state,
                     leds: initialLedState,
+                    play_button: false,
                 });
                 break;
             case "set-state":
@@ -140,7 +145,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             selected_file: event.currentTarget.value,
         });
     }
-    protected refreshSimulatorClick = () => { };
+    protected refreshSimulatorClick = () => {
+        sendMessage("refresh-simulator", true);
+    };
     protected onMouseUp(button: HTMLElement, event: Event) {
         event.preventDefault();
         console.log("To implement onMouseUp");
