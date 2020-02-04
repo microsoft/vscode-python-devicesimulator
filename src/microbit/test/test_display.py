@@ -140,3 +140,8 @@ class TestDisplay(object):
 
 
 # pytest src/microbit/test/test_display.py --cov-report=html --cov=src/microbit
+
+# Need tests for
+# threaded show
+# threaded scroll
+# normal scroll
