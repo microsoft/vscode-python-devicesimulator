@@ -8,6 +8,7 @@ from .. import shim
 
 
 class Display:
+    # The implementation based off of https://github.com/bbcmicrobit/micropython/blob/master/docs/display.rst.
     def __init__(self):
         self.__image = Image()
         self.__on = True
