@@ -476,6 +476,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-0-0"
                 className="sim-led"
                 x={152}
                 y={111}
@@ -502,6 +503,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-1-0"
                 className="sim-led"
                 x={198}
                 y={111}
@@ -528,6 +530,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-2-0"
                 className="sim-led"
                 x={244}
                 y={111}
@@ -554,6 +557,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-3-0"
                 className="sim-led"
                 x={290}
                 y={111}
@@ -580,6 +584,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-4-0"
                 className="sim-led"
                 x={336}
                 y={111}
@@ -606,6 +611,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-0-1"
                 className="sim-led"
                 x={152}
                 y={155}
@@ -632,6 +638,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-1-1"
                 className="sim-led"
                 x={198}
                 y={155}
@@ -658,6 +665,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-2-1"
                 className="sim-led"
                 x={244}
                 y={155}
@@ -684,6 +692,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-3-1"
                 className="sim-led"
                 x={290}
                 y={155}
@@ -710,6 +719,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-4-1"
                 className="sim-led"
                 x={336}
                 y={155}
@@ -736,6 +746,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-0-2"
                 className="sim-led"
                 x={152}
                 y={199}
@@ -762,6 +773,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-1-2"
                 className="sim-led"
                 x={198}
                 y={199}
@@ -788,6 +800,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-2-2"
                 className="sim-led"
                 x={244}
                 y={199}
@@ -814,6 +827,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-3-2"
                 className="sim-led"
                 x={290}
                 y={199}
@@ -840,6 +854,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-4-2"
                 className="sim-led"
                 x={336}
                 y={199}
@@ -866,6 +881,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-0-3"
                 className="sim-led"
                 x={152}
                 y={243}
@@ -892,6 +908,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-1-3"
                 className="sim-led"
                 x={198}
                 y={243}
@@ -918,6 +935,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-2-3"
                 className="sim-led"
                 x={244}
                 y={243}
@@ -944,6 +962,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-3-3"
                 className="sim-led"
                 x={290}
                 y={243}
@@ -970,6 +989,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-4-3"
                 className="sim-led"
                 x={336}
                 y={243}
@@ -996,6 +1016,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-0-4"
                 className="sim-led"
                 x={152}
                 y={287}
@@ -1022,6 +1043,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-1-4"
                 className="sim-led"
                 x={198}
                 y={287}
@@ -1048,6 +1070,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-2-4"
                 className="sim-led"
                 x={244}
                 y={287}
@@ -1074,6 +1097,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-3-4"
                 className="sim-led"
                 x={290}
                 y={287}
@@ -1100,6 +1124,7 @@ export const MICROBIT_SVG = (
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
+                id="LED-4-4"
                 className="sim-led"
                 x={336}
                 y={287}

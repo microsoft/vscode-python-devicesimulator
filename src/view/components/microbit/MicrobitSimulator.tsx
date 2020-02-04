@@ -1,7 +1,19 @@
 import * as React from "react";
 import { MicrobitImage } from "./MicrobitImage";
 
-export class MicrobitSimulator extends React.Component<any, any> {
+const initialLedState = [
+    [0, 0, 8, 0, 8],
+    [0, 0, 8, 0, 8],
+    [0, 0, 8, 0, 8],
+    [0, 0, 8, 0, 8],
+    [0, 0, 8, 0, 8],
+];
+export class MicrobitSimulator extends React.Component<any, { leds: any }> {
+    constructor() {
+        super({});
+        this.state = { leds: initialLedState };
+    }
+
     render() {
         return (
             <div className="simulator">
@@ -12,6 +24,7 @@ export class MicrobitSimulator extends React.Component<any, any> {
                             onMouseUp: this.onMouseUp,
                             onMouseLeave: this.onMouseLeave,
                         }}
+                        leds={this.state.leds}
                     />
                 </div>
                 {/* Implement actionbar here */}
