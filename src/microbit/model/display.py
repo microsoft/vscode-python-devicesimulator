@@ -4,12 +4,15 @@ import threading
 from . import constants as CONSTANTS
 from .image import Image
 from .. import shim
+from .. import utils_microbit
+import copy
 
 
 class Display:
     def __init__(self):
         self.__image = Image()
         self.__on = True
+        self.__debug_mode = False
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         if not wait:
@@ -45,6 +48,7 @@ class Display:
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
+                self.update_client()
                 time.sleep(delay / 1000)
             if not loop:
                 break
@@ -61,6 +65,7 @@ class Display:
                 self.__image = value.crop(
                     0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
+                self.update_client()
             elif isinstance(value, (str, int, float)):
                 if isinstance(value, str):
                     chars = list(value)
@@ -69,7 +74,9 @@ class Display:
 
                 for c in chars:
                     self.__image = Display.__get_image_from_char(c)
+                    self.update_client()
                     time.sleep(delay / 1000)
+                
             else:
                 # Check if iterable
                 try:
@@ -82,12 +89,15 @@ class Display:
                         self.__image = elem.crop(
                             0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                         )
+                        self.update_client()
                     elif isinstance(elem, str) and len(elem) == 1:
                         self.__image = Display.__get_image_from_char(elem)
+                        self.update_client()
                     # If elem is not char or image, break without iterating through rest of list
                     else:
                         break
                     time.sleep(delay / 1000)
+                
             if not loop:
                 break
         if clear:
@@ -206,3 +216,12 @@ class Display:
 
         return scroll_image
 
+
+    def update_client(self):
+        sendable_json = {
+            "active_device" : "microbit",
+            "microbit": {
+                "leds": copy.deepcopy(self.__get_array())
+            }
+        }
+        utils_microbit.show(sendable_json, self.__debug_mode)
