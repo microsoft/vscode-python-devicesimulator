@@ -310,7 +310,7 @@
     "mocha": "^6.1.4",
     "npm-run-all": "^4.1.3",
     "prettier": "^1.19.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.3.1",
     "style-loader": "^0.21.0",
     "ts-import-plugin": "^1.5.4",
     "ts-loader": "^4.4.2",
@@ -323,7 +323,7 @@
     "typescript-react-intl": "^0.4.0",
     "version-from-git": "^1.1.1",
     "vsce": "^1.47.0",
-    "vscode-nls-dev": "^3.2.6",
+    "vscode-nls-dev": "^3.3.1",
     "vscode-test": "^1.0.0",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
