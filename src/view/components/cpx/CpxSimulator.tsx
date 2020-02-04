@@ -294,6 +294,8 @@ class Simulator extends React.Component<IProps, IState> {
             this.handleClick(element, active);
             element.focus();
         }
+        console.log("onKeyEvent");
+        console.log(this.state);
     }
     protected onMouseDown(button: HTMLElement, event: Event) {
         event.preventDefault();

@@ -56,13 +56,10 @@ const setupAllButtons = (eventTriggers: EventTriggers) => {
     });
 };
 const updateAllLeds = (leds: number[][]) => {
-    console.log(leds);
     for (let j = 0; j < leds.length; j++) {
         for (let i = 0; i < leds[0].length; i++) {
             const ledElement = document.getElementById(`LED-${j}-${i}`);
             if (ledElement) {
-                console.log(ledElement.id);
-
                 setupLed(ledElement, leds[i][j]);
             }
         }

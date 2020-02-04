@@ -1,5 +1,9 @@
 import * as React from "react";
 import { MicrobitImage } from "./MicrobitImage";
+import ActionBar from "../simulator/ActionBar";
+import PlayLogo from "../../svgs/play_svg";
+import StopLogo from "../../svgs/stop_svg";
+import Dropdown from "../Dropdown";
 
 const initialLedState = [
     [0, 0, 0, 0, 0],
@@ -8,10 +12,34 @@ const initialLedState = [
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
 ];
-export class MicrobitSimulator extends React.Component<any, { leds: any }> {
+
+interface vscode {
+    postMessage(message: any): void;
+}
+
+declare const vscode: vscode;
+
+const sendMessage = (type: string, state: any) => {
+    vscode.postMessage({ command: type, text: state });
+};
+interface IState {
+    active_editors: string[];
+    running_file: string;
+    leds: any;
+    play_button: boolean;
+    selected_file: string;
+}
+export class MicrobitSimulator extends React.Component<any, IState> {
     constructor() {
         super({});
-        this.state = { leds: initialLedState };
+        this.state = {
+            leds: initialLedState,
+            play_button: false,
+            selected_file: "",
+            active_editors: [],
+            running_file: "",
+        };
+        this.onSelectBlur = this.onSelectBlur.bind(this);
     }
     handleMessage = (event: any): void => {
         const message = event.data;
@@ -28,6 +56,32 @@ export class MicrobitSimulator extends React.Component<any, { leds: any }> {
                     leds: message.state.leds,
                 });
                 break;
+            case "activate-play":
+                this.setState({
+                    ...this.state,
+                    play_button: !this.state.play_button,
+                });
+                break;
+            case "visible-editors":
+                console.log(
+                    "Setting active editors",
+                    message.state.activePythonEditors
+                );
+                this.setState({
+                    ...this.state,
+                    active_editors: message.state.activePythonEditors,
+                });
+                break;
+            case "current-file":
+                console.log("Setting current file", message.state.running_file);
+                this.setState({
+                    ...this.state,
+                    running_file: message.state.running_file,
+                });
+                break;
+            default:
+                console.log("Invalid message received from the extension.");
+                break;
         }
     };
     componentDidMount() {
@@ -38,8 +92,20 @@ export class MicrobitSimulator extends React.Component<any, { leds: any }> {
     }
 
     render() {
+        const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
+
         return (
             <div className="simulator">
+                <div className="file-selector">
+                    <Dropdown
+                        label={"file-dropdown"}
+                        styleLabel={"dropdown"}
+                        lastChosen={this.state.running_file}
+                        width={300}
+                        textOptions={this.state.active_editors}
+                        onBlur={this.onSelectBlur}
+                    />
+                </div>
                 <div className="microbit-container">
                     <MicrobitImage
                         eventTriggers={{
@@ -50,10 +116,30 @@ export class MicrobitSimulator extends React.Component<any, { leds: any }> {
                         leds={this.state.leds}
                     />
                 </div>
-                {/* Implement actionbar here */}
+                <ActionBar
+                    onTogglePlay={this.togglePlayClick}
+                    onToggleRefresh={this.refreshSimulatorClick}
+                    playStopImage={playStopImage}
+                />
             </div>
         );
     }
+    protected togglePlayClick = () => {
+        console.log("play-simulator");
+        console.log(this.state.selected_file);
+        sendMessage("play-simulator", {
+            active_device: "microbit",
+            selected_file: this.state.selected_file,
+            state: !this.state.play_button,
+        });
+    };
+    protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
+        this.setState({
+            ...this.state,
+            selected_file: event.currentTarget.value,
+        });
+    }
+    protected refreshSimulatorClick = () => {};
     protected onMouseUp(button: HTMLElement, event: Event) {
         event.preventDefault();
         console.log("To implement onMouseUp");
