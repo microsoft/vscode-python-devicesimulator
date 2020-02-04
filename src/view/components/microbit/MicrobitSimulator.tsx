@@ -4,6 +4,7 @@ import ActionBar from "../simulator/ActionBar";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import Dropdown from "../Dropdown";
+import CONSTANTS from "../../constants";
 
 const initialLedState = [
     [0, 0, 0, 0, 0],
@@ -128,7 +129,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         console.log("play-simulator");
         console.log(this.state.selected_file);
         sendMessage("play-simulator", {
-            active_device: "microbit",
+            active_device: CONSTANTS.DEVICE_NAME.MICROBIT,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
         });
