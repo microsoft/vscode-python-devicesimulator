@@ -90,7 +90,7 @@ class TestDisplay(object):
     @pytest.mark.parametrize(
         "value, expected_arr",
         [
-            ("!", TEST_IMAGES.EXCLAMATION_MARK),
+            ("!", "09000:09000:09000:00000:09000:"),
             ("A", TEST_IMAGES.A),
             (" ", TEST_IMAGES.BLANK),
             (6, TEST_IMAGES.SIX),
@@ -103,9 +103,11 @@ class TestDisplay(object):
         assert self.__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
-        expected = Image(TEST_IMAGES.BLANK)
-        value = TEST_IMAGES.QUESTION_MARK
-        self.display.show(value, clear=True)
+        expected = Image("00000:00000:00000:00000:00000:")
+        image = Image("09000:09000:09000:00000:09000:")
+        self.display.show(image, clear=True)
+        print(expected._Image__LED)
+        print(self.display._Display__image._Image__LED)
         assert self.__same_image(expected, self.display._Display__image)
 
     def test_show_iterable(self):
@@ -119,11 +121,11 @@ class TestDisplay(object):
             self.display.show(TestDisplay())
 
     def test_scroll(self):
-        self.display.scroll("tasdf")
+        self.display.scroll("m m!", wait=False)
 
     # Helpers
     def __is_clear(self):
-        i = Image()
+        i = Image("00000:00000:00000:00000:00000:")
         return self.__same_image(i, self.display._Display__image)
 
     def __same_image(self, i1, i2):
