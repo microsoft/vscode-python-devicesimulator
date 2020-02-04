@@ -273,8 +273,8 @@ class TestImage(object):
     @pytest.mark.parametrize(
         "const, actual",
         [
-            (Image.SNAKE, Image("99000:99099:09090:09990:00000:")),
-            (Image.PITCHFORK, Image("90909:90909:99999:00900:00900:")),
+            (Image.SNAKE, Image(CONSTANTS.IMAGE_PATTERNS["SNAKE"])),
+            (Image.PITCHFORK, Image(CONSTANTS.IMAGE_PATTERNS["PITCHFORK"])),
         ],
     )
     def test_image_constants(self, const, actual):
