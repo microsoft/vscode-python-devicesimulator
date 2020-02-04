@@ -25,7 +25,7 @@ const sendMessage = (type: string, state: any) => {
 interface IState {
     active_editors: string[];
     running_file: string;
-    leds: any;
+    leds: number[][];
     play_button: boolean;
     selected_file: string;
 }
@@ -53,7 +53,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             case "set-state":
                 console.log("Setting the state");
                 this.setState({
-                    leds: message.state.leds,
+                    leds: message.state.microbit.leds,
                 });
                 break;
             case "activate-play":
@@ -139,7 +139,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             selected_file: event.currentTarget.value,
         });
     }
-    protected refreshSimulatorClick = () => {};
+    protected refreshSimulatorClick = () => { };
     protected onMouseUp(button: HTMLElement, event: Event) {
         event.preventDefault();
         console.log("To implement onMouseUp");
