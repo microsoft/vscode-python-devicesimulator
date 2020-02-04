@@ -226,7 +226,6 @@ class TestImage(object):
         with pytest.raises(TypeError, match=err_message):
             target + value
 
-    # ADD - VALUEERROR
     @pytest.mark.parametrize(
         "target, value", [(Image(2, 3), Image(3, 3)), (Image(2, 1), Image(0, 0))]
     )

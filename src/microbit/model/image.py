@@ -156,8 +156,6 @@ class Image:
     # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
-        if self.read_only:
-            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
 
         for y in range(self.height()):
             for x in range(self.width()):
@@ -165,8 +163,6 @@ class Image:
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
-        if self.read_only:
-            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
 
         for y in range(self.height()):
             for x in range(self.width()):
@@ -174,9 +170,7 @@ class Image:
 
     # This transposes a certain area (w x h) on src onto the current image.
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
-        if self.read_only:
-            raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
-        elif not src.__valid_pos(x, y):
+        if not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
         for count_y in range(h):
@@ -360,7 +354,7 @@ class Image:
         for index_y in range(self.height()):
             ret_str += "\t" + self.__row_to_str(index_y) + "\n"
 
-        ret_str = ret_str + "')"
+        ret_str += "')"
 
         return ret_str
 
