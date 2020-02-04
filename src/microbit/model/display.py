@@ -40,7 +40,7 @@ class Display:
                         )
                         letters.append(Image(1, 5))
             appended_image = Display.__create_scroll_image(letters)
-            # Show the scrolled image a square at a time.
+            # Show the scrolled image one square at a time.
             for x in range(appended_image.width() - CONSTANTS.LED_WIDTH + 1):
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
