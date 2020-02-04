@@ -44,17 +44,22 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
+        console.log("microbitmessage");
+        console.log(JSON.stringify(message));
+
         switch (message.command) {
             case "reset-state":
                 console.log("Reset the state");
                 this.setState({
+                    ...this.state,
                     leds: initialLedState,
+                    play_button: false,
                 });
                 break;
             case "set-state":
                 console.log("Setting the state");
                 this.setState({
-                    leds: message.state.leds,
+                    leds: message.state.microbit.leds,
                 });
                 break;
             case "activate-play":
