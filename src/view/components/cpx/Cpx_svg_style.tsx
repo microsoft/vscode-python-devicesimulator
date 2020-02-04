@@ -57,7 +57,9 @@ export function rgbToHsl(
         }
 
         // Saturation
-        l > 50 ? s = 100 * (cDelta / (2 - maxAndMin)) : s = 100 * (cDelta / maxAndMin);
+        l > 50
+            ? (s = 100 * (cDelta / (2 - maxAndMin)))
+            : (s = 100 * (cDelta / maxAndMin));
     }
 
     return [Math.floor(h), Math.floor(s), Math.floor(l)];

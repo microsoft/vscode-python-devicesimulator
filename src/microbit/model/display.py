@@ -3,7 +3,7 @@ import threading
 
 from . import constants as CONSTANTS
 from .image import Image
-from . import code_processing_shim
+from .. import shim
 
 
 class Display:
@@ -27,19 +27,20 @@ class Display:
             for c in value:
                 if monospace:
                     if c == " ":
-                        letters.append(Image("000000:000000:000000:000000:000000"))
+                        letters.append(Image(6, 5))
                     else:
-                        letters.append(self.__get_image_from_char(c))
-                        letters.append(Image("0:0:0:0:0:"))
+                        letters.append(Display.__get_image_from_char(c))
+                        letters.append(Image(1, 5))
                 else:
                     if c == " ":
-                        letters.append(Image("000:000:000:000:000"))
+                        letters.append(Image(3, 5))
                     else:
                         letters.append(
-                            self.__strip_image(self.__get_image_from_char(c))
+                            Display.__strip_image(Display.__get_image_from_char(c))
                         )
-                        letters.append(Image("0:0:0:0:0:"))
-            appended_image = self.__create_scroll_image(letters)
+                        letters.append(Image(1, 5))
+            appended_image = Display.__create_scroll_image(letters)
+            # Show the scrolled image a square at a time.
             for x in range(appended_image.width() - CONSTANTS.LED_WIDTH + 1):
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
@@ -66,8 +67,9 @@ class Display:
                     chars = list(value)
                 else:
                     chars = list(str(value))
+
                 for c in chars:
-                    self.__image = self.__get_image_from_char(c)
+                    self.__image = Display.__get_image_from_char(c)
                     time.sleep(delay / 1000)
             else:
                 # Check if iterable
@@ -82,7 +84,7 @@ class Display:
                             0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                         )
                     elif isinstance(elem, str) and len(elem) == 1:
-                        self.__image = self.__get_image_from_char(elem)
+                        self.__image = Display.__get_image_from_char(elem)
                     # If elem is not char or image, break without iterating through rest of list
                     else:
                         break
@@ -99,7 +101,7 @@ class Display:
         self.__image.set_pixel(x, y, value)
 
     def clear(self):
-        self.__image = Image("00000:00000:00000:00000:00000:")
+        self.__image = Image()
 
     def on(self):
         self.__on = True
@@ -120,15 +122,17 @@ class Display:
         for i in range(CONSTANTS.LED_HEIGHT):
             print(self._Display__image._Image__LED[i])
 
-    def __get_image_from_char(self, c):
+    @staticmethod
+    def __get_image_from_char(c):
         # If c is not between the ASCII alphabet we cover, make it a question mark
         if ord(c) < CONSTANTS.ASCII_START or ord(c) > CONSTANTS.ASCII_END:
             c = "?"
         offset = (ord(c) - CONSTANTS.ASCII_START) * 5
         representative_bytes = CONSTANTS.ALPHABET[offset : offset + 5]
-        return Image(self.__convert_bytearray_to_image_array(representative_bytes))
+        return Image(Display.__convert_bytearray_to_image_str(representative_bytes))
 
-    def __strip_image(self, image):
+    @staticmethod
+    def __strip_image(image):
         # Find column that contains first lit pixel. Call that column number: c1.
         # Go reverse, and find number of columns seen until we see the last lit pixel. Call that number: c2.
         min_index = CONSTANTS.LED_WIDTH - 1
@@ -140,7 +144,8 @@ class Display:
                     max_index = max(max_index, index)
         return image.crop(min_index, 0, max_index - min_index + 1, CONSTANTS.LED_HEIGHT)
 
-    def __convert_bytearray_to_image_array(self, byte_array):
+    @staticmethod
+    def __convert_bytearray_to_image_str(byte_array):
         arr = []
         for b in byte_array:
             # Convert byte to binary
@@ -151,28 +156,35 @@ class Display:
                 # If there is a 1 at b, then the pixel at column b is lit
                 for bit in b_as_bits[::-1]:
                     if len(sub_arr) < 5:
-                        sub_arr.insert(0, int(bit) * CONSTANTS.MAX_BRIGHTNESS)
+                        sub_arr.insert(0, int(bit) * CONSTANTS.BRIGHTNESS_MAX)
                     else:
                         break
                 # Add 0s to the front until the list is 5 long
                 while len(sub_arr) < 5:
                     sub_arr.insert(0, 0)
             arr.append(sub_arr)
-        return arr
+        image_str = ""
+        for row in arr:
+            for elem in row:
+                image_str += str(elem)
+            image_str += ":"
+        return image_str
 
-    def __insert_blank_column(self, image):
+    @staticmethod
+    def __insert_blank_column(image):
         for row in image._Image__LED:
             row.append(0)
 
-    def __create_scroll_image(self, images):
-        blank_5x5_image = Image("00000:00000:00000:00000:00000:")
+    @staticmethod
+    def __create_scroll_image(images):
+        blank_5x5_image = Image()
         front_image = blank_5x5_image.crop(
             0, 0, CONSTANTS.LED_WIDTH - 1, CONSTANTS.LED_HEIGHT
         )
         images.insert(0, front_image)
 
-        scroll_image = self.__append_images(images)
-        end_image = Image("00000:00000:00000:00000:00000:")
+        scroll_image = Display.__append_images(images)
+        end_image = Image()
         # Insert columns of 0s until the ending is a 5x5 blank
         end_image.blit(
             scroll_image,
@@ -181,8 +193,8 @@ class Display:
             CONSTANTS.LED_WIDTH,
             CONSTANTS.LED_HEIGHT,
         )
-        while not self.__same_image(end_image, blank_5x5_image):
-            self.__insert_blank_column(scroll_image)
+        while not Display.__same_image(end_image, blank_5x5_image):
+            Display.__insert_blank_column(scroll_image)
             end_image.blit(
                 scroll_image,
                 scroll_image.width() - CONSTANTS.LED_WIDTH,
@@ -193,16 +205,8 @@ class Display:
 
         return scroll_image
 
-    def __same_image(self, i1, i2):
-        if i1.width() != i2.width() or i1.height() != i2.height():
-            return False
-        for y in range(i1.height()):
-            for x in range(i1.width()):
-                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
-                    return False
-        return True
-
-    def __append_images(self, images):
+    @staticmethod
+    def __append_images(images):
         width = 0
         height = 0
         for image in images:
@@ -214,3 +218,14 @@ class Display:
             res.blit(image, 0, 0, image.width(), image.height(), xdest=x_ind)
             x_ind += image.width()
         return res
+
+    @staticmethod
+    def __same_image(i1, i2):
+        if i1.width() != i2.width() or i1.height() != i2.height():
+            return False
+        for y in range(i1.height()):
+            for x in range(i1.width()):
+                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
+                    return False
+        return True
+

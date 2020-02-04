@@ -1,10 +1,15 @@
 import pytest
 
-from .. import constants as CONSTANTS
-from ..display import Display
-from ..image import Image
-from .. import code_processing_shim
-from . import image_constants as TEST_IMAGES
+from ..model import constants as CONSTANTS
+from ..model.display import Display
+from ..model.image import Image
+from .. import shim
+
+
+STR_A = "09900:90090:99990:90090:90090"
+STR_QUESTION_MARK = "09990:90009:00990:00000:00900"
+STR_EXCLAMATION_MARK = "09000:09000:09000:00000:09000:"
+STR_SIX = "00090:00900:09990:90009:09990"
 
 
 class TestDisplay(object):
@@ -68,7 +73,7 @@ class TestDisplay(object):
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
         self.display.show(img)
-        assert self.__same_image(img, self.display._Display__image)
+        assert Display._Display__same_image(img, self.display._Display__image)
 
     def test_show_different_size_image(self):
         img = Image(3, 7)
@@ -77,7 +82,7 @@ class TestDisplay(object):
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
         self.display.show(img)
-        assert self.__same_image(expected, self.display._Display__image)
+        assert Display._Display__same_image(expected, self.display._Display__image)
 
     def test_show_smaller_image(self):
         img = Image(2, 2)
@@ -85,59 +90,53 @@ class TestDisplay(object):
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
         self.display.show(img)
-        assert self.__same_image(expected, self.display._Display__image)
+        assert Display._Display__same_image(expected, self.display._Display__image)
 
     @pytest.mark.parametrize(
-        "value, expected_arr",
+        "value, expected_str",
         [
-            ("!", "09000:09000:09000:00000:09000:"),
-            ("A", TEST_IMAGES.A),
-            (" ", TEST_IMAGES.BLANK),
-            (6, TEST_IMAGES.SIX),
-            ("\x7F", TEST_IMAGES.QUESTION_MARK),  # Character is out of our ASCII range
+            ("!", STR_EXCLAMATION_MARK),
+            ("A", STR_A),
+            (" ", CONSTANTS.BLANK_5X5),
+            (6, STR_SIX),
+            ("\x7F", STR_QUESTION_MARK),  # Character is out of our ASCII range
         ],
     )
-    def test_show_char(self, value, expected_arr):
-        expected = Image(expected_arr)
+    def test_show_char(self, value, expected_str):
+        expected = Image(expected_str)
         self.display.show(value)
-        assert self.__same_image(expected, self.display._Display__image)
+        assert Display._Display__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
-        expected = Image("00000:00000:00000:00000:00000:")
-        image = Image("09000:09000:09000:00000:09000:")
+        expected = Image(CONSTANTS.BLANK_5X5)
+        image = Image(STR_EXCLAMATION_MARK)
         self.display.show(image, clear=True)
         print(expected._Image__LED)
         print(self.display._Display__image._Image__LED)
-        assert self.__same_image(expected, self.display._Display__image)
+        assert Display._Display__same_image(expected, self.display._Display__image)
 
     def test_show_iterable(self):
-        expected = Image(TEST_IMAGES.A)
-        value = [Image(TEST_IMAGES.EXCLAMATION_MARK), "A", "ab"]
+        expected = Image(STR_A)
+        value = [Image(STR_EXCLAMATION_MARK), "A", "ab"]
         self.display.show(value)
-        assert self.__same_image(expected, self.display._Display__image)
+        assert Display._Display__same_image(expected, self.display._Display__image)
 
     def test_show_non_iterable(self):
         with pytest.raises(TypeError):
             self.display.show(TestDisplay())
 
     def test_scroll(self):
-        self.display.scroll("m m!", wait=False)
+        self.display.scroll("n!")
 
     # Helpers
     def __is_clear(self):
-        i = Image("00000:00000:00000:00000:00000:")
-        return self.__same_image(i, self.display._Display__image)
-
-    def __same_image(self, i1, i2):
-        if i1.width() != i2.width() or i1.height() != i2.height():
-            return False
-        for y in range(i1.height()):
-            for x in range(i1.width()):
-                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
-                    return False
-        return True
+        i = Image(CONSTANTS.BLANK_5X5)
+        return Display._Display__same_image(i, self.display._Display__image)
 
     def __print(self, img):
         print("")
         for i in range(5):
             print(img._Image__LED[i])
+
+
+# pytest src/microbit/test/test_display.py --cov-report=html --cov=src/microbit

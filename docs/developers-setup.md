@@ -43,6 +43,12 @@
 
 6. Start running the extension locally by pressing F5 or going to VS Code Debug menu and select 'Start debugging'
 
+## Testing
+
+- To run unit tests, run the command: `npm run test` in the root level directory.
+    - You will need Pytest installed for the Python tests to run correctly
+- To run just the python tests, run the command: `pytest src` or `python -m pytest src` in the root level directory.
+
 ## Notes on how to use it
 
 - [Documentation to use the Extension](/docs/how-to-use.md)
@@ -51,6 +57,13 @@
 - In the new VS Code window, you can access the commands provided by the extension from the Commands Palette (Ctrl+Shift+P)
   listed as 'Device Simulator Express : ...'
 - If you change some files you'll need to run the 'npm run compile' command again and restart debugging
+
+## Formatting
+
+- We use prettier to format the Typescript and CSS files, and we use black to format the Python files.
+    - You will need to install them, if they are not installed already. This can be done by running the command: `npm install prettier` and `pip install black` respectively.
+- To check that your files are formatted correctly, run the command: `npm run check`.
+- To format your files correctly, run the command: `npm run format`.
 
 ## Repository Structure (important files)
 
