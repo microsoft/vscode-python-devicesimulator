@@ -1,5 +1,6 @@
 import pytest
 import threading
+from unittest import mock
 
 from ..model import constants as CONSTANTS
 from ..model.display import Display
@@ -109,12 +110,9 @@ class TestDisplay(object):
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
-        expected = Image(CONSTANTS.BLANK_5X5)
         image = Image(STR_EXCLAMATION_MARK)
         self.display.show(image, clear=True)
-        print(expected._Image__LED)
-        print(self.display._Display__image._Image__LED)
-        assert Image._Image__same_image(expected, self.display._Display__image)
+        assert self.__is_clear()
 
     def test_show_iterable(self):
         expected = Image(STR_A)
@@ -126,23 +124,25 @@ class TestDisplay(object):
         with pytest.raises(TypeError):
             self.display.show(TestDisplay())
 
+    def test_show_threaded(self):
+        threading.Thread = mock.Mock()
+        self.display.show("a", wait=False)
+        threading.Thread.assert_called_once()
+
     def test_scroll(self):
-        self.display.scroll("n!")
+        self.display.scroll("a b")
+        self.__is_clear()
+
+    def test_scroll_type_error(self):
+        with pytest.raises(TypeError):
+            self.display.scroll(["a", 1])
+
+    def test_scroll_threaded(self):
+        threading.Thread = mock.Mock()
+        self.display.scroll("test", wait=False)
+        threading.Thread.assert_called_once()
 
     # Helpers
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)
         return Image._Image__same_image(i, self.display._Display__image)
-
-    def __print(self, img):
-        print("")
-        for i in range(5):
-            print(img._Image__LED[i])
-
-
-# pytest src/microbit/test/test_display.py --cov-report=html --cov=src/microbit
-
-# Need tests for
-# threaded show
-# threaded scroll
-# normal scroll
