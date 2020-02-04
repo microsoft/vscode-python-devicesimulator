@@ -48,6 +48,9 @@ class UserInput(threading.Thread):
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event]
                     )
+                # tab_state = new_state.get(CONSTANTS.TAB_CHANGE_EVENT)
+                # if tab_state == "microbit":
+                # else:
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)

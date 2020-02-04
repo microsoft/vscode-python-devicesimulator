@@ -115,3 +115,5 @@ INDEX_ERR = "index out of bounds"
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UNSUPPORTED_ADD_TYPE = "unsupported types for __add__:"
 SAME_SIZE_ERR = "images must be the same size"
+
+TIME_DELAY = 0.03

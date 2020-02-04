@@ -17,7 +17,7 @@ EXPECTED_INPUT_EVENTS_CPX = [
     "touch",
 ]
 
-TAB_CHANGE_EVENT = "tab_current"
+TAB_CHANGE_EVENT = "active_device"
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
