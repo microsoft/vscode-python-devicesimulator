@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS } from "../constants";
-import "../styles/Simulator.css";
-import PlayLogo from "../svgs/play_svg";
-import StopLogo from "../svgs/stop_svg";
-import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import { CpxImage, updatePinTouch, updateSwitch } from "./cpx/CpxImage";
-import Dropdown from "./Dropdown";
-import ActionBar from "./simulator/ActionBar";
+import { CONSTANTS } from "../../constants";
+import "../../styles/Simulator.css";
+import PlayLogo from "../../svgs/play_svg";
+import StopLogo from "../../svgs/stop_svg";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
+import { CpxImage, updatePinTouch, updateSwitch } from "./CpxImage";
+import Dropdown from "../Dropdown";
+import ActionBar from "../simulator/ActionBar";
 
 interface ICpxState {
     pixels: number[][];
@@ -29,7 +29,7 @@ interface IState {
     cpx: ICpxState;
     play_button: boolean;
 }
-interface IMyProps {
+interface IProps {
     children?: any;
 }
 
@@ -65,8 +65,8 @@ const sendMessage = (type: string, state: any) => {
     vscode.postMessage({ command: type, text: state });
 };
 
-class Simulator extends React.Component<any, IState> {
-    constructor(props: IMyProps) {
+class Simulator extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             active_editors: [],

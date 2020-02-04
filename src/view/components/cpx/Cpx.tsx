@@ -1,5 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import * as React from "react";
-import Simulator from "../../components/Simulator";
+import Simulator from "./CpxSimulator";
 import { TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import ToolBar from "../../components/toolbar/ToolBar";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
