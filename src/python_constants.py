@@ -4,7 +4,7 @@
 CPX_DRIVE_NAME = "CIRCUITPY"
 
 ENABLE_TELEMETRY = "enable_telemetry"
-EXPECTED_INPUT_EVENTS = [
+EXPECTED_INPUT_EVENTS_CPX = [
     "button_a",
     "button_b",
     "switch",
@@ -16,6 +16,8 @@ EXPECTED_INPUT_EVENTS = [
     "motion_z",
     "touch",
 ]
+
+TAB_CHANGE_EVENT = "tab_current"
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
