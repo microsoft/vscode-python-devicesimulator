@@ -2,16 +2,39 @@ import * as React from "react";
 import { MicrobitImage } from "./MicrobitImage";
 
 const initialLedState = [
-    [0, 0, 8, 0, 8],
-    [0, 0, 8, 0, 8],
-    [0, 0, 8, 0, 8],
-    [0, 0, 8, 0, 8],
-    [0, 0, 8, 0, 8],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
 ];
 export class MicrobitSimulator extends React.Component<any, { leds: any }> {
     constructor() {
         super({});
         this.state = { leds: initialLedState };
+    }
+    handleMessage = (event: any): void => {
+        const message = event.data;
+        switch (message.command) {
+            case "reset-state":
+                console.log("Reset the state");
+                this.setState({
+                    leds: initialLedState,
+                });
+                break;
+            case "set-state":
+                console.log("Setting the state");
+                this.setState({
+                    leds: message.state.leds,
+                });
+                break;
+        }
+    };
+    componentDidMount() {
+        window.addEventListener("message", this.handleMessage);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("message", this.handleMessage);
     }
 
     render() {
