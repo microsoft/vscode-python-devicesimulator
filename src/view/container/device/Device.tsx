@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+
 import * as React from "react";
 import { Cpx } from "../../components/cpx/Cpx";
+import { Microbit } from "../../components/microbit/Microbit";
 import { DEVICE_LIST_KEY } from "../../constants";
 
 interface IProps {
@@ -30,7 +32,7 @@ const loadSelectedDevice = (currentSelectedDevice: string) => {
         case DEVICE_LIST_KEY.CPX:
             return <Cpx />;
         case DEVICE_LIST_KEY.MICROBIT:
-            return <p>Microbit to be implemented!</p>;
+            return <Microbit />;
         default:
             return null;
     }
