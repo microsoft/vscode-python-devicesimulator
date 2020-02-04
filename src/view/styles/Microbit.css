@@ -1,0 +1,151 @@
+svg.sim {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+svg.sim.grayscale {
+    -moz-filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+}
+.sim-button-group {
+    cursor: pointer;
+}
+.sim-button {
+    pointer-events: none;
+}
+.sim-board,
+.sim-display,
+sim-button {
+    fill: #111;
+}
+.sim-button-outer:hover {
+    stroke: grey;
+    stroke-width: 3px;
+}
+.sim-button-nut {
+    fill: #704a4a;
+    pointer-events: none;
+}
+.sim-button-nut:hover {
+    stroke: 1px solid #704a4a;
+}
+.sim-pin:hover {
+    stroke: #d4af37;
+    stroke-width: 2px;
+}
+.sim-pin-touch.touched:hover {
+    stroke: darkorange;
+}
+.sim-led-back:hover {
+    stroke: #a0a0a0;
+    stroke-width: 3px;
+}
+.sim-led:hover {
+    stroke: #ff7f7f;
+    stroke-width: 3px;
+}
+.sim-systemled {
+    fill: #333;
+    stroke: #555;
+    stroke-width: 1px;
+}
+.sim-light-level-button {
+    stroke: #fff;
+    stroke-width: 3px;
+}
+.sim-antenna {
+    stroke: #555;
+    stroke-width: 2px;
+}
+.sim-text {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 25px;
+    fill: #fff;
+    pointer-events: none;
+}
+.sim-text-pin {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 20px;
+    fill: #fff;
+    pointer-events: none;
+}
+.sim-thermometer {
+    stroke: #aaa;
+    stroke-width: 3px;
+}
+/* animations */
+.sim-flash {
+    animation-name: sim-flash-animation;
+    animation-duration: 0.1s;
+}
+@keyframes sim-flash-animation {
+    from {
+        fill: yellow;
+    }
+    to {
+        fill: default;
+    }
+}
+.sim-flash-stroke {
+    animation-name: sim-flash-stroke-animation;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in;
+}
+@keyframes sim-flash-stroke-animation {
+    from {
+        stroke: yellow;
+    }
+    to {
+        stroke: default;
+    }
+}
+/* wireframe */
+.sim-wireframe * {
+    fill: none;
+    stroke: black;
+}
+.sim-wireframe .sim-display,
+.sim-wireframe .sim-led,
+.sim-wireframe .sim-led-back,
+.sim-wireframe .sim-head,
+.sim-wireframe .sim-theme,
+.sim-wireframe .sim-button-group,
+.sim-wireframe .sim-button-label,
+.sim-wireframe .sim-button,
+.sim-wireframe .sim-text-pin {
+    visibility: hidden;
+}
+.sim-wireframe .sim-label {
+    stroke: none;
+    fill: #777;
+}
+.sim-label,
+.sim-button-label {
+    fill: #000;
+}
+.sim-wireframe .sim-board {
+    stroke-width: 2px;
+}
+*:focus {
+    outline: none;
+}
+*:focus .sim-button-outer,
+.sim-pin:focus,
+.sim-thermometer:focus,
+.sim-shake:focus,
+.sim-light-level-button:focus {
+    stroke: #4d90fe;
+    stroke-width: 5px !important;
+}
+.no-drag,
+.sim-text,
+.sim-text-pin {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
