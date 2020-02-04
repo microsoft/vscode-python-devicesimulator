@@ -146,11 +146,3 @@ class TestDisplay(object):
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)
         return Image._Image__same_image(i, self.display._Display__image)
-
-    def __print(self, img):
-        print("")
-        for i in range(5):
-            print(img._Image__LED[i])
-
-
-# pytest src/microbit/test/test_display.py --cov-report=html --cov=src/microbit
