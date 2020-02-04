@@ -3,8 +3,10 @@
 
 import json
 import sys
+from common import utils
 from . import constants as CONSTANTS
-from . import utils
+
+from . import utils_cpx
 from applicationinsights import TelemetryClient
 from . import constants as CONSTANTS
 from .telemetry import telemetry_py
@@ -19,7 +21,7 @@ class Pixel:
 
     def show(self):
         # Send the state to the extension so that React re-renders the Webview
-        utils.show(self.__state, self.__debug_mode)
+        utils_cpx.show(self.__state, self.__debug_mode)
 
     def __show_if_auto_write(self):
         if self.auto_write:

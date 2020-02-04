@@ -5,8 +5,10 @@ import json
 import sys
 import os
 import playsound
+from common import utils
 from .pixel import Pixel
-from . import utils
+
+from . import utils_cpx
 from . import constants as CONSTANTS
 from collections import namedtuple
 from applicationinsights import TelemetryClient
@@ -105,7 +107,7 @@ class Express:
         return self.__state["light"]
 
     def __show(self):
-        utils.show(self.__state, self.__debug_mode)
+        utils_cpx.show(self.__state, self.__debug_mode)
 
     def __touch(self, i):
         return self.__state["touch"][i - 1]
