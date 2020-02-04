@@ -1,3 +1,4 @@
+import copy
 import time
 import threading
 
@@ -117,20 +118,17 @@ class Display:
     # Helpers
 
     def __get_array(self):
-        return self.__image._Image__LED
-
-    def __print(self):
-        print("")
-        for i in range(CONSTANTS.LED_HEIGHT):
-            print(self._Display__image._Image__LED[i])
+        return copy.deepcopy(self.__image._Image__LED)
 
     @staticmethod
     def __get_image_from_char(c):
         # If c is not between the ASCII alphabet we cover, make it a question mark
         if ord(c) < CONSTANTS.ASCII_START or ord(c) > CONSTANTS.ASCII_END:
             c = "?"
-        offset = (ord(c) - CONSTANTS.ASCII_START) * 5
-        representative_bytes = CONSTANTS.ALPHABET[offset : offset + 5]
+        offset = (ord(c) - CONSTANTS.ASCII_START) * CONSTANTS.LED_WIDTH
+        representative_bytes = CONSTANTS.ALPHABET[
+            offset : offset + CONSTANTS.LED_HEIGHT
+        ]
         return Image(Display.__convert_bytearray_to_image_str(representative_bytes))
 
     # Removes columns that are not lit
@@ -145,6 +143,8 @@ class Display:
                     max_index = max(max_index, index)
         return image.crop(min_index, 0, max_index - min_index + 1, CONSTANTS.LED_HEIGHT)
 
+    # This method is different from Image's __bytes_to_array.
+    # This one requires a conversion from binary of the ALPHABET constant to an image.
     @staticmethod
     def __convert_bytearray_to_image_str(byte_array):
         arr = []
