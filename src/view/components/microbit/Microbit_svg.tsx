@@ -7,9 +7,11 @@ import * as React from "react";
 
 /* tslint:disable */
 
-export const MICROBIT_SVG = (
+export const MICROBIT_SVG =(ref:any)=> {
+    return(
     <svg
         id="microbit_svg"
+        ref={ref}
         version="1.0"
         viewBox="0 0 500 408"
         className="sim"
@@ -1534,4 +1536,4 @@ export const MICROBIT_SVG = (
         <g />
         <g />
     </svg>
-);
+)};
