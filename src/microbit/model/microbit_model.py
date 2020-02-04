@@ -19,5 +19,4 @@ class MicrobitModel:
         print(f"time. time: {time.time()}")
         return time.time() - self.__start_time
 
-        
 mb = MicrobitModel()
