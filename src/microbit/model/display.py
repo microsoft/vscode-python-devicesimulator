@@ -19,10 +19,10 @@ class Display:
             thread.start()
             return
         while True:
-            try:
+            if isinstance(value, (str, int, float)):
                 value = str(value)
-            except TypeError as e:
-                raise e
+            else:
+                raise TypeError(f"can't convert {type(value)} object to str implicitly")
             letters = []
             for c in value:
                 if monospace:
@@ -45,7 +45,6 @@ class Display:
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
-                self.__print()
                 time.sleep(delay / 1000)
             if not loop:
                 break
@@ -116,6 +115,9 @@ class Display:
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     # Helpers
+
+    def __get_array(self):
+        return self.__image._Image__LED
 
     def __print(self):
         print("")
