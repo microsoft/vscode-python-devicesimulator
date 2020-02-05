@@ -203,6 +203,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 }
 
                                 break;
+
                             case WebviewMessages.SENSOR_CHANGED:
                                 checkForTelemetry(message.text);
                                 console.log(`Sensor changed ${messageJson} \n`);
@@ -228,6 +229,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 break;
                             case WebviewMessages.SWITCH_DEVICE:
                                 switchDevice(message.text.active_device);
+                                killProcessIfRunning();
                                 break;
                             default:
                                 vscode.window.showInformationMessage(
