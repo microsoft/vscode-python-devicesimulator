@@ -2345,7 +2345,6 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
-              id="BTN_A_OUTER"
               rx={4}
               ry={4}
               width="56.2"
@@ -2402,7 +2401,6 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
-              id="BTN_B_OUTER"
               rx={4}
               ry={4}
               width="56.2"
@@ -2460,7 +2458,6 @@ exports[`Device component  should render correctly 1`] = `
             <rect
               className="sim-button-outer"
               height="56.2"
-              id="BTN_AB_OUTER"
               rx={4}
               ry={4}
               width="56.2"
