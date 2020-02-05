@@ -12,6 +12,7 @@ class Display:
     def __init__(self):
         self.__image = Image()
         self.__on = True
+        self.__blank_image = Image()
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         if not wait:
@@ -119,7 +120,10 @@ class Display:
     # Helpers
 
     def __get_array(self):
-        return copy.deepcopy(self.__image._Image__LED)
+        if self.is_on():
+            return copy.deepcopy(self.__image._Image__LED)
+        else:
+            return self.__blank_image._Image__LED
 
     @staticmethod
     def __get_image_from_char(c):

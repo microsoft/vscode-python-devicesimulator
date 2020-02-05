@@ -142,6 +142,26 @@ class TestDisplay(object):
         self.display.scroll("test", wait=False)
         threading.Thread.assert_called_once()
 
+    def test_get_array(self):
+        self.display.set_pixel(3, 3, 3)
+        self.display.off()
+        assert self.display._Display__get_array() == [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+        ]
+
+        self.display.on()
+        assert self.display._Display__get_array() == [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 3, 0],
+            [0, 0, 0, 0, 0],
+        ]
+
     # Helpers
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)
