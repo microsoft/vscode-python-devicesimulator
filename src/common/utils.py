@@ -7,18 +7,6 @@ import copy
 import time
 import sys
 
-
-def remove_leading_slashes(string):
-    string = string.lstrip("\\/")
-    return string
-
-
-def escape_if_OSX(file_name):
-    if sys.platform.startswith(CONSTANTS.MAC_OS):
-        file_name = file_name.replace(" ", "%20")
-    return file_name
-
-
 previous_state = {}
 
 
@@ -35,3 +23,15 @@ def show(state, device_name, debug_mode=False):
         message = {"type": "state", "data": json.dumps(state)}
         print(json.dumps(message) + "\0", end="", file=sys.__stdout__, flush=True)
         time.sleep(CONSTANTS.TIME_DELAY)
+
+
+def remove_leading_slashes(string):
+    string = string.lstrip("\\/")
+    return string
+
+
+def escape_if_OSX(file_name):
+    if sys.platform.startswith(CONSTANTS.MAC_OS):
+        file_name = file_name.replace(" ", "%20")
+    return file_name
+
