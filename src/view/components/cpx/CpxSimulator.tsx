@@ -90,6 +90,10 @@ class Simulator extends React.Component<IProps, IState> {
         const message = event.data; // The JSON data our extension sent
         console.log("cpxmessage");
         console.log(JSON.stringify(message));
+
+        if (message.active_device !== CONSTANTS.DEVICE_NAME.CPX) {
+            return;
+        }
         switch (message.command) {
             case "reset-state":
                 console.log("Clearing the state");

@@ -22,6 +22,10 @@ export const CONFIG = {
 };
 
 export const CONSTANTS = {
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "micro:bit",
+    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEPENDENCY_CHECKER: {
         PIP3: "pip3",
@@ -317,6 +321,7 @@ export enum TelemetryEventName {
     PERFORMANCE_NEW_FILE = "PERFORMANCE.NEW.FILE",
     PERFORMANCE_OPEN_SIMULATOR = "PERFORMANCE.OPEN.SIMULATOR",
 }
+export const DEFAULT_DEVICE = CONSTANTS.DEVICE_NAME.CPX;
 
 export enum WebviewMessages {
     BUTTON_PRESS = "button-press",
@@ -324,6 +329,7 @@ export enum WebviewMessages {
     SENSOR_CHANGED = "sensor-changed",
     REFRESH_SIMULATOR = "refresh-simulator",
     SLIDER_TELEMETRY = "slider-telemetry",
+    SWITCH_DEVICE = "switch-device",
 }
 
 // tslint:disable-next-line: no-namespace

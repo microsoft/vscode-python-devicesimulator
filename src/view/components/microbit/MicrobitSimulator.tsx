@@ -46,6 +46,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         const message = event.data;
         console.log("microbitmessage");
         console.log(JSON.stringify(message));
+        if (message.active_device !== CONSTANTS.DEVICE_NAME.MICROBIT) {
+            return;
+        }
 
         switch (message.command) {
             case "reset-state":

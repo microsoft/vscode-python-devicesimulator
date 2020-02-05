@@ -14,6 +14,7 @@ import {
     SERVER_INFO,
     TelemetryEventName,
     WebviewMessages,
+    DEFAULT_DEVICE,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -34,6 +35,8 @@ let debuggerCommunicationHandler: DebuggerCommunicationServer;
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+
+let currentActiveDevice: string = DEFAULT_DEVICE;
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
@@ -50,7 +53,11 @@ const setPathAndSendMessage = (
     if (currentPanel) {
         currentPanel.webview.postMessage({
             command: "current-file",
-            state: { running_file: newFilePath },
+            active_device: currentActiveDevice,
+
+            state: {
+                running_file: newFilePath,
+            },
         });
     }
 };
@@ -211,6 +218,9 @@ export async function activate(context: vscode.ExtensionContext) {
                             case WebviewMessages.SLIDER_TELEMETRY:
                                 handleSensorTelemetry(message.text);
                                 break;
+                            case WebviewMessages.SWITCH_DEVICE:
+                                switchDevice(message.text.active_device);
+                                break;
                             default:
                                 vscode.window.showInformationMessage(
                                     CONSTANTS.ERROR.UNEXPECTED_MESSAGE
@@ -336,7 +346,10 @@ export async function activate(context: vscode.ExtensionContext) {
         if (childProcess !== undefined) {
             if (currentPanel) {
                 console.info("Sending clearing state command");
-                currentPanel.webview.postMessage({ command: "reset-state" });
+                currentPanel.webview.postMessage({
+                    command: "reset-state",
+                    active_device: currentActiveDevice,
+                });
             }
             // TODO: We need to check the process was correctly killed
             childProcess.kill();
@@ -443,7 +456,10 @@ export async function activate(context: vscode.ExtensionContext) {
             }
 
             // Activate the run webview button
-            currentPanel.webview.postMessage({ command: "activate-play" });
+            currentPanel.webview.postMessage({
+                command: "activate-play",
+                active_device: currentActiveDevice,
+            });
 
             childProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
@@ -481,6 +497,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                             `Process state output = ${messageToWebview.data}`
                                         );
                                         currentPanel.webview.postMessage({
+                                            active_device: currentActiveDevice,
                                             command: "set-state",
                                             state: JSON.parse(
                                                 messageToWebview.data
@@ -530,6 +547,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (currentPanel) {
                     console.log("Sending clearing state command");
                     currentPanel.webview.postMessage({
+                        active_device: currentActiveDevice,
                         command: "reset-state",
                     });
                 }
@@ -832,6 +850,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (currentPanel) {
                     debuggerCommunicationHandler.setWebview(currentPanel);
                     currentPanel.webview.postMessage({
+                        currentActiveDevice: currentActiveDevice,
                         command: "activate-play",
                     });
                 }
@@ -861,7 +880,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 debuggerCommunicationHandler = undefined;
             }
             if (currentPanel) {
-                currentPanel.webview.postMessage({ command: "reset-state" });
+                currentPanel.webview.postMessage({
+                    command: "reset-state",
+                    active_device: currentActiveDevice,
+                });
             }
         }
     });
@@ -1049,6 +1071,11 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
+}
+function switchDevice(deviceName: string) {
+    console.log("switch-device");
+    console.log(deviceName);
+    currentActiveDevice = deviceName;
 }
 
 // this method is called when your extension is deactivated
