@@ -62,7 +62,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             case "set-state":
                 console.log("Setting the state");
                 this.setState({
-                    leds: message.state.microbit.leds,
+                    leds: message.state.leds,
                 });
                 break;
             case "activate-play":

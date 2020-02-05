@@ -37,6 +37,7 @@ let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 
 let currentActiveDevice: string = DEFAULT_DEVICE;
+
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
@@ -503,13 +504,19 @@ export async function activate(context: vscode.ExtensionContext) {
                                         console.log(
                                             `Process state output = ${messageToWebview.data}`
                                         );
-                                        currentPanel.webview.postMessage({
-                                            active_device: currentActiveDevice,
-                                            command: "set-state",
-                                            state: JSON.parse(
-                                                messageToWebview.data
-                                            ),
-                                        });
+                                        const messageData = JSON.parse(
+                                            messageToWebview.data
+                                        );
+                                        if (
+                                            messageData.device_name ===
+                                            currentActiveDevice
+                                        ) {
+                                            currentPanel.webview.postMessage({
+                                                active_device: currentActiveDevice,
+                                                command: "set-state",
+                                                state: messageData,
+                                            });
+                                        }
                                         break;
 
                                     case "print":
@@ -938,7 +945,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
