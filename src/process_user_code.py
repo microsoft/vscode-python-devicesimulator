@@ -48,9 +48,6 @@ class UserInput(threading.Thread):
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event]
                     )
-                # tab_state = new_state.get(CONSTANTS.TAB_CHANGE_EVENT)
-                # if tab_state == "microbit":
-                # else:
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
@@ -99,6 +96,7 @@ def execute_user_code(abs_path_to_code_file):
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
 telemetry_state = json.loads(sys.argv[2])
+
 telemetry_py._Telemetry__enable_telemetry = telemetry_state.get(
     CONSTANTS.ENABLE_TELEMETRY, True
 )

@@ -4,7 +4,7 @@ import threading
 from . import constants as CONSTANTS
 from .image import Image
 from .. import shim
-from .. import utils_microbit
+from common import utils
 import copy
 
 
@@ -219,9 +219,6 @@ class Display:
 
     def update_client(self):
         sendable_json = {
-            "active_device" : "microbit",
-            "microbit": {
-                "leds": copy.deepcopy(self.__get_array())
-            }
+            "leds": copy.deepcopy(self.__get_array())
         }
-        utils_microbit.show(sendable_json, self.__debug_mode)
+        utils.show(sendable_json, CONSTANTS.MICROBIT, self.__debug_mode)

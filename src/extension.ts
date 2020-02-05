@@ -194,6 +194,13 @@ export async function activate(context: vscode.ExtensionContext) {
                                 } else {
                                     killProcessIfRunning();
                                 }
+
+                                if (childProcess) {
+                                    childProcess.stdin.write(
+                                        messageJson + "\n"
+                                    );
+                                }
+
                                 break;
                             case WebviewMessages.SENSOR_CHANGED:
                                 checkForTelemetry(message.text);
@@ -931,7 +938,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
+        undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,

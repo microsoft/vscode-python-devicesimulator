@@ -26,7 +26,7 @@ const sendMessage = (type: string, state: any) => {
 interface IState {
     active_editors: string[];
     running_file: string;
-    leds: any;
+    leds: number[][];
     play_button: boolean;
     selected_file: string;
 }
