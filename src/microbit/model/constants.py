@@ -1,3 +1,5 @@
+MICROBIT = "micro:bit"
+
 # string arguments for constructor
 BLANK_5X5 = "00000:00000:00000:00000:00000:"
 

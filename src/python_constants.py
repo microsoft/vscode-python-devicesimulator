@@ -17,8 +17,6 @@ EXPECTED_INPUT_EVENTS_CPX = [
     "touch",
 ]
 
-TAB_CHANGE_EVENT = "active_device"
-
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 ERROR_TRACEBACK = "\n\tTraceback of code execution : \n"
@@ -44,3 +42,7 @@ UTF_FORMAT = "utf-8"
 WINDOWS_OS = "win32"
 
 DEFAULT_PORT = "5577"
+
+CPX = "CPX"
+
+MICROBIT = "micro:bit"

@@ -7,6 +7,8 @@ ASSIGN_PIXEL_TYPE_ERROR = (
 
 BRIGHTNESS_RANGE_ERROR = "The brightness value should be a number between 0 and 1."
 
+CPX = "cpx"
+
 INDEX_ERROR = (
     "The index is not a valid number, you can access the Neopixels from 0 to 9."
 )
