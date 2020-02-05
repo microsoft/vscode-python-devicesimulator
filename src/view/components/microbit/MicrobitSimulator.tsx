@@ -44,8 +44,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-        console.log("microbitmessage");
-        console.log(JSON.stringify(message));
         if (message.active_device !== CONSTANTS.DEVICE_NAME.MICROBIT) {
             return;
         }
@@ -134,8 +132,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         );
     }
     protected togglePlayClick = () => {
-        console.log("play-simulator");
-        console.log(this.state.selected_file);
         sendMessage("play-simulator", {
             active_device: CONSTANTS.DEVICE_NAME.MICROBIT,
             selected_file: this.state.selected_file,

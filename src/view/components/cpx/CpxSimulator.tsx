@@ -88,9 +88,6 @@ class Simulator extends React.Component<IProps, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
-        console.log("cpxmessage");
-        console.log(JSON.stringify(message));
-
         if (message.active_device !== CONSTANTS.DEVICE_NAME.CPX) {
             return;
         }
@@ -301,8 +298,6 @@ class Simulator extends React.Component<IProps, IState> {
             this.handleClick(element, active);
             element.focus();
         }
-        console.log("onKeyEvent");
-        console.log(this.state);
     }
     protected onMouseDown(button: HTMLElement, event: Event) {
         event.preventDefault();
