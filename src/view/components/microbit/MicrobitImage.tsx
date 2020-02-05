@@ -14,11 +14,18 @@ interface IProps {
     eventTriggers: EventTriggers;
     leds: number[][];
 }
+interface IState {
+    microbitImageReference: React.RefObject<SVGSVGElement>;
+}
 
 // Displays the SVG and call necessary svg modification.
-export class MicrobitImage extends React.Component<IProps, any> {
+export class MicrobitImage extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+        this.state = { microbitImageReference: React.createRef() };
+    }
     componentDidMount() {
-        const svgElement = window.document.getElementById("microbit_svg");
+        const svgElement = this.state.microbitImageReference.current;
         if (svgElement) {
             setupAllButtons(this.props.eventTriggers);
             updateAllLeds(this.props.leds);
@@ -28,7 +35,7 @@ export class MicrobitImage extends React.Component<IProps, any> {
         updateAllLeds(this.props.leds);
     }
     render() {
-        return MICROBIT_SVG;
+        return MICROBIT_SVG(this.state.microbitImageReference);
     }
 }
 const setupButton = (
@@ -56,13 +63,10 @@ const setupAllButtons = (eventTriggers: EventTriggers) => {
     });
 };
 const updateAllLeds = (leds: number[][]) => {
-    console.log(leds);
     for (let j = 0; j < leds.length; j++) {
         for (let i = 0; i < leds[0].length; i++) {
             const ledElement = document.getElementById(`LED-${j}-${i}`);
             if (ledElement) {
-                console.log(ledElement.id);
-
                 setupLed(ledElement, leds[i][j]);
             }
         }
