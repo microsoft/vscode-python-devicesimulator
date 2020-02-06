@@ -76,7 +76,7 @@ class Image:
 
     def __init__(self, *args, **kwargs):
 
-        # Depending on the nu__mber of arguments
+        # Depending on the number of arguments
         # in constructor, it treat args differently.
 
         if len(args) == 0:
@@ -200,7 +200,7 @@ class Image:
 
             return res
 
-    # This multiplies image by nu__mber (if other factor is not a nu__mber, it throws an error).
+    # This multiplies image by number (if other factor is not a nu__mber, it throws an error).
     def __mul__(self, other):
         try:
             float_val = float(other)
