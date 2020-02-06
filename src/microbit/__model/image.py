@@ -75,7 +75,6 @@ class Image:
     # https://microbit-micropython.readthedocs.io/en/latest/image.html
 
     def __init__(self, *args, **kwargs):
-
         # Depending on the number of arguments
         # in constructor, it treat args differently.
 
