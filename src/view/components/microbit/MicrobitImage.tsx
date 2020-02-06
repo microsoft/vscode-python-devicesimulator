@@ -6,61 +6,69 @@ import "../../styles/Microbit.css";
 import { MICROBIT_SVG } from "./Microbit_svg";
 
 interface EventTriggers {
-    onMouseUp: (button: HTMLElement, event: Event) => void;
-    onMouseDown: (button: HTMLElement, event: Event) => void;
-    onMouseLeave: (button: HTMLElement, event: Event) => void;
+    onMouseUp: (button: HTMLElement, event: Event, buttonKey: string) => void;
+    onMouseDown: (button: HTMLElement, event: Event, buttonKey: string) => void;
+    onMouseLeave: (
+        button: HTMLElement,
+        event: Event,
+        buttonKey: string
+    ) => void;
 }
 interface IProps {
     eventTriggers: EventTriggers;
     leds: number[][];
 }
 interface IState {
-    microbitImageReference: React.RefObject<SVGSVGElement>;
+    microbitImageRef: React.RefObject<SVGSVGElement>;
+    buttonRefs: { [key: string]: React.RefObject<SVGRectElement> };
 }
 
 // Displays the SVG and call necessary svg modification.
 export class MicrobitImage extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { microbitImageReference: React.createRef() };
+        this.state = {
+            microbitImageRef: React.createRef(),
+            buttonRefs: {
+                BTN_A: React.createRef(),
+                BTN_B: React.createRef(),
+                BTN_AB: React.createRef(),
+            },
+        };
     }
     componentDidMount() {
-        const svgElement = this.state.microbitImageReference.current;
+        const svgElement = this.state.microbitImageRef.current;
         if (svgElement) {
-            setupAllButtons(this.props.eventTriggers);
             updateAllLeds(this.props.leds);
+            setupAllButtons(this.props.eventTriggers, this.state.buttonRefs);
         }
     }
     componentDidUpdate() {
         updateAllLeds(this.props.leds);
     }
     render() {
-        return MICROBIT_SVG(this.state.microbitImageReference);
+        return MICROBIT_SVG(this.state.microbitImageRef, this.state.buttonRefs);
     }
 }
 const setupButton = (
     buttonElement: HTMLElement,
-    eventTriggers: EventTriggers
+    eventTriggers: EventTriggers,
+    key: string
 ) => {
     buttonElement.onmousedown = e => {
-        eventTriggers.onMouseDown(buttonElement, e);
+        eventTriggers.onMouseDown(buttonElement, e, key);
     };
     buttonElement.onmouseup = e => {
-        eventTriggers.onMouseUp(buttonElement, e);
+        eventTriggers.onMouseUp(buttonElement, e, key);
     };
-
     buttonElement.onmouseleave = e => {
-        eventTriggers.onMouseLeave(buttonElement, e);
+        eventTriggers.onMouseLeave(buttonElement, e, key);
     };
 };
-const setupAllButtons = (eventTriggers: EventTriggers) => {
-    const buttonsId = ["BTN_A_OUTER", "BTN_B_OUTER", "BTN_AB_OUTER"];
-    buttonsId.forEach(buttonId => {
-        const buttonElement = window.document.getElementById(buttonId);
-        if (buttonElement) {
-            setupButton(buttonElement, eventTriggers);
-        }
-    });
+const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {
+    for (let [key, ref] of Object.entries(buttonRefs)) {
+        setupButton(ref.current, eventTriggers, key);
+    }
 };
 const updateAllLeds = (leds: number[][]) => {
     for (let j = 0; j < leds.length; j++) {

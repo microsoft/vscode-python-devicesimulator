@@ -147,16 +147,16 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected refreshSimulatorClick = () => {
         sendMessage("refresh-simulator", true);
     };
-    protected onMouseUp(button: HTMLElement, event: Event) {
+    protected onMouseUp(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
-        console.log("To implement onMouseUp");
+        console.log(`To implement onMouseUp on ${key}`);
     }
-    protected onMouseDown(button: HTMLElement, event: Event) {
+    protected onMouseDown(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
-        console.log("To implement onMouseDown");
+        console.log(`To implement onMouseDown ${key}`);
     }
-    protected onMouseLeave(button: HTMLElement, event: Event) {
+    protected onMouseLeave(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
-        console.log("To implement onMouseLeave");
+        console.log(`To implement onMouseLeave ${key}`);
     }
 }

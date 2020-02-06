@@ -7,7 +7,10 @@ import * as React from "react";
 
 /* tslint:disable */
 
-export const MICROBIT_SVG = (svgRef: React.RefObject<SVGSVGElement>) => (
+export const MICROBIT_SVG = (
+    svgRef: React.RefObject<SVGSVGElement>,
+    buttonRefs: { [key: string]: React.RefObject<SVGRectElement> }
+) => (
     <svg
         id="microbit_svg"
         ref={svgRef}
@@ -1402,7 +1405,7 @@ export const MICROBIT_SVG = (svgRef: React.RefObject<SVGSVGElement>) => (
             >
                 <rect
                     className="sim-button-outer"
-                    id="BTN_A_OUTER"
+                    ref={buttonRefs.BTN_A}
                     x="25.9"
                     y="176.4"
                     rx={4}
@@ -1441,7 +1444,7 @@ export const MICROBIT_SVG = (svgRef: React.RefObject<SVGSVGElement>) => (
             >
                 <rect
                     className="sim-button-outer"
-                    id="BTN_B_OUTER"
+                    ref={buttonRefs.BTN_B}
                     x="418.1"
                     y="176.4"
                     rx={4}
@@ -1490,7 +1493,7 @@ export const MICROBIT_SVG = (svgRef: React.RefObject<SVGSVGElement>) => (
             >
                 <rect
                     className="sim-button-outer"
-                    id="BTN_AB_OUTER"
+                    ref={buttonRefs.BTN_AB}
                     x={417}
                     y={250}
                     rx={4}
