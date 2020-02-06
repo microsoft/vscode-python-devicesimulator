@@ -6,7 +6,7 @@ import { PivotItem } from "office-ui-fabric-react";
 import * as React from "react";
 import "./App.css";
 import { Tab } from "./components/tab/Tab";
-import CONSTANTS, { DEVICE_LIST_KEY } from "./constants";
+import { DEVICE_LIST_KEY } from "./constants";
 import { Device } from "./container/device/Device";
 
 interface vscode {
@@ -45,20 +45,10 @@ class App extends React.Component<{}, IState> {
     handleDeviceChange = (item?: PivotItem) => {
         if (item && item.props && item.props.itemKey) {
             this.setState({ currentDevice: item.props.itemKey });
-            //TO REFACTOR
-            switch (item.props.itemKey) {
-                case DEVICE_LIST_KEY.CPX:
-                    sendMessage("switch-device", {
-                        active_device: CONSTANTS.DEVICE_NAME.CPX,
-                    });
-                    break;
 
-                case DEVICE_LIST_KEY.MICROBIT:
-                    sendMessage("switch-device", {
-                        active_device: CONSTANTS.DEVICE_NAME.MICROBIT,
-                    });
-                    break;
-            }
+            sendMessage("switch-device", {
+                active_device: item.props.itemKey,
+            });
         }
     };
 }

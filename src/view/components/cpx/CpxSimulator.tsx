@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS, DEVICE_LIST_KEY } from "../../constants";
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
@@ -85,7 +85,7 @@ class Simulator extends React.Component<{}, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
-        if (message.active_device !== CONSTANTS.DEVICE_NAME.CPX) {
+        if (message.active_device !== DEVICE_LIST_KEY.CPX) {
             return;
         }
         switch (message.command) {

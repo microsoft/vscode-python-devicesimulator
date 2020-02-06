@@ -46,8 +46,8 @@ export const CONSTANTS = {
     TOOLBAR_INFO: `Explore what's on the board:`,
 };
 export enum DEVICE_LIST_KEY {
-    CPX = "cpx",
-    MICROBIT = "microbit",
+    CPX = "CPX",
+    MICROBIT = "micro:bit",
 }
 
 export default CONSTANTS;

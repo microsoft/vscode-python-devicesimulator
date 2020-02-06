@@ -4,7 +4,7 @@ import ActionBar from "../simulator/ActionBar";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import Dropdown from "../Dropdown";
-import CONSTANTS from "../../constants";
+import CONSTANTS, { DEVICE_LIST_KEY } from "../../constants";
 
 const initialLedState = [
     [0, 0, 0, 0, 0],
@@ -44,7 +44,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-        if (message.active_device !== CONSTANTS.DEVICE_NAME.MICROBIT) {
+        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
             return;
         }
 
