@@ -52,7 +52,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             case "reset-state":
                 console.log("Reset the state");
                 this.setState({
-                    ...this.state,
                     leds: initialLedState,
                     play_button: false,
                 });
@@ -65,7 +64,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 break;
             case "activate-play":
                 this.setState({
-                    ...this.state,
                     play_button: !this.state.play_button,
                 });
                 break;
@@ -75,14 +73,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     message.state.activePythonEditors
                 );
                 this.setState({
-                    ...this.state,
                     active_editors: message.state.activePythonEditors,
                 });
                 break;
             case "current-file":
                 console.log("Setting current file", message.state.running_file);
                 this.setState({
-                    ...this.state,
                     running_file: message.state.running_file,
                 });
                 break;
@@ -140,7 +136,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     };
     protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
         this.setState({
-            ...this.state,
             selected_file: event.currentTarget.value,
         });
     }
