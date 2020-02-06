@@ -12,7 +12,6 @@ def sleep(n):
     microbit.sleep(1000)
     will pause the execution for one second.  ``n`` can be an integer or
     a floating point number.
-    :param n: amount of milliseconds
     """
     __mb.sleep(n)
 
