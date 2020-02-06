@@ -29,9 +29,6 @@ interface IState {
     cpx: ICpxState;
     play_button: boolean;
 }
-interface IProps {
-    children?: any;
-}
 
 const DEFAULT_CPX_STATE: ICpxState = {
     brightness: 1.0,
@@ -65,9 +62,9 @@ const sendMessage = (type: string, state: any) => {
     vscode.postMessage({ command: type, text: state });
 };
 
-class Simulator extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+class Simulator extends React.Component<{}, IState> {
+    constructor() {
+        super({});
         this.state = {
             active_editors: [],
             cpx: DEFAULT_CPX_STATE,
