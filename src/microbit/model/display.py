@@ -181,10 +181,9 @@ class Display:
         if self.is_on():
             leds = copy.deepcopy(self.__image._Image__LED)
         else:
-            leds = self.__blank_image._Image__LED        
+            leds = self.__blank_image._Image__LED
         self.__lock.release()
         return leds
-            
 
     @staticmethod
     def __get_image_from_char(c):

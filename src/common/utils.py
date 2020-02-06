@@ -22,7 +22,7 @@ def create_message(state, device_name):
 
 def send_to_simulator(state, device_name):
     global previous_state
-    
+
     message = create_message(state, device_name)
 
     if state != previous_state:
