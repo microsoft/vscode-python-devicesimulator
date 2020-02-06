@@ -1,5 +1,5 @@
 import pytest
-from ..model.button import Button
+from ..__model.button import Button
 
 
 class TestButton(object):

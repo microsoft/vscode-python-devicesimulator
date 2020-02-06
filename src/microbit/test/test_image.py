@@ -1,7 +1,7 @@
 import pytest
-from ..model.image import Image
+from ..__model.image import Image
 
-from ..model import constants as CONSTANTS
+from ..__model import constants as CONSTANTS
 
 
 class TestImage(object):

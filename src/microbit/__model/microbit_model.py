@@ -18,4 +18,4 @@ class MicrobitModel:
         return time.time() - self.__start_time
 
 
-mb = MicrobitModel()
+__mb = MicrobitModel()
