@@ -3,6 +3,7 @@ from .__model.microbit_model import __mb
 
 button_a = __mb.button_a
 button_b = __mb.button_b
+display = __mb.display
 
 
 def sleep(n):
