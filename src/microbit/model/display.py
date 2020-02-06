@@ -17,7 +17,6 @@ class Display:
         self.__blank_image = Image()
 
         self.__image_lock = threading.Lock()
-        self.__thread_identifier_lock = threading.Lock()
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         if not wait:
@@ -28,9 +27,9 @@ class Display:
             return
 
         # Set current_pid to the thread's identifier
-        self.__thread_identifier_lock.acquire()
+        self.__image_lock.acquire()
         self.__current_pid = threading.get_ident()
-        self.__thread_identifier_lock.release()
+        self.__image_lock.release()
 
         if isinstance(value, (str, int, float)):
             value = str(value)
@@ -67,15 +66,14 @@ class Display:
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
-                self.__image_lock.release()
 
                 # If show or scroll is called again, there will be a different pid and break
-                self.__thread_identifier_lock.acquire()
                 if self.__current_pid != threading.get_ident():
+                    self.__image_lock.release()
                     break
-                self.__thread_identifier_lock.release()
+                self.__image_lock.release()
 
-                time.sleep(delay / 1000)
+                Display.sleep_ms(delay)
 
             if not loop:
                 break
@@ -89,9 +87,9 @@ class Display:
             return
 
         # Set current_pid to the thread's identifier
-        self.__thread_identifier_lock.acquire()
+        self.__image_lock.acquire()
         self.__current_pid = threading.get_ident()
-        self.__thread_identifier_lock.release()
+        self.__image_lock.release()
 
         images = []
         use_delay = False
@@ -126,16 +124,15 @@ class Display:
             for image in images:
                 self.__image_lock.acquire()
                 self.__image = image
-                self.__image_lock.release()
 
                 # If show or scroll is called again, there will be a different pid and break
-                self.__thread_identifier_lock.acquire()
                 if self.__current_pid != threading.get_ident():
+                    self.__image_lock.release()
                     break
-                self.__thread_identifier_lock.release()
+                self.__image_lock.release()
 
                 if use_delay:
-                    time.sleep(delay / 1000)
+                    Display.sleep_ms(delay)
 
             if not loop:
                 break
@@ -143,13 +140,20 @@ class Display:
             self.clear()
 
     def get_pixel(self, x, y):
-        return self.__image.get_pixel(x, y)
+        self.__image_lock.acquire()
+        pixel = self.__image.get_pixel(x, y)
+        self.__image_lock.release()
+        return pixel
 
     def set_pixel(self, x, y, value):
+        self.__image_lock.acquire()
         self.__image.set_pixel(x, y, value)
+        self.__image_lock.release()
 
     def clear(self):
+        self.__image_lock.acquire()
         self.__image = Image()
+        self.__image_lock.release()
 
     def on(self):
         self.__on = True
@@ -167,7 +171,10 @@ class Display:
 
     def __get_array(self):
         if self.is_on():
-            return copy.deepcopy(self.__image._Image__LED)
+            self.__image_lock.acquire()
+            leds = copy.deepcopy(self.__image._Image__LED)
+            self.__image_lock.release()
+            return leds
         else:
             return self.__blank_image._Image__LED
 
@@ -254,3 +261,7 @@ class Display:
             )
 
         return scroll_image
+
+    @staticmethod
+    def sleep_ms(ms):
+        time.sleep(ms / 1000)
