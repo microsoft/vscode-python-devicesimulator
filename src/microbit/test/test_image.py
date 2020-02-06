@@ -3,6 +3,7 @@ from ..model.image import Image
 
 from ..model import constants as CONSTANTS
 
+
 class TestImage(object):
     def setup_method(self):
         self.image = Image()

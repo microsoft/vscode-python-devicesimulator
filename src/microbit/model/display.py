@@ -76,7 +76,7 @@ class Display:
                     self.__image = Display.__get_image_from_char(c)
                     self.update_client()
                     time.sleep(delay / 1000)
-                
+
             else:
                 # Check if iterable
                 try:
@@ -97,7 +97,7 @@ class Display:
                     else:
                         break
                     time.sleep(delay / 1000)
-                
+
             if not loop:
                 break
         if clear:
@@ -216,9 +216,6 @@ class Display:
 
         return scroll_image
 
-
     def update_client(self):
-        sendable_json = {
-            "leds": copy.deepcopy(self.__get_array())
-        }
+        sendable_json = {"leds": copy.deepcopy(self.__get_array())}
         utils.show(sendable_json, CONSTANTS.MICROBIT, self.__debug_mode)
