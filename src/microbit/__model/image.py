@@ -200,7 +200,7 @@ class Image:
 
             return res
 
-    # This multiplies image by number (if other factor is not a nu__mber, it throws an error).
+    # This multiplies image by number (if other factor is not a number, it throws an error).
     def __mul__(self, other):
         try:
             float_val = float(other)
