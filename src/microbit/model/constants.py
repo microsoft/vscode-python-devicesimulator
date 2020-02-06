@@ -101,6 +101,8 @@ ALPHABET = b"\x00\x00\x00\x00\x00\x08\x08\x08\x00\x08\x0a\x4a\x40\x00\x00\x0a\x5
 # We support ASCII characters between these indexes on the microbit
 ASCII_START = 32
 ASCII_END = 126
+SPACE_BETWEEN_LETTERS_WIDTH = 1
+WHITESPACE_WIDTH = 3
 
 # numerical LED values
 LED_HEIGHT = 5
