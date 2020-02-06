@@ -112,42 +112,6 @@ class Image:
     # https://microbit-micropython.readthedocs.io/en/latest/image.html
 
     def __init__(self, *args, **kwargs):
-        """
-        If ``string`` is used, it has to consist of digits 0-9 arranged into
-        lines, describing the image, for example::
-
-            image = Image("90009:"
-                        "09090:"
-                        "00900:"
-                        "09090:"
-                        "90009")
-
-        will create a 5×5 image of an X. The end of a line is indicated by a colon.
-        It's also possible to use a newline (\n) to indicate the end of a line
-        like this::
-
-            image = Image("90009\n"
-                        "09090\n"
-                        "00900\n"
-                        "09090\n"
-                        "90009")
-
-        The other form creates an empty image with ``width`` columns and
-        ``height`` rows. Optionally ``buffer`` can be an array of
-        ``width``×``height`` integers in range 0-9 to initialize the image::
-
-            Image(2, 2, b'\x08\x08\x08\x08')
-
-        or::
-
-            Image(2, 2, bytearray([9,9,9,9]))
-
-        Will create a 2 x 2 pixel image at full brightness.
-
-        .. note::
-
-            Keyword arguments cannot be passed to ``buffer``.
-        """
         # Depending on the number of arguments
         # in constructor, it treat args differently.
 
