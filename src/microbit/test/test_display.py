@@ -2,10 +2,9 @@ import pytest
 import threading
 from unittest import mock
 
-from ..model import constants as CONSTANTS
-from ..model.display import Display
-from ..model.image import Image
-from .. import shim
+from ..__model import constants as CONSTANTS
+from ..__model.display import Display
+from ..__model.image import Image
 
 
 STR_A = "09900:90090:99990:90090:90090"

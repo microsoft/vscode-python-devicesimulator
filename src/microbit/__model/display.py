@@ -4,7 +4,6 @@ import threading
 
 from . import constants as CONSTANTS
 from .image import Image
-from .. import shim
 
 
 class Display:
