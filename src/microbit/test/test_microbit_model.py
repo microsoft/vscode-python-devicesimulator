@@ -21,4 +21,6 @@ class TestMicrobitModel(object):
         self.__mb._MicrobitModel__start_time = mock_start_time
         time.time = mock.MagicMock(return_value=mock_end_time)
         print(time.time())
-        assert mock_end_time - mock_start_time == pytest.approx(self.__mb.running_time())
+        assert mock_end_time - mock_start_time == pytest.approx(
+            self.__mb.running_time()
+        )
