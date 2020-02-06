@@ -3,7 +3,7 @@ import sys
 from unittest import mock
 
 from .. import constants as CONSTANTS
-from common import utils
+from .. import utils
 
 
 class TestUtils(object):
