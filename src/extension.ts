@@ -10,11 +10,11 @@ import {
     CONFIG,
     CONSTANTS,
     CPX_CONFIG_FILE,
+    DEFAULT_DEVICE,
     DialogResponses,
     SERVER_INFO,
     TelemetryEventName,
     WebviewMessages,
-    DEFAULT_DEVICE,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -866,7 +866,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (currentPanel) {
                     debuggerCommunicationHandler.setWebview(currentPanel);
                     currentPanel.webview.postMessage({
-                        currentActiveDevice: currentActiveDevice,
+                        currentActiveDevice,
                         command: "activate-play",
                     });
                 }

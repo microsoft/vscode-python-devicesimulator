@@ -1,10 +1,10 @@
 import * as React from "react";
-import { MicrobitImage } from "./MicrobitImage";
-import ActionBar from "../simulator/ActionBar";
+import CONSTANTS, { DEVICE_LIST_KEY } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import Dropdown from "../Dropdown";
-import CONSTANTS, { DEVICE_LIST_KEY } from "../../constants";
+import ActionBar from "../simulator/ActionBar";
+import { MicrobitImage } from "./MicrobitImage";
 
 const initialLedState = [
     [0, 0, 0, 0, 0],

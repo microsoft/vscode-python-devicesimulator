@@ -6,10 +6,10 @@ import { CONSTANTS, DEVICE_LIST_KEY } from "../../constants";
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
-import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
-import { CpxImage, updatePinTouch, updateSwitch } from "./CpxImage";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
+import { CpxImage, updatePinTouch, updateSwitch } from "./CpxImage";
 
 interface ICpxState {
     pixels: number[][];
