@@ -60,7 +60,7 @@ class TestDisplay(object):
         img.set_pixel(0, 1, 9)
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(img, self.display._Display__image)
 
     def test_show_different_size_image(self):
@@ -69,7 +69,7 @@ class TestDisplay(object):
         img.set_pixel(2, 6, 9)  # Will not be on display
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_smaller_image(self):
@@ -77,7 +77,7 @@ class TestDisplay(object):
         img.set_pixel(1, 1, 9)
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     @pytest.mark.parametrize(
@@ -92,18 +92,18 @@ class TestDisplay(object):
     )
     def test_show_char(self, value, expected_str):
         expected = Image(expected_str)
-        self.display.show(value)
+        self.display.show(value, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
         image = Image(STR_EXCLAMATION_MARK)
-        self.display.show(image, clear=True)
+        self.display.show(image, delay=0, clear=True)
         assert self.__is_clear()
 
     def test_show_iterable(self):
         expected = Image(STR_A)
         value = [Image(STR_EXCLAMATION_MARK), "A", "ab"]
-        self.display.show(value)
+        self.display.show(value, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_non_iterable(self):
@@ -121,12 +121,12 @@ class TestDisplay(object):
     # Should change these threaded tests to test behaviour in the future
     def test_show_threaded(self):
         threading.Thread = mock.Mock()
-        self.display.show("a", wait=False)
+        self.display.show("a", delay=0, wait=False)
         threading.Thread.assert_called_once()
 
     def test_scroll_threaded(self):
         threading.Thread = mock.Mock()
-        self.display.scroll("test", wait=False)
+        self.display.scroll("test", delay=0, wait=False)
         threading.Thread.assert_called_once()
 
     def test_get_array(self):
@@ -152,8 +152,8 @@ class TestDisplay(object):
     # The second show call should immedaitely stop the first show call.
     # Therefore the final result of display should be 6.
     def test_async_tests(self):
-        self.display.show("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", wait=False)
-        self.display.show("6")
+        self.display.show("MMMMMMMMMMMMMM", delay=100, wait=False)
+        self.display.show("6", delay=0)
         assert Image._Image__same_image(Image(STR_SIX), self.display._Display__image)
 
     # Helpers

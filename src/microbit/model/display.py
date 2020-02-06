@@ -17,15 +17,15 @@ class Display:
         self.__current_pid = None
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
-        # Set current_pid to the thread's identifier
-        self.__current_pid = threading.get_ident()
-
         if not wait:
             thread = threading.Thread(
                 target=self.scroll, args=(value, delay, True, loop, monospace)
             )
             thread.start()
             return
+
+        # Set current_pid to the thread's identifier
+        self.__current_pid = threading.get_ident()
 
         if isinstance(value, (str, int, float)):
             value = str(value)
@@ -69,15 +69,15 @@ class Display:
                 break
 
     def show(self, value, delay=400, wait=True, loop=False, clear=False):
-        # Set current_pid to the thread's identifier
-        self.__current_pid = threading.get_ident()
-
         if not wait:
             thread = threading.Thread(
                 target=self.show, args=(value, delay, True, loop, clear)
             )
             thread.start()
             return
+
+        # Set current_pid to the thread's identifier
+        self.__current_pid = threading.get_ident()
 
         images = []
         use_delay = False
