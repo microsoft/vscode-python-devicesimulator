@@ -218,4 +218,4 @@ class Display:
 
     def update_client(self):
         sendable_json = {"leds": copy.deepcopy(self.__get_array())}
-        utils.show(sendable_json, CONSTANTS.MICROBIT, self.__debug_mode)
+        utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
