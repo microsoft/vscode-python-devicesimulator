@@ -62,11 +62,13 @@ class Display:
 
         while True:
             # Show the scrolled image one square at a time.
-            self.__image_lock.acquire()
             for x in range(appended_image.width() - CONSTANTS.LED_WIDTH + 1):
+                self.__image_lock.acquire()
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
+                self.__image_lock.release()
+
                 # If show or scroll is called again, there will be a different pid and break
                 self.__thread_identifier_lock.acquire()
                 if self.__current_pid != threading.get_ident():
@@ -74,7 +76,6 @@ class Display:
                 self.__thread_identifier_lock.release()
 
                 time.sleep(delay / 1000)
-            self.__image_lock.release()
 
             if not loop:
                 break
@@ -122,18 +123,20 @@ class Display:
             use_delay = True
 
         while True:
-            self.__image_lock.acquire()
             for image in images:
+                self.__image_lock.acquire()
                 self.__image = image
-                if use_delay:
-                    time.sleep(delay / 1000)
+                self.__image_lock.release()
+
                 # If show or scroll is called again, there will be a different pid and break
                 self.__thread_identifier_lock.acquire()
                 if self.__current_pid != threading.get_ident():
                     break
                 self.__thread_identifier_lock.release()
-            self.__image_lock.release()
-            
+
+                if use_delay:
+                    time.sleep(delay / 1000)
+
             if not loop:
                 break
         if clear:
