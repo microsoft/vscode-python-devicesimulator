@@ -216,6 +216,24 @@ class Image:
 
         return res
 
+    def __repr__(self):
+        ret_str = "Image('"
+        for index_y in range(self.height()):
+            ret_str += self.__row_to_str(index_y)
+
+        ret_str += "')"
+
+        return ret_str
+
+    def __str__(self):
+        ret_str = "Image('\n"
+        for index_y in range(self.height()):
+            ret_str += "\t" + self.__row_to_str(index_y) + "\n"
+
+        ret_str += "')"
+
+        return ret_str
+
     # HELPER FUNCTIONS
 
     # This create 2D array of off LEDs with
@@ -338,23 +356,29 @@ class Image:
 
         return new_str
 
-    def __repr__(self):
-        ret_str = "Image('"
-        for index_y in range(self.height()):
-            ret_str += self.__row_to_str(index_y)
+    @staticmethod
+    def __append_images(images):
+        width = 0
+        height = 0
+        for image in images:
+            width += image.width()
+            height = max(height, image.height())
+        res = Image(width, height)
+        x_ind = 0
+        for image in images:
+            res.blit(image, 0, 0, image.width(), image.height(), xdest=x_ind)
+            x_ind += image.width()
+        return res
 
-        ret_str += "')"
-
-        return ret_str
-
-    def __str__(self):
-        ret_str = "Image('\n"
-        for index_y in range(self.height()):
-            ret_str += "\t" + self.__row_to_str(index_y) + "\n"
-
-        ret_str += "')"
-
-        return ret_str
+    @staticmethod
+    def __same_image(i1, i2):
+        if i1.width() != i2.width() or i1.height() != i2.height():
+            return False
+        for y in range(i1.height()):
+            for x in range(i1.width()):
+                if i1.get_pixel(x, y) != i2.get_pixel(x, y):
+                    return False
+        return True
 
 
 # This is for generating functions like Image.HEART
