@@ -2,6 +2,7 @@ import pytest
 import threading
 from unittest import mock
 
+from common import utils
 from ..model import constants as CONSTANTS
 from ..model.display import Display
 from ..model.image import Image
@@ -17,21 +18,17 @@ STR_SIX = "00090:00900:09990:90009:09990"
 class TestDisplay(object):
     def setup_method(self):
         self.display = Display()
+        utils.send_to_simulator = mock.Mock()
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_get_pixel(self, x, y, brightness):
-        self.display._Display__image._Image__LED[y][x] = brightness
+    def test_set_and_get_pixel(self, x, y, brightness):
+        self.display.set_pixel(x, y, brightness)
         assert brightness == self.display.get_pixel(x, y)
 
     @pytest.mark.parametrize("x, y", [(5, 0), (0, -1), (0, 5)])
     def test_get_pixel_error(self, x, y):
         with pytest.raises(ValueError, match=CONSTANTS.INDEX_ERR):
             self.display.get_pixel(x, y)
-
-    @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
-    def test_set_pixel(self, x, y, brightness):
-        self.display.set_pixel(x, y, brightness)
-        assert brightness == self.display._Display__image._Image__LED[y][x]
 
     @pytest.mark.parametrize(
         "x, y, brightness, err_msg",
@@ -46,27 +43,18 @@ class TestDisplay(object):
             self.display.set_pixel(x, y, brightness)
 
     def test_clear(self):
-        self.display._Display__image._Image__LED[2][3] = 7
-        self.display._Display__image._Image__LED[3][4] = 6
-        self.display._Display__image._Image__LED[4][4] = 9
+        self.display.set_pixel(2, 3, 7)
+        self.display.set_pixel(3, 4, 6)
+        self.display.set_pixel(4, 4, 9)
         assert not self.__is_clear()
         self.display.clear()
         assert self.__is_clear()
 
-    def test_on(self):
-        self.display._Display__on = False
+    def test_on_off(self):
         self.display.on()
-        assert self.display._Display__on
-
-    def test_off(self):
-        self.display._Display__on = True
+        assert self.display.is_on()
         self.display.off()
-        assert False == self.display._Display__on
-
-    @pytest.mark.parametrize("on", [True, False])
-    def test_is_on(self, on):
-        self.display._Display__on = on
-        assert on == self.display.is_on()
+        assert not self.display.is_on()
 
     def test_show_one_image(self):
         img = Image()
@@ -74,7 +62,7 @@ class TestDisplay(object):
         img.set_pixel(0, 1, 9)
         img.set_pixel(0, 2, 7)
         img.set_pixel(2, 2, 6)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(img, self.display._Display__image)
 
     def test_show_different_size_image(self):
@@ -83,7 +71,7 @@ class TestDisplay(object):
         img.set_pixel(2, 6, 9)  # Will not be on display
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_smaller_image(self):
@@ -91,7 +79,7 @@ class TestDisplay(object):
         img.set_pixel(1, 1, 9)
         expected = Image(5, 5)
         expected.set_pixel(1, 1, 9)
-        self.display.show(img)
+        self.display.show(img, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     @pytest.mark.parametrize(
@@ -106,28 +94,23 @@ class TestDisplay(object):
     )
     def test_show_char(self, value, expected_str):
         expected = Image(expected_str)
-        self.display.show(value)
+        self.display.show(value, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_char_with_clear(self):
         image = Image(STR_EXCLAMATION_MARK)
-        self.display.show(image, clear=True)
+        self.display.show(image, delay=0, clear=True)
         assert self.__is_clear()
 
     def test_show_iterable(self):
         expected = Image(STR_A)
         value = [Image(STR_EXCLAMATION_MARK), "A", "ab"]
-        self.display.show(value)
+        self.display.show(value, delay=0)
         assert Image._Image__same_image(expected, self.display._Display__image)
 
     def test_show_non_iterable(self):
         with pytest.raises(TypeError):
             self.display.show(TestDisplay())
-
-    def test_show_threaded(self):
-        threading.Thread = mock.Mock()
-        self.display.show("a", wait=False)
-        threading.Thread.assert_called_once()
 
     def test_scroll(self):
         self.display.scroll("a b")
@@ -137,10 +120,43 @@ class TestDisplay(object):
         with pytest.raises(TypeError):
             self.display.scroll(["a", 1])
 
+    # Should change these threaded tests to test behaviour in the future
+    def test_show_threaded(self):
+        threading.Thread = mock.Mock()
+        self.display.show("a", delay=0, wait=False)
+        threading.Thread.assert_called_once()
+
     def test_scroll_threaded(self):
         threading.Thread = mock.Mock()
-        self.display.scroll("test", wait=False)
+        self.display.scroll("test", delay=0, wait=False)
         threading.Thread.assert_called_once()
+
+    def test_get_array(self):
+        self.display.set_pixel(3, 3, 3)
+        self.display.off()
+        assert self.display._Display__get_array() == [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+        ]
+
+        self.display.on()
+        assert self.display._Display__get_array() == [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 3, 0],
+            [0, 0, 0, 0, 0],
+        ]
+
+    # The second show call should immedaitely stop the first show call.
+    # Therefore the final result of display should be 6.
+    def test_async_tests(self):
+        self.display.show("MMMMMMMMMMMMMM", delay=100, wait=False)
+        self.display.show("6", delay=0)
+        assert Image._Image__same_image(Image(STR_SIX), self.display._Display__image)
 
     # Helpers
     def __is_clear(self):

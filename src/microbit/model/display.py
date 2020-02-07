@@ -1,18 +1,23 @@
+import copy
 import time
 import threading
+from common import utils
 
 from . import constants as CONSTANTS
 from .image import Image
 from .. import shim
-from common import utils
-import copy
 
 
 class Display:
+    # The implementation based off of https://github.com/bbcmicrobit/micropython/blob/master/docs/display.rst.
+
     def __init__(self):
         self.__image = Image()
         self.__on = True
-        self.__debug_mode = False
+        self.__current_pid = None
+        self.__blank_image = Image()
+
+        self.__lock = threading.Lock()
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         if not wait:
@@ -21,35 +26,58 @@ class Display:
             )
             thread.start()
             return
-        while True:
-            if isinstance(value, (str, int, float)):
-                value = str(value)
+
+        # Set current_pid to the thread's identifier
+        self.__lock.acquire()
+        self.__current_pid = threading.get_ident()
+        self.__lock.release()
+
+        if isinstance(value, (str, int, float)):
+            value = str(value)
+        else:
+            raise TypeError(f"can't convert {type(value)} object to str implicitly")
+
+        letters = []
+        for c in value:
+            if monospace:
+                letters.append(Display.__get_image_from_char(c))
+                letters.append(
+                    Image(CONSTANTS.SPACE_BETWEEN_LETTERS_WIDTH, CONSTANTS.LED_HEIGHT)
+                )
             else:
-                raise TypeError(f"can't convert {type(value)} object to str implicitly")
-            letters = []
-            for c in value:
-                if monospace:
-                    if c == " ":
-                        letters.append(Image(6, CONSTANTS.LED_HEIGHT))
-                    else:
-                        letters.append(Display.__get_image_from_char(c))
-                        letters.append(Image(1, CONSTANTS.LED_HEIGHT))
+                if c == " ":
+                    letters.append(
+                        Image(CONSTANTS.WHITESPACE_WIDTH, CONSTANTS.LED_HEIGHT)
+                    )
                 else:
-                    if c == " ":
-                        letters.append(Image(3, CONSTANTS.LED_HEIGHT))
-                    else:
-                        letters.append(
-                            Display.__strip_image(Display.__get_image_from_char(c))
+                    letters.append(
+                        Display.__strip_unlit_columns(Display.__get_image_from_char(c))
+                    )
+                    letters.append(
+                        Image(
+                            CONSTANTS.SPACE_BETWEEN_LETTERS_WIDTH, CONSTANTS.LED_HEIGHT,
                         )
-                        letters.append(Image(1, CONSTANTS.LED_HEIGHT))
-            appended_image = Display.__create_scroll_image(letters)
+                    )
+        appended_image = Display.__create_scroll_image(letters)
+
+        while True:
             # Show the scrolled image one square at a time.
             for x in range(appended_image.width() - CONSTANTS.LED_WIDTH + 1):
+                self.__lock.acquire()
+
+                # If show or scroll is called again, there will be a different pid and break
+                if self.__current_pid != threading.get_ident():
+                    self.__lock.release()
+                    break
+
                 self.__image.blit(
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
-                self.update_client()
-                time.sleep(delay / 1000)
+                self.__lock.release()
+                self.__update_client()
+
+                Display.sleep_ms(delay)
+
             if not loop:
                 break
 
@@ -60,43 +88,56 @@ class Display:
             )
             thread.start()
             return
-        while True:
-            if isinstance(value, Image):
-                self.__image = value.crop(
-                    0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
-                )
-                self.update_client()
-            elif isinstance(value, (str, int, float)):
-                if isinstance(value, str):
-                    chars = list(value)
+
+        # Set current_pid to the thread's identifier
+        self.__lock.acquire()
+        self.__current_pid = threading.get_ident()
+        self.__lock.release()
+
+        images = []
+        use_delay = False
+        if isinstance(value, Image):
+            images.append(value.crop(0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT))
+        elif isinstance(value, (str, int, float)):
+            chars = list(str(value))
+            for c in chars:
+                images.append(Display.__get_image_from_char(c))
+            if len(chars) > 1:
+                use_delay = True
+        else:
+            # Check if iterable
+            try:
+                _ = iter(value)
+            except TypeError as e:
+                raise e
+
+            for elem in value:
+                if isinstance(elem, Image):
+                    images.append(
+                        elem.crop(0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT)
+                    )
+                elif isinstance(elem, str) and len(elem) == 1:
+                    images.append(Display.__get_image_from_char(elem))
+                # If elem is not char or image, break without iterating through rest of list
                 else:
-                    chars = list(str(value))
+                    break
+            use_delay = True
 
-                for c in chars:
-                    self.__image = Display.__get_image_from_char(c)
-                    self.update_client()
-                    time.sleep(delay / 1000)
+        while True:
+            for image in images:
+                self.__lock.acquire()
 
-            else:
-                # Check if iterable
-                try:
-                    _ = iter(value)
-                except TypeError as e:
-                    raise e
+                # If show or scroll is called again, there will be a different pid and break
+                if self.__current_pid != threading.get_ident():
+                    self.__lock.release()
+                    break
 
-                for elem in value:
-                    if isinstance(elem, Image):
-                        self.__image = elem.crop(
-                            0, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
-                        )
-                        self.update_client()
-                    elif isinstance(elem, str) and len(elem) == 1:
-                        self.__image = Display.__get_image_from_char(elem)
-                        self.update_client()
-                    # If elem is not char or image, break without iterating through rest of list
-                    else:
-                        break
-                    time.sleep(delay / 1000)
+                self.__image = image
+                self.__lock.release()
+                self.__update_client()
+
+                if use_delay:
+                    Display.sleep_ms(delay)
 
             if not loop:
                 break
@@ -104,13 +145,22 @@ class Display:
             self.clear()
 
     def get_pixel(self, x, y):
-        return self.__image.get_pixel(x, y)
+        self.__lock.acquire()
+        pixel = self.__image.get_pixel(x, y)
+        self.__lock.release()
+        return pixel
 
     def set_pixel(self, x, y, value):
+        self.__lock.acquire()
         self.__image.set_pixel(x, y, value)
+        self.__lock.release()
+        self.__update_client()
 
     def clear(self):
+        self.__lock.acquire()
         self.__image = Image()
+        self.__lock.release()
+        self.__update_client()
 
     def on(self):
         self.__on = True
@@ -127,25 +177,28 @@ class Display:
     # Helpers
 
     def __get_array(self):
-        return self.__image._Image__LED
-
-    def __print(self):
-        print("")
-        for i in range(CONSTANTS.LED_HEIGHT):
-            print(self._Display__image._Image__LED[i])
+        self.__lock.acquire()
+        if self.is_on():
+            leds = copy.deepcopy(self.__image._Image__LED)
+        else:
+            leds = self.__blank_image._Image__LED
+        self.__lock.release()
+        return leds
 
     @staticmethod
     def __get_image_from_char(c):
         # If c is not between the ASCII alphabet we cover, make it a question mark
         if ord(c) < CONSTANTS.ASCII_START or ord(c) > CONSTANTS.ASCII_END:
             c = "?"
-        offset = (ord(c) - CONSTANTS.ASCII_START) * 5
-        representative_bytes = CONSTANTS.ALPHABET[offset : offset + 5]
+        offset = (ord(c) - CONSTANTS.ASCII_START) * CONSTANTS.LED_WIDTH
+        representative_bytes = CONSTANTS.ALPHABET[
+            offset : offset + CONSTANTS.LED_HEIGHT
+        ]
         return Image(Display.__convert_bytearray_to_image_str(representative_bytes))
 
     # Removes columns that are not lit
     @staticmethod
-    def __strip_image(image):
+    def __strip_unlit_columns(image):
         min_index = CONSTANTS.LED_WIDTH - 1
         max_index = 0
         for row in image._Image__LED:
@@ -155,6 +208,8 @@ class Display:
                     max_index = max(max_index, index)
         return image.crop(min_index, 0, max_index - min_index + 1, CONSTANTS.LED_HEIGHT)
 
+    # This method is different from Image's __bytes_to_array.
+    # This one requires a conversion from binary of the ALPHABET constant to an image.
     @staticmethod
     def __convert_bytearray_to_image_str(byte_array):
         arr = []
@@ -189,24 +244,22 @@ class Display:
     @staticmethod
     def __create_scroll_image(images):
         blank_5x5_image = Image()
-        front_image = blank_5x5_image.crop(
-            0, 0, CONSTANTS.LED_WIDTH - 1, CONSTANTS.LED_HEIGHT
-        )
-        images.insert(0, front_image)
+        front_of_scroll_image = Image(4, 5)
+        images.insert(0, front_of_scroll_image)
 
         scroll_image = Image._Image__append_images(images)
-        end_image = Image()
+        end_of_scroll_image = Image()
         # Insert columns of 0s until the ending is a 5x5 blank
-        end_image.blit(
+        end_of_scroll_image.blit(
             scroll_image,
             scroll_image.width() - CONSTANTS.LED_WIDTH,
             0,
             CONSTANTS.LED_WIDTH,
             CONSTANTS.LED_HEIGHT,
         )
-        while not Image._Image__same_image(end_image, blank_5x5_image):
+        while not Image._Image__same_image(end_of_scroll_image, blank_5x5_image):
             Display.__insert_blank_column(scroll_image)
-            end_image.blit(
+            end_of_scroll_image.blit(
                 scroll_image,
                 scroll_image.width() - CONSTANTS.LED_WIDTH,
                 0,
@@ -216,6 +269,10 @@ class Display:
 
         return scroll_image
 
-    def update_client(self):
-        sendable_json = {"leds": copy.deepcopy(self.__get_array())}
-        utils.show(sendable_json, CONSTANTS.MICROBIT, self.__debug_mode)
+    def __update_client(self):
+        sendable_json = {"leds": self.__get_array()}
+        utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
+
+    @staticmethod
+    def sleep_ms(ms):
+        time.sleep(ms / 1000)
