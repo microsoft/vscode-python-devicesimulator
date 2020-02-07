@@ -32,7 +32,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             active_editors: [],
             running_file: "",
         };
-        this.onSelectBlur = this.onSelectBlur.bind(this);
     }
     handleMessage = (event: any): void => {
         const message = event.data;
@@ -88,7 +87,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                         lastChosen={this.state.running_file}
                         width={300}
                         textOptions={this.state.active_editors}
-                        onBlur={this.onSelectBlur}
+                        onBlur={this.onSelectFile}
                     />
                 </div>
                 <div className="microbit-container">
@@ -116,7 +115,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             state: !this.state.play_button,
         });
     };
-    protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
+    protected onSelectFile(event: React.FocusEvent<HTMLSelectElement>) {
         this.setState({
             selected_file: event.currentTarget.value,
         });
