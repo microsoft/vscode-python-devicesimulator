@@ -33,12 +33,14 @@ export class MicrobitImage extends React.Component<IProps, IState> {
     componentDidMount() {
         const svgElement = this.svgRef.current;
         if (svgElement) {
-            updateAllLeds(this.props.leds);
+            updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
         }
     }
     componentDidUpdate() {
-        updateAllLeds(this.props.leds);
+        if (this.svgRef.current) {
+            updateAllLeds(this.props.leds, this.svgRef.current.getLeds());
+        }
     }
     render() {
         return <MicrobitSvg ref={this.svgRef} />;
@@ -64,16 +66,19 @@ const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {
         setupButton(ref.current, eventTriggers, key);
     }
 };
-const updateAllLeds = (leds: number[][]) => {
+const updateAllLeds = (
+    leds: number[][],
+    ledRefs: React.RefObject<SVGRectElement>[][]
+) => {
     for (let j = 0; j < leds.length; j++) {
         for (let i = 0; i < leds[0].length; i++) {
-            const ledElement = document.getElementById(`LED-${j}-${i}`);
+            const ledElement = ledRefs[j][i].current;
             if (ledElement) {
                 setupLed(ledElement, leds[i][j]);
             }
         }
     }
 };
-const setupLed = (ledElement: HTMLElement, brightness: number) => {
+const setupLed = (ledElement: SVGRectElement, brightness: number) => {
     ledElement.style.opacity = (brightness / 10).toString();
 };

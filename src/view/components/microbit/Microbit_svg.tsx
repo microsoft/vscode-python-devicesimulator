@@ -8,7 +8,20 @@ interface IRefObject{
     [key: string]: React.RefObject<SVGRectElement> 
 }
 /* tslint:disable */
+
+const N_LED_COLUMN =5;
+const N_LED_ROW = 5;
 export class MicrobitSvg extends React.Component{
+    constructor(props: Readonly<{}>){
+        super(props);
+        for (let j =0; j<N_LED_ROW; j++){
+            const led_row:React.RefObject<SVGRectElement>[] =[]
+            for (let i=0; i<N_LED_COLUMN;i++){
+                led_row.push(React.createRef())
+            }
+            this.ledRefs.push(led_row)
+        }
+    }
     private svgRef : React.RefObject<SVGSVGElement> = React.createRef();
 
     private buttonRefs: IRefObject = {
@@ -16,16 +29,20 @@ export class MicrobitSvg extends React.Component{
         "BTN_B": React.createRef(),
         "BTN_AB": React.createRef(),
     }
+
+    private ledRefs:React.RefObject<SVGRectElement>[][] =[]
     public getSvgRef():React.RefObject<SVGSVGElement>{
         return this.svgRef;
     }
     public getButtons(): IRefObject{
         return this.buttonRefs
     }
+    public getLeds():React.RefObject<SVGRectElement>[][] {
+        return this.ledRefs
+    }
     render(){
         return(
 <svg
-        id="microbit_svg"
         ref={this.svgRef}
         version="1.0"
         viewBox="0 0 500 408"
@@ -493,7 +510,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-0-0"
+                ref={this.ledRefs[0][0]}
                 className="sim-led"
                 x={152}
                 y={111}
@@ -520,7 +537,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-1-0"
+                ref={this.ledRefs[1][0]}
                 className="sim-led"
                 x={198}
                 y={111}
@@ -547,7 +564,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-2-0"
+                ref={this.ledRefs[2][0]}
                 className="sim-led"
                 x={244}
                 y={111}
@@ -574,7 +591,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-3-0"
+                ref={this.ledRefs[3][0]}
                 className="sim-led"
                 x={290}
                 y={111}
@@ -601,7 +618,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-4-0"
+                ref={this.ledRefs[4][0]}
                 className="sim-led"
                 x={336}
                 y={111}
@@ -628,7 +645,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-0-1"
+                ref={this.ledRefs[0][1]}
                 className="sim-led"
                 x={152}
                 y={155}
@@ -655,7 +672,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-1-1"
+                ref={this.ledRefs[1][1]}
                 className="sim-led"
                 x={198}
                 y={155}
@@ -682,7 +699,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-2-1"
+                ref={this.ledRefs[2][1]}
                 className="sim-led"
                 x={244}
                 y={155}
@@ -709,7 +726,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-3-1"
+                ref={this.ledRefs[3][1]}
                 className="sim-led"
                 x={290}
                 y={155}
@@ -736,7 +753,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-4-1"
+                ref={this.ledRefs[4][1]}
                 className="sim-led"
                 x={336}
                 y={155}
@@ -763,7 +780,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-0-2"
+                ref={this.ledRefs[0][2]}
                 className="sim-led"
                 x={152}
                 y={199}
@@ -790,7 +807,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-1-2"
+                ref={this.ledRefs[1][2]}
                 className="sim-led"
                 x={198}
                 y={199}
@@ -817,7 +834,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-2-2"
+                ref={this.ledRefs[2][2]}
                 className="sim-led"
                 x={244}
                 y={199}
@@ -844,7 +861,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-3-2"
+                ref={this.ledRefs[3][2]}
                 className="sim-led"
                 x={290}
                 y={199}
@@ -871,7 +888,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-4-2"
+                ref={this.ledRefs[4][2]}
                 className="sim-led"
                 x={336}
                 y={199}
@@ -898,7 +915,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-0-3"
+                ref={this.ledRefs[0][3]}
                 className="sim-led"
                 x={152}
                 y={243}
@@ -925,7 +942,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-1-3"
+                ref={this.ledRefs[1][3]}
                 className="sim-led"
                 x={198}
                 y={243}
@@ -952,7 +969,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-2-3"
+                ref={this.ledRefs[2][3]}
                 className="sim-led"
                 x={244}
                 y={243}
@@ -979,7 +996,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-3-3"
+                ref={this.ledRefs[3][3]}
                 className="sim-led"
                 x={290}
                 y={243}
@@ -1006,7 +1023,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-4-3"
+                ref={this.ledRefs[4][3]}
                 className="sim-led"
                 x={336}
                 y={243}
@@ -1033,7 +1050,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-0-4"
+                ref={this.ledRefs[0][4]}
                 className="sim-led"
                 x={152}
                 y={287}
@@ -1060,7 +1077,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-1-4"
+                ref={this.ledRefs[1][4]}
                 className="sim-led"
                 x={198}
                 y={287}
@@ -1087,7 +1104,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-2-4"
+                ref={this.ledRefs[2][4]}
                 className="sim-led"
                 x={244}
                 y={287}
@@ -1114,7 +1131,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-3-4"
+                ref={this.ledRefs[3][4]}
                 className="sim-led"
                 x={290}
                 y={287}
@@ -1141,7 +1158,7 @@ export class MicrobitSvg extends React.Component{
                 style={{ fill: "rgb(32, 32, 32)" }}
             />
             <rect
-                id="LED-4-4"
+                ref={this.ledRefs[4][4]}
                 className="sim-led"
                 x={336}
                 y={287}
