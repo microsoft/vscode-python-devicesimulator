@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS, { DEVICE_LIST_KEY } from "../../constants";
+import CONSTANTS from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";

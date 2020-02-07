@@ -6,7 +6,7 @@ import { PivotItem } from "office-ui-fabric-react";
 import * as React from "react";
 import "./App.css";
 import { Tab } from "./components/tab/Tab";
-import CONSTANTS, { DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "./constants";
+import { DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "./constants";
 import { Device } from "./container/device/Device";
 import { sendMessage } from "./utils/MessageUtils";
 
