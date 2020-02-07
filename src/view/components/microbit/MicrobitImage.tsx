@@ -3,7 +3,8 @@
 
 import * as React from "react";
 import "../../styles/Microbit.css";
-import { MICROBIT_SVG } from "./Microbit_svg";
+import { MicrobitSvg } from "./Microbit_svg";
+import { RefObject } from "office-ui-fabric-react";
 
 interface EventTriggers {
     onMouseUp: (button: HTMLElement, event: Event, buttonKey: string) => void;
@@ -25,29 +26,22 @@ interface IState {
 
 // Displays the SVG and call necessary svg modification.
 export class MicrobitImage extends React.Component<IProps, IState> {
+    private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
     constructor(props: IProps) {
         super(props);
-        this.state = {
-            microbitImageRef: React.createRef(),
-            buttonRefs: {
-                BTN_A: React.createRef(),
-                BTN_B: React.createRef(),
-                BTN_AB: React.createRef(),
-            },
-        };
     }
     componentDidMount() {
-        const svgElement = this.state.microbitImageRef.current;
+        const svgElement = this.svgRef.current;
         if (svgElement) {
             updateAllLeds(this.props.leds);
-            setupAllButtons(this.props.eventTriggers, this.state.buttonRefs);
+            setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
         }
     }
     componentDidUpdate() {
         updateAllLeds(this.props.leds);
     }
     render() {
-        return MICROBIT_SVG(this.state.microbitImageRef, this.state.buttonRefs);
+        return <MicrobitSvg ref={this.svgRef} />;
     }
 }
 const setupButton = (

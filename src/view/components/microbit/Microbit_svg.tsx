@@ -4,16 +4,29 @@
 // Adapted from : https://makecode.microbit.org/#editor
 
 import * as React from "react";
-
+interface IRefObject{
+    [key: string]: React.RefObject<SVGRectElement> 
+}
 /* tslint:disable */
+export class MicrobitSvg extends React.Component{
+    private svgRef : React.RefObject<SVGSVGElement> = React.createRef();
 
-export const MICROBIT_SVG = (
-    svgRef: React.RefObject<SVGSVGElement>,
-    buttonRefs: { [key: string]: React.RefObject<SVGRectElement> }
-) => (
-    <svg
+    private buttonRefs: IRefObject = {
+        "BTN_A": React.createRef(),
+        "BTN_B": React.createRef(),
+        "BTN_AB": React.createRef(),
+    }
+    public getSvgRef():React.RefObject<SVGSVGElement>{
+        return this.svgRef;
+    }
+    public getButtons(): IRefObject{
+        return this.buttonRefs
+    }
+    render(){
+        return(
+<svg
         id="microbit_svg"
-        ref={svgRef}
+        ref={this.svgRef}
         version="1.0"
         viewBox="0 0 500 408"
         className="sim"
@@ -1405,7 +1418,7 @@ export const MICROBIT_SVG = (
             >
                 <rect
                     className="sim-button-outer"
-                    ref={buttonRefs.BTN_A}
+                    ref={this.buttonRefs.BTN_A}
                     x="25.9"
                     y="176.4"
                     rx={4}
@@ -1444,7 +1457,7 @@ export const MICROBIT_SVG = (
             >
                 <rect
                     className="sim-button-outer"
-                    ref={buttonRefs.BTN_B}
+                    ref={this.buttonRefs.BTN_B}
                     x="418.1"
                     y="176.4"
                     rx={4}
@@ -1493,7 +1506,7 @@ export const MICROBIT_SVG = (
             >
                 <rect
                     className="sim-button-outer"
-                    ref={buttonRefs.BTN_AB}
+                    ref={this.buttonRefs.BTN_AB}
                     x={417}
                     y={250}
                     rx={4}
@@ -1563,4 +1576,8 @@ export const MICROBIT_SVG = (
         <g />
         <g />
     </svg>
-);
+        )
+    }
+
+}
+
