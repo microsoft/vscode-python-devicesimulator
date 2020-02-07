@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS, WEBVIEW_MESSAGES } from "../../constants";
 import { sendMessage } from "../../utils/MessageUtils";
 
 import "../../styles/Simulator.css";
@@ -183,7 +183,7 @@ class Simulator extends React.Component<{}, IState> {
     }
 
     protected refreshSimulatorClick() {
-        sendMessage("refresh-simulator", true);
+        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
         );

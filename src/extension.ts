@@ -14,7 +14,6 @@ import {
     DialogResponses,
     SERVER_INFO,
     TelemetryEventName,
-    WebviewMessages,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -23,6 +22,7 @@ import { SerialMonitor } from "./serialMonitor";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
+import { WEBVIEW_MESSAGES } from "./view/constants";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -156,7 +156,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     message => {
                         const messageJson = JSON.stringify(message.text);
                         switch (message.command) {
-                            case WebviewMessages.BUTTON_PRESS:
+                            case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
                                 handleButtonPressTelemetry(message.text);
                                 console.log(`About to write ${messageJson} \n`);
@@ -173,7 +173,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     );
                                 }
                                 break;
-                            case WebviewMessages.PLAY_SIMULATOR:
+                            case WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP:
                                 console.log(`Play button ${messageJson} \n`);
                                 if (message.text.state as boolean) {
                                     setPathAndSendMessage(
@@ -204,7 +204,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
                                 break;
 
-                            case WebviewMessages.SENSOR_CHANGED:
+                            case WEBVIEW_MESSAGES.SENSOR_CHANGED:
                                 checkForTelemetry(message.text);
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
@@ -220,14 +220,14 @@ export async function activate(context: vscode.ExtensionContext) {
                                     );
                                 }
                                 break;
-                            case WebviewMessages.REFRESH_SIMULATOR:
+                            case WEBVIEW_MESSAGES.REFRESH_SIMULATOR:
                                 console.log("Refresh button");
                                 runSimulatorCommand();
                                 break;
-                            case WebviewMessages.SLIDER_TELEMETRY:
+                            case WEBVIEW_MESSAGES.SLIDER_TELEMETRY:
                                 handleSensorTelemetry(message.text);
                                 break;
-                            case WebviewMessages.SWITCH_DEVICE:
+                            case WEBVIEW_MESSAGES.SWITCH_DEVICE:
                                 switchDevice(message.text.active_device);
                                 killProcessIfRunning();
                                 break;

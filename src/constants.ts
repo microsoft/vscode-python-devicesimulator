@@ -323,15 +323,6 @@ export enum TelemetryEventName {
 }
 export const DEFAULT_DEVICE = CONSTANTS.DEVICE_NAME.CPX;
 
-export enum WebviewMessages {
-    BUTTON_PRESS = "button-press",
-    PLAY_SIMULATOR = "play-simulator",
-    SENSOR_CHANGED = "sensor-changed",
-    REFRESH_SIMULATOR = "refresh-simulator",
-    SLIDER_TELEMETRY = "slider-telemetry",
-    SWITCH_DEVICE = "switch-device",
-}
-
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
     export const ACCEPT_AND_RUN: MessageItem = {

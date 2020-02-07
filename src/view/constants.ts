@@ -49,8 +49,15 @@ export enum DEVICE_LIST_KEY {
     CPX = "CPX",
     MICROBIT = "micro:bit",
 }
-export const WEBVIEW_MESSAGES = {
-    SWITCH_DEVICE: "switch-device",
-};
+
+//
+export enum WEBVIEW_MESSAGES {
+    SWITCH_DEVICE = "switch-device",
+    REFRESH_SIMULATOR = "refresh-simulator",
+    TOGGLE_PLAY_STOP = "toggle-play-stop",
+    BUTTON_PRESS = "button-press",
+    SENSOR_CHANGED = "sensor-changed",
+    SLIDER_TELEMETRY = "slider-telemetry",
+}
 
 export default CONSTANTS;

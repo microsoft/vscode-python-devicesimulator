@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS from "../../constants";
+import CONSTANTS, { WEBVIEW_MESSAGES } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
@@ -110,7 +110,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         );
     }
     protected togglePlayClick = () => {
-        sendMessage("play-simulator", {
+        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
             active_device: CONSTANTS.DEVICE_NAME.MICROBIT,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
@@ -122,7 +122,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         });
     }
     protected refreshSimulatorClick = () => {
-        sendMessage("refresh-simulator", true);
+        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
     protected onMouseUp(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
