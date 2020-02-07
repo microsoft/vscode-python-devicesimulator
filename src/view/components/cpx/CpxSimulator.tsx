@@ -85,14 +85,11 @@ class Simulator extends React.Component<{}, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
-        if (message.active_device !== DEVICE_LIST_KEY.CPX) {
-            return;
-        }
+
         switch (message.command) {
             case "reset-state":
                 console.log("Clearing the state");
                 this.setState({
-                    ...this.state,
                     cpx: DEFAULT_CPX_STATE,
                     play_button: false,
                 });
@@ -102,14 +99,12 @@ class Simulator extends React.Component<{}, IState> {
                     "Setting the state: " + JSON.stringify(message.state)
                 );
                 this.setState({
-                    ...this.state,
                     cpx: message.state,
                     play_button: true,
                 });
                 break;
             case "activate-play":
                 this.setState({
-                    ...this.state,
                     play_button: !this.state.play_button,
                 });
                 break;
@@ -119,14 +114,12 @@ class Simulator extends React.Component<{}, IState> {
                     message.state.activePythonEditors
                 );
                 this.setState({
-                    ...this.state,
                     active_editors: message.state.activePythonEditors,
                 });
                 break;
             case "current-file":
                 console.log("Setting current file", message.state.running_file);
                 this.setState({
-                    ...this.state,
                     running_file: message.state.running_file,
                 });
                 break;
@@ -209,7 +202,6 @@ class Simulator extends React.Component<{}, IState> {
 
     protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
         this.setState({
-            ...this.state,
             selected_file: event.currentTarget.value,
         });
     }
