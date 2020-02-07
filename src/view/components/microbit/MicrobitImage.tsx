@@ -62,7 +62,9 @@ const setupButton = (
 };
 const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {
     for (const [key, ref] of Object.entries(buttonRefs)) {
-        setupButton(ref.current, eventTriggers, key);
+        if (ref.current) {
+            setupButton(ref.current, eventTriggers, key);
+        }
     }
 };
 const updateAllLeds = (

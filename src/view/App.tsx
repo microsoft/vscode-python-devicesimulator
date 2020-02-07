@@ -37,11 +37,10 @@ class App extends React.Component<{}, IState> {
 
     handleDeviceChange = (item?: PivotItem) => {
         if (item && item.props && item.props.itemKey) {
-            this.setState({ currentDevice: item.props.itemKey });
-
             sendMessage(WEBVIEW_MESSAGES.SWITCH_DEVICE, {
                 active_device: item.props.itemKey,
             });
+            this.setState({ currentDevice: item.props.itemKey });
         }
     };
 }
