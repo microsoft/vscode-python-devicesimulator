@@ -6,17 +6,10 @@ import { PivotItem } from "office-ui-fabric-react";
 import * as React from "react";
 import "./App.css";
 import { Tab } from "./components/tab/Tab";
-import { DEVICE_LIST_KEY } from "./constants";
+import CONSTANTS, { DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "./constants";
 import { Device } from "./container/device/Device";
+import { sendMessage } from "./utils/MessageUtils";
 
-interface vscode {
-    postMessage(message: any): void;
-}
-declare const vscode: vscode;
-
-const sendMessage = (type: string, state: any) => {
-    vscode.postMessage({ command: type, text: state });
-};
 interface IState {
     currentDevice: string;
 }
@@ -46,7 +39,7 @@ class App extends React.Component<{}, IState> {
         if (item && item.props && item.props.itemKey) {
             this.setState({ currentDevice: item.props.itemKey });
 
-            sendMessage("switch-device", {
+            sendMessage(WEBVIEW_MESSAGES.SWITCH_DEVICE, {
                 active_device: item.props.itemKey,
             });
         }

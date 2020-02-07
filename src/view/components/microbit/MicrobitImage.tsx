@@ -4,7 +4,6 @@
 import * as React from "react";
 import "../../styles/Microbit.css";
 import { MicrobitSvg } from "./Microbit_svg";
-import { RefObject } from "office-ui-fabric-react";
 
 interface EventTriggers {
     onMouseUp: (button: HTMLElement, event: Event, buttonKey: string) => void;
@@ -68,7 +67,7 @@ const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {
 };
 const updateAllLeds = (
     leds: number[][],
-    ledRefs: React.RefObject<SVGRectElement>[][]
+    ledRefs: Array<React.RefObject<SVGRectElement>>[]
 ) => {
     for (let j = 0; j < leds.length; j++) {
         for (let i = 0; i < leds[0].length; i++) {

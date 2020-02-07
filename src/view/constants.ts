@@ -49,5 +49,8 @@ export enum DEVICE_LIST_KEY {
     CPX = "CPX",
     MICROBIT = "micro:bit",
 }
+export const WEBVIEW_MESSAGES = {
+    SWITCH_DEVICE: "switch-device",
+};
 
 export default CONSTANTS;

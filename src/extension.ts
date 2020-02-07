@@ -1089,7 +1089,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
           </html>`;
 }
 function switchDevice(deviceName: string) {
-    console.log("Switched Devices");
     currentActiveDevice = deviceName;
 }
 

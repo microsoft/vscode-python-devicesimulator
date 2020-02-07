@@ -3,6 +3,8 @@
 
 import * as React from "react";
 import { CONSTANTS, DEVICE_LIST_KEY } from "../../constants";
+import { sendMessage } from "../../utils/MessageUtils";
+
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
@@ -52,19 +54,9 @@ const DEFAULT_CPX_STATE: ICpxState = {
     shake: false,
 };
 
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (type: string, state: any) => {
-    vscode.postMessage({ command: type, text: state });
-};
-
 class Simulator extends React.Component<{}, IState> {
-    constructor() {
-        super({});
+    constructor(props: Readonly<{}>) {
+        super(props);
         this.state = {
             active_editors: [],
             cpx: DEFAULT_CPX_STATE,

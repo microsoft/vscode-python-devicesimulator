@@ -2,6 +2,7 @@ import * as React from "react";
 import CONSTANTS, { DEVICE_LIST_KEY } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
+import { sendMessage } from "../../utils/MessageUtils";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { MicrobitImage } from "./MicrobitImage";
@@ -14,15 +15,6 @@ const initialLedState = [
     [0, 0, 0, 0, 0],
 ];
 
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (type: string, state: any) => {
-    vscode.postMessage({ command: type, text: state });
-};
 interface IState {
     active_editors: string[];
     running_file: string;
@@ -47,14 +39,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
 
         switch (message.command) {
             case "reset-state":
-                console.log("Reset the state");
                 this.setState({
                     leds: initialLedState,
                     play_button: false,
                 });
                 break;
             case "set-state":
-                console.log("Setting the state");
                 this.setState({
                     leds: message.state.leds,
                 });
@@ -65,16 +55,11 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "visible-editors":
-                console.log(
-                    "Setting active editors",
-                    message.state.activePythonEditors
-                );
                 this.setState({
                     active_editors: message.state.activePythonEditors,
                 });
                 break;
             case "current-file":
-                console.log("Setting current file", message.state.running_file);
                 this.setState({
                     running_file: message.state.running_file,
                 });
