@@ -30,6 +30,7 @@ sys.path.insert(0, abs_path_to_lib)
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.telemetry import telemetry_py
+from microbit.__model.microbit_model import __mb as mb
 
 
 # Handle User Inputs Thread
@@ -43,7 +44,7 @@ class UserInput(threading.Thread):
             sys.stdin.flush()
             try:
                 new_state = json.loads(read_val)
-                for event in CONSTANTS.EXPECTED_INPUT_EVENTS:
+                for event in CONSTANTS.EXPECTED_INPUT_EVENTS_CPX:
                     cpx._Express__state[event] = new_state.get(
                         event, cpx._Express__state[event]
                     )
@@ -95,6 +96,7 @@ def execute_user_code(abs_path_to_code_file):
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
 telemetry_state = json.loads(sys.argv[2])
+
 telemetry_py._Telemetry__enable_telemetry = telemetry_state.get(
     CONSTANTS.ENABLE_TELEMETRY, True
 )

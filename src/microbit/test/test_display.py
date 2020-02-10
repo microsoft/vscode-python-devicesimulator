@@ -1,6 +1,7 @@
 import pytest
 import threading
 from unittest import mock
+from common import utils
 
 from ..__model import constants as CONSTANTS
 from ..__model.display import Display
@@ -16,6 +17,7 @@ STR_SIX = "00090:00900:09990:90009:09990"
 class TestDisplay(object):
     def setup_method(self):
         self.display = Display()
+        utils.send_to_simulator = mock.Mock()
 
     @pytest.mark.parametrize("x, y, brightness", [(1, 1, 4), (2, 3, 6), (4, 4, 9)])
     def test_set_and_get_pixel(self, x, y, brightness):

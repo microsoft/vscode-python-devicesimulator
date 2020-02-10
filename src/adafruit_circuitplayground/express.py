@@ -5,12 +5,14 @@ import json
 import sys
 import os
 import playsound
+from common import utils
 from .pixel import Pixel
-from . import utils
+
 from . import constants as CONSTANTS
 from collections import namedtuple
 from applicationinsights import TelemetryClient
 from .telemetry import telemetry_py
+from . import debugger_communication_client
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])
 
@@ -105,7 +107,10 @@ class Express:
         return self.__state["light"]
 
     def __show(self):
-        utils.show(self.__state, self.__debug_mode)
+        if self.__debug_mode:
+            debugger_communication_client.debug_send_to_simulator(self.__state)
+        else:
+            utils.send_to_simulator(self.__state, CONSTANTS.CPX)
 
     def __touch(self, i):
         return self.__state["touch"][i - 1]

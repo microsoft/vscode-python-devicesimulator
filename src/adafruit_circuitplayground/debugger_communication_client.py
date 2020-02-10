@@ -4,8 +4,26 @@
 import sys
 import json
 import socketio
+import copy
 from . import express
 from . import constants as CONSTANTS
+from common import utils
+
+
+previous_state = {}
+
+# similar to utils.send_to_simulator, but for debugging
+# (needs handle to device-specific debugger)
+def debug_show(state):
+    global previous_state
+
+    if state != previous_state:
+        previous_state = copy.deepcopy(state)
+
+        updated_state = utils.update_state_with_device_name(state, CONSTANTS.CPX)
+        message = utils.create_message(updated_state)
+
+        update_state(json.dumps(message))
 
 
 # Create Socket Client
