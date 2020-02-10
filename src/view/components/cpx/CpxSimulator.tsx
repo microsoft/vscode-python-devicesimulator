@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS, WEBVIEW_MESSAGES } from "../../constants";
+import { CONSTANTS, WEBVIEW_MESSAGES, DEVICE_LIST_KEY } from "../../constants";
 import { sendMessage } from "../../utils/MessageUtils";
 
 import "../../styles/Simulator.css";
@@ -77,7 +77,9 @@ class Simulator extends React.Component<{}, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
-
+        if (message.active_device !== DEVICE_LIST_KEY.CPX) {
+            return;
+        }
         switch (message.command) {
             case "reset-state":
                 console.log("Clearing the state");
@@ -169,7 +171,7 @@ class Simulator extends React.Component<{}, IState> {
     }
 
     protected togglePlayClick() {
-        sendMessage("play-simulator", {
+        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
             active_device: CONSTANTS.DEVICE_NAME.CPX,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,

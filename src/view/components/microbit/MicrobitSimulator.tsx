@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS, { WEBVIEW_MESSAGES } from "../../constants";
+import CONSTANTS, { WEBVIEW_MESSAGES, DEVICE_LIST_KEY } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
@@ -35,6 +35,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
+
+        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
+            return;
+        }
 
         switch (message.command) {
             case "reset-state":
