@@ -54,13 +54,14 @@ class UserInput(threading.Thread):
                             event, cpx._Express__state[event]
                         )
                 elif device == MICROBIT:
+                    new_state = new_state.get("state", {})
                     for button in CONSTANTS.EXPECTED_INPUT_EVENTS_BUTTONS_MICROBIT:
                         previous_pressed = None
                         exec(f"previous_pressed = mb.{button}.get_presses()")
                         button_pressed = new_state.get(event, previous_pressed)
 
                         if button_pressed != previous_pressed:
-                            print(f"{event} is at {button_pressed}")
+                            print(f"{button} is at {button_pressed}")
                             if button_pressed:
                                 exec(f"mb.{button}._Button__press_down()")
                             else:
