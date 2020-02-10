@@ -3,6 +3,7 @@ import time
 import pytest
 from unittest import mock
 from ..__model.microbit_model import MicrobitModel
+from ..__model import constants as CONSTANTS
 
 
 class TestMicrobitModel(object):
@@ -24,3 +25,17 @@ class TestMicrobitModel(object):
         assert mock_end_time - mock_start_time == pytest.approx(
             self.__mb.running_time()
         )
+
+    @pytest.mark.parametrize(
+        "temperature, expected",
+        [
+            (CONSTANTS.MIN_TEMPERATURE - 10, CONSTANTS.MIN_TEMPERATURE),
+            (CONSTANTS.MIN_TEMPERATURE, CONSTANTS.MIN_TEMPERATURE),
+            (0, 0),
+            (CONSTANTS.MAX_TEMPERATURE, CONSTANTS.MAX_TEMPERATURE),
+            (CONSTANTS.MAX_TEMPERATURE + 5, CONSTANTS.MAX_TEMPERATURE),
+        ],
+    )
+    def test_temperature(self, temperature, expected):
+        self.__mb._MicrobitModel__set_temperature(temperature)
+        assert expected == self.__mb.temperature()

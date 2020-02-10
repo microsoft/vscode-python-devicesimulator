@@ -20,3 +20,8 @@ class TestShim(object):
         MicrobitModel.running_time = mock.Mock()
         running_time()
         MicrobitModel.running_time.assert_called_once()
+
+    def test_temperature(self):
+        MicrobitModel.temperature = mock.Mock()
+        temperature()
+        MicrobitModel.temperature.asser_called_once()
