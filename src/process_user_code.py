@@ -30,7 +30,7 @@ sys.path.insert(0, abs_path_to_lib)
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.telemetry import telemetry_py
-from microbit.model.microbit_model import mb
+from microbit.__model.microbit_model import __mb as mb
 
 
 # Handle User Inputs Thread
