@@ -10,13 +10,14 @@ import sys
 previous_state = {}
 
 
-def create_message(state, device_name):
-    state_copy = dict(state)
+def update_state_with_device_name(state, device_name):
     state_ext = {
         "device_name": device_name,
     }
-    state_copy.update(state_ext)
+    state.update(state_ext)
 
+
+def create_message(state_copy):
     message = {"type": "state", "data": json.dumps(state_copy)}
     return message
 
@@ -24,7 +25,8 @@ def create_message(state, device_name):
 def send_to_simulator(state, device_name):
     global previous_state
 
-    message = create_message(state, device_name)
+    update_state_with_device_name(state, device_name)
+    message = create_message(state)
 
     if state != previous_state:
         previous_state = copy.deepcopy(state)
