@@ -5,8 +5,9 @@ import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 import LightSensorBar from "./LightSensorBar";
-import MotionSensorBar from "./MotionSensorBar";
+import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
+import { Accelerometer } from "./motion/Accelerometer";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -33,7 +34,7 @@ export const TOOLBAR_ICON_LABEL = {
     TAG_OUTPUT: "Tag Output",
     TEMPERATURE: "Temperature Sensor",
 };
-export const TOOLBAR_ICON_ID = {
+export const CPX_TOOLBAR_ICON_ID = {
     GPIO: "toolbar-gpio",
     IR: "toolbar-ir-sensor",
     LEFT_EDGE: "left-edge",
@@ -47,6 +48,12 @@ export const TOOLBAR_ICON_ID = {
     SPEAKER: "toolbar-speaker",
     SWITCH: "toolbar-slider-switch",
     TEMPERATURE: "toolbar-temperature-sensor",
+};
+
+export const MICROBIT_TOOLBAR_ID = {
+    TEMPERATURE: "toolbar-temperature-sensor",
+    LIGHT: "toolbar-light-sensor",
+    ACCELEROMETER: "toolbar-accelerometer",
 };
 
 export interface IModalContent {
@@ -182,16 +189,28 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
     tryItTitle: "Try it on the Simulator!",
 };
 
+export const ACCELEROMETER_MODAL_CONTENT: IModalContent = {
+    component: <Accelerometer />,
+    descriptionText: "toolbar-accelerometer-sensor.description",
+    descriptionTitle: "toolbar-accelerometer-sensor.title",
+    id: "temperature",
+    tagInput: TAG_INPUT_SVG,
+    tagOutput: undefined,
+    tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
+    tryItTitle: "Try it on the Simulator!",
+};
+
 export const LABEL_TO_MODAL_CONTENT = new Map([
-    [TOOLBAR_ICON_ID.GPIO, GPIO_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.IR, IR_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.LIGHT, LIGHT_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.MOTION, MOTION_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.NEO_PIXEL, NEOP_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.PUSH_BUTTON, PUSHB_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.RED_LED, RED_LED_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.SOUND, SOUND_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.SPEAKER, SPEAKER_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
-    [TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.GPIO, GPIO_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.IR, IR_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.LIGHT, LIGHT_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.MOTION, MOTION_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.NEO_PIXEL, NEOP_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.PUSH_BUTTON, PUSHB_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.RED_LED, RED_LED_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.SOUND, SOUND_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.SPEAKER, SPEAKER_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
+    [CPX_TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
 ]);
