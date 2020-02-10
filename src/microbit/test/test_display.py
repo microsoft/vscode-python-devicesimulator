@@ -157,6 +157,20 @@ class TestDisplay(object):
         self.display.show("6", delay=0)
         assert Image._Image__same_image(Image(STR_SIX), self.display._Display__image)
 
+    @pytest.mark.parametrize(
+        "light_level, expected",
+        [
+            (CONSTANTS.MIN_LIGHT_LEVEL - 10, CONSTANTS.MIN_LIGHT_LEVEL),
+            (CONSTANTS.MIN_LIGHT_LEVEL, CONSTANTS.MIN_LIGHT_LEVEL),
+            (100, 100),
+            (CONSTANTS.MAX_LIGHT_LEVEL, CONSTANTS.MAX_LIGHT_LEVEL),
+            (CONSTANTS.MAX_LIGHT_LEVEL + 10, CONSTANTS.MAX_LIGHT_LEVEL),
+        ],
+    )
+    def test_temperature(self, light_level, expected):
+        self.display._Display__set_light_level(light_level)
+        assert expected == self.display.read_light_level()
+
     # Helpers
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)
