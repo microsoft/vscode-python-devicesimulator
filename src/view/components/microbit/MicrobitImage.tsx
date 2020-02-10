@@ -18,13 +18,9 @@ interface IProps {
     eventTriggers: EventTriggers;
     leds: number[][];
 }
-interface IState {
-    microbitImageRef: React.RefObject<SVGSVGElement>;
-    buttonRefs: { [key: string]: React.RefObject<SVGRectElement> };
-}
 
 // Displays the SVG and call necessary svg modification.
-export class MicrobitImage extends React.Component<IProps, IState> {
+export class MicrobitImage extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
     constructor(props: IProps) {
         super(props);

@@ -4,6 +4,9 @@ interface vscode {
 
 declare const vscode: vscode;
 
-export const sendMessage = (type: string, state: any) => {
+export const sendMessage = <TState extends unknown>(
+    type: string,
+    state: TState
+) => {
     vscode.postMessage({ command: type, text: state });
 };
