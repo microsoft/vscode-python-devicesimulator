@@ -64,6 +64,7 @@ class TestAccelerometer(object):
     def test_was_gesture(self):
         mock_gesture_up = "up"
         mock_gesture_down = "down"
+
         assert not self.accelerometer.was_gesture(mock_gesture_up)
         self.accelerometer._Accelerometer__set_gesture(mock_gesture_up)
         self.accelerometer.current_gesture()  # Call is needed for gesture detection so it can be added to the lists.
@@ -79,6 +80,7 @@ class TestAccelerometer(object):
         mock_gesture_up = "up"
         mock_gesture_down = "down"
         mock_gesture_freefall = "freefall"
+
         self.accelerometer._Accelerometer__set_gesture(mock_gesture_up)
         self.accelerometer.current_gesture()  # Call is needed for gesture detection so it can be added to the lists.
         self.accelerometer._Accelerometer__set_gesture(mock_gesture_down)
