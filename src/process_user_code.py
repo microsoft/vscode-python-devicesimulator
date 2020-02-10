@@ -46,9 +46,9 @@ class UserInput(threading.Thread):
             read_val = sys.stdin.readline()
             sys.stdin.flush()
             try:
-                json_val = json.loads(read_val)
-                device = json_val.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
-                new_state = json_val.get(CONSTANTS.STATE_KEYWORD, {})
+                new_state_message = json.loads(read_val)
+                device = new_state_message.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
+                new_state = new_state_message.get(CONSTANTS.STATE_FIELD, {})
 
                 if device == CPX:
                     update_cpx(new_state)
