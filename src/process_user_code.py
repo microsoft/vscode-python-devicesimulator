@@ -67,6 +67,7 @@ def update_cpx(new_state):
 
 
 def update_microbit(new_state):
+    # set button values
     for button in CONSTANTS.EXPECTED_INPUT_BUTTONS_MICROBIT:
         previous_pressed = None
         exec(f"previous_pressed = mb.{button}.get_presses()")
@@ -77,6 +78,28 @@ def update_microbit(new_state):
                 exec(f"mb.{button}._Button__press_down()")
             else:
                 exec(f"mb.{button}._Button__release()")
+
+    # set motion_x, motion_y, motion_z
+    for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL_MICROBIT:
+        previous_motion_val = None
+        exec(f"previous_motion_val = mb.accelerometer.get_{direction}()")
+        new_motion_val = new_state.get(name, previous_motion_val)
+        if new_motion_val != previous_motion_val:
+            print("change motion val")
+
+    # set temperature
+    previous_temp = mb.temperature()
+    new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP_MICROBIT, previous_temp)
+    if new_temp != new_temp:
+        print("set temp value")
+
+    # set light level
+    previous_light_level = mb.display.read_light_level()
+    new_light_level = new_state.get(
+        CONSTANTS.EXPECTED_INPUT_LIGHT_MICROBIT, previous_light_level
+    )
+    if new_light_level != new_light_level:
+        print("set light value")
 
 
 user_input = UserInput()
