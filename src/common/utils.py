@@ -32,7 +32,7 @@ def send_to_simulator(state, device_name):
     state_copy = update_state_with_device_name(state, device_name)
     message = create_message(state_copy)
 
-    if state != previous_state:
+    if state_copy != previous_state:
         previous_state = copy.deepcopy(state_copy)
         print(json.dumps(message) + "\0", end="", file=sys.__stdout__, flush=True)
         time.sleep(CONSTANTS.TIME_DELAY)
