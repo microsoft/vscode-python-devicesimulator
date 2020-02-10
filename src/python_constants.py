@@ -8,23 +8,6 @@ CPX_DRIVE_NAME = "CIRCUITPY"
 DEVICE_NOT_IMPLEMENTED_ERROR = "Device not implemented."
 
 ENABLE_TELEMETRY = "enable_telemetry"
-EXPECTED_INPUT_EVENTS_CPX = [
-    "button_a",
-    "button_b",
-    "switch",
-    "temperature",
-    "light",
-    "shake",
-    "motion_x",
-    "motion_y",
-    "motion_z",
-    "touch",
-]
-
-EXPECTED_INPUT_BUTTONS_MICROBIT = [
-    "button_a",
-    "button_b",
-]
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "

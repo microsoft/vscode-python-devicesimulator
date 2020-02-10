@@ -42,6 +42,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        device_dict = {CPX: cpx, MICROBIT: mb}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
@@ -50,33 +51,13 @@ class UserInput(threading.Thread):
                 device = new_state_message.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
                 new_state = new_state_message.get(CONSTANTS.STATE_FIELD, {})
 
-                if device == CPX:
-                    update_cpx(new_state)
-                elif device == MICROBIT:
-                    update_microbit(new_state)
+                if device in device_dict:
+                    device_dict[device].update_state(new_state)
                 else:
                     raise Exception(CONSTANTS.DEVICE_NOT_IMPLEMENTED_ERROR)
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
-
-
-def update_cpx(new_state):
-    for event in CONSTANTS.EXPECTED_INPUT_EVENTS_CPX:
-        cpx._Express__state[event] = new_state.get(event, cpx._Express__state[event])
-
-
-def update_microbit(new_state):
-    for button in CONSTANTS.EXPECTED_INPUT_BUTTONS_MICROBIT:
-        previous_pressed = None
-        exec(f"previous_pressed = mb.{button}.get_presses()")
-        button_pressed = new_state.get(button, previous_pressed)
-
-        if button_pressed != previous_pressed:
-            if button_pressed:
-                exec(f"mb.{button}._Button__press_down()")
-            else:
-                exec(f"mb.{button}._Button__release()")
 
 
 user_input = UserInput()
