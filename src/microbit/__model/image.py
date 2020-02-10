@@ -109,7 +109,7 @@ class Image:
     ALL_ARROWS = None
 
     # implementing image model as described here:
-    # https://github.com/bbcmicrobit/micropython/blob/master/docs/image.rst
+    # https://microbit-micropython.readthedocs.io/en/v1.0.1/image.html
 
     def __init__(self, *args, **kwargs):
         # Depending on the number of arguments
