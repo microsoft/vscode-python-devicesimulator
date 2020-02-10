@@ -81,8 +81,7 @@ def update_microbit(new_state):
 
     # set motion_x, motion_y, motion_z
     for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL_MICROBIT:
-        previous_motion_val = None
-        exec(f"previous_motion_val = mb.accelerometer.get_{direction}()")
+        previous_motion_val = mb.accelerometer._Accelerometer__get_accel(direction)
         new_motion_val = new_state.get(name, previous_motion_val)
         if new_motion_val != previous_motion_val:
             print("change motion val")
@@ -90,16 +89,16 @@ def update_microbit(new_state):
     # set temperature
     previous_temp = mb.temperature()
     new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP_MICROBIT, previous_temp)
-    if new_temp != new_temp:
-        print("set temp value")
+    if new_temp != previous_temp:
+        mb._MicrobitModel__set_temperature(new_temp)
 
     # set light level
     previous_light_level = mb.display.read_light_level()
     new_light_level = new_state.get(
         CONSTANTS.EXPECTED_INPUT_LIGHT_MICROBIT, previous_light_level
     )
-    if new_light_level != new_light_level:
-        print("set light value")
+    if new_light_level != previous_light_level:
+        mb.display._Display__set_light_level(new_light_level)
 
 
 user_input = UserInput()
