@@ -18,6 +18,23 @@ class Display:
         self.__lock = threading.Lock()
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
+        """
+        Scrolls ``value`` horizontally on the display. If ``value`` is an integer or float it is
+        first converted to a string using ``str()``. The ``delay`` parameter controls how fast
+        the text is scrolling.
+
+        If ``wait`` is ``True``, this function will block until the animation is
+        finished, otherwise the animation will happen in the background.
+
+        If ``loop`` is ``True``, the animation will repeat forever.
+
+        If ``monospace`` is ``True``, the characters will all take up 5 pixel-columns
+        in width, otherwise there will be exactly 1 blank pixel-column between each
+        character as they scroll.
+
+        Note that the ``wait``, ``loop`` and ``monospace`` arguments must be specified
+        using their keyword.
+        """
         if not wait:
             thread = threading.Thread(
                 target=self.scroll, args=(value, delay, True, loop, monospace)
@@ -79,6 +96,23 @@ class Display:
                 break
 
     def show(self, value, delay=400, wait=True, loop=False, clear=False):
+        """
+        Display the ``image``.
+
+        If ``value`` is a string, float or integer, display letters/digits in sequence.
+        Otherwise, if ``value`` is an iterable sequence of images, display these images in sequence.
+        Each letter, digit or image is shown with ``delay`` milliseconds between them.
+
+        If ``wait`` is ``True``, this function will block until the animation is
+        finished, otherwise the animation will happen in the background.
+
+        If ``loop`` is ``True``, the animation will repeat forever.
+
+        If ``clear`` is ``True``, the display will be cleared after the iterable has finished.
+
+        Note that the ``wait``, ``loop`` and ``clear`` arguments must be specified
+        using their keyword.
+        """
         if not wait:
             thread = threading.Thread(
                 target=self.show, args=(value, delay, True, loop, clear)
@@ -141,31 +175,58 @@ class Display:
             self.clear()
 
     def get_pixel(self, x, y):
+        """
+        Return the brightness of the LED at column ``x`` and row ``y`` as an
+        integer between 0 (off) and 9 (bright).
+        """
         self.__lock.acquire()
         pixel = self.__image.get_pixel(x, y)
         self.__lock.release()
         return pixel
 
     def set_pixel(self, x, y, value):
+        """
+        Set the brightness of the LED at column ``x`` and row ``y`` to ``value``,
+        which has to be an integer between 0 and 9.
+        """
         self.__lock.acquire()
         self.__image.set_pixel(x, y, value)
         self.__lock.release()
 
     def clear(self):
+        """
+        Set the brightness of all LEDs to 0 (off).
+        """
         self.__lock.acquire()
         self.__image = Image()
         self.__lock.release()
 
     def on(self):
+        """
+        Use on() to turn on the display.
+        """
         self.__on = True
 
     def off(self):
+        """
+        Use off() to turn off the display.
+        """
         self.__on = False
 
     def is_on(self):
+        """
+        Returns ``True`` if the display is on, otherwise returns ``False``.
+        """
         return self.__on
 
     def read_light_level(self):
+        """
+        Not implemented yet.
+
+        Use the display's LEDs in reverse-bias mode to sense the amount of light
+        falling on the display.  Returns an integer between 0 and 255 representing
+        the light level, with larger meaning more light.
+        """
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     # Helpers

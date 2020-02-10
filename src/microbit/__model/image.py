@@ -3,6 +3,43 @@ from .producer_property import ProducerProperty
 
 
 class Image:
+    """
+    If ``string`` is used, it has to consist of digits 0-9 arranged into
+    lines, describing the image, for example::
+
+        image = Image("90009:"
+                      "09090:"
+                      "00900:"
+                      "09090:"
+                      "90009")
+
+    will create a 5×5 image of an X. The end of a line is indicated by a colon.
+    It's also possible to use a newline (\\n) to indicate the end of a line
+    like this::
+
+        image = Image("90009\\n"
+                      "09090\\n"
+                      "00900\\n"
+                      "09090\\n"
+                      "90009")
+
+    The other form creates an empty image with ``width`` columns and
+    ``height`` rows. Optionally ``buffer`` can be an array of
+    ``width``×``height`` integers in range 0-9 to initialize the image::
+
+        Image(2, 2, b'\x08\x08\x08\x08')
+
+    or::
+
+        Image(2, 2, bytearray([9,9,9,9]))
+
+    Will create a 2 x 2 pixel image at full brightness.
+
+    .. note::
+
+        Keyword arguments cannot be passed to ``buffer``.
+    """
+
     # Attributes assigned (to functions) later;
     # having this here helps the pylint.
     HEART = None
@@ -75,7 +112,6 @@ class Image:
     # https://github.com/bbcmicrobit/micropython/blob/master/docs/image.rst
 
     def __init__(self, *args, **kwargs):
-
         # Depending on the number of arguments
         # in constructor, it treat args differently.
 
@@ -108,15 +144,28 @@ class Image:
         self.read_only = False
 
     def width(self):
+        """
+        Return the number of columns in the image.
+        """
         if len(self.__LED) > 0:
             return len(self.__LED[0])
         else:
             return 0
 
     def height(self):
+        """
+        Return the numbers of rows in the image.
+        """
         return len(self.__LED)
 
     def set_pixel(self, x, y, value):
+        """
+        Set the brightness of the pixel at column ``x`` and row ``y`` to the
+        ``value``, which has to be between 0 (dark) and 9 (bright).
+
+        This method will raise an exception when called on any of the built-in
+        read-only images, like ``Image.HEART``.
+        """
         if self.read_only:
             raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
         elif not self.__valid_pos(x, y):
@@ -127,47 +176,88 @@ class Image:
             self.__LED[y][x] = value
 
     def get_pixel(self, x, y):
+        """
+        Return the brightness of pixel at column ``x`` and row ``y`` as an
+        integer between 0 and 9.
+        """
         if self.__valid_pos(x, y):
             return self.__LED[y][x]
         else:
             raise ValueError(CONSTANTS.INDEX_ERR)
 
     def shift_up(self, n):
+        """
+        Return a new image created by shifting the picture up by ``n`` rows.
+        """
         return self.__shift_vertical(-n)
 
     def shift_down(self, n):
+        """
+        Return a new image created by shifting the picture down by ``n`` rows.
+        """
         return self.__shift_vertical(n)
 
     def shift_right(self, n):
+        """
+        Return a new image created by shifting the picture right by ``n``
+        columns.
+        """
         return self.__shift_horizontal(n)
 
     def shift_left(self, n):
+        """
+        Return a new image created by shifting the picture left by ``n``
+        columns.
+        """
         return self.__shift_horizontal(-n)
 
     def crop(self, x, y, w, h):
+        """
+        Return a new image by cropping the picture to a width of ``w`` and a
+        height of ``h``, starting with the pixel at column ``x`` and row ``y``.
+        """
         res = Image(w, h)
         res.blit(self, x, y, w, h)
         return res
 
     def copy(self):
+        """
+        Return an exact copy of the image.
+        """
         return Image(self.__create_string())
 
     # This inverts the brightness of each LED.
     # ie: Pixel that is at brightness 4 would become brightness 5
     # and pixel that is at brightness 9 would become brightness 0.
     def invert(self):
+        """
+        Return a new image by inverting the brightness of the pixels in the
+        source image.
+        """
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, CONSTANTS.BRIGHTNESS_MAX - self.get_pixel(x, y))
 
     # This fills all LEDs with same brightness.
     def fill(self, value):
+        """
+        Set the brightness of all the pixels in the image to the
+        ``value``, which has to be between 0 (dark) and 9 (bright).
+
+        This method will raise an exception when called on any of the built-in
+        read-only images, like ``Image.HEART``.
+        """
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, value)
 
     # This transposes a certain area (w x h) on src onto the current image.
     def blit(self, src, x, y, w, h, xdest=0, ydest=0):
+        """
+        Copy the rectangle defined by ``x``, ``y``, ``w``, ``h`` from the image ``src`` into
+        this image at ``xdest``, ``ydest``.
+        Areas in the source rectangle, but outside the source image are treated as having a value of 0.
+        """
         if not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
@@ -183,6 +273,9 @@ class Image:
     # This adds two images (if other object is not an image, throws error).
     # The images must be the same size.
     def __add__(self, other):
+        """
+        Create a new image by adding the brightness values from the two images for each pixel.
+        """
         if not isinstance(other, Image):
             raise TypeError(
                 CONSTANTS.UNSUPPORTED_ADD_TYPE + f"'{type(self)}', '{type(other)}'"
@@ -202,6 +295,9 @@ class Image:
 
     # This multiplies image by number (if other factor is not a number, it throws an error).
     def __mul__(self, other):
+        """
+        Create a new image by multiplying the brightness of each pixel by n.
+        """
         try:
             float_val = float(other)
         except TypeError:
@@ -217,6 +313,9 @@ class Image:
         return res
 
     def __repr__(self):
+        """
+        Get a compact string representation of the image.
+        """
         ret_str = "Image('"
         for index_y in range(self.height()):
             ret_str += self.__row_to_str(index_y)
@@ -226,6 +325,9 @@ class Image:
         return ret_str
 
     def __str__(self):
+        """
+        Get a readable string representation of the image.
+        """
         ret_str = "Image('\n"
         for index_y in range(self.height()):
             ret_str += "\t" + self.__row_to_str(index_y) + "\n"
