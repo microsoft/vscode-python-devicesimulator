@@ -11,12 +11,13 @@ previous_state = {}
 
 
 def create_message(state, device_name):
+    state_copy = dict(state)
     state_ext = {
         "device_name": device_name,
     }
-    state.update(state_ext)
+    state_copy.update(state_ext)
 
-    message = {"type": "state", "data": json.dumps(state)}
+    message = {"type": "state", "data": json.dumps(state_copy)}
     return message
 
 
