@@ -1,5 +1,9 @@
 import * as React from "react";
-import CONSTANTS, { WEBVIEW_MESSAGES } from "../../constants";
+import CONSTANTS, {
+    WEBVIEW_MESSAGES,
+    MICROBIT_BUTTONS_KEYS,
+    DEVICE_LIST_KEY,
+} from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
@@ -7,26 +11,34 @@ import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { MicrobitImage } from "./MicrobitImage";
 
-const initialLedState = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-];
+const DEFAULT_MICROBIT_STATE: IMicrobitState = {
+    leds: [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+    ],
+    buttons: { button_a: false, button_b: false },
+};
 
 interface IState {
     active_editors: string[];
     running_file: string;
-    leds: number[][];
     play_button: boolean;
     selected_file: string;
+    microbit: IMicrobitState;
+}
+
+interface IMicrobitState {
+    leds: number[][];
+    buttons: { button_a: boolean; button_b: boolean };
 }
 export class MicrobitSimulator extends React.Component<any, IState> {
     constructor() {
         super({});
         this.state = {
-            leds: initialLedState,
+            microbit: DEFAULT_MICROBIT_STATE,
             play_button: false,
             selected_file: "",
             active_editors: [],
@@ -39,13 +51,16 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         switch (message.command) {
             case "reset-state":
                 this.setState({
-                    leds: initialLedState,
+                    microbit: DEFAULT_MICROBIT_STATE,
                     play_button: false,
                 });
                 break;
             case "set-state":
                 this.setState({
-                    leds: message.state.leds,
+                    microbit: {
+                        ...this.state.microbit,
+                        leds: message.state.leds,
+                    },
                 });
                 break;
             case "activate-play":
@@ -97,7 +112,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                             onMouseUp: this.onMouseUp,
                             onMouseLeave: this.onMouseLeave,
                         }}
-                        leds={this.state.leds}
+                        leds={this.state.microbit.leds}
                     />
                 </div>
                 <ActionBar
@@ -123,14 +138,42 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected refreshSimulatorClick = () => {
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
-    protected onMouseUp(button: HTMLElement, event: Event, key: string) {
+    protected handleButtonClick = (key: string, isActive: boolean) => {
+        let newButtonState = this.state.microbit.buttons;
+        switch (key) {
+            case MICROBIT_BUTTONS_KEYS.BTN_A:
+                newButtonState.button_a = isActive;
+                break;
+            case MICROBIT_BUTTONS_KEYS.BTN_B:
+                newButtonState.button_b = isActive;
+                break;
+            case MICROBIT_BUTTONS_KEYS.BTN_AB:
+                newButtonState = {
+                    button_a: isActive,
+                    button_b: isActive,
+                };
+                break;
+        }
+        sendMessage(WEBVIEW_MESSAGES.BUTTON_PRESS, {
+            active_device: DEVICE_LIST_KEY.MICROBIT,
+            state: newButtonState,
+        });
+        this.setState({
+            microbit: {
+                ...this.state.microbit,
+                buttons: newButtonState,
+            },
+        });
+    };
+    protected onMouseUp = (button: HTMLElement, event: Event, key: string) => {
         event.preventDefault();
-        console.log(`To implement onMouseUp on ${key}`);
-    }
+        this.handleButtonClick(key, false);
+    };
     protected onMouseDown(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
-        console.log(`To implement onMouseDown ${key}`);
+        this.handleButtonClick(key, true);
     }
+
     protected onMouseLeave(button: HTMLElement, event: Event, key: string) {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
