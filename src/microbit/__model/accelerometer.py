@@ -111,11 +111,11 @@ class Accelerometer:
 
     def __set_accel(self, axis, accel):
         if axis == "x":
-            self.__x = self.__get_valid_acceleration(x)
+            self.__x = self.__get_valid_acceleration(accel)
         elif axis == "y":
-            self.__y = self.__get_valid_acceleration(y)
+            self.__y = self.__get_valid_acceleration(accel)
         elif axis == "z":
-            self.__z = self.__get_valid_acceleration(z)
+            self.__z = self.__get_valid_acceleration(accel)
 
     def __set_gesture(self, gesture):
         if gesture in CONSTANTS.GESTURES:
