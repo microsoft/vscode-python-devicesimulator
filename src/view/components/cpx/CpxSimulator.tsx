@@ -170,7 +170,6 @@ class Simulator extends React.Component<{}, IState> {
 
     protected togglePlayClick() {
         sendMessage("play-simulator", {
-            active_device: CONSTANTS.DEVICE_NAME.CPX,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
         });

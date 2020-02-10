@@ -154,7 +154,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 // Handle messages from webview
                 messageListener = currentPanel.webview.onDidReceiveMessage(
                     message => {
-                        const messageJson = JSON.stringify(message.text);
+                        const messageJson = JSON.stringify({
+                            active_device: currentActiveDevice,
+                            state: message.text,
+                        });
                         switch (message.command) {
                             case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
