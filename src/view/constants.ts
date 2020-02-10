@@ -46,8 +46,18 @@ export const CONSTANTS = {
     TOOLBAR_INFO: `Explore what's on the board:`,
 };
 export enum DEVICE_LIST_KEY {
-    CPX = "cpx",
-    MICROBIT = "microbit",
+    CPX = "CPX",
+    MICROBIT = "micro:bit",
+}
+
+//
+export enum WEBVIEW_MESSAGES {
+    SWITCH_DEVICE = "switch-device",
+    REFRESH_SIMULATOR = "refresh-simulator",
+    TOGGLE_PLAY_STOP = "toggle-play-stop",
+    BUTTON_PRESS = "button-press",
+    SENSOR_CHANGED = "sensor-changed",
+    SLIDER_TELEMETRY = "slider-telemetry",
 }
 
 export default CONSTANTS;

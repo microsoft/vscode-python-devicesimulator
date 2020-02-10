@@ -38,6 +38,7 @@ const pythonToMove = [
   "./src/microbit/*.*",
   "./src/microbit/!(test)/**/*",
   "./src/*.py",
+  "./src/common/*.py",
   "./src/requirements.txt",
 ];
 

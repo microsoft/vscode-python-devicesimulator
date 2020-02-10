@@ -3,6 +3,7 @@ from .model import image
 
 microbit = microbit_model.mb
 Image = image.Image
+display = microbit.display
 
 
 def sleep(n):

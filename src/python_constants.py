@@ -4,7 +4,7 @@
 CPX_DRIVE_NAME = "CIRCUITPY"
 
 ENABLE_TELEMETRY = "enable_telemetry"
-EXPECTED_INPUT_EVENTS = [
+EXPECTED_INPUT_EVENTS_CPX = [
     "button_a",
     "button_b",
     "switch",
@@ -42,3 +42,7 @@ UTF_FORMAT = "utf-8"
 WINDOWS_OS = "win32"
 
 DEFAULT_PORT = "5577"
+
+CPX = "CPX"
+
+MICROBIT = "micro:bit"

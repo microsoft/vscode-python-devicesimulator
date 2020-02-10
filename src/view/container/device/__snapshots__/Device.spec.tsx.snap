@@ -8,6 +8,25 @@ exports[`Device component  should render correctly 1`] = `
     className="simulator"
   >
     <div
+      className="file-selector"
+    >
+      <div>
+        <select
+          className="dropdown"
+          id="file-dropdown"
+          onBlur={[Function]}
+        >
+          <option
+            disabled={true}
+            selected={true}
+            value=""
+          >
+            Choose a .py file to run on the Simulator
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
       className="microbit-container"
     >
       <svg
@@ -2449,7 +2468,7 @@ exports[`Device component  should render correctly 1`] = `
             style={
               Object {
                 "fill": "rgb(51, 51, 51)",
-                "visibility": "hidden",
+                "visibility": "visible",
               }
             }
             tabIndex={0}
@@ -2497,7 +2516,7 @@ exports[`Device component  should render correctly 1`] = `
             style={
               Object {
                 "fill": "rgb(17, 17, 17)",
-                "visibility": "hidden",
+                "visibility": "visible",
               }
             }
           />
@@ -2545,6 +2564,65 @@ exports[`Device component  should render correctly 1`] = `
         <g />
         <g />
       </svg>
+    </div>
+    <div
+      className="buttons"
+    >
+      <button
+        aria-label="play"
+        className="play-button button"
+        id="play-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="play-icon"
+            d="M1.00005 0.854163C1.00003 0.471921 1.41151 0.231022 1.74482 0.418142L12.487 6.44883C12.8243 6.63823 12.828 7.12258 12.4936 7.31706L1.75209 13.5631C1.41877 13.757 1.00077 13.5165 1.00075 13.1309L1.00005 0.854163Z"
+            fill="#23D18B"
+          />
+        </svg>
+      </button>
+      <button
+        aria-label="refresh"
+        className="refresh-button button"
+        id="refresh-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="button-icon"
+            clip-rule="evenodd"
+            d="M7.12508 4.13728V2.92015C4.59083 2.92015 2.53127 4.74924 2.53127 6.9999C2.53127 7.53706 2.64611 8.06063 2.86815 8.5298C2.98299 8.77458 2.89877 9.05336 2.69205 9.23695C2.30158 9.58373 1.64313 9.46134 1.43641 9.00577C1.15313 8.38701 1 7.70705 1 6.9999C1 3.99449 3.74097 1.56024 7.12508 1.56024V0.343119C7.12508 0.0371382 7.53852 -0.112452 7.77587 0.0983343L9.91199 1.99541C10.0651 2.1314 10.0651 2.34219 9.91199 2.47818L7.77587 4.37526C7.53852 4.59285 7.12508 4.44326 7.12508 4.13728ZM11.3818 5.46997C11.267 5.23199 11.3512 4.94641 11.5579 4.76282C11.9484 4.41604 12.6068 4.53843 12.8136 4.994C13.0969 5.61277 13.25 6.29272 13.25 6.99988C13.25 10.0053 10.509 12.4395 7.1249 12.4395V13.6635C7.1249 13.9626 6.71146 14.1122 6.47411 13.9014L4.33799 12.0044C4.18487 11.8684 4.18487 11.6576 4.33799 11.5216L6.47411 9.62451C6.71146 9.40692 7.1249 9.55651 7.1249 9.8625V11.0796C9.65915 11.0796 11.7187 9.25053 11.7187 6.99988C11.7187 6.46271 11.5962 5.94594 11.3818 5.46997Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
     </div>
   </div>
 </div>

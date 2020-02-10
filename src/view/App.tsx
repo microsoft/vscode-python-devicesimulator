@@ -6,8 +6,9 @@ import { PivotItem } from "office-ui-fabric-react";
 import * as React from "react";
 import "./App.css";
 import { Tab } from "./components/tab/Tab";
-import { DEVICE_LIST_KEY } from "./constants";
+import { DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "./constants";
 import { Device } from "./container/device/Device";
+import { sendMessage } from "./utils/MessageUtils";
 
 interface IState {
     currentDevice: string;
@@ -36,6 +37,9 @@ class App extends React.Component<{}, IState> {
 
     handleDeviceChange = (item?: PivotItem) => {
         if (item && item.props && item.props.itemKey) {
+            sendMessage(WEBVIEW_MESSAGES.SWITCH_DEVICE, {
+                active_device: item.props.itemKey,
+            });
             this.setState({ currentDevice: item.props.itemKey });
         }
     };

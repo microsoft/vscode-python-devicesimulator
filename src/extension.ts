@@ -10,10 +10,10 @@ import {
     CONFIG,
     CONSTANTS,
     CPX_CONFIG_FILE,
+    DEFAULT_DEVICE,
     DialogResponses,
     SERVER_INFO,
     TelemetryEventName,
-    WebviewMessages,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -22,6 +22,7 @@ import { SerialMonitor } from "./serialMonitor";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
+import { WEBVIEW_MESSAGES } from "./view/constants";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -34,6 +35,9 @@ let debuggerCommunicationHandler: DebuggerCommunicationServer;
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+
+let currentActiveDevice: string = DEFAULT_DEVICE;
+
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
@@ -50,7 +54,11 @@ const setPathAndSendMessage = (
     if (currentPanel) {
         currentPanel.webview.postMessage({
             command: "current-file",
-            state: { running_file: newFilePath },
+            active_device: currentActiveDevice,
+
+            state: {
+                running_file: newFilePath,
+            },
         });
     }
 };
@@ -148,7 +156,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     message => {
                         const messageJson = JSON.stringify(message.text);
                         switch (message.command) {
-                            case WebviewMessages.BUTTON_PRESS:
+                            case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
                                 handleButtonPressTelemetry(message.text);
                                 console.log(`About to write ${messageJson} \n`);
@@ -165,7 +173,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     );
                                 }
                                 break;
-                            case WebviewMessages.PLAY_SIMULATOR:
+                            case WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP:
                                 console.log(`Play button ${messageJson} \n`);
                                 if (message.text.state as boolean) {
                                     setPathAndSendMessage(
@@ -187,8 +195,16 @@ export async function activate(context: vscode.ExtensionContext) {
                                 } else {
                                     killProcessIfRunning();
                                 }
+
+                                if (childProcess) {
+                                    childProcess.stdin.write(
+                                        messageJson + "\n"
+                                    );
+                                }
+
                                 break;
-                            case WebviewMessages.SENSOR_CHANGED:
+
+                            case WEBVIEW_MESSAGES.SENSOR_CHANGED:
                                 checkForTelemetry(message.text);
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
@@ -204,12 +220,16 @@ export async function activate(context: vscode.ExtensionContext) {
                                     );
                                 }
                                 break;
-                            case WebviewMessages.REFRESH_SIMULATOR:
+                            case WEBVIEW_MESSAGES.REFRESH_SIMULATOR:
                                 console.log("Refresh button");
                                 runSimulatorCommand();
                                 break;
-                            case WebviewMessages.SLIDER_TELEMETRY:
+                            case WEBVIEW_MESSAGES.SLIDER_TELEMETRY:
                                 handleSensorTelemetry(message.text);
+                                break;
+                            case WEBVIEW_MESSAGES.SWITCH_DEVICE:
+                                switchDevice(message.text.active_device);
+                                killProcessIfRunning();
                                 break;
                             default:
                                 vscode.window.showInformationMessage(
@@ -336,7 +356,10 @@ export async function activate(context: vscode.ExtensionContext) {
         if (childProcess !== undefined) {
             if (currentPanel) {
                 console.info("Sending clearing state command");
-                currentPanel.webview.postMessage({ command: "reset-state" });
+                currentPanel.webview.postMessage({
+                    command: "reset-state",
+                    active_device: currentActiveDevice,
+                });
             }
             // TODO: We need to check the process was correctly killed
             childProcess.kill();
@@ -443,7 +466,10 @@ export async function activate(context: vscode.ExtensionContext) {
             }
 
             // Activate the run webview button
-            currentPanel.webview.postMessage({ command: "activate-play" });
+            currentPanel.webview.postMessage({
+                command: "activate-play",
+                active_device: currentActiveDevice,
+            });
 
             childProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
@@ -480,12 +506,19 @@ export async function activate(context: vscode.ExtensionContext) {
                                         console.log(
                                             `Process state output = ${messageToWebview.data}`
                                         );
-                                        currentPanel.webview.postMessage({
-                                            command: "set-state",
-                                            state: JSON.parse(
-                                                messageToWebview.data
-                                            ),
-                                        });
+                                        const messageData = JSON.parse(
+                                            messageToWebview.data
+                                        );
+                                        if (
+                                            messageData.device_name ===
+                                            currentActiveDevice
+                                        ) {
+                                            currentPanel.webview.postMessage({
+                                                active_device: currentActiveDevice,
+                                                command: "set-state",
+                                                state: messageData,
+                                            });
+                                        }
                                         break;
 
                                     case "print":
@@ -530,6 +563,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (currentPanel) {
                     console.log("Sending clearing state command");
                     currentPanel.webview.postMessage({
+                        active_device: currentActiveDevice,
                         command: "reset-state",
                     });
                 }
@@ -832,6 +866,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (currentPanel) {
                     debuggerCommunicationHandler.setWebview(currentPanel);
                     currentPanel.webview.postMessage({
+                        currentActiveDevice,
                         command: "activate-play",
                     });
                 }
@@ -861,7 +896,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 debuggerCommunicationHandler = undefined;
             }
             if (currentPanel) {
-                currentPanel.webview.postMessage({ command: "reset-state" });
+                currentPanel.webview.postMessage({
+                    command: "reset-state",
+                    active_device: currentActiveDevice,
+                });
             }
         }
     });
@@ -1049,6 +1087,9 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
+}
+function switchDevice(deviceName: string) {
+    currentActiveDevice = deviceName;
 }
 
 // this method is called when your extension is deactivated

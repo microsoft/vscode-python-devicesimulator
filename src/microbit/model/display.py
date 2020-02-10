@@ -1,6 +1,7 @@
 import copy
 import time
 import threading
+from common import utils
 
 from . import constants as CONSTANTS
 from .image import Image
@@ -73,6 +74,7 @@ class Display:
                     appended_image, x, 0, CONSTANTS.LED_WIDTH, CONSTANTS.LED_HEIGHT
                 )
                 self.__lock.release()
+                self.__update_client()
 
                 Display.sleep_ms(delay)
 
@@ -132,6 +134,7 @@ class Display:
 
                 self.__image = image
                 self.__lock.release()
+                self.__update_client()
 
                 if use_delay:
                     Display.sleep_ms(delay)
@@ -151,11 +154,13 @@ class Display:
         self.__lock.acquire()
         self.__image.set_pixel(x, y, value)
         self.__lock.release()
+        self.__update_client()
 
     def clear(self):
         self.__lock.acquire()
         self.__image = Image()
         self.__lock.release()
+        self.__update_client()
 
     def on(self):
         self.__on = True
@@ -172,13 +177,13 @@ class Display:
     # Helpers
 
     def __get_array(self):
+        self.__lock.acquire()
         if self.is_on():
-            self.__lock.acquire()
             leds = copy.deepcopy(self.__image._Image__LED)
-            self.__lock.release()
-            return leds
         else:
-            return self.__blank_image._Image__LED
+            leds = self.__blank_image._Image__LED
+        self.__lock.release()
+        return leds
 
     @staticmethod
     def __get_image_from_char(c):
@@ -263,6 +268,10 @@ class Display:
             )
 
         return scroll_image
+
+    def __update_client(self):
+        sendable_json = {"leds": self.__get_array()}
+        utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
 
     @staticmethod
     def sleep_ms(ms):
