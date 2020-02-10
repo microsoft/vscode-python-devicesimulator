@@ -84,7 +84,7 @@ def update_microbit(new_state):
         previous_motion_val = mb.accelerometer._Accelerometer__get_accel(direction)
         new_motion_val = new_state.get(name, previous_motion_val)
         if new_motion_val != previous_motion_val:
-            print("change motion val")
+            mb.accelerometer._Accelerometer__set_accel(direction, new_motion_val)
 
     # set temperature
     previous_temp = mb.temperature()
