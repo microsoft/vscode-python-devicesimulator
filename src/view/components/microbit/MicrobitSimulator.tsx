@@ -165,17 +165,17 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             },
         });
     };
-    protected onMouseUp = (button: HTMLElement, event: Event, key: string) => {
+    protected onMouseUp = (event: Event, key: string) => {
         event.preventDefault();
         this.handleButtonClick(key, false);
     };
-    protected onMouseDown(button: HTMLElement, event: Event, key: string) {
+    protected onMouseDown = (event: Event, key: string) => {
         event.preventDefault();
         this.handleButtonClick(key, true);
-    }
+    };
 
-    protected onMouseLeave(button: HTMLElement, event: Event, key: string) {
+    protected onMouseLeave = (event: Event, key: string) => {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
-    }
+    };
 }
