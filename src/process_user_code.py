@@ -31,8 +31,9 @@ sys.path.insert(0, abs_path_to_lib)
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.telemetry import telemetry_py
 from adafruit_circuitplayground.constants import CPX
-from microbit.model.microbit_model import mb
-from microbit.model.constants import MICROBIT
+
+from microbit.__model.microbit_model import __mb as mb
+from microbit.__model.constants import MICROBIT
 
 
 # Handle User Inputs Thread
