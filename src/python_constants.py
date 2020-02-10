@@ -1,6 +1,8 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+ACTIVE_DEVICE_FIELD = "active_device"
+
 CPX_DRIVE_NAME = "CIRCUITPY"
 
 ENABLE_TELEMETRY = "enable_telemetry"
@@ -15,6 +17,11 @@ EXPECTED_INPUT_EVENTS_CPX = [
     "motion_y",
     "motion_z",
     "touch",
+]
+
+EXPECTED_INPUT_EVENTS_BUTTONS_MICROBIT = [
+    "button_a",
+    "button_b",
 ]
 
 EXEC_COMMAND = "exec"
