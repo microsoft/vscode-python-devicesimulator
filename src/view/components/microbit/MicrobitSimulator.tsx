@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS, {
+import {
     WEBVIEW_MESSAGES,
     MICROBIT_BUTTONS_KEYS,
     DEVICE_LIST_KEY,
@@ -47,6 +47,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
+
+        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
+            return;
+        }
 
         switch (message.command) {
             case "reset-state":
@@ -125,7 +129,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     protected togglePlayClick = () => {
         sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
-            active_device: CONSTANTS.DEVICE_NAME.MICROBIT,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
         });
@@ -154,10 +157,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 };
                 break;
         }
-        sendMessage(WEBVIEW_MESSAGES.BUTTON_PRESS, {
-            active_device: DEVICE_LIST_KEY.MICROBIT,
-            state: newButtonState,
-        });
+        sendMessage(WEBVIEW_MESSAGES.BUTTON_PRESS, newButtonState);
         this.setState({
             microbit: {
                 ...this.state.microbit,
