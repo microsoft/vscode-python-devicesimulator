@@ -7,7 +7,7 @@ from .image import Image
 
 
 class Display:
-    # The implementation based off of https://github.com/bbcmicrobit/micropython/blob/master/docs/display.rst.
+    # The implementation based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/display.html.
 
     def __init__(self):
         self.__image = Image()

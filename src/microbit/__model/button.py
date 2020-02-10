@@ -1,5 +1,5 @@
 class Button:
-    # The implementation is based off of https://github.com/bbcmicrobit/micropython/blob/master/docs/button.rst.
+    # The implementation is based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/button.html.
     def __init__(self):
         self.__pressed = False
         self.__presses = 0
