@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS, {
+import {
     WEBVIEW_MESSAGES,
     MICROBIT_BUTTONS_KEYS,
     DEVICE_LIST_KEY,
@@ -47,6 +47,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
+
+        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
+            return;
+        }
 
         switch (message.command) {
             case "reset-state":
