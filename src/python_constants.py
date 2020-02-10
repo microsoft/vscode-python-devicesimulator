@@ -5,6 +5,8 @@ ACTIVE_DEVICE_FIELD = "active_device"
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
+DEVICE_NOT_IMPLEMENTED_ERROR = "Device not implemented."
+
 ENABLE_TELEMETRY = "enable_telemetry"
 EXPECTED_INPUT_EVENTS_CPX = [
     "button_a",
@@ -19,7 +21,7 @@ EXPECTED_INPUT_EVENTS_CPX = [
     "touch",
 ]
 
-EXPECTED_INPUT_EVENTS_BUTTONS_MICROBIT = [
+EXPECTED_INPUT_BUTTONS_MICROBIT = [
     "button_a",
     "button_b",
 ]
@@ -43,6 +45,8 @@ NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
 PYTHON_LIBS_DIR = "python_libs"
+
+STATE_KEYWORD = "state"
 
 UTF_FORMAT = "utf-8"
 

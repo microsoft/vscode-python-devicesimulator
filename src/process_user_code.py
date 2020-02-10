@@ -45,32 +45,37 @@ class UserInput(threading.Thread):
             read_val = sys.stdin.readline()
             sys.stdin.flush()
             try:
-                new_state = json.loads(read_val)
+                json_val = json.loads(read_val)
+                device = json_val.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
+                new_state = json_val.get(CONSTANTS.STATE_KEYWORD, {})
 
-                device = new_state.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
                 if device == CPX:
-                    for event in CONSTANTS.EXPECTED_INPUT_EVENTS_CPX:
-                        cpx._Express__state[event] = new_state.get(
-                            event, cpx._Express__state[event]
-                        )
+                    update_cpx(new_state)
                 elif device == MICROBIT:
-                    new_state = new_state.get("state", {})
-                    for button in CONSTANTS.EXPECTED_INPUT_EVENTS_BUTTONS_MICROBIT:
-                        previous_pressed = None
-                        exec(f"previous_pressed = mb.{button}.get_presses()")
-                        button_pressed = new_state.get(event, previous_pressed)
-
-                        if button_pressed != previous_pressed:
-                            print(f"{button} is at {button_pressed}")
-                            if button_pressed:
-                                exec(f"mb.{button}._Button__press_down()")
-                            else:
-                                exec(f"mb.{button}._Button__release()")
+                    update_microbit(new_state)
                 else:
-                    raise Exception("Device not implemented.")
+                    raise Exception(CONSTANTS.DEVICE_NOT_IMPLEMENTED_ERROR)
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
+
+
+def update_cpx(new_state):
+    for event in CONSTANTS.EXPECTED_INPUT_EVENTS_CPX:
+        cpx._Express__state[event] = new_state.get(event, cpx._Express__state[event])
+
+
+def update_microbit(new_state):
+    for button in CONSTANTS.EXPECTED_INPUT_BUTTONS_MICROBIT:
+        previous_pressed = None
+        exec(f"previous_pressed = mb.{button}.get_presses()")
+        button_pressed = new_state.get(button, previous_pressed)
+
+        if button_pressed != previous_pressed:
+            if button_pressed:
+                exec(f"mb.{button}._Button__press_down()")
+            else:
+                exec(f"mb.{button}._Button__release()")
 
 
 user_input = UserInput()
