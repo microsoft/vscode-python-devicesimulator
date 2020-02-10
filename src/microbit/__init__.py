@@ -1,10 +1,10 @@
 from .__model.image import Image
 from .__model.microbit_model import __mb
 
+accelerometer = __mb.accelerometer
 button_a = __mb.button_a
 button_b = __mb.button_b
 display = __mb.display
-accelerometer = __mb.accelerometer
 
 
 def sleep(n):
