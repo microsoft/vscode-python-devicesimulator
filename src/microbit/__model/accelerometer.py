@@ -4,6 +4,7 @@ from . import constants as CONSTANTS
 
 
 class Accelerometer:
+    # The implementation is based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/accelerometer.html.
     def __init__(self):
         self.__x = 0
         self.__y = 0
