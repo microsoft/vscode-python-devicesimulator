@@ -20,8 +20,8 @@ def debug_show(state):
     if state != previous_state:
         previous_state = copy.deepcopy(state)
 
-        utils.update_state_with_device_name(state, CONSTANTS.CPX)
-        message = utils.create_message(state)
+        state_copy = utils.update_state_with_device_name(state, CONSTANTS.CPX)
+        message = utils.create_message(state_copy)
 
         update_state(json.dumps(message))
 
