@@ -6,13 +6,9 @@ import "../../styles/Microbit.css";
 import { MicrobitSvg } from "./Microbit_svg";
 
 interface EventTriggers {
-    onMouseUp: (button: HTMLElement, event: Event, buttonKey: string) => void;
-    onMouseDown: (button: HTMLElement, event: Event, buttonKey: string) => void;
-    onMouseLeave: (
-        button: HTMLElement,
-        event: Event,
-        buttonKey: string
-    ) => void;
+    onMouseUp: (event: Event, buttonKey: string) => void;
+    onMouseDown: (event: Event, buttonKey: string) => void;
+    onMouseLeave: (event: Event, buttonKey: string) => void;
 }
 interface IProps {
     eventTriggers: EventTriggers;
@@ -47,13 +43,13 @@ const setupButton = (
     key: string
 ) => {
     buttonElement.onmousedown = e => {
-        eventTriggers.onMouseDown(buttonElement, e, key);
+        eventTriggers.onMouseDown(e, key);
     };
     buttonElement.onmouseup = e => {
-        eventTriggers.onMouseUp(buttonElement, e, key);
+        eventTriggers.onMouseUp(e, key);
     };
     buttonElement.onmouseleave = e => {
-        eventTriggers.onMouseLeave(buttonElement, e, key);
+        eventTriggers.onMouseLeave(e, key);
     };
 };
 const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {

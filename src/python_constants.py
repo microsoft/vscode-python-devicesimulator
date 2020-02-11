@@ -1,21 +1,13 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+ACTIVE_DEVICE_FIELD = "active_device"
+
 CPX_DRIVE_NAME = "CIRCUITPY"
 
+DEVICE_NOT_IMPLEMENTED_ERROR = "Device not implemented."
+
 ENABLE_TELEMETRY = "enable_telemetry"
-EXPECTED_INPUT_EVENTS_CPX = [
-    "button_a",
-    "button_b",
-    "switch",
-    "temperature",
-    "light",
-    "shake",
-    "motion_x",
-    "motion_y",
-    "motion_z",
-    "touch",
-]
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
@@ -36,6 +28,8 @@ NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
 PYTHON_LIBS_DIR = "python_libs"
+
+STATE_FIELD = "state"
 
 UTF_FORMAT = "utf-8"
 

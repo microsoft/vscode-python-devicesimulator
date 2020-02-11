@@ -172,7 +172,6 @@ class Simulator extends React.Component<{}, IState> {
 
     protected togglePlayClick() {
         sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
-            active_device: CONSTANTS.DEVICE_NAME.CPX,
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
         });
