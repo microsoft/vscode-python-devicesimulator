@@ -77,7 +77,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) {}
+    } catch (exception) { }
 
     return false;
 }
@@ -294,7 +294,6 @@ export const promptInstallPythonDependencies = (
     return vscode.window
         .showInformationMessage(
             CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
-            { modal: true },
             DialogResponses.YES,
             DialogResponses.NO
         )
@@ -309,7 +308,6 @@ export const promptInstallPythonDependencies = (
                 return vscode.window
                     .showInformationMessage(
                         CONSTANTS.INFO.ARE_YOU_SURE,
-                        { modal: true },
                         DialogResponses.INSTALL_NOW,
                         DialogResponses.DONT_INSTALL
                     )
