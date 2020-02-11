@@ -77,7 +77,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) { }
+    } catch (exception) {}
 
     return false;
 }
