@@ -294,6 +294,7 @@ export const promptInstallPythonDependencies = (
     return vscode.window
         .showInformationMessage(
             CONSTANTS.INFO.INSTALL_PYTHON_DEPENDENCIES,
+            { modal: true },
             DialogResponses.YES,
             DialogResponses.NO
         )
@@ -304,10 +305,11 @@ export const promptInstallPythonDependencies = (
                     pythonExecutable,
                     pathToLibs
                 );
-            } else if (selection === DialogResponses.NO) {
+            } else {
                 return vscode.window
                     .showInformationMessage(
                         CONSTANTS.INFO.ARE_YOU_SURE,
+                        { modal: true },
                         DialogResponses.INSTALL_NOW,
                         DialogResponses.DONT_INSTALL
                     )
