@@ -1,5 +1,3 @@
-import enum
-
 from . import constants as CONSTANTS
 
 
