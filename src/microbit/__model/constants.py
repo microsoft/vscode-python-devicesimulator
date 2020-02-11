@@ -153,10 +153,12 @@ EXPECTED_INPUT_BUTTONS = [
     "button_b",
 ]
 
-EXPECTED_INPUT_LIGHT_MICROBIT = "light"
+EXPECTED_INPUT_ACCEL = {
+    "motion_x":"x",
+    "motion_y":"y",
+    "motion_z":"z",
+}
 
-EXPECTED_INPUT_SENSORS_MICROBIT = [
-    "temperature",
-    "light",
-]
-EXPECTED_INPUT_TEMP_MICROBIT = "temperature"
+EXPECTED_INPUT_LIGHT = "light"
+
+EXPECTED_INPUT_TEMP = "temperature"

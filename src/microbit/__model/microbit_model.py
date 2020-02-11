@@ -16,7 +16,7 @@ class MicrobitModel:
 
         self.__start_time = time.time()
         self.__temperature = 0
-        self.microbit_button_dict = {
+        self.__microbit_button_dict = {
             "button_a": self.button_a,
             "button_b": self.button_b,
         }
@@ -41,7 +41,7 @@ class MicrobitModel:
 
     def update_state(self, new_state):
         for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
-            button = self.microbit_button_dict[button_name]
+            button = self.__microbit_button_dict[button_name]
 
             previous_pressed = button.is_pressed()
             button_pressed = new_state.get(button_name, previous_pressed)
@@ -53,7 +53,7 @@ class MicrobitModel:
                     button._Button__release()
 
             # set motion_x, motion_y, motion_z
-            for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL_MICROBIT:
+            for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL.items():
                 previous_motion_val = self.accelerometer._Accelerometer__get_accel(
                     direction
                 )
@@ -65,16 +65,14 @@ class MicrobitModel:
 
             # set temperature
             previous_temp = self.temperature()
-            new_temp = new_state.get(
-                CONSTANTS.EXPECTED_INPUT_TEMP_MICROBIT, previous_temp
-            )
+            new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP, previous_temp)
             if new_temp != previous_temp:
                 self._MicrobitModel__set_temperature(new_temp)
 
             # set light level
             previous_light_level = self.display.read_light_level()
             new_light_level = new_state.get(
-                CONSTANTS.EXPECTED_INPUT_LIGHT_MICROBIT, previous_light_level
+                CONSTANTS.EXPECTED_INPUT_LIGHT, previous_light_level
             )
             if new_light_level != previous_light_level:
                 self.display._Display__set_light_level(new_light_level)
