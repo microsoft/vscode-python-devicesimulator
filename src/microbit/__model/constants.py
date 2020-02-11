@@ -154,9 +154,9 @@ EXPECTED_INPUT_BUTTONS = [
 ]
 
 EXPECTED_INPUT_ACCEL = {
-    "motion_x":"x",
-    "motion_y":"y",
-    "motion_z":"z",
+    "motion_x": "x",
+    "motion_y": "y",
+    "motion_z": "z",
 }
 
 EXPECTED_INPUT_LIGHT = "light"
