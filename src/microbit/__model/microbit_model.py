@@ -28,10 +28,11 @@ class MicrobitModel:
         return self.__temperature
 
     def __set_temperature(self, temperature):
-        if temperature < CONSTANTS.MIN_TEMPERATURE:
-            self.__temperature = CONSTANTS.MIN_TEMPERATURE
-        elif temperature > CONSTANTS.MAX_TEMPERATURE:
-            self.__temperature = CONSTANTS.MAX_TEMPERATURE
+        if (
+            temperature < CONSTANTS.MIN_TEMPERATURE
+            or temperature > CONSTANTS.MAX_TEMPERATURE
+        ):
+            raise ValueError(CONSTANTS.INVALID_TEMPERATURE_ERR)
         else:
             self.__temperature = temperature
 
