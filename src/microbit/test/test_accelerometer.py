@@ -1,8 +1,8 @@
 import pytest
 from unittest import mock
 
-from ..__model import constants as CONSTANTS
 from ..__model.accelerometer import Accelerometer
+from ..__model import constants as CONSTANTS
 
 
 class TestAccelerometer(object):

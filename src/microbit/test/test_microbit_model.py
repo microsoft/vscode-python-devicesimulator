@@ -2,8 +2,8 @@ import time
 
 import pytest
 from unittest import mock
-from ..__model.microbit_model import MicrobitModel
 from ..__model import constants as CONSTANTS
+from ..__model.microbit_model import MicrobitModel
 
 
 class TestMicrobitModel(object):
