@@ -145,5 +145,8 @@ NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UNSUPPORTED_ADD_TYPE = "unsupported types for __add__:"
 SAME_SIZE_ERR = "images must be the same size"
 INVALID_GESTURE_ERR = "invalid gesture"
+INVALID_ACCEL_ERR = "invalid acceleration"
+INVALID_LIGHT_LEVEL_ERR = "invalid light level"
+INVALID_TEMPERATURE_ERR = "invalid temperature"
 
 TIME_DELAY = 0.03

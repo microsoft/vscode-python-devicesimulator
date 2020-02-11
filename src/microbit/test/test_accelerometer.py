@@ -10,39 +10,47 @@ class TestAccelerometer(object):
         self.accelerometer = Accelerometer()
 
     @pytest.mark.parametrize(
-        "accel, expected",
+        "accel",
         [
-            (CONSTANTS.MIN_ACCELERATION - 10, CONSTANTS.MIN_ACCELERATION),
-            (CONSTANTS.MIN_ACCELERATION, CONSTANTS.MIN_ACCELERATION),
-            (100, 100),
-            (CONSTANTS.MAX_ACCELERATION, CONSTANTS.MAX_ACCELERATION),
-            (CONSTANTS.MAX_ACCELERATION + 1, CONSTANTS.MAX_ACCELERATION),
+            CONSTANTS.MIN_ACCELERATION,
+            CONSTANTS.MIN_ACCELERATION + 1,
+            100,
+            CONSTANTS.MAX_ACCELERATION - 1,
+            CONSTANTS.MAX_ACCELERATION,
         ],
     )
-    def test_x_y_z(self, accel, expected):
-        self.accelerometer._Accelerometer__set_x(accel)
-        assert expected == self.accelerometer.get_x()
-        self.accelerometer._Accelerometer__set_y(accel)
-        assert expected == self.accelerometer.get_y()
-        self.accelerometer._Accelerometer__set_z(accel)
-        assert expected == self.accelerometer.get_z()
+    def test_x_y_z(self, accel):
+        self.accelerometer._Accelerometer__set_accel("x", accel)
+        assert accel == self.accelerometer.get_x()
+        self.accelerometer._Accelerometer__set_accel("y", accel)
+        assert accel == self.accelerometer.get_y()
+        self.accelerometer._Accelerometer__set_accel("z", accel)
+        assert accel == self.accelerometer.get_z()
+
+    @pytest.mark.parametrize("axis", ["x", "y", "z"])
+    def test_x_y_z_invalid_accel(self, axis):
+        with pytest.raises(ValueError):
+            self.accelerometer._Accelerometer__set_accel(
+                axis, CONSTANTS.MAX_ACCELERATION + 1
+            )
+        with pytest.raises(ValueError):
+            self.accelerometer._Accelerometer__set_accel(
+                axis, CONSTANTS.MIN_ACCELERATION - 1
+            )
 
     @pytest.mark.parametrize(
-        "accels, expected",
+        "accels",
         [
-            ((23, 25, 26), (23, 25, 26)),
-            ((204, 234, -534), (204, 234, -534)),
-            (
-                (CONSTANTS.MIN_ACCELERATION - 10, 234, CONSTANTS.MAX_ACCELERATION),
-                (CONSTANTS.MIN_ACCELERATION, 234, CONSTANTS.MAX_ACCELERATION),
-            ),
+            (23, 25, 26),
+            (204, 234, -534),
+            (CONSTANTS.MIN_ACCELERATION + 10, 234, CONSTANTS.MAX_ACCELERATION),
         ],
     )
-    def test_get_values(self, accels, expected):
-        self.accelerometer._Accelerometer__set_x(accels[0])
-        self.accelerometer._Accelerometer__set_y(accels[1])
-        self.accelerometer._Accelerometer__set_z(accels[2])
-        assert expected == self.accelerometer.get_values()
+    def test_get_values(self, accels):
+        self.accelerometer._Accelerometer__set_accel("x", accels[0])
+        self.accelerometer._Accelerometer__set_accel("y", accels[1])
+        self.accelerometer._Accelerometer__set_accel("z", accels[2])
+        assert accels == self.accelerometer.get_values()
 
     @pytest.mark.parametrize("gesture", ["up", "face down", "freefall", "8g"])
     def test_current_gesture(self, gesture):

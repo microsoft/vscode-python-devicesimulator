@@ -82,23 +82,6 @@ class Accelerometer:
 
     # Helpers and Hidden Functions
 
-    def __set_x(self, x):
-        self.__x = self.__get_valid_acceleration(x)
-
-    def __set_y(self, y):
-        self.__y = self.__get_valid_acceleration(y)
-
-    def __set_z(self, z):
-        self.__z = self.__get_valid_acceleration(z)
-
-    def __get_valid_acceleration(self, acceleration):
-        if acceleration < CONSTANTS.MIN_ACCELERATION:
-            return CONSTANTS.MIN_ACCELERATION
-        elif acceleration > CONSTANTS.MAX_ACCELERATION:
-            return CONSTANTS.MAX_ACCELERATION
-        else:
-            return acceleration
-
     def __get_accel(self, axis):
         if axis == "x":
             return self.get_x()
@@ -108,12 +91,14 @@ class Accelerometer:
             return self.get_z()
 
     def __set_accel(self, axis, accel):
+        if accel < CONSTANTS.MIN_ACCELERATION or accel > CONSTANTS.MAX_ACCELERATION:
+            raise ValueError("")
         if axis == "x":
-            self.__x = self.__get_valid_acceleration(accel)
+            self.__x = accel
         elif axis == "y":
-            self.__y = self.__get_valid_acceleration(accel)
+            self.__y = accel
         elif axis == "z":
-            self.__z = self.__get_valid_acceleration(accel)
+            self.__z = accel
 
     def __set_gesture(self, gesture):
         if gesture in CONSTANTS.GESTURES:
