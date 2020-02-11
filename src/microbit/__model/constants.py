@@ -150,3 +150,8 @@ INVALID_LIGHT_LEVEL_ERR = "invalid light level"
 INVALID_TEMPERATURE_ERR = "invalid temperature"
 
 TIME_DELAY = 0.03
+
+EXPECTED_INPUT_BUTTONS = [
+    "button_a",
+    "button_b",
+]

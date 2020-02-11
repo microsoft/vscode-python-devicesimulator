@@ -194,5 +194,11 @@ class Express:
         telemetry_py.send_telemetry("STOP_TONE")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
+    def update_state(self, new_state):
+        for event in CONSTANTS.ALL_EXPECTED_INPUT_EVENTS:
+            self._Express__state[event] = new_state.get(
+                event, self._Express__state[event]
+            )
+
 
 cpx = Express()

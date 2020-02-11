@@ -17,6 +17,11 @@ class MicrobitModel:
         self.__start_time = time.time()
         self.__temperature = 0
 
+        self.microbit_button_dict = {
+            "button_a": self.button_a,
+            "button_b": self.button_b,
+        }
+
     def sleep(self, n):
         time.sleep(n / 1000)
 
@@ -35,6 +40,19 @@ class MicrobitModel:
             raise ValueError(CONSTANTS.INVALID_TEMPERATURE_ERR)
         else:
             self.__temperature = temperature
+
+    def update_state(self, new_state):
+        for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
+            button = self.microbit_button_dict[button_name]
+
+            previous_pressed = button.is_pressed()
+            button_pressed = new_state.get(button_name, previous_pressed)
+
+            if button_pressed != previous_pressed:
+                if button_pressed:
+                    button._Button__press_down()
+                else:
+                    button._Button__release()
 
 
 __mb = MicrobitModel()
