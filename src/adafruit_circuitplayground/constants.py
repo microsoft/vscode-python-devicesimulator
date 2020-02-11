@@ -47,3 +47,16 @@ DEFAULT_PORT = "5577"
 
 EVENTS_BUTTON_PRESS = ["button_a", "button_b", "switch"]
 EVENTS_SENSOR_CHANGED = ["temperature", "light", "motion_x", "motion_y", "motion_z"]
+
+ALL_EXPECTED_INPUT_EVENTS = [
+    "button_a",
+    "button_b",
+    "switch",
+    "temperature",
+    "light",
+    "shake",
+    "motion_x",
+    "motion_y",
+    "motion_z",
+    "touch",
+]

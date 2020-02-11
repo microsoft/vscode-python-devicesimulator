@@ -147,3 +147,8 @@ SAME_SIZE_ERR = "images must be the same size"
 INVALID_GESTURE_ERR = "invalid gesture"
 
 TIME_DELAY = 0.03
+
+EXPECTED_INPUT_BUTTONS = [
+    "button_a",
+    "button_b",
+]
