@@ -112,6 +112,30 @@ LED_WIDTH = 5
 BRIGHTNESS_MIN = 0
 BRIGHTNESS_MAX = 9
 
+# sensor max/min values
+MAX_TEMPERATURE = 125
+MIN_TEMPERATURE = -55
+MAX_LIGHT_LEVEL = 255
+MIN_LIGHT_LEVEL = 0
+MAX_ACCELERATION = 1023
+MIN_ACCELERATION = -1023
+
+GESTURES = set(
+    [
+        "up",
+        "down",
+        "left",
+        "right",
+        "face up",
+        "face down",
+        "freefall",
+        "3g",
+        "6g",
+        "8g",
+        "shake",
+    ]
+)
+
 # error messages
 BRIGHTNESS_ERR = "brightness out of bounds"
 COPY_ERR_MESSAGE = "please call copy function first"
@@ -120,6 +144,7 @@ INDEX_ERR = "index out of bounds"
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 UNSUPPORTED_ADD_TYPE = "unsupported types for __add__:"
 SAME_SIZE_ERR = "images must be the same size"
+INVALID_GESTURE_ERR = "invalid gesture"
 
 TIME_DELAY = 0.03
 
