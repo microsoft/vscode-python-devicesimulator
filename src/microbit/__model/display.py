@@ -234,10 +234,8 @@ class Display:
         return self.__light_level
 
     def __set_light_level(self, level):
-        if level < CONSTANTS.MIN_LIGHT_LEVEL:
-            self.__light_level = CONSTANTS.MIN_LIGHT_LEVEL
-        elif level > CONSTANTS.MAX_LIGHT_LEVEL:
-            self.__light_level = CONSTANTS.MAX_LIGHT_LEVEL
+        if level < CONSTANTS.MIN_LIGHT_LEVEL or level > CONSTANTS.MAX_LIGHT_LEVEL:
+            raise ValueError(CONSTANTS.INVALID_LIGHT_LEVEL_ERR)
         else:
             self.__light_level = level
 
