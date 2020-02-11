@@ -1,6 +1,6 @@
 import * as React from "react";
+import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
-import { ISliderProps, ISensorProps } from "../../../viewUtils";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",

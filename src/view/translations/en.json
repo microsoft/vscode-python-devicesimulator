@@ -1,7 +1,7 @@
 {
     "toolbar-gpio.description": "8 GPIOs on the device! Pin A1 - A7 can also be used as capacitive touch sensors, and A0 is a true analog output pin.",
     "toolbar-gpio.title": "GPIO",
-    "toolbar-gpio.tryItDescription": "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7”",
+    "toolbar-gpio.tryItDescription": "Use your mouse to interact with the pin A1 - A7 or use your keyboard SHIFT+”1” - “7”.",
     "toolbar-ir-sensor.description": "Allows you to send commands to the device with a remote control, or even send messages between multiple devices! You can also do very simple proximity sensing since it reads the reflected light.",
     "toolbar-ir-sensor.title": "IR Transmit & Receiver",
     "toolbar-ir-sensor.tryItDescription": "We’re working hard to support this sensor on the simulator in the Device Simulator Express. You can try it on MakeCode!",
@@ -35,5 +35,11 @@
     "toolbar-temperature-sensor.tryItDescription": "You can set the temperature range from your code!",
     "toolbar-accelerometer-sensor.title": "Accelerometer",
     "toolbar-accelerometer-sensor.description": "An accelerometer measures the acceleration of your micro:bit; this component senses when the micro:bit is moved.",
-    "toolbar-accelerometer-sensor.tryItDescription": "Change the acceleration here"
+    "toolbar-accelerometer-sensor.tryItDescription": "Change the acceleration here.",
+    "toolbar-microbit-led.title": "LEDs",
+    "toolbar-microbit-led.description": "The microbit has 25 LEDs for you to play with. The LEDs have 9 level of brightness.",
+    "toolbar-microbit-led.tryItDescription": "Run your code and see the LEDs light up!",
+    "toolbar-microbit-button.title": "Buttons",
+    "toolbar-microbit-button.description": "There are two buttons on the front of the micro:bit (labelled A and B). The third button is to trigger both A and B buttons. You can detect when these buttons are pressed, allowing you to trigger code on the device.",
+    "toolbar-microbit-button.tryItDescription": "Click them with your mouse or by pressing “A” “B” on your keyboard!"
 }

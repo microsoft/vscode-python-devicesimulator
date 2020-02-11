@@ -23,6 +23,14 @@ export class Microbit extends React.Component {
 
 const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
+        image: TOOLBAR_SVG.PUSH_BUTTON_SVG,
+        label: MICROBIT_TOOLBAR_ID.PUSH_BUTTON,
+    },
+    {
+        image: TOOLBAR_SVG.RED_LED_SVG,
+        label: MICROBIT_TOOLBAR_ID.LEDS,
+    },
+    {
         image: TOOLBAR_SVG.TEMPERATURE_SVG,
         label: MICROBIT_TOOLBAR_ID.TEMPERATURE,
     },

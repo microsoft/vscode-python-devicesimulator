@@ -54,6 +54,8 @@ export const MICROBIT_TOOLBAR_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
     LIGHT: "toolbar-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer",
+    LEDS: "toolbar-microbit-led",
+    PUSH_BUTTON: "toolbar-microbit-button",
 };
 
 export interface IModalContent {
@@ -64,7 +66,6 @@ export interface IModalContent {
     tagInput: any;
     tagOutput: any;
     tryItDescription: string;
-    tryItTitle: string;
 }
 
 export const DEFAULT_MODAL_CONTENT: IModalContent = {
@@ -72,7 +73,6 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
     tagInput: undefined,
     tagOutput: undefined,
     descriptionText: "none",
-    tryItTitle: "none",
     tryItDescription: "none",
     component: undefined,
     id: "none",
@@ -82,7 +82,6 @@ export const GPIO_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: TAG_OUTPUT_SVG,
     descriptionText: "toolbar-gpio.description",
-    tryItTitle: "Simulation Coming Soon!",
     tryItDescription: "toolbar-gpio.tryItDescription",
     component: undefined,
     id: "GPIO",
@@ -93,7 +92,6 @@ export const IR_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: TAG_OUTPUT_SVG,
     descriptionText: "toolbar-ir-sensor.description",
-    tryItTitle: "Simulation Coming Soon!",
     tryItDescription: "toolbar-ir-sensor.tryItDescription",
     component: TRY_IT_MAKE_CODE,
     id: "IR",
@@ -103,7 +101,6 @@ export const LIGHT_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     descriptionText: "toolbar-light-sensor.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-light-sensor.tryItDescription",
     component: <LightSensorBar />,
     id: "light_sensor",
@@ -113,7 +110,6 @@ export const MOTION_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     descriptionText: "toolbar-motion-sensor.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-motion-sensor.tryItDescription",
     component: <MotionSensorBar />,
     id: "motion_sensor",
@@ -123,7 +119,6 @@ export const NEOP_MODAL_CONTENT: IModalContent = {
     tagInput: undefined,
     tagOutput: TAG_OUTPUT_SVG,
     descriptionText: "toolbar-neo-pixels.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-neo-pixels.tryItDescription",
     component: undefined,
     id: "neon_pixel",
@@ -133,7 +128,6 @@ export const PUSHB_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     descriptionText: "toolbar-push-button.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-push-button.tryItDescription",
     component: undefined,
     id: "push_btn",
@@ -143,7 +137,6 @@ export const RED_LED_MODAL_CONTENT: IModalContent = {
     tagInput: undefined,
     tagOutput: TAG_OUTPUT_SVG,
     descriptionText: "toolbar-red-led.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-red-led.tryItDescription",
     component: undefined,
     id: "red_LED",
@@ -153,7 +146,6 @@ export const SOUND_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     descriptionText: "toolbar-sound-sensor.description",
-    tryItTitle: "Simulation Coming Soon!",
     tryItDescription: "toolbar-sound-sensor.tryItDescription",
     component: TRY_IT_MAKE_CODE,
     id: "sound_sensor",
@@ -163,7 +155,6 @@ export const SWITCH_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     descriptionText: "toolbar-slider-switch.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-slider-switch.tryItDescription",
     component: undefined,
     id: "slider_switch",
@@ -173,7 +164,6 @@ export const SPEAKER_MODAL_CONTENT: IModalContent = {
     tagInput: undefined,
     tagOutput: TAG_OUTPUT_SVG,
     descriptionText: "toolbar-speaker.description",
-    tryItTitle: "Try it on the Simulator!",
     tryItDescription: "toolbar-speaker.tryItDescription",
     component: undefined,
     id: "speaker",
@@ -186,18 +176,35 @@ export const TEMPERATURE_MODAL_CONTENT: IModalContent = {
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     tryItDescription: "toolbar-temperature-sensor.tryItDescription",
-    tryItTitle: "Try it on the Simulator!",
 };
 
 export const ACCELEROMETER_MODAL_CONTENT: IModalContent = {
     component: <Accelerometer />,
     descriptionText: "toolbar-accelerometer-sensor.description",
     descriptionTitle: "toolbar-accelerometer-sensor.title",
-    id: "temperature",
+    id: "accelerometer",
     tagInput: TAG_INPUT_SVG,
     tagOutput: undefined,
     tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
-    tryItTitle: "Try it on the Simulator!",
+};
+export const MICROBIT_LED_CONTENT: IModalContent = {
+    descriptionTitle: "toolbar-microbit-led.title",
+    tagInput: undefined,
+    tagOutput: TAG_OUTPUT_SVG,
+    descriptionText: "toolbar-microbit-led.description",
+    tryItDescription: "toolbar-microbit-led.tryItDescription",
+    component: undefined,
+    id: "microbit_LED",
+};
+
+export const MICROBIT_BUTTON_CONTENT: IModalContent = {
+    descriptionTitle: "toolbar-microbit-button.title",
+    tagInput: undefined,
+    tagOutput: TAG_INPUT_SVG,
+    descriptionText: "toolbar-microbit-button.description",
+    tryItDescription: "toolbar-microbit-button.tryItDescription",
+    component: undefined,
+    id: "microbit_button",
 };
 
 export const LABEL_TO_MODAL_CONTENT = new Map([
@@ -213,4 +220,6 @@ export const LABEL_TO_MODAL_CONTENT = new Map([
     [CPX_TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
     [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
+    [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
 ]);
