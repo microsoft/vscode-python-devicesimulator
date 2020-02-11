@@ -69,9 +69,7 @@ class MicrobitModel:
             )
             new_motion_val = new_state.get(name, previous_motion_val)
             if new_motion_val != previous_motion_val:
-                self.accelerometer._Accelerometer__set_accel(
-                    direction, new_motion_val
-                )
+                self.accelerometer._Accelerometer__set_accel(direction, new_motion_val)
 
     def __update_light(self, new_state):
         # set light level
@@ -81,12 +79,13 @@ class MicrobitModel:
         )
         if new_light_level != previous_light_level:
             self.display._Display__set_light_level(new_light_level)
-    
+
     def __update_temp(self, new_state):
         # set temperature
         previous_temp = self.temperature()
         new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP, previous_temp)
         if new_temp != previous_temp:
             self._MicrobitModel__set_temperature(new_temp)
+
 
 __mb = MicrobitModel()
