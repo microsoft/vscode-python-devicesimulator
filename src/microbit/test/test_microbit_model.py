@@ -2,8 +2,8 @@ import time
 
 import pytest
 from unittest import mock
-from ..__model.microbit_model import MicrobitModel
 from ..__model import constants as CONSTANTS
+from ..__model.microbit_model import MicrobitModel
 
 
 class TestMicrobitModel(object):
@@ -21,7 +21,6 @@ class TestMicrobitModel(object):
         mock_end_time = 300
         self.__mb._MicrobitModel__start_time = mock_start_time
         time.time = mock.MagicMock(return_value=mock_end_time)
-        print(time.time())
         assert mock_end_time - mock_start_time == pytest.approx(
             self.__mb.running_time()
         )

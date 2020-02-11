@@ -92,7 +92,7 @@ class Accelerometer:
 
     def __set_accel(self, axis, accel):
         if accel < CONSTANTS.MIN_ACCELERATION or accel > CONSTANTS.MAX_ACCELERATION:
-            raise ValueError("")
+            raise ValueError(CONSTANTS.INVALID_ACCEL_ERR)
         if axis == "x":
             self.__x = accel
         elif axis == "y":

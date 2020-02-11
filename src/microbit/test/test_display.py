@@ -158,8 +158,7 @@ class TestDisplay(object):
         assert Image._Image__same_image(Image(STR_SIX), self.display._Display__image)
 
     @pytest.mark.parametrize(
-        "light_level",
-        [CONSTANTS.MIN_LIGHT_LEVEL + 10, 100, CONSTANTS.MAX_LIGHT_LEVEL,],
+        "light_level", [CONSTANTS.MIN_LIGHT_LEVEL + 10, 100, CONSTANTS.MAX_LIGHT_LEVEL],
     )
     def test_light_level(self, light_level):
         self.display._Display__set_light_level(light_level)
