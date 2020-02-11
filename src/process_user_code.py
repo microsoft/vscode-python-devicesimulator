@@ -31,8 +31,9 @@ sys.path.insert(0, abs_path_to_lib)
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.telemetry import telemetry_py
 from adafruit_circuitplayground.constants import CPX
-from microbit.model.microbit_model import mb
-from microbit.model.constants import MICROBIT
+
+from microbit.__model.microbit_model import __mb as mb
+from microbit.__model.constants import MICROBIT
 
 
 # Handle User Inputs Thread
@@ -41,33 +42,19 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        device_dict = {CPX: cpx, MICROBIT: mb}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
             try:
-                new_state = json.loads(read_val)
+                new_state_message = json.loads(read_val)
+                device = new_state_message.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
+                new_state = new_state_message.get(CONSTANTS.STATE_FIELD, {})
 
-                device = new_state.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
-                if device == CPX:
-                    for event in CONSTANTS.EXPECTED_INPUT_EVENTS_CPX:
-                        cpx._Express__state[event] = new_state.get(
-                            event, cpx._Express__state[event]
-                        )
-                elif device == MICROBIT:
-                    new_state = new_state.get("state", {})
-                    for button in CONSTANTS.EXPECTED_INPUT_EVENTS_BUTTONS_MICROBIT:
-                        previous_pressed = None
-                        exec(f"previous_pressed = mb.{button}.get_presses()")
-                        button_pressed = new_state.get(event, previous_pressed)
-
-                        if button_pressed != previous_pressed:
-                            print(f"{button} is at {button_pressed}")
-                            if button_pressed:
-                                exec(f"mb.{button}._Button__press_down()")
-                            else:
-                                exec(f"mb.{button}._Button__release()")
+                if device in device_dict:
+                    device_dict[device].update_state(new_state)
                 else:
-                    raise Exception("Device not implemented.")
+                    raise Exception(CONSTANTS.DEVICE_NOT_IMPLEMENTED_ERROR)
 
             except Exception as e:
                 print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)

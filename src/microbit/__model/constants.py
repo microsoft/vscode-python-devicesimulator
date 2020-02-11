@@ -122,3 +122,8 @@ UNSUPPORTED_ADD_TYPE = "unsupported types for __add__:"
 SAME_SIZE_ERR = "images must be the same size"
 
 TIME_DELAY = 0.03
+
+EXPECTED_INPUT_BUTTONS = [
+    "button_a",
+    "button_b",
+]

@@ -2,18 +2,21 @@ import time
 
 import pytest
 from unittest import mock
-from .. import shim
-from ..model import microbit_model
+
+from .. import *
+from ..__model.microbit_model import MicrobitModel
+
+# tests methods in __init__.py
 
 
 class TestShim(object):
     def test_sleep(self):
         milliseconds = 100
-        microbit_model.mb.sleep = mock.Mock()
-        shim.sleep(milliseconds)
-        microbit_model.mb.sleep.assert_called_with(milliseconds)
+        MicrobitModel.sleep = mock.Mock()
+        sleep(milliseconds)
+        MicrobitModel.sleep.assert_called_with(milliseconds)
 
     def test_running_time(self):
-        microbit_model.mb.running_time = mock.Mock()
-        shim.running_time()
-        microbit_model.mb.running_time.assert_called_once()
+        MicrobitModel.running_time = mock.Mock()
+        running_time()
+        MicrobitModel.running_time.assert_called_once()
