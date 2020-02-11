@@ -5,9 +5,9 @@ import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 import LightSensorBar from "./LightSensorBar";
+import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
-import { Accelerometer } from "./motion/Accelerometer";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">

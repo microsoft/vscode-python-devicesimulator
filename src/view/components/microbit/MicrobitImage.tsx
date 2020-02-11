@@ -61,7 +61,7 @@ const setupAllButtons = (eventTriggers: EventTriggers, buttonRefs: Object) => {
 };
 const updateAllLeds = (
     leds: number[][],
-    ledRefs: Array<React.RefObject<SVGRectElement>>[]
+    ledRefs: Array<Array<React.RefObject<SVGRectElement>>>
 ) => {
     for (let j = 0; j < leds.length; j++) {
         for (let i = 0; i < leds[0].length; i++) {

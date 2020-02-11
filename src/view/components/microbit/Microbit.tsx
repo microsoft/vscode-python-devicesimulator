@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "../../styles/Simulator.css";
-import { MicrobitSimulator } from "./MicrobitSimulator";
-import ToolBar from "../toolbar/ToolBar";
-import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import { MICROBIT_TOOLBAR_ID } from "../../components/toolbar/SensorModalUtils";
+import "../../styles/Simulator.css";
+import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
+import ToolBar from "../toolbar/ToolBar";
+import { MicrobitSimulator } from "./MicrobitSimulator";
 
 // Component grouping the functionality for micro:bit functionalities
 

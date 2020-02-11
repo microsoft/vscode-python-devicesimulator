@@ -2,19 +2,12 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import svg from "../../cpx/Svg_utils";
-import InputSlider from "../InputSlider";
-import SensorButton from "../SensorButton";
-import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { CONSTANTS } from "../../../constants";
 import "../../../styles/MotionSensorBar.css";
-import {
-    ISensorProps,
-    ISliderProps,
-    X_SLIDER_INDEX,
-    Y_SLIDER_INDEX,
-    Z_SLIDER_INDEX,
-} from "../../../viewUtils";
+import { ISensorProps, ISliderProps } from "../../../viewUtils";
+import svg from "../../cpx/Svg_utils";
+import SensorButton from "../SensorButton";
+import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 
 interface vscode {
     postMessage(message: any): void;
@@ -78,7 +71,9 @@ class MotionSensorBar extends React.Component {
                     onKeyDown={this.onKeyDown}
                 />
                 <br />
-                <ThreeDimensionSlider />
+                <ThreeDimensionSlider
+                    axisProperties={MOTION_SENSOR_PROPERTIES}
+                />
                 <br />
             </div>
         );
