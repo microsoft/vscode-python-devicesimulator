@@ -152,3 +152,11 @@ EXPECTED_INPUT_BUTTONS = [
     "button_a",
     "button_b",
 ]
+
+EXPECTED_INPUT_LIGHT_MICROBIT = "light"
+
+EXPECTED_INPUT_SENSORS_MICROBIT = [
+    "temperature",
+    "light",
+]
+EXPECTED_INPUT_TEMP_MICROBIT = "temperature"
