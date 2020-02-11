@@ -31,7 +31,8 @@
         "onCommand:deviceSimulatorExpress.openSerialMonitor",
         "onCommand:deviceSimulatorExpress.openSimulator",
         "onCommand:deviceSimulatorExpress.runSimulator",
-        "onCommand:deviceSimulatorExpress.newFile",
+        "onCommand:deviceSimulatorExpress.newFileCPX",
+        "onCommand:deviceSimulatorExpress.newFileMicrobit",
         "onCommand:deviceSimulatorExpress.runDevice",
         "onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
         "onCommand:deviceSimulatorExpress.selectSerialPort",
@@ -79,8 +80,13 @@
                 }
             },
             {
-                "command": "deviceSimulatorExpress.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.newFile%",
+                "command": "deviceSimulatorExpress.newFileCPX",
+                "title": "%deviceSimulatorExpressExtension.commands.newFileCPX%",
+                "category": "%deviceSimulatorExpressExtension.commands.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.newFileMicrobit",
+                "title": "%deviceSimulatorExpressExtension.commands.newFileMicrobit%",
                 "category": "%deviceSimulatorExpressExtension.commands.label%"
             },
             {

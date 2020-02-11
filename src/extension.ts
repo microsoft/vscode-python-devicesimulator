@@ -286,15 +286,23 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const openTemplateFile = () => {
-        const fileName = "template.py";
-        const filePath = __dirname + path.sep + fileName;
+    const openCPXTemplateFile = () => {
+        openTemplateFile("cpx");
+    }
+
+    const openMicrobitTemplateFile = () => {
+        openTemplateFile("microbit");
+    }
+
+    const openTemplateFile = (device: string) => {
+        const fileName = `${device}_template.py`;
+        const filePath = __dirname + path.sep + "templates" + path.sep + fileName;
         const file = fs.readFileSync(filePath, "utf8");
         const showNewFilePopup: boolean = vscode.workspace
             .getConfiguration()
             .get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-        if (showNewFilePopup) {
+        if (showNewFilePopup && device === "cpx") {
             vscode.window
                 .showInformationMessage(
                     CONSTANTS.INFO.NEW_FILE,
@@ -344,12 +352,23 @@ export async function activate(context: vscode.ExtensionContext) {
             };
     };
 
-    const newFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.newFile",
+    const newFileCPX: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileCPX",
         () => {
-            telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
+            telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE_CPX);
             telemetryAI.runWithLatencyMeasure(
-                openTemplateFile,
+                openCPXTemplateFile,
+                TelemetryEventName.PERFORMANCE_NEW_FILE
+            );
+        }
+    );
+
+    const newFileMicrobit: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileMicrobit",
+        () => {
+            telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE_MICROBIT);
+            telemetryAI.runWithLatencyMeasure(
+                openMicrobitTemplateFile,
                 TelemetryEventName.PERFORMANCE_NEW_FILE
             );
         }
@@ -912,7 +931,8 @@ export async function activate(context: vscode.ExtensionContext) {
         closeSerialMonitor,
         openSerialMonitor,
         openSimulator,
-        newFile,
+        newFileCPX,
+        newFileMicrobit,
         runSimulator,
         runSimulatorEditorButton,
         runDevice,
