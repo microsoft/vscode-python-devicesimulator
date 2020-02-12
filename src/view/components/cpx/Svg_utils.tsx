@@ -3,17 +3,20 @@
 
 // Adapted from : https://github.com/microsoft/pxt/blob/master/pxtsim/svg.ts
 
+// tslint:disable-next-line: no-namespace
 namespace svg {
     export function addClass(el: SVGElement, cls: string) {
-        if (el.classList) { el.classList.add(cls); }
-        else if (el.className.baseVal.indexOf(cls) < 0) {
+        if (el.classList) {
+            el.classList.add(cls);
+        } else if (el.className.baseVal.indexOf(cls) < 0) {
             el.className.baseVal += " " + cls;
- }
+        }
     }
 
     export function removeClass(el: SVGElement, cls: string) {
-        if (el.classList) { el.classList.remove(cls); }
-        else {
+        if (el.classList) {
+            el.classList.remove(cls);
+        } else {
             el.className.baseVal = el.className.baseVal
                 .replace(cls, "")
                 .replace(/\s{2,}/, " ");
@@ -24,7 +27,9 @@ namespace svg {
         for (const k in props) {
             if (k == "title") {
                 svg.title(el, props[k]);
-            } else { el.setAttributeNS(null, k, props[k]); }
+            } else {
+                el.setAttributeNS(null, k, props[k]);
+            }
         }
     }
 
@@ -33,7 +38,9 @@ namespace svg {
             "http://www.w3.org/2000/svg",
             name
         );
-        if (props) { svg.hydrate(newElement, props); }
+        if (props) {
+            svg.hydrate(newElement, props);
+        }
         return newElement;
     }
 
