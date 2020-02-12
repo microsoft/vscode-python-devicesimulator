@@ -41,7 +41,6 @@ class Button:
     def __release(self):
         self.__pressed = False
 
-    
     def __update(self, is_button_pressed):
         if is_button_pressed is not None:
             was_button_pressed = self.is_pressed()

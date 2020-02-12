@@ -115,9 +115,6 @@ class Accelerometer:
 
     def __update(self, axis, accel):
         if accel is not None:
-            previous_accel = self.__get_accel(
-                axis
-            )
+            previous_accel = self.__get_accel(axis)
             if accel != previous_accel:
                 self.__set_accel(axis, accel)
-        
