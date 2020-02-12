@@ -2,22 +2,13 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS } from "../../../constants";
+import { CONSTANTS, WEBVIEW_MESSAGES } from "../../../constants";
 import "../../../styles/MotionSensorBar.css";
+import { sendMessage } from "../../../utils/MessageUtils";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import svg from "../../cpx/Svg_utils";
 import SensorButton from "../SensorButton";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
-
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (state: any) => {
-    vscode.postMessage({ command: "sensor-changed", text: state });
-};
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -97,7 +88,7 @@ class MotionSensorBar extends React.Component {
 
     private handleOnclick = (active: boolean, type: string) => {
         const messageState = { [type]: active };
-        sendMessage(messageState);
+        sendMessage(WEBVIEW_MESSAGES.SENSOR_CHANGED, messageState);
     };
 
     private onKeyEvent(
