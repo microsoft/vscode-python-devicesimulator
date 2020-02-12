@@ -114,7 +114,7 @@ export const CONSTANTS = {
     INFO: {
         ARE_YOU_SURE: localize(
             "info.areYouSure",
-            "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+            "Are you sure you don't want to install the dependencies? The extension can't run without installing them."
         ),
         CLOSED_SERIAL_PORT: (port: string) => {
             return localize(
