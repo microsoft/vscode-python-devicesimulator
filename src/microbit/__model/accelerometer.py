@@ -103,8 +103,10 @@ class Accelerometer:
     def __set_gesture(self, gesture):
         if gesture in CONSTANTS.GESTURES:
             self.__current_gesture = gesture
-        else:
+        elif gesture == "":
             self.__current_gesture = ""
+        else:
+            raise ValueError(CONSTANTS.INVALID_GESTURE_ERR)
 
     def __add_current_gesture_to_gesture_lists(self):
         if self.__current_gesture in CONSTANTS.GESTURES:
