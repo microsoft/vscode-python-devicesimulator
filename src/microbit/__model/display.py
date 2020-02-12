@@ -338,6 +338,12 @@ class Display:
         sendable_json = {"leds": self.__get_array()}
         utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
 
+    def __update_light_level(self, new_light_level):
+        if new_light_level is not None:
+            previous_light_level = self.read_light_level()
+            if new_light_level != previous_light_level:
+                self.__set_light_level(new_light_level)
+
     @staticmethod
     def sleep_ms(ms):
         time.sleep(ms / 1000)

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS, WEBVIEW_MESSAGES, DEVICE_LIST_KEY } from "../../constants";
+import { CONSTANTS, DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "../../constants";
 import { sendMessage } from "../../utils/MessageUtils";
 
 import "../../styles/Simulator.css";

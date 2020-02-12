@@ -155,3 +155,13 @@ EXPECTED_INPUT_BUTTONS = [
     "button_a",
     "button_b",
 ]
+
+EXPECTED_INPUT_ACCEL = {
+    "motion_x": "x",
+    "motion_y": "y",
+    "motion_z": "z",
+}
+
+EXPECTED_INPUT_LIGHT = "light"
+
+EXPECTED_INPUT_TEMP = "temperature"
