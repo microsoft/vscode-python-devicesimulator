@@ -22,7 +22,7 @@ import { SerialMonitor } from "./serialMonitor";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
-import { WEBVIEW_MESSAGES } from "./view/constants";
+import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -59,6 +59,15 @@ const setPathAndSendMessage = (
             state: {
                 running_file: newFilePath,
             },
+        });
+    }
+};
+
+const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
+    if (currentPanel) {
+        currentPanel.webview.postMessage({
+            command: VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE,
+            active_device: currentActiveDevice,
         });
     }
 };
@@ -270,6 +279,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 context.subscriptions
             );
         }
+        sendCurrentDeviceMessage(currentPanel);
     };
 
     // Open Simulator on the webview
@@ -286,15 +296,26 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const openTemplateFile = () => {
-        const fileName = "template.py";
-        const filePath = __dirname + path.sep + fileName;
+    const openCPXTemplateFile = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.CPX);
+        openTemplateFile(CONSTANTS.TEMPLATE.CPX);
+    };
+
+    const openMicrobitTemplateFile = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
+        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
+    };
+
+    const openTemplateFile = (template: string) => {
+        const fileName = template;
+        const filePath =
+            __dirname + path.sep + "templates" + path.sep + fileName;
         const file = fs.readFileSync(filePath, "utf8");
         const showNewFilePopup: boolean = vscode.workspace
             .getConfiguration()
             .get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-        if (showNewFilePopup) {
+        if (showNewFilePopup && template === CONSTANTS.TEMPLATE.CPX) {
             vscode.window
                 .showInformationMessage(
                     CONSTANTS.INFO.NEW_FILE,
@@ -344,12 +365,27 @@ export async function activate(context: vscode.ExtensionContext) {
             };
     };
 
-    const newFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.newFile",
+    const newFileCPX: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileCPX",
         () => {
-            telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_NEW_FILE_CPX
+            );
             telemetryAI.runWithLatencyMeasure(
-                openTemplateFile,
+                openCPXTemplateFile,
+                TelemetryEventName.PERFORMANCE_NEW_FILE
+            );
+        }
+    );
+
+    const newFileMicrobit: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileMicrobit",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_NEW_FILE_MICROBIT
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openMicrobitTemplateFile,
                 TelemetryEventName.PERFORMANCE_NEW_FILE
             );
         }
@@ -929,7 +965,8 @@ export async function activate(context: vscode.ExtensionContext) {
         installDependencies,
         openSerialMonitor,
         openSimulator,
-        newFile,
+        newFileCPX,
+        newFileMicrobit,
         runSimulator,
         runSimulatorEditorButton,
         runDevice,
