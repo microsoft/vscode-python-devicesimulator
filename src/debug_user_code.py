@@ -20,7 +20,7 @@ sys.path.insert(0, abs_path_to_lib)
 
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
-from adafruit_circuitplayground import debugger_communication_client
+from common import debugger_communication_client
 
 
 ## Execute User Code ##

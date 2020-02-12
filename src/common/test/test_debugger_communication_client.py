@@ -3,7 +3,7 @@ import json  # Remove
 from unittest import mock
 import socketio
 
-from .. import express
+from adafruit_circuitplayground import express
 from .. import debugger_communication_client
 
 

@@ -38,11 +38,9 @@ TELEMETRY_EVENT_NAMES = {
     "RED_LED": "API.RED.LED",
     "PIXELS": "API.PIXELS",
 }
-ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 
 TIME_DELAY = 0.03
 
-DEFAULT_PORT = "5577"
 
 
 EVENTS_BUTTON_PRESS = ["button_a", "button_b", "switch"]

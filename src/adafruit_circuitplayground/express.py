@@ -12,7 +12,7 @@ from . import constants as CONSTANTS
 from collections import namedtuple
 from applicationinsights import TelemetryClient
 from .telemetry import telemetry_py
-from . import debugger_communication_client
+from common import debugger_communication_client
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])
 
