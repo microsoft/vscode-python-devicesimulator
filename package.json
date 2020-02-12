@@ -52,8 +52,8 @@
                 "category": "%deviceSimulatorExpressExtension.commands.label%"
             },
             {
-                "command": "deviceSimulatorExpress.closeSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.closeSerialMonitor%",
+                "command": "deviceSimulatorExpress.openSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.openSerialMonitor%",
                 "category": "%deviceSimulatorExpressExtension.commands.label%"
             },
             {
