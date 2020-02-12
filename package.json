@@ -28,6 +28,7 @@
         "Adafruit"
     ],
     "activationEvents": [
+        "onCommand:deviceSimulatorExpress.installDependencies",
         "onCommand:deviceSimulatorExpress.openSerialMonitor",
         "onCommand:deviceSimulatorExpress.openSimulator",
         "onCommand:deviceSimulatorExpress.runSimulator",
@@ -51,8 +52,13 @@
                 "category": "%deviceSimulatorExpressExtension.commands.label%"
             },
             {
-                "command": "deviceSimulatorExpress.openSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.openSerialMonitor%",
+                "command": "deviceSimulatorExpress.closeSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.closeSerialMonitor%",
+                "category": "%deviceSimulatorExpressExtension.commands.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.installDependencies",
+                "title": "%deviceSimulatorExpressExtension.commands.installDependencies%",
                 "category": "%deviceSimulatorExpressExtension.commands.label%"
             },
             {

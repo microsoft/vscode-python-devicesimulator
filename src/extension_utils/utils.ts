@@ -304,7 +304,7 @@ export const promptInstallPythonDependencies = (
                     pythonExecutable,
                     pathToLibs
                 );
-            } else if (selection === DialogResponses.NO) {
+            } else {
                 return vscode.window
                     .showInformationMessage(
                         CONSTANTS.INFO.ARE_YOU_SURE,
