@@ -41,7 +41,7 @@ class TestMicrobitModel(object):
 
     @pytest.mark.parametrize(
         "invalid_temperature",
-        [CONSTANTS.MIN_TEMPERATURE - 10, CONSTANTS.MAX_TEMPERATURE + 5],
+        [CONSTANTS.MIN_TEMPERATURE - 1, CONSTANTS.MAX_TEMPERATURE + 1],
     )
     def test_invalid_temperature(self, invalid_temperature):
         with pytest.raises(ValueError):
