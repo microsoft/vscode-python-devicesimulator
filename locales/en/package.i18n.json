@@ -1,6 +1,7 @@
 {
   "deviceSimulatorExpressExtension.commands.changeBaudRate": "Change Baud Rate",
   "deviceSimulatorExpressExtension.commands.closeSerialMonitor": "Close Serial Monitor",
+  "deviceSimulatorExpressExtension.commands.installDependencies": "Install Extension Dependencies",
   "deviceSimulatorExpressExtension.commands.label": "Device Simulator Express",
   "deviceSimulatorExpressExtension.commands.openSerialMonitor": "Open Serial Monitor",
   "deviceSimulatorExpressExtension.commands.openSimulator": "Open Simulator",

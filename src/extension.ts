@@ -298,16 +298,16 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const openCPXTemplateFile = () => {
         switchDevice(CONSTANTS.DEVICE_NAME.CPX);
-        openTemplateFile("cpx");
+        openTemplateFile(CONSTANTS.TEMPLATE.CPX);
     };
 
     const openMicrobitTemplateFile = () => {
         switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
-        openTemplateFile("microbit");
+        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
     };
 
-    const openTemplateFile = (device: string) => {
-        const fileName = `${device}_template.py`;
+    const openTemplateFile = (template: string) => {
+        const fileName = template;
         const filePath =
             __dirname + path.sep + "templates" + path.sep + fileName;
         const file = fs.readFileSync(filePath, "utf8");
@@ -315,7 +315,7 @@ export async function activate(context: vscode.ExtensionContext) {
             .getConfiguration()
             .get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-        if (showNewFilePopup && device === "cpx") {
+        if (showNewFilePopup && template === CONSTANTS.TEMPLATE.CPX) {
             vscode.window
                 .showInformationMessage(
                     CONSTANTS.INFO.NEW_FILE,
@@ -387,6 +387,22 @@ export async function activate(context: vscode.ExtensionContext) {
             telemetryAI.runWithLatencyMeasure(
                 openMicrobitTemplateFile,
                 TelemetryEventName.PERFORMANCE_NEW_FILE
+            );
+        }
+    );
+
+    const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.installDependencies",
+        () => {
+            const pathToLibs: string = utils.getPathToScript(
+                context,
+                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+                CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
+            );
+            return utils.installPythonDependencies(
+                context,
+                pythonExecutableName,
+                pathToLibs
             );
         }
     );
@@ -946,6 +962,7 @@ export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         changeBaudRate,
         closeSerialMonitor,
+        installDependencies,
         openSerialMonitor,
         openSimulator,
         newFileCPX,

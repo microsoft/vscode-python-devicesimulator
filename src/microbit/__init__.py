@@ -1,6 +1,7 @@
 from .__model.image import Image
 from .__model.microbit_model import __mb
 
+accelerometer = __mb.accelerometer
 button_a = __mb.button_a
 button_b = __mb.button_b
 display = __mb.display
@@ -21,4 +22,11 @@ def running_time():
     Return the number of milliseconds since the board was switched on or
     restarted.
     """
-    __mb.running_time()
+    return __mb.running_time()
+
+
+def temperature():
+    """
+    Return the temperature of the micro:bit in degrees Celcius.
+    """
+    return __mb.temperature()
