@@ -23,7 +23,7 @@ previous_state = {}
 
 # similar to utils.send_to_simulator, but for debugging
 # (needs handle to device-specific debugger)
-def debug_show(state, active_device):
+def debug_send_to_simulator(state, active_device):
     global previous_state
 
     if state != previous_state:
