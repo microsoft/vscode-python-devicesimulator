@@ -61,7 +61,7 @@ class Accelerometer:
     def was_gesture(self, name):
         """
         Return True or False to indicate if the named gesture was active since the
-        last call.
+        last [was_gesture] call.
         """
         self.__add_current_gesture_to_gesture_lists()
         if name not in CONSTANTS.GESTURES:
