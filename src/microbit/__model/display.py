@@ -13,9 +13,10 @@ class Display:
     def __init__(self):
         self.__image = Image()
         self.__on = True
-        self.__current_pid = None
+        self.__light_level = 0
         self.__blank_image = Image()
 
+        self.__current_pid = None
         self.__lock = threading.Lock()
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
@@ -226,13 +227,17 @@ class Display:
 
     def read_light_level(self):
         """
-        Not implemented yet.
-
         Use the display's LEDs in reverse-bias mode to sense the amount of light
         falling on the display.  Returns an integer between 0 and 255 representing
         the light level, with larger meaning more light.
         """
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        return self.__light_level
+
+    def __set_light_level(self, level):
+        if level < CONSTANTS.MIN_LIGHT_LEVEL or level > CONSTANTS.MAX_LIGHT_LEVEL:
+            raise ValueError(CONSTANTS.INVALID_LIGHT_LEVEL_ERR)
+        else:
+            self.__light_level = level
 
     # Helpers
 

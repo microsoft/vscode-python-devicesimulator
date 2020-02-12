@@ -157,6 +157,28 @@ class TestDisplay(object):
         self.display.show("6", delay=0)
         assert Image._Image__same_image(Image(STR_SIX), self.display._Display__image)
 
+    @pytest.mark.parametrize(
+        "light_level",
+        [
+            CONSTANTS.MIN_LIGHT_LEVEL,
+            CONSTANTS.MIN_LIGHT_LEVEL + 1,
+            100,
+            CONSTANTS.MAX_LIGHT_LEVEL - 1,
+            CONSTANTS.MAX_LIGHT_LEVEL,
+        ],
+    )
+    def test_light_level(self, light_level):
+        self.display._Display__set_light_level(light_level)
+        assert light_level == self.display.read_light_level()
+
+    @pytest.mark.parametrize(
+        "invalid_light_level",
+        [CONSTANTS.MIN_LIGHT_LEVEL - 1, CONSTANTS.MAX_LIGHT_LEVEL + 1],
+    )
+    def test_invalid_light_level(self, invalid_light_level):
+        with pytest.raises(ValueError):
+            self.display._Display__set_light_level(invalid_light_level)
+
     # Helpers
     def __is_clear(self):
         i = Image(CONSTANTS.BLANK_5X5)

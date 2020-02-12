@@ -1,5 +1,6 @@
 import time
 
+from .accelerometer import Accelerometer
 from .button import Button
 from .display import Display
 from . import constants as CONSTANTS
@@ -8,10 +9,13 @@ from . import constants as CONSTANTS
 class MicrobitModel:
     def __init__(self):
         # State in the Python process
+        self.accelerometer = Accelerometer()
         self.button_a = Button()
         self.button_b = Button()
-        self.__start_time = time.time()
         self.display = Display()
+
+        self.__start_time = time.time()
+        self.__temperature = 0
 
         self.microbit_button_dict = {
             "button_a": self.button_a,
@@ -24,6 +28,18 @@ class MicrobitModel:
     def running_time(self):
         print(f"time. time: {time.time()}")
         return time.time() - self.__start_time
+
+    def temperature(self):
+        return self.__temperature
+
+    def __set_temperature(self, temperature):
+        if (
+            temperature < CONSTANTS.MIN_TEMPERATURE
+            or temperature > CONSTANTS.MAX_TEMPERATURE
+        ):
+            raise ValueError(CONSTANTS.INVALID_TEMPERATURE_ERR)
+        else:
+            self.__temperature = temperature
 
     def update_state(self, new_state):
         for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
