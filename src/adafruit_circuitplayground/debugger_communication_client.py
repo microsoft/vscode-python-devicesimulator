@@ -41,6 +41,7 @@ def init_connection(port=CONSTANTS.DEFAULT_PORT):
 def __update_api_state(data, expected_events):
     try:
         event_state = json.loads(data)
+        active_device = event_state.get("active_device")
         for event in expected_events:
             express.cpx._Express__state[event] = event_state.get(
                 event, express.cpx._Express__state[event]
