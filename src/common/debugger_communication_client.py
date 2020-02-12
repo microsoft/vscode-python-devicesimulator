@@ -5,6 +5,7 @@ import sys
 import json
 import socketio
 import copy
+
 # from adafruit_circuitplayground import cpx
 # from microbit import __mb as mb
 from . import constants as CONSTANTS
@@ -47,15 +48,11 @@ def init_connection(port=CONSTANTS.DEFAULT_PORT):
 
 
 # Transfer the user's inputs to the API
-def __update_api_state(data, expected_events):
+def __update_api_state(data):
     try:
         event_state = json.loads(data)
         active_device = event_state.get("active_device")
-        
-        # for event in expected_events:
-        #     express.cpx._Express__state[event] = event_state.get(
-        #         event, express.cpx._Express__state[event]
-        #     )
+        device_dict[active_device].update_state(data)
     except Exception as e:
         print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
 
@@ -71,10 +68,10 @@ def update_state(state):
 # Event : Button pressed (A, B, A+B, Switch)
 @sio.on("button_press")
 def button_press(data):
-    __update_api_state(data, CONSTANTS.EVENTS_BUTTON_PRESS)
+    __update_api_state(data)
 
 
 # Event : Sensor changed (Temperature, light, Motion)
 @sio.on("sensor_changed")
 def sensor_changed(data):
-    __update_api_state(data, CONSTANTS.EVENTS_SENSOR_CHANGED)
+    __update_api_state(data)
