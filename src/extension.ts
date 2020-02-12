@@ -355,22 +355,6 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.installDependencies",
-        () => {
-            const pathToLibs: string = utils.getPathToScript(
-                context,
-                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-            );
-            return utils.installPythonDependencies(
-                context,
-                pythonExecutableName,
-                pathToLibs
-            );
-        }
-    );
-
     const killProcessIfRunning = () => {
         if (childProcess !== undefined) {
             if (currentPanel) {
@@ -926,7 +910,6 @@ export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         changeBaudRate,
         closeSerialMonitor,
-        installDependencies,
         openSerialMonitor,
         openSimulator,
         newFile,
