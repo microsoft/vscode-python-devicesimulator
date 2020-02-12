@@ -50,7 +50,6 @@ class UserInput(threading.Thread):
                 new_state_message = json.loads(read_val)
                 device = new_state_message.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
                 new_state = new_state_message.get(CONSTANTS.STATE_FIELD, {})
-
                 if device in device_dict:
                     device_dict[device].update_state(new_state)
                 else:

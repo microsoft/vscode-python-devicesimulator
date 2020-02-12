@@ -2,18 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { WEBVIEW_MESSAGES } from "../../constants";
 import "../../styles/InputSlider.css";
+import { sendMessage } from "../../utils/MessageUtils";
 import { ISliderProps } from "../../viewUtils";
-
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (state: any) => {
-    vscode.postMessage({ command: "sensor-changed", text: state });
-};
 
 class InputSlider extends React.Component<ISliderProps, any, any> {
     constructor(props: ISliderProps) {
@@ -63,7 +55,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                     value={this.state.value}
                     onInput={this.handleOnChange}
                     defaultValue={this.props.minValue.toLocaleString()}
-                    pattern="^-?[0-9]{0,3}$"
+                    pattern="^-?[0-9]{0,4}$"
                     onKeyUp={this.handleOnChange}
                     aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
                 />
@@ -100,7 +92,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         const validatedValue = this.validateRange(this.updateValue(event));
         const newSensorState = this.writeMessage(validatedValue);
         if (newSensorState) {
-            sendMessage(newSensorState);
+            sendMessage(WEBVIEW_MESSAGES.SENSOR_CHANGED, newSensorState);
         }
     };
 
@@ -124,10 +116,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     };
 
     private sendTelemetry = () => {
-        vscode.postMessage({
-            command: "slider-telemetry",
-            text: this.props.type,
-        });
+        sendMessage(WEBVIEW_MESSAGES.SLIDER_TELEMETRY, this.props.type);
     };
 
     private validateRange = (valueString: string) => {

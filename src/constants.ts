@@ -22,15 +22,15 @@ export const CONFIG = {
 };
 
 export const CONSTANTS = {
-    DEVICE_NAME: {
-        CPX: "CPX",
-        MICROBIT: "micro:bit",
-    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEPENDENCY_CHECKER: {
         PIP3: "pip3",
         PYTHON: "python",
         PYTHON3: "python3.7",
+    },
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "micro:bit",
     },
     ERROR: {
         COMPORT_UNKNOWN_ERROR:
@@ -114,7 +114,7 @@ export const CONSTANTS = {
     INFO: {
         ARE_YOU_SURE: localize(
             "info.areYouSure",
-            "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+            "Are you sure you don't want to install the dependencies? The extension can't run without installing them."
         ),
         CLOSED_SERIAL_PORT: (port: string) => {
             return localize(
@@ -237,6 +237,10 @@ export const CONSTANTS = {
         ),
     },
     NAME: localize("name", "Device Simulator Express"),
+    TEMPLATE: {
+        CPX: "cpx_template.py",
+        MICROBIT: "microbit_template.py",
+    },
     WARNING: {
         ACCEPT_AND_RUN: localize(
             "warning.agreeAndRun",
