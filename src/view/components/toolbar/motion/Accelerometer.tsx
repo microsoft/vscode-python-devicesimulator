@@ -19,12 +19,12 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     type: "motion_y",
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
-    maxValue: 1023,
-    minValue: -1023,
-    minLabel: "Up",
-    maxLabel: "Down",
-    type: "motion_z",
     axisLabel: "Z",
+    maxLabel: "Down",
+    maxValue: 1023,
+    minLabel: "Up",
+    minValue: -1023,
+    type: "motion_z",
 };
 
 const MOTION_SENSOR_PROPERTIES: ISensorProps = {
