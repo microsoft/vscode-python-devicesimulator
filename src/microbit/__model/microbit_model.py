@@ -51,41 +51,27 @@ class MicrobitModel:
         # get button pushes
         for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
             button = self.__microbit_button_dict[button_name]
-
-            was_button_pressed = button.is_pressed()
-            is_button_pressed = new_state.get(button_name, was_button_pressed)
-
-            if is_button_pressed != was_button_pressed:
-                if is_button_pressed:
-                    button._Button__press_down()
-                else:
-                    button._Button__release()
+            button._Button__update(new_state.get(button_name))
 
     def __update_motion(self, new_state):
         # set motion_x, motion_y, motion_z
         for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL.items():
-            previous_motion_val = self.accelerometer._Accelerometer__get_accel(
-                direction
-            )
-            new_motion_val = new_state.get(name, previous_motion_val)
-            if new_motion_val != previous_motion_val:
-                self.accelerometer._Accelerometer__set_accel(direction, new_motion_val)
-
+            self.accelerometer._Accelerometer__update(direction, new_state.get(name))
+            
     def __update_light(self, new_state):
         # set light level
-        previous_light_level = self.display.read_light_level()
         new_light_level = new_state.get(
-            CONSTANTS.EXPECTED_INPUT_LIGHT, previous_light_level
+            CONSTANTS.EXPECTED_INPUT_LIGHT
         )
-        if new_light_level != previous_light_level:
-            self.display._Display__set_light_level(new_light_level)
+        self.display._Display__update_light_level(new_light_level)
 
     def __update_temp(self, new_state):
         # set temperature
-        previous_temp = self.temperature()
-        new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP, previous_temp)
-        if new_temp != previous_temp:
-            self._MicrobitModel__set_temperature(new_temp)
+        new_temp = new_state.get(CONSTANTS.EXPECTED_INPUT_TEMP)
+        if new_temp is not None:
+            previous_temp = self.temperature()
+            if new_temp != previous_temp:
+                self._MicrobitModel__set_temperature(new_temp)
 
 
 __mb = MicrobitModel()
