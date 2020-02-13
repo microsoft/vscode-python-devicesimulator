@@ -176,7 +176,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitButtonPress(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -223,7 +223,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitSensorChanged(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -425,6 +425,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const runSimulatorCommand = async () => {
         // Prevent running new code if a debug session is active
         if (inDebugMode) {
+            console.log("debug mode not running simulator command")
             vscode.window.showErrorMessage(
                 CONSTANTS.ERROR.DEBUGGING_SESSION_IN_PROGESS
             );
@@ -543,6 +544,7 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
+                    console.log("receiving message")
                     // Process the data from the process and send one state at a time
                     dataFromTheProcess.split("\0").forEach(message => {
                         if (
@@ -915,7 +917,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
-                    utils.getServerPortConfig()
+                    utils.getServerPortConfig(),
+                    
                 );
                 openWebview();
                 if (currentPanel) {
