@@ -6,10 +6,8 @@ import json
 import socketio
 import copy
 
-# from adafruit_circuitplayground import cpx
-# from microbit import __mb as mb
 from . import constants as CONSTANTS
-from common import utils
+from . import utils
 
 
 from adafruit_circuitplayground.express import cpx
@@ -51,7 +49,8 @@ def init_connection(port=CONSTANTS.DEFAULT_PORT):
 def __update_api_state(data):
     try:
         event_state = json.loads(data)
-        active_device = event_state.get("active_device")
+        active_device = event_state.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
+        # can we do without this?
         device_dict[active_device].update_state(data)
     except Exception as e:
         print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
