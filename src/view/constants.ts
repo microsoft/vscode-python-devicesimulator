@@ -64,5 +64,8 @@ export enum WEBVIEW_MESSAGES {
     SENSOR_CHANGED = "sensor-changed",
     SLIDER_TELEMETRY = "slider-telemetry",
 }
+export enum VSCODE_MESSAGES_TO_WEBVIEW {
+    SET_DEVICE = "set-device",
+}
 
 export default CONSTANTS;

@@ -22,7 +22,7 @@ import { SerialMonitor } from "./serialMonitor";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
-import { WEBVIEW_MESSAGES } from "./view/constants";
+import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -41,7 +41,7 @@ let currentActiveDevice: string = DEFAULT_DEVICE;
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
+    return `<script initialDevice=${currentActiveDevice} src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
         .with({ scheme: "vscode-resource" })
         .toString()}"></script>`;
 }
@@ -59,6 +59,15 @@ const setPathAndSendMessage = (
             state: {
                 running_file: newFilePath,
             },
+        });
+    }
+};
+
+const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
+    if (currentPanel) {
+        currentPanel.webview.postMessage({
+            command: VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE,
+            active_device: currentActiveDevice,
         });
     }
 };
@@ -129,6 +138,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
+            
 
             currentPanel.webview.html = getWebviewContent(context);
 
@@ -167,7 +177,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitButtonPress(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -214,7 +224,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitSensorChanged(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -270,6 +280,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 context.subscriptions
             );
         }
+        sendCurrentDeviceMessage(currentPanel);
     };
 
     // Open Simulator on the webview
@@ -286,15 +297,26 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const openTemplateFile = () => {
-        const fileName = "template.py";
-        const filePath = __dirname + path.sep + fileName;
+    const openCPXTemplateFile = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.CPX);
+        openTemplateFile(CONSTANTS.TEMPLATE.CPX);
+    };
+
+    const openMicrobitTemplateFile = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
+        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
+    };
+
+    const openTemplateFile = (template: string) => {
+        const fileName = template;
+        const filePath =
+            __dirname + path.sep + "templates" + path.sep + fileName;
         const file = fs.readFileSync(filePath, "utf8");
         const showNewFilePopup: boolean = vscode.workspace
             .getConfiguration()
             .get(CONFIG.SHOW_NEW_FILE_POPUP);
 
-        if (showNewFilePopup) {
+        if (showNewFilePopup && template === CONSTANTS.TEMPLATE.CPX) {
             vscode.window
                 .showInformationMessage(
                     CONSTANTS.INFO.NEW_FILE,
@@ -344,12 +366,27 @@ export async function activate(context: vscode.ExtensionContext) {
             };
     };
 
-    const newFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.newFile",
+    const newFileCPX: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileCPX",
         () => {
-            telemetryAI.trackFeatureUsage(TelemetryEventName.COMMAND_NEW_FILE);
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_NEW_FILE_CPX
+            );
             telemetryAI.runWithLatencyMeasure(
-                openTemplateFile,
+                openCPXTemplateFile,
+                TelemetryEventName.PERFORMANCE_NEW_FILE
+            );
+        }
+    );
+
+    const newFileMicrobit: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.newFileMicrobit",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_NEW_FILE_MICROBIT
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openMicrobitTemplateFile,
                 TelemetryEventName.PERFORMANCE_NEW_FILE
             );
         }
@@ -389,6 +426,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const runSimulatorCommand = async () => {
         // Prevent running new code if a debug session is active
         if (inDebugMode) {
+            console.log("debug mode not running simulator command")
             vscode.window.showErrorMessage(
                 CONSTANTS.ERROR.DEBUGGING_SESSION_IN_PROGESS
             );
@@ -507,6 +545,7 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
+                    console.log("receiving message")
                     // Process the data from the process and send one state at a time
                     dataFromTheProcess.split("\0").forEach(message => {
                         if (
@@ -879,7 +918,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
-                    utils.getServerPortConfig()
+                    utils.getServerPortConfig(),
+                    currentActiveDevice
                 );
                 openWebview();
                 if (currentPanel) {
@@ -929,7 +969,8 @@ export async function activate(context: vscode.ExtensionContext) {
         installDependencies,
         openSerialMonitor,
         openSimulator,
-        newFile,
+        newFileCPX,
+        newFileMicrobit,
         runSimulator,
         runSimulatorEditorButton,
         runDevice,
@@ -1100,9 +1141,10 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             </head>
           <body>
             <div id="root"></div>
-            <script>
+            <script >
               const vscode = acquireVsCodeApi();
             </script>
+            <script ></script>
             ${loadScript(context, "out/vendor.js")}
             ${loadScript(context, "out/simulator.js")}
           </body>

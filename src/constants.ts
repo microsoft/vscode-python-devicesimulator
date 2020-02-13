@@ -22,15 +22,15 @@ export const CONFIG = {
 };
 
 export const CONSTANTS = {
-    DEVICE_NAME: {
-        CPX: "CPX",
-        MICROBIT: "micro:bit",
-    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEPENDENCY_CHECKER: {
         PIP3: "pip3",
         PYTHON: "python",
         PYTHON3: "python3.7",
+    },
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "micro:bit",
     },
     ERROR: {
         COMPORT_UNKNOWN_ERROR:
@@ -237,6 +237,10 @@ export const CONSTANTS = {
         ),
     },
     NAME: localize("name", "Device Simulator Express"),
+    TEMPLATE: {
+        CPX: "cpx_template.py",
+        MICROBIT: "microbit_template.py",
+    },
     WARNING: {
         ACCEPT_AND_RUN: localize(
             "warning.agreeAndRun",
@@ -280,7 +284,8 @@ export enum TelemetryEventName {
 
     // Extension commands
     COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
-    COMMAND_NEW_FILE = "COMMAND.NEW.FILE",
+    COMMAND_NEW_FILE_CPX = "COMMAND.NEW.FILE.CPX",
+    COMMAND_NEW_FILE_MICROBIT = "COMMAND.NEW.FILE.MICROBIT",
     COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
     COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
     COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",

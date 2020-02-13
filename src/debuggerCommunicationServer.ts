@@ -11,10 +11,12 @@ export class DebuggerCommunicationServer {
     private serverHttp: http.Server;
     private serverIo: socketio.Server;
     private simulatorWebview: WebviewPanel | undefined;
+    private currentActiveDevice;
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
-        port = SERVER_INFO.DEFAULT_SERVER_PORT
+        port = SERVER_INFO.DEFAULT_SERVER_PORT,
+        currentActiveDevice:string
     ) {
         this.port = port;
         this.serverHttp = new http.Server();
@@ -24,6 +26,8 @@ export class DebuggerCommunicationServer {
         this.simulatorWebview = webviewPanel;
         this.initEventsHandlers();
         console.info(`Server running on port ${this.port}`);
+
+        this.currentActiveDevice=currentActiveDevice
     }
 
     public closeConnection(): void {
@@ -36,16 +40,9 @@ export class DebuggerCommunicationServer {
         this.simulatorWebview = webviewPanel;
     }
 
-    // Emit Buttons Inputs Events
-    public emitButtonPress(newState: string): void {
-        console.log(`Emit Button Press: ${newState} \n`);
-        this.serverIo.emit("button_press", newState);
-    }
 
-    // Emit Sensors Inputs Events
-    public emitSensorChanged(newState: string): void {
-        console.log(`Emit Sensor Changed: ${newState} \n`);
-        this.serverIo.emit("sensor_changed", newState);
+    public emitInputChanged(newState:string):void{
+        this.serverIo.emit("input_changed",newState)
     }
 
     private initHttpServer(): void {
@@ -76,11 +73,14 @@ export class DebuggerCommunicationServer {
 
     private handleState(data: any): void {
         try {
+            console.log("handleState")
             const messageToWebview = JSON.parse(data);
+            console.log(messageToWebview)
             if (messageToWebview.type === "state") {
                 console.log(`State recieved: ${messageToWebview.data}`);
                 if (this.simulatorWebview) {
                     this.simulatorWebview.webview.postMessage({
+                        active_device:this.currentActiveDevice,
                         command: "set-state",
                         state: JSON.parse(messageToWebview.data),
                     });
