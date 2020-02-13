@@ -1,9 +1,6 @@
 # Device Simulator Express, a Microsoft Garage project
 
-<img src="https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg" alt="Platforms Supported: Windows, MacOSX"/>
-<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>
-<img src="https://img.shields.io/badge/Python-3.7%2B-blue.svg" alt="Python versions: 3.7+" />
+<a href="https://www.repostatus.org/#active"> <img src="https://img.shields.io/badge/Python-3.7%2B-blue.svg" alt="Python versions: 3.7+" /></a> <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a> <a href="https://www.python.org/downloads/"> <img src="https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg" alt="Platforms Supported: Windows, MacOSX"/></a>
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
 Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same
