@@ -11,10 +11,12 @@ export class DebuggerCommunicationServer {
     private serverHttp: http.Server;
     private serverIo: socketio.Server;
     private simulatorWebview: WebviewPanel | undefined;
+    private currentActiveDevice;
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
-        port = SERVER_INFO.DEFAULT_SERVER_PORT
+        port = SERVER_INFO.DEFAULT_SERVER_PORT,
+        currentActiveDevice:string
     ) {
         this.port = port;
         this.serverHttp = new http.Server();
@@ -24,6 +26,8 @@ export class DebuggerCommunicationServer {
         this.simulatorWebview = webviewPanel;
         this.initEventsHandlers();
         console.info(`Server running on port ${this.port}`);
+
+        this.currentActiveDevice=currentActiveDevice
     }
 
     public closeConnection(): void {

@@ -28,6 +28,14 @@ class App extends React.Component<{}, IState> {
         this.state = defaultState;
     }
     componentDidMount() {
+        if (document.currentScript) {
+            const initialDevice = document.currentScript.getAttribute('initialDevice')
+
+            if (initialDevice) {
+                this.setState({ currentDevice: initialDevice })
+
+            }
+        }
         window.addEventListener("message", this.handleMessage);
     }
     componentWillUnmount() {
