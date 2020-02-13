@@ -41,7 +41,7 @@ let currentActiveDevice: string = DEFAULT_DEVICE;
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
+    return `<script initialDevice=${currentActiveDevice} src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
         .with({ scheme: "vscode-resource" })
         .toString()}"></script>`;
 }
@@ -138,6 +138,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
+            
 
             currentPanel.webview.html = getWebviewContent(context);
 
@@ -918,7 +919,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
                     utils.getServerPortConfig(),
-                    
+                    currentActiveDevice
                 );
                 openWebview();
                 if (currentPanel) {
@@ -1140,9 +1141,10 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             </head>
           <body>
             <div id="root"></div>
-            <script>
+            <script >
               const vscode = acquireVsCodeApi();
             </script>
+            <script ></script>
             ${loadScript(context, "out/vendor.js")}
             ${loadScript(context, "out/simulator.js")}
           </body>
