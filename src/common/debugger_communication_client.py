@@ -61,16 +61,10 @@ def update_state(state):
     sio.emit("updateState", state)
 
 
-## Events Handlers ##
-
+## Events Handler ##
 
 # Event : Button pressed (A, B, A+B, Switch)
-@sio.on("button_press")
-def button_press(data):
-    __update_api_state(data)
-
-
-# Event : Sensor changed (Temperature, light, Motion)
-@sio.on("sensor_changed")
-def sensor_changed(data):
+# or Sensor changed (Temperature, light, Motion)
+@sio.on("input_changed")
+def input_changed(data):
     __update_api_state(data)

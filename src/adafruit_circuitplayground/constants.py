@@ -42,7 +42,6 @@ TELEMETRY_EVENT_NAMES = {
 TIME_DELAY = 0.03
 
 
-
 EVENTS_BUTTON_PRESS = ["button_a", "button_b", "switch"]
 EVENTS_SENSOR_CHANGED = ["temperature", "light", "motion_x", "motion_y", "motion_z"]
 

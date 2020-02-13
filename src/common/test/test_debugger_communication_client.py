@@ -34,7 +34,7 @@ class TestDebuggerCommunicationClient(object):
     def test_button_press(self):
         data = {"button_a": True, "button_b": True, "switch": True}
         serialized_data = json.dumps(data)
-        debugger_communication_client.button_press(serialized_data)
+        debugger_communication_client.input_changed(serialized_data)
         assert data == express.cpx._Express__state
 
     @mock.patch.dict(
@@ -51,7 +51,7 @@ class TestDebuggerCommunicationClient(object):
             "motion_z": 5,
         }
         serialized_data = json.dumps(data)
-        debugger_communication_client.sensor_changed(serialized_data)
+        debugger_communication_client.input_changed(serialized_data)
         assert data == express.cpx._Express__state
 
     @mock.patch("builtins.print")
