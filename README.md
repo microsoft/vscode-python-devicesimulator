@@ -1,11 +1,22 @@
 # Device Simulator Express, a Microsoft Garage project
 
+<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.7%2B-blue.svg" alt="Python versions: 3.7+" /></a> <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>  <img src="https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg" alt="Platforms Supported: Windows, MacOSX"/>
+
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
 Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
 <img alt='CircuitPlayground Express' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx.jpg>
+
+## Build Status
+
+| Branch  |                                                                                                                Build Status                                                                                                                 |
+| :------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| dev     |    [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Adafruit/Pacifica-CI?branchName=dev)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=304&branchName=dev)    |
+| staging |   [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Adafruit/Pacifica-CI?branchName=staging)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=304&branchName=staging)    |
+| master  | [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Adafruit/Pacifica-CI?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=304&branchName=master) |
+
 
 ## Features
 
