@@ -24,7 +24,6 @@ previous_state = {}
 # (needs handle to device-specific debugger)
 def debug_send_to_simulator(state, active_device):
     global previous_state
-
     if state != previous_state:
         previous_state = copy.deepcopy(state)
 

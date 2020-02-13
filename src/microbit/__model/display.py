@@ -1,7 +1,7 @@
 import copy
 import time
 import threading
-from common import utils
+import common
 
 from . import constants as CONSTANTS
 from .image import Image
@@ -18,6 +18,7 @@ class Display:
 
         self.__current_pid = None
         self.__lock = threading.Lock()
+        self.__debug_mode = False
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         """
@@ -336,7 +337,13 @@ class Display:
 
     def __update_client(self):
         sendable_json = {"leds": self.__get_array()}
-        utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
+
+        if self.__debug_mode:
+            common.debugger_communication_client.debug_send_to_simulator(
+                sendable_json, CONSTANTS.MICROBIT
+            )
+        else:
+            common.utils.send_to_simulator(sendable_json, CONSTANTS.MICROBIT)
 
     def __update_light_level(self, new_light_level):
         if new_light_level is not None:
@@ -347,3 +354,4 @@ class Display:
     @staticmethod
     def sleep_ms(ms):
         time.sleep(ms / 1000)
+
