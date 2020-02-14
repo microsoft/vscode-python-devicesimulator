@@ -41,7 +41,9 @@ let currentActiveDevice: string = DEFAULT_DEVICE;
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script initialDevice=${currentActiveDevice} src="${vscode.Uri.file(context.asAbsolutePath(scriptPath))
+    return `<script initialDevice=${currentActiveDevice} src="${vscode.Uri.file(
+        context.asAbsolutePath(scriptPath)
+    )
         .with({ scheme: "vscode-resource" })
         .toString()}"></script>`;
 }
@@ -138,7 +140,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
-            
 
             currentPanel.webview.html = getWebviewContent(context);
 
