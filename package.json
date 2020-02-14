@@ -25,7 +25,9 @@
     "keywords": [
         "python",
         "CircuitPython",
-        "Adafruit"
+        "Adafruit",
+        "microbit",
+        "MicroPython"
     ],
     "activationEvents": [
         "onCommand:deviceSimulatorExpress.installDependencies",
