@@ -917,8 +917,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
-                    utils.getServerPortConfig(),
-                    currentActiveDevice
+                    utils.getServerPortConfig()
+                    
                 );
                 openWebview();
                 if (currentPanel) {
@@ -1143,7 +1143,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             <script >
               const vscode = acquireVsCodeApi();
             </script>
-            <script ></script>
             ${loadScript(context, "out/vendor.js")}
             ${loadScript(context, "out/simulator.js")}
           </body>
