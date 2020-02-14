@@ -918,7 +918,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
                     utils.getServerPortConfig()
-                    
                 );
                 openWebview();
                 if (currentPanel) {
