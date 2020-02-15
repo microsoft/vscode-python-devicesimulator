@@ -88,10 +88,9 @@ export async function activate(context: vscode.ExtensionContext) {
     // ignore import errors so that adafruit_circuitplayground library
     // doesn't trigger lint errors
     updatePylintArgs(context);
-
-    pythonExecutableName = await utils.setPythonExectuableName();
-
-    await utils.checkPythonDependencies(context, pythonExecutableName);
+    console.log("uriugseigiohgeiohgifghd")
+    pythonExecutableName = await utils.checkVenv(context);
+    console.log("uriugseigiohgeiohgifghd" + pythonExecutableName)
 
     // Generate cpx.json
     try {
@@ -399,7 +398,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
                 CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
             );
-            return utils.installPythonDependencies(
+            utils.installPythonVenv(
                 context,
                 pythonExecutableName,
                 pathToLibs
@@ -1004,7 +1003,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
+        undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
