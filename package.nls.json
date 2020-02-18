@@ -12,8 +12,5 @@
   "deviceSimulatorExpressExtension.commands.microbit.openSimulator": "[micro:bit] Open Simulator",
   "deviceSimulatorExpressExtension.commands.microbit.newFile": "[micro:bit] New File",
   "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
-  "deviceSimulatorExpressExtension.configuration.properties.open": "Whether to show 'Open Simulator' icon in editor title menu.", // How will these work with new command pallet user flow
-  "deviceSimulatorExpressExtension.configuration.properties.device": "Whether to show 'Deploy to Device' icon in editor title menu.",
-  "deviceSimulatorExpressExtension.configuration.properties.simulator": "Whether to show 'Run Simulator' icon in editor title menu.",
   "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger."
 }
