@@ -28,7 +28,7 @@ sim-button {
     fill: #111;
 }
 .sim-button-outer:hover {
-    stroke: orange !important;
+    stroke: orange;
     stroke-width: 4px;
 }
 .sim-button-outer:active {
