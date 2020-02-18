@@ -179,6 +179,34 @@ export const checkPipDependency = async () => {
 
 export const setGlobalPythonExectuableName = async () => {
     // Find our what command is the PATH for python
+    if (os.platform() === "win32") {
+
+        const { stdout } = await exec(
+            "py -0p"
+        );
+        if (stdout.includes(" -3.7")) {
+            console.log("has 3.7")
+        } else {
+            console.log("doesn't have 3.7")
+        }
+
+        // split by newline in stdout to and find which line is 3.7, then split by whitespace to find address
+
+    } else {
+        const { stdout } = await exec(
+            "ls /usr/bin/python3.7*"
+        );
+        if (stdout !== "") {
+            console.log("unix has 3.7")
+        } else {
+            console.log("unix doesn't have 3.7")
+        }
+
+        // take first result of command
+    }
+
+
+
     let executableName: string = "";
     const dependencyCheck = await checkPythonDependency();
     if (dependencyCheck.installed) {
@@ -262,7 +290,6 @@ export const checkConfig = (configName: string): boolean => {
 export const checkVenv = async (
     context: vscode.ExtensionContext
 ) => {
-    // let installedDependencies: boolean = false;
     const pathToEnv: string = getPathToScript(
         context,
         "env"
@@ -276,11 +303,11 @@ export const checkVenv = async (
             // for adafruit_circuitpython are not (successfully) installed yet
             if (fs.existsSync(pathToEnv)) {
                 const pythonVenv = await getPythonVenv(context);
-                if (await checkForDependencies(context,pythonVenv)) {
-                    await installDependencies(context,pythonVenv)
+                if (await checkForDependencies(context, pythonVenv)) {
+                    await installDependencies(context, pythonVenv)
                 }
                 return pythonVenv;
-            }else {
+            } else {
                 return promptInstallVenv(
                     context,
                     globalPythonExecutableName,
@@ -389,15 +416,15 @@ export const installPythonVenv = async (
         console.error(err);
         return "python"
     }
-    
-    await installDependencies(context,pythonPath)
-        
+
+    await installDependencies(context, pythonPath)
+
     vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
 
     return pythonPath
 };
 
-export const checkForDependencies = async (context: vscode.ExtensionContext, pythonPath:string) => {
+export const checkForDependencies = async (context: vscode.ExtensionContext, pythonPath: string) => {
     const dependencyCheckerPath: string = getPathToScript(
         context,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
@@ -415,7 +442,7 @@ export const checkForDependencies = async (context: vscode.ExtensionContext, pyt
 
 };
 
-export const installDependencies = async (context: vscode.ExtensionContext, pythonPath:string) => {
+export const installDependencies = async (context: vscode.ExtensionContext, pythonPath: string) => {
     const requirementsPath: string = getPathToScript(
         context,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
