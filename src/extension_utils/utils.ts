@@ -26,7 +26,7 @@ const exec = util.promisify(cp.exec);
 export const getPathToScript = (
     context: vscode.ExtensionContext,
     folderName: string,
-    fileName?: string
+    fileName: string = ""
 ) => {
     const onDiskPath = vscode.Uri.file(
         path.join(context.extensionPath, folderName, fileName)
@@ -267,7 +267,7 @@ export const checkVenv = async (
         context,
         "env"
     );
-
+    console.log("uriugseigiohgeiohgifghd" + pathToEnv)
     const globalPythonExecutableName = await setGlobalPythonExectuableName();
     if (checkPipDependency() && globalPythonExecutableName !== "") {
         // checks for whether the check is necessary
@@ -275,8 +275,12 @@ export const checkVenv = async (
             // check if ./out/python_libs exists; if not, the dependencies
             // for adafruit_circuitpython are not (successfully) installed yet
             if (fs.existsSync(pathToEnv)) {
-                return getPythonVenv(context);
-            } else {
+                const pythonVenv = await getPythonVenv(context);
+                if (await checkForDependencies(context,pythonVenv)) {
+                    await installDependencies(context,pythonVenv)
+                }
+                return pythonVenv;
+            }else {
                 return promptInstallVenv(
                     context,
                     globalPythonExecutableName,
@@ -350,40 +354,78 @@ export const installPythonVenv = async (
     pythonExecutable: string,
     pathToEnv: string
 ) => {
+    vscode.window.showInformationMessage(
+        CONSTANTS.INFO.INSTALLING_PYTHON_VENV
+    );
+
+
+    const subFolder = (os.platform() === "win32") ? "Scripts" : "bin";
+
+    const pythonPath: string = getPathToScript(
+        context,
+        path.join("env", subFolder),
+        "python.exe"
+    );
     try {
-        vscode.window.showInformationMessage(
-            CONSTANTS.INFO.INSTALLING_PYTHON_VENV
-        );
-
-
-        const subFolder = (os.platform() === "win32") ? "Scripts" : "bin";
-
-        const pythonPath: string = getPathToScript(
-            context,
-            path.join("env", subFolder),
-            "python.exe"
-        );
-
-        const requirementsPath: string = getPathToScript(
-            context,
-            CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-            "requirements.txt"
-        );
-
         // make venv
         // get python /env/[bin or Scripts]/python
         // run command to download dependencies to out/python_libs
         await exec(
             `${pythonExecutable} -m venv ${pathToEnv}`
         );
+
+    } catch (err) {
+        vscode.window
+            .showErrorMessage(
+                "Virtual Environment for download could not be completed. Please download dependencies manually.",
+                DialogResponses.READ_INSTALL_MD
+            )
+            .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.READ_INSTALL_MD) {
+                    open(CONSTANTS.LINKS.INSTALL);
+                }
+            });
+
+        console.error(err);
+        return "python"
+    }
+    
+    await installDependencies(context,pythonPath)
+        
+    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
+
+    return pythonPath
+};
+
+export const checkForDependencies = async (context: vscode.ExtensionContext, pythonPath:string) => {
+    const dependencyCheckerPath: string = getPathToScript(
+        context,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        "check_python_dependencies.py"
+    );
+    try {
         const { stdout } = await exec(
-            `${pythonPath} -m pip install - r ${requirementsPath} - t ${pathToEnv}\n`
+            `${pythonPath} ${dependencyCheckerPath}`
+        );
+        console.info(stdout)
+        return true;
+    } catch (err) {
+        return false;
+    }
+
+};
+
+export const installDependencies = async (context: vscode.ExtensionContext, pythonPath:string) => {
+    const requirementsPath: string = getPathToScript(
+        context,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        "requirements.txt"
+    );
+    try {
+        const { stdout } = await exec(
+            `${pythonPath} -m pip install -r ${requirementsPath}`
         );
         console.info(stdout);
-
-        vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
-
-        return pythonPath
     } catch (err) {
         vscode.window
             .showErrorMessage(
@@ -397,6 +439,6 @@ export const installPythonVenv = async (
             });
 
         console.error(err);
-        return "";
-    }
+    };
 };
+

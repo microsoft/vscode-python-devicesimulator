@@ -25,6 +25,7 @@ const languages = [{ folderName: "en", id: "en" }];
 gulp.task("clean", () => {
   return del(
     [
+      "env/",
       "out/*",
       "package.nls.*.json",
       "../../dist/*0.0.0-UNTRACKEDVERSION.vsix",
