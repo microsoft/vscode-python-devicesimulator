@@ -22,7 +22,9 @@ import { DependencyChecker } from "./dependencyChecker";
 
 const exec = util.promisify(cp.exec);
 
-const errorChannel = vscode.window.createOutputChannel(CONSTANTS.ERROR.INSTALLATION_ERROR);
+const errorChannel = vscode.window.createOutputChannel(
+    CONSTANTS.ERROR.INSTALLATION_ERROR
+);
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
@@ -371,7 +373,7 @@ export const installPythonDependencies = async (
             });
 
         console.error(err);
-        this.logToOutputChannel(errorChannel, err.toString(), true /* show */)
+        this.logToOutputChannel(errorChannel, err.toString(), true /* show */);
         installed = false;
     }
     return installed;

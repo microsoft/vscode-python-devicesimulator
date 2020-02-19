@@ -73,7 +73,7 @@ export const CONSTANTS = {
         ),
         INSTALLATION_ERROR: localize(
             "error.installationError",
-            "Installation Error"  
+            "Installation Error"
         ),
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
