@@ -16,7 +16,7 @@ export class DebuggerCommunicationServer {
     constructor(
         webviewPanel: WebviewPanel | undefined,
         port = SERVER_INFO.DEFAULT_SERVER_PORT,
-        currentActiveDevice:string
+        currentActiveDevice: string
     ) {
         this.port = port;
         this.serverHttp = new http.Server();
@@ -27,7 +27,7 @@ export class DebuggerCommunicationServer {
         this.initEventsHandlers();
         console.info(`Server running on port ${this.port}`);
 
-        this.currentActiveDevice=currentActiveDevice
+        this.currentActiveDevice = currentActiveDevice
     }
 
     public closeConnection(): void {
@@ -41,8 +41,8 @@ export class DebuggerCommunicationServer {
     }
 
 
-    public emitInputChanged(newState:string):void{
-        this.serverIo.emit("input_changed",newState)
+    public emitInputChanged(newState: string): void {
+        this.serverIo.emit("input_changed", newState)
     }
 
     private initHttpServer(): void {
@@ -58,6 +58,7 @@ export class DebuggerCommunicationServer {
 
             socket.on("updateState", (data: any) => {
                 this.handleState(data);
+                this.serverIo.emit("received_state", {})
             });
 
             socket.on("disconnect", () => {
@@ -80,7 +81,7 @@ export class DebuggerCommunicationServer {
                 console.log(`State recieved: ${messageToWebview.data}`);
                 if (this.simulatorWebview) {
                     this.simulatorWebview.webview.postMessage({
-                        active_device:this.currentActiveDevice,
+                        active_device: this.currentActiveDevice,
                         command: "set-state",
                         state: JSON.parse(messageToWebview.data),
                     });

@@ -19,6 +19,7 @@ from microbit.__model.constants import MICROBIT
 
 device_dict = {CPX: cpx, MICROBIT: mb}
 previous_state = {}
+processing_state = False
 
 # similar to utils.send_to_simulator, but for debugging
 # (needs handle to device-specific debugger)
@@ -58,12 +59,18 @@ def __update_api_state(data):
 # Method : Update State
 def update_state(state):
     sio.emit("updateState", state)
+    processing_state = False
+    while not processing_state:
+        pass
 
-
-## Events Handler ##
 
 # Event : Button pressed (A, B, A+B, Switch)
 # or Sensor changed (Temperature, light, Motion)
 @sio.on("input_changed")
 def input_changed(data):
     __update_api_state(data)
+
+
+@sio.on("received_state")
+def received_state(data):
+    processing_state = True
