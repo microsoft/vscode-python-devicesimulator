@@ -354,4 +354,3 @@ class Display:
     @staticmethod
     def sleep_ms(ms):
         time.sleep(ms / 1000)
-

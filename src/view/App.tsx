@@ -29,11 +29,12 @@ class App extends React.Component<{}, IState> {
     }
     componentDidMount() {
         if (document.currentScript) {
-            const initialDevice = document.currentScript.getAttribute('initialDevice')
+            const initialDevice = document.currentScript.getAttribute(
+                "initialDevice"
+            );
 
             if (initialDevice) {
-                this.setState({ currentDevice: initialDevice })
-
+                this.setState({ currentDevice: initialDevice });
             }
         }
         window.addEventListener("message", this.handleMessage);
