@@ -77,7 +77,7 @@ export class SerialMonitor implements vscode.Disposable {
             STATUS_BAR_PRIORITY.PORT
         );
         this._portsStatusBar.command =
-            "deviceSimulatorExpress.selectSerialPort";
+            "deviceSimulatorExpress.cpx.selectSerialPort";
         this._portsStatusBar.tooltip = "Select Serial Port";
         this._portsStatusBar.show();
 
@@ -86,7 +86,7 @@ export class SerialMonitor implements vscode.Disposable {
             STATUS_BAR_PRIORITY.OPEN_PORT
         );
         this._openPortStatusBar.command =
-            "deviceSimulatorExpress.openSerialMonitor";
+            "deviceSimulatorExpress.cpx.openSerialMonitor";
         this._openPortStatusBar.text = `$(plug)`;
         this._openPortStatusBar.tooltip = "Open Serial Monitor";
         this._openPortStatusBar.show();
@@ -96,7 +96,7 @@ export class SerialMonitor implements vscode.Disposable {
             STATUS_BAR_PRIORITY.BAUD_RATE
         );
         this._baudRateStatusBar.command =
-            "deviceSimulatorExpress.changeBaudRate";
+            "deviceSimulatorExpress.cpx.changeBaudRate";
         this._baudRateStatusBar.tooltip = "Baud Rate";
         this._baudRateStatusBar.text = defaultBaudRate.toString();
         this.updatePortListStatus(null);
@@ -281,13 +281,13 @@ export class SerialMonitor implements vscode.Disposable {
     private updatePortStatus(isOpened: boolean) {
         if (isOpened) {
             this._openPortStatusBar.command =
-                "deviceSimulatorExpress.closeSerialMonitor";
+                "deviceSimulatorExpress.cpx.closeSerialMonitor";
             this._openPortStatusBar.text = `$(x)`;
             this._openPortStatusBar.tooltip = "Close Serial Monitor";
             this._baudRateStatusBar.show();
         } else {
             this._openPortStatusBar.command =
-                "deviceSimulatorExpress.openSerialMonitor";
+                "deviceSimulatorExpress.cpx.openSerialMonitor";
             this._openPortStatusBar.text = `$(plug)`;
             this._openPortStatusBar.tooltip = "Open Serial Monitor";
             this._baudRateStatusBar.hide();
