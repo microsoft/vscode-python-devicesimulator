@@ -1,7 +1,7 @@
-[![Board Status](https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/cd662973-2222-45fa-b969-ad9a9557ff44/_apis/work/boardbadge/c64889c3-1527-446b-aacd-0c65c715d074)](https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/cd662973-2222-45fa-b969-ad9a9557ff44/Microsoft.RequirementCategory)
 # Device Simulator Express, a Microsoft Garage project
 
 <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.7%2B-blue.svg" alt="Python versions: 3.7+" /></a> <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>  <img src="https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg" alt="Platforms Supported: Windows, MacOSX"/>
+[![Board Status](https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/e91f1784-db73-45c5-a1e8-e0fee6c2251a?columnOptions=1)](https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/)
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code in CircuitPython for your awesome
 Circuit Playground Express (CPX) projects! Test and debug your code on the device simulator and see the same
