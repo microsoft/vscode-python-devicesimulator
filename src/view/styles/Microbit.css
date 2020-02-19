@@ -1,3 +1,6 @@
+.microbit-svg {
+    padding: 0 0 0 10px;
+}
 svg.sim {
     box-sizing: border-box;
     width: 100%;
@@ -14,6 +17,10 @@ svg.sim.grayscale {
 }
 .sim-button {
     pointer-events: none;
+    fill: "rgb(17, 17, 17)";
+}
+.sim-button:active {
+    fill: orange;
 }
 .sim-board,
 .sim-display,
@@ -21,9 +28,13 @@ sim-button {
     fill: #111;
 }
 .sim-button-outer:hover {
-    stroke: grey;
-    stroke-width: 3px;
+    stroke: orange;
+    stroke-width: 4px;
 }
+.sim-button-outer:active {
+    fill: orange;
+}
+
 .sim-button-nut {
     fill: #704a4a;
     pointer-events: none;
