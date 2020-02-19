@@ -8,6 +8,7 @@ import copy
 
 from . import constants as CONSTANTS
 from . import utils
+import threading
 
 
 from adafruit_circuitplayground.express import cpx
@@ -19,7 +20,8 @@ from microbit.__model.constants import MICROBIT
 
 device_dict = {CPX: cpx, MICROBIT: mb}
 previous_state = {}
-processing_state = False
+# processing_state = False
+processing_state_event = threading.Event()
 
 # similar to utils.send_to_simulator, but for debugging
 # (needs handle to device-specific debugger)
@@ -58,19 +60,19 @@ def __update_api_state(data):
 
 # Method : Update State
 def update_state(state):
+    processing_state_event.clear()
     sio.emit("updateState", state)
-    processing_state = False
-    while not processing_state:
-        pass
+    processing_state_event.wait()
 
 
 # Event : Button pressed (A, B, A+B, Switch)
 # or Sensor changed (Temperature, light, Motion)
 @sio.on("input_changed")
 def input_changed(data):
+    sio.emit("receivedState", {})
     __update_api_state(data)
 
 
 @sio.on("received_state")
 def received_state(data):
-    processing_state = True
+    processing_state_event.set()
