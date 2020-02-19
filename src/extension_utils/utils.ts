@@ -22,7 +22,7 @@ import { DependencyChecker } from "./dependencyChecker";
 
 const exec = util.promisify(cp.exec);
 
-const errorChannel = vscode.window.createOutputChannel("Error");
+const errorChannel = vscode.window.createOutputChannel(CONSTANTS.ERROR.INSTALLATION_ERROR);
 
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
