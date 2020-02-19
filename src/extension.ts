@@ -172,7 +172,20 @@ export async function activate(context: vscode.ExtensionContext) {
                         switch (message.command) {
                             case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
-                                handleButtonPressTelemetry(message.text);
+                                switch (currentActiveDevice) {
+                                    case CONSTANTS.DEVICE_NAME.CPX:
+                                        handleCPXButtonPressTelemetry(
+                                            message.text
+                                        );
+                                        break;
+                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
+                                        handleMicrobitButtonPressTelemetry(
+                                            message.text
+                                        );
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 console.log(`About to write ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -219,7 +232,15 @@ export async function activate(context: vscode.ExtensionContext) {
                                 break;
 
                             case WEBVIEW_MESSAGES.SENSOR_CHANGED:
-                                checkForTelemetry(message.text);
+                                switch (currentActiveDevice) {
+                                    case CONSTANTS.DEVICE_NAME.CPX:
+                                        checkForCPXTelemetry(message.text);
+                                        break;
+                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -239,7 +260,18 @@ export async function activate(context: vscode.ExtensionContext) {
                                 runSimulatorCommand();
                                 break;
                             case WEBVIEW_MESSAGES.SLIDER_TELEMETRY:
-                                handleSensorTelemetry(message.text);
+                                switch (currentActiveDevice) {
+                                    case CONSTANTS.DEVICE_NAME.CPX:
+                                        handleCPXSensorTelemetry(message.text);
+                                        break;
+                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
+                                        handleMicrobitSensorTelemetry(
+                                            message.text
+                                        );
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 break;
                             case WEBVIEW_MESSAGES.SWITCH_DEVICE:
                                 switchDevice(message.text.active_device);
@@ -299,11 +331,11 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.cpx.openSimulator",
         () => {
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_OPEN_SIMULATOR
+                TelemetryEventName.CPX_COMMAND_OPEN_SIMULATOR
             );
             telemetryAI.runWithLatencyMeasure(
                 openCPXWebview,
-                TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
+                TelemetryEventName.CPX_PERFORMANCE_OPEN_SIMULATOR
             );
         }
     );
@@ -312,11 +344,11 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.microbit.openSimulator",
         () => {
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_OPEN_SIMULATOR
+                TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR
             );
             telemetryAI.runWithLatencyMeasure(
                 openMicrobitWebview,
-                TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
+                TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR
             );
         }
     );
@@ -354,18 +386,18 @@ export async function activate(context: vscode.ExtensionContext) {
                             .getConfiguration()
                             .update(CONFIG.SHOW_NEW_FILE_POPUP, false);
                         telemetryAI.trackFeatureUsage(
-                            TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+                            TelemetryEventName.CPX_CLICK_DIALOG_DONT_SHOW
                         );
                     } else if (selection === DialogResponses.EXAMPLE_CODE) {
                         open(CONSTANTS.LINKS.EXAMPLE_CODE);
                         telemetryAI.trackFeatureUsage(
-                            TelemetryEventName.CLICK_DIALOG_EXAMPLE_CODE
+                            TelemetryEventName.CPX_CLICK_DIALOG_EXAMPLE_CODE
                         );
                     } else if (selection === DialogResponses.TUTORIALS) {
                         const okAction = () => {
                             open(CONSTANTS.LINKS.TUTORIALS);
                             telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CLICK_DIALOG_TUTORIALS
+                                TelemetryEventName.CPX_CLICK_DIALOG_TUTORIALS
                             );
                         };
                         utils.showPrivacyModal(okAction);
@@ -383,9 +415,20 @@ export async function activate(context: vscode.ExtensionContext) {
             }),
             // tslint:disable-next-line: no-unused-expression
             (error: any) => {
-                telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.ERROR_COMMAND_NEW_FILE
-                );
+                switch (currentActiveDevice) {
+                    case CONSTANTS.DEVICE_NAME.CPX:
+                        telemetryAI.trackFeatureUsage(
+                            TelemetryEventName.CPX_ERROR_COMMAND_NEW_FILE
+                        );
+                        break;
+                    case CONSTANTS.DEVICE_NAME.MICROBIT:
+                        telemetryAI.trackFeatureUsage(
+                            TelemetryEventName.MICROBIT_ERROR_COMMAND_NEW_FILE
+                        );
+                        break;
+                    default:
+                        break;
+                }
                 console.error(`Failed to open a new text document:  ${error}`);
             };
     };
@@ -394,11 +437,11 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.cpx.newFile",
         () => {
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_NEW_FILE_CPX
+                TelemetryEventName.CPX_COMMAND_NEW_FILE
             );
             telemetryAI.runWithLatencyMeasure(
                 openCPXTemplateFile,
-                TelemetryEventName.PERFORMANCE_NEW_FILE
+                TelemetryEventName.CPX_PERFORMANCE_NEW_FILE
             );
         }
     );
@@ -407,11 +450,11 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.microbit.newFile",
         () => {
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_NEW_FILE_MICROBIT
+                TelemetryEventName.MICROBIT_COMMAND_NEW_FILE
             );
             telemetryAI.runWithLatencyMeasure(
                 openMicrobitTemplateFile,
-                TelemetryEventName.PERFORMANCE_NEW_FILE
+                TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
             );
         }
     );
@@ -539,7 +582,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         if (selection === DialogResponses.DONT_SHOW) {
                             shouldShowInvalidFileNamePopup = false;
                             telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CLICK_DIALOG_DONT_SHOW
+                                TelemetryEventName.CPX_CLICK_DIALOG_DONT_SHOW
                             );
                         }
                     });
@@ -732,7 +775,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     switch (messageToWebview.type) {
                         case "complete":
                             telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.SUCCESS_COMMAND_DEPLOY_DEVICE
+                                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE
                             );
                             utils.logToOutputChannel(
                                 outChannel,
@@ -742,7 +785,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
                         case "no-device":
                             telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.ERROR_DEPLOY_WITHOUT_DEVICE
+                                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE
                             );
                             vscode.window
                                 .showErrorMessage(
@@ -761,7 +804,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                             const okAction = () => {
                                                 open(CONSTANTS.LINKS.HELP);
                                                 telemetryAI.trackFeatureUsage(
-                                                    TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                                                    TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                                                 );
                                             };
                                             utils.showPrivacyModal(okAction);
@@ -786,7 +829,7 @@ export async function activate(context: vscode.ExtensionContext) {
             // Std error output
             deviceProcess.stderr.on("data", data => {
                 telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.ERROR_PYTHON_DEVICE_PROCESS,
+                    TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS,
                     { error: `${data}` }
                 );
                 console.error(
@@ -810,11 +853,11 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.cpx.deployToDevice",
         () => {
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_DEPLOY_DEVICE
+                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE
             );
             telemetryAI.runWithLatencyMeasure(
                 cpxDeployCodeToDevice,
-                TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE
+                TelemetryEventName.CPX_PERFORMANCE_DEPLOY_DEVICE
             );
         }
     );
@@ -831,7 +874,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
                     serialMonitor.selectSerialPort(null, null);
-                }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
+                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
             } else {
                 vscode.window.showErrorMessage(
                     CONSTANTS.ERROR.NO_FOLDER_OPENED
@@ -847,7 +890,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
                     serialMonitor.openSerialMonitor.bind(serialMonitor),
-                    TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
+                    TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_OPEN
                 );
             } else {
                 vscode.window.showErrorMessage(
@@ -864,7 +907,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
                     serialMonitor.changeBaudRate.bind(serialMonitor),
-                    TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
+                    TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE
                 );
             } else {
                 vscode.window.showErrorMessage(
@@ -881,7 +924,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
                     serialMonitor.closeSerialMonitor(port, showWarning);
-                }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE);
+                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
             } else {
                 vscode.window.showErrorMessage(
                     CONSTANTS.ERROR.NO_FOLDER_OPENED
@@ -1028,61 +1071,115 @@ const updateCurrentFileIfPython = async (
     }
 };
 
-const handleButtonPressTelemetry = (buttonState: any) => {
+const handleCPXButtonPressTelemetry = (buttonState: any) => {
     if (buttonState.button_a && buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_AB);
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.CPX_SIMULATOR_BUTTON_AB
+        );
     } else if (buttonState.button_a) {
-        telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_A);
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.CPX_SIMULATOR_BUTTON_A
+        );
     } else if (buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_BUTTON_B);
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.CPX_SIMULATOR_BUTTON_B
+        );
     } else if (buttonState.switch) {
-        telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SWITCH);
+        telemetryAI.trackFeatureUsage(TelemetryEventName.CPX_SIMULATOR_SWITCH);
     }
 };
 
-const handleSensorTelemetry = (sensor: string) => {
+const handleCPXSensorTelemetry = (sensor: string) => {
     switch (sensor) {
         case "temperature":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_TEMPERATURE_SENSOR
+                TelemetryEventName.CPX_SIMULATOR_TEMPERATURE_SENSOR
             );
             break;
         case "light":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_LIGHT_SENSOR
+                TelemetryEventName.CPX_SIMULATOR_LIGHT_SENSOR
             );
             break;
         case "motion_x":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_MOTION_SENSOR
+                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
             );
             break;
         case "motion_y":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_MOTION_SENSOR
+                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
             );
             break;
         case "motion_z":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_MOTION_SENSOR
+                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
             );
             break;
         case "shake":
-            telemetryAI.trackFeatureUsage(TelemetryEventName.SIMULATOR_SHAKE);
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CPX_SIMULATOR_SHAKE
+            );
             break;
         case "touch":
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SIMULATOR_CAPACITIVE_TOUCH
+                TelemetryEventName.CPX_SIMULATOR_CAPACITIVE_TOUCH
             );
             break;
     }
 };
 
-const checkForTelemetry = (sensorState: any) => {
+const checkForCPXTelemetry = (sensorState: any) => {
     if (sensorState.shake) {
-        handleSensorTelemetry("shake");
+        handleCPXSensorTelemetry("shake");
     } else if (sensorState.touch) {
-        handleSensorTelemetry("touch");
+        handleCPXSensorTelemetry("touch");
+    }
+};
+
+const handleMicrobitButtonPressTelemetry = (buttonState: any) => {
+    if (buttonState.button_a && buttonState.button_b) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_AB
+        );
+    } else if (buttonState.button_a) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_A
+        );
+    } else if (buttonState.button_b) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_B
+        );
+    }
+};
+
+const handleMicrobitSensorTelemetry = (sensor: string) => {
+    switch (sensor) {
+        case "temperature":
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_SIMULATOR_TEMPERATURE_SENSOR
+            );
+            break;
+        case "light":
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_SIMULATOR_LIGHT_SENSOR
+            );
+            break;
+        case "motion_x":
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
+            );
+            break;
+        case "motion_y":
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
+            );
+            break;
+        case "motion_z":
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
+            );
+            break;
     }
 };
 
