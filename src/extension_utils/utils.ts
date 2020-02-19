@@ -287,6 +287,19 @@ export const checkConfig = (configName: string): boolean => {
     return vscode.workspace.getConfiguration().get(configName) === true;
 };
 
+export const getConfig = (configName: string): string => {
+    return vscode.workspace.getConfiguration().get(configName);
+};
+
+
+export const checkIfVenv = async (
+    context: vscode.ExtensionContext,
+    pythonExecutableName: string
+) => {
+
+
+}
+
 export const checkVenv = async (
     context: vscode.ExtensionContext
 ) => {
@@ -320,6 +333,13 @@ export const checkVenv = async (
     }
     return ""
 };
+
+
+// new menus
+// your selected python intepreter version is too low
+// open python intepreter menu      python website download 
+
+// install dependencies needed for extention (only for their venv)
 
 export const promptInstallVenv = (
     context: vscode.ExtensionContext,

@@ -89,6 +89,11 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
     console.log("uriugseigiohgeiohgifghd")
+
+    pythonExecutableName = utils.getConfig(CONFIG.PYTHON_PATH)
+    isVenv = await utils.checkIfVenv(context,pythonExecutableName);
+
+
     pythonExecutableName = await utils.checkVenv(context);
     console.log("uriugseigiohgeiohgifghd" + pythonExecutableName)
 
