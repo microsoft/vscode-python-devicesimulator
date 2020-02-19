@@ -462,6 +462,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
+            );
             const pathToLibs: string = utils.getPathToScript(
                 context,
                 CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
