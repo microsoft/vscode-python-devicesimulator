@@ -12,6 +12,8 @@ export class DebuggerCommunicationServer {
     private serverIo: socketio.Server;
     private simulatorWebview: WebviewPanel | undefined;
     private currentActiveDevice;
+    private isWaitingResponse = false;
+    private currentCall :Array<Function>= []
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
@@ -42,7 +44,18 @@ export class DebuggerCommunicationServer {
 
 
     public emitInputChanged(newState: string): void {
-        this.serverIo.emit("input_changed", newState)
+        if(this.isWaitingResponse){
+            console.log('I have added a call to the queue')
+            this.currentCall.push(()=>{
+                console.log("I will send another input for sensor_changed")
+                this.serverIo.emit("input_changed", newState)
+                this.isWaitingResponse=true;
+            })
+
+        }else{
+            this.serverIo.emit("input_changed", newState)
+            this.isWaitingResponse=true;
+        }
     }
 
     private initHttpServer(): void {
@@ -60,6 +73,17 @@ export class DebuggerCommunicationServer {
                 this.handleState(data);
                 this.serverIo.emit("received_state", {})
             });
+            socket.on("receivedState",()=>{
+                this.isWaitingResponse=false;
+                if(this.currentCall.length>0){
+                    let currentCall = this.currentCall.shift()
+                    console.log("The previous state has been received by the python api")
+                    currentCall()
+                }
+                
+            }
+
+            );
 
             socket.on("disconnect", () => {
                 console.log("Socket disconnected");
