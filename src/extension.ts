@@ -91,11 +91,17 @@ export async function activate(context: vscode.ExtensionContext) {
     console.log("uriugseigiohgeiohgifghd")
 
     pythonExecutableName = utils.getConfig(CONFIG.PYTHON_PATH)
-    isVenv = await utils.checkIfVenv(context,pythonExecutableName);
+    if (!await utils.checkIfVenv(context, pythonExecutableName)) {
+        const venvPythonExecutableName = await utils.createVenv(context);
+    } else {
+        const venvPythonExecutableName = pythonExecutableName;
+
+        // prompt for dependency download
+    }
 
 
     pythonExecutableName = await utils.checkVenv(context);
-    console.log("uriugseigiohgeiohgifghd" + pythonExecutableName)
+    // console.log("uriugseigiohgeiohgifghd" + pythonExecutableName)
 
     // Generate cpx.json
     try {

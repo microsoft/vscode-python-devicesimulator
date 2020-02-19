@@ -296,8 +296,14 @@ export const checkIfVenv = async (
     context: vscode.ExtensionContext,
     pythonExecutableName: string
 ) => {
+    const venvCheckerPath: string = getPathToScript(
+        context,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        "check_if_venv.py"
+    );
+    const { stdout } = await exec(`${pythonExecutableName} ${venvCheckerPath}`)
 
-
+    return (stdout === "1")
 }
 
 export const checkVenv = async (
