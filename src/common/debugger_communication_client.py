@@ -51,9 +51,12 @@ def init_connection(port=CONSTANTS.DEFAULT_PORT):
 def __update_api_state(data):
     try:
         event_state = json.loads(data)
+        print(event_state)
         active_device = event_state.get(CONSTANTS.ACTIVE_DEVICE_FIELD)
+        print(active_device)
         # can we do without this?
-        device_dict[active_device].update_state(data)
+        if active_device is None:
+            device_dict[active_device].update_state(data)
     except Exception as e:
         print(CONSTANTS.ERROR_SENDING_EVENT, e, file=sys.stderr, flush=True)
 
@@ -69,7 +72,8 @@ def update_state(state):
 # or Sensor changed (Temperature, light, Motion)
 @sio.on("input_changed")
 def input_changed(data):
-    sio.emit("receivedState", {})
+    print("input changed!")
+    sio.emit("receivedState", data)
     __update_api_state(data)
 
 
