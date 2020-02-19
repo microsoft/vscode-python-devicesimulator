@@ -178,32 +178,32 @@ export const checkPipDependency = async () => {
 };
 
 export const setGlobalPythonExectuableName = async () => {
-    // Find our what command is the PATH for python
-    if (os.platform() === "win32") {
+    // // Find our what command is the PATH for python
+    // if (os.platform() === "win32") {
 
-        const { stdout } = await exec(
-            "py -0p"
-        );
-        if (stdout.includes(" -3.7")) {
-            console.log("has 3.7")
-        } else {
-            console.log("doesn't have 3.7")
-        }
+    //     const { stdout } = await exec(
+    //         "py -0p"
+    //     );
+    //     if (stdout.includes(" -3.7")) {
+    //         console.log("has 3.7")
+    //     } else {
+    //         console.log("doesn't have 3.7")
+    //     }
 
-        // split by newline in stdout to and find which line is 3.7, then split by whitespace to find address
+    //     // split by newline in stdout to and find which line is 3.7, then split by whitespace to find address
 
-    } else {
-        const { stdout } = await exec(
-            "ls /usr/bin/python3.7*"
-        );
-        if (stdout !== "") {
-            console.log("unix has 3.7")
-        } else {
-            console.log("unix doesn't have 3.7")
-        }
+    // } else {
+    //     const { stdout } = await exec(
+    //         "ls /usr/bin/python3.7*"
+    //     );
+    //     if (stdout !== "") {
+    //         console.log("unix has 3.7")
+    //     } else {
+    //         console.log("unix doesn't have 3.7")
+    //     }
 
-        // take first result of command
-    }
+    //     // take first result of command
+    // }
 
 
 
