@@ -284,15 +284,38 @@ export async function activate(context: vscode.ExtensionContext) {
         sendCurrentDeviceMessage(currentPanel);
     };
 
+    const openCPXWebview = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.CPX);
+        openWebview();
+    };
+
+    const openMicrobitWebview = () => {
+        switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
+        openWebview();
+    };
+
     // Open Simulator on the webview
-    const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.openSimulator",
+    const cpxOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.openSimulator",
         () => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_OPEN_SIMULATOR
             );
             telemetryAI.runWithLatencyMeasure(
-                openWebview,
+                openCPXWebview,
+                TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
+            );
+        }
+    );
+
+    const microbitOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.microbit.openSimulator",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_OPEN_SIMULATOR
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openMicrobitWebview,
                 TelemetryEventName.PERFORMANCE_OPEN_SIMULATOR
             );
         }
@@ -367,8 +390,8 @@ export async function activate(context: vscode.ExtensionContext) {
             };
     };
 
-    const newFileCPX: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.newFileCPX",
+    const cpxNewFile: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.newFile",
         () => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_NEW_FILE_CPX
@@ -380,8 +403,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const newFileMicrobit: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.newFileMicrobit",
+    const microbitNewFile: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.microbit.newFile",
         () => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_NEW_FILE_MICROBIT
@@ -394,7 +417,7 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.installDependencies",
+        "deviceSimulatorExpress.common.installDependencies",
         () => {
             const pathToLibs: string = utils.getPathToScript(
                 context,
@@ -633,19 +656,9 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const runSimulatorEditorButton: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.runSimulatorEditorButton",
-        () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.COMMAND_RUN_EDITOR_ICON
-            );
-            runSimulatorCommand();
-        }
-    );
-
     // Send message to the webview
     const runSimulator: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.runSimulator",
+        "deviceSimulatorExpress.common.runSimulator",
         () => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_RUN_PALETTE
@@ -654,7 +667,7 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const deployCodeToDevice = async () => {
+    const cpxDeployCodeToDevice = async () => {
         console.info("Sending code to device");
 
         utils.logToOutputChannel(
@@ -793,14 +806,14 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const runDevice: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.runDevice",
+    const cpxDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.deployToDevice",
         () => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_DEPLOY_DEVICE
             );
             telemetryAI.runWithLatencyMeasure(
-                deployCodeToDevice,
+                cpxDeployCodeToDevice,
                 TelemetryEventName.PERFORMANCE_DEPLOY_DEVICE
             );
         }
@@ -812,8 +825,8 @@ export async function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(serialMonitor);
     }
 
-    const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.selectSerialPort",
+    const cpxSelectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.selectSerialPort",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
@@ -828,8 +841,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.openSerialMonitor",
+    const cpxOpenSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.openSerialMonitor",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
@@ -845,8 +858,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.changeBaudRate",
+    const cpxChangeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.changeBaudRate",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
@@ -862,8 +875,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.closeSerialMonitor",
+    const cpxCloseSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.cpx.closeSerialMonitor",
         (port, showWarning = true) => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
@@ -962,17 +975,17 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(
-        changeBaudRate,
-        closeSerialMonitor,
         installDependencies,
-        openSerialMonitor,
-        openSimulator,
-        newFileCPX,
-        newFileMicrobit,
         runSimulator,
-        runSimulatorEditorButton,
-        runDevice,
-        selectSerialPort,
+        cpxChangeBaudRate,
+        cpxCloseSerialMonitor,
+        cpxDeployToDevice,
+        cpxNewFile,
+        cpxOpenSerialMonitor,
+        cpxOpenSimulator,
+        cpxSelectSerialPort,
+        microbitOpenSimulator,
+        microbitNewFile,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
             simulatorDebugConfiguration
