@@ -172,20 +172,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         switch (message.command) {
                             case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
-                                switch (currentActiveDevice) {
-                                    case CONSTANTS.DEVICE_NAME.CPX:
-                                        handleCPXButtonPressTelemetry(
-                                            message.text
-                                        );
-                                        break;
-                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
-                                        handleMicrobitButtonPressTelemetry(
-                                            message.text
-                                        );
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                handleButtonPressTelemetry(message.text);
                                 console.log(`About to write ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -232,15 +219,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 break;
 
                             case WEBVIEW_MESSAGES.SENSOR_CHANGED:
-                                switch (currentActiveDevice) {
-                                    case CONSTANTS.DEVICE_NAME.CPX:
-                                        checkForCPXTelemetry(message.text);
-                                        break;
-                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                handleCPXGestureTelemetry(message.text);
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -260,18 +239,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 runSimulatorCommand();
                                 break;
                             case WEBVIEW_MESSAGES.SLIDER_TELEMETRY:
-                                switch (currentActiveDevice) {
-                                    case CONSTANTS.DEVICE_NAME.CPX:
-                                        handleCPXSensorTelemetry(message.text);
-                                        break;
-                                    case CONSTANTS.DEVICE_NAME.MICROBIT:
-                                        handleMicrobitSensorTelemetry(
-                                            message.text
-                                        );
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                handleSensorTelemetry(message.text);
                                 break;
                             case WEBVIEW_MESSAGES.SWITCH_DEVICE:
                                 switchDevice(message.text.active_device);
@@ -415,20 +383,7 @@ export async function activate(context: vscode.ExtensionContext) {
             }),
             // tslint:disable-next-line: no-unused-expression
             (error: any) => {
-                switch (currentActiveDevice) {
-                    case CONSTANTS.DEVICE_NAME.CPX:
-                        telemetryAI.trackFeatureUsage(
-                            TelemetryEventName.CPX_ERROR_COMMAND_NEW_FILE
-                        );
-                        break;
-                    case CONSTANTS.DEVICE_NAME.MICROBIT:
-                        telemetryAI.trackFeatureUsage(
-                            TelemetryEventName.MICROBIT_ERROR_COMMAND_NEW_FILE
-                        );
-                        break;
-                    default:
-                        break;
-                }
+                handleNewFileErrorTelemetry();
                 console.error(`Failed to open a new text document:  ${error}`);
             };
     };
@@ -978,6 +933,11 @@ export async function activate(context: vscode.ExtensionContext) {
                     currentPanel,
                     utils.getServerPortConfig()
                 );
+
+                telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.DEBUGGER_INIT_SUCCESS
+                );
+
                 openWebview();
                 if (currentPanel) {
                     debuggerCommunicationHandler.setWebview(currentPanel);
@@ -991,6 +951,11 @@ export async function activate(context: vscode.ExtensionContext) {
                     console.error(
                         `Error trying to init the server on port ${utils.getServerPortConfig()}`
                     );
+
+                    telemetryAI.trackFeatureUsage(
+                        TelemetryEventName.DEBUGGER_INIT_FAIL
+                    );
+
                     vscode.window.showErrorMessage(
                         CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
                             utils.getServerPortConfig()
@@ -1074,6 +1039,44 @@ const updateCurrentFileIfPython = async (
     }
 };
 
+const handleButtonPressTelemetry = (buttonState: any) => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            handleCPXButtonPressTelemetry(buttonState);
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            handleMicrobitButtonPressTelemetry(buttonState);
+            break;
+        default:
+            break;
+    }
+};
+
+const handleGestureTelemetry = (sensorState: any) => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            handleCPXGestureTelemetry(sensorState);
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            break;
+        default:
+            break;
+    }
+};
+
+const handleSensorTelemetry = (sensor: string) => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            handleCPXSensorTelemetry(sensor);
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            handleMicrobitSensorTelemetry(sensor);
+            break;
+        default:
+            break;
+    }
+};
+
 const handleCPXButtonPressTelemetry = (buttonState: any) => {
     if (buttonState.button_a && buttonState.button_b) {
         telemetryAI.trackFeatureUsage(
@@ -1089,6 +1092,14 @@ const handleCPXButtonPressTelemetry = (buttonState: any) => {
         );
     } else if (buttonState.switch) {
         telemetryAI.trackFeatureUsage(TelemetryEventName.CPX_SIMULATOR_SWITCH);
+    }
+};
+
+const handleCPXGestureTelemetry = (sensorState: any) => {
+    if (sensorState.shake) {
+        handleCPXSensorTelemetry("shake");
+    } else if (sensorState.touch) {
+        handleCPXSensorTelemetry("touch");
     }
 };
 
@@ -1129,14 +1140,6 @@ const handleCPXSensorTelemetry = (sensor: string) => {
                 TelemetryEventName.CPX_SIMULATOR_CAPACITIVE_TOUCH
             );
             break;
-    }
-};
-
-const checkForCPXTelemetry = (sensorState: any) => {
-    if (sensorState.shake) {
-        handleCPXSensorTelemetry("shake");
-    } else if (sensorState.touch) {
-        handleCPXSensorTelemetry("touch");
     }
 };
 
@@ -1182,6 +1185,23 @@ const handleMicrobitSensorTelemetry = (sensor: string) => {
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
             );
+            break;
+    }
+};
+
+const handleNewFileErrorTelemetry = () => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CPX_ERROR_COMMAND_NEW_FILE
+            );
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_ERROR_COMMAND_NEW_FILE
+            );
+            break;
+        default:
             break;
     }
 };
