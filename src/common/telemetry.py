@@ -29,3 +29,4 @@ class Telemetry:
 
 
 telemetry_py = Telemetry()
+print(telemetry_py.telemetry_state)
