@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
+import { TooltipHost } from "office-ui-fabric-react";
 import * as React from "react";
 import {
     FormattedMessage,
@@ -15,7 +15,6 @@ import {
     LABEL_TO_MODAL_CONTENT,
 } from "./SensorModalUtils";
 
-
 interface IToolbarState {
     currentOpenedId: string;
     showModal: boolean;
@@ -27,7 +26,6 @@ interface IProps extends WrappedComponentProps {
         image: any;
     }>;
 }
-
 
 class ToolBar extends React.Component<IProps, IToolbarState, any> {
     private readonly TOOLBAR_BUTTON_WIDTH: number = 32;
@@ -49,14 +47,18 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                         {buttonList.map(
                             (currrentButton: any, index: number) => {
                                 return (
-                                    <TooltipHost tooltipProps={
-                                        {
+                                    <TooltipHost
+                                        tooltipProps={{
                                             onRenderContent: () => (
-                                                <FormattedMessage id={`${currrentButton.label}.title`} />
-
-                                            )
-                                        }
-                                    } key={index}>  <Button
+                                                <FormattedMessage
+                                                    id={`${currrentButton.label}.title`}
+                                                />
+                                            ),
+                                        }}
+                                        key={index}
+                                    >
+                                        {" "}
+                                        <Button
                                             key={index}
                                             label={currrentButton.label}
                                             width={this.TOOLBAR_BUTTON_WIDTH}
@@ -71,8 +73,8 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                                             image={currrentButton.image}
                                             styleLabel="toolbar"
                                             focusable={true}
-                                        /></TooltipHost>
-
+                                        />
+                                    </TooltipHost>
                                 );
                             }
                         )}
