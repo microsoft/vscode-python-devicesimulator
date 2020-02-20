@@ -23,6 +23,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { DebugAdapterFactory } from "./extension_utils/debugAdapter";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -140,7 +141,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
-
 
             currentPanel.webview.html = getWebviewContent(context);
 
@@ -451,7 +451,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const runSimulatorCommand = async () => {
         // Prevent running new code if a debug session is active
         if (inDebugMode) {
-            console.log("debug mode not running simulator command")
+            console.log("debug mode not running simulator command");
             vscode.window.showErrorMessage(
                 CONSTANTS.ERROR.DEBUGGING_SESSION_IN_PROGESS
             );
@@ -570,7 +570,7 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
-                    console.log("receiving message")
+                    console.log("receiving message");
                     // Process the data from the process and send one state at a time
                     dataFromTheProcess.split("\0").forEach(message => {
                         if (
@@ -916,6 +916,13 @@ export async function activate(context: vscode.ExtensionContext) {
         utils.getPathToScript(context, "out/", "debug_user_code.py")
     );
 
+    const debugAdapterFactory = new DebugAdapterFactory(
+        vscode.debug.activeDebugSession
+    );
+    vscode.debug.registerDebugAdapterTrackerFactory(
+        "python",
+        debugAdapterFactory
+    );
     // On Debug Session Start: Init comunication
     const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
@@ -1023,7 +1030,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
