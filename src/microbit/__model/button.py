@@ -1,4 +1,5 @@
 from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 
 
 class Button:
@@ -13,7 +14,7 @@ class Button:
         Returns ``True`` if the specified button ``button`` is currently being
         held down, and ``False`` otherwise.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_BUTTON")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_BUTTON)
         return self.__pressed
 
     def was_pressed(self):
@@ -24,7 +25,7 @@ class Button:
         that the button must be pressed again before this method will return
         ``True`` again.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_BUTTON")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_BUTTON)
         res = self.__prev_pressed
         self.__prev_pressed = False
         return res
@@ -34,7 +35,7 @@ class Button:
         Returns the running total of button presses, and resets this total
         to zero before returning.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_BUTTON")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_BUTTON)
         res = self.__presses
         self.__presses = 0
         return res

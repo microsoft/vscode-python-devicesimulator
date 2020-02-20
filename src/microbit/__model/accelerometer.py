@@ -1,5 +1,6 @@
 from . import constants as CONSTANTS
 from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 
 
 class Accelerometer:
@@ -18,7 +19,7 @@ class Accelerometer:
         negative integer, depending on the direction. The measurement is given in
         milli-g.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_ACCELEROMETER")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_ACCELEROMETER)
         return self.__x
 
     def get_y(self):
@@ -27,7 +28,7 @@ class Accelerometer:
         negative integer, depending on the direction. The measurement is given in
         milli-g.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_ACCELEROMETER")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_ACCELEROMETER)
         return self.__y
 
     def get_z(self):
@@ -36,7 +37,7 @@ class Accelerometer:
         negative integer, depending on the direction. The measurement is given in
         milli-g.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_ACCELEROMETER")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_ACCELEROMETER)
         return self.__z
 
     def get_values(self):
@@ -44,14 +45,14 @@ class Accelerometer:
         Get the acceleration measurements in all axes at once, as a three-element
         tuple of integers ordered as X, Y, Z.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_ACCELEROMETER")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_ACCELEROMETER)
         return (self.__x, self.__y, self.__z)
 
     def current_gesture(self):
         """
         Return the name of the current gesture.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_GESTURE")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_GESTURE)
         self.__add_current_gesture_to_gesture_lists()
         return self.__current_gesture
 
@@ -59,7 +60,7 @@ class Accelerometer:
         """
         Return True or False to indicate if the named gesture is currently active.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_GESTURE")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_GESTURE)
         self.__add_current_gesture_to_gesture_lists()
         if name not in CONSTANTS.GESTURES:
             raise ValueError(CONSTANTS.INVALID_GESTURE_ERR)
@@ -70,7 +71,7 @@ class Accelerometer:
         Return True or False to indicate if the named gesture was active since the
         last [was_gesture] call.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_GESTURE")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_GESTURE)
         self.__add_current_gesture_to_gesture_lists()
         if name not in CONSTANTS.GESTURES:
             raise ValueError(CONSTANTS.INVALID_GESTURE_ERR)
@@ -83,7 +84,7 @@ class Accelerometer:
         Return a tuple of the gesture history. The most recent is listed last.
         Also clears the gesture history before returning.
         """
-        telemetry_py.send_telemetry("MICROBIT_API_GESTURE")
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_GESTURE)
         self.__add_current_gesture_to_gesture_lists()
         gestures = tuple(self.__gestures)
         self.__gestures.clear()

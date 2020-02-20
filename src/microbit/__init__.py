@@ -1,6 +1,7 @@
 from .__model.image import Image
 from .__model.microbit_model import __mb
 from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 
 accelerometer = __mb.accelerometer
 button_a = __mb.button_a
@@ -30,5 +31,5 @@ def temperature():
     """
     Return the temperature of the micro:bit in degrees Celcius.
     """
-    telemetry_py.send_telemetry("MICROBIT_API_TEMPERATURE")
+    telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_TEMPERATURE)
     return __mb.temperature()
