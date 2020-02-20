@@ -3,12 +3,10 @@
 
 import json
 import sys
-from common import utils
-from . import constants as CONSTANTS
 
-from applicationinsights import TelemetryClient
+from common import utils
+from common.telemetry import telemetry_py
 from . import constants as CONSTANTS
-from .telemetry import telemetry_py
 from . import debugger_communication_client
 
 

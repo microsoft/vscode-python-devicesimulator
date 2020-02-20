@@ -5,13 +5,12 @@ import json
 import sys
 import os
 import playsound
-from common import utils
-from .pixel import Pixel
 
+from common import utils
+from common.telemetry import telemetry_py
+from .pixel import Pixel
 from . import constants as CONSTANTS
 from collections import namedtuple
-from applicationinsights import TelemetryClient
-from .telemetry import telemetry_py
 from . import debugger_communication_client
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])

@@ -1,5 +1,6 @@
 from . import constants as CONSTANTS
 from .producer_property import ProducerProperty
+from common.telemetry import telemetry_py
 
 
 class Image:
@@ -114,7 +115,7 @@ class Image:
     def __init__(self, *args, **kwargs):
         # Depending on the number of arguments
         # in constructor, it treat args differently.
-
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_CREATION")
         if len(args) == 0:
             # default constructor
             self.__LED = self.__string_to_square_array(CONSTANTS.BLANK_5X5)
@@ -140,13 +141,13 @@ class Image:
                 self.__LED = self.__bytes_to_array(width, height, byte_arr)
             else:
                 self.__LED = self.__create_leds(width, height)
-
         self.read_only = False
 
     def width(self):
         """
         Return the number of columns in the image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         if len(self.__LED) > 0:
             return len(self.__LED[0])
         else:
@@ -156,6 +157,7 @@ class Image:
         """
         Return the numbers of rows in the image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return len(self.__LED)
 
     def set_pixel(self, x, y, value):
@@ -166,6 +168,7 @@ class Image:
         This method will raise an exception when called on any of the built-in
         read-only images, like ``Image.HEART``.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         if self.read_only:
             raise TypeError(CONSTANTS.COPY_ERR_MESSAGE)
         elif not self.__valid_pos(x, y):
@@ -180,6 +183,7 @@ class Image:
         Return the brightness of pixel at column ``x`` and row ``y`` as an
         integer between 0 and 9.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         if self.__valid_pos(x, y):
             return self.__LED[y][x]
         else:
@@ -189,12 +193,14 @@ class Image:
         """
         Return a new image created by shifting the picture up by ``n`` rows.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return self.__shift_vertical(-n)
 
     def shift_down(self, n):
         """
         Return a new image created by shifting the picture down by ``n`` rows.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return self.__shift_vertical(n)
 
     def shift_right(self, n):
@@ -202,6 +208,7 @@ class Image:
         Return a new image created by shifting the picture right by ``n``
         columns.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return self.__shift_horizontal(n)
 
     def shift_left(self, n):
@@ -209,6 +216,7 @@ class Image:
         Return a new image created by shifting the picture left by ``n``
         columns.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return self.__shift_horizontal(-n)
 
     def crop(self, x, y, w, h):
@@ -216,6 +224,7 @@ class Image:
         Return a new image by cropping the picture to a width of ``w`` and a
         height of ``h``, starting with the pixel at column ``x`` and row ``y``.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         res = Image(w, h)
         res.blit(self, x, y, w, h)
         return res
@@ -224,6 +233,7 @@ class Image:
         """
         Return an exact copy of the image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         return Image(self.__create_string())
 
     # This inverts the brightness of each LED.
@@ -234,6 +244,7 @@ class Image:
         Return a new image by inverting the brightness of the pixels in the
         source image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, CONSTANTS.BRIGHTNESS_MAX - self.get_pixel(x, y))
@@ -247,6 +258,7 @@ class Image:
         This method will raise an exception when called on any of the built-in
         read-only images, like ``Image.HEART``.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         for y in range(self.height()):
             for x in range(self.width()):
                 self.set_pixel(x, y, value)
@@ -258,6 +270,7 @@ class Image:
         this image at ``xdest``, ``ydest``.
         Areas in the source rectangle, but outside the source image are treated as having a value of 0.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         if not src.__valid_pos(x, y):
             raise ValueError(CONSTANTS.INDEX_ERR)
 
@@ -276,6 +289,7 @@ class Image:
         """
         Create a new image by adding the brightness values from the two images for each pixel.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         if not isinstance(other, Image):
             raise TypeError(
                 CONSTANTS.UNSUPPORTED_ADD_TYPE + f"'{type(self)}', '{type(other)}'"
@@ -298,6 +312,7 @@ class Image:
         """
         Create a new image by multiplying the brightness of each pixel by n.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         try:
             float_val = float(other)
         except TypeError:
@@ -316,6 +331,7 @@ class Image:
         """
         Get a compact string representation of the image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         ret_str = "Image('"
         for index_y in range(self.height()):
             ret_str += self.__row_to_str(index_y)
@@ -328,6 +344,7 @@ class Image:
         """
         Get a readable string representation of the image.
         """
+        telemetry_py.send_telemetry("MICROBIT_API_IMAGE_OTHER")
         ret_str = "Image('\n"
         for index_y in range(self.height()):
             ret_str += "\t" + self.__row_to_str(index_y) + "\n"
@@ -486,6 +503,7 @@ class Image:
 # This is for generating functions like Image.HEART
 # that return a new read-only Image
 def create_const_func(func_name):
+    telemetry_py.send_telemetry("MICROBIT_API_IMAGE_STATIC")
     def func(*args):
         const_instance = Image(CONSTANTS.IMAGE_PATTERNS[func_name])
         const_instance.read_only = True
