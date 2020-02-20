@@ -30,5 +30,5 @@ def temperature():
     """
     Return the temperature of the micro:bit in degrees Celcius.
     """
-    telemetry_py.send_telemetry("MICROBIT_API_SLEEP")
+    telemetry_py.send_telemetry("MICROBIT_API_TEMPERATURE")
     return __mb.temperature()
