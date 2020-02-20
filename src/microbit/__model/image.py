@@ -504,6 +504,7 @@ class Image:
 # that return a new read-only Image
 def create_const_func(func_name):
     telemetry_py.send_telemetry("MICROBIT_API_IMAGE_STATIC")
+
     def func(*args):
         const_instance = Image(CONSTANTS.IMAGE_PATTERNS[func_name])
         const_instance.read_only = True
