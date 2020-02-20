@@ -13,6 +13,8 @@ import {
     IModalContent,
     LABEL_TO_MODAL_CONTENT,
 } from "./SensorModalUtils";
+import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
+
 
 interface IToolbarState {
     currentOpenedId: string;
@@ -25,6 +27,7 @@ interface IProps extends WrappedComponentProps {
         image: any;
     }>;
 }
+
 
 class ToolBar extends React.Component<IProps, IToolbarState, any> {
     private readonly TOOLBAR_BUTTON_WIDTH: number = 32;
@@ -46,22 +49,30 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                         {buttonList.map(
                             (currrentButton: any, index: number) => {
                                 return (
-                                    <Button
-                                        key={index}
-                                        label={currrentButton.label}
-                                        width={this.TOOLBAR_BUTTON_WIDTH}
-                                        onClick={(
-                                            e: React.MouseEvent<HTMLElement>
-                                        ) => {
-                                            this.handleOnClick(
-                                                e,
-                                                currrentButton.label
-                                            );
-                                        }}
-                                        image={currrentButton.image}
-                                        styleLabel="toolbar"
-                                        focusable={true}
-                                    />
+                                    <TooltipHost tooltipProps={
+                                        {
+                                            onRenderContent: () => (
+                                                <FormattedMessage id={`${currrentButton.label}.title`} />
+
+                                            )
+                                        }
+                                    } key={index}>  <Button
+                                            key={index}
+                                            label={currrentButton.label}
+                                            width={this.TOOLBAR_BUTTON_WIDTH}
+                                            onClick={(
+                                                e: React.MouseEvent<HTMLElement>
+                                            ) => {
+                                                this.handleOnClick(
+                                                    e,
+                                                    currrentButton.label
+                                                );
+                                            }}
+                                            image={currrentButton.image}
+                                            styleLabel="toolbar"
+                                            focusable={true}
+                                        /></TooltipHost>
+
                                 );
                             }
                         )}
