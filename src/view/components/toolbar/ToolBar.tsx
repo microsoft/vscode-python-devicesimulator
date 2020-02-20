@@ -57,7 +57,6 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                                         }}
                                         key={index}
                                     >
-                                        {" "}
                                         <Button
                                             key={index}
                                             label={currrentButton.label}
