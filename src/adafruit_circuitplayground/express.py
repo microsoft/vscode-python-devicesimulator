@@ -52,25 +52,29 @@ class Express:
 
     @property
     def acceleration(self):
+        telemetry_py.send_telemetry("CPX_API_ACCELERATION")
         return Acceleration(
             self.__state["motion_x"], self.__state["motion_y"], self.__state["motion_z"]
         )
 
     @property
     def button_a(self):
+        telemetry_py.send_telemetry("CPX_API_BUTTON_A")
         return self.__state["button_a"]
 
     @property
     def button_b(self):
+        telemetry_py.send_telemetry("CPX_API_BUTTON_B")
         return self.__state["button_b"]
 
     @property
     def detect_taps(self):
-        telemetry_py.send_telemetry("DETECT_TAPS")
+        telemetry_py.send_telemetry("CPX_API_DETECT_TAPS")
         return self.__state["detect_taps"]
 
     @detect_taps.setter
     def detect_taps(self, value):
+        telemetry_py.send_telemetry("CPX_API_DETECT_TAPS")
         value_int = int(value)
         self.__state["detect_taps"] = (
             value_int if (value_int == 1 or value_int == 2) else 1
@@ -96,14 +100,17 @@ class Express:
 
     @property
     def switch(self):
+        telemetry_py.send_telemetry("CPX_API_SWITCH")
         return self.__state["switch"]
 
     @property
     def temperature(self):
+        telemetry_py.send_telemetry("CPX_API_TEMPERATURE")
         return self.__state["temperature"]
 
     @property
     def light(self):
+        telemetry_py.send_telemetry("CPX_API_LIGHT")
         return self.__state["light"]
 
     def __show(self):
@@ -113,6 +120,7 @@ class Express:
             utils.send_to_simulator(self.__state, CONSTANTS.CPX)
 
     def __touch(self, i):
+        telemetry_py.send_telemetry("CPX_API_TOUCH")
         return self.__state["touch"][i - 1]
 
     @property
@@ -151,6 +159,7 @@ class Express:
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def shake(self, shake_threshold=30):
+        telemetry_py.send_telemetry("CPX_API_SHAKE")
         return self.__state["shake"]
 
     def play_file(self, file_name):
