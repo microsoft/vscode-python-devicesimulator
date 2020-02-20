@@ -1050,7 +1050,7 @@ const handleDebuggerTelemetry = () => {
         default:
             break;
     }
-}
+};
 
 const handleDebuggerFailTelemetry = () => {
     switch (currentActiveDevice) {
@@ -1067,7 +1067,7 @@ const handleDebuggerFailTelemetry = () => {
         default:
             break;
     }
-}
+};
 
 const handleButtonPressTelemetry = (buttonState: any) => {
     switch (currentActiveDevice) {
