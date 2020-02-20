@@ -19,9 +19,8 @@ from microbit.__model.constants import MICROBIT
 
 
 device_dict = {CPX: cpx, MICROBIT: mb}
-previous_state = {}
-# processing_state = False
 processing_state_event = threading.Event()
+previous_state = {}
 
 # similar to utils.send_to_simulator, but for debugging
 # (needs handle to device-specific debugger)
@@ -80,26 +79,3 @@ def input_changed(data):
 @sio.on("received_state")
 def received_state(data):
     processing_state_event.set()
-
-
-# @sio.event
-# def disconnect():
-#     print("I'm disconnected!")
-
-
-@sio.on("frontend_disconnected")
-def frontend_disconnected(data):
-    print("disconnecting...")
-    sio.disconnect()
-
-
-def disconnect_socket():
-    print("disconnecting here!")
-    sio.disconnect()
-
-import signal
-
-def handler(signum, frame):
-    print('Signal handler called with signal', signum)
-
-signal.signal(signal.SIGABRT, handler)
