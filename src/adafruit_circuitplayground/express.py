@@ -83,17 +83,17 @@ class Express:
     def tapped(self):
         """  Not Implemented!
         """
-        telemetry_py.send_telemetry("TAPPED")
+        telemetry_py.send_telemetry("CPX_API_TAPPED")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     @property
     def red_led(self):
-        telemetry_py.send_telemetry("RED_LED")
+        telemetry_py.send_telemetry("CPX_API_RED_LED")
         return self.__state["red_led"]
 
     @red_led.setter
     def red_led(self, value):
-        telemetry_py.send_telemetry("RED_LED")
+        telemetry_py.send_telemetry("CPX_API_RED_LED")
         self.__state["red_led"] = bool(value)
         self.__show()
 
@@ -154,7 +154,7 @@ class Express:
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
-        telemetry_py.send_telemetry("ADJUST_THRESHOLD")
+        telemetry_py.send_telemetry("CPX_API_ADJUST_THRESHOLD")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def shake(self, shake_threshold=30):
@@ -162,7 +162,7 @@ class Express:
         return self.__state["shake"]
 
     def play_file(self, file_name):
-        telemetry_py.send_telemetry("PLAY_FILE")
+        telemetry_py.send_telemetry("CPX_API_PLAY_FILE")
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
             os.path.join(self.__abs_path_to_code_file, os.pardir)
@@ -187,19 +187,19 @@ class Express:
     def play_tone(self, frequency, duration):
         """ Not Implemented!
         """
-        telemetry_py.send_telemetry("PLAY_TONE")
+        telemetry_py.send_telemetry("CPX_API_PLAY_TONE")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
-        telemetry_py.send_telemetry("START_TONE")
+        telemetry_py.send_telemetry("CPX_API_START_TONE")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def stop_tone(self):
         """ Not Implemented!
         """
-        telemetry_py.send_telemetry("STOP_TONE")
+        telemetry_py.send_telemetry("CPX_API_STOP_TONE")
         raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
 
     def update_state(self, new_state):
