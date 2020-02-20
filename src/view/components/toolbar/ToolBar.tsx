@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import * as React from "react";
 import {
     FormattedMessage,
@@ -13,7 +14,6 @@ import {
     IModalContent,
     LABEL_TO_MODAL_CONTENT,
 } from "./SensorModalUtils";
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 
 
 interface IToolbarState {
