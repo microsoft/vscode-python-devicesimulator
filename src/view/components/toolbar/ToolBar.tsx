@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import { TooltipHost } from "office-ui-fabric-react";
 import * as React from "react";
 import {
     FormattedMessage,
@@ -46,22 +47,33 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                         {buttonList.map(
                             (currrentButton: any, index: number) => {
                                 return (
-                                    <Button
-                                        key={index}
-                                        label={currrentButton.label}
-                                        width={this.TOOLBAR_BUTTON_WIDTH}
-                                        onClick={(
-                                            e: React.MouseEvent<HTMLElement>
-                                        ) => {
-                                            this.handleOnClick(
-                                                e,
-                                                currrentButton.label
-                                            );
+                                    <TooltipHost
+                                        tooltipProps={{
+                                            onRenderContent: () => (
+                                                <FormattedMessage
+                                                    id={`${currrentButton.label}.title`}
+                                                />
+                                            ),
                                         }}
-                                        image={currrentButton.image}
-                                        styleLabel="toolbar"
-                                        focusable={true}
-                                    />
+                                        key={index}
+                                    >
+                                        <Button
+                                            key={index}
+                                            label={currrentButton.label}
+                                            width={this.TOOLBAR_BUTTON_WIDTH}
+                                            onClick={(
+                                                e: React.MouseEvent<HTMLElement>
+                                            ) => {
+                                                this.handleOnClick(
+                                                    e,
+                                                    currrentButton.label
+                                                );
+                                            }}
+                                            image={currrentButton.image}
+                                            styleLabel="toolbar"
+                                            focusable={true}
+                                        />
+                                    </TooltipHost>
                                 );
                             }
                         )}
