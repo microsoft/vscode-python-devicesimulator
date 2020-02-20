@@ -23,6 +23,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -88,47 +89,8 @@ export async function activate(context: vscode.ExtensionContext) {
     // ignore import errors so that adafruit_circuitplayground library
     // doesn't trigger lint errors
     updatePylintArgs(context);
-    console.log("uriugseigiohgeiohgifghd")
 
-    let originalPythonExecutableName:string = utils.getConfig(CONFIG.PYTHON_PATH)
-
-    if (!path.isAbsolute(originalPythonExecutableName)) {
-        originalPythonExecutableName = path.join(vscode.workspace.rootPath,originalPythonExecutableName)
-        console.log("uriugseigiohgeiohgifghd " + originalPythonExecutableName)
-    }
-
-    originalPythonExecutableName = `"${originalPythonExecutableName}"`
-    console.log("uriugseigiohgeiohgifghd 0.5")
-    if (!await utils.validPythonVersion(originalPythonExecutableName)) {
-        return;
-    }
-
-    
-    console.log("uriugseigiohgeiohgifghd 1")
-    pythonExecutableName = originalPythonExecutableName;
-    if (!await utils.checkIfVenv(context, pythonExecutableName)) {
-        console.log("here!!")
-        pythonExecutableName = `"${await utils.createVenv(context,pythonExecutableName)}"`;
-    }
-
-    
-    console.log("uriugseigiohgeiohgifghd 2")
-
-    if (pythonExecutableName === originalPythonExecutableName) {
-        await vscode.window
-            .showInformationMessage(
-                CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
-                DialogResponses.INSTALL_NOW,
-                DialogResponses.DONT_INSTALL
-            )
-            .then(async (installChoice: vscode.MessageItem | undefined) => {
-                if (installChoice === DialogResponses.INSTALL_NOW) {
-                    await utils.installDependencies(context, pythonExecutableName)
-                }
-            });
-    }
-
-    console.log("uriugseigiohgeiohgifghd 3 " + pythonExecutableName)
+    pythonExecutableName = await utils.setupEnv(context);
     try {
         utils.generateCPXConfig();
         configFileCreated = true;
@@ -378,7 +340,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 TelemetryEventName.CLICK_DIALOG_TUTORIALS
                             );
                         };
-                        utils.showPrivacyModal(okAction);
+                        utils.showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT);
                     }
                 });
         }
@@ -429,15 +391,8 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.installDependencies",
         () => {
-            const pathToLibs: string = utils.getPathToScript(
-                context,
-                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-            );
-            utils.installPythonVenv(
-                context,
-                pythonExecutableName,
-                pathToLibs
+            utils.setupEnv(
+                context
             );
         }
     );
@@ -561,6 +516,15 @@ export async function activate(context: vscode.ExtensionContext) {
                 active_device: currentActiveDevice,
             });
 
+            console.log(
+                utils.createEscapedPath(utils.getPathToScript(
+                    context,
+                    CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+                    "process_user_code.py"
+                )),
+                utils.createEscapedPath(currentFileAbsPath),
+                JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
+            )
             childProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
                     context,
@@ -730,6 +694,13 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
             );
 
+            console.log(utils.createEscapedPath(utils.getPathToScript(
+                context,
+                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+                "device.py"
+            )),
+                utils.createEscapedPath(currentFileAbsPath),
+            )
             const deviceProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
                     context,
@@ -784,7 +755,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                                     TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                                                 );
                                             };
-                                            utils.showPrivacyModal(okAction);
+                                            utils.showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT);
                                         }
                                     }
                                 );
@@ -1115,11 +1086,11 @@ const updatePythonExtraPaths = () => {
 };
 
 const updatePylintArgs = (context: vscode.ExtensionContext) => {
-    const outPath: string = createEscapedPath(
+    const outPath: string = utils.createEscapedPath(
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
     );
-    const pyLibsPath: string = createEscapedPath(
+    const pyLibsPath: string = utils.createEscapedPath(
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
         CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
@@ -1137,12 +1108,6 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
     );
 };
 
-const createEscapedPath = (...pieces: string[]) => {
-    const initialPath: string = path.join(...pieces);
-
-    // escape all instances of backslashes
-    return initialPath.replace(/\\/g, "\\\\");
-};
 
 const updateConfigLists = (
     section: string,

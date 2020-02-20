@@ -96,6 +96,10 @@ export const CONSTANTS = {
             "error.noProgramFoundDebug",
             "Cannot find a program to debug."
         ),
+        NO_PIP: localize(
+            "error.noPip",
+            "We found that you don't have Pip installed on your computer, please install it and try again."
+        ),
         NO_PYTHON_PATH: localize(
             "error.noPythonPath",
             "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
@@ -204,9 +208,17 @@ export const CONSTANTS = {
             "info.successfulInstall",
             "Successfully installed Python dependencies."
         ),
-        THIRD_PARTY_WEBSITE: localize(
-            "info.thirdPartyWebsite",
+        THIRD_PARTY_WEBSITE_ADAFRUIT: localize(
+            "info.thirdPartyWebsiteAdafruit",
             'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PIP: localize(
+            "info.thirdPartyWebsitePip",
+            'By clicking "Agree and Proceed" you will be redirected to pip.pypa.io, a third party website not managed by Microsoft. Please note that your activity on pip.pypa.io is subject to PyPA\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PYTHON: localize(
+            "info.thirdPartyWebsitePython",
+            'By clicking "Agree and Proceed" you will be redirected to python.org, a third party website not managed by Microsoft. Please note that your activity on python.org is subject to Python\'s privacy policy'
         ),
         WELCOME_OUTPUT_TAB: localize(
             "info.welcomeOutputTab",
@@ -220,6 +232,7 @@ export const CONSTANTS = {
         ),
     },
     LINKS: {
+        DOWNLOAD_PIP: "https://pip.pypa.io/en/stable/installing/",
         DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
         EXAMPLE_CODE:
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
@@ -377,6 +390,12 @@ export namespace DialogResponses {
     };
     export const MESSAGE_UNDERSTOOD: MessageItem = {
         title: localize("dialogResponses.messageUnderstood", "Got It"),
+    };
+    export const INSTALL_PIP: MessageItem = {
+        title: localize(
+            "dialogResponses.installPip",
+            "Install from Pip's webpage"
+        ),
     };
     export const INSTALL_PYTHON: MessageItem = {
         title: localize(

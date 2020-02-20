@@ -43,10 +43,10 @@ export const validCodeFileName = (filePath: string) => {
     );
 };
 
-export const showPrivacyModal = (okAction: () => void) => {
+export const showPrivacyModal = (okAction: () => void, thirdPartyDisclaimer: string) => {
     vscode.window
         .showInformationMessage(
-            `${CONSTANTS.INFO.THIRD_PARTY_WEBSITE}: ${CONSTANTS.LINKS.PRIVACY}`,
+            `${thirdPartyDisclaimer}: ${CONSTANTS.LINKS.PRIVACY}`,
             DialogResponses.AGREE_AND_PROCEED,
             DialogResponses.CANCEL
         )
@@ -177,36 +177,7 @@ export const checkPipDependency = async () => {
     return result.payload;
 };
 
-export const check = async () => {
-    // // Find our what command is the PATH for python
-    // if (os.platform() === "win32") {
-
-    //     const { stdout } = await exec(
-    //         "py -0p"
-    //     );
-    //     if (stdout.includes(" -3.7")) {
-    //         console.log("has 3.7")
-    //     } else {
-    //         console.log("doesn't have 3.7")
-    //     }
-
-    //     // split by newline in stdout to and find which line is 3.7, then split by whitespace to find address
-
-    // } else {
-    //     const { stdout } = await exec(
-    //         "ls /usr/bin/python3.7*"
-    //     );
-    //     if (stdout !== "") {
-    //         console.log("unix has 3.7")
-    //     } else {
-    //         console.log("unix doesn't have 3.7")
-    //     }
-
-    //     // take first result of command
-    // }
-
-
-
+export const checkForPython = async () => {
     const dependencyCheck = await checkPythonDependency();
     if (dependencyCheck.installed) {
         return true;
@@ -221,7 +192,30 @@ export const check = async () => {
                     const okAction = () => {
                         open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                     };
-                    showPrivacyModal(okAction);
+                    showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON);
+                }
+            });
+        return false
+    }
+
+};
+
+export const checkForPip = async () => {
+    const dependencyCheck = await checkPipDependency();
+    if (dependencyCheck.installed) {
+        return true;
+    } else {
+        vscode.window
+            .showErrorMessage(
+                CONSTANTS.ERROR.NO_PIP,
+                DialogResponses.INSTALL_PIP
+            )
+            .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.INSTALL_PIP) {
+                    const okAction = () => {
+                        open(CONSTANTS.LINKS.DOWNLOAD_PIP);
+                    };
+                    showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PIP);
                 }
             });
         return false
@@ -304,8 +298,8 @@ export const checkIfVenv = async (
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
         "check_if_venv.py"
     );
-    const { stdout } = await exec(`${pythonExecutableName} "${venvCheckerPath}"`)
-    console.log(`${pythonExecutableName} "${venvCheckerPath}"`)
+    const { stdout } = await exec(`${createEscapedPath(pythonExecutableName)} "${venvCheckerPath}"`)
+    console.log(`${createEscapedPath(pythonExecutableName)}  "${venvCheckerPath}"`)
     console.log(stdout)
     console.log((stdout.trim() === "1"))
     return (stdout.trim() === "1")
@@ -314,8 +308,9 @@ export const checkIfVenv = async (
 export const validPythonVersion = async (
     pythonExecutableName: string
 ) => {
-    const { stdout } = await exec(`${pythonExecutableName} --version` )
-
+    console.log(`${createEscapedPath(pythonExecutableName)} --version`)
+    const { stdout } = await exec(`${createEscapedPath(pythonExecutableName)} --version`)
+    console.log(stdout)
     console.log("sdfasdfasd here")
     if (stdout < "3.7.0") {
         vscode.window.showInformationMessage(
@@ -323,16 +318,16 @@ export const validPythonVersion = async (
             DialogResponses.INSTALL_PYTHON,
             DialogResponses.OPEN_PYTHON_INTERPRETER_MENU
         )
-        .then((installChoice: vscode.MessageItem | undefined) => {
-            if (installChoice === DialogResponses.INSTALL_PYTHON) {
-                const okAction = () => {
-                    open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-                };
-                showPrivacyModal(okAction);
-            } else if (installChoice === DialogResponses.OPEN_PYTHON_INTERPRETER_MENU){
-                vscode.commands.executeCommand('python.selectInterpreter');
-            }
-        });
+            .then((installChoice: vscode.MessageItem | undefined) => {
+                if (installChoice === DialogResponses.INSTALL_PYTHON) {
+                    const okAction = () => {
+                        open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                    };
+                    showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON);
+                } else if (installChoice === DialogResponses.OPEN_PYTHON_INTERPRETER_MENU) {
+                    vscode.commands.executeCommand('python.selectInterpreter');
+                }
+            });
         return false
     } else {
         return true
@@ -340,7 +335,7 @@ export const validPythonVersion = async (
 }
 export const checkBaseDependencies = async (
     context: vscode.ExtensionContext
-) => {}
+) => { }
 
 export const createVenv = async (
     context: vscode.ExtensionContext,
@@ -353,12 +348,12 @@ export const createVenv = async (
     console.log("uriugseigiohgeiohgifghd" + pathToEnv)
     // const globalPythonExecutableName = await setGlobalPythonExectuableName();
     // if (checkPipDependency() && globalPythonExecutableName !== "") {
-        // checks for whether the check is necessary
-            // check if ./out/python_libs exists; if not, the dependencies
-            // for adafruit_circuitpython are not (successfully) installed yet
+    // checks for whether the check is necessary
+    // check if ./out/python_libs exists; if not, the dependencies
+    // for adafruit_circuitpython are not (successfully) installed yet
     if (fs.existsSync(pathToEnv)) {
         const pythonVenv = await getPythonVenv(context);
-        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL) && await checkForDependencies(context, pythonVenv)) {
+        if (await checkForDependencies(context, pythonVenv)) {
             await installDependencies(context, pythonVenv)
         }
         return pythonVenv;
@@ -369,7 +364,7 @@ export const createVenv = async (
             pathToEnv
         );
     }
-        
+
     // } else {
     //     return "";
     // }
@@ -459,7 +454,7 @@ export const installPythonVenv = async (
         // get python /env/[bin or Scripts]/python
         // run command to download dependencies to out/python_libs
         await exec(
-            `${pythonExecutable} -m venv ${pathToEnv}`
+            `${createEscapedPath(pythonExecutable)} -m venv ${pathToEnv}`
         );
 
     } catch (err) {
@@ -476,12 +471,14 @@ export const installPythonVenv = async (
 
         console.error(err);
 
-        return pythonExecutable
+        return pythonExecutable;
     }
 
-    await installDependencies(context, pythonPath)
+    if (!await installDependencies(context, pythonPath)) {
+        return pythonExecutable;
+    }
 
-    
+
     return pythonPath
 };
 
@@ -493,7 +490,7 @@ export const checkForDependencies = async (context: vscode.ExtensionContext, pyt
     );
     try {
         const { stdout } = await exec(
-            `${pythonPath} "${dependencyCheckerPath}"`
+            `${createEscapedPath(pythonPath)} ${dependencyCheckerPath}`
         );
         console.info(stdout)
         return true;
@@ -511,11 +508,12 @@ export const installDependencies = async (context: vscode.ExtensionContext, pyth
     );
     try {
         const { stdout } = await exec(
-            `${pythonPath} -m pip install -r ${requirementsPath}`
+            `${createEscapedPath(pythonPath)} -m pip install -r ${requirementsPath}`
         );
         console.info(stdout);
-        
+
         vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
+        return true
     } catch (err) {
         vscode.window
             .showErrorMessage(
@@ -529,6 +527,73 @@ export const installDependencies = async (context: vscode.ExtensionContext, pyth
             });
 
         console.error(err);
+        return false
     };
+};
+
+export const setupEnv = async (context: vscode.ExtensionContext) => {
+    console.log("uriugseigiohgeiohgifghd")
+    let pythonExecutableName = ""
+
+    // initial checks for what we need
+    if (!checkPipDependency() || !checkForPython()) {
+        return "";
+    }
+
+    // get name from interpreter
+    let originalPythonExecutableName: string = getConfig(CONFIG.PYTHON_PATH)
+
+    // fix path to be absolute
+    if (!path.isAbsolute(originalPythonExecutableName)) {
+        originalPythonExecutableName = path.join(vscode.workspace.rootPath, originalPythonExecutableName)
+        console.log("uriugseigiohgeiohgifghd " + originalPythonExecutableName)
+    }
+
+    // originalPythonExecutableName = createEscapedPath(originalPythonExecutableName);
+
+    console.log("uriugseigiohgeiohgifghd 0.5")
+    if (!await validPythonVersion(originalPythonExecutableName)) {
+        return "";
+    }
+
+
+    console.log("uriugseigiohgeiohgifghd 1")
+    pythonExecutableName = originalPythonExecutableName;
+    if (!await checkIfVenv(context, pythonExecutableName)) {
+        console.log("here!!")
+
+        pythonExecutableName = await createVenv(context, pythonExecutableName)
+    }
+
+
+    console.log("uriugseigiohgeiohgifghd 2")
+
+    if (pythonExecutableName === originalPythonExecutableName && !await checkForDependencies(context, originalPythonExecutableName)) {
+        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+            await vscode.window
+                .showInformationMessage(
+                    CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
+                    DialogResponses.INSTALL_NOW,
+                    DialogResponses.DONT_INSTALL
+                )
+                .then(async (installChoice: vscode.MessageItem | undefined) => {
+                    if (installChoice === DialogResponses.INSTALL_NOW) {
+                        await installDependencies(context, pythonExecutableName)
+                    }
+                });
+        }
+    }
+
+    console.log("uriugseigiohgeiohgifghd 3 " + pythonExecutableName)
+    return pythonExecutableName
+};
+
+
+export const createEscapedPath = (...pieces: string[]) => {
+    const initialPath: string = path.join(...pieces);
+
+    // escape all special characters
+    // https://stackoverflow.com/questions/1779858/how-do-i-escape-a-string-for-a-shell-command-in-node
+    return `"` + initialPath.replace(/(["'$`\\])/g, '\\$1') + `"`;
 };
 
