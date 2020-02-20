@@ -80,3 +80,20 @@ def input_changed(data):
 @sio.on("received_state")
 def received_state(data):
     processing_state_event.set()
+
+
+# @sio.event
+# def disconnect():
+#     print("I'm disconnected!")
+
+
+@sio.on("frontend_disconnected")
+def frontend_disconnected(data):
+    print("disconnecting...")
+    sio.disconnect()
+
+
+def disconnect_socket():
+    print("disconnecting here!")
+    sio.disconnect()
+
