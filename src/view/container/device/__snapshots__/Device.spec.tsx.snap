@@ -2652,7 +2652,6 @@ exports[`Device component  should render correctly 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar microbit-button"
             className="toolbar-button button"
@@ -2720,7 +2719,6 @@ exports[`Device component  should render correctly 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar microbit-led"
             className="toolbar-button button"
@@ -2786,7 +2784,6 @@ exports[`Device component  should render correctly 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar temperature-sensor"
             className="toolbar-button button"
@@ -2854,7 +2851,6 @@ exports[`Device component  should render correctly 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar light-sensor"
             className="toolbar-button button"
@@ -2922,7 +2918,6 @@ exports[`Device component  should render correctly 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar accelerometer-sensor"
             className="toolbar-button button"

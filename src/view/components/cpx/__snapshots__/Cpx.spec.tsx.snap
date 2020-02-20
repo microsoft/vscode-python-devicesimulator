@@ -3961,7 +3961,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar slider-switch"
             className="toolbar-button button"
@@ -4029,7 +4028,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar push-button"
             className="toolbar-button button"
@@ -4097,7 +4095,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar red-led"
             className="toolbar-button button"
@@ -4163,7 +4160,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar sound-sensor"
             className="toolbar-button button"
@@ -4240,7 +4236,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar temperature-sensor"
             className="toolbar-button button"
@@ -4308,7 +4303,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar light-sensor"
             className="toolbar-button button"
@@ -4376,7 +4370,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar neo-pixels"
             className="toolbar-button button"
@@ -4480,7 +4473,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar speaker"
             className="toolbar-button button"
@@ -4541,7 +4533,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar motion-sensor"
             className="toolbar-button button"
@@ -4604,7 +4595,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar ir-sensor"
             className="toolbar-button button"
@@ -4665,7 +4655,6 @@ Array [
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-           
           <button
             aria-label="toolbar gpio"
             className="toolbar-button button"
