@@ -17,7 +17,7 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-    PYTHON_PATH: "python.PythonPath",
+    PYTHON_PATH: "python.pythonPath",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
 };
@@ -75,6 +75,10 @@ export const CONSTANTS = {
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
+        ),
+        INVALID_PYTHON_PATH: localize(
+            "error.invalidPythonPath",
+            "We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7 or above."
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -159,12 +163,16 @@ export const CONSTANTS = {
             'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
         ),
         INSTALLING_PYTHON_VENV: localize(
-            "info.installingPythonDependencies",
+            "info.installingPythonVenv",
             "A virtual environment is currently being created. The required Python packages will be installed. You will be prompted a message telling you when the installation is done."
         ),
-        INSTALL_PYTHON_VENV: localize(
+        INSTALL_PYTHON_DEPS: localize(
             "info.installPythonDependencies",
-            "Do you want us to try and install this extensions dependencies via virtual environment for you?"
+            "Do you want us to try and install this extension's dependencies on your selected Python interpreter for you?"
+        ),
+        INSTALL_PYTHON_VENV: localize(
+            "info.installPythonVenv",
+            "Do you want us to try and install this extension's dependencies via virtual environment for you?"
         ),
         INVALID_FILE_NAME_DEBUG: localize(
             "info.invalidFileNameDebug",
@@ -383,6 +391,12 @@ export namespace DialogResponses {
         title: localize(
             "dialogResponses.readInstall",
             "Read installation docs"
+        ),
+    };
+    export const OPEN_PYTHON_INTERPRETER_MENU: MessageItem = {
+        title: localize(
+            "dialogResponses.openPythonInterpreterMenu",
+            "Open Python interpreter menu"
         ),
     };
 }

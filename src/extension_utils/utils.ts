@@ -177,7 +177,7 @@ export const checkPipDependency = async () => {
     return result.payload;
 };
 
-export const setGlobalPythonExectuableName = async () => {
+export const check = async () => {
     // // Find our what command is the PATH for python
     // if (os.platform() === "win32") {
 
@@ -207,10 +207,9 @@ export const setGlobalPythonExectuableName = async () => {
 
 
 
-    let executableName: string = "";
     const dependencyCheck = await checkPythonDependency();
     if (dependencyCheck.installed) {
-        executableName = dependencyCheck.dependency;
+        return true;
     } else {
         vscode.window
             .showErrorMessage(
@@ -225,9 +224,9 @@ export const setGlobalPythonExectuableName = async () => {
                     showPrivacyModal(okAction);
                 }
             });
+        return false
     }
 
-    return executableName;
 };
 
 export const addVisibleTextEditorCallback = (
@@ -288,6 +287,10 @@ export const checkConfig = (configName: string): boolean => {
 };
 
 export const getConfig = (configName: string): string => {
+    console.log(vscode.workspace.getConfiguration())
+    console.log(configName)
+
+    console.log("sdfasdfasd " + vscode.workspace.getConfiguration().get(configName))
     return vscode.workspace.getConfiguration().get(configName);
 };
 
@@ -301,43 +304,75 @@ export const checkIfVenv = async (
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
         "check_if_venv.py"
     );
-    const { stdout } = await exec(`${pythonExecutableName} ${venvCheckerPath}`)
-
-    return (stdout === "1")
+    const { stdout } = await exec(`${pythonExecutableName} "${venvCheckerPath}"`)
+    console.log(`${pythonExecutableName} "${venvCheckerPath}"`)
+    console.log(stdout)
+    console.log((stdout.trim() === "1"))
+    return (stdout.trim() === "1")
 }
 
-export const checkVenv = async (
+export const validPythonVersion = async (
+    pythonExecutableName: string
+) => {
+    const { stdout } = await exec(`${pythonExecutableName} --version` )
+
+    console.log("sdfasdfasd here")
+    if (stdout < "3.7.0") {
+        vscode.window.showInformationMessage(
+            CONSTANTS.ERROR.INVALID_PYTHON_PATH,
+            DialogResponses.INSTALL_PYTHON,
+            DialogResponses.OPEN_PYTHON_INTERPRETER_MENU
+        )
+        .then((installChoice: vscode.MessageItem | undefined) => {
+            if (installChoice === DialogResponses.INSTALL_PYTHON) {
+                const okAction = () => {
+                    open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                };
+                showPrivacyModal(okAction);
+            } else if (installChoice === DialogResponses.OPEN_PYTHON_INTERPRETER_MENU){
+                vscode.commands.executeCommand('python.selectInterpreter');
+            }
+        });
+        return false
+    } else {
+        return true
+    }
+}
+export const checkBaseDependencies = async (
     context: vscode.ExtensionContext
+) => {}
+
+export const createVenv = async (
+    context: vscode.ExtensionContext,
+    pythonExecutableName: string
 ) => {
     const pathToEnv: string = getPathToScript(
         context,
         "env"
     );
     console.log("uriugseigiohgeiohgifghd" + pathToEnv)
-    const globalPythonExecutableName = await setGlobalPythonExectuableName();
-    if (checkPipDependency() && globalPythonExecutableName !== "") {
+    // const globalPythonExecutableName = await setGlobalPythonExectuableName();
+    // if (checkPipDependency() && globalPythonExecutableName !== "") {
         // checks for whether the check is necessary
-        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
             // check if ./out/python_libs exists; if not, the dependencies
             // for adafruit_circuitpython are not (successfully) installed yet
-            if (fs.existsSync(pathToEnv)) {
-                const pythonVenv = await getPythonVenv(context);
-                if (await checkForDependencies(context, pythonVenv)) {
-                    await installDependencies(context, pythonVenv)
-                }
-                return pythonVenv;
-            } else {
-                return promptInstallVenv(
-                    context,
-                    globalPythonExecutableName,
-                    pathToEnv
-                );
-            }
+    if (fs.existsSync(pathToEnv)) {
+        const pythonVenv = await getPythonVenv(context);
+        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL) && await checkForDependencies(context, pythonVenv)) {
+            await installDependencies(context, pythonVenv)
         }
+        return pythonVenv;
     } else {
-        return "";
+        return promptInstallVenv(
+            context,
+            pythonExecutableName,
+            pathToEnv
+        );
     }
-    return ""
+        
+    // } else {
+    //     return "";
+    // }
 };
 
 
@@ -430,7 +465,7 @@ export const installPythonVenv = async (
     } catch (err) {
         vscode.window
             .showErrorMessage(
-                "Virtual Environment for download could not be completed. Please download dependencies manually.",
+                "Virtual Environment for download could not be completed.",
                 DialogResponses.READ_INSTALL_MD
             )
             .then((selection: vscode.MessageItem | undefined) => {
@@ -440,13 +475,13 @@ export const installPythonVenv = async (
             });
 
         console.error(err);
-        return "python"
+
+        return pythonExecutable
     }
 
     await installDependencies(context, pythonPath)
 
-    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
-
+    
     return pythonPath
 };
 
@@ -458,7 +493,7 @@ export const checkForDependencies = async (context: vscode.ExtensionContext, pyt
     );
     try {
         const { stdout } = await exec(
-            `${pythonPath} ${dependencyCheckerPath}`
+            `${pythonPath} "${dependencyCheckerPath}"`
         );
         console.info(stdout)
         return true;
@@ -479,6 +514,8 @@ export const installDependencies = async (context: vscode.ExtensionContext, pyth
             `${pythonPath} -m pip install -r ${requirementsPath}`
         );
         console.info(stdout);
+        
+        vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
     } catch (err) {
         vscode.window
             .showErrorMessage(

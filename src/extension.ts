@@ -90,20 +90,45 @@ export async function activate(context: vscode.ExtensionContext) {
     updatePylintArgs(context);
     console.log("uriugseigiohgeiohgifghd")
 
-    pythonExecutableName = utils.getConfig(CONFIG.PYTHON_PATH)
-    if (!await utils.checkIfVenv(context, pythonExecutableName)) {
-        const venvPythonExecutableName = await utils.createVenv(context);
-    } else {
-        const venvPythonExecutableName = pythonExecutableName;
+    let originalPythonExecutableName:string = utils.getConfig(CONFIG.PYTHON_PATH)
 
-        // prompt for dependency download
+    if (!path.isAbsolute(originalPythonExecutableName)) {
+        originalPythonExecutableName = path.join(vscode.workspace.rootPath,originalPythonExecutableName)
+        console.log("uriugseigiohgeiohgifghd " + originalPythonExecutableName)
     }
 
+    originalPythonExecutableName = `"${originalPythonExecutableName}"`
+    console.log("uriugseigiohgeiohgifghd 0.5")
+    if (!await utils.validPythonVersion(originalPythonExecutableName)) {
+        return;
+    }
 
-    pythonExecutableName = await utils.checkVenv(context);
-    // console.log("uriugseigiohgeiohgifghd" + pythonExecutableName)
+    
+    console.log("uriugseigiohgeiohgifghd 1")
+    pythonExecutableName = originalPythonExecutableName;
+    if (!await utils.checkIfVenv(context, pythonExecutableName)) {
+        console.log("here!!")
+        pythonExecutableName = `"${await utils.createVenv(context,pythonExecutableName)}"`;
+    }
 
-    // Generate cpx.json
+    
+    console.log("uriugseigiohgeiohgifghd 2")
+
+    if (pythonExecutableName === originalPythonExecutableName) {
+        await vscode.window
+            .showInformationMessage(
+                CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
+                DialogResponses.INSTALL_NOW,
+                DialogResponses.DONT_INSTALL
+            )
+            .then(async (installChoice: vscode.MessageItem | undefined) => {
+                if (installChoice === DialogResponses.INSTALL_NOW) {
+                    await utils.installDependencies(context, pythonExecutableName)
+                }
+            });
+    }
+
+    console.log("uriugseigiohgeiohgifghd 3 " + pythonExecutableName)
     try {
         utils.generateCPXConfig();
         configFileCreated = true;
