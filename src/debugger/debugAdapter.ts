@@ -1,4 +1,4 @@
-import { DebugAdapterTracker, DebugSession, DebugConsole } from "vscode";
+import { DebugAdapterTracker, DebugConsole, DebugSession } from "vscode";
 import { MessagingService } from "../service/messagingService";
 import { DEBUG_COMMANDS } from "../view/constants";
 
