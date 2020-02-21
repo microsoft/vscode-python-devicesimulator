@@ -67,5 +67,9 @@ export enum WEBVIEW_MESSAGES {
 export enum VSCODE_MESSAGES_TO_WEBVIEW {
     SET_DEVICE = "set-device",
 }
+export enum DEBUG_COMMANDS {
+    STACK_TRACE = "stackTrace",
+    CONTINUE = "continue",
+}
 
 export default CONSTANTS;

@@ -3,7 +3,11 @@
 
 import * as React from "react";
 import "./App.css";
-import { DEVICE_LIST_KEY, VSCODE_MESSAGES_TO_WEBVIEW } from "./constants";
+import {
+    DEVICE_LIST_KEY,
+    VSCODE_MESSAGES_TO_WEBVIEW,
+    DEBUG_COMMANDS,
+} from "./constants";
 import { Device } from "./container/device/Device";
 
 interface IState {
@@ -48,11 +52,15 @@ class App extends React.Component<{}, IState> {
     handleMessage = (event: any): void => {
         const message = event.data;
         console.log(JSON.stringify(message));
-        if (
-            message.command === VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE &&
-            message.active_device !== this.state.currentDevice
-        ) {
-            this.setState({ currentDevice: message.active_device });
+        switch (message.command) {
+            case VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE:
+                if (message.active_device !== this.state.currentDevice) {
+                    this.setState({ currentDevice: message.active_device });
+                }
+                break;
+            case DEBUG_COMMANDS.CONTINUE:
+            case DEBUG_COMMANDS.STACK_TRACE:
+                break;
         }
     };
 }
