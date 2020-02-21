@@ -24,6 +24,7 @@ import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
 import { DebugAdapterFactory } from "./extension_utils/debugAdapter";
+import { MessagingService } from "./service/messagingService";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -36,6 +37,7 @@ let debuggerCommunicationHandler: DebuggerCommunicationServer;
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+const messagingService = new MessagingService();
 
 let currentActiveDevice: string = DEFAULT_DEVICE;
 
@@ -122,6 +124,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const openWebview = () => {
         if (currentPanel) {
+            messagingService.setWebview(currentPanel.webview);
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
@@ -143,6 +146,7 @@ export async function activate(context: vscode.ExtensionContext) {
             );
 
             currentPanel.webview.html = getWebviewContent(context);
+            messagingService.setWebview(currentPanel.webview);
 
             if (messageListener !== undefined) {
                 messageListener.dispose();
@@ -917,7 +921,8 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     const debugAdapterFactory = new DebugAdapterFactory(
-        vscode.debug.activeDebugSession
+        vscode.debug.activeDebugSession,
+        messagingService
     );
     vscode.debug.registerDebugAdapterTrackerFactory(
         "python",
