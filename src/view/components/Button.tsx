@@ -1,6 +1,6 @@
 import * as React from "react";
 import "../styles/Button.css";
-import {ViewStateContext} from '../context'
+import { ViewStateContext } from "../context";
 import { VIEW_STATE } from "../constants";
 
 export interface IButtonProps {
@@ -17,9 +17,8 @@ const Button: React.FC<IButtonProps> = props => {
     const iconSvg: SVGElement = props.image as SVGElement;
     const buttonStyle = { width: props.width };
     const tabIndex = props.focusable ? 0 : -1;
-    const isButtonDisabled = (React.useContext(ViewStateContext) === VIEW_STATE.PAUSE)
-    console.log(React.useContext(ViewStateContext))
-    console.log(isButtonDisabled)
+    const isButtonDisabled =
+        React.useContext(ViewStateContext) === VIEW_STATE.PAUSE;
 
     return (
         <button

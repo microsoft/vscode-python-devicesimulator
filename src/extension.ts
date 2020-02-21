@@ -23,7 +23,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { DebugAdapterFactory } from "./extension_utils/debugAdapter";
+import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
 import { MessagingService } from "./service/messagingService";
 
 let currentFileAbsPath: string = "";
