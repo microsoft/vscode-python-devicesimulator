@@ -6,6 +6,19 @@ import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
 import { SERVER_INFO } from "./constants";
 
+const DEBUGGER_MESSAGES = {
+    EMITTER: {
+        INPUT_CHANGED: "input_changed",
+        RECEIVED_STATE: "received_state",
+        DISCONNECT: "frontend_disconnected",
+    },
+    LISTENER: {
+        UPDATE_STATE: "updateState",
+        RECEIVED_STATE: "receivedState",
+        DISCONNECT: "disconnect",
+    },
+};
+
 export class DebuggerCommunicationServer {
     private port: number;
     private serverHttp: http.Server;
@@ -13,7 +26,7 @@ export class DebuggerCommunicationServer {
     private simulatorWebview: WebviewPanel | undefined;
     private currentActiveDevice;
     private isWaitingResponse = false;
-    private currentCall: Array<Function> = []
+    private currentCall: Array<Function> = [];
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
@@ -29,7 +42,7 @@ export class DebuggerCommunicationServer {
         this.initEventsHandlers();
         console.info(`Server running on port ${this.port}`);
 
-        this.currentActiveDevice = currentActiveDevice
+        this.currentActiveDevice = currentActiveDevice;
     }
 
     public closeConnection(): void {
@@ -42,18 +55,20 @@ export class DebuggerCommunicationServer {
         this.simulatorWebview = webviewPanel;
     }
 
-
     public emitInputChanged(newState: string): void {
         if (this.isWaitingResponse) {
-            console.log('I have added a call to the queue')
             this.currentCall.push(() => {
-                console.log("I will send another input for sensor_changed")
-                this.serverIo.emit("input_changed", newState)
+                this.serverIo.emit(
+                    DEBUGGER_MESSAGES.EMITTER.INPUT_CHANGED,
+                    newState
+                );
                 this.isWaitingResponse = true;
-            })
-
+            });
         } else {
-            this.serverIo.emit("input_changed", newState)
+            this.serverIo.emit(
+                DEBUGGER_MESSAGES.EMITTER.INPUT_CHANGED,
+                newState
+            );
             this.isWaitingResponse = true;
         }
     }
@@ -67,27 +82,23 @@ export class DebuggerCommunicationServer {
 
     private initEventsHandlers(): void {
         this.serverIo.on("connection", (socket: any) => {
-            console.log("Connection received");
-
-            socket.on("updateState", (data: any) => {
+            socket.on(DEBUGGER_MESSAGES.LISTENER.UPDATE_STATE, (data: any) => {
                 this.handleState(data);
-                this.serverIo.emit("received_state", {})
+                this.serverIo.emit(
+                    DEBUGGER_MESSAGES.EMITTER.RECEIVED_STATE,
+                    {}
+                );
             });
-            socket.on("receivedState", () => {
+            socket.on(DEBUGGER_MESSAGES.LISTENER.RECEIVED_STATE, () => {
                 this.isWaitingResponse = false;
                 if (this.currentCall.length > 0) {
-                    let currentCall = this.currentCall.shift()
-                    console.log("The previous state has been received by the python api")
-                    currentCall()
+                    let currentCall = this.currentCall.shift();
+                    currentCall();
                 }
+            });
 
-            }
-
-            );
-
-            socket.on("disconnect", () => {
-                this.serverIo.emit("frontend_disconnected", {})
-                console.log("Socket disconnected");
+            socket.on(DEBUGGER_MESSAGES.LISTENER.DISCONNECT, () => {
+                this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
                 if (this.simulatorWebview) {
                     this.simulatorWebview.webview.postMessage({
                         command: "reset-state",
@@ -99,9 +110,7 @@ export class DebuggerCommunicationServer {
 
     private handleState(data: any): void {
         try {
-            console.log("handleState")
             const messageToWebview = JSON.parse(data);
-            console.log(messageToWebview)
             if (messageToWebview.type === "state") {
                 console.log(`State recieved: ${messageToWebview.data}`);
                 if (this.simulatorWebview) {
