@@ -71,6 +71,10 @@ export const CONSTANTS = {
             "error.incorrectFileNameForDevicePopup",
             'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
         ),
+        INSTALLATION_ERROR: localize(
+            "error.installationError",
+            "Installation Error"
+        ),
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
