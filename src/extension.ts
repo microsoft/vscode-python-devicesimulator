@@ -934,9 +934,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     utils.getServerPortConfig()
                 );
 
-                telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.DEBUGGER_INIT_SUCCESS
-                );
+                handleDebuggerTelemetry();
 
                 openWebview();
                 if (currentPanel) {
@@ -952,9 +950,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         `Error trying to init the server on port ${utils.getServerPortConfig()}`
                     );
 
-                    telemetryAI.trackFeatureUsage(
-                        TelemetryEventName.DEBUGGER_INIT_FAIL
-                    );
+                    handleDebuggerFailTelemetry();
 
                     vscode.window.showErrorMessage(
                         CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
@@ -1036,6 +1032,40 @@ const updateCurrentFileIfPython = async (
             currentTextDocument,
             vscode.ViewColumn.One
         );
+    }
+};
+
+const handleDebuggerTelemetry = () => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CPX_DEBUGGER_INIT_SUCCESS
+            );
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_DEBUGGER_INIT_SUCCESS
+            );
+            break;
+        default:
+            break;
+    }
+};
+
+const handleDebuggerFailTelemetry = () => {
+    switch (currentActiveDevice) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CPX_DEBUGGER_INIT_FAIL
+            );
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_DEBUGGER_INIT_FAIL
+            );
+            break;
+        default:
+            break;
     }
 };
 
