@@ -315,8 +315,7 @@ export const validPythonVersion = async (
     if (stdout < "3.7.0") {
         vscode.window.showInformationMessage(
             CONSTANTS.ERROR.INVALID_PYTHON_PATH,
-            DialogResponses.INSTALL_PYTHON,
-            DialogResponses.OPEN_PYTHON_INTERPRETER_MENU
+            DialogResponses.INSTALL_PYTHON
         )
             .then((installChoice: vscode.MessageItem | undefined) => {
                 if (installChoice === DialogResponses.INSTALL_PYTHON) {
@@ -324,8 +323,6 @@ export const validPythonVersion = async (
                         open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                     };
                     showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON);
-                } else if (installChoice === DialogResponses.OPEN_PYTHON_INTERPRETER_MENU) {
-                    vscode.commands.executeCommand('python.selectInterpreter');
                 }
             });
         return false
@@ -556,35 +553,39 @@ export const setupEnv = async (context: vscode.ExtensionContext) => {
         return "";
     }
 
-
     console.log("uriugseigiohgeiohgifghd 1")
     pythonExecutableName = originalPythonExecutableName;
-    if (!await checkIfVenv(context, pythonExecutableName)) {
-        console.log("here!!")
 
-        pythonExecutableName = await createVenv(context, pythonExecutableName)
-    }
+    if (!await checkForDependencies(context, pythonExecutableName)) {
+        if (!await checkIfVenv(context, pythonExecutableName)) {
+            console.log("here!!")
+
+            pythonExecutableName = await createVenv(context, pythonExecutableName)
+        }
 
 
-    console.log("uriugseigiohgeiohgifghd 2")
+        console.log("uriugseigiohgeiohgifghd 2")
 
-    if (pythonExecutableName === originalPythonExecutableName && !await checkForDependencies(context, originalPythonExecutableName)) {
-        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-            await vscode.window
-                .showInformationMessage(
-                    CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
-                    DialogResponses.INSTALL_NOW,
-                    DialogResponses.DONT_INSTALL
-                )
-                .then(async (installChoice: vscode.MessageItem | undefined) => {
-                    if (installChoice === DialogResponses.INSTALL_NOW) {
-                        await installDependencies(context, pythonExecutableName)
-                    }
-                });
+        if (pythonExecutableName === originalPythonExecutableName) {
+            if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+                await vscode.window
+                    .showInformationMessage(
+                        CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
+                        DialogResponses.INSTALL_NOW,
+                        DialogResponses.DONT_INSTALL
+                    )
+                    .then(async (installChoice: vscode.MessageItem | undefined) => {
+                        if (installChoice === DialogResponses.INSTALL_NOW) {
+                            await installDependencies(context, pythonExecutableName)
+                        }
+                    });
+            }
         }
     }
 
+
     console.log("uriugseigiohgeiohgifghd 3 " + pythonExecutableName)
+    vscode.workspace.getConfiguration().update(CONFIG.PYTHON_PATH, pythonExecutableName)
     return pythonExecutableName
 };
 

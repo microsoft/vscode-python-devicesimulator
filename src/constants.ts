@@ -78,7 +78,7 @@ export const CONSTANTS = {
         ),
         INVALID_PYTHON_PATH: localize(
             "error.invalidPythonPath",
-            "We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7 or above."
+            "We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+p and type \"python.selectInterpreter\") and restart the application."
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -410,12 +410,6 @@ export namespace DialogResponses {
         title: localize(
             "dialogResponses.readInstall",
             "Read installation docs"
-        ),
-    };
-    export const OPEN_PYTHON_INTERPRETER_MENU: MessageItem = {
-        title: localize(
-            "dialogResponses.openPythonInterpreterMenu",
-            "Open Python interpreter menu"
         ),
     };
 }

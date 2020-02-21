@@ -72,7 +72,6 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
         });
     }
 };
-
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
@@ -965,6 +964,10 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
+        utils.setupEnv(context);
+    });
+
     context.subscriptions.push(
         changeBaudRate,
         closeSerialMonitor,
@@ -982,7 +985,8 @@ export async function activate(context: vscode.ExtensionContext) {
             simulatorDebugConfiguration
         ),
         debugSessionsStarted,
-        debugSessionStopped
+        debugSessionStopped,
+        configsChanged
     );
 }
 
