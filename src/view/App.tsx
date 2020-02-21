@@ -7,16 +7,23 @@ import {
     DEVICE_LIST_KEY,
     VSCODE_MESSAGES_TO_WEBVIEW,
     DEBUG_COMMANDS,
+    VIEW_STATE,
 } from "./constants";
 import { Device } from "./container/device/Device";
+import {ViewStateContext} from './context'
 
 interface IState {
     currentDevice: string;
+    viewState:VIEW_STATE;
 }
 
 const defaultState = {
     currentDevice: DEVICE_LIST_KEY.CPX,
+    viewState:VIEW_STATE.RUNNING
 };
+
+
+
 
 class App extends React.Component<{}, IState> {
     constructor() {
@@ -43,15 +50,17 @@ class App extends React.Component<{}, IState> {
         return (
             <div className="App">
                 <main className="App-main">
+                    <ViewStateContext.Provider value ={this.state.viewState}>
                     <Device currentSelectedDevice={this.state.currentDevice} />
-                </main>
+                    </ViewStateContext.Provider></main>
             </div>
         );
     }
 
     handleMessage = (event: any): void => {
         const message = event.data;
-        console.log(JSON.stringify(message));
+        console.log(
+            "blabla"+JSON.stringify(message));
         switch (message.command) {
             case VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE:
                 if (message.active_device !== this.state.currentDevice) {
@@ -59,7 +68,11 @@ class App extends React.Component<{}, IState> {
                 }
                 break;
             case DEBUG_COMMANDS.CONTINUE:
+                this.setState({viewState:VIEW_STATE.RUNNING})
+                break;
             case DEBUG_COMMANDS.STACK_TRACE:
+                this.setState({viewState:VIEW_STATE.PAUSE})
+
                 break;
         }
     };

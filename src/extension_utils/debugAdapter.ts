@@ -28,8 +28,10 @@ export class DebugAdapter implements DebugAdapterTracker {
         console.log(JSON.stringify(message));
         if (message.command) {
             // Only send pertinent debug messages
+            console.log("command exists")
+            console.log(message.command)
 
-            if (message.command in DEBUG_COMMANDS) {
+            if (Object.values(DEBUG_COMMANDS).includes(message.command)) {
                 this.handleAdapterMessages(message.command);
             }
         }

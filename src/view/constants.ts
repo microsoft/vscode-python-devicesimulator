@@ -55,6 +55,12 @@ export enum DEVICE_LIST_KEY {
     MICROBIT = "micro:bit",
 }
 
+// Pauses on Debug mode alter the state of the view
+export enum VIEW_STATE{
+    PAUSE="debug-pause",
+    RUNNING="running"
+}
+
 //
 export enum WEBVIEW_MESSAGES {
     SWITCH_DEVICE = "switch-device",
