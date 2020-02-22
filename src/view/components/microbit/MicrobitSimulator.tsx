@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    CONSTANTS,
     DEVICE_LIST_KEY,
     MICROBIT_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
@@ -44,6 +45,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             active_editors: [],
             running_file: "",
         };
+        this.onKeyEvent = this.onKeyEvent.bind(this);
     }
     handleMessage = (event: any): void => {
         const message = event.data;
@@ -112,6 +114,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                             onMouseDown: this.onMouseDown,
                             onMouseUp: this.onMouseUp,
                             onMouseLeave: this.onMouseLeave,
+                            onKeyEvent: this.onKeyEvent
                         }}
                         leds={this.state.microbit.leds}
                     />
@@ -175,4 +178,44 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
     };
+    protected onKeyEvent(event: KeyboardEvent, active: boolean) {
+        let element;
+        const target = event.target as SVGElement;
+        // Guard Clause
+        console.log("STARTING ON KEY EVENT");
+        if (target === undefined) {
+            console.log("Returning");
+            return;
+        }
+
+        if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+            element = window.document.getElementById(target.id);
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
+        ) {
+            console.log("btn_a");
+            element = window.document.getElementById(
+                CONSTANTS.ID_NAME.BUTTON_A
+            );
+            this.handleButtonClick(MICROBIT_BUTTONS_KEYS.BTN_A, active);
+            console.log(element)
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
+        ) {
+            console.log("btn_b");
+            element = window.document.getElementById(
+                CONSTANTS.ID_NAME.BUTTON_B
+            );
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
+            this.togglePlayClick();
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
+            this.refreshSimulatorClick();
+        }
+        if (element) {
+            console.log(element);
+            event.preventDefault();
+            this.handleButtonClick(event.key, active);
+            element.focus();
+        }
+    }
 }

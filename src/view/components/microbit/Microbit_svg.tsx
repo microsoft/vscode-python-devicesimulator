@@ -1677,7 +1677,7 @@ export class MicrobitSvg extends React.Component {
                             focusable="true"
                             tabIndex={0}
                             role="button"
-                            aria-label="A"
+                            aria-label="a"
                             style={{ fill: "rgb(151, 151, 151)" }}
                         >
                             <rect
@@ -1726,7 +1726,7 @@ export class MicrobitSvg extends React.Component {
                             focusable="true"
                             tabIndex={0}
                             role="button"
-                            aria-label="B"
+                            aria-label="b"
                             style={{ fill: "rgb(151, 151, 151)" }}
                         >
                             <rect
