@@ -14,7 +14,6 @@ const locale = "en";
 const message = {
     en: messageEn,
 };
-
 ReactDOM.render(
     <IntlProvider locale={locale} messages={message[locale]}>
         <App />

@@ -23,6 +23,10 @@ import { DeviceContext } from "../deviceContext";
 
 const exec = util.promisify(cp.exec);
 
+const errorChannel = vscode.window.createOutputChannel(
+    CONSTANTS.ERROR.INSTALLATION_ERROR
+);
+
 // tslint:disable-next-line: export-name
 export const getPathToScript = (
     context: vscode.ExtensionContext,
@@ -474,6 +478,7 @@ export const installDependencies = async (
         }
 
         console.error(err);
+        this.logToOutputChannel(errorChannel, err.toString(), true /* show */);
         return false;
     }
 };

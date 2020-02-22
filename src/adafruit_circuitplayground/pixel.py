@@ -3,12 +3,11 @@
 
 import json
 import sys
-from common import utils
-from . import constants as CONSTANTS
 
-from applicationinsights import TelemetryClient
+from common import utils
+from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 from . import constants as CONSTANTS
-from .telemetry import telemetry_py
 from . import debugger_communication_client
 
 
@@ -38,11 +37,11 @@ class Pixel:
         if type(index) is not slice:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
-        telemetry_py.send_telemetry("PIXELS")
+        telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PIXELS)
         return self.__state["pixels"][index]
 
     def __setitem__(self, index, val):
-        telemetry_py.send_telemetry("PIXELS")
+        telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PIXELS)
         is_slice = False
         if type(index) is slice:
             is_slice = True
@@ -115,12 +114,14 @@ class Pixel:
 
     @property
     def brightness(self):
+        telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BRIGHTNESS)
         return self.__state["brightness"]
 
     @brightness.setter
     def brightness(self, brightness):
         if not self.__valid_brightness(brightness):
             raise ValueError(CONSTANTS.BRIGHTNESS_RANGE_ERROR)
+        telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BRIGHTNESS)
         self.__state["brightness"] = brightness
         self.__show_if_auto_write()
 

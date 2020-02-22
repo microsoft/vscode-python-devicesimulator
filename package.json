@@ -25,89 +25,79 @@
     "keywords": [
         "python",
         "CircuitPython",
-        "Adafruit"
+        "Adafruit",
+        "microbit",
+        "MicroPython"
     ],
     "activationEvents": [
-        "onCommand:deviceSimulatorExpress.installDependencies",
-        "onCommand:deviceSimulatorExpress.openSerialMonitor",
-        "onCommand:deviceSimulatorExpress.openSimulator",
-        "onCommand:deviceSimulatorExpress.runSimulator",
-        "onCommand:deviceSimulatorExpress.newFileCPX",
-        "onCommand:deviceSimulatorExpress.newFileMicrobit",
-        "onCommand:deviceSimulatorExpress.runDevice",
-        "onCommand:deviceSimulatorExpress.runSimulatorEditorButton",
-        "onCommand:deviceSimulatorExpress.selectSerialPort",
+        "onCommand:deviceSimulatorExpress.common.installDependencies",
+        "onCommand:deviceSimulatorExpress.common.runSimulator",
+        "onCommand:deviceSimulatorExpress.cpx.deployToDevice",
+        "onCommand:deviceSimulatorExpress.cpx.newFile",
+        "onCommand:deviceSimulatorExpress.cpx.openSerialMonitor",
+        "onCommand:deviceSimulatorExpress.cpx.openSimulator",
+        "onCommand:deviceSimulatorExpress.cpx.selectSerialPort",
+        "onCommand:deviceSimulatorExpress.microbit.newFile",
+        "onCommand:deviceSimulatorExpress.microbit.openSimulator",
         "onDebug"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "deviceSimulatorExpress.changeBaudRate",
-                "title": "%deviceSimulatorExpressExtension.commands.changeBaudRate%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.common.installDependencies",
+                "title": "%deviceSimulatorExpressExtension.commands.common.installDependencies%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.closeSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.closeSerialMonitor%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.common.runSimulator",
+                "title": "%deviceSimulatorExpressExtension.commands.common.runSimulator%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.openSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.openSerialMonitor%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.cpx.changeBaudRate",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.changeBaudRate%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.installDependencies",
-                "title": "%deviceSimulatorExpressExtension.commands.installDependencies%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.cpx.closeSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.closeSerialMonitor%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%",
-                "icon": {
-                    "light": "./assets/light-theme/open-simulator.svg",
-                    "dark": "./assets/dark-theme/open-simulator.svg"
-                }
+                "command": "deviceSimulatorExpress.cpx.deployToDevice",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.deployToDevice%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.runSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.runSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.cpx.newFile",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.newFile%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.runSimulatorEditorButton",
-                "title": "%deviceSimulatorExpressExtension.commands.runSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%",
-                "icon": {
-                    "light": "./assets/light-theme/run-on-simulator.svg",
-                    "dark": "./assets/dark-theme/run-on-simulator.svg"
-                }
+                "command": "deviceSimulatorExpress.cpx.openSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.openSerialMonitor%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.newFileCPX",
-                "title": "%deviceSimulatorExpressExtension.commands.newFileCPX%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.cpx.openSimulator",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.newFileMicrobit",
-                "title": "%deviceSimulatorExpressExtension.commands.newFileMicrobit%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.cpx.selectSerialPort",
+                "title": "%deviceSimulatorExpressExtension.commands.cpx.selectSerialPort%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.runDevice",
-                "title": "%deviceSimulatorExpressExtension.commands.runDevice%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%",
-                "icon": {
-                    "light": "./assets/light-theme/save-to-board.svg",
-                    "dark": "./assets/dark-theme/save-to-board.svg"
-                }
+                "command": "deviceSimulatorExpress.microbit.openSimulator",
+                "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.selectSerialPort",
-                "title": "%deviceSimulatorExpressExtension.commands.selectSerialPort%",
-                "category": "%deviceSimulatorExpressExtension.commands.label%"
+                "command": "deviceSimulatorExpress.microbit.newFile",
+                "title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             }
         ],
         "colors": [
@@ -130,31 +120,6 @@
                 }
             }
         ],
-        "menus": {
-            "commandPalette": [
-                {
-                    "command": "deviceSimulatorExpress.runSimulatorEditorButton",
-                    "when": "false"
-                }
-            ],
-            "editor/title": [
-                {
-                    "when": "editorLangId==python  && config.deviceSimulatorExpress.showOpenIconInEditorTitleMenu",
-                    "command": "deviceSimulatorExpress.openSimulator",
-                    "group": "navigation@1"
-                },
-                {
-                    "when": "editorLangId==python && config.deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu",
-                    "command": "deviceSimulatorExpress.runSimulatorEditorButton",
-                    "group": "navigation@2"
-                },
-                {
-                    "when": "editorLangId==python && config.deviceSimulatorExpress.showDeviceIconInEditorTitleMenu",
-                    "command": "deviceSimulatorExpress.runDevice",
-                    "group": "navigation@3"
-                }
-            ]
-        },
         "configuration": {
             "type": "object",
             "title": "%deviceSimulatorExpressExtension.configuration.title%",
@@ -168,24 +133,6 @@
                 "deviceSimulatorExpress.enableUSBDetection": {
                     "type": "boolean",
                     "default": true
-                },
-                "deviceSimulatorExpress.showOpenIconInEditorTitleMenu": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.open%",
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.showSimulatorIconInEditorTitleMenu": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.simulator%",
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.showDeviceIconInEditorTitleMenu": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.device%",
-                    "scope": "resource"
                 },
                 "deviceSimulatorExpress.showDependencyInstall": {
                     "type": "boolean",
@@ -329,7 +276,7 @@
         "mocha": "^6.1.4",
         "npm-run-all": "^4.1.3",
         "prettier": "^1.19.1",
-        "react-scripts": "3.0.1",
+        "react-scripts": "^3.4.0",
         "style-loader": "^0.21.0",
         "ts-import-plugin": "^1.5.4",
         "ts-loader": "^4.4.2",

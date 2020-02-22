@@ -1,18 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PivotItem } from "office-ui-fabric-react";
-
 import * as React from "react";
 import "./App.css";
-import { Tab } from "./components/tab/Tab";
-import {
-    DEVICE_LIST_KEY,
-    VSCODE_MESSAGES_TO_WEBVIEW,
-    WEBVIEW_MESSAGES,
-} from "./constants";
+import { DEVICE_LIST_KEY, VSCODE_MESSAGES_TO_WEBVIEW } from "./constants";
 import { Device } from "./container/device/Device";
-import { sendMessage } from "./utils/MessageUtils";
 
 interface IState {
     currentDevice: string;
@@ -28,6 +20,15 @@ class App extends React.Component<{}, IState> {
         this.state = defaultState;
     }
     componentDidMount() {
+        if (document.currentScript) {
+            const initialDevice = document.currentScript.getAttribute(
+                "initialDevice"
+            );
+
+            if (initialDevice) {
+                this.setState({ currentDevice: initialDevice });
+            }
+        }
         window.addEventListener("message", this.handleMessage);
     }
     componentWillUnmount() {
@@ -38,24 +39,12 @@ class App extends React.Component<{}, IState> {
         return (
             <div className="App">
                 <main className="App-main">
-                    <Tab
-                        handleTabClick={this.handleDeviceChange}
-                        currentActiveDevice={this.state.currentDevice}
-                    />
                     <Device currentSelectedDevice={this.state.currentDevice} />
                 </main>
             </div>
         );
     }
 
-    handleDeviceChange = (item?: PivotItem) => {
-        if (item && item.props && item.props.itemKey) {
-            sendMessage(WEBVIEW_MESSAGES.SWITCH_DEVICE, {
-                active_device: item.props.itemKey,
-            });
-            this.setState({ currentDevice: item.props.itemKey });
-        }
-    };
     handleMessage = (event: any): void => {
         const message = event.data;
         console.log(JSON.stringify(message));

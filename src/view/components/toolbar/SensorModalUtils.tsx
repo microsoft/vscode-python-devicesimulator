@@ -53,7 +53,7 @@ export const CPX_TOOLBAR_ICON_ID = {
 export const MICROBIT_TOOLBAR_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
     LIGHT: "toolbar-light-sensor",
-    ACCELEROMETER: "toolbar-accelerometer",
+    ACCELEROMETER: "toolbar-accelerometer-sensor",
     LEDS: "toolbar-microbit-led",
     PUSH_BUTTON: "toolbar-microbit-button",
 };
