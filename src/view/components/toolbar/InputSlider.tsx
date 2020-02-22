@@ -2,10 +2,11 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { WEBVIEW_MESSAGES } from "../../constants";
+import { WEBVIEW_MESSAGES, VIEW_STATE } from "../../constants";
 import "../../styles/InputSlider.css";
 import { sendMessage } from "../../utils/MessageUtils";
 import { ISliderProps } from "../../viewUtils";
+import { ViewStateContext } from "../../context";
 
 class InputSlider extends React.Component<ISliderProps, any, any> {
     constructor(props: ISliderProps) {
@@ -24,20 +25,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             case "reset-state":
                 this.setState({ value: 0 });
                 break;
-            case "set-state":
-                console.log(
-                    "Setting the state: " + JSON.stringify(message.state)
-                );
-                break;
-            default:
-                console.log("Invalid message received from the extension.");
-                this.setState({ value: 0 });
-                break;
         }
     };
 
     componentDidMount() {
-        console.log("Mounted");
         window.addEventListener("message", this.handleMessage);
     }
 
@@ -46,6 +37,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         window.removeEventListener("message", this.handleMessage);
     }
     render() {
+        const isInputDisabled = this.context === VIEW_STATE.PAUSE;
         return (
             <div className="inputSlider">
                 <span>{this.props.axisLabel}</span>
@@ -78,6 +70,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                         value={this.state.value}
                         aria-label={`${this.props.type} sensor slider`}
                         defaultValue={this.props.minValue.toLocaleString()}
+                        disabled={isInputDisabled}
                     />
                     <span className="downLabelArea">
                         <span className="minLabel">{this.props.minLabel}</span>
@@ -131,5 +124,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         return valueInt;
     };
 }
+InputSlider.contextType = ViewStateContext;
 
 export default InputSlider;
