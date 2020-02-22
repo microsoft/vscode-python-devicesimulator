@@ -12,8 +12,9 @@ import {
     CPX_CONFIG_FILE,
     DEFAULT_DEVICE,
     DialogResponses,
+    HELPER_FILES,
     SERVER_INFO,
-    TelemetryEventName,
+    TelemetryEventName
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -90,6 +91,7 @@ export async function activate(context: vscode.ExtensionContext) {
     updatePylintArgs(context);
 
     pythonExecutableName = await utils.setupEnv(context);
+
     try {
         utils.generateCPXConfig();
         configFileCreated = true;
@@ -391,7 +393,7 @@ export async function activate(context: vscode.ExtensionContext) {
         "deviceSimulatorExpress.installDependencies",
         () => {
             utils.setupEnv(
-                context
+                context, true
             );
         }
     );
@@ -515,20 +517,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 active_device: currentActiveDevice,
             });
 
-            console.log(
-                utils.createEscapedPath(utils.getPathToScript(
-                    context,
-                    CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "process_user_code.py"
-                )),
-                utils.createEscapedPath(currentFileAbsPath),
-                JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
-            )
             childProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "process_user_code.py"
+                    HELPER_FILES.PROCESS_USER_CODE_PY
                 ),
                 currentFileAbsPath,
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
@@ -693,18 +686,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
             );
 
-            console.log(utils.createEscapedPath(utils.getPathToScript(
-                context,
-                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                "device.py"
-            )),
-                utils.createEscapedPath(currentFileAbsPath),
-            )
             const deviceProcess = cp.spawn(pythonExecutableName, [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "device.py"
+                    HELPER_FILES.DEVICE_PY
                 ),
                 currentFileAbsPath,
             ]);
@@ -965,7 +951,7 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
-        utils.setupEnv(context);
+        utils.setupEnv(context, true);
     });
 
     context.subscriptions.push(

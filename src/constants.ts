@@ -34,6 +34,8 @@ export const CONSTANTS = {
         MICROBIT: "micro:bit",
     },
     ERROR: {
+        BAD_PYTHON_PATH:
+            "Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+p and type \"python.selectInterpreter\") and restart the application",
         COMPORT_UNKNOWN_ERROR:
             "Writing to COM port (GetOverlappedResult): Unknown error code 121",
         CPX_FILE_ERROR: localize(
@@ -121,6 +123,10 @@ export const CONSTANTS = {
         PYTHON_LIBS_DIR: "python_libs",
     },
     INFO: {
+        ALREADY_SUCCESSFUL_INSTALL: localize(
+            "info.successfulInstall",
+            "Your current configuration is already successfully set up for the Device Simulator Expresss."
+        ),
         ARE_YOU_SURE: localize(
             "info.areYouSure",
             "Are you sure you don't want to install the dependencies? The extension can't run without installing them."
@@ -206,7 +212,7 @@ export const CONSTANTS = {
         RUNNING_CODE: localize("info.runningCode", "Running user code"),
         SUCCESSFUL_INSTALL: localize(
             "info.successfulInstall",
-            "Successfully installed Python dependencies."
+            "Successfully setup Python environment."
         ),
         THIRD_PARTY_WEBSITE_ADAFRUIT: localize(
             "info.thirdPartyWebsiteAdafruit",
@@ -426,5 +432,17 @@ export const STATUS_BAR_PRIORITY = {
     OPEN_PORT: 30,
     BAUD_RATE: 40,
 };
+
+export const VERSIONS = {
+    MIN_PY_VERSION: "3.7.0",
+};
+
+export const HELPER_FILES = {
+    CHECK_IF_VENV_PY: "check_if_venv.py",
+    CHECK_PYTHON_DEPENDENCIES: "check_python_dependencies.py",
+    DEVICE_PY: "device.py",
+    PROCESS_USER_CODE_PY: "process_user_code.py",
+    PYTHON_EXE: "python.exe",
+}
 
 export default CONSTANTS;
