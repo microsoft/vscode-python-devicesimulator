@@ -20,7 +20,6 @@ import {
 } from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
 import { DeviceContext } from "../deviceContext";
-import { DependencyChecker } from "./dependencyChecker";
 
 const exec = util.promisify(cp.exec);
 
@@ -162,49 +161,6 @@ export function generateCPXConfig(): void {
     mkdirRecursivelySync(path.dirname(cpxConfigFilePath));
     fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
 }
-export const checkPythonDependency = async () => {
-    const dependencyChecker: DependencyChecker = new DependencyChecker();
-    const result = await dependencyChecker.checkDependency(
-        CONSTANTS.DEPENDENCY_CHECKER.PYTHON
-    );
-    return result.payload;
-};
-
-// export const checkPipDependency = async (
-//     context: vscode.ExtensionContext,
-//     pythonExecutableName: string) => {
-//     try {
-//         const { stdout } = await executePythonCommand(pythonExecutableName, "-m pip")
-//     }
-//     const dependencyChecker: DependencyChecker = new DependencyChecker();
-//     const result = await dependencyChecker.checkDependency(
-//         CONSTANTS.DEPENDENCY_CHECKER.PIP3
-//     );
-//     return result.payload;
-// };
-
-export const checkForPython = async () => {
-    const dependencyCheck = await checkPythonDependency();
-    if (dependencyCheck.installed) {
-        return true;
-    } else {
-        vscode.window
-            .showErrorMessage(
-                CONSTANTS.ERROR.NO_PYTHON_PATH,
-                DialogResponses.INSTALL_PYTHON
-            )
-            .then((selection: vscode.MessageItem | undefined) => {
-                if (selection === DialogResponses.INSTALL_PYTHON) {
-                    const okAction = () => {
-                        open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-                    };
-                    showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON);
-                }
-            });
-        return false
-    }
-
-};
 
 export const checkForPip = async (
     pythonExecutableName: string) => {
@@ -325,7 +281,6 @@ export const executePythonCommand = async (
     pythonExecutableName: string,
     command: string
 ) => {
-    console.log("DSE COMMAND: " + `${createEscapedPath(pythonExecutableName)} ${command}`)
     return exec(`${createEscapedPath(pythonExecutableName)} ${command}`);
 }
 
@@ -346,7 +301,6 @@ export const validPythonVersion = async (
                     showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON);
                 }
             });
-        console.log("here3.5")
         return false
 
     } else {
@@ -431,14 +385,8 @@ export const installPythonVenv = async (
         CONSTANTS.INFO.INSTALLING_PYTHON_VENV
     );
 
-
-    const subFolder = (os.platform() === "win32") ? "Scripts" : "bin";
-
-    const pythonPath: string = getPathToScript(
-        context,
-        path.join("env", subFolder),
-        HELPER_FILES.PYTHON_EXE
-    );
+    const pythonPath: string = await getPythonVenv(context)
+    
     try {
         // make venv
         // run command to download dependencies to out/python_libs
@@ -512,6 +460,7 @@ export const installDependencies = async (context: vscode.ExtensionContext, pyth
             await executePythonCommand(pythonPath, `-m pip install -r "${requirementsPath}"`);
 
         console.info(stdout);
+        vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
         return true
     } catch (err) {
         if (!failSilently) {
@@ -534,17 +483,19 @@ export const installDependencies = async (context: vscode.ExtensionContext, pyth
 
 export const setupEnv = async (context: vscode.ExtensionContext, needsResponse: boolean = false) => {
     let pythonExecutableName = "";
+    let originalPythonExecutableName = ""
 
-
-    // get name from interpreter
-    console.log("here1")
-    let originalPythonExecutableName: string = getConfig(CONFIG.PYTHON_PATH);
+    // try to get name from interpreter
+    try  {
+        originalPythonExecutableName = getConfig(CONFIG.PYTHON_PATH);
+    } catch (err) {
+        originalPythonExecutableName = "python"
+    }
 
     if (originalPythonExecutableName === "python" || originalPythonExecutableName === "") {
         try {
             const { stdout } = await exec("python -c \"import sys; print(sys.executable)\"")
-            console.log("DSE: " + stdout)
-            originalPythonExecutableName = stdout;
+            originalPythonExecutableName = stdout.trim();
         } catch (err) {
             vscode.window
                 .showErrorMessage(
@@ -568,21 +519,14 @@ export const setupEnv = async (context: vscode.ExtensionContext, needsResponse: 
     }
 
     if (!fs.existsSync(originalPythonExecutableName)) {
-        console.log("DSE REALNAME 1: " + originalPythonExecutableName)
         await vscode.window
             .showErrorMessage(
-                CONSTANTS.ERROR.BAD_PYTHON_PATH + ". The current name is " + originalPythonExecutableName
+                CONSTANTS.ERROR.BAD_PYTHON_PATH
             )
-        console.log("Asdfasdfasd " + originalPythonExecutableName)
         return "";
-    } else {
-        console.log("DSE REALNAME 2: " + originalPythonExecutableName)
-
     }
 
     if (!await validPythonVersion(originalPythonExecutableName)) {
-
-        console.log("here2")
         return "";
     }
 
@@ -595,14 +539,10 @@ export const setupEnv = async (context: vscode.ExtensionContext, needsResponse: 
             pythonExecutableName = await getPythonVenv(context);
             if (await hasVenv(context)) {
                 // venv in extention exists with wrong dependencies
-                await installDependencies(context, pythonExecutableName)
-                if (needsResponse) {
-                    vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
-                    vscode.workspace.getConfiguration().update(CONFIG.PYTHON_PATH, pythonExecutableName);
+                if (!await checkForDependencies(context, pythonExecutableName)) {
+                    await installDependencies(context, pythonExecutableName)
                 }
-                return pythonExecutableName;
-            }
-            else {
+            } else {
                 pythonExecutableName = await promptInstallVenv(
                     context,
                     originalPythonExecutableName
@@ -624,17 +564,18 @@ export const setupEnv = async (context: vscode.ExtensionContext, needsResponse: 
                         if (installChoice === DialogResponses.INSTALL_NOW) {
                             await installDependencies(context, pythonExecutableName);
                         }
+                        
                     });
             }
+        } else {
+            vscode.window.showInformationMessage(CONSTANTS.INFO.UPDATED_TO_EXTENSION_VENV);
+            vscode.workspace.getConfiguration().update(CONFIG.PYTHON_PATH, pythonExecutableName);
         }
-        vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
 
     } else if (needsResponse) {
         vscode.window.showInformationMessage(CONSTANTS.INFO.ALREADY_SUCCESSFUL_INSTALL);
     }
-
-    vscode.workspace.getConfiguration().update(CONFIG.PYTHON_PATH, pythonExecutableName);
-
+    
     return pythonExecutableName;
 };
 

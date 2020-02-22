@@ -17,6 +17,7 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
+    CONFIG_ENV_ON_SWITCH: "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
     PYTHON_PATH: "python.pythonPath",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
@@ -24,11 +25,6 @@ export const CONFIG = {
 
 export const CONSTANTS = {
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
-    DEPENDENCY_CHECKER: {
-        PIP3: "pip3",
-        PYTHON: "python",
-        PYTHON3: "python3.7",
-    },
     DEVICE_NAME: {
         CPX: "CPX",
         MICROBIT: "micro:bit",
@@ -212,7 +208,7 @@ export const CONSTANTS = {
         RUNNING_CODE: localize("info.runningCode", "Running user code"),
         SUCCESSFUL_INSTALL: localize(
             "info.successfulInstall",
-            "Successfully setup Python environment."
+            "Successfully set up the Python environment."
         ),
         THIRD_PARTY_WEBSITE_ADAFRUIT: localize(
             "info.thirdPartyWebsiteAdafruit",
@@ -225,6 +221,10 @@ export const CONSTANTS = {
         THIRD_PARTY_WEBSITE_PYTHON: localize(
             "info.thirdPartyWebsitePython",
             'By clicking "Agree and Proceed" you will be redirected to python.org, a third party website not managed by Microsoft. Please note that your activity on python.org is subject to Python\'s privacy policy'
+        ),
+        UPDATED_TO_EXTENSION_VENV: localize(
+            "info.updatedToExtensionsVenv",
+            "Automatically updated interpreter to point to extension's virtual environment."
         ),
         WELCOME_OUTPUT_TAB: localize(
             "info.welcomeOutputTab",

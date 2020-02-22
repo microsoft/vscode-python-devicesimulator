@@ -951,7 +951,9 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
-        utils.setupEnv(context, true);
+        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)){
+            utils.setupEnv(context);
+        }
     });
 
     context.subscriptions.push(
