@@ -14,7 +14,7 @@ import {
     DialogResponses,
     HELPER_FILES,
     SERVER_INFO,
-    TelemetryEventName
+    TelemetryEventName,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
@@ -341,7 +341,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                 TelemetryEventName.CLICK_DIALOG_TUTORIALS
                             );
                         };
-                        utils.showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT);
+                        utils.showPrivacyModal(
+                            okAction,
+                            CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
+                        );
                     }
                 });
         }
@@ -392,9 +395,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.installDependencies",
         () => {
-            utils.setupEnv(
-                context, true
-            );
+            utils.setupEnv(context, true);
         }
     );
 
@@ -740,7 +741,11 @@ export async function activate(context: vscode.ExtensionContext) {
                                                     TelemetryEventName.CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                                                 );
                                             };
-                                            utils.showPrivacyModal(okAction, CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT);
+                                            utils.showPrivacyModal(
+                                                okAction,
+                                                CONSTANTS.INFO
+                                                    .THIRD_PARTY_WEBSITE_ADAFRUIT
+                                            );
                                         }
                                     }
                                 );
@@ -951,7 +956,7 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
-        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)){
+        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
             utils.setupEnv(context);
         }
     });
@@ -1002,7 +1007,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
@@ -1099,7 +1104,6 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         vscode.ConfigurationTarget.Workspace
     );
 };
-
 
 const updateConfigLists = (
     section: string,

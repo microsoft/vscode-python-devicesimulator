@@ -17,10 +17,11 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
-    CONFIG_ENV_ON_SWITCH: "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
+    CONFIG_ENV_ON_SWITCH:
+        "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
     PYTHON_PATH: "python.pythonPath",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
-    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
+    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
 };
 
 export const CONSTANTS = {
@@ -31,7 +32,7 @@ export const CONSTANTS = {
     },
     ERROR: {
         BAD_PYTHON_PATH:
-            "Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+p and type \"python.selectInterpreter\") and restart the application",
+            'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+p and type "python.selectInterpreter") and restart the application',
         COMPORT_UNKNOWN_ERROR:
             "Writing to COM port (GetOverlappedResult): Unknown error code 121",
         CPX_FILE_ERROR: localize(
@@ -76,7 +77,7 @@ export const CONSTANTS = {
         ),
         INVALID_PYTHON_PATH: localize(
             "error.invalidPythonPath",
-            "We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+p and type \"python.selectInterpreter\") and restart the application."
+            'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+p and type "python.selectInterpreter") and restart the application.'
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -443,6 +444,6 @@ export const HELPER_FILES = {
     DEVICE_PY: "device.py",
     PROCESS_USER_CODE_PY: "process_user_code.py",
     PYTHON_EXE: "python.exe",
-}
+};
 
 export default CONSTANTS;
