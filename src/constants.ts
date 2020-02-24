@@ -17,8 +17,9 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
+    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
-    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
+    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
 };
 
 export const CONSTANTS = {
@@ -155,7 +156,7 @@ export const CONSTANTS = {
         },
         FIRST_TIME_WEBVIEW: localize(
             "info.firstTimeWebview",
-            'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
+            'To reopen the simulator select the command "Open Simulator" from command palette.'
         ),
         INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
             "info.incorrectFileNameForSimulatorPopup",
