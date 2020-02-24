@@ -28,8 +28,9 @@ abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
 
 # This import must happen after the sys.path is modified
+from common.telemetry import telemetry_py
+
 from adafruit_circuitplayground.express import cpx
-from adafruit_circuitplayground.telemetry import telemetry_py
 from adafruit_circuitplayground.constants import CPX
 
 from microbit.__model.microbit_model import __mb as mb

@@ -38,6 +38,7 @@ TELEMETRY_EVENT_NAMES = {
     "RED_LED": "API.RED.LED",
     "PIXELS": "API.PIXELS",
 }
+ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 
 TIME_DELAY = 0.03
 
