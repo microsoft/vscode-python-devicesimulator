@@ -16,15 +16,15 @@ import {
     TelemetryEventName,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
+import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
+import { MessagingService } from "./service/messagingService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
-import { MessagingService } from "./service/messagingService";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;

@@ -26,7 +26,7 @@ export class DebuggerCommunicationServer {
     private simulatorWebview: WebviewPanel | undefined;
     private currentActiveDevice;
     private isWaitingResponse = false;
-    private currentCall: Array<Function> = [];
+    private currentCall: Function[] = [];
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
@@ -92,7 +92,7 @@ export class DebuggerCommunicationServer {
             socket.on(DEBUGGER_MESSAGES.LISTENER.RECEIVED_STATE, () => {
                 this.isWaitingResponse = false;
                 if (this.currentCall.length > 0) {
-                    let currentCall = this.currentCall.shift();
+                    const currentCall = this.currentCall.shift();
                     currentCall();
                 }
             });
