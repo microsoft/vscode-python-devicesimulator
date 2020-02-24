@@ -9,7 +9,7 @@ out/
 package.nls.*.json
 
 # virtual environment
-env/
+venv/
 
 # testing
 .vscode-test 

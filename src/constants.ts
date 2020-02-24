@@ -121,7 +121,7 @@ export const CONSTANTS = {
     },
     FILESYSTEM: {
         OUTPUT_DIRECTORY: "out",
-        PYTHON_LIBS_DIR: "python_libs",
+        PYTHON_VENV_DIR: "venv",
     },
     INFO: {
         ALREADY_SUCCESSFUL_INSTALL: localize(

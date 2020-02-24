@@ -1029,7 +1029,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
+        undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
@@ -1252,11 +1252,6 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
     );
-    const pyLibsPath: string = utils.createEscapedPath(
-        context.extensionPath,
-        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-    );
 
     // update pylint args to extend system path
     // to include python libs local to extention
@@ -1264,7 +1259,7 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         "python.linting.pylintArgs",
         [
             "--init-hook",
-            `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`,
+            `import sys; sys.path.append(\"${outPath}\")`,
         ],
         vscode.ConfigurationTarget.Workspace
     );
