@@ -19,7 +19,7 @@ const localize: nls.LocalizeFunc = nls.config({
 export const CONFIG = {
     ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
-    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup"
+    SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
 };
 
 export const CONSTANTS = {
