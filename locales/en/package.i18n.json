@@ -13,5 +13,6 @@
   "deviceSimulatorExpressExtension.commands.microbit.newFile": "[micro:bit] New File",
   "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
   "deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange": "When you change the Python Interpreter, the dependencies for the Device Simulator Express will automatically be configured for the extension dependencies (and the interpreter will auto-change if necessary).",
-  "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger."
+  "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger.",
+  "deviceSimulatorExpressExtension.configuration.properties.dependencyChecker": "Whether or not to ask if we can download dependencies. If unchecked, the extension will default to never download dependencies, except when automatically creating a virtual environment in the extension files."
 }

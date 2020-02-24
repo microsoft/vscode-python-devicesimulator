@@ -1029,7 +1029,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
@@ -1257,10 +1257,7 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
-        [
-            "--init-hook",
-            `import sys; sys.path.append(\"${outPath}\")`,
-        ],
+        ["--init-hook", `import sys; sys.path.append(\"${outPath}\")`],
         vscode.ConfigurationTarget.Workspace
     );
 };

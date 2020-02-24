@@ -85,7 +85,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) { }
+    } catch (exception) {}
 
     return false;
 }
@@ -323,7 +323,10 @@ export const validPythonVersion = async (pythonExecutableName: string) => {
 };
 
 export const hasVenv = async (context: vscode.ExtensionContext) => {
-    const pathToEnv: string = getPathToScript(context, CONSTANTS.FILESYSTEM.PYTHON_VENV_DIR);
+    const pathToEnv: string = getPathToScript(
+        context,
+        CONSTANTS.FILESYSTEM.PYTHON_VENV_DIR
+    );
 
     return fs.existsSync(pathToEnv);
 };
@@ -373,7 +376,10 @@ export const installPythonVenv = async (
     context: vscode.ExtensionContext,
     pythonExecutable: string
 ) => {
-    const pathToEnv: string = getPathToScript(context, CONSTANTS.FILESYSTEM.PYTHON_VENV_DIR);
+    const pathToEnv: string = getPathToScript(
+        context,
+        CONSTANTS.FILESYSTEM.PYTHON_VENV_DIR
+    );
 
     vscode.window.showInformationMessage(CONSTANTS.INFO.INSTALLING_PYTHON_VENV);
 
