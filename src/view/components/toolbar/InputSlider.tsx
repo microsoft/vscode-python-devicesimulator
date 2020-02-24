@@ -12,7 +12,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     constructor(props: ISliderProps) {
         super(props);
         this.state = {
-            value: 0,
+            value: this.props.value,
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
@@ -44,7 +44,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                 <input
                     type="text"
                     className="sliderValue"
-                    value={this.state.value}
+                    value={this.props.value}
                     onInput={this.handleOnChange}
                     defaultValue={this.props.minValue.toLocaleString()}
                     pattern="^-?[0-9]{0,4}$"
@@ -67,7 +67,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                         onKeyUp={this.sendTelemetry}
                         onMouseUp={this.sendTelemetry}
                         aria-valuenow={this.state.value}
-                        value={this.state.value}
+                        value={this.props.value}
                         aria-label={`${this.props.type} sensor slider`}
                         defaultValue={this.props.minValue.toLocaleString()}
                         disabled={isInputDisabled}
@@ -104,7 +104,11 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         const newValue = event.target.validity.valid
             ? event.target.value
             : this.state.value;
-        this.setState({ value: newValue });
+        // this.setState({ value: newValue });
+        if (this.props.onUpdateValue) {
+            console.log(this.props.type, newValue);
+            this.props.onUpdateValue(this.props.type as SENSOR_LIST, newValue);
+        }
         return newValue;
     };
 

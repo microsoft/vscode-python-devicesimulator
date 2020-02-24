@@ -6,6 +6,7 @@ import { CPX_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import ToolBar from "../../components/toolbar/ToolBar";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import Simulator from "./CpxSimulator";
+import { SENSOR_LIST } from "../../constants";
 
 // Component grouping the functionality for circuit playground express
 
@@ -14,10 +15,17 @@ export class Cpx extends React.Component {
         return (
             <React.Fragment>
                 <Simulator />
-                <ToolBar buttonList={CPX_TOOLBAR_BUTTONS} />
+                <ToolBar
+                    buttonList={CPX_TOOLBAR_BUTTONS}
+                    onUpdateSensor={this.updateSensor}
+                    sensorValues={{}}
+                />
             </React.Fragment>
         );
     }
+    updateSensor = (sensor: SENSOR_LIST, value: number) => {
+        this.setState({ [sensor]: value });
+    };
 }
 
 const CPX_TOOLBAR_BUTTONS: Array<{ label: any; image: any }> = [

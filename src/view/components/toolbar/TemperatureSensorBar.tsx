@@ -5,6 +5,7 @@ import * as React from "react";
 import "../../styles/TemperatureSensorBar.css";
 import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
 import InputSlider from "./InputSlider";
+import { SENSOR_LIST } from "../../constants";
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
     axisLabel: " ",
@@ -12,15 +13,18 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
     maxValue: 125,
     minLabel: "Cold",
     minValue: -55,
-    type: "temperature",
+    type: SENSOR_LIST.TEMPERATURE,
 };
 const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
     LABEL: "Temperature sensor",
     sliderProps: [TEMPERATURE_SLIDER_PROPS],
     unitLabel: "°C",
 };
-
-class TemperatureSensorBar extends React.Component {
+interface IProps {
+    onUpdateSensor: (sensor: SENSOR_LIST, value: number) => void;
+    value: number;
+}
+class TemperatureSensorBar extends React.Component<IProps, {}> {
     constructor(props: any) {
         super(props);
     }
@@ -59,6 +63,8 @@ class TemperatureSensorBar extends React.Component {
                             X_SLIDER_INDEX
                         ].axisLabel
                     }
+                    value={this.props.value}
+                    onUpdateValue={this.props.onUpdateSensor}
                 />
             </div>
         );

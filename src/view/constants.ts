@@ -79,5 +79,10 @@ export enum DEBUG_COMMANDS {
     STACK_TRACE = "stackTrace",
     CONTINUE = "continue",
 }
+export enum SENSOR_LIST {
+    TEMPERATURE = "temperature",
+    LIGHT = "light",
+    ACCELEROMETER = "accelerometer",
+}
 
 export default CONSTANTS;
