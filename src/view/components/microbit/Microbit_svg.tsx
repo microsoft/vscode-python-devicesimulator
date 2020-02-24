@@ -40,16 +40,6 @@ export class MicrobitSvg extends React.Component {
     public getLeds(): React.RefObject<SVGRectElement>[][] {
         return this.ledRefs;
     }
-    public clickButtonA() {
-        if (this.buttonRefs.BTN_A.current){
-            this.buttonRefs.BTN_A.current.dispatchEvent(new Event('click'))
-        }
-    }
-    public clickButtonB() {
-        if (this.buttonRefs.BTN_B.current){
-            this.buttonRefs.BTN_B.current.dispatchEvent(new Event('click'))
-        }
-    }
 
     render() {
         return (
