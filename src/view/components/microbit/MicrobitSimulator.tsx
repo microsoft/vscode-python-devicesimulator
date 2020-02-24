@@ -10,7 +10,7 @@ import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
-import { MicrobitImage } from "./MicrobitImage";
+import { MicrobitImage, BUTTONS_KEYS } from "./MicrobitImage";
 
 const DEFAULT_MICROBIT_STATE: IMicrobitState = {
     leds: [
@@ -36,6 +36,7 @@ interface IMicrobitState {
     buttons: { button_a: boolean; button_b: boolean };
 }
 export class MicrobitSimulator extends React.Component<any, IState> {
+    private imageRef: React.RefObject<MicrobitImage> = React.createRef();
     constructor() {
         super({});
         this.state = {
@@ -110,11 +111,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 </div>
                 <div className="microbit-container">
                     <MicrobitImage
+                        ref={this.imageRef}
                         eventTriggers={{
                             onMouseDown: this.onMouseDown,
                             onMouseUp: this.onMouseUp,
                             onMouseLeave: this.onMouseLeave,
-                            onKeyEvent: this.onKeyEvent
+                            onKeyEvent: this.onKeyEvent,
                         }}
                         leds={this.state.microbit.leds}
                     />
@@ -194,18 +196,23 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
         ) {
             console.log("btn_a");
-            element = window.document.getElementById(
-                CONSTANTS.ID_NAME.BUTTON_A
-            );
-            this.handleButtonClick(MICROBIT_BUTTONS_KEYS.BTN_A, active);
-            console.log(element)
+
+            if (this.imageRef.current) {
+                this.imageRef.current.sendButtonEvent(
+                    BUTTONS_KEYS.BTN_A,
+                    active
+                );
+            }
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
         ) {
             console.log("btn_b");
-            element = window.document.getElementById(
-                CONSTANTS.ID_NAME.BUTTON_B
-            );
+            if (this.imageRef.current) {
+                this.imageRef.current.sendButtonEvent(
+                    BUTTONS_KEYS.BTN_B,
+                    active
+                );
+            }
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {

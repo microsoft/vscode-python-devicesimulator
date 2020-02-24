@@ -4,7 +4,7 @@
 import * as React from "react";
 import { VIEW_STATE } from "../../constants";
 import { ViewStateContext } from "../../context";
-import CONSTANTS from "../../constants";
+import CONSTANTS, { MICROBIT_BUTTONS_CLASSES } from "../../constants";
 import "../../styles/Microbit.css";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 
@@ -24,6 +24,11 @@ const BUTTON_CLASSNAME = {
     DEACTIVATED: "sim-button-deactivated",
 };
 
+export enum BUTTONS_KEYS {
+    BTN_A = "BTN_A",
+    BTN_B = "BTN_B",
+    BTN_AB = "BTN_AB",
+}
 // Displays the SVG and call necessary svg modification.
 export class MicrobitImage extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
@@ -53,6 +58,27 @@ export class MicrobitImage extends React.Component<IProps, {}> {
     }
     render() {
         return <MicrobitSvg ref={this.svgRef} />;
+    }
+    public sendButtonEvent(key: BUTTONS_KEYS, isActive: boolean) {
+        if (this.svgRef.current) {
+            const button = this.svgRef.current.getButtons()[key].current;
+            if (button) {
+                if (isActive) {
+                    button.dispatchEvent(new Event("mousedown"));
+                    button.setAttribute(
+                        "class",
+                        MICROBIT_BUTTONS_CLASSES.KEYPRESSED
+                    );
+                    console.log(JSON.stringify(button.className));
+                } else {
+                    button.dispatchEvent(new Event("mouseup"));
+                    button.setAttribute(
+                        "class",
+                        MICROBIT_BUTTONS_CLASSES.DEFAULT
+                    );
+                }
+            }
+        }
     }
 }
 

@@ -50,6 +50,10 @@ export const MICROBIT_BUTTONS_KEYS = {
     BTN_B: "BTN_B",
     BTN_AB: "BTN_AB",
 };
+export const MICROBIT_BUTTONS_CLASSES = {
+    DEFAULT: "sim-button-outer",
+    KEYPRESSED: "sim-button-key-press",
+};
 export enum DEVICE_LIST_KEY {
     CPX = "CPX",
     MICROBIT = "micro:bit",

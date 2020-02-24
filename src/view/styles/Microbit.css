@@ -36,6 +36,10 @@ sim-button {
     fill: orange;
 }
 
+.sim-button-key-press {
+    fill: orange;
+}
+
 .sim-button-nut {
     fill: #704a4a;
     pointer-events: none;
