@@ -18,7 +18,7 @@ export class MessagingService {
             command: VSCODE_MESSAGES_TO_WEBVIEW.RUN_DEVICE,
         });
     }
-    public sendStopMessage() {
+    public sendPauseMessage() {
         this.currentWebviewTarget.postMessage({
             command: VSCODE_MESSAGES_TO_WEBVIEW.PAUSE_DEVICE,
         });
