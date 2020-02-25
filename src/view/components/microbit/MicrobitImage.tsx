@@ -82,7 +82,7 @@ const setupAllButtons = (
     }
 };
 const disableAllButtons = (buttonRefs: IRefObject) => {
-    for (const [key, ref] of Object.entries(buttonRefs)) {
+    for (const [, ref] of Object.entries(buttonRefs)) {
         if (ref.current) {
             // to implement
             ref.current.onmousedown = null;

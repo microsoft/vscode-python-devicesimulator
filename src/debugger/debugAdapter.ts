@@ -18,6 +18,7 @@ export class DebugAdapter implements DebugAdapterTracker {
     onWillReceiveMessage(message: any): void {
         if (message.command) {
             // Only send pertinent debug messages
+
             switch (message.command) {
                 case DEBUG_COMMANDS.CONTINUE:
                     this.messagingService.sendStartMessage();

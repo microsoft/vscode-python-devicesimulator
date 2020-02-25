@@ -4,7 +4,6 @@
 import * as React from "react";
 import "./App.css";
 import {
-    DEBUG_COMMANDS,
     DEVICE_LIST_KEY,
     VIEW_STATE,
     VSCODE_MESSAGES_TO_WEBVIEW,

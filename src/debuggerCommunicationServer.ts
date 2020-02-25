@@ -6,11 +6,12 @@ import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
 import { SERVER_INFO } from "./constants";
 
-const DEBUGGER_MESSAGES = {
+export const DEBUGGER_MESSAGES = {
     EMITTER: {
         INPUT_CHANGED: "input_changed",
         RECEIVED_STATE: "received_state",
-        DISCONNECT: "frontend_disconnected",
+        DISCONNECT: "process_disconnect",
+
     },
     LISTENER: {
         UPDATE_STATE: "updateState",
