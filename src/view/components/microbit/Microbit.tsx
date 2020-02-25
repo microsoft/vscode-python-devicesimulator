@@ -7,22 +7,41 @@ import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import ToolBar from "../toolbar/ToolBar";
 import { MicrobitSimulator } from "./MicrobitSimulator";
-import { SENSOR_LIST } from "../../constants";
+import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {
     sensors: { [key: string]: number };
 }
+const DEFAULT_STATE = {
+    sensors: {
+        [SENSOR_LIST.TEMPERATURE]: 0,
+        [SENSOR_LIST.LIGHT]: 0,
+        [SENSOR_LIST.MOTION_X]: 0,
+        [SENSOR_LIST.MOTION_Y]: 0,
+        [SENSOR_LIST.MOTION_Z]: 0,
+    },
+};
 
 export class Microbit extends React.Component<{}, IState> {
-    state = {
-        sensors: {
-            [SENSOR_LIST.TEMPERATURE]: 0,
-            [SENSOR_LIST.LIGHT]: 0,
-            [SENSOR_LIST.MOTION_X]: 0,
-            [SENSOR_LIST.MOTION_Y]: 0,
-            [SENSOR_LIST.MOTION_Z]: 0,
-        },
+    state = DEFAULT_STATE;
+
+    componentDidMount() {
+        window.addEventListener("message", this.handleMessage);
+    }
+
+    componentWillUnmount() {
+        // Make sure to remove the DOM listener when the component is unmounted.
+        window.removeEventListener("message", this.handleMessage);
+    }
+    handleMessage = (event: any): void => {
+        const message = event.data;
+
+        switch (message.command) {
+            case VSCODE_MESSAGES_TO_WEBVIEW.RESET:
+                this.setState({ ...DEFAULT_STATE });
+                break;
+        }
     };
     render() {
         return (
@@ -37,9 +56,7 @@ export class Microbit extends React.Component<{}, IState> {
         );
     }
     updateSensor = (sensor: SENSOR_LIST, value: number) => {
-        console.log(value);
         this.setState({ sensors: { ...this.state.sensors, [sensor]: value } });
-        console.log(JSON.stringify(this.state.sensors));
     };
 }
 

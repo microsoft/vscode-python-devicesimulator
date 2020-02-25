@@ -6,20 +6,43 @@ import { CPX_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import ToolBar from "../../components/toolbar/ToolBar";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import Simulator from "./CpxSimulator";
-import { SENSOR_LIST } from "../../constants";
+import {
+    SENSOR_LIST,
+    WEBVIEW_MESSAGES,
+    VSCODE_MESSAGES_TO_WEBVIEW,
+} from "../../constants";
 
 // Component grouping the functionality for circuit playground express
+const DEFAULT_STATE = {
+    sensors: {
+        [SENSOR_LIST.TEMPERATURE]: 0,
+        [SENSOR_LIST.LIGHT]: 0,
+        [SENSOR_LIST.MOTION_X]: 0,
+        [SENSOR_LIST.MOTION_Y]: 0,
+        [SENSOR_LIST.MOTION_Z]: 0,
+    },
+};
 
 export class Cpx extends React.Component {
-    state = {
-        sensors: {
-            [SENSOR_LIST.TEMPERATURE]: 0,
-            [SENSOR_LIST.LIGHT]: 0,
-            [SENSOR_LIST.MOTION_X]: 0,
-            [SENSOR_LIST.MOTION_Y]: 0,
-            [SENSOR_LIST.MOTION_Z]: 0,
-        },
+    state = DEFAULT_STATE;
+    componentDidMount() {
+        window.addEventListener("message", this.handleMessage);
+    }
+
+    componentWillUnmount() {
+        // Make sure to remove the DOM listener when the component is unmounted.
+        window.removeEventListener("message", this.handleMessage);
+    }
+    handleMessage = (event: any): void => {
+        const message = event.data;
+
+        switch (message.command) {
+            case VSCODE_MESSAGES_TO_WEBVIEW.RESET:
+                this.setState({ ...DEFAULT_STATE });
+                break;
+        }
     };
+
     render() {
         return (
             <React.Fragment>

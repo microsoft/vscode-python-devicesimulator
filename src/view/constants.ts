@@ -70,10 +70,12 @@ export enum WEBVIEW_MESSAGES {
     SENSOR_CHANGED = "sensor-changed",
     SLIDER_TELEMETRY = "slider-telemetry",
 }
+
 export enum VSCODE_MESSAGES_TO_WEBVIEW {
     SET_DEVICE = "set-device",
     PAUSE_DEVICE = "pause-device",
     RUN_DEVICE = "run-device",
+    RESET = "reset-state",
 }
 export enum DEBUG_COMMANDS {
     STACK_TRACE = "stackTrace",

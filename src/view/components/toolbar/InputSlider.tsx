@@ -19,23 +19,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         this.validateRange = this.validateRange.bind(this);
     }
 
-    handleMessage = (event: any): void => {
-        const message = event.data; // The JSON data our extension sent
-        switch (message.command) {
-            case "reset-state":
-                this.setState({ value: 0 });
-                break;
-        }
-    };
-
-    componentDidMount() {
-        window.addEventListener("message", this.handleMessage);
-    }
-
-    componentWillUnmount() {
-        // Make sure to remove the DOM listener when the component is unmounted.
-        window.removeEventListener("message", this.handleMessage);
-    }
     render() {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
         return (
