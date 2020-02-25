@@ -137,6 +137,7 @@
                 "deviceSimulatorExpress.showDependencyInstall": {
                     "type": "boolean",
                     "default": true,
+                    "description": "%deviceSimulatorExpressExtension.configuration.properties.dependencyChecker%",
                     "scope": "resource"
                 },
                 "deviceSimulatorExpress.showNewFilePopup": {
