@@ -69,6 +69,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
                         "class",
                         MICROBIT_BUTTONS_CLASSES.KEYPRESSED
                     );
+                    button.focus();
                     console.log(JSON.stringify(button.className));
                 } else {
                     button.dispatchEvent(new Event("mouseup"));
@@ -98,6 +99,8 @@ const setupButton = (
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
     };
+    buttonElement.setAttribute("focusable", "true");
+    buttonElement.setAttribute("tabindex", "0");
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,

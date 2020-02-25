@@ -189,14 +189,11 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             console.log("Returning");
             return;
         }
-
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
             element = window.document.getElementById(target.id);
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
         ) {
-            console.log("btn_a");
-
             if (this.imageRef.current) {
                 this.imageRef.current.sendButtonEvent(
                     BUTTONS_KEYS.BTN_A,
@@ -206,7 +203,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
         ) {
-            console.log("btn_b");
             if (this.imageRef.current) {
                 this.imageRef.current.sendButtonEvent(
                     BUTTONS_KEYS.BTN_B,
@@ -219,9 +215,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             this.refreshSimulatorClick();
         }
         if (element) {
+            console.log("element");
             console.log(element);
             event.preventDefault();
-            this.handleButtonClick(event.key, active);
+            this.handleButtonClick(MICROBIT_BUTTONS_KEYS.BTN_A, active);
             element.focus();
         }
     }
