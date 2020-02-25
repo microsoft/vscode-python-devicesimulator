@@ -14,11 +14,7 @@ export class MessagingService {
             this.currentWebviewTarget.postMessage({ command: debugCommand });
         }
     }
-    public sendDebuggerExitMessage() {
-        this.currentWebviewTarget.postMessage({
-            command: DEBUGGER_MESSAGES.EMITTER.DISCONNECT,
-        });
-    }
+
     public sendStartMessage() {
         this.currentWebviewTarget.postMessage({
             command: VSCODE_MESSAGES_TO_WEBVIEW.RUN_DEVICE,

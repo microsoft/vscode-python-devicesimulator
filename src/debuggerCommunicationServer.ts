@@ -11,7 +11,6 @@ export const DEBUGGER_MESSAGES = {
         INPUT_CHANGED: "input_changed",
         RECEIVED_STATE: "received_state",
         DISCONNECT: "process_disconnect",
-
     },
     LISTENER: {
         UPDATE_STATE: "updateState",
@@ -47,6 +46,7 @@ export class DebuggerCommunicationServer {
     }
 
     public closeConnection(): void {
+        this.disconnectSocketIo();
         this.serverIo.close();
         this.serverHttp.close();
         console.info("Closing the server");
@@ -107,6 +107,9 @@ export class DebuggerCommunicationServer {
                 }
             });
         });
+    }
+    public disconnectSocketIo() {
+        this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
     }
 
     private handleState(data: any): void {
