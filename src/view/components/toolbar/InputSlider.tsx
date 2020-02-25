@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { WEBVIEW_MESSAGES, VIEW_STATE } from "../../constants";
+import { VIEW_STATE, WEBVIEW_MESSAGES } from "../../constants";
+import { ViewStateContext } from "../../context";
 import "../../styles/InputSlider.css";
 import { sendMessage } from "../../utils/MessageUtils";
 import { ISliderProps } from "../../viewUtils";
-import { ViewStateContext } from "../../context";
 
 class InputSlider extends React.Component<ISliderProps, any, any> {
     constructor(props: ISliderProps) {

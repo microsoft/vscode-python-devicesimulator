@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "../../styles/Microbit.css";
-import { MicrobitSvg, IRefObject } from "./Microbit_svg";
-import { ViewStateContext } from "../../context";
 import { VIEW_STATE } from "../../constants";
+import { ViewStateContext } from "../../context";
+import "../../styles/Microbit.css";
+import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
@@ -82,7 +82,7 @@ const setupAllButtons = (
     }
 };
 const disableAllButtons = (buttonRefs: IRefObject) => {
-    for (const [key, ref] of Object.entries(buttonRefs)) {
+    for (const [, ref] of Object.entries(buttonRefs)) {
         if (ref.current) {
             // to implement
             ref.current.onmousedown = null;
