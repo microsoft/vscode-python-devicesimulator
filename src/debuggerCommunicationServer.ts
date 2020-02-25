@@ -45,11 +45,9 @@ export class DebuggerCommunicationServer {
         this.currentActiveDevice = currentActiveDevice;
     }
 
+    // send the message to start closing the connection
     public closeConnection(): void {
         this.disconnectSocketIo();
-        this.serverIo.close();
-        this.serverHttp.close();
-        console.info("Closing the server");
     }
 
     public setWebview(webviewPanel: WebviewPanel | undefined) {
@@ -105,6 +103,11 @@ export class DebuggerCommunicationServer {
                         command: "reset-state",
                     });
                 }
+            });
+            socket.on("disconnect_confirmation", () => {
+                this.serverIo.close();
+                this.serverHttp.close();
+                console.info("Closing the server");
             });
         });
     }
