@@ -71,5 +71,8 @@ class MicrobitModel:
             if new_temp != previous_temp:
                 self._MicrobitModel__set_temperature(new_temp)
 
+    def __set_debug_mode(self, mode):
+        self.display._Display__debug_mode = mode
+
 
 __mb = MicrobitModel()

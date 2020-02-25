@@ -176,7 +176,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitButtonPress(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -223,7 +223,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                     inDebugMode &&
                                     debuggerCommunicationHandler
                                 ) {
-                                    debuggerCommunicationHandler.emitSensorChanged(
+                                    debuggerCommunicationHandler.emitInputChanged(
                                         messageJson
                                     );
                                 } else if (childProcess) {
@@ -927,7 +927,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 debuggerCommunicationHandler = new DebuggerCommunicationServer(
                     currentPanel,
-                    utils.getServerPortConfig()
+                    utils.getServerPortConfig(),
+                    currentActiveDevice
                 );
 
                 handleDebuggerTelemetry();
@@ -1293,6 +1294,7 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             <script >
               const vscode = acquireVsCodeApi();
             </script>
+            <script ></script>
             ${loadScript(context, "out/vendor.js")}
             ${loadScript(context, "out/simulator.js")}
           </body>
