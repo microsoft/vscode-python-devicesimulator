@@ -1780,10 +1780,10 @@ export class MicrobitSvg extends React.Component {
                             role="button"
                             aria-label="A+B"
                             style={{ fill: "rgb(151, 151, 151)" }}
+                            ref={this.buttonRefs.BTN_AB}
                         >
                             <rect
                                 className="sim-button-outer"
-                                ref={this.buttonRefs.BTN_AB}
                                 x={520}
                                 y={350}
                                 rx={4}

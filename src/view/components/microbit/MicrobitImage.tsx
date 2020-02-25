@@ -92,6 +92,7 @@ const setupButton = (
     buttonElement.setAttribute("class", BUTTON_CLASSNAME.ACTIVE);
     buttonElement.onmousedown = e => {
         eventTriggers.onMouseDown(e, key);
+        buttonElement.focus();
     };
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
@@ -99,8 +100,6 @@ const setupButton = (
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
     };
-    buttonElement.setAttribute("focusable", "true");
-    buttonElement.setAttribute("tabindex", "0");
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,
