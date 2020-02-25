@@ -23,6 +23,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { PopupService } from "./service/PopupService"
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -118,6 +119,7 @@ export async function activate(context: vscode.ExtensionContext) {
             await updateCurrentFileIfPython(document, currentPanel);
         }
     );
+    PopupService.OPEN_RELEASE_NOTE()
 
     const openWebview = () => {
         if (currentPanel) {
@@ -892,6 +894,22 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    const showReleaseNote = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.",
+        (port, showWarning = true) => {
+            if (serialMonitor) {
+                telemetryAI.runWithLatencyMeasure(() => {
+                    serialMonitor.closeSerialMonitor(port, showWarning);
+                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
+            } else {
+                vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.NO_FOLDER_OPENED
+                );
+                console.info("Serial monitor is not defined.");
+            }
+        }
+    );
+
     UsbDetector.getInstance().initialize(context.extensionPath);
     UsbDetector.getInstance().startListening();
 
@@ -1026,7 +1044,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
+        undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
