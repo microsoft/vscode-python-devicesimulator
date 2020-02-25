@@ -336,5 +336,7 @@ export const getModalContent = (
     );
     if (modalContentConstructor) {
         return modalContentConstructor(onUpdateValue, sensorValues);
-    } else { return; }
+    } else {
+        return;
+    }
 };
