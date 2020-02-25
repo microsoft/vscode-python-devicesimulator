@@ -1,7 +1,7 @@
 import * as React from "react";
+import { SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
-import { SENSOR_LIST } from "../../../constants";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",

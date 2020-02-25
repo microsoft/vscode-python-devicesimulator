@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import * as React from "react";
+import { SENSOR_LIST } from "../../constants";
 import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
@@ -8,7 +9,6 @@ import LightSensorBar from "./LightSensorBar";
 import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
-import { SENSOR_LIST } from "../../constants";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -336,5 +336,5 @@ export const getModalContent = (
     );
     if (modalContentConstructor) {
         return modalContentConstructor(onUpdateValue, sensorValues);
-    } else return;
+    } else { return; }
 };

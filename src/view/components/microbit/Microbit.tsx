@@ -3,11 +3,11 @@
 
 import * as React from "react";
 import { MICROBIT_TOOLBAR_ID } from "../../components/toolbar/SensorModalUtils";
+import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import ToolBar from "../toolbar/ToolBar";
 import { MicrobitSimulator } from "./MicrobitSimulator";
-import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {

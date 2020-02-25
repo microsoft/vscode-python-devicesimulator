@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS, WEBVIEW_MESSAGES, SENSOR_LIST } from "../../../constants";
+import { CONSTANTS, SENSOR_LIST, WEBVIEW_MESSAGES } from "../../../constants";
 import "../../../styles/MotionSensorBar.css";
 import { sendMessage } from "../../../utils/MessageUtils";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";

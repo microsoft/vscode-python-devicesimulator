@@ -7,14 +7,14 @@ import {
     injectIntl,
     WrappedComponentProps,
 } from "react-intl";
+import { SENSOR_LIST } from "../../constants";
 import "../../styles/ToolBar.css";
 import Button from "../Button";
 import {
     DEFAULT_MODAL_CONTENT,
-    IModalContent,
     getModalContent,
+    IModalContent,
 } from "./SensorModalUtils";
-import { SENSOR_LIST } from "../../constants";
 
 interface IToolbarState {
     currentOpenedId: string;

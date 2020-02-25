@@ -4,13 +4,9 @@
 import * as React from "react";
 import { CPX_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import ToolBar from "../../components/toolbar/ToolBar";
+import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import Simulator from "./CpxSimulator";
-import {
-    SENSOR_LIST,
-    WEBVIEW_MESSAGES,
-    VSCODE_MESSAGES_TO_WEBVIEW,
-} from "../../constants";
 
 // Component grouping the functionality for circuit playground express
 const DEFAULT_STATE = {

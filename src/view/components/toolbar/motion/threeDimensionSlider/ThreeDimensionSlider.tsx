@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SENSOR_LIST } from "../../../../constants";
 import {
     ISensorProps,
     X_SLIDER_INDEX,
@@ -6,7 +7,6 @@ import {
     Z_SLIDER_INDEX,
 } from "../../../../viewUtils";
 import InputSlider from "../../InputSlider";
-import { SENSOR_LIST } from "../../../../constants";
 
 interface IProps {
     axisProperties: ISensorProps;
