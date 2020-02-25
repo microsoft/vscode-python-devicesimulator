@@ -19,7 +19,9 @@ export class Microbit extends React.Component<{}, IState> {
         sensors: {
             [SENSOR_LIST.TEMPERATURE]: 0,
             [SENSOR_LIST.LIGHT]: 0,
-            [SENSOR_LIST.ACCELEROMETER]: 0,
+            [SENSOR_LIST.MOTION_X]: 0,
+            [SENSOR_LIST.MOTION_Y]: 0,
+            [SENSOR_LIST.MOTION_Z]: 0,
         },
     };
     render() {

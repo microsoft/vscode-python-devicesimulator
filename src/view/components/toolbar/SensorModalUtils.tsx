@@ -118,7 +118,12 @@ export const LIGHT_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
-        component: <LightSensorBar />,
+        component: (
+            <LightSensorBar
+                onUpdateValue={onUpdateValue}
+                value={sensorValues[SENSOR_LIST.LIGHT]}
+            />
+        ),
         id: "light_sensor",
     };
 };
@@ -126,13 +131,23 @@ export const MOTION_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const motionSensorValues = {
+        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
+        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+    };
     return {
         descriptionTitle: "toolbar-motion-sensor.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
         descriptionText: "toolbar-motion-sensor.description",
         tryItDescription: "toolbar-motion-sensor.tryItDescription",
-        component: <MotionSensorBar />,
+        component: (
+            <MotionSensorBar
+                onUpdateValue={onUpdateValue}
+                axisValues={motionSensorValues}
+            />
+        ),
         id: "motion_sensor",
     };
 };
@@ -244,8 +259,18 @@ export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const accelerometerSensorValues = {
+        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
+        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+    };
     return {
-        component: <Accelerometer />,
+        component: (
+            <Accelerometer
+                onUpdateValue={onUpdateValue}
+                axisValues={accelerometerSensorValues}
+            />
+        ),
         descriptionText: "toolbar-accelerometer-sensor.description",
         descriptionTitle: "toolbar-accelerometer-sensor.title",
         id: "accelerometer",

@@ -11,6 +11,15 @@ import { SENSOR_LIST } from "../../constants";
 // Component grouping the functionality for circuit playground express
 
 export class Cpx extends React.Component {
+    state = {
+        sensors: {
+            [SENSOR_LIST.TEMPERATURE]: 0,
+            [SENSOR_LIST.LIGHT]: 0,
+            [SENSOR_LIST.MOTION_X]: 0,
+            [SENSOR_LIST.MOTION_Y]: 0,
+            [SENSOR_LIST.MOTION_Z]: 0,
+        },
+    };
     render() {
         return (
             <React.Fragment>
@@ -18,13 +27,13 @@ export class Cpx extends React.Component {
                 <ToolBar
                     buttonList={CPX_TOOLBAR_BUTTONS}
                     onUpdateSensor={this.updateSensor}
-                    sensorValues={{}}
+                    sensorValues={this.state.sensors}
                 />
             </React.Fragment>
         );
     }
     updateSensor = (sensor: SENSOR_LIST, value: number) => {
-        this.setState({ [sensor]: value });
+        this.setState({ sensors: { ...this.state.sensors, [sensor]: value } });
     };
 }
 

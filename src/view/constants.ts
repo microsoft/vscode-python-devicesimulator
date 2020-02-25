@@ -83,6 +83,9 @@ export enum SENSOR_LIST {
     TEMPERATURE = "temperature",
     LIGHT = "light",
     ACCELEROMETER = "accelerometer",
+    MOTION_X = "motion_x",
+    MOTION_Y = "motion_y",
+    MOTION_Z = "motion_z",
 }
 
 export default CONSTANTS;

@@ -5,6 +5,7 @@ import * as React from "react";
 import "../../styles/LightSensorBar.css";
 import { ISensorProps, ISliderProps, X_SLIDER_INDEX } from "../../viewUtils";
 import InputSlider from "./InputSlider";
+import { SENSOR_LIST } from "../../constants";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
     maxValue: 255,
@@ -20,8 +21,12 @@ const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
     sliderProps: [LIGHT_SLIDER_PROPS],
     unitLabel: "Lux",
 };
+interface IProps {
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
+    value: number;
+}
 
-class LightSensorBar extends React.Component {
+class LightSensorBar extends React.Component<IProps> {
     constructor(props: any) {
         super(props);
     }
@@ -53,6 +58,8 @@ class LightSensorBar extends React.Component {
                         LIGHT_SENSOR_PROPERTIES.sliderProps[X_SLIDER_INDEX]
                             .axisLabel
                     }
+                    onUpdateValue={this.props.onUpdateValue}
+                    value={this.props.value}
                 />
             </div>
         );
