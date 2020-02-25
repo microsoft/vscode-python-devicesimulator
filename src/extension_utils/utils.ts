@@ -85,7 +85,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) {}
+    } catch (exception) { }
 
     return false;
 }
@@ -169,7 +169,7 @@ export function generateCPXConfig(): void {
     fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
 }
 
-export const checkForPip = async (pythonExecutableName: string) => {
+export const IsPipInstalled = async (pythonExecutableName: string) => {
     try {
         await executePythonCommand(pythonExecutableName, " -m pip");
         return true;
@@ -294,7 +294,7 @@ export const executePythonCommand = async (
     return exec(`${createEscapedPath(pythonExecutableName)} ${command}`);
 };
 
-export const validPythonVersion = async (pythonExecutableName: string) => {
+export const validatePythonVersion = async (pythonExecutableName: string) => {
     const { stdout } = await executePythonCommand(
         pythonExecutableName,
         "--version"
@@ -355,6 +355,10 @@ export const promptInstallVenv = (
                         if (installChoice === DialogResponses.INSTALL_NOW) {
                             return installPythonVenv(context, pythonExecutable);
                         } else {
+                            // return an empty string, notifying the caller
+                            // that the user was unwilling to create venv
+                            // and by default, this will trigger the extension to
+                            // try using pythonExecutable
                             return "";
                         }
                     });
@@ -424,7 +428,7 @@ export const installPythonVenv = async (
     return pythonPath;
 };
 
-export const checkForDependencies = async (
+export const areDependenciesInstalled = async (
     context: vscode.ExtensionContext,
     pythonPath: string
 ) => {
@@ -434,10 +438,14 @@ export const checkForDependencies = async (
         HELPER_FILES.CHECK_PYTHON_DEPENDENCIES
     );
     try {
+        // python script will throw exception
+        // if not all dependencies are downloaded
         const { stdout } = await executePythonCommand(
             pythonPath,
             `"${dependencyCheckerPath}"`
         );
+
+        // output for debugging purposes
         console.info(stdout);
         return true;
     } catch (err) {
@@ -456,7 +464,7 @@ export const installDependencies = async (
         "requirements.txt"
     );
 
-    if (!checkForPip(pythonPath)) {
+    if (!IsPipInstalled(pythonPath)) {
         return false;
     }
 
@@ -489,11 +497,7 @@ export const installDependencies = async (
     }
 };
 
-export const setupEnv = async (
-    context: vscode.ExtensionContext,
-    needsResponse: boolean = false
-) => {
-    let pythonExecutableName = "";
+export const GetCurrentPythonExecutableName = async () => {
     let originalPythonExecutableName = "";
 
     // try to get name from interpreter
@@ -529,6 +533,8 @@ export const setupEnv = async (
                         );
                     }
                 });
+
+            // no python installed, cannot get path
             return "";
         }
     }
@@ -545,20 +551,27 @@ export const setupEnv = async (
         return "";
     }
 
-    if (!(await validPythonVersion(originalPythonExecutableName))) {
+    if (!(await validatePythonVersion(originalPythonExecutableName))) {
         return "";
     }
 
-    pythonExecutableName = originalPythonExecutableName;
+    return originalPythonExecutableName
+}
+export const setupEnv = async (
+    context: vscode.ExtensionContext,
+    needsResponse: boolean = false
+) => {
+    const originalPythonExecutableName = await GetCurrentPythonExecutableName();
+    let pythonExecutableName = originalPythonExecutableName;
 
-    if (!(await checkForDependencies(context, pythonExecutableName))) {
+    if (!(await areDependenciesInstalled(context, pythonExecutableName))) {
         // environment needs to install dependencies
         if (!(await checkIfVenv(context, pythonExecutableName))) {
             pythonExecutableName = await getPythonVenv(context);
             if (await hasVenv(context)) {
                 // venv in extention exists with wrong dependencies
                 if (
-                    !(await checkForDependencies(context, pythonExecutableName))
+                    !(await areDependenciesInstalled(context, pythonExecutableName))
                 ) {
                     await installDependencies(context, pythonExecutableName);
                 }
