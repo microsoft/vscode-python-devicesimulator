@@ -117,6 +117,7 @@ const setupButton = (
     buttonElement.onmousedown = e => {
         buttonElement.focus();
         eventTriggers.onMouseDown(e, key);
+        buttonElement.focus();
     };
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
