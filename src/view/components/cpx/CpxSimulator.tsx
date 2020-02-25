@@ -272,6 +272,8 @@ class Simulator extends React.Component<{}, IState> {
             }
         }
         if (element) {
+            console.log("element");
+            console.log(element);
             event.preventDefault();
             this.handleClick(element, active);
             element.focus();
