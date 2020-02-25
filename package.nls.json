@@ -13,5 +13,5 @@
   "deviceSimulatorExpressExtension.commands.microbit.newFile": "[micro:bit] New File",
   "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
   "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger.",
-  "deviceSimulatorExpressExtension.configuration.properties.previewMode": "Enable this to test out and play with the new micro:bit simulator"
+  "deviceSimulatorExpressExtension.configuration.properties.previewMode": "Enable this to test out and play with the new micro:bit simulator!"
 }

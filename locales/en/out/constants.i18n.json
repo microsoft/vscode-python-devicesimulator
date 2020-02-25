@@ -36,7 +36,7 @@
   "info.privacyStatement": "Privacy Statement",
   "info.successfulInstall": "Successfully installed Python dependencies.",
   "info.thirdPartyWebsite": "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
-  "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab!\n\n",
+  "info.welcomeOutputTab": "Welcome to the Device Simulator Express output tab!\n\n",
   "label.webviewPanel": "Device Simulator Express",
   "name": "Device Simulator Express",
 
