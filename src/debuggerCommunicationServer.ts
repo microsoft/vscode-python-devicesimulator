@@ -25,8 +25,8 @@ export class DebuggerCommunicationServer {
     private serverIo: socketio.Server;
     private simulatorWebview: WebviewPanel | undefined;
     private currentActiveDevice;
-    private isWaitingResponse = false;
-    private currentCall: Function[] = [];
+    private isPendingResponse = false;
+    private pendingCallbacks: Array<Function> = [];
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
@@ -54,22 +54,21 @@ export class DebuggerCommunicationServer {
     public setWebview(webviewPanel: WebviewPanel | undefined) {
         this.simulatorWebview = webviewPanel;
     }
-
+    // Events are pushed when the previous processed event is over
     public emitInputChanged(newState: string): void {
-        if (this.isWaitingResponse) {
-            this.currentCall.push(() => {
+        if (this.isPendingResponse) {
+            this.pendingCallbacks.push(() => {
                 this.serverIo.emit(
                     DEBUGGER_MESSAGES.EMITTER.INPUT_CHANGED,
                     newState
                 );
-                this.isWaitingResponse = true;
             });
         } else {
             this.serverIo.emit(
                 DEBUGGER_MESSAGES.EMITTER.INPUT_CHANGED,
                 newState
             );
-            this.isWaitingResponse = true;
+            this.isPendingResponse = true;
         }
     }
 
@@ -90,10 +89,12 @@ export class DebuggerCommunicationServer {
                 );
             });
             socket.on(DEBUGGER_MESSAGES.LISTENER.RECEIVED_STATE, () => {
-                this.isWaitingResponse = false;
-                if (this.currentCall.length > 0) {
-                    const currentCall = this.currentCall.shift();
+                if (this.pendingCallbacks.length > 0) {
+                    const currentCall = this.pendingCallbacks.shift();
                     currentCall();
+                    this.isPendingResponse = true;
+                } else {
+                    this.isPendingResponse = false;
                 }
             });
 

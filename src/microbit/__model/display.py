@@ -3,6 +3,9 @@ import time
 import threading
 import common
 
+from common import utils
+from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 from . import constants as CONSTANTS
 from .image import Image
 
@@ -44,6 +47,8 @@ class Display:
             )
             thread.start()
             return
+
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_SCROLL)
 
         # Set current_pid to the thread's identifier
         self.__lock.acquire()
@@ -124,6 +129,8 @@ class Display:
             thread.start()
             return
 
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_SHOW)
+
         # Set current_pid to the thread's identifier
         self.__lock.acquire()
         self.__current_pid = threading.get_ident()
@@ -184,6 +191,7 @@ class Display:
         Return the brightness of the LED at column ``x`` and row ``y`` as an
         integer between 0 (off) and 9 (bright).
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         self.__lock.acquire()
         pixel = self.__image.get_pixel(x, y)
         self.__lock.release()
@@ -194,6 +202,7 @@ class Display:
         Set the brightness of the LED at column ``x`` and row ``y`` to ``value``,
         which has to be an integer between 0 and 9.
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         self.__lock.acquire()
         self.__image.set_pixel(x, y, value)
         self.__lock.release()
@@ -203,6 +212,7 @@ class Display:
         """
         Set the brightness of all LEDs to 0 (off).
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         self.__lock.acquire()
         self.__image = Image()
         self.__lock.release()
@@ -212,18 +222,21 @@ class Display:
         """
         Use on() to turn on the display.
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         self.__on = True
 
     def off(self):
         """
         Use off() to turn off the display.
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         self.__on = False
 
     def is_on(self):
         """
         Returns ``True`` if the display is on, otherwise returns ``False``.
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_DISPLAY_OTHER)
         return self.__on
 
     def read_light_level(self):
@@ -232,6 +245,7 @@ class Display:
         falling on the display.  Returns an integer between 0 and 255 representing
         the light level, with larger meaning more light.
         """
+        telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_LIGHT_LEVEL)
         return self.__light_level
 
     def __set_light_level(self, level):
