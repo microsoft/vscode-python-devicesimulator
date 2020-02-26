@@ -175,7 +175,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         event.preventDefault();
         this.handleButtonClick(key, true);
     };
-
     protected onMouseLeave = (event: Event, key: string) => {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
@@ -184,7 +183,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         let element;
         const target = event.target as SVGElement;
         // Guard Clause
-        console.log("STARTING ON KEY EVENT");
         if (target === undefined) {
             console.log("Returning");
             return;

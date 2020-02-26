@@ -1695,24 +1695,28 @@ export class MicrobitSvg extends React.Component {
                                 cx="35.9"
                                 cy="186.4"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="35.9"
                                 cy="222.60000000000002"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="72.1"
                                 cy="222.60000000000002"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="72.1"
                                 cy="186.4"
                                 r={6}
+                                strokeWidth={0}
                             />
                         </g>
                         <path
@@ -1744,24 +1748,28 @@ export class MicrobitSvg extends React.Component {
                                 cx="428.1"
                                 cy="186.4"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="428.1"
                                 cy="222.60000000000002"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="464.3"
                                 cy="222.60000000000002"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="464.3"
                                 cy="186.4"
                                 r={6}
+                                strokeWidth={0}
                             />
                         </g>
                         <path
@@ -1796,24 +1804,28 @@ export class MicrobitSvg extends React.Component {
                                 cx={530}
                                 cy={360}
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx={530}
                                 cy="396.2"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="566.2"
                                 cy="396.2"
                                 r={6}
+                                strokeWidth={0}
                             />
                             <circle
                                 className="sim-button-nut"
                                 cx="566.2"
                                 cy={360}
                                 r={6}
+                                strokeWidth={0}
                             />
                         </g>
                         <circle

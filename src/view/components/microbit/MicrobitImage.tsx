@@ -78,6 +78,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
                         MICROBIT_BUTTONS_CLASSES.DEFAULT
                     );
                 }
+                button.setAttribute("pressed", `${isActive}`);
             }
         }
     }
@@ -89,7 +90,6 @@ const setupButton = (
     eventTriggers: EventTriggers,
     key: string
 ) => {
-    buttonElement.setAttribute("class", BUTTON_CLASSNAME.ACTIVE);
     buttonElement.onmousedown = e => {
         eventTriggers.onMouseDown(e, key);
         buttonElement.focus();
