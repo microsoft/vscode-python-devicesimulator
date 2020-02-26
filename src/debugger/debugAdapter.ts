@@ -23,7 +23,7 @@ export class DebugAdapter implements DebugAdapterTracker {
                     this.messagingService.sendStartMessage();
                     break;
                 case DEBUG_COMMANDS.STACK_TRACE:
-                    this.messagingService.sendStopMessage();
+                    this.messagingService.sendPauseMessage();
             }
         }
     }
