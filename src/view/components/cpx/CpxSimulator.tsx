@@ -117,10 +117,6 @@ class Simulator extends React.Component<{}, IState> {
                     running_file: message.state.running_file,
                 });
                 break;
-            default:
-                console.log("Invalid message received from the extension.");
-                this.setState({ ...this.state, cpx: DEFAULT_CPX_STATE });
-                break;
         }
     };
 
