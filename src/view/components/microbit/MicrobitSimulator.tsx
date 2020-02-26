@@ -180,7 +180,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         console.log(`To implement onMouseLeave ${key}`);
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean) {
-        let element;
         const target = event.target as SVGElement;
         // Guard Clause
         if (target === undefined) {
@@ -188,7 +187,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             return;
         }
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
-            element = window.document.getElementById(target.id);
+            // Todo
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
         ) {
@@ -211,13 +210,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
             this.refreshSimulatorClick();
-        }
-        if (element) {
-            console.log("element");
-            console.log(element);
-            event.preventDefault();
-            this.handleButtonClick(MICROBIT_BUTTONS_KEYS.BTN_A, active);
-            element.focus();
         }
     }
 }
