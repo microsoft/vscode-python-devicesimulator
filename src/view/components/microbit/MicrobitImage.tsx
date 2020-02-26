@@ -69,7 +69,6 @@ const setupButton = (
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
     };
-    console.log("buttons should be enabled");
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,
@@ -89,7 +88,6 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             ref.current.onmouseup = null;
             ref.current.onmouseleave = null;
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);
-            console.log("buttons should be disabled");
         }
     }
 };

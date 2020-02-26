@@ -70,7 +70,6 @@ class App extends React.Component<{}, IState> {
                 break;
             case VSCODE_MESSAGES_TO_WEBVIEW.PAUSE_DEVICE:
                 this.setState({ viewState: VIEW_STATE.PAUSE });
-
                 break;
         }
     };
