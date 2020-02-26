@@ -24,6 +24,7 @@ import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
 import { PopupService } from "./service/PopupService"
+import getPackageInfo from "./telemetry/getPackageInfo";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -78,7 +79,7 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
-
+    console.log(context.workspaceState)
     telemetryAI = new TelemetryAI(context);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
@@ -119,7 +120,13 @@ export async function activate(context: vscode.ExtensionContext) {
             await updateCurrentFileIfPython(document, currentPanel);
         }
     );
-    PopupService.OPEN_RELEASE_NOTE()
+
+    const currVersionReleaseName = "release_note_" + getPackageInfo(context).extensionVersion
+    const viewedReleaseNote = context.workspaceState.get(currVersionReleaseName,false)
+    if (!viewedReleaseNote) {
+        PopupService.OPEN_RELEASE_NOTE()
+        context.workspaceState.update(currVersionReleaseName,true)
+    }
 
     const openWebview = () => {
         if (currentPanel) {
