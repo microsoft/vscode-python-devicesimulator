@@ -63,5 +63,3 @@ with open(abs_path_to_code_file) as user_code_file:
         for frameIndex in range(2, len(stackTrace) - 1):
             errorMessage += "\t" + str(stackTrace[frameIndex])
         print(e, errorMessage, file=sys.stderr, flush=True)
-
-    debugger_communication_client.disconnect_socket()

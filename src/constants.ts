@@ -71,6 +71,10 @@ export const CONSTANTS = {
             "error.incorrectFileNameForDevicePopup",
             'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
         ),
+        INSTALLATION_ERROR: localize(
+            "error.installationError",
+            "Installation Error"
+        ),
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
@@ -281,8 +285,12 @@ export enum CONFIG_KEYS {
 
 export enum TelemetryEventName {
     FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
-    DEBUGGER_INIT_SUCCESS = "DEBUGGER.INIT.SUCCESS",
-    DEBUGGER_INIT_FAIL = "DEBUGGER.INIT.FAIL",
+
+    // Debugger
+    CPX_DEBUGGER_INIT_SUCCESS = "CPX.DEBUGGER.INIT.SUCCESS",
+    CPX_DEBUGGER_INIT_FAIL = "CPX.DEBUGGER.INIT.FAIL",
+    MICROBIT_DEBUGGER_INIT_SUCCESS = "MICROBIT.DEBUGGER.INIT.SUCCESS",
+    MICROBIT_DEBUGGER_INIT_FAIL = "MICROBIT.DEBUGGER.INIT.FAIL",
 
     // Extension commands
     COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",

@@ -1,7 +1,10 @@
 import { DebugAdapterTracker, DebugConsole, DebugSession } from "vscode";
 import { MessagingService } from "../service/messagingService";
 import { DEBUG_COMMANDS } from "../view/constants";
+<<<<<<< HEAD
 import { DebuggerCommunicationServer } from "../debuggerCommunicationServer";
+=======
+>>>>>>> dev
 
 export class DebugAdapter implements DebugAdapterTracker {
     private readonly console: DebugConsole | undefined;
@@ -19,13 +22,12 @@ export class DebugAdapter implements DebugAdapterTracker {
     onWillReceiveMessage(message: any): void {
         if (message.command) {
             // Only send pertinent debug messages
-
             switch (message.command) {
                 case DEBUG_COMMANDS.CONTINUE:
                     this.messagingService.sendStartMessage();
                     break;
                 case DEBUG_COMMANDS.STACK_TRACE:
-                    this.messagingService.sendStopMessage();
+                    this.messagingService.sendPauseMessage();
             }
         }
     }
@@ -33,8 +35,8 @@ export class DebugAdapter implements DebugAdapterTracker {
     onError() {
         this.messagingService.sendStartMessage();
     }
+    // Device is always running when exiting debugging mode
     onExit() {
-        // Device is always running when exiting debugging mode
         this.messagingService.sendStartMessage();
     }
 }

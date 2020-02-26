@@ -1,6 +1,5 @@
 import { Webview } from "vscode";
 import { VSCODE_MESSAGES_TO_WEBVIEW } from "../view/constants";
-import { DEBUGGER_MESSAGES } from "../debuggerCommunicationServer";
 export class MessagingService {
     private currentWebviewTarget: Webview | undefined;
 
@@ -14,13 +13,12 @@ export class MessagingService {
             this.currentWebviewTarget.postMessage({ command: debugCommand });
         }
     }
-
     public sendStartMessage() {
         this.currentWebviewTarget.postMessage({
             command: VSCODE_MESSAGES_TO_WEBVIEW.RUN_DEVICE,
         });
     }
-    public sendStopMessage() {
+    public sendPauseMessage() {
         this.currentWebviewTarget.postMessage({
             command: VSCODE_MESSAGES_TO_WEBVIEW.PAUSE_DEVICE,
         });
