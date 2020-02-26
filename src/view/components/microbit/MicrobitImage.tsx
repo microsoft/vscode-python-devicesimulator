@@ -100,10 +100,10 @@ const setupButton = (
     };
     buttonElement.onkeydown = e => {
         eventTriggers.onKeyEvent(e, true, key);
-    }
+    };
     buttonElement.onkeyup = e => {
         eventTriggers.onKeyEvent(e, false, key);
-    }
+    };
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,
