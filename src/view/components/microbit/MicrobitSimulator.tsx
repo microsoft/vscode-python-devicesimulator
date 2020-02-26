@@ -180,23 +180,26 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         console.log(`To implement onMouseLeave ${key}`);
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
+        event.stopPropagation();
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
             this.handleButtonClick(key, active);
-            if (key === BUTTONS_KEYS.BTN_A && this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_A,
-                    active
-                );
-            } else if (key === BUTTONS_KEYS.BTN_B && this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_B,
-                    active
-                );
-            } else if (key === BUTTONS_KEYS.BTN_AB && this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_AB,
-                    active
-                );
+            if (this.imageRef.current) {
+                if (key === BUTTONS_KEYS.BTN_A) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_A,
+                        active
+                    );
+                } else if (key === BUTTONS_KEYS.BTN_B) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_B,
+                        active
+                    );
+                } else if (key === BUTTONS_KEYS.BTN_AB) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_AB,
+                        active
+                    );
+                }
             }
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
