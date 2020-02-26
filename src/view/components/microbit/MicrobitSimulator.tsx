@@ -82,9 +82,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     running_file: message.state.running_file,
                 });
                 break;
-            default:
-                console.log("Invalid message received from the extension.");
-                break;
         }
     };
     componentDidMount() {
