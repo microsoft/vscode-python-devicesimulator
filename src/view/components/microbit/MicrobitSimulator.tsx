@@ -179,20 +179,31 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
     };
-    protected onKeyEvent(event: KeyboardEvent, active: boolean) {
-        const target = event.target as SVGElement;
-        // Guard Clause
-        if (target === undefined) {
-            console.log("Returning");
-            return;
-        }
+    protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
-            // Todo
+            this.handleButtonClick(key, active);
+            if (key === BUTTONS_KEYS.BTN_A && this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_A,
+                    active
+                );
+            } else if (key === BUTTONS_KEYS.BTN_B && this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_B,
+                    active
+                );
+            } else if (key === BUTTONS_KEYS.BTN_AB && this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_AB,
+                    active
+                );
+            }
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
         ) {
+            this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
             if (this.imageRef.current) {
-                this.imageRef.current.sendButtonEvent(
+                this.imageRef.current.updateButtonAttributes(
                     BUTTONS_KEYS.BTN_A,
                     active
                 );
@@ -200,8 +211,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
         ) {
+            this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
             if (this.imageRef.current) {
-                this.imageRef.current.sendButtonEvent(
+                this.imageRef.current.updateButtonAttributes(
                     BUTTONS_KEYS.BTN_B,
                     active
                 );

@@ -12,7 +12,7 @@ interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
     onMouseDown: (event: Event, buttonKey: string) => void;
     onMouseLeave: (event: Event, buttonKey: string) => void;
-    onKeyEvent: (event: KeyboardEvent, active: boolean) => void;
+    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void;
 }
 interface IProps {
     eventTriggers: EventTriggers;
@@ -59,26 +59,24 @@ export class MicrobitImage extends React.Component<IProps, {}> {
     render() {
         return <MicrobitSvg ref={this.svgRef} />;
     }
-    public sendButtonEvent(key: BUTTONS_KEYS, isActive: boolean) {
+    public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
         if (this.svgRef.current) {
             const button = this.svgRef.current.getButtons()[key].current;
             if (button) {
+                button.focus();
                 if (isActive) {
-                    button.dispatchEvent(new Event("mousedown"));
-                    button.focus();
                     button.children[0].setAttribute(
                         "class",
                         MICROBIT_BUTTONS_CLASSES.KEYPRESSED
                     );
-                    console.log(JSON.stringify(button.className));
                 } else {
-                    button.dispatchEvent(new Event("mouseup"));
                     button.children[0].setAttribute(
                         "class",
                         MICROBIT_BUTTONS_CLASSES.DEFAULT
                     );
                 }
                 button.setAttribute("pressed", `${isActive}`);
+                button.setAttribute("aria-pressed", `${isActive}`);
             }
         }
     }
@@ -91,8 +89,8 @@ const setupButton = (
     key: string
 ) => {
     buttonElement.onmousedown = e => {
-        eventTriggers.onMouseDown(e, key);
         buttonElement.focus();
+        eventTriggers.onMouseDown(e, key);
     };
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
@@ -100,6 +98,12 @@ const setupButton = (
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
     };
+    buttonElement.onkeydown = e => {
+        eventTriggers.onKeyEvent(e, true, key);
+    }
+    buttonElement.onkeyup = e => {
+        eventTriggers.onKeyEvent(e, false, key);
+    }
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,
@@ -140,7 +144,7 @@ const setupLed = (ledElement: SVGRectElement, brightness: number) => {
 };
 
 const setupKeyPresses = (
-    onKeyEvent: (event: KeyboardEvent, active: boolean) => void
+    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
 ) => {
     window.document.addEventListener("keydown", event => {
         const keyEvents = [event.key, event.code];
@@ -152,10 +156,10 @@ const setupKeyPresses = (
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
             )
         ) {
-            onKeyEvent(event, true);
+            onKeyEvent(event, true, event.key);
         }
     });
     window.document.addEventListener("keyup", event =>
-        onKeyEvent(event, false)
+        onKeyEvent(event, false, event.key)
     );
 };
