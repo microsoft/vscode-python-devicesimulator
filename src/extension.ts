@@ -1056,7 +1056,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
