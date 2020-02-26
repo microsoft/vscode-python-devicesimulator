@@ -140,6 +140,12 @@
             "type": "object",
             "title": "%deviceSimulatorExpressExtension.configuration.title%",
             "properties": {
+                "deviceSimulatorExpress.configNewEnvironmentUponSwitch": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange%",
+                    "scope": "resource"
+                },
                 "deviceSimulatorExpress.enableUSBDetection": {
                     "type": "boolean",
                     "default": true
@@ -147,6 +153,7 @@
                 "deviceSimulatorExpress.showDependencyInstall": {
                     "type": "boolean",
                     "default": true,
+                    "description": "%deviceSimulatorExpressExtension.configuration.properties.dependencyChecker%",
                     "scope": "resource"
                 },
                 "deviceSimulatorExpress.showNewFilePopup": {
