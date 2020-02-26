@@ -122,10 +122,11 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     const currVersionReleaseName = "release_note_" + getPackageInfo(context).extensionVersion
-    const viewedReleaseNote = context.workspaceState.get(currVersionReleaseName,false)
+    const viewedReleaseNote = context.globalState.get(currVersionReleaseName, false)
+
     if (!viewedReleaseNote) {
         PopupService.OPEN_RELEASE_NOTE()
-        context.workspaceState.update(currVersionReleaseName,true)
+        context.globalState.update(currVersionReleaseName, true)
     }
 
     const openWebview = () => {
