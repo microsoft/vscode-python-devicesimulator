@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { VIEW_STATE, WEBVIEW_MESSAGES } from "../../constants";
+import { SENSOR_LIST, VIEW_STATE, WEBVIEW_MESSAGES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import "../../styles/InputSlider.css";
 import { sendMessage } from "../../utils/MessageUtils";
