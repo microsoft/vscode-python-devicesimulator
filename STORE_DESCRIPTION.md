@@ -70,7 +70,7 @@ As we only support CPX library now, other libraries (i.e. simpleio) can’t run 
 
 To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
-#### 1. Start with the "New File" Command.
+#### 1. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
 
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL+SHIFT+P` to open the command palette).  
    <img alt='"New File" animation' src=https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/newFile.gif>
