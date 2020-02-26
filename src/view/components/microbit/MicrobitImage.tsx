@@ -69,7 +69,6 @@ const setupButton = (
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
     };
-    console.log("buttons should be enabled");
 };
 const setupAllButtons = (
     eventTriggers: EventTriggers,

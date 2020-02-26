@@ -72,6 +72,10 @@ export class DebuggerCommunicationServer {
     }
     public disconnectSocketIo() {
         this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
+        setTimeout(() => {
+            this.serverIo.close();
+            this.serverHttp.close();
+        }, 100);
     }
 
     private initHttpServer(): void {
@@ -107,11 +111,6 @@ export class DebuggerCommunicationServer {
                         command: "reset-state",
                     });
                 }
-            });
-            socket.on("disconnect_confirmation", () => {
-                this.serverIo.close();
-                this.serverHttp.close();
-                console.info("Closing the server");
             });
         });
     }

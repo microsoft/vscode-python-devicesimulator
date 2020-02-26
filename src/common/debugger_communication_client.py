@@ -83,5 +83,4 @@ def received_state(data):
 
 @sio.on("process_disconnect")
 def process_disconnect(data):
-    sio.emit("disconnect_confirmation")
     sio.disconnect()
