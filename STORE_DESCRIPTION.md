@@ -165,8 +165,8 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 ### How to use
 Using the simulator for the Micro:bit is similar to using the one for the CPX. The only difference is that the commands in the command palette display `Device Simulator Express: [micro:bit] <command>` instead of `Device Simulator Express: [Circuit Playground Express] <command>`. Currently, we support the following commands for Micro:bit:
-- `Device Simulator Express: [micro:bit] Open Simulator`
-- `Device Simulator Express: [micro:bit] New File`
+- `Device Simulator Express: [micro:bit] Open Simulator`: Opens an unsaved .py file with template code, also opens the simulator.
+- `Device Simulator Express: [micro:bit] New File`: Opens the simulator in the webView
 
 Please review the CPX's ["How to use" guide](#How-to-use) for more info.
 
