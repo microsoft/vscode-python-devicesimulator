@@ -85,7 +85,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) { }
+    } catch (exception) {}
 
     return false;
 }
@@ -540,7 +540,7 @@ export const getCurrentPythonExecutableName = async () => {
     }
 
     return originalPythonExecutableName;
-}
+};
 export const setupEnv = async (
     context: vscode.ExtensionContext,
     needsResponse: boolean = false
@@ -581,7 +581,7 @@ export const setupEnv = async (
                                     }
                                 }
                             );
-                        return pythonExecutableName
+                        return pythonExecutableName;
                     }
                 }
             } else {
@@ -615,7 +615,8 @@ export const setupEnv = async (
                                 ) {
                                     vscode.window
                                         .showErrorMessage(
-                                            CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
+                                            CONSTANTS.ERROR
+                                                .DEPENDENCY_DOWNLOAD_ERROR,
                                             DialogResponses.READ_INSTALL_MD
                                         )
                                         .then(
@@ -634,7 +635,7 @@ export const setupEnv = async (
                                                 }
                                             }
                                         );
-                                    return pythonExecutableName
+                                    return pythonExecutableName;
                                 }
                             }
                         }
