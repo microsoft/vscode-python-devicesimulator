@@ -79,7 +79,7 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
-    console.log(context.workspaceState);
+
     telemetryAI = new TelemetryAI(context);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
@@ -1056,7 +1056,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
+        undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
