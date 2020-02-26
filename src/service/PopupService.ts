@@ -1,12 +1,12 @@
 // import { Webview } from "vscode";
 import * as vscode from "vscode";
-import { LATEST_RELEASE_NOTE } from "../latest_release_note"
+import { LATEST_RELEASE_NOTE } from "../latest_release_note";
 
 export class PopupService {
     public static OPEN_RELEASE_NOTE() {
         const panel = vscode.window.createWebviewPanel(
-            'catCoding',
-            'Cat Coding',
+            "catCoding",
+            "Cat Coding",
             vscode.ViewColumn.One,
             {}
         );

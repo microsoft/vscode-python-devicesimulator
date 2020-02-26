@@ -60,4 +60,4 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
 </p>
 
 <p><b>Happy Hacking! ✨✨🐍🐍🍰</b><br>
-    &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`
+    &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;

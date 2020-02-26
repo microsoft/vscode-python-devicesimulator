@@ -23,7 +23,7 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { PopupService } from "./service/PopupService"
+import { PopupService } from "./service/PopupService";
 import getPackageInfo from "./telemetry/getPackageInfo";
 
 let currentFileAbsPath: string = "";
@@ -79,7 +79,7 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
-    console.log(context.workspaceState)
+    console.log(context.workspaceState);
     telemetryAI = new TelemetryAI(context);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
@@ -121,12 +121,16 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const currVersionReleaseName = "release_note_" + getPackageInfo(context).extensionVersion
-    const viewedReleaseNote = context.globalState.get(currVersionReleaseName, false)
+    const currVersionReleaseName =
+        "release_note_" + getPackageInfo(context).extensionVersion;
+    const viewedReleaseNote = context.globalState.get(
+        currVersionReleaseName,
+        false
+    );
 
     if (!viewedReleaseNote) {
-        PopupService.OPEN_RELEASE_NOTE()
-        context.globalState.update(currVersionReleaseName, true)
+        PopupService.OPEN_RELEASE_NOTE();
+        context.globalState.update(currVersionReleaseName, true);
     }
 
     const openWebview = () => {
@@ -1052,7 +1056,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,
