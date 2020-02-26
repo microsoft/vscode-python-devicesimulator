@@ -129,7 +129,7 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     if (!viewedReleaseNote) {
-        PopupService.OPEN_RELEASE_NOTE();
+        PopupService.openReleaseNote();
         context.globalState.update(currVersionReleaseName, true);
     }
 

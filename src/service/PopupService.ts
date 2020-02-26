@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import { LATEST_RELEASE_NOTE } from "../latest_release_note";
 
 export class PopupService {
-    public static OPEN_RELEASE_NOTE() {
+    public static openReleaseNote() {
         const panel = vscode.window.createWebviewPanel(
             "releaseNote",
             "Release Note",
