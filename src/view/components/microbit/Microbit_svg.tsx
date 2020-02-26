@@ -4,7 +4,7 @@
 // Adapted from : https://makecode.microbit.org/#editor
 
 import * as React from "react";
-interface IRefObject {
+export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
 /* tslint:disable */

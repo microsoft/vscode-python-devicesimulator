@@ -100,6 +100,22 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             }
         ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "deviceSimulatorExpress.microbit.openSimulator",
+                    "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
+                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
+                    "when": "config.deviceSimulatorExpress.previewMode"
+                },
+                {
+                    "command": "deviceSimulatorExpress.microbit.newFile",
+                    "title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
+                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
+                    "when": "config.deviceSimulatorExpress.previewMode"
+                }
+            ]
+        },
         "colors": [
             {
                 "id": "highContrastButtonBorderOverride.color",
@@ -150,6 +166,12 @@
                     "default": 5577,
                     "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",
                     "scope": "resource"
+                },
+                "deviceSimulatorExpress.previewMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%deviceSimulatorExpressExtension.configuration.properties.previewMode%",
+                    "scope": "resource"    
                 }
             }
         },

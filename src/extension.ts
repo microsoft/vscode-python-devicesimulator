@@ -17,9 +17,11 @@ import {
     TelemetryEventName,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
+import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
+import { MessagingService } from "./service/messagingService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
@@ -37,6 +39,7 @@ let debuggerCommunicationHandler: DebuggerCommunicationServer;
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+const messagingService = new MessagingService();
 
 let currentActiveDevice: string = DEFAULT_DEVICE;
 
@@ -119,6 +122,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const openWebview = () => {
         if (currentPanel) {
+            messagingService.setWebview(currentPanel.webview);
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
@@ -140,6 +144,7 @@ export async function activate(context: vscode.ExtensionContext) {
             );
 
             currentPanel.webview.html = getWebviewContent(context);
+            messagingService.setWebview(currentPanel.webview);
 
             if (messageListener !== undefined) {
                 messageListener.dispose();
@@ -910,6 +915,14 @@ export async function activate(context: vscode.ExtensionContext) {
         utils.getPathToScript(context, "out/", "debug_user_code.py")
     );
 
+    const debugAdapterFactory = new DebugAdapterFactory(
+        vscode.debug.activeDebugSession,
+        messagingService
+    );
+    vscode.debug.registerDebugAdapterTrackerFactory(
+        "python",
+        debugAdapterFactory
+    );
     // On Debug Session Start: Init comunication
     const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
