@@ -7,12 +7,13 @@ import {
     injectIntl,
     WrappedComponentProps,
 } from "react-intl";
+import { SENSOR_LIST } from "../../constants";
 import "../../styles/ToolBar.css";
 import Button from "../Button";
 import {
     DEFAULT_MODAL_CONTENT,
+    getModalContent,
     IModalContent,
-    LABEL_TO_MODAL_CONTENT,
 } from "./SensorModalUtils";
 
 interface IToolbarState {
@@ -25,6 +26,8 @@ interface IProps extends WrappedComponentProps {
         label: any;
         image: any;
     }>;
+    onUpdateSensor: (sensor: SENSOR_LIST, value: number) => void;
+    sensorValues: { [key: string]: number };
 }
 
 class ToolBar extends React.Component<IProps, IToolbarState, any> {
@@ -129,13 +132,19 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
     private getIconModal() {
         if (
             !this.state.showModal ||
-            !LABEL_TO_MODAL_CONTENT.get(this.state.currentOpenedId)
+            !getModalContent(
+                this.state.currentOpenedId,
+                this.props.onUpdateSensor,
+                this.props.sensorValues
+            )
         ) {
             return null;
         }
 
-        const content = LABEL_TO_MODAL_CONTENT.get(
-            this.state.currentOpenedId
+        const content = getModalContent(
+            this.state.currentOpenedId,
+            this.props.onUpdateSensor,
+            this.props.sensorValues
         ) as IModalContent;
 
         const component = content
