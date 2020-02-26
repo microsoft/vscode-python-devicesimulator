@@ -117,7 +117,6 @@ const setupButton = (
     buttonElement.onmousedown = e => {
         buttonElement.focus();
         eventTriggers.onMouseDown(e, key);
-        buttonElement.focus();
     };
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
@@ -171,7 +170,7 @@ const setupLed = (ledElement: SVGRectElement, brightness: number) => {
 };
 
 const setupKeyPresses = (
-    onKeyEvent: (event: KeyboardEvent, active: boolean) => void
+    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
 ) => {
     window.document.addEventListener("keydown", event => {
         const keyEvents = [event.key, event.code];
@@ -183,10 +182,10 @@ const setupKeyPresses = (
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
             )
         ) {
-            onKeyEvent(event, true);
+            onKeyEvent(event, true, event.key);
         }
     });
     window.document.addEventListener("keyup", event =>
-        onKeyEvent(event, false)
+        onKeyEvent(event, false, event.key)
     );
 };
