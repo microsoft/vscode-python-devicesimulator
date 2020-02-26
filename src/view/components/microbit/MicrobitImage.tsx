@@ -65,15 +65,15 @@ export class MicrobitImage extends React.Component<IProps, {}> {
             if (button) {
                 if (isActive) {
                     button.dispatchEvent(new Event("mousedown"));
-                    button.setAttribute(
+                    button.focus();
+                    button.children[0].setAttribute(
                         "class",
                         MICROBIT_BUTTONS_CLASSES.KEYPRESSED
                     );
-                    button.focus();
                     console.log(JSON.stringify(button.className));
                 } else {
                     button.dispatchEvent(new Event("mouseup"));
-                    button.setAttribute(
+                    button.children[0].setAttribute(
                         "class",
                         MICROBIT_BUTTONS_CLASSES.DEFAULT
                     );
