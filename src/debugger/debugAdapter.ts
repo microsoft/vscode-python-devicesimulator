@@ -1,10 +1,6 @@
 import { DebugAdapterTracker, DebugConsole, DebugSession } from "vscode";
 import { MessagingService } from "../service/messagingService";
 import { DEBUG_COMMANDS } from "../view/constants";
-<<<<<<< HEAD
-import { DebuggerCommunicationServer } from "../debuggerCommunicationServer";
-=======
->>>>>>> dev
 
 export class DebugAdapter implements DebugAdapterTracker {
     private readonly console: DebugConsole | undefined;

@@ -70,6 +70,9 @@ export class DebuggerCommunicationServer {
             this.isPendingResponse = true;
         }
     }
+    public disconnectSocketIo() {
+        this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
+    }
 
     private initHttpServer(): void {
         this.serverHttp.listen(this.port);
@@ -111,9 +114,6 @@ export class DebuggerCommunicationServer {
                 console.info("Closing the server");
             });
         });
-    }
-    public disconnectSocketIo() {
-        this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
     }
 
     private handleState(data: any): void {
