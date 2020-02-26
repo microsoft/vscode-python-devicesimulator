@@ -87,9 +87,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         const newValue = event.target.validity.valid
             ? event.target.value
             : this.state.value;
-        // this.setState({ value: newValue });
         if (this.props.onUpdateValue) {
-            console.log(this.props.type, newValue);
             this.props.onUpdateValue(this.props.type as SENSOR_LIST, newValue);
         }
         return newValue;
