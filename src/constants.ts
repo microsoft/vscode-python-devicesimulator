@@ -50,7 +50,8 @@ export const CONSTANTS = {
             "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
         ),
         DEPENDENCY_DOWNLOAD_ERROR:
-            "Package downloads failed. Some functionalities may not work. Try restarting the simulator or review the installation docs.",
+            "Dependency download could not be completed. Functionality may be limited. Please review the installation docs.",
+
         FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
             return localize(
                 "error.failedToOpenSerialPort",

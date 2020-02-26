@@ -169,7 +169,7 @@ export function generateCPXConfig(): void {
     fs.writeFileSync(cpxConfigFilePath, JSON.stringify(cpxJson, null, 4));
 }
 
-export const IsPipInstalled = async (pythonExecutableName: string) => {
+export const isPipInstalled = async (pythonExecutableName: string) => {
     try {
         await executePythonCommand(pythonExecutableName, " -m pip");
         return true;
@@ -413,7 +413,7 @@ export const installPythonVenv = async (
     if (!(await installDependencies(context, pythonPath))) {
         vscode.window
             .showErrorMessage(
-                `Dependency download for the custom virtual environment for download could not be completed. Using original interpreter at: ${pythonExecutable}.`,
+                `${CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR} Using original interpreter at: ${pythonExecutable}.`,
                 DialogResponses.READ_INSTALL_MD
             )
             .then((selection: vscode.MessageItem | undefined) => {
@@ -455,8 +455,7 @@ export const areDependenciesInstalled = async (
 
 export const installDependencies = async (
     context: vscode.ExtensionContext,
-    pythonPath: string,
-    failSilently: boolean = true
+    pythonPath: string
 ) => {
     const requirementsPath: string = getPathToScript(
         context,
@@ -464,7 +463,7 @@ export const installDependencies = async (
         "requirements.txt"
     );
 
-    if (!IsPipInstalled(pythonPath)) {
+    if (!isPipInstalled(pythonPath)) {
         return false;
     }
 
@@ -478,26 +477,11 @@ export const installDependencies = async (
         vscode.window.showInformationMessage(CONSTANTS.INFO.SUCCESSFUL_INSTALL);
         return true;
     } catch (err) {
-        if (!failSilently) {
-            vscode.window
-                .showErrorMessage(
-                    CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
-                    DialogResponses.READ_INSTALL_MD
-                )
-                .then((selection: vscode.MessageItem | undefined) => {
-                    if (selection === DialogResponses.READ_INSTALL_MD) {
-                        open(CONSTANTS.LINKS.INSTALL);
-                    }
-                });
-        }
-
-        console.error(err);
-        this.logToOutputChannel(errorChannel, err.toString(), true /* show */);
         return false;
     }
 };
 
-export const GetCurrentPythonExecutableName = async () => {
+export const getCurrentPythonExecutableName = async () => {
     let originalPythonExecutableName = "";
 
     // try to get name from interpreter
@@ -555,13 +539,13 @@ export const GetCurrentPythonExecutableName = async () => {
         return "";
     }
 
-    return originalPythonExecutableName
+    return originalPythonExecutableName;
 }
 export const setupEnv = async (
     context: vscode.ExtensionContext,
     needsResponse: boolean = false
 ) => {
-    const originalPythonExecutableName = await GetCurrentPythonExecutableName();
+    const originalPythonExecutableName = await getCurrentPythonExecutableName();
     let pythonExecutableName = originalPythonExecutableName;
 
     if (!(await areDependenciesInstalled(context, pythonExecutableName))) {
@@ -571,9 +555,34 @@ export const setupEnv = async (
             if (await hasVenv(context)) {
                 // venv in extention exists with wrong dependencies
                 if (
-                    !(await areDependenciesInstalled(context, pythonExecutableName))
+                    !(await areDependenciesInstalled(
+                        context,
+                        pythonExecutableName
+                    ))
                 ) {
-                    await installDependencies(context, pythonExecutableName);
+                    if (
+                        !(await installDependencies(
+                            context,
+                            pythonExecutableName
+                        ))
+                    ) {
+                        vscode.window
+                            .showErrorMessage(
+                                `${CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR} Using original interpreter at: ${pythonExecutableName}.`,
+                                DialogResponses.READ_INSTALL_MD
+                            )
+                            .then(
+                                (selection: vscode.MessageItem | undefined) => {
+                                    if (
+                                        selection ===
+                                        DialogResponses.READ_INSTALL_MD
+                                    ) {
+                                        open(CONSTANTS.LINKS.INSTALL);
+                                    }
+                                }
+                            );
+                        return pythonExecutableName
+                    }
                 }
             } else {
                 pythonExecutableName = await promptInstallVenv(
@@ -598,10 +607,35 @@ export const setupEnv = async (
                             installChoice: vscode.MessageItem | undefined
                         ) => {
                             if (installChoice === DialogResponses.INSTALL_NOW) {
-                                await installDependencies(
-                                    context,
-                                    pythonExecutableName
-                                );
+                                if (
+                                    !(await installDependencies(
+                                        context,
+                                        pythonExecutableName
+                                    ))
+                                ) {
+                                    vscode.window
+                                        .showErrorMessage(
+                                            CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
+                                            DialogResponses.READ_INSTALL_MD
+                                        )
+                                        .then(
+                                            (
+                                                selection:
+                                                    | vscode.MessageItem
+                                                    | undefined
+                                            ) => {
+                                                if (
+                                                    selection ===
+                                                    DialogResponses.READ_INSTALL_MD
+                                                ) {
+                                                    open(
+                                                        CONSTANTS.LINKS.INSTALL
+                                                    );
+                                                }
+                                            }
+                                        );
+                                    return pythonExecutableName
+                                }
                             }
                         }
                     );
