@@ -149,10 +149,9 @@ sim-button {
 }
 *:focus {
     outline: none;
-
 }
 .sim-button-group:focus {
-    stroke: #4D90FE;
+    stroke: #4d90fe;
     stroke-width: 4px;
 }
 .sim-button-group:focus {
