@@ -21,6 +21,7 @@ import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
+import { DebuggerCommunicationService } from "./service/debuggerCommunicationService";
 import { MessagingService } from "./service/messagingService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
@@ -36,12 +37,12 @@ let telemetryAI: TelemetryAI;
 let pythonExecutableName: string = "python";
 let configFileCreated: boolean = false;
 let inDebugMode: boolean = false;
-let debuggerCommunicationHandler: DebuggerCommunicationServer;
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 const messagingService = new MessagingService();
+const debuggerCommunicationService = new DebuggerCommunicationService();
 
 let currentActiveDevice: string = DEFAULT_DEVICE;
 
@@ -193,11 +194,11 @@ export async function activate(context: vscode.ExtensionContext) {
                                 console.log(`About to write ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
-                                    debuggerCommunicationHandler
+                                    debuggerCommunicationService.getCurrentDebuggerServer()
                                 ) {
-                                    debuggerCommunicationHandler.emitInputChanged(
-                                        messageJson
-                                    );
+                                    debuggerCommunicationService
+                                        .getCurrentDebuggerServer()
+                                        .emitInputChanged(messageJson);
                                 } else if (childProcess) {
                                     childProcess.stdin.write(
                                         messageJson + "\n"
@@ -240,11 +241,11 @@ export async function activate(context: vscode.ExtensionContext) {
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
-                                    debuggerCommunicationHandler
+                                    debuggerCommunicationService.getCurrentDebuggerServer()
                                 ) {
-                                    debuggerCommunicationHandler.emitInputChanged(
-                                        messageJson
-                                    );
+                                    debuggerCommunicationService
+                                        .getCurrentDebuggerServer()
+                                        .emitInputChanged(messageJson);
                                 } else if (childProcess) {
                                     childProcess.stdin.write(
                                         messageJson + "\n"
@@ -283,8 +284,12 @@ export async function activate(context: vscode.ExtensionContext) {
             currentPanel.onDidDispose(
                 () => {
                     currentPanel = undefined;
-                    if (debuggerCommunicationHandler) {
-                        debuggerCommunicationHandler.setWebview(undefined);
+                    if (
+                        debuggerCommunicationService.getCurrentDebuggerServer()
+                    ) {
+                        debuggerCommunicationService
+                            .getCurrentDebuggerServer()
+                            .setWebview(undefined);
                     }
                     killProcessIfRunning();
                     if (firstTimeClosed) {
@@ -947,7 +952,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const debugAdapterFactory = new DebugAdapterFactory(
         vscode.debug.activeDebugSession,
-        messagingService
+        messagingService,
+        debuggerCommunicationService
     );
     vscode.debug.registerDebugAdapterTrackerFactory(
         "python",
@@ -958,27 +964,29 @@ export async function activate(context: vscode.ExtensionContext) {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
             // Reinitialize process
             killProcessIfRunning();
-            console.log("Debug Started");
             inDebugMode = true;
 
             try {
                 // Shut down existing server on debug restart
-                if (debuggerCommunicationHandler) {
-                    debuggerCommunicationHandler.closeConnection();
-                    debuggerCommunicationHandler = undefined;
+                if (debuggerCommunicationService.getCurrentDebuggerServer()) {
+                    debuggerCommunicationService.resetCurrentDebuggerServer();
                 }
 
-                debuggerCommunicationHandler = new DebuggerCommunicationServer(
-                    currentPanel,
-                    utils.getServerPortConfig(),
-                    currentActiveDevice
+                debuggerCommunicationService.setCurrentDebuggerServer(
+                    new DebuggerCommunicationServer(
+                        currentPanel,
+                        utils.getServerPortConfig(),
+                        currentActiveDevice
+                    )
                 );
 
                 handleDebuggerTelemetry();
 
                 openWebview();
                 if (currentPanel) {
-                    debuggerCommunicationHandler.setWebview(currentPanel);
+                    debuggerCommunicationService
+                        .getCurrentDebuggerServer()
+                        .setWebview(currentPanel);
                     currentPanel.webview.postMessage({
                         currentActiveDevice,
                         command: "activate-play",
@@ -1005,12 +1013,10 @@ export async function activate(context: vscode.ExtensionContext) {
     // On Debug Session Stop: Stop communiation
     const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
-            console.log("Debug Stopped");
             inDebugMode = false;
             simulatorDebugConfiguration.deviceSimulatorExpressDebug = false;
-            if (debuggerCommunicationHandler) {
-                debuggerCommunicationHandler.closeConnection();
-                debuggerCommunicationHandler = undefined;
+            if (debuggerCommunicationService.getCurrentDebuggerServer()) {
+                debuggerCommunicationService.resetCurrentDebuggerServer();
             }
             if (currentPanel) {
                 currentPanel.webview.postMessage({

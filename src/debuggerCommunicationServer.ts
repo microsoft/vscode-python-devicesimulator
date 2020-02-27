@@ -6,11 +6,11 @@ import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
 import { SERVER_INFO } from "./constants";
 
-const DEBUGGER_MESSAGES = {
+export const DEBUGGER_MESSAGES = {
     EMITTER: {
         INPUT_CHANGED: "input_changed",
         RECEIVED_STATE: "received_state",
-        DISCONNECT: "frontend_disconnected",
+        DISCONNECT: "process_disconnect",
     },
     LISTENER: {
         UPDATE_STATE: "updateState",
@@ -45,10 +45,9 @@ export class DebuggerCommunicationServer {
         this.currentActiveDevice = currentActiveDevice;
     }
 
+    // send the message to start closing the connection
     public closeConnection(): void {
-        this.serverIo.close();
-        this.serverHttp.close();
-        console.info("Closing the server");
+        this.sendDisconnectEvent();
     }
 
     public setWebview(webviewPanel: WebviewPanel | undefined) {
@@ -70,6 +69,13 @@ export class DebuggerCommunicationServer {
             );
             this.isPendingResponse = true;
         }
+    }
+    public disconnectFromPort() {
+        this.serverIo.close();
+        this.serverHttp.close();
+    }
+    private sendDisconnectEvent() {
+        this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
     }
 
     private initHttpServer(): void {
