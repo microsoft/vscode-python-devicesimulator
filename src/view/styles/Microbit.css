@@ -44,7 +44,10 @@ sim-button {
     fill: #704a4a;
     pointer-events: none;
 }
-/* .sim-button-nut:hover {
+
+/* Will add back once pin functionality is added 
+
+.sim-button-nut:hover {
     stroke: 1px solid #704a4a;
 }
 .sim-pin:hover {
