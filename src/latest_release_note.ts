@@ -3,7 +3,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
 <p>
     Welcome to the first update to the Device Simulator Express! <u>Please feel free to enable our feature flag in
         Settings
-        (under the setting titled “<b>deviceSimulatorExpress.previewMode</b>” in the User settings)</u>.
+        (under the setting titled “<b>deviceSimulatorExpress.previewMode</b>”)</u>.
 </p>
 <h2>Changes</h2>
 <p>
@@ -26,7 +26,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
     </ul>
     <h3>New features (only available with feature flag enabled):</h3>
     <ul>
-        <li><u>BBC Micro:bit simulator and debugger – <i>open up a new Micro:bit file, write code for the Micro:bit and
+        <li><u>BBC micro:bit simulator and debugger – <i>open up a new micro:bit file, write code for the micro:bit and
                     test it out!</u></i>
             <ul>
                 <li>Ability to interact with LEDs, buttons, and sensors.</li>
@@ -58,6 +58,10 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
             </ul>
     </ul>
 </p>
-
+<h2>Upcoming Improvements</h2>
+<ul>
+    <li>Deploying to device on the micro:bit with serial monitor interaction.</li>
+</ul>
+<br>
 <p><b>Happy Hacking! ✨✨🐍🐍🍰</b><br>
     &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;
