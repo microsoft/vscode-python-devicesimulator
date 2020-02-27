@@ -217,6 +217,12 @@ class Simulator extends React.Component<{}, IState> {
                 CONSTANTS.ID_NAME.BUTTON_B
             );
         } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+        ) {
+            element = window.document.getElementById(
+                CONSTANTS.ID_NAME.BUTTON_AB
+            );
+        } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)
         ) {
             element = window.document.getElementById(CONSTANTS.ID_NAME.SWITCH);
