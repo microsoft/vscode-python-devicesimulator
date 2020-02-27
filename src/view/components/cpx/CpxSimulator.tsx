@@ -132,6 +132,7 @@ class Simulator extends React.Component<{}, IState> {
 
     render() {
         const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
+        const playStopLabel = this.state.play_button ? "stop" : "play";
         return (
             <div className="simulator">
                 <div className="file-selector">
@@ -161,6 +162,7 @@ class Simulator extends React.Component<{}, IState> {
                     onTogglePlay={this.togglePlayClick}
                     onToggleRefresh={this.refreshSimulatorClick}
                     playStopImage={playStopImage}
+                    playStopLabel={playStopLabel}
                 />
             </div>
         );

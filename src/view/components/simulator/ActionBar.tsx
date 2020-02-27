@@ -10,13 +10,14 @@ interface IProps {
     onTogglePlay: (event: React.MouseEvent<HTMLElement>) => void;
     onToggleRefresh: (event: React.MouseEvent<HTMLElement>) => void;
     playStopImage: JSX.Element;
+    playStopLabel: string;
 }
 
 // Component including the actions done on the Simulator (play/stop, refresh)
 
 class ActionBar extends React.Component<IProps> {
     public render() {
-        const { onTogglePlay, onToggleRefresh, playStopImage } = this.props;
+        const { onTogglePlay, onToggleRefresh, playStopImage, playStopLabel } = this.props;
         return (
             <div className="buttons">
                 <Button
@@ -24,7 +25,7 @@ class ActionBar extends React.Component<IProps> {
                     focusable={true}
                     image={playStopImage}
                     styleLabel="play"
-                    label="play"
+                    label={playStopLabel}
                     width={CONSTANTS.SIMULATOR_BUTTON_WIDTH}
                 />
                 <Button

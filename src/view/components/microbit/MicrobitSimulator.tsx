@@ -96,7 +96,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
 
     render() {
         const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
-
+        const playStopLabel = this.state.play_button ? "stop" : "play";
         return (
             <div className="simulator">
                 <div className="file-selector">
@@ -125,6 +125,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     onTogglePlay={this.togglePlayClick}
                     onToggleRefresh={this.refreshSimulatorClick}
                     playStopImage={playStopImage}
+                    playStopLabel={playStopLabel}
                 />
             </div>
         );
