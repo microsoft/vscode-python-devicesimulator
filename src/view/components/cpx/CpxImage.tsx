@@ -27,14 +27,41 @@ export class CpxImage extends React.Component<IProps, any> {
             initSvgStyle(svgElement, this.props.brightness);
             setupButtons(this.props);
             setupPins(this.props);
-            setupKeyPresses(this.props.onKeyEvent);
+            this.setupKeyPresses(this.props.onKeyEvent);
             setupSwitch(this.props);
             this.updateImage();
         }
     }
+    componentWillUnmount() {
+        window.document.removeEventListener("keyup", this.handleKeyUp);
+        window.document.removeEventListener("keydown", this.handleKeyDown);
+    }
     componentDidUpdate() {
         this.updateImage();
     }
+    setupKeyPresses = (
+        onKeyEvent: (event: KeyboardEvent, active: boolean) => void
+    ) => {
+        window.document.addEventListener("keydown", this.handleKeyDown);
+        window.document.addEventListener("keyup", this.handleKeyUp);
+    };
+
+    handleKeyDown = (event: KeyboardEvent) => {
+        const keyEvents = [event.key, event.code];
+        // Don't listen to keydown events for the switch, run button and enter key
+        if (
+            !(
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
+            )
+        ) {
+            this.props.onKeyEvent(event, true);
+        }
+    };
+    handleKeyUp = (event: KeyboardEvent) => {
+        this.props.onKeyEvent(event, false);
+    };
     render() {
         return CPX_SVG;
     }
@@ -312,27 +339,6 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
     svgButton.onkeydown = e => props.onKeyEvent(e, true);
     svgButton.onkeyup = e => props.onKeyEvent(e, false);
     svgButton.onmouseleave = e => props.onMouseLeave(button, e);
-};
-
-const setupKeyPresses = (
-    onKeyEvent: (event: KeyboardEvent, active: boolean) => void
-) => {
-    window.document.addEventListener("keydown", event => {
-        const keyEvents = [event.key, event.code];
-        // Don't listen to keydown events for the switch, run button and enter key
-        if (
-            !(
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
-            )
-        ) {
-            onKeyEvent(event, true);
-        }
-    });
-    window.document.addEventListener("keyup", event =>
-        onKeyEvent(event, false)
-    );
 };
 
 const setupSwitch = (props: IProps): void => {

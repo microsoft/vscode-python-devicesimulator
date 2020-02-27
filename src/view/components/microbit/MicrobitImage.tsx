@@ -40,7 +40,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
         if (svgElement) {
             updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
-            setupKeyPresses(this.props.eventTriggers.onKeyEvent);
+            this.setupKeyPresses(this.props.eventTriggers.onKeyEvent);
         }
     }
     componentDidUpdate() {
@@ -56,6 +56,32 @@ export class MicrobitImage extends React.Component<IProps, {}> {
             }
         }
     }
+    componentWillUnmount() {
+        window.document.removeEventListener("keydown", this.handleKeyUp);
+        window.document.removeEventListener("keyup", this.handleKeyUp);
+    }
+    setupKeyPresses = (
+        onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
+    ) => {
+        window.document.addEventListener("keydown", this.handleKeyUp);
+        window.document.addEventListener("keyup", this.handleKeyDown);
+    };
+    handleKeyDown = (event: KeyboardEvent) => {
+        const keyEvents = [event.key, event.code];
+        // Don't listen to keydown events for the switch, run button and enter key
+        if (
+            !(
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
+            )
+        ) {
+            this.props.eventTriggers.onKeyEvent(event, true, event.key);
+        }
+    };
+    handleKeyUp = (event: KeyboardEvent) => {
+        this.props.eventTriggers.onKeyEvent(event, false, event.key);
+    };
     render() {
         return <MicrobitSvg ref={this.svgRef} />;
     }
@@ -141,25 +167,4 @@ const updateAllLeds = (
 };
 const setupLed = (ledElement: SVGRectElement, brightness: number) => {
     ledElement.style.opacity = (brightness / 10).toString();
-};
-
-const setupKeyPresses = (
-    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
-) => {
-    window.document.addEventListener("keydown", event => {
-        const keyEvents = [event.key, event.code];
-        // Don't listen to keydown events for the switch, run button and enter key
-        if (
-            !(
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
-            )
-        ) {
-            onKeyEvent(event, true, event.key);
-        }
-    });
-    window.document.addEventListener("keyup", event =>
-        onKeyEvent(event, false, event.key)
-    );
 };

@@ -221,9 +221,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     active
                 );
             }
-        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F && !active) {
             this.togglePlayClick();
-        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R && !active) {
             this.refreshSimulatorClick();
         }
     }
