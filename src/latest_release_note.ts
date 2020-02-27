@@ -3,7 +3,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
 <p>
     Welcome to the first update to the Device Simulator Express! <u>Please feel free to enable our feature flag in
         Settings
-        (under the setting titled “<b>deviceSimulatorExpress.previewMode</b>”)</u>.
+        (under the setting titled “<b>deviceSimulatorExpress.previewMode</b>” in the User settings)</u>.
 </p>
 <h2>Changes</h2>
 <p>
