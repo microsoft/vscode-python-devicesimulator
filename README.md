@@ -4,7 +4,7 @@
 
 <a href="https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/"><img src="https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28" alt="Azure DevOps Board Badge" /></a>
 
-Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Circuit Playground Express (CPX) or your BBC Micro:bit! Test and debug your code on the device simulator and see the same
+Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Circuit Playground Express (CPX) or your BBC micro:bit! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
@@ -26,7 +26,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 - _**[Visual Studio Code](https://code.visualstudio.com/)**_
 - _**[Node](https://nodejs.org/en/download/)**_
-- _**[Python 3.7.4](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
+- _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
 ## Circuit Playground Express (CPX) Simulator
@@ -151,16 +151,16 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - Refresh the simulator: `SHIFT + R`
 
 
-## BBC Micro:bit Simulator
+## BBC micro:bit Simulator
 >**NOTE 1**: this feature is hidden by default. To use it, enable the feature flag in the "deviceSimulatorExpress.previewMode" user setting.
 
->**NOTE 2**: Micro:bit simulation is still in development. Features may not work as intended.
+>**NOTE 2**: micro:bit simulation is still in development. Features may not work as intended.
 
 ### Features
-- IntelliSense and syntax highlighting for microbit code 
+- IntelliSense and syntax highlighting for micro:bit code 
 - Template file generation
 - Integrated Python Debugging for the Simulator
-- Simulation of the Micro:bit device, including:
+- Simulation of the micro:bit device, including:
   - 25 LEDs
   - Light sensor
   - Motion sensors
@@ -168,7 +168,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
   - Temperature sensor
 
 ### How to use
-Using the simulator for the Micro:bit is similar to using the one for the CPX. The only difference is that the commands in the command palette display `Device Simulator Express: [micro:bit] <command>` instead of `Device Simulator Express: [Circuit Playground Express] <command>`. Currently, we support the following commands for Micro:bit:
+Using the simulator for the micro:bit is similar to using the one for the CPX. The only difference is that the commands in the command palette display `Device Simulator Express: [micro:bit] <command>` instead of `Device Simulator Express: [Circuit Playground Express] <command>`. Currently, we support the following commands for micro:bit:
 - `Device Simulator Express: [micro:bit] Open Simulator`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [micro:bit] New File`: Opens the simulator in the webView
 
@@ -219,7 +219,7 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
 - If you try to deploy to the device while it's plugged in but you still get an error saying it cannot find the board, make sure your Circuit Playground Express is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: [Circuit Playground Express] Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: [<device_name>] Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
