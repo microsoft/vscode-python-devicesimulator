@@ -17,7 +17,12 @@ interface IProps {
 
 class ActionBar extends React.Component<IProps> {
     public render() {
-        const { onTogglePlay, onToggleRefresh, playStopImage, playStopLabel } = this.props;
+        const {
+            onTogglePlay,
+            onToggleRefresh,
+            playStopImage,
+            playStopLabel,
+        } = this.props;
         return (
             <div className="buttons">
                 <Button

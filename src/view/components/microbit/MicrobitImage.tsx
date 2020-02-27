@@ -73,6 +73,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
             !(
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
             )
         ) {
@@ -167,25 +168,4 @@ const updateAllLeds = (
 };
 const setupLed = (ledElement: SVGRectElement, brightness: number) => {
     ledElement.style.opacity = (brightness / 10).toString();
-};
-
-const setupKeyPresses = (
-    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
-) => {
-    window.document.addEventListener("keydown", event => {
-        const keyEvents = [event.key, event.code];
-        // Don't listen to keydown events for the switch, run button and enter key
-        if (
-            !(
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
-            )
-        ) {
-            onKeyEvent(event, true, event.key);
-        }
-    });
-    window.document.addEventListener("keyup", event =>
-        onKeyEvent(event, false, event.key)
-    );
 };
