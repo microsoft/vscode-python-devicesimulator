@@ -1,7 +1,8 @@
 import { DebuggerCommunicationServer } from "../debuggerCommunicationServer";
 
 export class DebuggerCommunicationService {
-    private currentDebuggerServer: DebuggerCommunicationServer | undefined;
+    private currentDebuggerServer?: DebuggerCommunicationServer;
+    private previousDebuggerServerToDisconnect?: DebuggerCommunicationServer;
 
     public setCurrentDebuggerServer(debugServer: DebuggerCommunicationServer) {
         this.currentDebuggerServer = debugServer;
@@ -11,6 +12,7 @@ export class DebuggerCommunicationService {
         if (this.currentDebuggerServer) {
             this.currentDebuggerServer.closeConnection();
         }
+        this.previousDebuggerServerToDisconnect = this.currentDebuggerServer;
         this.currentDebuggerServer = undefined;
     }
     public getCurrentDebuggerServer() {
@@ -18,8 +20,8 @@ export class DebuggerCommunicationService {
     }
     // Only used for stop event
     public handleStopEvent() {
-        if (this.currentDebuggerServer) {
-            this.currentDebuggerServer.disconnectFromPort();
+        if (this.previousDebuggerServerToDisconnect) {
+            this.previousDebuggerServerToDisconnect.disconnectFromPort();
         }
     }
 }

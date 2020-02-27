@@ -34,6 +34,7 @@ export class DebugAdapter implements DebugAdapterTracker {
                     if (!message.arguments.restart) {
                         this.debugCommunicationService.handleStopEvent();
                     }
+                    break;
             }
         }
     }
