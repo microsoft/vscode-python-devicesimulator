@@ -55,6 +55,12 @@ export enum DEVICE_LIST_KEY {
     MICROBIT = "micro:bit",
 }
 
+// Pauses on Debug mode alter the state of the view
+export enum VIEW_STATE {
+    PAUSE = "debug-pause",
+    RUNNING = "running",
+}
+
 //
 export enum WEBVIEW_MESSAGES {
     SWITCH_DEVICE = "switch-device",
@@ -64,8 +70,24 @@ export enum WEBVIEW_MESSAGES {
     SENSOR_CHANGED = "sensor-changed",
     SLIDER_TELEMETRY = "slider-telemetry",
 }
+
 export enum VSCODE_MESSAGES_TO_WEBVIEW {
     SET_DEVICE = "set-device",
+    PAUSE_DEVICE = "pause-device",
+    RUN_DEVICE = "run-device",
+    RESET = "reset-state",
+}
+export enum DEBUG_COMMANDS {
+    STACK_TRACE = "stackTrace",
+    CONTINUE = "continue",
+}
+export enum SENSOR_LIST {
+    TEMPERATURE = "temperature",
+    LIGHT = "light",
+    ACCELEROMETER = "accelerometer",
+    MOTION_X = "motion_x",
+    MOTION_Y = "motion_y",
+    MOTION_Z = "motion_z",
 }
 
 export default CONSTANTS;

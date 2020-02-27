@@ -8,6 +8,9 @@ out/
 !locales/**/out/  
 package.nls.*.json
 
+# virtual environment
+venv/
+
 # testing
 .vscode-test 
 

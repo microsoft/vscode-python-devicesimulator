@@ -12,17 +12,21 @@ import {
     CPX_CONFIG_FILE,
     DEFAULT_DEVICE,
     DialogResponses,
+    HELPER_FILES,
     SERVER_INFO,
     TelemetryEventName,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
+import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
 import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
+import { MessagingService } from "./service/messagingService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -35,6 +39,7 @@ let debuggerCommunicationHandler: DebuggerCommunicationServer;
 let firstTimeClosed: boolean = true;
 let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
+const messagingService = new MessagingService();
 
 let currentActiveDevice: string = DEFAULT_DEVICE;
 
@@ -73,7 +78,6 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
         });
     }
 };
-
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
@@ -91,11 +95,8 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutableName = await utils.setPythonExectuableName();
+    pythonExecutableName = await utils.setupEnv(context);
 
-    await utils.checkPythonDependencies(context, pythonExecutableName);
-
-    // Generate cpx.json
     try {
         utils.generateCPXConfig();
         configFileCreated = true;
@@ -121,6 +122,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const openWebview = () => {
         if (currentPanel) {
+            messagingService.setWebview(currentPanel.webview);
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
@@ -142,6 +144,7 @@ export async function activate(context: vscode.ExtensionContext) {
             );
 
             currentPanel.webview.html = getWebviewContent(context);
+            messagingService.setWebview(currentPanel.webview);
 
             if (messageListener !== undefined) {
                 messageListener.dispose();
@@ -368,7 +371,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                 TelemetryEventName.CPX_CLICK_DIALOG_TUTORIALS
                             );
                         };
-                        utils.showPrivacyModal(okAction);
+                        utils.showPrivacyModal(
+                            okAction,
+                            CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
+                        );
                     }
                 });
         }
@@ -417,18 +423,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         () => {
+            utils.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
-            );
-            const pathToLibs: string = utils.getPathToScript(
-                context,
-                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-            );
-            return utils.installPythonDependencies(
-                context,
-                pythonExecutableName,
-                pathToLibs
             );
         }
     );
@@ -556,7 +553,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "process_user_code.py"
+                    HELPER_FILES.PROCESS_USER_CODE_PY
                 ),
                 currentFileAbsPath,
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
@@ -715,7 +712,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "device.py"
+                    HELPER_FILES.DEVICE_PY
                 ),
                 currentFileAbsPath,
             ]);
@@ -765,7 +762,11 @@ export async function activate(context: vscode.ExtensionContext) {
                                                     TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                                                 );
                                             };
-                                            utils.showPrivacyModal(okAction);
+                                            utils.showPrivacyModal(
+                                                okAction,
+                                                CONSTANTS.INFO
+                                                    .THIRD_PARTY_WEBSITE_ADAFRUIT
+                                            );
                                         }
                                     }
                                 );
@@ -914,6 +915,14 @@ export async function activate(context: vscode.ExtensionContext) {
         utils.getPathToScript(context, "out/", "debug_user_code.py")
     );
 
+    const debugAdapterFactory = new DebugAdapterFactory(
+        vscode.debug.activeDebugSession,
+        messagingService
+    );
+    vscode.debug.registerDebugAdapterTrackerFactory(
+        "python",
+        debugAdapterFactory
+    );
     // On Debug Session Start: Init comunication
     const debugSessionsStarted = vscode.debug.onDidStartDebugSession(() => {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
@@ -982,6 +991,12 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
+        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
+            utils.setupEnv(context);
+        }
+    });
+
     context.subscriptions.push(
         installDependencies,
         runSimulator,
@@ -999,7 +1014,8 @@ export async function activate(context: vscode.ExtensionContext) {
             simulatorDebugConfiguration
         ),
         debugSessionsStarted,
-        debugSessionStopped
+        debugSessionStopped,
+        configsChanged
     );
 }
 
@@ -1246,33 +1262,18 @@ const updatePythonExtraPaths = () => {
 };
 
 const updatePylintArgs = (context: vscode.ExtensionContext) => {
-    const outPath: string = createEscapedPath(
+    const outPath: string = utils.createEscapedPath(
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
-    );
-    const pyLibsPath: string = createEscapedPath(
-        context.extensionPath,
-        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
     );
 
     // update pylint args to extend system path
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
-        [
-            "--init-hook",
-            `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`,
-        ],
+        ["--init-hook", `import sys; sys.path.append(\"${outPath}\")`],
         vscode.ConfigurationTarget.Workspace
     );
-};
-
-const createEscapedPath = (...pieces: string[]) => {
-    const initialPath: string = path.join(...pieces);
-
-    // escape all instances of backslashes
-    return initialPath.replace(/\\/g, "\\\\");
 };
 
 const updateConfigLists = (

@@ -26,7 +26,7 @@ export class DebuggerCommunicationServer {
     private simulatorWebview: WebviewPanel | undefined;
     private currentActiveDevice;
     private isPendingResponse = false;
-    private pendingCallbacks: Array<Function> = [];
+    private pendingCallbacks: Function[] = [];
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
