@@ -33,8 +33,8 @@ export class CpxImage extends React.Component<IProps, any> {
         }
     }
     componentWillUnmount() {
-        window.document.removeEventListener("keyup", this.handleKeyUp);
         window.document.removeEventListener("keydown", this.handleKeyDown);
+        window.document.removeEventListener("keyup", this.handleKeyUp);
     }
     componentDidUpdate() {
         this.updateImage();
@@ -53,6 +53,7 @@ export class CpxImage extends React.Component<IProps, any> {
             !(
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
             )
         ) {
