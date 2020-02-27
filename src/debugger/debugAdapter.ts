@@ -20,7 +20,6 @@ export class DebugAdapter implements DebugAdapterTracker {
         // To Implement
     }
     onWillReceiveMessage(message: any): void {
-        console.log(JSON.stringify(message));
         if (message.command) {
             // Only send pertinent debug messages
             switch (message.command) {

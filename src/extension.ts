@@ -1013,7 +1013,6 @@ export async function activate(context: vscode.ExtensionContext) {
     // On Debug Session Stop: Stop communiation
     const debugSessionStopped = vscode.debug.onDidTerminateDebugSession(() => {
         if (simulatorDebugConfiguration.deviceSimulatorExpressDebug) {
-            console.log("Debug Stopped");
             inDebugMode = false;
             simulatorDebugConfiguration.deviceSimulatorExpressDebug = false;
             if (debuggerCommunicationService.getCurrentDebuggerServer()) {
