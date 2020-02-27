@@ -26,6 +26,8 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { PopupService } from "./service/PopupService";
+import getPackageInfo from "./telemetry/getPackageInfo";
 import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
@@ -119,6 +121,18 @@ export async function activate(context: vscode.ExtensionContext) {
             await updateCurrentFileIfPython(document, currentPanel);
         }
     );
+
+    const currVersionReleaseName =
+        "release_note_" + getPackageInfo(context).extensionVersion;
+    const viewedReleaseNote = context.globalState.get(
+        currVersionReleaseName,
+        false
+    );
+
+    if (!viewedReleaseNote) {
+        PopupService.openReleaseNote();
+        context.globalState.update(currVersionReleaseName, true);
+    }
 
     const openWebview = () => {
         if (currentPanel) {
@@ -879,6 +893,22 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const cpxCloseSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.cpx.closeSerialMonitor",
+        (port, showWarning = true) => {
+            if (serialMonitor) {
+                telemetryAI.runWithLatencyMeasure(() => {
+                    serialMonitor.closeSerialMonitor(port, showWarning);
+                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
+            } else {
+                vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.NO_FOLDER_OPENED
+                );
+                console.info("Serial monitor is not defined.");
+            }
+        }
+    );
+
+    const showReleaseNote = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.",
         (port, showWarning = true) => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
