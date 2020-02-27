@@ -86,7 +86,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 #### 2. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
-2. Run `Open Simulator` from the command palette or icon in the editor toolbar.
+2. Run `Device Simulator Express: [Circuit Playground Express] Open Simulator` from the command palette or icon in the editor toolbar.
 
 #### 3. Run your code on the simulator.
 
@@ -139,7 +139,7 @@ Device Simulator Express provides several commands in the Command Palette (F1 or
 - `Device Simulator Express: [Circuit Playground Express] Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: [Circuit Playground Express] Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Device Simulator Express: [Circuit Playground Express] Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
-- `SeleSelect Serial Port`: Changes the current serial port.
+- `Device Simulator Express: [Circuit Playground Express] Select Serial Port`: Changes the current serial port.
 
 ### Keybindings
 
