@@ -3,12 +3,12 @@
 
 import json
 import sys
+import common
 
 from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 from . import constants as CONSTANTS
-from . import debugger_communication_client
 
 
 class Pixel:
@@ -22,9 +22,11 @@ class Pixel:
         # Send the state to the extension so that React re-renders the Webview
         # or send the state to the debugger (within this library)
         if self.__debug_mode:
-            debugger_communication_client.debug_send_to_simulator(self.__state)
+            common.debugger_communication_client.debug_send_to_simulator(
+                self.__state, CONSTANTS.CPX
+            )
         else:
-            utils.send_to_simulator(self.__state, CONSTANTS.CPX)
+            common.utils.send_to_simulator(self.__state, CONSTANTS.CPX)
 
     def __show_if_auto_write(self):
         if self.auto_write:

@@ -12,7 +12,8 @@ from common.telemetry_events import TelemetryEvent
 from .pixel import Pixel
 from . import constants as CONSTANTS
 from collections import namedtuple
-from . import debugger_communication_client
+from applicationinsights import TelemetryClient
+import common
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])
 
@@ -115,7 +116,9 @@ class Express:
 
     def __show(self):
         if self.__debug_mode:
-            debugger_communication_client.debug_send_to_simulator(self.__state)
+            common.debugger_communication_client.debug_send_to_simulator(
+                self.__state, CONSTANTS.CPX
+            )
         else:
             utils.send_to_simulator(self.__state, CONSTANTS.CPX)
 

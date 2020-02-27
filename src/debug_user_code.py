@@ -15,12 +15,12 @@ sys.path.insert(0, abs_path_to_lib)
 
 # Insert absolute path to python libraries into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.PYTHON_LIBS_DIR)
 sys.path.insert(0, abs_path_to_lib)
 
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
-from adafruit_circuitplayground import debugger_communication_client
+from microbit.__model.microbit_model import __mb as mb
+from common import debugger_communication_client
 
 
 ## Execute User Code ##
@@ -45,6 +45,7 @@ debugger_communication_client.init_connection(server_port)
 cpx._Express__abs_path_to_code_file = abs_path_to_code_file
 cpx._Express__debug_mode = True
 cpx.pixels._Pixel__set_debug_mode(True)
+mb._MicrobitModel__set_debug_mode(True)
 
 # Execute the user's code file
 with open(abs_path_to_code_file) as user_code_file:

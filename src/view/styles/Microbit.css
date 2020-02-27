@@ -22,6 +22,7 @@ svg.sim.grayscale {
 .sim-button:active {
     fill: orange;
 }
+
 .sim-board,
 .sim-display,
 sim-button {
@@ -146,10 +147,6 @@ sim-button {
 .sim-pin:focus,
 .sim-thermometer:focus,
 .sim-shake:focus,
-.sim-light-level-button:focus {
-    stroke: #4d90fe;
-    stroke-width: 5px !important;
-}
 .no-drag,
 .sim-text,
 .sim-text-pin {
