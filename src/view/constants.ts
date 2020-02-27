@@ -80,6 +80,7 @@ export enum VSCODE_MESSAGES_TO_WEBVIEW {
 export enum DEBUG_COMMANDS {
     STACK_TRACE = "stackTrace",
     CONTINUE = "continue",
+    DISCONNECT = "disconnect",
 }
 export enum SENSOR_LIST {
     TEMPERATURE = "temperature",

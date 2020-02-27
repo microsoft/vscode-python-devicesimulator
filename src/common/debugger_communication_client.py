@@ -79,3 +79,8 @@ def input_changed(data):
 @sio.on("received_state")
 def received_state(data):
     processing_state_event.set()
+
+
+@sio.on("process_disconnect")
+def process_disconnect(data):
+    sio.disconnect()
