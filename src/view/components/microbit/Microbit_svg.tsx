@@ -1786,7 +1786,7 @@ export class MicrobitSvg extends React.Component {
                             focusable="true"
                             tabIndex={0}
                             role="button"
-                            aria-label="A+B"
+                            aria-label="a+b"
                             style={{ fill: "rgb(151, 151, 151)" }}
                             ref={this.buttonRefs.BTN_AB}
                         >
