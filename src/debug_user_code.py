@@ -15,7 +15,6 @@ sys.path.insert(0, abs_path_to_lib)
 
 # Insert absolute path to python libraries into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.PYTHON_LIBS_DIR)
 sys.path.insert(0, abs_path_to_lib)
 
 # This import must happen after the sys.path is modified

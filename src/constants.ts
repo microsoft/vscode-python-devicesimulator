@@ -17,22 +17,23 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
+    CONFIG_ENV_ON_SWITCH:
+        "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
+    PYTHON_PATH: "python.pythonPath",
+    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
 };
 
 export const CONSTANTS = {
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
-    DEPENDENCY_CHECKER: {
-        PIP3: "pip3",
-        PYTHON: "python",
-        PYTHON3: "python3.7",
-    },
     DEVICE_NAME: {
         CPX: "CPX",
         MICROBIT: "micro:bit",
     },
     ERROR: {
+        BAD_PYTHON_PATH:
+            'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application',
         COMPORT_UNKNOWN_ERROR:
             "Writing to COM port (GetOverlappedResult): Unknown error code 121",
         CPX_FILE_ERROR: localize(
@@ -50,7 +51,8 @@ export const CONSTANTS = {
             "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
         ),
         DEPENDENCY_DOWNLOAD_ERROR:
-            "Package downloads failed. Some functionalities may not work. Try restarting the simulator or review the installation docs.",
+            "Dependency download could not be completed. Functionality may be limited. Please review the installation docs.",
+
         FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
             return localize(
                 "error.failedToOpenSerialPort",
@@ -79,6 +81,10 @@ export const CONSTANTS = {
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
         ),
+        INVALID_PYTHON_PATH: localize(
+            "error.invalidPythonPath",
+            'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application.'
+        ),
         NO_DEVICE: localize(
             "error.noDevice",
             "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
@@ -94,6 +100,10 @@ export const CONSTANTS = {
         NO_PROGRAM_FOUND_DEBUG: localize(
             "error.noProgramFoundDebug",
             "Cannot find a program to debug."
+        ),
+        NO_PIP: localize(
+            "error.noPip",
+            "We found that you don't have Pip installed on your computer, please install it and try again."
         ),
         NO_PYTHON_PATH: localize(
             "error.noPythonPath",
@@ -113,9 +123,13 @@ export const CONSTANTS = {
     },
     FILESYSTEM: {
         OUTPUT_DIRECTORY: "out",
-        PYTHON_LIBS_DIR: "python_libs",
+        PYTHON_VENV_DIR: "venv",
     },
     INFO: {
+        ALREADY_SUCCESSFUL_INSTALL: localize(
+            "info.successfulInstall",
+            "Your current configuration is already successfully set up for the Device Simulator Expresss."
+        ),
         ARE_YOU_SURE: localize(
             "info.areYouSure",
             "Are you sure you don't want to install the dependencies? The extension can't run without installing them."
@@ -155,19 +169,23 @@ export const CONSTANTS = {
         },
         FIRST_TIME_WEBVIEW: localize(
             "info.firstTimeWebview",
-            'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
+            'To reopen the simulator select the command "Open Simulator" from command palette.'
         ),
         INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
             "info.incorrectFileNameForSimulatorPopup",
             'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
         ),
-        INSTALLING_PYTHON_DEPENDENCIES: localize(
-            "info.installingPythonDependencies",
-            "The Python packages are currently being installed. You will be prompt a message telling you when the installation is done."
+        INSTALLING_PYTHON_VENV: localize(
+            "info.installingPythonVenv",
+            "A virtual environment is currently being created. The required Python packages will be installed. You will be prompted a message telling you when the installation is done."
         ),
-        INSTALL_PYTHON_DEPENDENCIES: localize(
+        INSTALL_PYTHON_DEPS: localize(
             "info.installPythonDependencies",
-            "Do you want us to try and install this extensions dependencies for you?"
+            "Do you want us to try and install this extension's dependencies on your selected Python interpreter for you?"
+        ),
+        INSTALL_PYTHON_VENV: localize(
+            "info.installPythonVenv",
+            "Do you want us to try and install this extension's dependencies via virtual environment for you?"
         ),
         INVALID_FILE_NAME_DEBUG: localize(
             "info.invalidFileNameDebug",
@@ -197,15 +215,27 @@ export const CONSTANTS = {
         RUNNING_CODE: localize("info.runningCode", "Running user code"),
         SUCCESSFUL_INSTALL: localize(
             "info.successfulInstall",
-            "Successfully installed Python dependencies."
+            "Successfully set up the Python environment."
         ),
-        THIRD_PARTY_WEBSITE: localize(
-            "info.thirdPartyWebsite",
+        THIRD_PARTY_WEBSITE_ADAFRUIT: localize(
+            "info.thirdPartyWebsiteAdafruit",
             'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PIP: localize(
+            "info.thirdPartyWebsitePip",
+            'By clicking "Agree and Proceed" you will be redirected to pip.pypa.io, a third party website not managed by Microsoft. Please note that your activity on pip.pypa.io is subject to PyPA\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PYTHON: localize(
+            "info.thirdPartyWebsitePython",
+            'By clicking "Agree and Proceed" you will be redirected to python.org, a third party website not managed by Microsoft. Please note that your activity on python.org is subject to Python\'s privacy policy'
+        ),
+        UPDATED_TO_EXTENSION_VENV: localize(
+            "info.updatedToExtensionsVenv",
+            "Automatically updated interpreter to point to extension's virtual environment."
         ),
         WELCOME_OUTPUT_TAB: localize(
             "info.welcomeOutputTab",
-            "Welcome to the Adafruit Simulator output tab!\n\n"
+            "Welcome to the Device Simulator Express output tab!\n\n"
         ),
     },
     LABEL: {
@@ -215,6 +245,7 @@ export const CONSTANTS = {
         ),
     },
     LINKS: {
+        DOWNLOAD_PIP: "https://pip.pypa.io/en/stable/installing/",
         DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
         EXAMPLE_CODE:
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
@@ -394,6 +425,12 @@ export namespace DialogResponses {
     export const MESSAGE_UNDERSTOOD: MessageItem = {
         title: localize("dialogResponses.messageUnderstood", "Got It"),
     };
+    export const INSTALL_PIP: MessageItem = {
+        title: localize(
+            "dialogResponses.installPip",
+            "Install from Pip's webpage"
+        ),
+    };
     export const INSTALL_PYTHON: MessageItem = {
         title: localize(
             "dialogResponses.installPython",
@@ -422,6 +459,18 @@ export const STATUS_BAR_PRIORITY = {
     PORT: 20,
     OPEN_PORT: 30,
     BAUD_RATE: 40,
+};
+
+export const VERSIONS = {
+    MIN_PY_VERSION: "3.7.0",
+};
+
+export const HELPER_FILES = {
+    CHECK_IF_VENV_PY: "check_if_venv.py",
+    CHECK_PYTHON_DEPENDENCIES: "check_python_dependencies.py",
+    DEVICE_PY: "device.py",
+    PROCESS_USER_CODE_PY: "process_user_code.py",
+    PYTHON_EXE: "python.exe",
 };
 
 export default CONSTANTS;
