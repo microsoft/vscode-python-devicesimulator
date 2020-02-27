@@ -565,10 +565,12 @@ export const setupEnv = async (
     let pythonExecutableName = originalPythonExecutableName;
 
     if (!(await areDependenciesInstalled(context, pythonExecutableName))) {
+        const pythonExecutableNameVenv = await getPythonVenv(context);
         // environment needs to install dependencies
         if (!(await checkIfVenv(context, pythonExecutableName))) {
-            const pythonExecutableNameVenv = await getPythonVenv(context);
+            console.log("uuuuwuuu 1")
             if (await hasVenv(context)) {
+                console.log("uuuuwuuu 2")
                 // venv in extention exists with wrong dependencies
                 if (
                     !(await areDependenciesInstalled(
@@ -576,66 +578,67 @@ export const setupEnv = async (
                         pythonExecutableNameVenv
                     ))
                 ) {
-                    await installDependenciesWrapper(
+                    pythonExecutableName = await installDependenciesWrapper(
                         context,
                         pythonExecutableNameVenv,
-                        pythonExecutableName);
+                        pythonExecutableName)
                 }
-            }
-        } else {
-            pythonExecutableName = await promptInstallVenv(
-                context,
-                originalPythonExecutableName
-            );
-        }
-    }
-
-    if (pythonExecutableName === originalPythonExecutableName) {
-        // going with original interpreter, either because
-        // already in venv or error in creating custom venv
-        if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
-            await vscode.window
-                .showInformationMessage(
-                    CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
-                    DialogResponses.INSTALL_NOW,
-                    DialogResponses.DONT_INSTALL
-                )
-                .then(
-                    async (
-                        installChoice: vscode.MessageItem | undefined
-                    ) => {
-                        if (installChoice === DialogResponses.INSTALL_NOW) {
-                            await installDependenciesWrapper(context, pythonExecutableName)
-                        } else {
-                            vscode.window
-                                .showInformationMessage(
-                                    CONSTANTS.INFO.ARE_YOU_SURE,
-                                    DialogResponses.INSTALL_NOW,
-                                    DialogResponses.DONT_INSTALL
-                                )
-                                .then((installChoice2: vscode.MessageItem | undefined) => {
-                                    if (installChoice2 === DialogResponses.INSTALL_NOW) {
-                                        await installDependenciesWrapper(context, pythonExecutableName);
-                                    }
-                                });
-                        }
-                    }
+            } else {
+                console.log("uuuuwuuu 2")
+                pythonExecutableName = await promptInstallVenv(
+                    context,
+                    originalPythonExecutableName
                 );
+            }
         }
-    } else {
+        if (pythonExecutableName === pythonExecutableNameVenv) {
+            vscode.window.showInformationMessage(
+                CONSTANTS.INFO.UPDATED_TO_EXTENSION_VENV
+            );
+            vscode.workspace
+                .getConfiguration()
+                .update(CONFIG.PYTHON_PATH, pythonExecutableName);
+        } else if (pythonExecutableName === originalPythonExecutableName) {
+            // going with original interpreter, either because
+            // already in venv or error in creating custom venv
+            if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
+                await vscode.window
+                    .showInformationMessage(
+                        CONSTANTS.INFO.INSTALL_PYTHON_DEPS,
+                        DialogResponses.INSTALL_NOW,
+                        DialogResponses.DONT_INSTALL
+                    )
+                    .then(
+                        async (
+                            installChoice: vscode.MessageItem | undefined
+                        ) => {
+                            if (installChoice === DialogResponses.INSTALL_NOW) {
+                                await installDependenciesWrapper(context, pythonExecutableName)
+                            } else {
+                                await vscode.window
+                                    .showInformationMessage(
+                                        CONSTANTS.INFO.ARE_YOU_SURE,
+                                        DialogResponses.INSTALL_NOW,
+                                        DialogResponses.DONT_INSTALL
+                                    )
+                                    .then(
+                                        async (
+                                            installChoice2: vscode.MessageItem | undefined) => {
+                                            if (installChoice2 === DialogResponses.INSTALL_NOW) {
+                                                await installDependenciesWrapper(context, pythonExecutableName);
+                                            }
+                                        });
+                            }
+                        }
+                    );
+            }
+        }
+    } else if (needsResponse) {
         vscode.window.showInformationMessage(
-            CONSTANTS.INFO.UPDATED_TO_EXTENSION_VENV
+            CONSTANTS.INFO.ALREADY_SUCCESSFUL_INSTALL
         );
-        vscode.workspace
-            .getConfiguration()
-            .update(CONFIG.PYTHON_PATH, pythonExecutableName);
     }
-} else if (needsResponse) {
-    vscode.window.showInformationMessage(
-        CONSTANTS.INFO.ALREADY_SUCCESSFUL_INSTALL
-    );
-}
 
-return pythonExecutableName;
+    return pythonExecutableName;
 };
 
