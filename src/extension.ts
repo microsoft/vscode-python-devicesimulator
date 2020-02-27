@@ -12,6 +12,7 @@ import {
     CPX_CONFIG_FILE,
     DEFAULT_DEVICE,
     DialogResponses,
+    HELPER_FILES,
     SERVER_INFO,
     TelemetryEventName,
 } from "./constants";
@@ -26,6 +27,9 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { PopupService } from "./service/PopupService";
+import getPackageInfo from "./telemetry/getPackageInfo";
+import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -77,7 +81,6 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
         });
     }
 };
-
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
@@ -95,11 +98,8 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutableName = await utils.setPythonExectuableName();
+    pythonExecutableName = await utils.setupEnv(context);
 
-    await utils.checkPythonDependencies(context, pythonExecutableName);
-
-    // Generate cpx.json
     try {
         utils.generateCPXConfig();
         configFileCreated = true;
@@ -122,6 +122,18 @@ export async function activate(context: vscode.ExtensionContext) {
             await updateCurrentFileIfPython(document, currentPanel);
         }
     );
+
+    const currVersionReleaseName =
+        "release_note_" + getPackageInfo(context).extensionVersion;
+    const viewedReleaseNote = context.globalState.get(
+        currVersionReleaseName,
+        false
+    );
+
+    if (!viewedReleaseNote) {
+        PopupService.openReleaseNote();
+        context.globalState.update(currVersionReleaseName, true);
+    }
 
     const openWebview = () => {
         if (currentPanel) {
@@ -378,7 +390,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                 TelemetryEventName.CPX_CLICK_DIALOG_TUTORIALS
                             );
                         };
-                        utils.showPrivacyModal(okAction);
+                        utils.showPrivacyModal(
+                            okAction,
+                            CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
+                        );
                     }
                 });
         }
@@ -427,18 +442,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         () => {
+            utils.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
-            );
-            const pathToLibs: string = utils.getPathToScript(
-                context,
-                CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
-            );
-            return utils.installPythonDependencies(
-                context,
-                pythonExecutableName,
-                pathToLibs
             );
         }
     );
@@ -566,7 +572,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "process_user_code.py"
+                    HELPER_FILES.PROCESS_USER_CODE_PY
                 ),
                 currentFileAbsPath,
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
@@ -725,7 +731,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-                    "device.py"
+                    HELPER_FILES.DEVICE_PY
                 ),
                 currentFileAbsPath,
             ]);
@@ -775,7 +781,11 @@ export async function activate(context: vscode.ExtensionContext) {
                                                     TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
                                                 );
                                             };
-                                            utils.showPrivacyModal(okAction);
+                                            utils.showPrivacyModal(
+                                                okAction,
+                                                CONSTANTS.INFO
+                                                    .THIRD_PARTY_WEBSITE_ADAFRUIT
+                                            );
                                         }
                                     }
                                 );
@@ -902,6 +912,22 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    const showReleaseNote = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.",
+        (port, showWarning = true) => {
+            if (serialMonitor) {
+                telemetryAI.runWithLatencyMeasure(() => {
+                    serialMonitor.closeSerialMonitor(port, showWarning);
+                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
+            } else {
+                vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.NO_FOLDER_OPENED
+                );
+                console.info("Serial monitor is not defined.");
+            }
+        }
+    );
+
     UsbDetector.getInstance().initialize(context.extensionPath);
     UsbDetector.getInstance().startListening();
 
@@ -1002,6 +1028,12 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
+        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
+            utils.setupEnv(context);
+        }
+    });
+
     context.subscriptions.push(
         installDependencies,
         runSimulator,
@@ -1019,7 +1051,8 @@ export async function activate(context: vscode.ExtensionContext) {
             simulatorDebugConfiguration
         ),
         debugSessionsStarted,
-        debugSessionStopped
+        debugSessionStopped,
+        configsChanged
     );
 }
 
@@ -1266,33 +1299,18 @@ const updatePythonExtraPaths = () => {
 };
 
 const updatePylintArgs = (context: vscode.ExtensionContext) => {
-    const outPath: string = createEscapedPath(
+    const outPath: string = utils.createEscapedPath(
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
-    );
-    const pyLibsPath: string = createEscapedPath(
-        context.extensionPath,
-        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-        CONSTANTS.FILESYSTEM.PYTHON_LIBS_DIR
     );
 
     // update pylint args to extend system path
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
-        [
-            "--init-hook",
-            `import sys; sys.path.extend([\"${outPath}\",\"${pyLibsPath}\"])`,
-        ],
+        ["--init-hook", `import sys; sys.path.append(\"${outPath}\")`],
         vscode.ConfigurationTarget.Workspace
     );
-};
-
-const createEscapedPath = (...pieces: string[]) => {
-    const initialPath: string = path.join(...pieces);
-
-    // escape all instances of backslashes
-    return initialPath.replace(/\\/g, "\\\\");
 };
 
 const updateConfigLists = (

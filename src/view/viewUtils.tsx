@@ -1,3 +1,5 @@
+import { SENSOR_LIST } from "./constants";
+
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 export interface ISliderProps {
@@ -5,8 +7,10 @@ export interface ISliderProps {
     maxValue: number;
     maxLabel: string;
     minLabel: string;
-    type: string;
+    type: string | SENSOR_LIST;
     axisLabel: string;
+    value?: number;
+    onUpdateValue?: (sensor: SENSOR_LIST, value: number) => void;
 }
 
 export interface ISensorButtonProps {
@@ -17,7 +21,6 @@ export interface ISensorButtonProps {
     onKeyUp: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
     onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
-
 export interface ISensorProps {
     LABEL: string;
     sliderProps: ISliderProps[];

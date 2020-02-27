@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS, WEBVIEW_MESSAGES } from "../../../constants";
+import { CONSTANTS, SENSOR_LIST, WEBVIEW_MESSAGES } from "../../../constants";
 import "../../../styles/MotionSensorBar.css";
 import { sendMessage } from "../../../utils/MessageUtils";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
@@ -16,7 +16,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     maxValue: 78,
     minLabel: "Left",
     minValue: -78,
-    type: "motion_x",
+    type: SENSOR_LIST.MOTION_X,
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     axisLabel: "Y",
@@ -24,7 +24,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     maxValue: 78,
     minLabel: "Back",
     minValue: -78,
-    type: "motion_y",
+    type: SENSOR_LIST.MOTION_Y,
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     axisLabel: "Z",
@@ -32,7 +32,7 @@ const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     maxValue: 78,
     minLabel: "Up",
     minValue: -78,
-    type: "motion_z",
+    type: SENSOR_LIST.MOTION_Z,
 };
 
 const MOTION_SENSOR_PROPERTIES: ISensorProps = {
@@ -44,8 +44,16 @@ const MOTION_SENSOR_PROPERTIES: ISensorProps = {
     ],
     unitLabel: "Lux",
 };
+interface IProps {
+    axisValues: {
+        X_AXIS: number;
+        Y_AXIS: number;
+        Z_AXIS: number;
+    };
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
+}
 
-class MotionSensorBar extends React.Component {
+class MotionSensorBar extends React.Component<IProps> {
     constructor(props: any) {
         super(props);
     }
@@ -64,6 +72,8 @@ class MotionSensorBar extends React.Component {
                 <br />
                 <ThreeDimensionSlider
                     axisProperties={MOTION_SENSOR_PROPERTIES}
+                    onUpdateValue={this.props.onUpdateValue}
+                    axisValues={this.props.axisValues}
                 />
                 <br />
             </div>
