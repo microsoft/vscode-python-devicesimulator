@@ -47,7 +47,7 @@ export class DebuggerCommunicationServer {
 
     // send the message to start closing the connection
     public closeConnection(): void {
-        this.disconnectSocketIo();
+        this.sendDisconnectEvent();
     }
 
     public setWebview(webviewPanel: WebviewPanel | undefined) {
@@ -70,12 +70,12 @@ export class DebuggerCommunicationServer {
             this.isPendingResponse = true;
         }
     }
-    public disconnectSocketIo() {
+    public disconnectFromPort() {
+        this.serverIo.close();
+        this.serverHttp.close();
+    }
+    private sendDisconnectEvent() {
         this.serverIo.emit(DEBUGGER_MESSAGES.EMITTER.DISCONNECT, {});
-        setTimeout(() => {
-            this.serverIo.close();
-            this.serverHttp.close();
-        }, 100);
     }
 
     private initHttpServer(): void {
