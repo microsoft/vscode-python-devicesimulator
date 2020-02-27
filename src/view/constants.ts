@@ -29,6 +29,7 @@ export const CONSTANTS = {
     KEYBOARD_KEYS: {
         A: "KeyA",
         B: "KeyB",
+        C: "KeyC",
         CAPITAL_R: "R",
         CAPITAL_F: "F",
         ENTER: "Enter",
