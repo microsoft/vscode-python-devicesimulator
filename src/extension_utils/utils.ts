@@ -85,7 +85,7 @@ export function tryParseJSON(jsonString: string): any | boolean {
         if (jsonObj && typeof jsonObj === "object") {
             return jsonObj;
         }
-    } catch (exception) { }
+    } catch (exception) {}
 
     return false;
 }
@@ -459,40 +459,21 @@ export const installDependenciesWrapper = async (
     pythonPath: string,
     backupPythonPath: string = ""
 ) => {
-
-    let errMessage = CONSTANTS.ERROR
-        .DEPENDENCY_DOWNLOAD_ERROR
+    let errMessage = CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR;
     if (backupPythonPath !== "") {
-        errMessage = `${errMessage} Using original interpreter at: ${backupPythonPath}.`
+        errMessage = `${errMessage} Using original interpreter at: ${backupPythonPath}.`;
     }
-    if (
-        !(await installDependencies(
-            context,
-            pythonPath
-        ))
-    ) {
+    if (!(await installDependencies(context, pythonPath))) {
         vscode.window
             .showErrorMessage(
-                CONSTANTS.ERROR
-                    .DEPENDENCY_DOWNLOAD_ERROR,
+                CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
                 DialogResponses.READ_INSTALL_MD
             )
-            .then(
-                (
-                    selection:
-                        | vscode.MessageItem
-                        | undefined
-                ) => {
-                    if (
-                        selection ===
-                        DialogResponses.READ_INSTALL_MD
-                    ) {
-                        open(
-                            CONSTANTS.LINKS.INSTALL
-                        );
-                    }
+            .then((selection: vscode.MessageItem | undefined) => {
+                if (selection === DialogResponses.READ_INSTALL_MD) {
+                    open(CONSTANTS.LINKS.INSTALL);
                 }
-            );
+            });
         return backupPythonPath;
     }
     return pythonPath;
@@ -568,9 +549,9 @@ export const setupEnv = async (
         const pythonExecutableNameVenv = await getPythonVenv(context);
         // environment needs to install dependencies
         if (!(await checkIfVenv(context, pythonExecutableName))) {
-            console.log("uuuuwuuu 1")
+            console.log("uuuuwuuu 1");
             if (await hasVenv(context)) {
-                console.log("uuuuwuuu 2")
+                console.log("uuuuwuuu 2");
                 // venv in extention exists with wrong dependencies
                 if (
                     !(await areDependenciesInstalled(
@@ -581,10 +562,11 @@ export const setupEnv = async (
                     pythonExecutableName = await installDependenciesWrapper(
                         context,
                         pythonExecutableNameVenv,
-                        pythonExecutableName)
+                        pythonExecutableName
+                    );
                 }
             } else {
-                console.log("uuuuwuuu 2")
+                console.log("uuuuwuuu 2");
                 pythonExecutableName = await promptInstallVenv(
                     context,
                     originalPythonExecutableName
@@ -613,7 +595,10 @@ export const setupEnv = async (
                             installChoice: vscode.MessageItem | undefined
                         ) => {
                             if (installChoice === DialogResponses.INSTALL_NOW) {
-                                await installDependenciesWrapper(context, pythonExecutableName)
+                                await installDependenciesWrapper(
+                                    context,
+                                    pythonExecutableName
+                                );
                             } else {
                                 await vscode.window
                                     .showInformationMessage(
@@ -623,11 +608,21 @@ export const setupEnv = async (
                                     )
                                     .then(
                                         async (
-                                            installChoice2: vscode.MessageItem | undefined) => {
-                                            if (installChoice2 === DialogResponses.INSTALL_NOW) {
-                                                await installDependenciesWrapper(context, pythonExecutableName);
+                                            installChoice2:
+                                                | vscode.MessageItem
+                                                | undefined
+                                        ) => {
+                                            if (
+                                                installChoice2 ===
+                                                DialogResponses.INSTALL_NOW
+                                            ) {
+                                                await installDependenciesWrapper(
+                                                    context,
+                                                    pythonExecutableName
+                                                );
                                             }
-                                        });
+                                        }
+                                    );
                             }
                         }
                     );
@@ -641,4 +636,3 @@ export const setupEnv = async (
 
     return pythonExecutableName;
 };
-
