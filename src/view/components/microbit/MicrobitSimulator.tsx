@@ -181,6 +181,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         console.log(`To implement onMouseLeave ${key}`);
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
+        event.preventDefault();
         event.stopPropagation();
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
             this.handleButtonClick(key, active);

@@ -57,14 +57,14 @@ export class MicrobitImage extends React.Component<IProps, {}> {
         }
     }
     componentWillUnmount() {
-        window.document.removeEventListener("keydown", this.handleKeyUp);
+        window.document.removeEventListener("keydown", this.handleKeyDown);
         window.document.removeEventListener("keyup", this.handleKeyUp);
     }
     setupKeyPresses = (
         onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
     ) => {
-        window.document.addEventListener("keydown", this.handleKeyUp);
-        window.document.addEventListener("keyup", this.handleKeyDown);
+        window.document.addEventListener("keydown", this.handleKeyDown);
+        window.document.addEventListener("keyup", this.handleKeyUp);
     };
     handleKeyDown = (event: KeyboardEvent) => {
         const keyEvents = [event.key, event.code];
@@ -149,6 +149,8 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             ref.current.onmousedown = null;
             ref.current.onmouseup = null;
             ref.current.onmouseleave = null;
+            ref.current.onkeydown = null;
+            ref.current.onkeyup = null;
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);
         }
     }
