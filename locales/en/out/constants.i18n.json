@@ -27,7 +27,7 @@
   "info.deploySimulator": "\n[INFO] Deploying code to the simulator...\n",
   "info.deploySuccess": "\n[INFO] Code successfully deployed\n",
   "info.extensionActivated": "Congratulations, your extension Adafruit_Simulator is now active!",
-  "info.firstTimeWebview": "To reopen the simulator click on the \"Open Simulator\" button on the upper right corner of the text editor, or select the command \"Open Simulator\" from command palette.",
+  "info.firstTimeWebview": "To reopen the simulator select the command \"Open Simulator\" from command palette.",
   "info.installPythonDependencies": "Do you want us to try and install this extensions dependencies for you?",
   "error.invalidFileExtensionDebug": "The file you tried to run isn\\'t a Python file.",
   "info.newFile": "New to Python or the Circuit Playground Express? We are here to help!",
@@ -36,7 +36,7 @@
   "info.privacyStatement": "Privacy Statement",
   "info.successfulInstall": "Successfully installed Python dependencies.",
   "info.thirdPartyWebsite": "By clicking \"Agree and Proceed\" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit's privacy policy",
-  "info.welcomeOutputTab": "Welcome to the Adafruit Simulator output tab!\n\n",
+  "info.welcomeOutputTab": "Welcome to the Device Simulator Express output tab!\n\n",
   "label.webviewPanel": "Device Simulator Express",
   "name": "Device Simulator Express",
 

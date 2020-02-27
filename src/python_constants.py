@@ -27,8 +27,6 @@ NO_CPX_DETECTED_ERROR_DETAIL = (
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
-PYTHON_LIBS_DIR = "python_libs"
-
 STATE_FIELD = "state"
 
 UTF_FORMAT = "utf-8"
