@@ -471,6 +471,11 @@ export const HELPER_FILES = {
     DEVICE_PY: "device.py",
     PROCESS_USER_CODE_PY: "process_user_code.py",
     PYTHON_EXE: "python.exe",
+    PYTHON: "python",
 };
+
+export const GLOBAL_ENV_VARS = {
+    PYTHON: "python"
+}
 
 export default CONSTANTS;
