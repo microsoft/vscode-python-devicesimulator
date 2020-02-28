@@ -441,8 +441,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
-        () => {
-            utils.setupEnv(context, true);
+        async () => {
+            pythonExecutableName = await utils.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
             );
@@ -1027,11 +1027,13 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    const configsChanged = vscode.workspace.onDidChangeConfiguration(() => {
-        if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
-            utils.setupEnv(context);
+    const configsChanged = vscode.workspace.onDidChangeConfiguration(
+        async () => {
+            if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
+                pythonExecutableName = await utils.setupEnv(context);
+            }
         }
-    });
+    );
 
     context.subscriptions.push(
         installDependencies,

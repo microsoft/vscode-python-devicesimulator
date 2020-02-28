@@ -6,7 +6,10 @@ import sys
 import traceback
 from pathlib import Path
 import python_constants as CONSTANTS
+import check_python_dependencies
 
+# will propagate errors if dependencies aren't sufficient
+check_python_dependencies.check_for_dependencies()
 
 # Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))

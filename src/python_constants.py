@@ -5,6 +5,8 @@ ACTIVE_DEVICE_FIELD = "active_device"
 
 CPX_DRIVE_NAME = "CIRCUITPY"
 
+DEPEND_ERR = 'The required dependencies aren\'t downloaded. Please use CTRL+SHIFT+P to open the command palette and select "Device Simulator Express: Install Extension Dependencies".'
+
 DEVICE_NOT_IMPLEMENTED_ERROR = "Device not implemented."
 
 ENABLE_TELEMETRY = "enable_telemetry"
