@@ -10,6 +10,10 @@ import threading
 import traceback
 import python_constants as CONSTANTS
 from pathlib import Path
+import check_python_dependencies
+
+# will propagate errors if dependencies aren't sufficient
+check_python_dependencies.check_for_dependencies()
 
 read_val = ""
 threads = []
