@@ -10,6 +10,13 @@ import threading
 import traceback
 import python_constants as CONSTANTS
 from pathlib import Path
+from pkg_resources import DistributionNotFound, VersionConflict
+
+try:
+    import check_python_dependencies
+except (DistributionNotFound,VersionConflict) as e:
+    print("Dependencies are not correct!")
+    quit()
 
 read_val = ""
 threads = []
