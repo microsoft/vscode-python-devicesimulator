@@ -546,9 +546,9 @@ export const setupEnv = async (
     let pythonExecutableName = originalPythonExecutableName;
 
     if (!(await areDependenciesInstalled(context, pythonExecutableName))) {
-        const pythonExecutableNameVenv = await getPythonVenv(context);
         // environment needs to install dependencies
         if (!(await checkIfVenv(context, pythonExecutableName))) {
+            const pythonExecutableNameVenv = await getPythonVenv(context);
             if (await hasVenv(context)) {
                 // venv in extention exists with wrong dependencies
                 if (
@@ -562,6 +562,8 @@ export const setupEnv = async (
                         pythonExecutableNameVenv,
                         pythonExecutableName
                     );
+                } else {
+                    pythonExecutableName = pythonExecutableNameVenv;
                 }
             } else {
                 pythonExecutableName = await promptInstallVenv(
@@ -569,15 +571,17 @@ export const setupEnv = async (
                     originalPythonExecutableName
                 );
             }
+
+            if (pythonExecutableName === pythonExecutableNameVenv) {
+                vscode.window.showInformationMessage(
+                    CONSTANTS.INFO.UPDATED_TO_EXTENSION_VENV
+                );
+                vscode.workspace
+                    .getConfiguration()
+                    .update(CONFIG.PYTHON_PATH, pythonExecutableName);
+            }
         }
-        if (pythonExecutableName === pythonExecutableNameVenv) {
-            vscode.window.showInformationMessage(
-                CONSTANTS.INFO.UPDATED_TO_EXTENSION_VENV
-            );
-            vscode.workspace
-                .getConfiguration()
-                .update(CONFIG.PYTHON_PATH, pythonExecutableName);
-        } else if (pythonExecutableName === originalPythonExecutableName) {
+        if (pythonExecutableName === originalPythonExecutableName) {
             // going with original interpreter, either because
             // already in venv or error in creating custom venv
             if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
