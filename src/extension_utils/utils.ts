@@ -174,10 +174,8 @@ export const isPipInstalled = async (pythonExecutablePath: string) => {
 
     try {
         const { stdout } = await executePythonCommand(pythonExecutablePath, " -m pip");
-        console.log(`uuwuu: ${stdout}`)
         return true;
     } catch (err) {
-        console.log(`uuwuu: ${err}`)
         vscode.window
             .showErrorMessage(
                 CONSTANTS.ERROR.NO_PIP,
@@ -295,7 +293,6 @@ export const executePythonCommand = async (
     pythonExecutablePath: string,
     command: string
 ) => {
-    console.log(`DSE COMMAND: ${createEscapedPath(pythonExecutablePath)} ${command}`)
     return exec(`${createEscapedPath(pythonExecutablePath)} ${command}`);
 };
 
