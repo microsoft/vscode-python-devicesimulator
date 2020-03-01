@@ -710,7 +710,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.ERROR.NO_FILE_TO_RUN,
                 DialogResponses.MESSAGE_UNDERSTOOD
             );
-        } else if (device == CONSTANTS.DEVICE_NAME.CPX && !utils.validCodeFileName(currentFileAbsPath)) {
+        } else if (
+            device == CONSTANTS.DEVICE_NAME.CPX &&
+            !utils.validCodeFileName(currentFileAbsPath)
+        ) {
             // Save on run
             await currentTextDocument.save();
             // Output panel
@@ -776,34 +779,38 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const handleDeployToDeviceErrorTelemetry = (data: string, device: string) => {
+    const handleDeployToDeviceErrorTelemetry = (
+        data: string,
+        device: string
+    ) => {
         let telemetryErrorName: string;
         if (device === CONSTANTS.DEVICE_NAME.CPX) {
-            telemetryErrorName = TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS
+            telemetryErrorName =
+                TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
         } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-            telemetryErrorName = TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS
+            telemetryErrorName =
+                TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
         }
-        telemetryAI.trackFeatureUsage(
-            telemetryErrorName,
-            { error: `${data}` }
-        );
-    }
+        telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
+    };
 
     const handleDeployToDeviceTelemetry = (message: any, device: string) => {
         let successCommandDeployDevice: string;
         let errorCommandDeployWithoutDevice: string;
         if (device === CONSTANTS.DEVICE_NAME.CPX) {
-            successCommandDeployDevice = TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice = TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
+            successCommandDeployDevice =
+                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
         } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-            successCommandDeployDevice = TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice = TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
+            successCommandDeployDevice =
+                TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
         }
         switch (message.type) {
             case "complete":
-                telemetryAI.trackFeatureUsage(
-                    successCommandDeployDevice
-                );
+                telemetryAI.trackFeatureUsage(successCommandDeployDevice);
                 utils.logToOutputChannel(
                     outChannel,
                     CONSTANTS.INFO.DEPLOY_SUCCESS
@@ -811,24 +818,15 @@ export async function activate(context: vscode.ExtensionContext) {
                 break;
 
             case "no-device":
-                telemetryAI.trackFeatureUsage(
-                    errorCommandDeployWithoutDevice
-                );
+                telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
                 if (device === CONSTANTS.DEVICE_NAME.CPX) {
                     vscode.window
-                    .showErrorMessage(
-                        CONSTANTS.ERROR.NO_DEVICE,
-                        DialogResponses.HELP
-                    )
-                    .then(
-                        (
-                            selection:
-                                | vscode.MessageItem
-                                | undefined
-                        ) => {
-                            if (
-                                selection === DialogResponses.HELP
-                            ) {
+                        .showErrorMessage(
+                            CONSTANTS.ERROR.NO_DEVICE,
+                            DialogResponses.HELP
+                        )
+                        .then((selection: vscode.MessageItem | undefined) => {
+                            if (selection === DialogResponses.HELP) {
                                 const okAction = () => {
                                     open(CONSTANTS.LINKS.HELP);
                                     telemetryAI.trackFeatureUsage(
@@ -837,24 +835,18 @@ export async function activate(context: vscode.ExtensionContext) {
                                 };
                                 utils.showPrivacyModal(
                                     okAction,
-                                    CONSTANTS.INFO
-                                        .THIRD_PARTY_WEBSITE_ADAFRUIT
+                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
                                 );
                             }
-                        }
-                    ); 
+                        });
                 } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-                    vscode.window
-                    .showErrorMessage(
-                        CONSTANTS.ERROR.NO_DEVICE
-                    )
+                    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
                 }
                 break;
             case "wrong-python-version":
-                vscode.window
-                .showErrorMessage(
-                    CONSTANTS.ERROR.WRONG_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT,
-                )
+                vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.WRONG_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
+                );
                 break;
             default:
                 console.log(
@@ -862,15 +854,15 @@ export async function activate(context: vscode.ExtensionContext) {
                 );
                 break;
         }
-    }    
-    
+    };
+
     const cpxDeployCodeToDevice = () => {
         deployCode(CONSTANTS.DEVICE_NAME.CPX);
-    }
+    };
 
     const microbitDeployCodeToDevice = () => {
         deployCode(CONSTANTS.DEVICE_NAME.MICROBIT);
-    }
+    };
 
     const cpxDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.cpx.deployToDevice",
