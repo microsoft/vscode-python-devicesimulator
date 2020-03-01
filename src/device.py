@@ -74,7 +74,9 @@ class Device:
                 flush=True,
             )
         if cpx.connected:
-            dest_path = os.path.join(device_directory, self.file_path.rsplit(os.sep, 1)[-1])
+            dest_path = os.path.join(
+                device_directory, self.file_path.rsplit(os.sep, 1)[-1]
+            )
             shutil.copyfile(self.file_path, dest_path)
             message = {"type": "complete"}
         else:
@@ -83,18 +85,18 @@ class Device:
     def deployToMicrobit(self):
         try:
             uflash.flash(path_to_python=self.file_path)
-            message = {'type': 'complete'}
+            message = {"type": "complete"}
         except:
-            message = {'type': 'no-device'}
+            message = {"type": "no-device"}
         return message
 
     def deploy(self):
-        if self.name === CONSTANTS.MICROBIT:
+        if self.name == CONSTANTS.MICROBIT:
             return self.deployToMicrobit()
-        elif self.name === CONSTANTS.CPX:
+        elif self.name == CONSTANTS.CPX:
             return self.deployToCPX()
         else:
-            return {'type': 'no-device'}
+            return {"type": "no-device"}
 
 
 if __name__ == "__main__":
