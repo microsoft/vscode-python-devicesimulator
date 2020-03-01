@@ -155,11 +155,11 @@ export const CONSTANTS = {
         ),
         DEPLOY_SUCCESS: localize(
             "info.deploySuccess",
-            "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
+            "\n[INFO] Code successfully copied! Your device should be loading and ready to go shortly.\n"
         ),
         EXTENSION_ACTIVATED: localize(
             "info.extensionActivated",
-            "Congratulations, your extension Adafruit_Simulator is now active!"
+            "Congratulations, your extension Device Simulator Express is now active!"
         ),
         FILE_SELECTED: (filePath: string) => {
             return localize(
@@ -336,6 +336,7 @@ export enum TelemetryEventName {
     CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE = "CPX.COMMAND.SERIAL_MONITOR.BAUD_RATE",
     CPX_COMMAND_SERIAL_MONITOR_CLOSE = "CPX.COMMAND.SERIAL_MONITOR.CLOSE",
 
+    MICROBIT_COMMAND_DEPLOY_DEVICE = "MICROBIT.COMMAND.DEPLOY.DEVICE",
     MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
@@ -373,12 +374,16 @@ export enum TelemetryEventName {
     CPX_SUCCESS_COMMAND_DEPLOY_DEVICE = "CPX.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     MICROBIT_ERROR_COMMAND_NEW_FILE = "MICROBIT.ERROR.COMMAND.NEW.FILE",
+    MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE = "MICROBIT.ERROR.DEPLOY.WITHOUT.DEVICE",
+    MICROBIT_ERROR_PYTHON_DEVICE_PROCESS = "MICROBIT.ERROR.PYTHON.DEVICE.PROCESS",
+    MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE = "MICROBIT.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     // Performance
     CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
     CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
     CPX_PERFORMANCE_OPEN_SIMULATOR = "CPX.PERFORMANCE.OPEN.SIMULATOR",
 
+    MICROBIT_PERFORMANCE_DEPLOY_DEVICE = "MICROBIT.PERFORMANCE.DEPLOY.DEVICE",
     MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
 }
