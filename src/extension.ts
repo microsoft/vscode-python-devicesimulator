@@ -844,10 +844,18 @@ export async function activate(context: vscode.ExtensionContext) {
                         }
                     ); 
                 } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-                    console.log("do stuff");
+                    vscode.window
+                    .showErrorMessage(
+                        CONSTANTS.ERROR.NO_DEVICE
+                    )
                 }
                 break;
-
+            case "wrong-python-version":
+                vscode.window
+                .showErrorMessage(
+                    CONSTANTS.ERROR.WRONG_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT,
+                )
+                break;
             default:
                 console.log(
                     `Non-state JSON output from the process : ${message}`

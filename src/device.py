@@ -86,6 +86,8 @@ class Device:
         try:
             uflash.flash(path_to_python=self.file_path)
             message = {"type": "complete"}
+        except RuntimeError:
+            message = {"type": "wrong-python-version"}
         except:
             message = {"type": "no-device"}
         return message

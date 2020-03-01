@@ -120,6 +120,10 @@ export const CONSTANTS = {
             "error.unexpectedMessage",
             "Webview sent an unexpected message"
         ),
+        WRONG_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT: localize(
+            "error.wrongPythonVersionForMicrobitDeployment",
+            "To deploy your code to the micro:bit, you must be using Python 3.3+"
+        ),
     },
     FILESYSTEM: {
         OUTPUT_DIRECTORY: "out",
