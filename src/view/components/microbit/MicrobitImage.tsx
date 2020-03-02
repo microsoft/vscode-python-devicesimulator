@@ -126,7 +126,11 @@ const setupButton = (
         eventTriggers.onMouseLeave(e, key);
     };
     buttonElement.onkeydown = e => {
-        eventTriggers.onKeyEvent(e, true, key);
+        // ensure that the keydown is enter, 
+        // or else it may register shortcuts twice
+        if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+            eventTriggers.onKeyEvent(e, true, key);
+        }
     };
     buttonElement.onkeyup = e => {
         eventTriggers.onKeyEvent(e, false, key);

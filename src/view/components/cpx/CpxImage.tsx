@@ -337,7 +337,14 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
     }
     svgButton.onmousedown = e => props.onMouseDown(button, e);
     svgButton.onmouseup = e => props.onMouseUp(button, e);
-    svgButton.onkeydown = e => props.onKeyEvent(e, true);
+    svgButton.onkeydown = e => {
+        // ensure that the keydown is enter.
+        // Or else, if the key is a shortcut instead,
+        // it may register shortcuts twice
+        if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+            props.onKeyEvent(e, true);
+        }
+    }
     svgButton.onkeyup = e => props.onKeyEvent(e, false);
     svgButton.onmouseleave = e => props.onMouseLeave(button, e);
 };
