@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     max-width: 700px;
     max-height: 700px;
     margin-left: auto;
@@ -63,12 +64,10 @@
     }
 }
 
-.simulator {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 700px;
-    max-height: 700px;
-    margin-left: auto;
-    margin-right: auto;
+.microbit-container {
+    max-width: 350px;
+    padding: 20px;
+}
+.cpx-container {
+    width: 100%;
 }

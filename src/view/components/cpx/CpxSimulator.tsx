@@ -2,14 +2,16 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { CONSTANTS } from "../constants";
-import "../styles/Simulator.css";
-import PlayLogo from "../svgs/play_svg";
-import StopLogo from "../svgs/stop_svg";
-import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./cpx/Cpx_svg_style";
-import CpxImage, { updatePinTouch, updateSwitch } from "./cpx/CpxImage";
-import Dropdown from "./Dropdown";
-import ActionBar from "./simulator/ActionBar";
+import { CONSTANTS, DEVICE_LIST_KEY, WEBVIEW_MESSAGES } from "../../constants";
+import { sendMessage } from "../../utils/MessageUtils";
+
+import "../../styles/Simulator.css";
+import PlayLogo from "../../svgs/play_svg";
+import StopLogo from "../../svgs/stop_svg";
+import Dropdown from "../Dropdown";
+import ActionBar from "../simulator/ActionBar";
+import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
+import { CpxImage, updatePinTouch, updateSwitch } from "./CpxImage";
 
 interface ICpxState {
     pixels: number[][];
@@ -28,9 +30,6 @@ interface IState {
     selected_file: string;
     cpx: ICpxState;
     play_button: boolean;
-}
-interface IMyProps {
-    children?: any;
 }
 
 const DEFAULT_CPX_STATE: ICpxState = {
@@ -55,18 +54,8 @@ const DEFAULT_CPX_STATE: ICpxState = {
     shake: false,
 };
 
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (type: string, state: any) => {
-    vscode.postMessage({ command: type, text: state });
-};
-
-class Simulator extends React.Component<any, IState> {
-    constructor(props: IMyProps) {
+class Simulator extends React.Component<{}, IState> {
+    constructor(props: Readonly<{}>) {
         super(props);
         this.state = {
             active_editors: [],
@@ -88,11 +77,13 @@ class Simulator extends React.Component<any, IState> {
 
     handleMessage = (event: any): void => {
         const message = event.data; // The JSON data our extension sent
+        if (message.active_device !== DEVICE_LIST_KEY.CPX) {
+            return;
+        }
         switch (message.command) {
             case "reset-state":
                 console.log("Clearing the state");
                 this.setState({
-                    ...this.state,
                     cpx: DEFAULT_CPX_STATE,
                     play_button: false,
                 });
@@ -102,14 +93,12 @@ class Simulator extends React.Component<any, IState> {
                     "Setting the state: " + JSON.stringify(message.state)
                 );
                 this.setState({
-                    ...this.state,
                     cpx: message.state,
                     play_button: true,
                 });
                 break;
             case "activate-play":
                 this.setState({
-                    ...this.state,
                     play_button: !this.state.play_button,
                 });
                 break;
@@ -119,20 +108,14 @@ class Simulator extends React.Component<any, IState> {
                     message.state.activePythonEditors
                 );
                 this.setState({
-                    ...this.state,
                     active_editors: message.state.activePythonEditors,
                 });
                 break;
             case "current-file":
                 console.log("Setting current file", message.state.running_file);
                 this.setState({
-                    ...this.state,
                     running_file: message.state.running_file,
                 });
-                break;
-            default:
-                console.log("Invalid message received from the extension.");
-                this.setState({ ...this.state, cpx: DEFAULT_CPX_STATE });
                 break;
         }
     };
@@ -149,6 +132,7 @@ class Simulator extends React.Component<any, IState> {
 
     render() {
         const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
+        const playStopLabel = this.state.play_button ? "stop" : "play";
         return (
             <div className="simulator">
                 <div className="file-selector">
@@ -178,37 +162,37 @@ class Simulator extends React.Component<any, IState> {
                     onTogglePlay={this.togglePlayClick}
                     onToggleRefresh={this.refreshSimulatorClick}
                     playStopImage={playStopImage}
+                    playStopLabel={playStopLabel}
                 />
             </div>
         );
     }
 
     protected togglePlayClick() {
-        sendMessage("play-simulator", {
-            selected_file: this.state.selected_file,
-            state: !this.state.play_button,
-        });
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
             window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
+            selected_file: this.state.selected_file,
+            state: !this.state.play_button,
+        });
     }
 
     protected refreshSimulatorClick() {
-        sendMessage("refresh-simulator", true);
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
         );
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     }
 
     protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
         this.setState({
-            ...this.state,
             selected_file: event.currentTarget.value,
         });
     }
@@ -233,6 +217,12 @@ class Simulator extends React.Component<any, IState> {
         ) {
             element = window.document.getElementById(
                 CONSTANTS.ID_NAME.BUTTON_B
+            );
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+        ) {
+            element = window.document.getElementById(
+                CONSTANTS.ID_NAME.BUTTON_AB
             );
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)

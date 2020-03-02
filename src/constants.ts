@@ -17,18 +17,23 @@ const localize: nls.LocalizeFunc = nls.config({
 })();
 
 export const CONFIG = {
+    CONFIG_ENV_ON_SWITCH:
+        "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
+    PYTHON_PATH: "python.pythonPath",
+    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
 };
 
 export const CONSTANTS = {
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
-    DEPENDENCY_CHECKER: {
-        PIP3: "pip3",
-        PYTHON: "python",
-        PYTHON3: "python3.7",
+    DEVICE_NAME: {
+        CPX: "CPX",
+        MICROBIT: "micro:bit",
     },
     ERROR: {
+        BAD_PYTHON_PATH:
+            'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application',
         COMPORT_UNKNOWN_ERROR:
             "Writing to COM port (GetOverlappedResult): Unknown error code 121",
         CPX_FILE_ERROR: localize(
@@ -46,7 +51,8 @@ export const CONSTANTS = {
             "[ERROR] A debugging session is currently in progress, please stop it before running your code. \n"
         ),
         DEPENDENCY_DOWNLOAD_ERROR:
-            "Package downloads failed. Some functionalities may not work. Try restarting the simulator or review the installation docs.",
+            "Dependency download could not be completed. Functionality may be limited. Please review the installation docs.",
+
         FAILED_TO_OPEN_SERIAL_PORT: (port: string): string => {
             return localize(
                 "error.failedToOpenSerialPort",
@@ -67,9 +73,17 @@ export const CONSTANTS = {
             "error.incorrectFileNameForDevicePopup",
             'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
         ),
+        INSTALLATION_ERROR: localize(
+            "error.installationError",
+            "Installation Error"
+        ),
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
+        ),
+        INVALID_PYTHON_PATH: localize(
+            "error.invalidPythonPath",
+            'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application.'
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -86,6 +100,10 @@ export const CONSTANTS = {
         NO_PROGRAM_FOUND_DEBUG: localize(
             "error.noProgramFoundDebug",
             "Cannot find a program to debug."
+        ),
+        NO_PIP: localize(
+            "error.noPip",
+            "We found that you don't have Pip installed on your computer, please install it and try again."
         ),
         NO_PYTHON_PATH: localize(
             "error.noPythonPath",
@@ -105,12 +123,16 @@ export const CONSTANTS = {
     },
     FILESYSTEM: {
         OUTPUT_DIRECTORY: "out",
-        PYTHON_LIBS_DIR: "python_libs",
+        PYTHON_VENV_DIR: "venv",
     },
     INFO: {
+        ALREADY_SUCCESSFUL_INSTALL: localize(
+            "info.successfulInstall",
+            "Your current configuration is already successfully set up for the Device Simulator Expresss."
+        ),
         ARE_YOU_SURE: localize(
             "info.areYouSure",
-            "Are you sure you don't want to install the dependencies? The extension can't run without installing it"
+            "Are you sure you don't want to install the dependencies? The extension can't run without installing them."
         ),
         CLOSED_SERIAL_PORT: (port: string) => {
             return localize(
@@ -147,19 +169,23 @@ export const CONSTANTS = {
         },
         FIRST_TIME_WEBVIEW: localize(
             "info.firstTimeWebview",
-            'To reopen the simulator click on the "Open Simulator" button on the upper right corner of the text editor, or select the command "Open Simulator" from command palette.'
+            'To reopen the simulator select the command "Open Simulator" from command palette.'
         ),
         INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
             "info.incorrectFileNameForSimulatorPopup",
             'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
         ),
-        INSTALLING_PYTHON_DEPENDENCIES: localize(
-            "info.installingPythonDependencies",
-            "The Python packages are currently being installed. You will be prompt a message telling you when the installation is done."
+        INSTALLING_PYTHON_VENV: localize(
+            "info.installingPythonVenv",
+            "A virtual environment is currently being created. The required Python packages will be installed. You will be prompted a message telling you when the installation is done."
         ),
-        INSTALL_PYTHON_DEPENDENCIES: localize(
+        INSTALL_PYTHON_DEPS: localize(
             "info.installPythonDependencies",
-            "Do you want us to try and install this extensions dependencies for you?"
+            "Do you want us to try and install this extension's dependencies on your selected Python interpreter for you?"
+        ),
+        INSTALL_PYTHON_VENV: localize(
+            "info.installPythonVenv",
+            "Do you want us to try and install this extension's dependencies via virtual environment for you?"
         ),
         INVALID_FILE_NAME_DEBUG: localize(
             "info.invalidFileNameDebug",
@@ -189,15 +215,27 @@ export const CONSTANTS = {
         RUNNING_CODE: localize("info.runningCode", "Running user code"),
         SUCCESSFUL_INSTALL: localize(
             "info.successfulInstall",
-            "Successfully installed Python dependencies."
+            "Successfully set up the Python environment."
         ),
-        THIRD_PARTY_WEBSITE: localize(
-            "info.thirdPartyWebsite",
+        THIRD_PARTY_WEBSITE_ADAFRUIT: localize(
+            "info.thirdPartyWebsiteAdafruit",
             'By clicking "Agree and Proceed" you will be redirected to adafruit.com, a third party website not managed by Microsoft. Please note that your activity on adafruit.com is subject to Adafruit\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PIP: localize(
+            "info.thirdPartyWebsitePip",
+            'By clicking "Agree and Proceed" you will be redirected to pip.pypa.io, a third party website not managed by Microsoft. Please note that your activity on pip.pypa.io is subject to PyPA\'s privacy policy'
+        ),
+        THIRD_PARTY_WEBSITE_PYTHON: localize(
+            "info.thirdPartyWebsitePython",
+            'By clicking "Agree and Proceed" you will be redirected to python.org, a third party website not managed by Microsoft. Please note that your activity on python.org is subject to Python\'s privacy policy'
+        ),
+        UPDATED_TO_EXTENSION_VENV: localize(
+            "info.updatedToExtensionsVenv",
+            "Automatically updated interpreter to point to extension's virtual environment."
         ),
         WELCOME_OUTPUT_TAB: localize(
             "info.welcomeOutputTab",
-            "Welcome to the Adafruit Simulator output tab!\n\n"
+            "Welcome to the Device Simulator Express output tab!\n\n"
         ),
     },
     LABEL: {
@@ -207,6 +245,7 @@ export const CONSTANTS = {
         ),
     },
     LINKS: {
+        DOWNLOAD_PIP: "https://pip.pypa.io/en/stable/installing/",
         DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
         EXAMPLE_CODE:
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
@@ -233,6 +272,10 @@ export const CONSTANTS = {
         ),
     },
     NAME: localize("name", "Device Simulator Express"),
+    TEMPLATE: {
+        CPX: "cpx_template.py",
+        MICROBIT: "microbit_template.py",
+    },
     WARNING: {
         ACCEPT_AND_RUN: localize(
             "warning.agreeAndRun",
@@ -274,57 +317,72 @@ export enum CONFIG_KEYS {
 export enum TelemetryEventName {
     FAILED_TO_OPEN_SIMULATOR = "SIMULATOR.FAILED_TO_OPEN",
 
+    // Debugger
+    CPX_DEBUGGER_INIT_SUCCESS = "CPX.DEBUGGER.INIT.SUCCESS",
+    CPX_DEBUGGER_INIT_FAIL = "CPX.DEBUGGER.INIT.FAIL",
+    MICROBIT_DEBUGGER_INIT_SUCCESS = "MICROBIT.DEBUGGER.INIT.SUCCESS",
+    MICROBIT_DEBUGGER_INIT_FAIL = "MICROBIT.DEBUGGER.INIT.FAIL",
+
     // Extension commands
-    COMMAND_DEPLOY_DEVICE = "COMMAND.DEPLOY.DEVICE",
-    COMMAND_NEW_FILE = "COMMAND.NEW.FILE",
-    COMMAND_OPEN_SIMULATOR = "COMMAND.OPEN.SIMULATOR",
     COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
     COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",
-    COMMAND_RUN_EDITOR_ICON = "COMMAND.RUN.EDITOR_ICON",
-    COMMAND_SERIAL_MONITOR_CHOOSE_PORT = "COMMAND.SERIAL_MONITOR.CHOOSE_PORT",
-    COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
-    COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
-    COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
+    COMMAND_INSTALL_EXTENSION_DEPENDENCIES = "COMMAND.INSTALL.EXTENSION.DEPENDENCIES",
+
+    CPX_COMMAND_DEPLOY_DEVICE = "CPX.COMMAND.DEPLOY.DEVICE",
+    CPX_COMMAND_NEW_FILE = "CPX.COMMAND.NEW.FILE.CPX",
+    CPX_COMMAND_OPEN_SIMULATOR = "CPX.COMMAND.OPEN.SIMULATOR",
+    CPX_COMMAND_SERIAL_MONITOR_CHOOSE_PORT = "CPX.COMMAND.SERIAL_MONITOR.CHOOSE_PORT",
+    CPX_COMMAND_SERIAL_MONITOR_OPEN = "CPX.COMMAND.SERIAL_MONITOR.OPEN",
+    CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE = "CPX.COMMAND.SERIAL_MONITOR.BAUD_RATE",
+    CPX_COMMAND_SERIAL_MONITOR_CLOSE = "CPX.COMMAND.SERIAL_MONITOR.CLOSE",
+
+    MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
+    MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
     // Simulator interaction
-    SIMULATOR_BUTTON_A = "SIMULATOR.BUTTON.A",
-    SIMULATOR_BUTTON_B = "SIMULATOR.BUTTON.B",
-    SIMULATOR_BUTTON_AB = "SIMULATOR.BUTTON.AB",
-    SIMULATOR_SWITCH = "SIMULATOR.SWITCH",
+    CPX_SIMULATOR_BUTTON_A = "CPX.SIMULATOR.BUTTON.A",
+    CPX_SIMULATOR_BUTTON_B = "CPX.SIMULATOR.BUTTON.B",
+    CPX_SIMULATOR_BUTTON_AB = "CPX.SIMULATOR.BUTTON.AB",
+    CPX_SIMULATOR_SWITCH = "CPX.SIMULATOR.SWITCH",
+
+    MICROBIT_SIMULATOR_BUTTON_A = "MICROBIT.SIMULATOR.BUTTON.A",
+    MICROBIT_SIMULATOR_BUTTON_B = "MICROBIT.SIMULATOR.BUTTON.B",
+    MICROBIT_SIMULATOR_BUTTON_AB = "MICROBIT.SIMULATOR.BUTTON.AB",
 
     // Sensors
-    SIMULATOR_TEMPERATURE_SENSOR = "SIMULATOR.TEMPERATURE",
-    SIMULATOR_LIGHT_SENSOR = " SIMULATOR.LIGHT",
-    SIMULATOR_MOTION_SENSOR = "SIMULATOR.MOTION",
-    SIMULATOR_SHAKE = "SIMULATOR.SHAKE",
-    SIMULATOR_CAPACITIVE_TOUCH = "SIMULATOR.CAPACITIVE.TOUCH",
+    CPX_SIMULATOR_TEMPERATURE_SENSOR = "CPX.SIMULATOR.TEMPERATURE",
+    CPX_SIMULATOR_LIGHT_SENSOR = "CPX.SIMULATOR.LIGHT",
+    CPX_SIMULATOR_MOTION_SENSOR = "CPX.SIMULATOR.MOTION",
+    CPX_SIMULATOR_SHAKE = "CPX.SIMULATOR.SHAKE",
+    CPX_SIMULATOR_CAPACITIVE_TOUCH = "CPX.SIMULATOR.CAPACITIVE.TOUCH",
+
+    MICROBIT_SIMULATOR_TEMPERATURE_SENSOR = "MICROBIT.SIMULATOR.TEMPERATURE",
+    MICROBIT_SIMULATOR_LIGHT_SENSOR = "MICROBIT.SIMULATOR.LIGHT",
+    MICROBIT_SIMULATOR_MOTION_SENSOR = "MICROBIT.SIMULATOR.MOTION",
 
     // Pop-up dialog
-    CLICK_DIALOG_DONT_SHOW = "CLICK.DIALOG.DONT.SHOW",
-    CLICK_DIALOG_EXAMPLE_CODE = "CLICK.DIALOG.EXAMPLE.CODE",
-    CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
-    CLICK_DIALOG_TUTORIALS = "CLICK.DIALOG.TUTORIALS",
+    CPX_CLICK_DIALOG_DONT_SHOW = "CPX.CLICK.DIALOG.DONT.SHOW",
+    CPX_CLICK_DIALOG_EXAMPLE_CODE = "CPX.CLICK.DIALOG.EXAMPLE.CODE",
+    CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CPX.CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
+    CPX_CLICK_DIALOG_TUTORIALS = "CPX.CLICK.DIALOG.TUTORIALS",
 
-    ERROR_PYTHON_DEVICE_PROCESS = "ERROR.PYTHON.DEVICE.PROCESS",
     ERROR_PYTHON_PROCESS = "ERROR.PYTHON.PROCESS",
-    ERROR_COMMAND_NEW_FILE = "ERROR.COMMAND.NEW.FILE",
-    ERROR_DEPLOY_WITHOUT_DEVICE = "ERROR.DEPLOY.WITHOUT.DEVICE",
+    CPX_ERROR_COMMAND_NEW_FILE = "CPX.ERROR.COMMAND.NEW.FILE",
+    CPX_ERROR_DEPLOY_WITHOUT_DEVICE = "CPX.ERROR.DEPLOY.WITHOUT.DEVICE",
+    CPX_ERROR_PYTHON_DEVICE_PROCESS = "CPX.ERROR.PYTHON.DEVICE.PROCESS",
+    CPX_SUCCESS_COMMAND_DEPLOY_DEVICE = "CPX.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
-    SUCCESS_COMMAND_DEPLOY_DEVICE = "SUCCESS.COMMAND.DEPLOY.DEVICE",
+    MICROBIT_ERROR_COMMAND_NEW_FILE = "MICROBIT.ERROR.COMMAND.NEW.FILE",
 
     // Performance
-    PERFORMANCE_DEPLOY_DEVICE = "PERFORMANCE.DEPLOY.DEVICE",
-    PERFORMANCE_NEW_FILE = "PERFORMANCE.NEW.FILE",
-    PERFORMANCE_OPEN_SIMULATOR = "PERFORMANCE.OPEN.SIMULATOR",
-}
+    CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
+    CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
+    CPX_PERFORMANCE_OPEN_SIMULATOR = "CPX.PERFORMANCE.OPEN.SIMULATOR",
 
-export enum WebviewMessages {
-    BUTTON_PRESS = "button-press",
-    PLAY_SIMULATOR = "play-simulator",
-    SENSOR_CHANGED = "sensor-changed",
-    REFRESH_SIMULATOR = "refresh-simulator",
-    SLIDER_TELEMETRY = "slider-telemetry",
+    MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
+    MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
 }
+export const DEFAULT_DEVICE = CONSTANTS.DEVICE_NAME.CPX;
 
 // tslint:disable-next-line: no-namespace
 export namespace DialogResponses {
@@ -367,6 +425,12 @@ export namespace DialogResponses {
     export const MESSAGE_UNDERSTOOD: MessageItem = {
         title: localize("dialogResponses.messageUnderstood", "Got It"),
     };
+    export const INSTALL_PIP: MessageItem = {
+        title: localize(
+            "dialogResponses.installPip",
+            "Install from Pip's webpage"
+        ),
+    };
     export const INSTALL_PYTHON: MessageItem = {
         title: localize(
             "dialogResponses.installPython",
@@ -395,6 +459,23 @@ export const STATUS_BAR_PRIORITY = {
     PORT: 20,
     OPEN_PORT: 30,
     BAUD_RATE: 40,
+};
+
+export const VERSIONS = {
+    MIN_PY_VERSION: "3.7.0",
+};
+
+export const HELPER_FILES = {
+    CHECK_IF_VENV_PY: "check_if_venv.py",
+    CHECK_PYTHON_DEPENDENCIES: "check_python_dependencies.py",
+    DEVICE_PY: "device.py",
+    PROCESS_USER_CODE_PY: "process_user_code.py",
+    PYTHON_EXE: "python.exe",
+    PYTHON: "python",
+};
+
+export const GLOBAL_ENV_VARS = {
+    PYTHON: "python",
 };
 
 export default CONSTANTS;

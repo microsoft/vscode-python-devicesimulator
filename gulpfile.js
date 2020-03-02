@@ -27,7 +27,7 @@ gulp.task("clean", () => {
     [
       "out/*",
       "package.nls.*.json",
-      "../../dist/*0.0.0-UNTRACKEDVERSION.vsix"
+      "../../dist/*0.0.0-UNTRACKEDVERSION.vsix",
     ],
     { force: true }
   );
@@ -35,8 +35,12 @@ gulp.task("clean", () => {
 
 const pythonToMove = [
   "./src/adafruit_circuitplayground/*.*",
+  "./src/microbit/*.*",
+  "./src/microbit/!(test)/**/*",
   "./src/*.py",
+  "./src/common/*.py",
   "./src/requirements.txt",
+  "./src/templates/*.*"
 ];
 
 gulp.task("python-compile", () => {
@@ -66,7 +70,8 @@ gulp.task("vsce:publish", () => {
 
 gulp.task("vsce:package", () => {
   return vsce.createVSIX({
-    packagePath: "../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix"
+    packagePath:
+      "../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix",
   });
 });
 
@@ -126,7 +131,7 @@ function compile(buildNls) {
         // no inlined source
         includeContent: inlineSource,
         // Return relative source map root directories per file.
-        sourceRoot: "../src"
+        sourceRoot: "../src",
       })
     );
   }

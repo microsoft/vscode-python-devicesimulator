@@ -2,68 +2,35 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { SENSOR_LIST, VIEW_STATE, WEBVIEW_MESSAGES } from "../../constants";
+import { ViewStateContext } from "../../context";
 import "../../styles/InputSlider.css";
+import { sendMessage } from "../../utils/MessageUtils";
 import { ISliderProps } from "../../viewUtils";
-
-interface vscode {
-    postMessage(message: any): void;
-}
-
-declare const vscode: vscode;
-
-const sendMessage = (state: any) => {
-    vscode.postMessage({ command: "sensor-changed", text: state });
-};
 
 class InputSlider extends React.Component<ISliderProps, any, any> {
     constructor(props: ISliderProps) {
         super(props);
         this.state = {
-            value: 0,
+            value: this.props.value,
         };
 
         this.handleOnChange = this.handleOnChange.bind(this);
         this.validateRange = this.validateRange.bind(this);
     }
 
-    handleMessage = (event: any): void => {
-        const message = event.data; // The JSON data our extension sent
-        switch (message.command) {
-            case "reset-state":
-                this.setState({ value: 0 });
-                break;
-            case "set-state":
-                console.log(
-                    "Setting the state: " + JSON.stringify(message.state)
-                );
-                break;
-            default:
-                console.log("Invalid message received from the extension.");
-                this.setState({ value: 0 });
-                break;
-        }
-    };
-
-    componentDidMount() {
-        console.log("Mounted");
-        window.addEventListener("message", this.handleMessage);
-    }
-
-    componentWillUnmount() {
-        // Make sure to remove the DOM listener when the component is unmounted.
-        window.removeEventListener("message", this.handleMessage);
-    }
     render() {
+        const isInputDisabled = this.context === VIEW_STATE.PAUSE;
         return (
             <div className="inputSlider">
                 <span>{this.props.axisLabel}</span>
                 <input
                     type="text"
                     className="sliderValue"
-                    value={this.state.value}
+                    value={this.props.value}
                     onInput={this.handleOnChange}
                     defaultValue={this.props.minValue.toLocaleString()}
-                    pattern="^-?[0-9]{0,3}$"
+                    pattern="^-?[0-9]{0,4}$"
                     onKeyUp={this.handleOnChange}
                     aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
                 />
@@ -83,9 +50,10 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                         onKeyUp={this.sendTelemetry}
                         onMouseUp={this.sendTelemetry}
                         aria-valuenow={this.state.value}
-                        value={this.state.value}
+                        value={this.props.value}
                         aria-label={`${this.props.type} sensor slider`}
                         defaultValue={this.props.minValue.toLocaleString()}
+                        disabled={isInputDisabled}
                     />
                     <span className="downLabelArea">
                         <span className="minLabel">{this.props.minLabel}</span>
@@ -100,7 +68,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         const validatedValue = this.validateRange(this.updateValue(event));
         const newSensorState = this.writeMessage(validatedValue);
         if (newSensorState) {
-            sendMessage(newSensorState);
+            sendMessage(WEBVIEW_MESSAGES.SENSOR_CHANGED, newSensorState);
         }
     };
 
@@ -119,15 +87,14 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         const newValue = event.target.validity.valid
             ? event.target.value
             : this.state.value;
-        this.setState({ value: newValue });
+        if (this.props.onUpdateValue) {
+            this.props.onUpdateValue(this.props.type as SENSOR_LIST, newValue);
+        }
         return newValue;
     };
 
     private sendTelemetry = () => {
-        vscode.postMessage({
-            command: "slider-telemetry",
-            text: this.props.type,
-        });
+        sendMessage(WEBVIEW_MESSAGES.SLIDER_TELEMETRY, this.props.type);
     };
 
     private validateRange = (valueString: string) => {
@@ -142,5 +109,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
         return valueInt;
     };
 }
+InputSlider.contextType = ViewStateContext;
 
 export default InputSlider;

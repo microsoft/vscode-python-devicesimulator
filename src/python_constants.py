@@ -1,21 +1,15 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+ACTIVE_DEVICE_FIELD = "active_device"
+
 CPX_DRIVE_NAME = "CIRCUITPY"
 
+DEPEND_ERR = 'The required dependencies aren\'t downloaded. Please use CTRL+SHIFT+P to open the command palette and select "Device Simulator Express: Install Extension Dependencies".'
+
+DEVICE_NOT_IMPLEMENTED_ERROR = "Device not implemented."
+
 ENABLE_TELEMETRY = "enable_telemetry"
-EXPECTED_INPUT_EVENTS = [
-    "button_a",
-    "button_b",
-    "switch",
-    "temperature",
-    "light",
-    "shake",
-    "motion_x",
-    "motion_y",
-    "motion_z",
-    "touch",
-]
 
 EXEC_COMMAND = "exec"
 ERROR_SENDING_EVENT = "Error trying to send event to the process : "
@@ -35,10 +29,14 @@ NO_CPX_DETECTED_ERROR_DETAIL = (
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 
-PYTHON_LIBS_DIR = "python_libs"
+STATE_FIELD = "state"
 
 UTF_FORMAT = "utf-8"
 
 WINDOWS_OS = "win32"
 
 DEFAULT_PORT = "5577"
+
+CPX = "CPX"
+
+MICROBIT = "micro:bit"

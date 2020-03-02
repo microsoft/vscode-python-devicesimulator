@@ -1,0 +1,2991 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Device component  should render correctly 1`] = `
+<div
+  className="device-container"
+>
+  <div
+    className="simulator"
+  >
+    <div
+      className="file-selector"
+    >
+      <div>
+        <select
+          className="dropdown"
+          id="file-dropdown"
+          onBlur={[Function]}
+        >
+          <option
+            disabled={true}
+            selected={true}
+            value=""
+          >
+            Choose a .py file to run on the Simulator
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="microbit-container"
+    >
+      <div
+        className="microbit-svg"
+      >
+        <svg
+          className="sim"
+          fill="rgba(0,0,0,0)"
+          height="100%"
+          version="1.0"
+          viewBox="0 0 580 408"
+          width="100%"
+          x="0px"
+          y="0px"
+        >
+          <defs>
+            <filter
+              height="300%"
+              id="ledglow"
+              width="300%"
+              x="-75%"
+              y="-75%"
+            >
+              <feMorphology
+                in="SourceAlpha"
+                operator="dilate"
+                radius={4}
+                result="thicken"
+              />
+              <feGaussianBlur
+                in="thicken"
+                result="blurred"
+                stdDeviation={5}
+              />
+              <feFlood
+                floodColor="rgb(255, 17, 77)"
+                result="glowColor"
+              />
+              <feComposite
+                in="glowColor"
+                in2="blurred"
+                operator="in"
+                result="ledglow_colored"
+              />
+              <feMerge>
+                <feMergeNode
+                  in="ledglow_colored"
+                />
+                <feMergeNode
+                  in="SourceGraphic"
+                />
+              </feMerge>
+            </filter>
+            <filter
+              height="120%"
+              id="filterglow"
+              width="120%"
+              x="-5%"
+              y="-5%"
+            >
+              <feGaussianBlur
+                result="glow"
+                stdDeviation={5}
+              />
+              <feMerge>
+                <feMergeNode
+                  in="glow"
+                />
+                <feMergeNode
+                  in="glow"
+                />
+                <feMergeNode
+                  in="glow"
+                />
+              </feMerge>
+            </filter>
+            <linearGradient
+              id="gradient-pin-0"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-1"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-2"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-3"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-4"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-5"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-6"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-7"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-8"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-9"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-10"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-11"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-12"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-13"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-14"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-15"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-16"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-17"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-18"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-19"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-20"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-21"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-22"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-23"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+            <linearGradient
+              id="gradient-pin-24"
+              x1="0%"
+              x2="0%"
+              y1="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(212, 175, 55)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+              <stop
+                offset="100%"
+                style={
+                  Object {
+                    "stopColor": "rgb(255, 85, 0)",
+                  }
+                }
+              />
+            </linearGradient>
+          </defs>
+          <g>
+            <path
+              className="sim-board"
+              d="M498,31.9C498,14.3,483.7,0,466.1,0H31.9C14.3,0,0,14.3,0,31.9v342.2C0,391.7,14.3,406,31.9,406h434.2c17.6,0,31.9-14.3,31.9-31.9V31.9z M14.3,206.7c-2.7,0-4.8-2.2-4.8-4.8c0-2.7,2.2-4.8,4.8-4.8c2.7,0,4.8,2.2,4.8,4.8C19.2,204.6,17,206.7,14.3,206.7z M486.2,206.7c-2.7,0-4.8-2.2-4.8-4.8c0-2.72.2-4.8,4.8-4.8c2.7,0,4.8,2.2,4.8,4.8C491,204.6,488.8,206.7,486.2,206.7z"
+              fill="#111"
+            />
+            <path
+              className="sim-display"
+              d="M333.8,310.3H165.9c-8.3,0-15-6.7-15-15V127.5c0-8.3,6.7-15,15-15h167.8c8.3,0,15,6.7,15,15v167.8C348.8,303.6,342.1,310.3,333.8,310.3z"
+              fill="#111"
+              style={
+                Object {
+                  "fill": "rgb(17, 17, 17)",
+                }
+              }
+            />
+            <polygon
+              className="sim-theme"
+              points="115,56.7 173.1,0 115,0"
+              style={
+                Object {
+                  "fill": "rgb(255, 58, 84)",
+                }
+              }
+            />
+            <path
+              className="sim-theme"
+              d="M114.2,0H25.9C12.1,2.1,0,13.3,0,27.7v83.9L114.2,0z"
+              style={
+                Object {
+                  "fill": "rgb(255, 58, 84)",
+                }
+              }
+            />
+            <polygon
+              className="sim-theme"
+              points="173,27.9 202.5,0 173,0"
+              style={
+                Object {
+                  "fill": "rgb(255, 58, 84)",
+                }
+              }
+            />
+            <polygon
+              className="sim-theme"
+              points="54.1,242.4 54.1,274.1 22.4,274.1"
+              style={
+                Object {
+                  "fill": "rgb(255, 58, 84)",
+                }
+              }
+            />
+            <polygon
+              className="sim-theme"
+              points="446.2,164.6 446.2,132.8 477.9,132.8"
+              style={
+                Object {
+                  "fill": "rgb(255, 58, 84)",
+                }
+              }
+            />
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={154}
+              y={113}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={152}
+              y={111}
+            >
+              <title>
+                (0,0)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={200}
+              y={113}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={198}
+              y={111}
+            >
+              <title>
+                (1,0)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={246}
+              y={113}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={244}
+              y={111}
+            >
+              <title>
+                (2,0)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={292}
+              y={113}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={290}
+              y={111}
+            >
+              <title>
+                (3,0)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={338}
+              y={113}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={336}
+              y={111}
+            >
+              <title>
+                (4,0)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={154}
+              y={157}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={152}
+              y={155}
+            >
+              <title>
+                (0,1)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={200}
+              y={157}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={198}
+              y={155}
+            >
+              <title>
+                (1,1)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={246}
+              y={157}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={244}
+              y={155}
+            >
+              <title>
+                (2,1)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={292}
+              y={157}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={290}
+              y={155}
+            >
+              <title>
+                (3,1)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={338}
+              y={157}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={336}
+              y={155}
+            >
+              <title>
+                (4,1)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={154}
+              y={201}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={152}
+              y={199}
+            >
+              <title>
+                (0,2)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={200}
+              y={201}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={198}
+              y={199}
+            >
+              <title>
+                (1,2)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={246}
+              y={201}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={244}
+              y={199}
+            >
+              <title>
+                (2,2)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={292}
+              y={201}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={290}
+              y={199}
+            >
+              <title>
+                (3,2)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={338}
+              y={201}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={336}
+              y={199}
+            >
+              <title>
+                (4,2)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={154}
+              y={245}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={152}
+              y={243}
+            >
+              <title>
+                (0,3)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={200}
+              y={245}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={198}
+              y={243}
+            >
+              <title>
+                (1,3)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={246}
+              y={245}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={244}
+              y={243}
+            >
+              <title>
+                (2,3)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={292}
+              y={245}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={290}
+              y={243}
+            >
+              <title>
+                (3,3)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={338}
+              y={245}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={336}
+              y={243}
+            >
+              <title>
+                (4,3)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={154}
+              y={289}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={152}
+              y={287}
+            >
+              <title>
+                (0,4)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={200}
+              y={289}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={198}
+              y={287}
+            >
+              <title>
+                (1,4)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={246}
+              y={289}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={244}
+              y={287}
+            >
+              <title>
+                (2,4)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={292}
+              y={289}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={290}
+              y={287}
+            >
+              <title>
+                (3,4)
+              </title>
+            </rect>
+            <rect
+              className="sim-led-back"
+              height={20}
+              rx={2}
+              ry={2}
+              style={
+                Object {
+                  "fill": "rgb(32, 32, 32)",
+                }
+              }
+              width={10}
+              x={338}
+              y={289}
+            />
+            <rect
+              className="sim-led"
+              height={24}
+              rx={3}
+              ry={3}
+              style={
+                Object {
+                  "fill": "rgb(255, 127, 127)",
+                  "filter": "url(\\"#ledglow\\")",
+                  "opacity": 0,
+                }
+              }
+              width={14}
+              x={336}
+              y={287}
+            >
+              <title>
+                (4,4)
+              </title>
+            </rect>
+            <g
+              className="sim-head no-drag"
+            >
+              <circle
+                cx={258}
+                cy={75}
+                fill="transparent"
+                r={100}
+              />
+              <path
+                className="sim-theme"
+                d="M269.9,50.2L269.9,50.2l-39.5,0v0c-14.1,0.1-24.6,10.7-24.6,24.8c0,13.9,10.4,24.4,24.3,24.7v0h39.6c14.2,0,24.8-10.6,24.8-24.7C294.5,61,284,50.3,269.9,50.2 M269.7,89.2L269.7,89.2l-39.3,0c-7.7-0.1-14-6.4-14-14.2c0-7.8,6.4-14.2,14.2-14.2h39.1c7.8,0,14.2,6.4,14.2,14.2C283.9,82.9,277.5,89.2,269.7,89.2"
+                style={
+                  Object {
+                    "fill": "rgb(255, 58, 84)",
+                  }
+                }
+              />
+              <path
+                className="sim-theme"
+                d="M230.6,69.7c-2.9,0-5.3,2.4-5.3,5.3c0,2.9,2.4,5.3,5.3,5.3c2.9,0,5.3-2.4,5.3-5.3C235.9,72.1,233.5,69.7,230.6,69.7"
+                style={
+                  Object {
+                    "fill": "rgb(255, 58, 84)",
+                  }
+                }
+              />
+              <path
+                className="sim-theme"
+                d="M269.7,80.3c2.9,0,5.3-2.4,5.3-5.3c0-2.9-2.4-5.3-5.3-5.3c-2.9,0-5.3,2.4-5.3,5.3C264.4,77.9,266.8,80.3,269.7,80.3"
+                style={
+                  Object {
+                    "fill": "rgb(255, 58, 84)",
+                  }
+                }
+              />
+            </g>
+            <text
+              className="sim-text"
+              x={310}
+              y={100}
+            />
+            <path
+              className="sim-pin sim-pin-touch"
+              d="M16.5,341.2c0,0.4-0.1,0.9-0.1,1.3v60.7c4.1,1.7,8.6,2.7,12.9,2.7h34.4v-64.7h0.3c0,0,0-0.1,0-0.1c0-13-10.6-23.6-23.7-23.6C27.2,317.6,16.5,328.1,16.5,341.2z M21.2,341.6c0-10.7,8.7-19.3,19.3-19.3c10.7,0,19.3,8.7,19.3,19.3c0,10.7-8.6,19.3-19.3,19.3C29.9,360.9,21.2,352.2,21.2,341.6z"
+              fill="url(#gradient-pin-0)"
+            >
+              <title>
+                P0, ANALOG IN
+              </title>
+            </path>
+            <path
+              className="sim-pin sim-pin-touch"
+              d="M139.1,317.3c-12.8,0-22.1,10.3-23.1,23.1V406h46.2v-65.6C162.2,327.7,151.9,317.3,139.1,317.3zM139.3,360.1c-10.7,0-19.3-8.6-19.3-19.3c0-10.7,8.6-19.3,19.3-19.3c10.7,0,19.3,8.7,19.3,19.3C158.6,351.5,150,360.1,139.3,360.1z"
+              fill="url(#gradient-pin-1)"
+            >
+              <title>
+                P1, ANALOG IN
+              </title>
+            </path>
+            <path
+              className="sim-pin sim-pin-touch"
+              d="M249,317.3c-12.8,0-22.1,10.3-23.1,23.1V406h46.2v-65.6C272.1,327.7,261.8,317.3,249,317.3z M249.4,360.1c-10.7,0-19.3-8.6-19.3-19.3c0-10.7,8.6-19.3,19.3-19.3c10.7,0,19.3,8.7,19.3,19.3C268.7,351.5,260.1,360.1,249.4,360.1z"
+              fill="url(#gradient-pin-2)"
+            >
+              <title>
+                P2, ANALOG IN
+              </title>
+            </path>
+            <path
+              className="sim-pin"
+              d="M0,357.7v19.2c0,10.8,6.2,20.2,14.4,25.2v-44.4H0z"
+              fill="url(#gradient-pin-3)"
+            >
+              <title>
+                P3, ANALOG IN, LED Col 1
+              </title>
+            </path>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-4)"
+              height={50}
+              width={10}
+              x="66.7"
+              y="356.7"
+            >
+              <title>
+                P4, ANALOG IN, LED Col 2
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-5)"
+              height={50}
+              width={10}
+              x="79.1"
+              y="356.7"
+            >
+              <title>
+                P5, BUTTON A
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-6)"
+              height={50}
+              width={10}
+              x="91.4"
+              y="356.7"
+            >
+              <title>
+                P6, LED Col 9
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-7)"
+              height={50}
+              width={10}
+              x="103.7"
+              y="356.7"
+            >
+              <title>
+                P7, LED Col 8
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-8)"
+              height={50}
+              width={10}
+              x="164.3"
+              y="356.7"
+            >
+              <title>
+                P8
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-9)"
+              height={50}
+              width={10}
+              x="176.6"
+              y="356.7"
+            >
+              <title>
+                P9, LED Col 7
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-10)"
+              height={50}
+              width={10}
+              x="188.9"
+              y="356.7"
+            >
+              <title>
+                P10, ANALOG IN, LED Col 3
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-11)"
+              height={50}
+              width={10}
+              x="201.3"
+              y="356.7"
+            >
+              <title>
+                P11, BUTTON B
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-12)"
+              height={50}
+              width={10}
+              x="213.6"
+              y="356.7"
+            >
+              <title>
+                P12, RESERVED ACCESSIBILITY
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-13)"
+              height={50}
+              width={10}
+              x="275.2"
+              y="356.7"
+            >
+              <title>
+                P13, SPI - SCK
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-14)"
+              height={50}
+              width={10}
+              x="287.5"
+              y="356.7"
+            >
+              <title>
+                P14, SPI - MISO
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-15)"
+              height={50}
+              width={10}
+              x="299.8"
+              y="356.7"
+            >
+              <title>
+                P15, SPI - MOSI
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-16)"
+              height={50}
+              width={10}
+              x="312.1"
+              y="356.7"
+            >
+              <title>
+                P16, SPI - Chip Select
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-17)"
+              height={50}
+              width={10}
+              x="324.5"
+              y="356.7"
+            >
+              <title>
+                P17, +3v3
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-18)"
+              height={50}
+              width={10}
+              x="385.1"
+              y="356.7"
+            >
+              <title>
+                P18, +3v3
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-19)"
+              height={50}
+              width={10}
+              x="397.4"
+              y="356.7"
+            >
+              <title>
+                P19, I2C - SCL
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-20)"
+              height={50}
+              width={10}
+              x="409.7"
+              y="356.7"
+            >
+              <title>
+                P20, I2C - SDA
+              </title>
+            </rect>
+            <rect
+              className="sim-pin"
+              fill="url(#gradient-pin-21)"
+              height={50}
+              width={10}
+              x={422}
+              y="356.7"
+            >
+              <title>
+                GND
+              </title>
+            </rect>
+            <path
+              className="sim-pin"
+              d="M483.6,402c8.2-5,14.4-14.4,14.4-25.1v-19.2h-14.4V402z"
+              fill="url(#gradient-pin-22)"
+            >
+              <title>
+                GND
+              </title>
+            </path>
+            <path
+              className="sim-pin"
+              d="M359.9,317.3c-12.8,0-22.1,10.3-23.1,23.1V406H383v-65.6C383,327.7,372.7,317.3,359.9,317.3z M360,360.1c-10.7,0-19.3-8.6-19.3-19.3c0-10.7,8.6-19.3,19.3-19.3c10.7,0,19.3,8.7,19.3,19.3C379.3,351.5,370.7,360.1,360,360.1z"
+              fill="url(#gradient-pin-23)"
+            >
+              <title>
+                +3v3
+              </title>
+            </path>
+            <path
+              className="sim-pin"
+              d="M458,317.6c-13,0-23.6,10.6-23.6,23.6c0,0,0,0.1,0,0.1h0V406H469c4.3,0,8.4-1,12.6-2.7v-60.7c0-0.4,0-0.9,0-1.3C481.6,328.1,471,317.6,458,317.6z M457.8,360.9c-10.7,0-19.3-8.6-19.3-19.3c0-10.7,8.6-19.3,19.3-19.3c10.7,0,19.3,8.7,19.3,19.3C477.1,352.2,468.4,360.9,457.8,360.9z"
+              fill="url(#gradient-pin-24)"
+            >
+              <title>
+                GND
+              </title>
+            </path>
+            <text
+              className="sim-text-pin"
+              x={67}
+              y={345}
+            />
+            <text
+              className="sim-text-pin"
+              x={165}
+              y={345}
+            />
+            <text
+              className="sim-text-pin"
+              x={275}
+              y={345}
+            />
+            <g
+              aria-label="a"
+              className="sim-button-group"
+              focusable="true"
+              role="button"
+              style={
+                Object {
+                  "fill": "rgb(151, 151, 151)",
+                }
+              }
+              tabIndex={0}
+            >
+              <rect
+                className="sim-button-outer"
+                height="56.2"
+                rx={4}
+                ry={4}
+                width="56.2"
+                x="25.9"
+                y="176.4"
+              />
+              <circle
+                className="sim-button-nut"
+                cx="35.9"
+                cy="186.4"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="35.9"
+                cy="222.60000000000002"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="72.1"
+                cy="222.60000000000002"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="72.1"
+                cy="186.4"
+                r={6}
+                strokeWidth={0}
+              />
+            </g>
+            <path
+              className="sim-button"
+              d="M69.7,203.5c0,8.7-7,15.7-15.7,15.7s-15.7-7-15.7-15.7c0-8.7,7-15.7,15.7-15.7S69.7,194.9,69.7,203.5"
+              fill="#111"
+              style={
+                Object {
+                  "fill": "rgb(17, 17, 17)",
+                }
+              }
+            />
+            <g
+              aria-label="b"
+              className="sim-button-group"
+              focusable="true"
+              role="button"
+              style={
+                Object {
+                  "fill": "rgb(151, 151, 151)",
+                }
+              }
+              tabIndex={0}
+            >
+              <rect
+                className="sim-button-outer"
+                height="56.2"
+                rx={4}
+                ry={4}
+                width="56.2"
+                x="418.1"
+                y="176.4"
+              />
+              <circle
+                className="sim-button-nut"
+                cx="428.1"
+                cy="186.4"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="428.1"
+                cy="222.60000000000002"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="464.3"
+                cy="222.60000000000002"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="464.3"
+                cy="186.4"
+                r={6}
+                strokeWidth={0}
+              />
+            </g>
+            <path
+              className="sim-button"
+              d="M461.9,203.5c0,8.7-7,15.7-15.7,15.7c-8.7,0-15.7-7-15.7-15.7c0-8.7,7-15.7,15.7-15.7C454.9,187.8,461.9,194.9,461.9,203.5"
+              fill="#111"
+              style={
+                Object {
+                  "fill": "rgb(17, 17, 17)",
+                }
+              }
+            />
+            <text
+              className="sim-text"
+              x={525}
+              y={340}
+            >
+              A+B
+            </text>
+            <g
+              aria-label="a+b"
+              className="sim-button-group"
+              focusable="true"
+              role="button"
+              style={
+                Object {
+                  "fill": "rgb(151, 151, 151)",
+                }
+              }
+              tabIndex={0}
+            >
+              <rect
+                className="sim-button-outer"
+                height="56.2"
+                rx={4}
+                ry={4}
+                width="56.2"
+                x={520}
+                y={350}
+              />
+              <circle
+                className="sim-button-nut"
+                cx={530}
+                cy={360}
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx={530}
+                cy="396.2"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="566.2"
+                cy="396.2"
+                r={6}
+                strokeWidth={0}
+              />
+              <circle
+                className="sim-button-nut"
+                cx="566.2"
+                cy={360}
+                r={6}
+                strokeWidth={0}
+              />
+            </g>
+            <circle
+              className="sim-button"
+              cx={549}
+              cy={379}
+              fill="#111"
+              r="16.5"
+              style={
+                Object {
+                  "fill": "rgb(17, 17, 17)",
+                }
+              }
+            />
+            <path
+              className="sim-label"
+              d="M35.7,376.4c0-2.8,2.1-5.1,5.5-5.1c3.3,0,5.5,2.4,5.5,5.1v4.7c0,2.8-2.2,5.1-5.5,5.1c-3.3,0-5.5-2.4-5.5-5.1V376.4zM43.3,376.4c0-1.3-0.8-2.3-2.2-2.3c-1.3,0-2.1,1.1-2.1,2.3v4.7c0,1.2,0.8,2.3,2.1,2.3c1.3,0,2.2-1.1,2.2-2.3V376.4z"
+            />
+            <path
+              className="sim-label"
+              d="M136.2,374.1c2.8,0,3.4-0.8,3.4-2.5h2.9v14.3h-3.4v-9.5h-3V374.1z"
+            />
+            <path
+              className="sim-label"
+              d="M248.6,378.5c1.7-1,3-1.7,3-3.1c0-1.1-0.7-1.6-1.6-1.6c-1,0-1.8,0.6-1.8,2.1h-3.3c0-2.6,1.8-4.6,5.1-4.6c2.6,0,4.9,1.3,4.9,4.3c0,2.4-2.3,3.9-3.8,4.7c-2,1.3-2.5,1.8-2.5,2.9h6.1v2.7h-10C244.8,381.2,246.4,379.9,248.6,378.5z"
+            />
+            <path
+              className="sim-button-label"
+              d="M48.1,270.9l-0.6-1.7h-5.1l-0.6,1.7h-3.5l5.1-14.3h3.1l5.2,14.3H48.1z M45,260.7l-1.8,5.9h3.5L45,260.7z"
+            />
+            <path
+              className="sim-button-label"
+              d="M449.1,135.8h5.9c3.9,0,4.7,2.4,4.7,3.9c0,1.8-1.4,2.9-2.5,3.2c0.9,0,2.6,1.1,2.6,3.3c0,1.5-0.8,4-4.7,4h-6V135.8zM454.4,141.7c1.6,0,2-1,2-1.7c0-0.6-0.3-1.7-2-1.7h-2v3.4H454.4z M452.4,144.1v3.5h2.1c1.6,0,2-1,2-1.8c0-0.7-0.4-1.8-2-1.8H452.4z"
+            />
+            <path
+              className="sim-label"
+              d="M352.1,381.1c0,1.6,0.9,2.5,2.2,2.5c1.2,0,1.9-0.9,1.9-1.9c0-1.2-0.6-2-2.1-2h-1.3v-2.6h1.3c1.5,0,1.9-0.7,1.9-1.8c0-1.1-0.7-1.6-1.6-1.6c-1.4,0-1.8,0.8-1.8,2.1h-3.3c0-2.4,1.5-4.6,5.1-4.6c2.6,0,5,1.3,5,4c0,1.6-1,2.8-2.1,3.2c1.3,0.5,2.3,1.6,2.3,3.5c0,2.7-2.4,4.3-5.2,4.3c-3.5,0-5.5-2.1-5.5-5.1H352.1z"
+            />
+            <path
+              className="sim-label"
+              d="M368.5,385.9h-3.1l-5.1-14.3h3.5l3.1,10.1l3.1-10.1h3.6L368.5,385.9z"
+            />
+            <path
+              className="sim-label"
+              d="M444.4,378.3h7.4v2.5h-1.5c-0.6,3.3-3,5.5-7.1,5.5c-4.8,0-7.5-3.5-7.5-7.5c0-3.9,2.8-7.5,7.5-7.5c3.8,0,6.4,2.3,6.6,5h-3.5c-0.2-1.1-1.4-2.2-3.1-2.2c-2.7,0-4.1,2.3-4.1,4.7c0,2.5,1.4,4.7,4.4,4.7c2,0,3.2-1.2,3.4-2.7h-2.5V378.3z"
+            />
+            <path
+              className="sim-label"
+              d="M461.4,380.9v-9.3h3.3v14.3h-3.5l-5.2-9.2v9.2h-3.3v-14.3h3.5L461.4,380.9z"
+            />
+            <path
+              className="sim-label"
+              d="M472.7,371.6c4.8,0,7.5,3.5,7.5,7.2s-2.7,7.2-7.5,7.2h-5.3v-14.3H472.7z M470.8,374.4v8.6h1.8c2.7,0,4.2-2.1,4.2-4.3s-1.6-4.3-4.2-4.3H470.8z"
+            />
+          </g>
+          <g />
+          <g />
+        </svg>
+      </div>
+    </div>
+    <div
+      className="buttons"
+    >
+      <button
+        aria-label="play"
+        className="play-button button"
+        id="play-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="play-icon"
+            d="M1.00005 0.854163C1.00003 0.471921 1.41151 0.231022 1.74482 0.418142L12.487 6.44883C12.8243 6.63823 12.828 7.12258 12.4936 7.31706L1.75209 13.5631C1.41877 13.757 1.00077 13.5165 1.00075 13.1309L1.00005 0.854163Z"
+            fill="#23D18B"
+          />
+        </svg>
+      </button>
+      <button
+        aria-label="refresh"
+        className="refresh-button button"
+        id="refresh-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="button-icon"
+            clip-rule="evenodd"
+            d="M7.12508 4.13728V2.92015C4.59083 2.92015 2.53127 4.74924 2.53127 6.9999C2.53127 7.53706 2.64611 8.06063 2.86815 8.5298C2.98299 8.77458 2.89877 9.05336 2.69205 9.23695C2.30158 9.58373 1.64313 9.46134 1.43641 9.00577C1.15313 8.38701 1 7.70705 1 6.9999C1 3.99449 3.74097 1.56024 7.12508 1.56024V0.343119C7.12508 0.0371382 7.53852 -0.112452 7.77587 0.0983343L9.91199 1.99541C10.0651 2.1314 10.0651 2.34219 9.91199 2.47818L7.77587 4.37526C7.53852 4.59285 7.12508 4.44326 7.12508 4.13728ZM11.3818 5.46997C11.267 5.23199 11.3512 4.94641 11.5579 4.76282C11.9484 4.41604 12.6068 4.53843 12.8136 4.994C13.0969 5.61277 13.25 6.29272 13.25 6.99988C13.25 10.0053 10.509 12.4395 7.1249 12.4395V13.6635C7.1249 13.9626 6.71146 14.1122 6.47411 13.9014L4.33799 12.0044C4.18487 11.8684 4.18487 11.6576 4.33799 11.5216L6.47411 9.62451C6.71146 9.40692 7.1249 9.55651 7.1249 9.8625V11.0796C9.65915 11.0796 11.7187 9.25053 11.7187 6.99988C11.7187 6.46271 11.5962 5.94594 11.3818 5.46997Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div
+    className="toolbar-parent"
+    id="toolbar-parent"
+  >
+    <div
+      className="toolbar"
+    >
+      <div
+        className="toolbar-icon"
+      >
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar microbit-button"
+            className="toolbar-button button"
+            id="toolbar-microbit-button-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Push Button
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="push_btn"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                  transform="translate(1.000000, 1.000000)"
+                >
+                  <g
+                    id="Group-8"
+                  >
+                    <path
+                      d="M2,0 L12,0 C13.1045695,-2.02906125e-16 14,0.8954305 14,2 L14,12 C14,13.1045695 13.1045695,14 12,14 L2,14 C0.8954305,14 1.3527075e-16,13.1045695 0,12 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z M2,1.2 C1.5581722,1.2 1.2,1.5581722 1.2,2 L1.2,12 C1.2,12.4418278 1.5581722,12.8 2,12.8 L12,12.8 C12.4418278,12.8 12.8,12.4418278 12.8,12 L12.8,2 C12.8,1.5581722 12.4418278,1.2 12,1.2 L2,1.2 Z"
+                      fill-rule="nonzero"
+                      id="Rectangle"
+                    />
+                    <circle
+                      cx="7"
+                      cy="7"
+                      id="Oval"
+                      r="3.5"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar microbit-led"
+            className="toolbar-button button"
+            id="toolbar-microbit-led-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Red LED
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="red_LED"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  fill-rule="nonzero"
+                  id="Group-10"
+                  transform="translate(3.000000, 0.000000)"
+                >
+                  <g
+                    id="red_LED"
+                  >
+                    <path
+                      d="M9.66,8.22 L9.66,9.34 C9.67207548,9.48313939 9.61659012,9.6237023 9.51,9.72 C9.40841613,9.82599772 9.26675788,9.88411393 9.12,9.88 L8.27,9.88 L8.45,10.08 C8.66182619,10.3044565 8.77987709,10.6013724 8.78,10.91 L8.78,15.45 C8.74261072,15.7279186 8.50542238,15.9353341 8.225,15.9353341 C7.94457762,15.9353341 7.70738928,15.7279186 7.67,15.45 L7.67,10.91 C7.68004066,10.8842785 7.68004066,10.8557215 7.67,10.83 L6.79,9.88 L3.87,9.88 L3,10.83 C2.98995934,10.8557215 2.98995934,10.8842785 3,10.91 L3,15.45 C3,15.7537566 2.75375661,16 2.45,16 C2.14624339,16 1.9,15.7537566 1.9,15.45 L1.9,10.91 C1.89639548,10.6025545 2.01094012,10.3054544 2.22,10.08 L2.4,9.88 L1.54,9.88 C1.39203102,9.89122505 1.24745182,9.83191051 1.15,9.72 C1.04659498,9.61738925 0.992005545,9.4754567 1,9.33 L1,8.22 C0.995083542,8.18015107 0.995083542,8.13984893 1,8.1 L9.64,8.1 C9.65162558,8.1390139 9.65834402,8.1793245 9.66,8.22 Z"
+                      id="Path"
+                    />
+                    <path
+                      d="M9.11,3.81 L9.1100498,6.9 L1.56,6.9 L1.56,3.81 C1.5493174,2.80322131 1.94179172,1.83399894 2.64996503,1.11831186 C3.35813834,0.402624772 4.32316464,-5.66732473e-05 5.33,-4.4408921e-16 C6.33766756,0.00269204012 7.30113489,0.414060117 8,1.14 C8.71491032,1.84390238 9.11518744,2.80673114 9.11,3.81 Z"
+                      id="Path"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar temperature-sensor"
+            className="toolbar-button button"
+            id="toolbar-temperature-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Temperature Sensor
+              </title>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="temperature"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  fill-rule="nonzero"
+                  id="thermometer"
+                  transform="translate(4.000000, 0.000000)"
+                >
+                  <path
+                    d="M6.66665625,9.01853125 L6.66665625,2.66665625 C6.66665625,1.19390625 5.47275,0 4,0 C2.52725,0 1.33334375,1.19390625 1.33334375,2.66665625 L1.33334375,9.0185 C0.515,9.7509375 0,10.8153438 0,12 C0,14.2091562 1.790875,16 4,16 C6.209125,16 8,14.2091562 8,12 C8,10.8153438 7.485,9.7509375 6.66665625,9.01853125 Z M4,14.6666563 C2.52725,14.6666563 1.33334375,13.47275 1.33334375,12 C1.33334375,11.2300937 1.659625,10.515875 2.2225625,10.0120312 L2.6666875,9.61453125 L2.6666875,2.66665625 C2.6666875,1.93028125 3.26365625,1.3333125 4.00003125,1.3333125 C4.73640625,1.3333125 5.333375,1.93025 5.333375,2.66665625 L5.333375,9.61453125 L5.7775,10.0120312 C6.3404375,10.515875 6.66671875,11.2300625 6.66671875,12 C6.66665625,13.47275 5.47275,14.6666563 4,14.6666563 Z"
+                    id="Shape"
+                  />
+                  <rect
+                    height="8"
+                    id="Rectangle"
+                    width="1.33334375"
+                    x="3.33334375"
+                    y="5.33334375"
+                  />
+                  <circle
+                    cx="4"
+                    cy="12"
+                    id="Oval"
+                    r="2"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar light-sensor"
+            className="toolbar-button button"
+            id="toolbar-light-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              fill="none"
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Light sensor
+              </title>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="light_sensor"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  fill-rule="nonzero"
+                  id="Group-10"
+                  transform="translate(4.000000, 0.000000)"
+                >
+                  <g
+                    id="light-bulb"
+                  >
+                    <path
+                      d="M8.30374549,6.20872934 L7.44295783,8.17745143 C7.23654761,8.7386575 7.20852246,8.7656952 6.99231195,9.20813126 L6.45540049,10.4361106 C6.46864532,10.5933327 6.46346172,11 6.05537849,11 L2.94465012,11 C2.68129241,11 2.58708458,10.8227848 2.55655729,10.6570975 L2.54351121,10.6570975 L0,4.83978978 L0.0886634694,4.84519734 C0.0290289823,4.57964193 -0.00106181819,4.307929 2.86084252e-05,4.03423261 C0.00757892,1.8945771 1.94423384,0.0877568873 4.31880683,0.00284992256 C5.55705792,-0.0379054205 6.72735622,0.359459175 7.61829298,1.13041441 C8.50922975,1.89797338 9,2.93723463 9,4.04781772 C9,4.82474009 8.75968094,5.56322682 8.30374549,6.20872934 Z"
+                      id="Shape"
+                    />
+                    <path
+                      d="M6.5,12.4 C6.82926694,12.4 7.1,12.6707331 7.1,13 C7.1,13.3307854 6.83256829,13.6 6.5,13.6 L2.5,13.6 C2.16921459,13.6 1.9,13.3325683 1.9,13 C1.9,12.6692146 2.16743171,12.4 2.5,12.4 L6.5,12.4 Z"
+                      id="Shape"
+                    />
+                    <path
+                      d="M5.66965517,14.8 C5.96435528,14.8 6.2,15.0737859 6.2,15.4 C6.2,15.7277609 5.9672384,16 5.66965517,16 L3.53034483,16 C3.23437963,16 3,15.7294873 3,15.4 C3,15.0722391 3.2327616,14.8 3.53034483,14.8 L5.66965517,14.8 Z"
+                      id="Shape"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar accelerometer-sensor"
+            className="toolbar-button button"
+            id="toolbar-accelerometer-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              fill="none"
+              height="16px"
+              version="1.1"
+              viewBox="0 0 17 16"
+              width="17px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="motion_sensor"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                >
+                  <g
+                    id="Group-12"
+                  >
+                    <path
+                      d="M8,8.8203 L5.88,11.9103 L8,11.9103 L8,12.5493 L5,12.5493 L5,12.0303 L7.12,8.9403 L5.12,8.9403 L5.12,8.2993 L8,8.2993 L8,8.8203 Z M17,10.5903 L13.87,8.7903 L13.87,9.9903 L11.76,9.9903 C11.63,8.7803 11.1,7.6503 10.25,6.7693 C9.39,5.9103 8.25,5.3703 7.04,5.2403 L7.04,3.1203 L8.23,3.1203 L6.38,0.0003 L4.63,3.1203 L5.83,3.1203 L5.83,5.2403 C4.5,5.3803 3.27,6.0003 2.38,6.9803 C1.48,7.9693 0.99,9.2503 1,10.5703 C0.99,11.2803 1.12,11.9903 1.38,12.6393 C1.65,13.2993 2.04,13.9003 2.54,14.4103 C3.04,14.9103 3.64,15.3093 4.3,15.5903 C4.96,15.8603 5.66,16.0003 6.38,16.0003 C7.72,16.0093 9.01,15.5193 10.01,14.6303 C11,13.7403 11.63,12.5093 11.76,11.1903 L13.87,11.1903 L13.87,12.3893 L17,10.5903 Z"
+                      id="Fill-1"
+                    />
+                    <polygon
+                      id="Fill-3"
+                      points="2.3398 4 2.9998 4 2.9998 2.42 4.3398 0 3.6108 0 2.6698 1.75 1.7598 0 0.9998 0 2.3398 2.4"
+                    />
+                    <polygon
+                      id="Fill-10"
+                      points="14.54 4.0098 13.69 5.5198 12.84 4.0098 12.05 4.0098 13.269 6.0098 12 8.1398 12.769 8.1398 13.67 6.5498 14.58 8.1398 15.37 8.1398 14.08 5.9998 15.31 3.9998"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
