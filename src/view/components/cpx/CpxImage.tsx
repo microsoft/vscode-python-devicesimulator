@@ -48,7 +48,7 @@ export class CpxImage extends React.Component<IProps, any> {
 
     handleKeyDown = (event: KeyboardEvent) => {
         const keyEvents = [event.key, event.code];
-        // Don't listen to keydown events for the switch, run button and enter key
+        // Don't listen to keydown events for the switch, run button, restart button and enter key
         if (
             !(
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||

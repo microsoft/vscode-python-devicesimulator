@@ -169,26 +169,26 @@ class Simulator extends React.Component<{}, IState> {
     }
 
     protected togglePlayClick() {
-        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
-            selected_file: this.state.selected_file,
-            state: !this.state.play_button,
-        });
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
             window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
+            selected_file: this.state.selected_file,
+            state: !this.state.play_button,
+        });
     }
 
     protected refreshSimulatorClick() {
-        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
         );
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     }
 
     protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {

@@ -131,6 +131,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         );
     }
     protected togglePlayClick = () => {
+        const button =
+            window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
+            window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
+        if (button) {
+            button.focus();
+        }
         sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
@@ -142,6 +148,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         });
     }
     protected refreshSimulatorClick = () => {
+        const button = window.document.getElementById(
+            CONSTANTS.ID_NAME.REFRESH_BUTTON
+        );
+        if (button) {
+            button.focus();
+        }
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
     protected handleButtonClick = (key: string, isActive: boolean) => {
@@ -181,7 +193,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         console.log(`To implement onMouseLeave ${key}`);
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
-        event.preventDefault();
         event.stopPropagation();
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
             this.handleButtonClick(key, active);

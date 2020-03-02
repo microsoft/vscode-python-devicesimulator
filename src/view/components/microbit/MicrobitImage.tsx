@@ -68,10 +68,9 @@ export class MicrobitImage extends React.Component<IProps, {}> {
     };
     handleKeyDown = (event: KeyboardEvent) => {
         const keyEvents = [event.key, event.code];
-        // Don't listen to keydown events for the switch, run button and enter key
+        // Don't listen to keydown events for the run button, restart button and enter key
         if (
             !(
-                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.S) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) ||
                 keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
