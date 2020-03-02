@@ -1,4 +1,7 @@
+import sys
+
 from applicationinsights import TelemetryClient
+from common import constants as CONSTANTS
 from .telemetry_events import TelemetryEvent
 
 
@@ -17,6 +20,7 @@ class Telemetry:
             self.__enable_telemetry
             and self.telemetry_available()
             and not self.telemetry_state[event_name.name]
+            and not sys.platform.startswith(CONSTANTS.MAC_OS)
         ):
             self.telemetry_client.track_event(
                 f"{self.extension_name}/{event_name.value}"
