@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    CONSTANTS,
     DEVICE_LIST_KEY,
     MICROBIT_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
@@ -9,7 +10,7 @@ import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
-import { MicrobitImage } from "./MicrobitImage";
+import { MicrobitImage, BUTTONS_KEYS } from "./MicrobitImage";
 
 const DEFAULT_MICROBIT_STATE: IMicrobitState = {
     leds: [
@@ -35,6 +36,7 @@ interface IMicrobitState {
     buttons: { button_a: boolean; button_b: boolean };
 }
 export class MicrobitSimulator extends React.Component<any, IState> {
+    private imageRef: React.RefObject<MicrobitImage> = React.createRef();
     constructor() {
         super({});
         this.state = {
@@ -44,6 +46,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             active_editors: [],
             running_file: "",
         };
+        this.onKeyEvent = this.onKeyEvent.bind(this);
     }
     handleMessage = (event: any): void => {
         const message = event.data;
@@ -93,7 +96,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
 
     render() {
         const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
-
+        const playStopLabel = this.state.play_button ? "stop" : "play";
         return (
             <div className="simulator">
                 <div className="file-selector">
@@ -108,10 +111,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 </div>
                 <div className="microbit-container">
                     <MicrobitImage
+                        ref={this.imageRef}
                         eventTriggers={{
                             onMouseDown: this.onMouseDown,
                             onMouseUp: this.onMouseUp,
                             onMouseLeave: this.onMouseLeave,
+                            onKeyEvent: this.onKeyEvent,
                         }}
                         leds={this.state.microbit.leds}
                     />
@@ -120,11 +125,18 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     onTogglePlay={this.togglePlayClick}
                     onToggleRefresh={this.refreshSimulatorClick}
                     playStopImage={playStopImage}
+                    playStopLabel={playStopLabel}
                 />
             </div>
         );
     }
     protected togglePlayClick = () => {
+        const button =
+            window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
+            window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
+        if (button) {
+            button.focus();
+        }
         sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
             selected_file: this.state.selected_file,
             state: !this.state.play_button,
@@ -136,6 +148,12 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         });
     }
     protected refreshSimulatorClick = () => {
+        const button = window.document.getElementById(
+            CONSTANTS.ID_NAME.REFRESH_BUTTON
+        );
+        if (button) {
+            button.focus();
+        }
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
     protected handleButtonClick = (key: string, isActive: boolean) => {
@@ -170,9 +188,66 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         event.preventDefault();
         this.handleButtonClick(key, true);
     };
-
     protected onMouseLeave = (event: Event, key: string) => {
         event.preventDefault();
         console.log(`To implement onMouseLeave ${key}`);
     };
+    protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
+        event.stopPropagation();
+        if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+            this.handleButtonClick(key, active);
+            if (this.imageRef.current) {
+                if (key === BUTTONS_KEYS.BTN_A) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_A,
+                        active
+                    );
+                } else if (key === BUTTONS_KEYS.BTN_B) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_B,
+                        active
+                    );
+                } else if (key === BUTTONS_KEYS.BTN_AB) {
+                    this.imageRef.current.updateButtonAttributes(
+                        BUTTONS_KEYS.BTN_AB,
+                        active
+                    );
+                }
+            }
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
+        ) {
+            this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
+            if (this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_A,
+                    active
+                );
+            }
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
+        ) {
+            this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
+            if (this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_B,
+                    active
+                );
+            }
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+        ) {
+            this.handleButtonClick(BUTTONS_KEYS.BTN_AB, active);
+            if (this.imageRef.current) {
+                this.imageRef.current.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_AB,
+                    active
+                );
+            }
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
+            this.togglePlayClick();
+        } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
+            this.refreshSimulatorClick();
+        }
+    }
 }
