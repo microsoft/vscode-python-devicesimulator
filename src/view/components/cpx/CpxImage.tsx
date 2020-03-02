@@ -344,7 +344,7 @@ const setupButton = (button: HTMLElement, className: string, props: IProps) => {
         if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
             props.onKeyEvent(e, true);
         }
-    }
+    };
     svgButton.onkeyup = e => props.onKeyEvent(e, false);
     svgButton.onmouseleave = e => props.onMouseLeave(button, e);
 };
