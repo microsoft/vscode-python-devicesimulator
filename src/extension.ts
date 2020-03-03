@@ -751,6 +751,13 @@ export async function activate(context: vscode.ExtensionContext) {
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
+                    if (messageToWebview.type === "complete") {
+                        utils.logToOutputChannel(
+                            outChannel,
+                            CONSTANTS.INFO.DEPLOY_SUCCESS,
+                            true
+                        );
+                    }
                     handleDeployToDeviceTelemetry(messageToWebview, device);
                 } catch (err) {
                     console.log(
@@ -811,12 +818,7 @@ export async function activate(context: vscode.ExtensionContext) {
         switch (message.type) {
             case "complete":
                 telemetryAI.trackFeatureUsage(successCommandDeployDevice);
-                utils.logToOutputChannel(
-                    outChannel,
-                    CONSTANTS.INFO.DEPLOY_SUCCESS
-                );
                 break;
-
             case "no-device":
                 telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
                 if (device === CONSTANTS.DEVICE_NAME.CPX) {

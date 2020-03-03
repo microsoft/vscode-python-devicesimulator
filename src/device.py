@@ -81,10 +81,16 @@ class Device:
             message = {"type": "complete"}
         else:
             message = {"type": "no-device"}
+        return message
 
     def deployToMicrobit(self):
         try:
+            # Temporarily redircting stdout because there are some print statements in uflash library
+            fake_stdout = open(os.devnull, "w")
+            _stdout = sys.stdout
+            sys.stdout = fake_stdout
             uflash.flash(path_to_python=self.file_path)
+            sys.stdout = _stdout
             message = {"type": "complete"}
         except RuntimeError:
             message = {"type": "wrong-python-version"}
