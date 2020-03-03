@@ -29,6 +29,7 @@ export const CONSTANTS = {
     KEYBOARD_KEYS: {
         A: "KeyA",
         B: "KeyB",
+        C: "KeyC",
         CAPITAL_R: "R",
         CAPITAL_F: "F",
         ENTER: "Enter",
@@ -49,6 +50,10 @@ export const MICROBIT_BUTTONS_KEYS = {
     BTN_A: "BTN_A",
     BTN_B: "BTN_B",
     BTN_AB: "BTN_AB",
+};
+export const MICROBIT_BUTTON_STYLING_CLASSES = {
+    DEFAULT: "sim-button-outer",
+    KEYPRESSED: "sim-button-key-press",
 };
 export enum DEVICE_LIST_KEY {
     CPX = "CPX",

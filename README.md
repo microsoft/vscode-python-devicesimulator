@@ -145,7 +145,7 @@ Device Simulator Express provides several commands in the Command Palette (F1 or
 
 In Device Simulator Express, you can use keyboard to interact with the device:
 
-- Push Button `A & B: A B`
+- Push Button `A for A, B for B, C for A & B`
 - Capacitive Touch Sensor `A1 – A7: SHIFT + 1~7`
 - Slider Switch: `SHIFT + S`
 - Refresh the simulator: `SHIFT + R`
@@ -176,7 +176,7 @@ Using the simulator for the micro:bit is similar to using the one for the CPX. T
 Please review the CPX's ["How to use" guide](#How-to-use) for more info.
 
 ### Keybindings
-- Push Button `A & B: A B`
+- Push Button `A for A, B for B, C for A & B`
 - Refresh the simulator: `SHIFT + R`
 
 ## Contribute

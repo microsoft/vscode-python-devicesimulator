@@ -4,6 +4,7 @@
 import * as React from "react";
 import { VIEW_STATE } from "../../constants";
 import { ViewStateContext } from "../../context";
+import CONSTANTS, { MICROBIT_BUTTON_STYLING_CLASSES } from "../../constants";
 import "../../styles/Microbit.css";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 
@@ -11,6 +12,7 @@ interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
     onMouseDown: (event: Event, buttonKey: string) => void;
     onMouseLeave: (event: Event, buttonKey: string) => void;
+    onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void;
 }
 interface IProps {
     eventTriggers: EventTriggers;
@@ -22,6 +24,11 @@ const BUTTON_CLASSNAME = {
     DEACTIVATED: "sim-button-deactivated",
 };
 
+export enum BUTTONS_KEYS {
+    BTN_A = "BTN_A",
+    BTN_B = "BTN_B",
+    BTN_AB = "BTN_AB",
+}
 // Displays the SVG and call necessary svg modification.
 export class MicrobitImage extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
@@ -33,6 +40,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
         if (svgElement) {
             updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
+            this.setupKeyPresses(this.props.eventTriggers.onKeyEvent);
         }
     }
     componentDidUpdate() {
@@ -48,8 +56,55 @@ export class MicrobitImage extends React.Component<IProps, {}> {
             }
         }
     }
+    componentWillUnmount() {
+        window.document.removeEventListener("keydown", this.handleKeyDown);
+        window.document.removeEventListener("keyup", this.handleKeyUp);
+    }
+    setupKeyPresses = (
+        onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void
+    ) => {
+        window.document.addEventListener("keydown", this.handleKeyDown);
+        window.document.addEventListener("keyup", this.handleKeyUp);
+    };
+    handleKeyDown = (event: KeyboardEvent) => {
+        const keyEvents = [event.key, event.code];
+        // Don't listen to keydown events for the run button, restart button and enter key
+        if (
+            !(
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) ||
+                keyEvents.includes(CONSTANTS.KEYBOARD_KEYS.ENTER)
+            )
+        ) {
+            this.props.eventTriggers.onKeyEvent(event, true, event.key);
+        }
+    };
+    handleKeyUp = (event: KeyboardEvent) => {
+        this.props.eventTriggers.onKeyEvent(event, false, event.key);
+    };
     render() {
         return <MicrobitSvg ref={this.svgRef} />;
+    }
+    public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
+        if (this.svgRef.current) {
+            const button = this.svgRef.current.getButtons()[key].current;
+            if (button) {
+                button.focus();
+                if (isActive) {
+                    button.children[0].setAttribute(
+                        "class",
+                        MICROBIT_BUTTON_STYLING_CLASSES.KEYPRESSED
+                    );
+                } else {
+                    button.children[0].setAttribute(
+                        "class",
+                        MICROBIT_BUTTON_STYLING_CLASSES.DEFAULT
+                    );
+                }
+                button.setAttribute("pressed", `${isActive}`);
+                button.setAttribute("aria-pressed", `${isActive}`);
+            }
+        }
     }
 }
 
@@ -59,8 +114,8 @@ const setupButton = (
     eventTriggers: EventTriggers,
     key: string
 ) => {
-    buttonElement.setAttribute("class", BUTTON_CLASSNAME.ACTIVE);
     buttonElement.onmousedown = e => {
+        buttonElement.focus();
         eventTriggers.onMouseDown(e, key);
     };
     buttonElement.onmouseup = e => {
@@ -68,6 +123,16 @@ const setupButton = (
     };
     buttonElement.onmouseleave = e => {
         eventTriggers.onMouseLeave(e, key);
+    };
+    buttonElement.onkeydown = e => {
+        // ensure that the keydown is enter,
+        // or else it may register shortcuts twice
+        if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+            eventTriggers.onKeyEvent(e, true, key);
+        }
+    };
+    buttonElement.onkeyup = e => {
+        eventTriggers.onKeyEvent(e, false, key);
     };
 };
 const setupAllButtons = (
@@ -87,6 +152,8 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             ref.current.onmousedown = null;
             ref.current.onmouseup = null;
             ref.current.onmouseleave = null;
+            ref.current.onkeydown = null;
+            ref.current.onkeyup = null;
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);
         }
     }
