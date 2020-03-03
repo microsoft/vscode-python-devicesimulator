@@ -51,6 +51,7 @@ class Device:
                     if drive_name == CONSTANTS.CPX_DRIVE_NAME:
                         found_directory = drive_path
                         break
+            print("WINDOWS")
         else:
             raise NotImplementedError(CONSTANTS.NOT_SUPPORTED_OS.format(sys.platform))
 
@@ -60,25 +61,29 @@ class Device:
                 CONSTANTS.NO_CPX_DETECTED_ERROR_TITLE,
                 CONSTANTS.NO_CPX_DETECTED_ERROR_DETAIL.format(sys.platform),
             )
+            print("DIRECTORY NOT FOUND")
         else:
             self.connected = True
             self.error_message = None
+            print("Directory found")
         return found_directory
 
     def deployToCPX(self):
         device_directory = self.find_device_directory()
-        if cpx.error_message:
+        if self.error_message:
             print(
-                "{}:\t{}".format(cpx.error_message[0], cpx.error_message[1]),
+                "{}:\t{}".format(self.error_message[0], self.error_message[1]),
                 file=sys.stderr,
                 flush=True,
             )
-        if cpx.connected:
+            print("deploy error")
+        if self.connected:
             dest_path = os.path.join(
                 device_directory, self.file_path.rsplit(os.sep, 1)[-1]
             )
             shutil.copyfile(self.file_path, dest_path)
             message = {"type": "complete"}
+            print("deploy success")
         else:
             message = {"type": "no-device"}
 
@@ -88,7 +93,13 @@ class Device:
             message = {"type": "complete"}
         except RuntimeError:
             message = {"type": "wrong-python-version"}
-        except:
+        except IOError:
+            self.error_message = CONSTANTS.NO_MICROBIT_DETECTED_ERROR_TITLE
+            print(
+                self.error_message,
+                file=sys.stderr,
+                flush=True,
+            )
             message = {"type": "no-device"}
         return message
 

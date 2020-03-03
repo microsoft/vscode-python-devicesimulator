@@ -26,6 +26,7 @@ NO_CPX_DETECTED_ERROR_TITLE = "No Circuit Playground Express detected"
 NO_CPX_DETECTED_ERROR_DETAIL = (
     "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
 )
+NO_MICROBIT_DETECTED_ERROR_TITLE = "No micro:bit detected"
 NOT_SUPPORTED_OS = 'The OS "{}" not supported.'
 NOT_IMPLEMENTED_ERROR = "This method is not implemented by the simulator"
 

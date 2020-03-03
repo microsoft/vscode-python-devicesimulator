@@ -160,6 +160,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - IntelliSense and syntax highlighting for micro:bit code 
 - Template file generation
 - Integrated Python Debugging for the Simulator
+- Deploy MicroPython code to the physical device.
 - Simulation of the micro:bit device, including:
   - 25 LEDs
   - Light sensor
