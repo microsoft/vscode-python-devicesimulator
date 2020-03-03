@@ -132,6 +132,7 @@ class Simulator extends React.Component<{}, IState> {
 
     render() {
         const playStopImage = this.state.play_button ? StopLogo : PlayLogo;
+        const playStopLabel = this.state.play_button ? "stop" : "play";
         return (
             <div className="simulator">
                 <div className="file-selector">
@@ -161,32 +162,33 @@ class Simulator extends React.Component<{}, IState> {
                     onTogglePlay={this.togglePlayClick}
                     onToggleRefresh={this.refreshSimulatorClick}
                     playStopImage={playStopImage}
+                    playStopLabel={playStopLabel}
                 />
             </div>
         );
     }
 
     protected togglePlayClick() {
-        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
-            selected_file: this.state.selected_file,
-            state: !this.state.play_button,
-        });
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
             window.document.getElementById(CONSTANTS.ID_NAME.STOP_BUTTON);
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP, {
+            selected_file: this.state.selected_file,
+            state: !this.state.play_button,
+        });
     }
 
     protected refreshSimulatorClick() {
-        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
         );
         if (button) {
             button.focus();
         }
+        sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     }
 
     protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
@@ -215,6 +217,12 @@ class Simulator extends React.Component<{}, IState> {
         ) {
             element = window.document.getElementById(
                 CONSTANTS.ID_NAME.BUTTON_B
+            );
+        } else if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+        ) {
+            element = window.document.getElementById(
+                CONSTANTS.ID_NAME.BUTTON_AB
             );
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.S)

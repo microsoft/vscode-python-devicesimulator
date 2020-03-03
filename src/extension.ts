@@ -4,6 +4,7 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as open from "open";
+import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import {
@@ -12,6 +13,7 @@ import {
     CPX_CONFIG_FILE,
     DEFAULT_DEVICE,
     DialogResponses,
+    GLOBAL_ENV_VARS,
     HELPER_FILES,
     SERVER_INFO,
     TelemetryEventName,
@@ -34,7 +36,7 @@ import { registerDefaultFontFaces } from "office-ui-fabric-react";
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
 let telemetryAI: TelemetryAI;
-let pythonExecutableName: string = "python";
+let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;
 let configFileCreated: boolean = false;
 let inDebugMode: boolean = false;
 // Notification booleans
@@ -98,7 +100,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutableName = await utils.setupEnv(context);
+    pythonExecutablePath = await utils.setupEnv(context);
 
     try {
         utils.generateCPXConfig();
@@ -108,7 +110,7 @@ export async function activate(context: vscode.ExtensionContext) {
         configFileCreated = false;
     }
 
-    if (pythonExecutableName === "") {
+    if (pythonExecutablePath === "") {
         return;
     }
 
@@ -442,7 +444,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         async () => {
-            pythonExecutableName = await utils.setupEnv(context, true);
+            pythonExecutablePath = await utils.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
             );
@@ -568,7 +570,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 active_device: currentActiveDevice,
             });
 
-            childProcess = cp.spawn(pythonExecutableName, [
+            childProcess = cp.spawn(pythonExecutablePath, [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
@@ -727,7 +729,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
             );
 
-            const deviceProcess = cp.spawn(pythonExecutableName, [
+            const deviceProcess = cp.spawn(pythonExecutablePath, [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
@@ -1030,7 +1032,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const configsChanged = vscode.workspace.onDidChangeConfiguration(
         async () => {
             if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
-                pythonExecutableName = await utils.setupEnv(context);
+                pythonExecutablePath = await utils.setupEnv(context);
             }
         }
     );

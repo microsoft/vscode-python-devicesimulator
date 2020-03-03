@@ -39,10 +39,16 @@ sim-button {
     fill: orange;
 }
 
+.sim-button-key-press {
+    fill: orange;
+}
+
 .sim-button-nut {
     fill: #704a4a;
     pointer-events: none;
 }
+
+/*
 .sim-button-nut:hover {
     stroke: 1px solid #704a4a;
 }
@@ -60,7 +66,7 @@ sim-button {
 .sim-led:hover {
     stroke: #ff7f7f;
     stroke-width: 3px;
-}
+} */
 .sim-systemled {
     fill: #333;
     stroke: #555;
@@ -145,6 +151,14 @@ sim-button {
 }
 *:focus {
     outline: none;
+}
+.sim-button-group:focus {
+    stroke: #4d90fe;
+    stroke-width: 4px;
+}
+.sim-button-group:focus {
+    stroke: #4d90fe;
+    stroke-width: 4px;
 }
 *:focus .sim-button-outer,
 .sim-pin:focus,
