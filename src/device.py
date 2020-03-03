@@ -51,7 +51,6 @@ class Device:
                     if drive_name == CONSTANTS.CPX_DRIVE_NAME:
                         found_directory = drive_path
                         break
-            print("WINDOWS")
         else:
             raise NotImplementedError(CONSTANTS.NOT_SUPPORTED_OS.format(sys.platform))
 
@@ -61,11 +60,9 @@ class Device:
                 CONSTANTS.NO_CPX_DETECTED_ERROR_TITLE,
                 CONSTANTS.NO_CPX_DETECTED_ERROR_DETAIL.format(sys.platform),
             )
-            print("DIRECTORY NOT FOUND")
         else:
             self.connected = True
             self.error_message = None
-            print("Directory found")
         return found_directory
 
     def deployToCPX(self):
