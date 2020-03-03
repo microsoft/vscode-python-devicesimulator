@@ -73,14 +73,12 @@ class Device:
                 file=sys.stderr,
                 flush=True,
             )
-            print("deploy error")
         if self.connected:
             dest_path = os.path.join(
                 device_directory, self.file_path.rsplit(os.sep, 1)[-1]
             )
             shutil.copyfile(self.file_path, dest_path)
             message = {"type": "complete"}
-            print("deploy success")
         else:
             message = {"type": "no-device"}
 
