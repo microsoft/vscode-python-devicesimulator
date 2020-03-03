@@ -807,9 +807,9 @@ export async function activate(context: vscode.ExtensionContext) {
                     vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
                 }
                 break;
-            case "less-python-version":
+            case "low-python-version":
                 vscode.window.showErrorMessage(
-                    CONSTANTS.ERROR.LESS_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
+                    CONSTANTS.ERROR.LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
                 );
                 break;
             default:

@@ -22,7 +22,7 @@ class Device:
         self.connected = False
         self.error_message = None
 
-    def find_device_directory(self):
+    def find_cpx_directory(self):
         """
         Check if the Circuit Playground Express is available/plugged in
         """
@@ -66,7 +66,7 @@ class Device:
         return found_directory
 
     def deployToCPX(self):
-        device_directory = self.find_device_directory()
+        device_directory = self.find_cpx_directory()
         if self.error_message:
             print(
                 "{}:\t{}".format(self.error_message[0], self.error_message[1]),
@@ -95,7 +95,7 @@ class Device:
             sys.stdout = _stdout
             message = {"type": "complete"}
         except RuntimeError:
-            message = {"type": "less-python-version"}
+            message = {"type": "low-python-version"}
         except IOError:
             self.error_message = CONSTANTS.NO_MICROBIT_DETECTED_ERROR_TITLE
             print(
