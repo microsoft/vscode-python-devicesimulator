@@ -1,6 +1,4 @@
 """
-Save your file as "code.py" or "main.py" to run on the actual device.
-
 Getting started with CPX and CircuitPython intro on:
 https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library
 

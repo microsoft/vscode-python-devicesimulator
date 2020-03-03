@@ -65,14 +65,6 @@ export const CONSTANTS = {
                 `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
             );
         },
-        INCORRECT_FILE_NAME_FOR_DEVICE: localize(
-            "error.incorrectFileNameForDevice",
-            '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
-        ),
-        INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
-            "error.incorrectFileNameForDevicePopup",
-            'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
-        ),
         INSTALLATION_ERROR: localize(
             "error.installationError",
             "Installation Error"
@@ -175,10 +167,6 @@ export const CONSTANTS = {
             "info.firstTimeWebview",
             'To reopen the simulator select the command "Open Simulator" from command palette.'
         ),
-        INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
-            "info.incorrectFileNameForSimulatorPopup",
-            'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
-        ),
         INSTALLING_PYTHON_VENV: localize(
             "info.installingPythonVenv",
             "A virtual environment is currently being created. The required Python packages will be installed. You will be prompted a message telling you when the installation is done."
@@ -190,10 +178,6 @@ export const CONSTANTS = {
         INSTALL_PYTHON_VENV: localize(
             "info.installPythonVenv",
             "Do you want us to try and install this extension's dependencies via virtual environment for you?"
-        ),
-        INVALID_FILE_NAME_DEBUG: localize(
-            "info.invalidFileNameDebug",
-            'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
         ),
         NEW_FILE: localize(
             "info.newFile",
@@ -458,11 +442,6 @@ export namespace DialogResponses {
 }
 
 export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
-
-export const USER_CODE_NAMES = {
-    CODE_PY: "code.py",
-    MAIN_PY: "main.py",
-};
 
 export const STATUS_BAR_PRIORITY = {
     PORT: 20,

@@ -101,7 +101,6 @@ Before deploying the python code to your CPX device, you need to format your dev
 
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
-   **_Note:_** Make sure you name your file `main.py` or `code.py`: the device automatically runs the first file that is likely named. This is the convention for CircuitPython ([source](https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file-7-32)).
 
 Then, if you are on Windows, you will also need to install the Python Pywin32 package. Use the following command in the console: `pip install pywin32`
 
@@ -135,7 +134,7 @@ Device Simulator Express provides several commands in the Command Palette (F1 or
 - `Device Simulator Express: [Circuit Playground Express] New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [Circuit Playground Express] Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: [Circuit Playground Express] Run on Simulator`: Runs python code on the simulator
-- `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies & Pastes the code.py or main.py file to CIRCUITPY drive if detected a CPX is plugged in
+- `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies & Pastes the current file to CIRCUITPY drive if detected a CPX is plugged in
 - `Device Simulator Express: [Circuit Playground Express] Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: [Circuit Playground Express] Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Device Simulator Express: [Circuit Playground Express] Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
@@ -253,4 +252,3 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 
 1. Make sure that when you type _python_ in a terminal, the command is recognized and you have the correct version. The easiest way to do it is to select the "Add to PATH" option directly when you install Python. Otherwise you can search how to insert it manually.
 2. You can choose to see the prompt or not by changing the extension configurations.
-3. To be able to run the file on your physical device, it should either be named code.py or main.py.

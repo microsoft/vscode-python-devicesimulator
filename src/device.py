@@ -74,9 +74,11 @@ class Device:
                 flush=True,
             )
         if self.connected:
-            dest_path = os.path.join(
-                device_directory, self.file_path.rsplit(os.sep, 1)[-1]
-            )
+            original_file_name = self.file_path.rsplit(os.sep, 1)[-1]
+            if original_file_name == "code.py" or original_file_name == "main.py":
+                dest_path = os.path.join(device_directory, original_file_name)
+            else:
+                dest_path = os.path.join(device_directory, "code.py")
             shutil.copyfile(self.file_path, dest_path)
             message = {"type": "complete"}
         else:

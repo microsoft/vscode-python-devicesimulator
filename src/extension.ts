@@ -41,7 +41,6 @@ let configFileCreated: boolean = false;
 let inDebugMode: boolean = false;
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 const messagingService = new MessagingService();
 const debuggerCommunicationService = new DebuggerCommunicationService();
@@ -543,27 +542,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
             );
 
-            if (
-                !utils.validCodeFileName(currentFileAbsPath) &&
-                shouldShowInvalidFileNamePopup
-            ) {
-                // to the popup
-                vscode.window
-                    .showInformationMessage(
-                        CONSTANTS.INFO.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
-                        DialogResponses.DONT_SHOW,
-                        DialogResponses.MESSAGE_UNDERSTOOD
-                    )
-                    .then((selection: vscode.MessageItem | undefined) => {
-                        if (selection === DialogResponses.DONT_SHOW) {
-                            shouldShowInvalidFileNamePopup = false;
-                            telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CPX_CLICK_DIALOG_DONT_SHOW
-                            );
-                        }
-                    });
-            }
-
             // Activate the run webview button
             currentPanel.webview.postMessage({
                 command: "activate-play",
@@ -709,22 +687,6 @@ export async function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage(
                 CONSTANTS.ERROR.NO_FILE_TO_RUN,
                 DialogResponses.MESSAGE_UNDERSTOOD
-            );
-        } else if (
-            device == CONSTANTS.DEVICE_NAME.CPX &&
-            !utils.validCodeFileName(currentFileAbsPath)
-        ) {
-            // Save on run
-            await currentTextDocument.save();
-            // Output panel
-            utils.logToOutputChannel(
-                outChannel,
-                CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
-                true
-            );
-            // Popup
-            vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
             );
         } else {
             utils.logToOutputChannel(
