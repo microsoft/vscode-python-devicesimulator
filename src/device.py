@@ -95,7 +95,7 @@ class Device:
             sys.stdout = _stdout
             message = {"type": "complete"}
         except RuntimeError:
-            message = {"type": "wrong-python-version"}
+            message = {"type": "less-python-version"}
         except IOError:
             self.error_message = CONSTANTS.NO_MICROBIT_DETECTED_ERROR_TITLE
             print(

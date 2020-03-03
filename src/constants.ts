@@ -77,6 +77,10 @@ export const CONSTANTS = {
             "error.invalidPythonPath",
             'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application.'
         ),
+        LESS_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT: localize(
+            "error.wrongPythonVersionForMicrobitDeployment",
+            "To deploy your code to the micro:bit, you must be using Python 3.3+"
+        ),
         NO_DEVICE: localize(
             "error.noDevice",
             "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
@@ -111,10 +115,6 @@ export const CONSTANTS = {
         UNEXPECTED_MESSAGE: localize(
             "error.unexpectedMessage",
             "Webview sent an unexpected message"
-        ),
-        WRONG_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT: localize(
-            "error.wrongPythonVersionForMicrobitDeployment",
-            "To deploy your code to the micro:bit, you must be using Python 3.3+"
         ),
     },
     FILESYSTEM: {
