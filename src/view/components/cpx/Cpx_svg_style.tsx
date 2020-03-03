@@ -143,7 +143,7 @@ export const SVG_STYLE = `
     }
     .sim-text-outside{
         font-size:8px;
-        fill: var(--vscode-textLink-activeForeground);
+        fill: var(--vscode-descriptionForeground);
     }
     .sim-text.small {
         font-size:6px;
