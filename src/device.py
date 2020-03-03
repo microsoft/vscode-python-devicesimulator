@@ -85,7 +85,7 @@ class Device:
 
     def deployToMicrobit(self):
         try:
-            # Temporarily redircting stdout because there are some print statements in uflash library
+            # Temporarily redirecting stdout because there are some print statements in uflash library
             fake_stdout = open(os.devnull, "w")
             _stdout = sys.stdout
             sys.stdout = fake_stdout
