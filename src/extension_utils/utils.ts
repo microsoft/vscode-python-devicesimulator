@@ -16,10 +16,12 @@ import {
     GLOBAL_ENV_VARS,
     HELPER_FILES,
     SERVER_INFO,
+    TelemetryEventName,
     VERSIONS,
 } from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
 import { DeviceContext } from "../deviceContext";
+import TelemetryAI from "../telemetry/telemetryAI";
 
 const exec = util.promisify(cp.exec);
 
@@ -330,7 +332,8 @@ export const hasVenv = async (context: vscode.ExtensionContext) => {
 export const promptInstallVenv = (
     context: vscode.ExtensionContext,
     pythonExecutable: string,
-    pythonExecutableName: string
+    pythonExecutableName: string,
+    telemetryAI: TelemetryAI
 ) => {
     return vscode.window
         .showInformationMessage(
@@ -343,7 +346,8 @@ export const promptInstallVenv = (
                 return installPythonVenv(
                     context,
                     pythonExecutable,
-                    pythonExecutableName
+                    pythonExecutableName,
+                    telemetryAI
                 );
             } else {
                 // return pythonExecutable, notifying the caller
@@ -371,7 +375,8 @@ export const getPythonVenv = async (
 export const installPythonVenv = async (
     context: vscode.ExtensionContext,
     pythonExecutable: string,
-    pythonExecutableName: string
+    pythonExecutableName: string,
+    telemetryAI: TelemetryAI
 ) => {
     const pathToEnv: string = getPathToScript(
         context,
@@ -390,6 +395,9 @@ export const installPythonVenv = async (
         // run command to download dependencies to out/python_libs
         await executePythonCommand(pythonExecutable, `-m venv "${pathToEnv}"`);
     } catch (err) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.SETUP_VENV_CREATION_ERR
+        );
         vscode.window
             .showErrorMessage(
                 `Virtual environment for download could not be completed. Using original interpreter at: ${pythonExecutable}.`,
@@ -406,7 +414,12 @@ export const installPythonVenv = async (
         return pythonExecutable;
     }
 
-    return installDependenciesWrapper(context, pythonPath, pythonExecutable);
+    return installDependenciesWrapper(
+        context,
+        pythonPath,
+        telemetryAI,
+        pythonExecutable
+    );
 };
 
 export const areDependenciesInstalled = async (
@@ -436,7 +449,8 @@ export const areDependenciesInstalled = async (
 
 export const installDependencies = async (
     context: vscode.ExtensionContext,
-    pythonPath: string
+    pythonPath: string,
+    telemetryAI: TelemetryAI
 ) => {
     const requirementsPath: string = getPathToScript(
         context,
@@ -445,6 +459,7 @@ export const installDependencies = async (
     );
 
     if (!isPipInstalled(pythonPath)) {
+        telemetryAI.trackFeatureUsage(TelemetryEventName.SETUP_NO_PIP);
         return false;
     }
 
@@ -465,13 +480,14 @@ export const installDependencies = async (
 export const installDependenciesWrapper = async (
     context: vscode.ExtensionContext,
     pythonPath: string,
+    telemetryAI: TelemetryAI,
     backupPythonPath: string = ""
 ) => {
     let errMessage = CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR;
     if (backupPythonPath !== "") {
         errMessage = `${errMessage} Using original interpreter at: ${backupPythonPath}.`;
     }
-    if (!(await installDependencies(context, pythonPath))) {
+    if (!(await installDependencies(context, pythonPath, telemetryAI))) {
         vscode.window
             .showErrorMessage(
                 CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
@@ -482,11 +498,17 @@ export const installDependenciesWrapper = async (
                     open(CONSTANTS.LINKS.INSTALL);
                 }
             });
+
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.SETUP_DEP_INSTALL_FAIL
+        );
         return backupPythonPath;
     }
     return pythonPath;
 };
-export const getCurrentpythonExecutablePath = async () => {
+export const getCurrentpythonExecutablePath = async (
+    telemetryAI: TelemetryAI
+) => {
     let originalpythonExecutablePath = "";
 
     // try to get name from interpreter
@@ -500,6 +522,9 @@ export const getCurrentpythonExecutablePath = async () => {
         originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
         originalpythonExecutablePath === ""
     ) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.SETUP_AUTO_RESOLVE_PYTHON_PATH
+        );
         try {
             const { stdout } = await executePythonCommand(
                 GLOBAL_ENV_VARS.PYTHON,
@@ -507,6 +532,9 @@ export const getCurrentpythonExecutablePath = async () => {
             );
             originalpythonExecutablePath = stdout.trim();
         } catch (err) {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.SETUP_NO_PYTHON_PATH
+            );
             vscode.window
                 .showErrorMessage(
                     CONSTANTS.ERROR.NO_PYTHON_PATH,
@@ -515,6 +543,9 @@ export const getCurrentpythonExecutablePath = async () => {
                 .then((selection: vscode.MessageItem | undefined) => {
                     if (selection === DialogResponses.INSTALL_PYTHON) {
                         const okAction = () => {
+                            telemetryAI.trackFeatureUsage(
+                                TelemetryEventName.SETUP_DOWNLOAD_PYTHON
+                            );
                             open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                         };
                         showPrivacyModal(
@@ -523,7 +554,6 @@ export const getCurrentpythonExecutablePath = async () => {
                         );
                     }
                 });
-
             // no python installed, cannot get path
             return "";
         }
@@ -538,10 +568,14 @@ export const getCurrentpythonExecutablePath = async () => {
 
     if (!fs.existsSync(originalpythonExecutablePath)) {
         await vscode.window.showErrorMessage(CONSTANTS.ERROR.BAD_PYTHON_PATH);
+        telemetryAI.trackFeatureUsage(TelemetryEventName.SETUP_BAD_PYTHON_PATH);
         return "";
     }
 
     if (!(await validatePythonVersion(originalpythonExecutablePath))) {
+        telemetryAI.trackFeatureUsage(
+            TelemetryEventName.SETUP_INVALID_PYTHON_VER
+        );
         return "";
     }
 
@@ -549,9 +583,12 @@ export const getCurrentpythonExecutablePath = async () => {
 };
 export const setupEnv = async (
     context: vscode.ExtensionContext,
+    telemetryAI: TelemetryAI,
     needsResponse: boolean = false
 ) => {
-    const originalpythonExecutablePath = await getCurrentpythonExecutablePath();
+    const originalpythonExecutablePath = await getCurrentpythonExecutablePath(
+        telemetryAI
+    );
     let pythonExecutablePath = originalpythonExecutablePath;
     let pythonExecutableName: string =
         os.platform() === "win32"
@@ -567,6 +604,7 @@ export const setupEnv = async (
             );
             if (await hasVenv(context)) {
                 // venv in extention exists with wrong dependencies
+
                 if (
                     !(await areDependenciesInstalled(
                         context,
@@ -576,6 +614,7 @@ export const setupEnv = async (
                     pythonExecutablePath = await installDependenciesWrapper(
                         context,
                         pythonExecutablePathVenv,
+                        telemetryAI,
                         pythonExecutablePath
                     );
                 } else {
@@ -585,7 +624,11 @@ export const setupEnv = async (
                 pythonExecutablePath = await promptInstallVenv(
                     context,
                     originalpythonExecutablePath,
-                    pythonExecutableName
+                    pythonExecutableName,
+                    telemetryAI
+                );
+                telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.SETUP_INSTALL_VENV
                 );
             }
 
@@ -597,6 +640,8 @@ export const setupEnv = async (
                     .getConfiguration()
                     .update(CONFIG.PYTHON_PATH, pythonExecutablePath);
             }
+        } else {
+            telemetryAI.trackFeatureUsage(TelemetryEventName.SETUP_HAS_VENV);
         }
         if (pythonExecutablePath === originalpythonExecutablePath) {
             // going with original interpreter, either because
@@ -613,9 +658,13 @@ export const setupEnv = async (
                             installChoice: vscode.MessageItem | undefined
                         ) => {
                             if (installChoice === DialogResponses.INSTALL_NOW) {
+                                telemetryAI.trackFeatureUsage(
+                                    TelemetryEventName.SETUP_ORIGINAL_INTERPRETER_DEP_INSTALL
+                                );
                                 await installDependenciesWrapper(
                                     context,
-                                    pythonExecutablePath
+                                    pythonExecutablePath,
+                                    telemetryAI
                                 );
                             } else {
                                 await vscode.window
@@ -636,7 +685,12 @@ export const setupEnv = async (
                                             ) {
                                                 await installDependenciesWrapper(
                                                     context,
-                                                    pythonExecutablePath
+                                                    pythonExecutablePath,
+                                                    telemetryAI
+                                                );
+                                            } else {
+                                                telemetryAI.trackFeatureUsage(
+                                                    TelemetryEventName.SETUP_NO_DEPS_INSTALLED
                                                 );
                                             }
                                         }

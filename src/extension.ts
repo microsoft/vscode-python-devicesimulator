@@ -99,7 +99,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutablePath = await utils.setupEnv(context);
+    pythonExecutablePath = await utils.setupEnv(context, telemetryAI);
 
     try {
         utils.generateCPXConfig();
@@ -443,7 +443,11 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         async () => {
-            pythonExecutablePath = await utils.setupEnv(context, true);
+            pythonExecutablePath = await utils.setupEnv(
+                context,
+                telemetryAI,
+                true
+            );
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
             );
@@ -1028,7 +1032,10 @@ export async function activate(context: vscode.ExtensionContext) {
     const configsChanged = vscode.workspace.onDidChangeConfiguration(
         async () => {
             if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
-                pythonExecutablePath = await utils.setupEnv(context);
+                pythonExecutablePath = await utils.setupEnv(
+                    context,
+                    telemetryAI
+                );
             }
         }
     );
