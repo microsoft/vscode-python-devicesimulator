@@ -51,7 +51,7 @@ cpx.pixels._Pixel__set_debug_mode(True)
 mb._MicrobitModel__set_debug_mode(True)
 
 # Execute the user's code file
-with open(abs_path_to_code_file) as user_code_file:
+with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
     user_code = user_code_file.read()
     try:
         codeObj = compile(user_code, abs_path_to_code_file, CONSTANTS.EXEC_COMMAND)
