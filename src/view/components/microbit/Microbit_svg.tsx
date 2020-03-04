@@ -1778,7 +1778,7 @@ export class MicrobitSvg extends React.Component {
                             fill="#111"
                             style={{ fill: "rgb(17, 17, 17)" }}
                         />
-                        <text x={525} y={340} className="sim-text">
+                        <text x={525} y={340} className="sim-text-outside">
                             A+B
                         </text>
                         <g

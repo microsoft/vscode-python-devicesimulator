@@ -3,8 +3,8 @@
 
 import * as React from "react";
 import { VIEW_STATE } from "../../constants";
-import { ViewStateContext } from "../../context";
 import CONSTANTS, { MICROBIT_BUTTON_STYLING_CLASSES } from "../../constants";
+import { ViewStateContext } from "../../context";
 import "../../styles/Microbit.css";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 

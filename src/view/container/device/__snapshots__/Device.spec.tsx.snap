@@ -2472,7 +2472,7 @@ exports[`Device component  should render correctly 1`] = `
               }
             />
             <text
-              className="sim-text"
+              className="sim-text-outside"
               x={525}
               y={340}
             >
