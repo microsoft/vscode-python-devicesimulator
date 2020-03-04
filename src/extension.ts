@@ -3,6 +3,7 @@
 
 import * as cp from "child_process";
 import * as fs from "fs";
+import { registerDefaultFontFaces } from "office-ui-fabric-react";
 import * as open from "open";
 import * as os from "os";
 import * as path from "path";
@@ -25,13 +26,12 @@ import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
 import { DebuggerCommunicationService } from "./service/debuggerCommunicationService";
 import { MessagingService } from "./service/messagingService";
+import { PopupService } from "./service/PopupService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { PopupService } from "./service/PopupService";
-import getPackageInfo from "./telemetry/getPackageInfo";
-import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
