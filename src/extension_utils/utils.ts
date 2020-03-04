@@ -553,7 +553,7 @@ export const setupEnv = async (
 ) => {
     const originalpythonExecutablePath = await getCurrentpythonExecutablePath();
     let pythonExecutablePath = originalpythonExecutablePath;
-    let pythonExecutableName: string =
+    const pythonExecutableName: string =
         os.platform() === "win32"
             ? HELPER_FILES.PYTHON_EXE
             : HELPER_FILES.PYTHON;
