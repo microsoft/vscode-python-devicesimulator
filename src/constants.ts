@@ -65,14 +65,6 @@ export const CONSTANTS = {
                 `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
             );
         },
-        INCORRECT_FILE_NAME_FOR_DEVICE: localize(
-            "error.incorrectFileNameForDevice",
-            '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
-        ),
-        INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
-            "error.incorrectFileNameForDevicePopup",
-            'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
-        ),
         INSTALLATION_ERROR: localize(
             "error.installationError",
             "Installation Error"
@@ -84,6 +76,10 @@ export const CONSTANTS = {
         INVALID_PYTHON_PATH: localize(
             "error.invalidPythonPath",
             'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application.'
+        ),
+        LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT: localize(
+            "error.lowPythonVersionForMicrobitDeployment",
+            "To deploy your code to the micro:bit, you must be using Python 3.3+"
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -155,11 +151,11 @@ export const CONSTANTS = {
         ),
         DEPLOY_SUCCESS: localize(
             "info.deploySuccess",
-            "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
+            "\n[INFO] Code successfully copied! Your device should be loading and ready to go shortly.\n"
         ),
         EXTENSION_ACTIVATED: localize(
             "info.extensionActivated",
-            "Congratulations, your extension Adafruit_Simulator is now active!"
+            "Congratulations, your extension Device Simulator Express is now active!"
         ),
         FILE_SELECTED: (filePath: string) => {
             return localize(
@@ -170,10 +166,6 @@ export const CONSTANTS = {
         FIRST_TIME_WEBVIEW: localize(
             "info.firstTimeWebview",
             'To reopen the simulator select the command "Open Simulator" from command palette.'
-        ),
-        INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
-            "info.incorrectFileNameForSimulatorPopup",
-            'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
         ),
         INSTALLING_PYTHON_VENV: localize(
             "info.installingPythonVenv",
@@ -186,10 +178,6 @@ export const CONSTANTS = {
         INSTALL_PYTHON_VENV: localize(
             "info.installPythonVenv",
             "Do you want us to try and install this extension's dependencies via virtual environment for you?"
-        ),
-        INVALID_FILE_NAME_DEBUG: localize(
-            "info.invalidFileNameDebug",
-            'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
         ),
         NEW_FILE: localize(
             "info.newFile",
@@ -336,6 +324,7 @@ export enum TelemetryEventName {
     CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE = "CPX.COMMAND.SERIAL_MONITOR.BAUD_RATE",
     CPX_COMMAND_SERIAL_MONITOR_CLOSE = "CPX.COMMAND.SERIAL_MONITOR.CLOSE",
 
+    MICROBIT_COMMAND_DEPLOY_DEVICE = "MICROBIT.COMMAND.DEPLOY.DEVICE",
     MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
@@ -373,12 +362,16 @@ export enum TelemetryEventName {
     CPX_SUCCESS_COMMAND_DEPLOY_DEVICE = "CPX.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     MICROBIT_ERROR_COMMAND_NEW_FILE = "MICROBIT.ERROR.COMMAND.NEW.FILE",
+    MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE = "MICROBIT.ERROR.DEPLOY.WITHOUT.DEVICE",
+    MICROBIT_ERROR_PYTHON_DEVICE_PROCESS = "MICROBIT.ERROR.PYTHON.DEVICE.PROCESS",
+    MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE = "MICROBIT.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     // Performance
     CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
     CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
     CPX_PERFORMANCE_OPEN_SIMULATOR = "CPX.PERFORMANCE.OPEN.SIMULATOR",
 
+    MICROBIT_PERFORMANCE_DEPLOY_DEVICE = "MICROBIT.PERFORMANCE.DEPLOY.DEVICE",
     MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
 }
@@ -449,11 +442,6 @@ export namespace DialogResponses {
 }
 
 export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
-
-export const USER_CODE_NAMES = {
-    CODE_PY: "code.py",
-    MAIN_PY: "main.py",
-};
 
 export const STATUS_BAR_PRIORITY = {
     PORT: 20,

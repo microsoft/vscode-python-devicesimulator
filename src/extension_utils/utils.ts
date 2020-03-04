@@ -16,7 +16,6 @@ import {
     GLOBAL_ENV_VARS,
     HELPER_FILES,
     SERVER_INFO,
-    USER_CODE_NAMES,
     VERSIONS,
 } from "../constants";
 import { CPXWorkspace } from "../cpxWorkspace";
@@ -39,13 +38,6 @@ export const getPathToScript = (
     );
     const scriptPath = onDiskPath.with({ scheme: "vscode-resource" });
     return scriptPath.fsPath;
-};
-
-export const validCodeFileName = (filePath: string) => {
-    return (
-        filePath.endsWith(USER_CODE_NAMES.CODE_PY) ||
-        filePath.endsWith(USER_CODE_NAMES.MAIN_PY)
-    );
 };
 
 export const showPrivacyModal = (

@@ -41,7 +41,6 @@ let configFileCreated: boolean = false;
 let inDebugMode: boolean = false;
 // Notification booleans
 let firstTimeClosed: boolean = true;
-let shouldShowInvalidFileNamePopup: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 const messagingService = new MessagingService();
 const debuggerCommunicationService = new DebuggerCommunicationService();
@@ -543,27 +542,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
             );
 
-            if (
-                !utils.validCodeFileName(currentFileAbsPath) &&
-                shouldShowInvalidFileNamePopup
-            ) {
-                // to the popup
-                vscode.window
-                    .showInformationMessage(
-                        CONSTANTS.INFO.INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP,
-                        DialogResponses.DONT_SHOW,
-                        DialogResponses.MESSAGE_UNDERSTOOD
-                    )
-                    .then((selection: vscode.MessageItem | undefined) => {
-                        if (selection === DialogResponses.DONT_SHOW) {
-                            shouldShowInvalidFileNamePopup = false;
-                            telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CPX_CLICK_DIALOG_DONT_SHOW
-                            );
-                        }
-                    });
-            }
-
             // Activate the run webview button
             currentPanel.webview.postMessage({
                 command: "activate-play",
@@ -686,8 +664,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const cpxDeployCodeToDevice = async () => {
-        console.info("Sending code to device");
+    const deployCode = async (device: string) => {
+        console.info(`Sending code to ${device}`);
 
         utils.logToOutputChannel(
             outChannel,
@@ -710,19 +688,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 CONSTANTS.ERROR.NO_FILE_TO_RUN,
                 DialogResponses.MESSAGE_UNDERSTOOD
             );
-        } else if (!utils.validCodeFileName(currentFileAbsPath)) {
-            // Save on run
-            await currentTextDocument.save();
-            // Output panel
-            utils.logToOutputChannel(
-                outChannel,
-                CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE,
-                true
-            );
-            // Popup
-            vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.INCORRECT_FILE_NAME_FOR_DEVICE_POPUP
-            );
         } else {
             utils.logToOutputChannel(
                 outChannel,
@@ -735,6 +700,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
                     HELPER_FILES.DEVICE_PY
                 ),
+                device,
                 currentFileAbsPath,
             ]);
 
@@ -747,58 +713,14 @@ export async function activate(context: vscode.ExtensionContext) {
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
-                    // Check the JSON is a state
-                    switch (messageToWebview.type) {
-                        case "complete":
-                            telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE
-                            );
-                            utils.logToOutputChannel(
-                                outChannel,
-                                CONSTANTS.INFO.DEPLOY_SUCCESS
-                            );
-                            break;
-
-                        case "no-device":
-                            telemetryAI.trackFeatureUsage(
-                                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE
-                            );
-                            vscode.window
-                                .showErrorMessage(
-                                    CONSTANTS.ERROR.NO_DEVICE,
-                                    DialogResponses.HELP
-                                )
-                                .then(
-                                    (
-                                        selection:
-                                            | vscode.MessageItem
-                                            | undefined
-                                    ) => {
-                                        if (
-                                            selection === DialogResponses.HELP
-                                        ) {
-                                            const okAction = () => {
-                                                open(CONSTANTS.LINKS.HELP);
-                                                telemetryAI.trackFeatureUsage(
-                                                    TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
-                                                );
-                                            };
-                                            utils.showPrivacyModal(
-                                                okAction,
-                                                CONSTANTS.INFO
-                                                    .THIRD_PARTY_WEBSITE_ADAFRUIT
-                                            );
-                                        }
-                                    }
-                                );
-                            break;
-
-                        default:
-                            console.log(
-                                `Non-state JSON output from the process : ${messageToWebview}`
-                            );
-                            break;
+                    if (messageToWebview.type === "complete") {
+                        utils.logToOutputChannel(
+                            outChannel,
+                            CONSTANTS.INFO.DEPLOY_SUCCESS,
+                            true
+                        );
                     }
+                    handleDeployToDeviceTelemetry(messageToWebview, device);
                 } catch (err) {
                     console.log(
                         `Non-JSON output from the process :  ${dataFromTheProcess}`
@@ -808,10 +730,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
             // Std error output
             deviceProcess.stderr.on("data", data => {
-                telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS,
-                    { error: `${data}` }
-                );
+                handleDeployToDeviceErrorTelemetry(data, device);
                 console.error(
                     `Error from the Python device process through stderr: ${data}`
                 );
@@ -829,6 +748,86 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
+    const handleDeployToDeviceErrorTelemetry = (
+        data: string,
+        device: string
+    ) => {
+        let telemetryErrorName: string;
+        if (device === CONSTANTS.DEVICE_NAME.CPX) {
+            telemetryErrorName =
+                TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
+        } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
+            telemetryErrorName =
+                TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
+        }
+        telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
+    };
+
+    const handleDeployToDeviceTelemetry = (message: any, device: string) => {
+        let successCommandDeployDevice: string;
+        let errorCommandDeployWithoutDevice: string;
+        if (device === CONSTANTS.DEVICE_NAME.CPX) {
+            successCommandDeployDevice =
+                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
+        } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
+            successCommandDeployDevice =
+                TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
+        }
+        switch (message.type) {
+            case "complete":
+                telemetryAI.trackFeatureUsage(successCommandDeployDevice);
+                break;
+            case "no-device":
+                telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
+                if (device === CONSTANTS.DEVICE_NAME.CPX) {
+                    vscode.window
+                        .showErrorMessage(
+                            CONSTANTS.ERROR.NO_DEVICE,
+                            DialogResponses.HELP
+                        )
+                        .then((selection: vscode.MessageItem | undefined) => {
+                            if (selection === DialogResponses.HELP) {
+                                const okAction = () => {
+                                    open(CONSTANTS.LINKS.HELP);
+                                    telemetryAI.trackFeatureUsage(
+                                        TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                                    );
+                                };
+                                utils.showPrivacyModal(
+                                    okAction,
+                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
+                                );
+                            }
+                        });
+                } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
+                    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
+                }
+                break;
+            case "low-python-version":
+                vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
+                );
+                break;
+            default:
+                console.log(
+                    `Non-state JSON output from the process : ${message}`
+                );
+                break;
+        }
+    };
+
+    const cpxDeployCodeToDevice = () => {
+        deployCode(CONSTANTS.DEVICE_NAME.CPX);
+    };
+
+    const microbitDeployCodeToDevice = () => {
+        deployCode(CONSTANTS.DEVICE_NAME.MICROBIT);
+    };
+
     const cpxDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.cpx.deployToDevice",
         () => {
@@ -838,6 +837,19 @@ export async function activate(context: vscode.ExtensionContext) {
             telemetryAI.runWithLatencyMeasure(
                 cpxDeployCodeToDevice,
                 TelemetryEventName.CPX_PERFORMANCE_DEPLOY_DEVICE
+            );
+        }
+    );
+
+    const microbitDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.microbit.deployToDevice",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE
+            );
+            telemetryAI.runWithLatencyMeasure(
+                microbitDeployCodeToDevice,
+                TelemetryEventName.MICROBIT_PERFORMANCE_DEPLOY_DEVICE
             );
         }
     );
@@ -900,22 +912,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const cpxCloseSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.cpx.closeSerialMonitor",
-        (port, showWarning = true) => {
-            if (serialMonitor) {
-                telemetryAI.runWithLatencyMeasure(() => {
-                    serialMonitor.closeSerialMonitor(port, showWarning);
-                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
-            } else {
-                vscode.window.showErrorMessage(
-                    CONSTANTS.ERROR.NO_FOLDER_OPENED
-                );
-                console.info("Serial monitor is not defined.");
-            }
-        }
-    );
-
-    const showReleaseNote = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.",
         (port, showWarning = true) => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
@@ -1049,6 +1045,7 @@ export async function activate(context: vscode.ExtensionContext) {
         cpxSelectSerialPort,
         microbitOpenSimulator,
         microbitNewFile,
+        microbitDeployToDevice,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
             simulatorDebugConfiguration

@@ -5,7 +5,9 @@ from subprocess import check_output
 import string
 import os
 import sys
+import shutil
 import json
+import uflash
 import python_constants as CONSTANTS
 
 if sys.platform == "win32":
@@ -14,11 +16,13 @@ if sys.platform == "win32":
 
 
 class Device:
-    def __init__(self):
+    def __init__(self, name, file_path):
+        self.name = name
+        self.file_path = file_path
         self.connected = False
         self.error_message = None
 
-    def find_device_directory(self):
+    def find_cpx_directory(self):
         """
         Check if the Circuit Playground Express is available/plugged in
         """
@@ -61,22 +65,57 @@ class Device:
             self.error_message = None
         return found_directory
 
+    def deployToCPX(self):
+        device_directory = self.find_cpx_directory()
+        if self.error_message:
+            print(
+                "{}:\t{}".format(self.error_message[0], self.error_message[1]),
+                file=sys.stderr,
+                flush=True,
+            )
+        if self.connected:
+            original_file_name = self.file_path.rsplit(os.sep, 1)[-1]
+            if original_file_name == "code.py" or original_file_name == "main.py":
+                dest_path = os.path.join(device_directory, original_file_name)
+            else:
+                dest_path = os.path.join(device_directory, "code.py")
+            shutil.copyfile(self.file_path, dest_path)
+            message = {"type": "complete"}
+        else:
+            message = {"type": "no-device"}
+        return message
+
+    def deployToMicrobit(self):
+        # Temporarily redirecting stdout because there are some print statements in uflash library
+        fake_stdout = open(os.devnull, "w")
+        _stdout = sys.stdout
+        sys.stdout = fake_stdout
+
+        try:
+            uflash.flash(path_to_python=self.file_path)
+            message = {"type": "complete"}
+        except RuntimeError:
+            message = {"type": "low-python-version"}
+        except IOError:
+            self.error_message = CONSTANTS.NO_MICROBIT_DETECTED_ERROR_TITLE
+            print(
+                self.error_message, file=sys.stderr, flush=True,
+            )
+            message = {"type": "no-device"}
+
+        sys.stdout = _stdout
+        return message
+
+    def deploy(self):
+        if self.name == CONSTANTS.MICROBIT:
+            return self.deployToMicrobit()
+        elif self.name == CONSTANTS.CPX:
+            return self.deployToCPX()
+        else:
+            return {"type": "no-device"}
+
 
 if __name__ == "__main__":
-    import shutil
-
-    cpx = Device()
-    device_directory = cpx.find_device_directory()
-    if cpx.error_message:
-        print(
-            "{}:\t{}".format(cpx.error_message[0], cpx.error_message[1]),
-            file=sys.stderr,
-            flush=True,
-        )
-    if cpx.connected:
-        dest_path = os.path.join(device_directory, sys.argv[1].rsplit(os.sep, 1)[-1])
-        shutil.copyfile(sys.argv[1], dest_path)
-        message = {"type": "complete"}
-    else:
-        message = {"type": "no-device"}
+    device = Device(sys.argv[1], sys.argv[2])
+    message = device.deploy()
     print(json.dumps(message), flush=True)

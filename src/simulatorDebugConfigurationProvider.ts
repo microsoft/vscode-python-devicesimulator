@@ -3,12 +3,7 @@
 
 import * as vscode from "vscode";
 import { CONSTANTS, DialogResponses } from "./constants";
-import {
-    getServerPortConfig,
-    validCodeFileName,
-} from "./extension_utils/utils";
-
-let shouldShowInvalidFileNamePopup: boolean = true;
+import { getServerPortConfig } from "./extension_utils/utils";
 
 export class SimulatorDebugConfigurationProvider
     implements vscode.DebugConfigurationProvider {
@@ -54,23 +49,6 @@ export class SimulatorDebugConfigurationProvider
                         )
                         .then(() => {
                             return undefined; // Abort launch
-                        });
-                } else if (
-                    !validCodeFileName(currentFilePath) &&
-                    shouldShowInvalidFileNamePopup
-                ) {
-                    vscode.window
-                        .showInformationMessage(
-                            CONSTANTS.INFO.INVALID_FILE_NAME_DEBUG,
-                            ...[
-                                DialogResponses.DONT_SHOW,
-                                DialogResponses.MESSAGE_UNDERSTOOD,
-                            ]
-                        )
-                        .then((selection: vscode.MessageItem | undefined) => {
-                            if (selection === DialogResponses.DONT_SHOW) {
-                                shouldShowInvalidFileNamePopup = false;
-                            }
                         });
                 }
                 // Set the new configuration type so the python debugger can take over
