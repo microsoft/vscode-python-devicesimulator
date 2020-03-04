@@ -590,7 +590,7 @@ export const setupEnv = async (
         telemetryAI
     );
     let pythonExecutablePath = originalpythonExecutablePath;
-    let pythonExecutableName: string =
+    const pythonExecutableName: string =
         os.platform() === "win32"
             ? HELPER_FILES.PYTHON_EXE
             : HELPER_FILES.PYTHON;

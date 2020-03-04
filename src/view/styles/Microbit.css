@@ -22,7 +22,10 @@ svg.sim.grayscale {
 .sim-button:active {
     fill: orange;
 }
-
+.sim-text-outside {
+    font-size: 25px;
+    fill: var(--vscode-descriptionForeground);
+}
 .sim-board,
 .sim-display,
 sim-button {
