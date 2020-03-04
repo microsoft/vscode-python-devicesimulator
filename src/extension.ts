@@ -3,6 +3,7 @@
 
 import * as cp from "child_process";
 import * as fs from "fs";
+import { registerDefaultFontFaces } from "office-ui-fabric-react";
 import * as open from "open";
 import * as os from "os";
 import * as path from "path";
@@ -25,13 +26,12 @@ import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
 import { DebuggerCommunicationService } from "./service/debuggerCommunicationService";
 import { MessagingService } from "./service/messagingService";
+import { PopupService } from "./service/PopupService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
+import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { PopupService } from "./service/PopupService";
-import getPackageInfo from "./telemetry/getPackageInfo";
-import { registerDefaultFontFaces } from "office-ui-fabric-react";
 
 let currentFileAbsPath: string = "";
 let currentTextDocument: vscode.TextDocument;
@@ -453,7 +453,6 @@ export async function activate(context: vscode.ExtensionContext) {
     const killProcessIfRunning = () => {
         if (childProcess !== undefined) {
             if (currentPanel) {
-                console.info("Sending clearing state command");
                 currentPanel.webview.postMessage({
                     command: "reset-state",
                     active_device: currentActiveDevice,
@@ -510,8 +509,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
         killProcessIfRunning();
 
-        await updateCurrentFileIfPython(
-            vscode.window.activeTextEditor!.document,
+        await updateCurrentFileFromEditor(
+            vscode.window.activeTextEditor,
             currentPanel
         );
 
@@ -638,7 +637,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     true
                 );
                 if (currentPanel) {
-                    console.log("Sending clearing state command");
                     currentPanel.webview.postMessage({
                         active_device: currentActiveDevice,
                         command: "reset-state",
@@ -1067,6 +1065,34 @@ const getActivePythonFile = () => {
     return activeEditor ? activeEditor.document.fileName : "";
 };
 
+const updateCurrentFileFromEditor = async (
+    activeTextDocument: vscode.TextEditor | undefined,
+    currentPanel: vscode.WebviewPanel
+) => {
+    if (
+        activeTextDocument &&
+        activeTextDocument.document &&
+        activeTextDocument.document.languageId === "python"
+    ) {
+        setPathAndSendMessage(
+            currentPanel,
+            activeTextDocument.document.fileName
+        );
+        currentTextDocument = activeTextDocument.document;
+    } else if (currentFileAbsPath === "") {
+        setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
+    }
+    if (
+        currentTextDocument &&
+        utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
+            undefined
+    ) {
+        await vscode.window.showTextDocument(
+            currentTextDocument,
+            vscode.ViewColumn.One
+        );
+    }
+};
 const updateCurrentFileIfPython = async (
     activeTextDocument: vscode.TextDocument | undefined,
     currentPanel: vscode.WebviewPanel
