@@ -9,7 +9,7 @@ Commands are accessible through :
 
 - **Open Simulator** : opens the webview of the simulator.
 
-- **New File** : opens an unsaved file with links to help you and a code snippet that you can save as `code.py` / `main.py`.  
+- **New File** : opens an unsaved file to help you and a code snippet that you can save and play around with.  
   _(**Note :** will open the simulator webview if it's not open yet)_.
 
 - **Run Simulator** : runs the code you have opened in the simulator (make sure you've clicked on a valid code file).  

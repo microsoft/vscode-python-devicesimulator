@@ -9,6 +9,7 @@
   "deviceSimulatorExpressExtension.commands.cpx.newFile": "[Circuit Playground Express] New File",
   "deviceSimulatorExpressExtension.commands.cpx.deployToDevice": "[Circuit Playground Express] Deploy to Device",
   "deviceSimulatorExpressExtension.commands.cpx.selectSerialPort": "[Circuit Playground Express] Select Serial Port",
+  "deviceSimulatorExpressExtension.commands.microbit.deployToDevice": "[micro:bit] Deploy to Device",
   "deviceSimulatorExpressExtension.commands.microbit.openSimulator": "[micro:bit] Open Simulator",
   "deviceSimulatorExpressExtension.commands.microbit.newFile": "[micro:bit] New File",
   "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
