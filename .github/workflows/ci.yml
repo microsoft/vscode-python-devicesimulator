@@ -32,7 +32,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r ./src/requirements.txt
     - name: Run npm compile, format-check and test
-    - with:
+      with:
         node-version: ${{ matrix.node-version }}
     - run: npm run compile
     - run: npm run check
