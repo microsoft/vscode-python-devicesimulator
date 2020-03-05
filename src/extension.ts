@@ -863,13 +863,13 @@ export async function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(serialMonitor);
     }
 
-    const cpxSelectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.selectSerialPort",
+    const selectSerialPort: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.selectSerialPort",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
                     serialMonitor.selectSerialPort(null, null);
-                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
+                }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CHOOSE_PORT);
             } else {
                 vscode.window.showErrorMessage(
                     CONSTANTS.ERROR.NO_FOLDER_OPENED
@@ -879,13 +879,13 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const cpxOpenSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.openSerialMonitor",
+    const openSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.openSerialMonitor",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
                     serialMonitor.openSerialMonitor.bind(serialMonitor),
-                    TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_OPEN
+                    TelemetryEventName.COMMAND_SERIAL_MONITOR_OPEN
                 );
             } else {
                 vscode.window.showErrorMessage(
@@ -896,13 +896,13 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const cpxChangeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.changeBaudRate",
+    const changeBaudRate: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.changeBaudRate",
         () => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(
                     serialMonitor.changeBaudRate.bind(serialMonitor),
-                    TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE
+                    TelemetryEventName.COMMAND_SERIAL_MONITOR_BAUD_RATE
                 );
             } else {
                 vscode.window.showErrorMessage(
@@ -913,13 +913,13 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    const cpxCloseSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.closeSerialMonitor",
+    const closeSerialMonitor: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.closeSerialMonitor",
         (port, showWarning = true) => {
             if (serialMonitor) {
                 telemetryAI.runWithLatencyMeasure(() => {
                     serialMonitor.closeSerialMonitor(port, showWarning);
-                }, TelemetryEventName.CPX_COMMAND_SERIAL_MONITOR_CLOSE);
+                }, TelemetryEventName.COMMAND_SERIAL_MONITOR_CLOSE);
             } else {
                 vscode.window.showErrorMessage(
                     CONSTANTS.ERROR.NO_FOLDER_OPENED
@@ -1039,13 +1039,13 @@ export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         installDependencies,
         runSimulator,
-        cpxChangeBaudRate,
-        cpxCloseSerialMonitor,
+        changeBaudRate,
+        closeSerialMonitor,
         cpxDeployToDevice,
         cpxNewFile,
-        cpxOpenSerialMonitor,
+        openSerialMonitor,
         cpxOpenSimulator,
-        cpxSelectSerialPort,
+        selectSerialPort,
         microbitOpenSimulator,
         microbitNewFile,
         microbitDeployToDevice,
