@@ -51,7 +51,7 @@ const fileSelectionService = new FileSelectionService(messagingService);
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script initialDevice=${this.deviceSelectionService.getCurrentActiveDevice()} src="${vscode.Uri.file(
+    return `<script initialDevice=${deviceSelectionService.getCurrentActiveDevice()} src="${vscode.Uri.file(
         context.asAbsolutePath(scriptPath)
     )
         .with({ scheme: "vscode-resource" })
@@ -121,7 +121,7 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     const openWebview = () => {
-        if (currentPanel) {
+        if (currentPanel && currentPanel.webview) {
             messagingService.setWebview(currentPanel.webview);
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
