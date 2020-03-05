@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Enable GUI applications if on Linux
-      if: matrix.os == "ubuntu-18.04"
+      if: startsWith(matrix.os, 'ubuntu')
       run: |
         export DISPLAY="127.0.0.1:10.0"
     - name: Use Node.js ${{ matrix.node-version }} and install npm dependencies
