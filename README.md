@@ -109,7 +109,7 @@ Then, if you are on Windows, you will also need to install the Python Pywin32 pa
 #### 5. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already)
-2. Run the command `"Device Simulator Express: [Circuit Playground Express] Open Serial Monitor"`
+2. Run the command `"Device Simulator Express: Open Serial Monitor"`
 3. Select your baud rate for the serial port
 4. The print() statements in your code will show in the output console
 
@@ -135,10 +135,10 @@ Device Simulator Express provides several commands in the Command Palette (F1 or
 - `Device Simulator Express: [Circuit Playground Express] Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: [Circuit Playground Express] Run on Simulator`: Runs python code on the simulator
 - `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies & Pastes the current file to CIRCUITPY drive if detected a CPX is plugged in
-- `Device Simulator Express: [Circuit Playground Express] Open Serial Monitor`: Opens the serial monitor in the integrated output window.
-- `Device Simulator Express: [Circuit Playground Express] Close Serial Monitor`: Stops the serial monitor and releases the serial port.
-- `Device Simulator Express: [Circuit Playground Express] Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
-- `Device Simulator Express: [Circuit Playground Express] Select Serial Port`: Changes the current serial port.
+- `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
+- `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
+- `Device Simulator Express: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX and the BBC micro:bit, the default baud rate is 115200.
+- `Device Simulator Express: Select Serial Port`: Changes the current serial port.
 
 ### Keybindings
 
@@ -159,7 +159,8 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - IntelliSense and syntax highlighting for micro:bit code 
 - Template file generation
 - Integrated Python Debugging for the Simulator
-- Deploy MicroPython code to the physical device.
+- Deploy MicroPython code to the physical device
+- Serial monitor (available on Windows and Mac only)
 - Simulation of the micro:bit device, including:
   - 25 LEDs
   - Light sensor
