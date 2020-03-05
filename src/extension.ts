@@ -25,6 +25,8 @@ import { DebuggerCommunicationServer } from "./debuggerCommunicationServer";
 import * as utils from "./extension_utils/utils";
 import { SerialMonitor } from "./serialMonitor";
 import { DebuggerCommunicationService } from "./service/debuggerCommunicationService";
+import { DeviceSelectionService } from "./service/deviceSelectionService";
+import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
@@ -32,8 +34,6 @@ import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
-import { DeviceSelectionService } from "./service/deviceSelectionService";
-import { FileSelectionService } from "./service/fileSelectionService";
 
 let telemetryAI: TelemetryAI;
 let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;

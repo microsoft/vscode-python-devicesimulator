@@ -25,7 +25,7 @@ export class FileSelectionService {
             await this.updateCurrentFileFromEditor({
                 document: activeTextDocument,
             } as vscode.TextEditor);
-        } else return;
+        } else { return; }
     };
     public updateCurrentFileFromEditor = async (
         activeTextDocument: vscode.TextEditor | undefined

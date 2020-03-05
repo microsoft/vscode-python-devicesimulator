@@ -16,7 +16,7 @@ export class MessagingService {
     public sendMessageToWebview(command: string, stateToSend: Object) {
         if (this.currentWebviewTarget) {
             this.currentWebviewTarget.postMessage({
-                command: command,
+                command,
                 active_device: this.deviceSelectionService.getCurrentActiveDevice(),
                 state: { ...stateToSend },
             });
