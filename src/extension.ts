@@ -1066,7 +1066,7 @@ const getActivePythonFile = () => {
 };
 
 const updateCurrentFileFromEditor = async (
-    activeTextDocument: vscode.TextEditor | undefined,
+    activeTextDocument: Partial<vscode.TextEditor> | undefined,
     currentPanel: vscode.WebviewPanel
 ) => {
     if (
@@ -1097,20 +1097,12 @@ const updateCurrentFileIfPython = async (
     activeTextDocument: vscode.TextDocument | undefined,
     currentPanel: vscode.WebviewPanel
 ) => {
-    if (activeTextDocument && activeTextDocument.languageId === "python") {
-        setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
-        currentTextDocument = activeTextDocument;
-    } else if (currentFileAbsPath === "") {
-        setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
-    }
-    if (
-        currentTextDocument &&
-        utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
-    ) {
-        await vscode.window.showTextDocument(
-            currentTextDocument,
-            vscode.ViewColumn.One
+    if (activeTextDocument) {
+        await updateCurrentFileFromEditor(
+            {
+                document: activeTextDocument,
+            },
+            currentPanel
         );
     }
 };
