@@ -21,6 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Enable GUI applications if on Linux
+      if: matrix.os == "ubuntu-18.04"
+      run: |
+        export DISPLAY="127.0.0.1:10.0"
     - name: Use Node.js ${{ matrix.node-version }} and install npm dependencies
       uses: actions/setup-node@v1
       with:
@@ -33,7 +37,7 @@ jobs:
     - run: |
         python -m pip install --upgrade pip
         pip install -r ./src/requirements.txt
-    - name: Run npm compile, format-check and test
+    - name: Use npm to compile, format-check and test
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
