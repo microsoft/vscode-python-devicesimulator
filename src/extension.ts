@@ -18,6 +18,7 @@ import {
     HELPER_FILES,
     SERVER_INFO,
     TelemetryEventName,
+    LANGUAGE_VARS,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
@@ -387,7 +388,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
         // tslint:disable-next-line: ban-comma-operator
         vscode.workspace
-            .openTextDocument({ content: file, language: "python" })
+            .openTextDocument({
+                content: file,
+                language: LANGUAGE_VARS.PYTHON.ID,
+            })
             .then((template: vscode.TextDocument) => {
                 vscode.window.showTextDocument(template, 1, false).then(() => {
                     openWebview();
@@ -516,7 +520,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (
                 !fileSelectionService
                     .getCurrentTextDocument()
-                    .fileName.endsWith(".py")
+                    .fileName.endsWith(LANGUAGE_VARS.PYTHON.FILE_ENDS)
             ) {
                 utils.logToOutputChannel(
                     outChannel,
@@ -654,8 +658,6 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     const deployCode = async (device: string) => {
-        console.info(`Sending code to ${device}`);
-
         utils.logToOutputChannel(
             outChannel,
             CONSTANTS.INFO.DEPLOY_DEVICE,
@@ -944,7 +946,7 @@ export async function activate(context: vscode.ExtensionContext) {
         debuggerCommunicationService
     );
     vscode.debug.registerDebugAdapterTrackerFactory(
-        "python",
+        LANGUAGE_VARS.PYTHON.ID,
         debugAdapterFactory
     );
     // On Debug Session Start: Init comunication

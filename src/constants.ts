@@ -465,5 +465,8 @@ export const HELPER_FILES = {
 export const GLOBAL_ENV_VARS = {
     PYTHON: "python",
 };
+export const LANGUAGE_VARS = {
+    PYTHON: { ID: "python", FILE_ENDS: ".py" },
+};
 
 export default CONSTANTS;

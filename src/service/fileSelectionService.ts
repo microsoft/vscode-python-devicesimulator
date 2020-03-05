@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { VSCODE_MESSAGES_TO_WEBVIEW } from "../view/constants";
 import { DeviceSelectionService } from "./deviceSelectionService";
 import { MessagingService } from "./messagingService";
+import { LANGUAGE_VARS } from "../constants";
 
 export class FileSelectionService {
     private currentFileAbsPath: string = "";
@@ -84,7 +85,7 @@ export class FileSelectionService {
     private getActivePythonFile = () => {
         const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
         const activeEditor = editors.find(
-            editor => editor.document.languageId === "python"
+            editor => editor.document.languageId === LANGUAGE_VARS.PYTHON.ID
         );
         if (activeEditor) {
             this.currentTextDocument = activeEditor.document;
