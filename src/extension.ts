@@ -30,6 +30,7 @@ import { DeviceSelectionService } from "./service/deviceSelectionService";
 import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
+import { SetupService } from "./service/SetupService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
@@ -44,6 +45,7 @@ let inDebugMode: boolean = false;
 let firstTimeClosed: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
 
+let setupService: SetupService;
 const deviceSelectionService = new DeviceSelectionService();
 const messagingService = new MessagingService(deviceSelectionService);
 const debuggerCommunicationService = new DebuggerCommunicationService();
@@ -72,6 +74,7 @@ export async function activate(context: vscode.ExtensionContext) {
     console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
     telemetryAI = new TelemetryAI(context);
+    setupService = new SetupService(telemetryAI);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
     let messageListener: vscode.Disposable;
@@ -84,7 +87,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutablePath = await utils.setupEnv(context);
+    pythonExecutablePath = await setupService.setupEnv(context);
 
     try {
         utils.generateCPXConfig();
@@ -433,7 +436,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         async () => {
-            pythonExecutablePath = await utils.setupEnv(context, true);
+            pythonExecutablePath = await setupService.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
             );
@@ -1020,7 +1023,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const configsChanged = vscode.workspace.onDidChangeConfiguration(
         async () => {
             if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
-                pythonExecutablePath = await utils.setupEnv(context);
+                pythonExecutablePath = await setupService.setupEnv(context);
             }
         }
     );
