@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
+import { LANGUAGE_VARS } from "../constants";
 import { VSCODE_MESSAGES_TO_WEBVIEW } from "../view/constants";
 import { DeviceSelectionService } from "./deviceSelectionService";
 import { MessagingService } from "./messagingService";
-import { LANGUAGE_VARS } from "../constants";
 
 export class FileSelectionService {
     private currentFileAbsPath: string = "";
