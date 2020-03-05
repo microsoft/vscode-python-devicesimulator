@@ -32,9 +32,9 @@ import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { DeviceSelectionService } from "./service/deviceSelectionService";
+import { FileSelectionService } from "./service/fileSelectionService";
 
-let currentFileAbsPath: string = "";
-let currentTextDocument: vscode.TextDocument;
 let telemetryAI: TelemetryAI;
 let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;
 let configFileCreated: boolean = false;
@@ -42,43 +42,27 @@ let inDebugMode: boolean = false;
 // Notification booleans
 let firstTimeClosed: boolean = true;
 let shouldShowRunCodePopup: boolean = true;
-const messagingService = new MessagingService();
-const debuggerCommunicationService = new DebuggerCommunicationService();
 
-let currentActiveDevice: string = DEFAULT_DEVICE;
+const deviceSelectionService = new DeviceSelectionService();
+const messagingService = new MessagingService(deviceSelectionService);
+const debuggerCommunicationService = new DebuggerCommunicationService();
+const fileSelectionService = new FileSelectionService(messagingService);
 
 export let outChannel: vscode.OutputChannel | undefined;
 
 function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script initialDevice=${currentActiveDevice} src="${vscode.Uri.file(
+    return `<script initialDevice=${this.deviceSelectionService.getCurrentActiveDevice()} src="${vscode.Uri.file(
         context.asAbsolutePath(scriptPath)
     )
         .with({ scheme: "vscode-resource" })
         .toString()}"></script>`;
 }
 
-const setPathAndSendMessage = (
-    currentPanel: vscode.WebviewPanel,
-    newFilePath: string
-) => {
-    currentFileAbsPath = newFilePath;
-    if (currentPanel) {
-        currentPanel.webview.postMessage({
-            command: "current-file",
-            active_device: currentActiveDevice,
-
-            state: {
-                running_file: newFilePath,
-            },
-        });
-    }
-};
-
 const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
     if (currentPanel) {
         currentPanel.webview.postMessage({
             command: VSCODE_MESSAGES_TO_WEBVIEW.SET_DEVICE,
-            active_device: currentActiveDevice,
+            active_device: deviceSelectionService.getCurrentActiveDevice(),
         });
     }
 };
@@ -120,7 +104,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     vscode.workspace.onDidSaveTextDocument(
         async (document: vscode.TextDocument) => {
-            await updateCurrentFileIfPython(document, currentPanel);
+            await fileSelectionService.updateCurrentFileFromTextFile(document);
         }
     );
 
@@ -185,7 +169,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 messageListener = currentPanel.webview.onDidReceiveMessage(
                     message => {
                         const messageJson = JSON.stringify({
-                            active_device: currentActiveDevice,
+                            active_device: deviceSelectionService.getCurrentActiveDevice(),
                             state: message.text,
                         });
                         switch (message.command) {
@@ -209,18 +193,10 @@ export async function activate(context: vscode.ExtensionContext) {
                             case WEBVIEW_MESSAGES.TOGGLE_PLAY_STOP:
                                 console.log(`Play button ${messageJson} \n`);
                                 if (message.text.state as boolean) {
-                                    setPathAndSendMessage(
-                                        currentPanel,
+                                    fileSelectionService.setPathAndSendMessage(
                                         message.text.selected_file
                                     );
-                                    if (currentFileAbsPath) {
-                                        const foundDocument = utils.getActiveEditorFromPath(
-                                            currentFileAbsPath
-                                        );
-                                        if (foundDocument !== undefined) {
-                                            currentTextDocument = foundDocument;
-                                        }
-                                    }
+                                    fileSelectionService.findCurrentTextDocument();
                                     telemetryAI.trackFeatureUsage(
                                         TelemetryEventName.COMMAND_RUN_SIMULATOR_BUTTON
                                     );
@@ -261,7 +237,9 @@ export async function activate(context: vscode.ExtensionContext) {
                                 handleSensorTelemetry(message.text);
                                 break;
                             case WEBVIEW_MESSAGES.SWITCH_DEVICE:
-                                switchDevice(message.text.active_device);
+                                deviceSelectionService.setCurrentActiveDevice(
+                                    message.text.active_device
+                                );
                                 killProcessIfRunning();
                                 break;
                             default:
@@ -308,12 +286,16 @@ export async function activate(context: vscode.ExtensionContext) {
     };
 
     const openCPXWebview = () => {
-        switchDevice(CONSTANTS.DEVICE_NAME.CPX);
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CPX
+        );
         openWebview();
     };
 
     const openMicrobitWebview = () => {
-        switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.MICROBIT
+        );
         openWebview();
     };
 
@@ -345,12 +327,16 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     const openCPXTemplateFile = () => {
-        switchDevice(CONSTANTS.DEVICE_NAME.CPX);
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CPX
+        );
         openTemplateFile(CONSTANTS.TEMPLATE.CPX);
     };
 
     const openMicrobitTemplateFile = () => {
-        switchDevice(CONSTANTS.DEVICE_NAME.MICROBIT);
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.MICROBIT
+        );
         openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
     };
 
@@ -455,7 +441,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (currentPanel) {
                 currentPanel.webview.postMessage({
                     command: "reset-state",
-                    active_device: currentActiveDevice,
+                    active_device: deviceSelectionService.getCurrentActiveDevice(),
                 });
             }
             // TODO: We need to check the process was correctly killed
@@ -509,12 +495,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
         killProcessIfRunning();
 
-        await updateCurrentFileFromEditor(
-            vscode.window.activeTextEditor,
-            currentPanel
+        await fileSelectionService.updateCurrentFileFromEditor(
+            vscode.window.activeTextEditor
         );
 
-        if (currentFileAbsPath === "") {
+        if (fileSelectionService.getCurrentFileAbsPath() === "") {
             utils.logToOutputChannel(
                 outChannel,
                 CONSTANTS.ERROR.NO_FILE_TO_RUN,
@@ -526,9 +511,13 @@ export async function activate(context: vscode.ExtensionContext) {
             );
         } else {
             // Save on run
-            await currentTextDocument.save();
+            await fileSelectionService.getCurrentTextDocument().save();
 
-            if (!currentTextDocument.fileName.endsWith(".py")) {
+            if (
+                !fileSelectionService
+                    .getCurrentTextDocument()
+                    .fileName.endsWith(".py")
+            ) {
                 utils.logToOutputChannel(
                     outChannel,
                     CONSTANTS.ERROR.NO_FILE_TO_RUN,
@@ -538,13 +527,15 @@ export async function activate(context: vscode.ExtensionContext) {
             }
             utils.logToOutputChannel(
                 outChannel,
-                CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+                CONSTANTS.INFO.FILE_SELECTED(
+                    fileSelectionService.getCurrentFileAbsPath()
+                )
             );
 
             // Activate the run webview button
             currentPanel.webview.postMessage({
                 command: "activate-play",
-                active_device: currentActiveDevice,
+                active_device: deviceSelectionService.getCurrentActiveDevice(),
             });
 
             childProcess = cp.spawn(pythonExecutablePath, [
@@ -553,7 +544,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
                     HELPER_FILES.PROCESS_USER_CODE_PY
                 ),
-                currentFileAbsPath,
+                fileSelectionService.getCurrentFileAbsPath(),
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
             ]);
 
@@ -587,10 +578,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                         );
                                         if (
                                             messageData.device_name ===
-                                            currentActiveDevice
+                                            deviceSelectionService.getCurrentActiveDevice()
                                         ) {
                                             currentPanel.webview.postMessage({
-                                                active_device: currentActiveDevice,
+                                                active_device: deviceSelectionService.getCurrentActiveDevice(),
                                                 command: "set-state",
                                                 state: messageData,
                                             });
@@ -638,7 +629,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 );
                 if (currentPanel) {
                     currentPanel.webview.postMessage({
-                        active_device: currentActiveDevice,
+                        active_device: deviceSelectionService.getCurrentActiveDevice(),
                         command: "reset-state",
                     });
                 }
@@ -671,12 +662,11 @@ export async function activate(context: vscode.ExtensionContext) {
             true
         );
 
-        await updateCurrentFileIfPython(
-            vscode.window.activeTextEditor!.document,
-            currentPanel
+        await fileSelectionService.updateCurrentFileFromEditor(
+            vscode.window.activeTextEditor
         );
 
-        if (currentFileAbsPath === "") {
+        if (fileSelectionService.getCurrentFileAbsPath() === "") {
             utils.logToOutputChannel(
                 outChannel,
                 CONSTANTS.ERROR.NO_FILE_TO_RUN,
@@ -689,7 +679,9 @@ export async function activate(context: vscode.ExtensionContext) {
         } else {
             utils.logToOutputChannel(
                 outChannel,
-                CONSTANTS.INFO.FILE_SELECTED(currentFileAbsPath)
+                CONSTANTS.INFO.FILE_SELECTED(
+                    fileSelectionService.getCurrentFileAbsPath()
+                )
             );
 
             const deviceProcess = cp.spawn(pythonExecutablePath, [
@@ -699,7 +691,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     HELPER_FILES.DEVICE_PY
                 ),
                 device,
-                currentFileAbsPath,
+                fileSelectionService.getCurrentFileAbsPath(),
             ]);
 
             let dataFromTheProcess = "";
@@ -972,7 +964,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     new DebuggerCommunicationServer(
                         currentPanel,
                         utils.getServerPortConfig(),
-                        currentActiveDevice
+                        deviceSelectionService.getCurrentActiveDevice()
                     )
                 );
 
@@ -984,7 +976,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         .getCurrentDebuggerServer()
                         .setWebview(currentPanel);
                     currentPanel.webview.postMessage({
-                        currentActiveDevice,
+                        active_device: deviceSelectionService.getCurrentActiveDevice(),
                         command: "activate-play",
                     });
                 }
@@ -1017,7 +1009,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (currentPanel) {
                 currentPanel.webview.postMessage({
                     command: "reset-state",
-                    active_device: currentActiveDevice,
+                    active_device: deviceSelectionService.getCurrentActiveDevice(),
                 });
             }
         }
@@ -1054,69 +1046,8 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 }
 
-const getActivePythonFile = () => {
-    const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
-    const activeEditor = editors.find(
-        editor => editor.document.languageId === "python"
-    );
-    if (activeEditor) {
-        currentTextDocument = activeEditor.document;
-    }
-    return activeEditor ? activeEditor.document.fileName : "";
-};
-
-const updateCurrentFileFromEditor = async (
-    activeTextDocument: vscode.TextEditor | undefined,
-    currentPanel: vscode.WebviewPanel
-) => {
-    if (
-        activeTextDocument &&
-        activeTextDocument.document &&
-        activeTextDocument.document.languageId === "python"
-    ) {
-        setPathAndSendMessage(
-            currentPanel,
-            activeTextDocument.document.fileName
-        );
-        currentTextDocument = activeTextDocument.document;
-    } else if (currentFileAbsPath === "") {
-        setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
-    }
-    if (
-        currentTextDocument &&
-        utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
-    ) {
-        await vscode.window.showTextDocument(
-            currentTextDocument,
-            vscode.ViewColumn.One
-        );
-    }
-};
-const updateCurrentFileIfPython = async (
-    activeTextDocument: vscode.TextDocument | undefined,
-    currentPanel: vscode.WebviewPanel
-) => {
-    if (activeTextDocument && activeTextDocument.languageId === "python") {
-        setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
-        currentTextDocument = activeTextDocument;
-    } else if (currentFileAbsPath === "") {
-        setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
-    }
-    if (
-        currentTextDocument &&
-        utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-            undefined
-    ) {
-        await vscode.window.showTextDocument(
-            currentTextDocument,
-            vscode.ViewColumn.One
-        );
-    }
-};
-
 const handleDebuggerTelemetry = () => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.CPX_DEBUGGER_INIT_SUCCESS
@@ -1133,7 +1064,7 @@ const handleDebuggerTelemetry = () => {
 };
 
 const handleDebuggerFailTelemetry = () => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.CPX_DEBUGGER_INIT_FAIL
@@ -1150,7 +1081,7 @@ const handleDebuggerFailTelemetry = () => {
 };
 
 const handleButtonPressTelemetry = (buttonState: any) => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             handleCPXButtonPressTelemetry(buttonState);
             break;
@@ -1163,7 +1094,7 @@ const handleButtonPressTelemetry = (buttonState: any) => {
 };
 
 const handleGestureTelemetry = (sensorState: any) => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             handleCPXGestureTelemetry(sensorState);
             break;
@@ -1175,7 +1106,7 @@ const handleGestureTelemetry = (sensorState: any) => {
 };
 
 const handleSensorTelemetry = (sensor: string) => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             handleCPXSensorTelemetry(sensor);
             break;
@@ -1300,7 +1231,7 @@ const handleMicrobitSensorTelemetry = (sensor: string) => {
 };
 
 const handleNewFileErrorTelemetry = () => {
-    switch (currentActiveDevice) {
+    switch (deviceSelectionService.getCurrentActiveDevice()) {
         case CONSTANTS.DEVICE_NAME.CPX:
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.CPX_ERROR_COMMAND_NEW_FILE
@@ -1375,9 +1306,6 @@ function getWebviewContent(context: vscode.ExtensionContext) {
             ${loadScript(context, "out/simulator.js")}
           </body>
           </html>`;
-}
-function switchDevice(deviceName: string) {
-    currentActiveDevice = deviceName;
 }
 
 // this method is called when your extension is deactivated

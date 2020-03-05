@@ -1,42 +1,49 @@
 import * as vscode from "vscode";
+import { VSCODE_MESSAGES_TO_WEBVIEW } from "../view/constants";
+import { DeviceSelectionService } from "./deviceSelectionService";
+import { MessagingService } from "./messagingService";
 
 export class FileSelectionService {
-    static getActiveEditorFromPath = (
-        filePath: string
-    ): vscode.TextDocument => {
-        const activeEditor = vscode.window.visibleTextEditors.find(
-            (editor: vscode.TextEditor) => editor.document.fileName === filePath
-        );
-        return activeEditor ? activeEditor.document : undefined;
-    };
     private currentFileAbsPath: string = "";
     private currentTextDocument: vscode.TextDocument;
+    private messagingService: MessagingService;
 
+    constructor(messagingService: MessagingService) {
+        this.messagingService = messagingService;
+    }
+
+    public getCurrentFileAbsPath() {
+        return this.currentFileAbsPath;
+    }
+    public getCurrentTextDocument() {
+        return this.currentTextDocument;
+    }
+    public updateCurrentFileFromTextFile = async (
+        activeTextDocument: vscode.TextDocument | undefined
+    ) => {
+        if (activeTextDocument) {
+            await this.updateCurrentFileFromEditor({
+                document: activeTextDocument,
+            } as vscode.TextEditor);
+        } else return;
+    };
     public updateCurrentFileFromEditor = async (
-        activeTextDocument: vscode.TextEditor | undefined,
-        currentPanel: vscode.WebviewPanel
+        activeTextDocument: vscode.TextEditor | undefined
     ) => {
         if (
             activeTextDocument &&
             activeTextDocument.document &&
             activeTextDocument.document.languageId === "python"
         ) {
-            this.setPathAndSendMessage(
-                currentPanel,
-                activeTextDocument.document.fileName
-            );
+            this.setPathAndSendMessage(activeTextDocument.document.fileName);
             this.currentTextDocument = activeTextDocument.document;
         } else if (this.currentFileAbsPath === "") {
-            this.setPathAndSendMessage(
-                currentPanel,
-                this.getActivePythonFile() || ""
-            );
+            this.setPathAndSendMessage(this.getActivePythonFile() || "");
         }
         if (
             this.currentTextDocument &&
-            FileSelectionService.getActiveEditorFromPath(
-                this.currentTextDocument.fileName
-            ) === undefined
+            this.getActiveEditorFromPath(this.currentTextDocument.fileName) ===
+                undefined
         ) {
             await vscode.window.showTextDocument(
                 this.currentTextDocument,
@@ -44,21 +51,54 @@ export class FileSelectionService {
             );
         }
     };
-    private setPathAndSendMessage = (
-        currentPanel: vscode.WebviewPanel,
-        newFilePath: string
-    ) => {
-        this.currentFileAbsPath = newFilePath;
-        if (currentPanel) {
-            currentPanel.webview.postMessage({
-                command: "current-file",
-                active_device: this.currentActiveDevice,
-
-                state: {
-                    running_file: newFilePath,
-                },
-            });
+    public findCurrentTextDocument() {
+        if (this.currentFileAbsPath) {
+            const foundDocument = this.getActiveEditorFromPath(
+                this.currentFileAbsPath
+            );
+            if (foundDocument !== undefined) {
+                this.currentTextDocument = foundDocument;
+            }
         }
+    }
+    // public updateCurrentFileIfPython = async (
+    //     activeTextDocument: vscode.TextDocument | undefined,
+    //     currentPanel: vscode.WebviewPanel
+    // ) => {
+    //     if (activeTextDocument && activeTextDocument.languageId === "python") {
+    //         setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
+    //         currentTextDocument = activeTextDocument;
+    //     } else if (currentFileAbsPath === "") {
+    //         setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
+    //     }
+    //     if (
+    //         currentTextDocument &&
+    //         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
+    //             undefined
+    //     ) {
+    //         await vscode.window.showTextDocument(
+    //             currentTextDocument,
+    //             vscode.ViewColumn.One
+    //         );
+    //     }
+    // };
+
+    public setPathAndSendMessage = (newFilePath: string) => {
+        this.currentFileAbsPath = newFilePath;
+        this.messagingService.sendMessageToWebview(
+            VSCODE_MESSAGES_TO_WEBVIEW.CURRENT_FILE,
+            {
+                running_file: newFilePath,
+            }
+        );
+    };
+    private getActiveEditorFromPath = (
+        filePath: string
+    ): vscode.TextDocument => {
+        const activeEditor = vscode.window.visibleTextEditors.find(
+            (editor: vscode.TextEditor) => editor.document.fileName === filePath
+        );
+        return activeEditor ? activeEditor.document : undefined;
     };
     private getActivePythonFile = () => {
         const editors: vscode.TextEditor[] = vscode.window.visibleTextEditors;
