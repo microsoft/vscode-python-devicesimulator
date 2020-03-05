@@ -25,7 +25,9 @@ export class FileSelectionService {
             await this.updateCurrentFileFromEditor({
                 document: activeTextDocument,
             } as vscode.TextEditor);
-        } else { return; }
+        } else {
+            return;
+        }
     };
     public updateCurrentFileFromEditor = async (
         activeTextDocument: vscode.TextEditor | undefined
@@ -61,27 +63,6 @@ export class FileSelectionService {
             }
         }
     }
-    // public updateCurrentFileIfPython = async (
-    //     activeTextDocument: vscode.TextDocument | undefined,
-    //     currentPanel: vscode.WebviewPanel
-    // ) => {
-    //     if (activeTextDocument && activeTextDocument.languageId === "python") {
-    //         setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
-    //         currentTextDocument = activeTextDocument;
-    //     } else if (currentFileAbsPath === "") {
-    //         setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
-    //     }
-    //     if (
-    //         currentTextDocument &&
-    //         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-    //             undefined
-    //     ) {
-    //         await vscode.window.showTextDocument(
-    //             currentTextDocument,
-    //             vscode.ViewColumn.One
-    //         );
-    //     }
-    // };
 
     public setPathAndSendMessage = (newFilePath: string) => {
         this.currentFileAbsPath = newFilePath;
