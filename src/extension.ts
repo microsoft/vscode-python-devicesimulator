@@ -47,7 +47,6 @@ const messagingService = new MessagingService();
 let setupService: SetupService;
 const debuggerCommunicationService = new DebuggerCommunicationService();
 
-
 let currentActiveDevice: string = DEFAULT_DEVICE;
 
 export let outChannel: vscode.OutputChannel | undefined;
@@ -103,7 +102,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // doesn't trigger lint errors
     updatePylintArgs(context);
 
-    pythonExecutablePath = await setupService.setupEnv(context, telemetryAI);
+    pythonExecutablePath = await setupService.setupEnv(context);
 
     try {
         utils.generateCPXConfig();
@@ -447,11 +446,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const installDependencies: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.installDependencies",
         async () => {
-            pythonExecutablePath = await setupService.setupEnv(
-                context,
-                telemetryAI,
-                true
-            );
+            pythonExecutablePath = await setupService.setupEnv(context, true);
             telemetryAI.trackFeatureUsage(
                 TelemetryEventName.COMMAND_INSTALL_EXTENSION_DEPENDENCIES
             );
@@ -1036,10 +1031,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const configsChanged = vscode.workspace.onDidChangeConfiguration(
         async () => {
             if (utils.checkConfig(CONFIG.CONFIG_ENV_ON_SWITCH)) {
-                pythonExecutablePath = await setupService.setupEnv(
-                    context,
-                    telemetryAI
-                );
+                pythonExecutablePath = await setupService.setupEnv(context);
             }
         }
     );
@@ -1091,7 +1083,7 @@ const updateCurrentFileIfPython = async (
     if (
         currentTextDocument &&
         utils.getActiveEditorFromPath(currentTextDocument.fileName) ===
-        undefined
+            undefined
     ) {
         await vscode.window.showTextDocument(
             currentTextDocument,

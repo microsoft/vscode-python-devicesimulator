@@ -25,16 +25,13 @@ export class SetupService {
     private telemetryAI: TelemetryAI;
 
     constructor(telemetryAI: TelemetryAI) {
-        this.telemetryAI = telemetryAI
+        this.telemetryAI = telemetryAI;
     }
 
     public setupEnv = async (
         context: vscode.ExtensionContext,
-        telemetryAI: TelemetryAI,
         needsResponse: boolean = false
     ) => {
-        this.telemetryAI = telemetryAI
-
         const originalpythonExecutablePath = await this.getCurrentPythonExecutablePath();
         let pythonExecutablePath = originalpythonExecutablePath;
         const pythonExecutableName: string =
@@ -160,6 +157,84 @@ export class SetupService {
         }
 
         return pythonExecutablePath;
+    };
+
+    public getCurrentPythonExecutablePath = async () => {
+        let originalpythonExecutablePath = "";
+
+        // try to get name from interpreter
+        try {
+            originalpythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
+        } catch (err) {
+            originalpythonExecutablePath = GLOBAL_ENV_VARS.PYTHON;
+        }
+
+        if (
+            originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
+            originalpythonExecutablePath === ""
+        ) {
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.SETUP_AUTO_RESOLVE_PYTHON_PATH
+            );
+            try {
+                const { stdout } = await this.executePythonCommand(
+                    GLOBAL_ENV_VARS.PYTHON,
+                    `-c "import sys; print(sys.executable)"`
+                );
+                originalpythonExecutablePath = stdout.trim();
+            } catch (err) {
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.SETUP_NO_PYTHON_PATH
+                );
+                vscode.window
+                    .showErrorMessage(
+                        CONSTANTS.ERROR.NO_PYTHON_PATH,
+                        DialogResponses.INSTALL_PYTHON
+                    )
+                    .then((selection: vscode.MessageItem | undefined) => {
+                        if (selection === DialogResponses.INSTALL_PYTHON) {
+                            const okAction = () => {
+                                this.telemetryAI.trackFeatureUsage(
+                                    TelemetryEventName.SETUP_DOWNLOAD_PYTHON
+                                );
+                                open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                            };
+                            showPrivacyModal(
+                                okAction,
+                                CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
+                            );
+                        }
+                    });
+                // no python installed, cannot get path
+                return "";
+            }
+        }
+        // fix path to be absolute
+        if (!path.isAbsolute(originalpythonExecutablePath)) {
+            originalpythonExecutablePath = path.join(
+                vscode.workspace.rootPath,
+                originalpythonExecutablePath
+            );
+        }
+
+        if (!fs.existsSync(originalpythonExecutablePath)) {
+            await vscode.window.showErrorMessage(
+                CONSTANTS.ERROR.BAD_PYTHON_PATH
+            );
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.SETUP_INVALID_PYTHON_INTERPRETER_PATH
+            );
+            return "";
+        }
+
+        if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.SETUP_INVALID_PYTHON_VER
+            );
+            return "";
+        }
+
+        return originalpythonExecutablePath;
     };
 
     public isPipInstalled = async (pythonExecutablePath: string) => {
@@ -409,9 +484,7 @@ export class SetupService {
         if (backupPythonPath !== "") {
             errMessage = `${errMessage} Using original interpreter at: ${backupPythonPath}.`;
         }
-        if (
-            !(await this.installDependencies(context, pythonPath))
-        ) {
+        if (!(await this.installDependencies(context, pythonPath))) {
             vscode.window
                 .showErrorMessage(
                     CONSTANTS.ERROR.DEPENDENCY_DOWNLOAD_ERROR,
@@ -430,82 +503,4 @@ export class SetupService {
         }
         return pythonPath;
     };
-    public getCurrentPythonExecutablePath = async () => {
-        let originalpythonExecutablePath = "";
-
-        // try to get name from interpreter
-        try {
-            originalpythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
-        } catch (err) {
-            originalpythonExecutablePath = GLOBAL_ENV_VARS.PYTHON;
-        }
-
-        if (
-            originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
-            originalpythonExecutablePath === ""
-        ) {
-            this.telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SETUP_AUTO_RESOLVE_PYTHON_PATH
-            );
-            try {
-                const { stdout } = await this.executePythonCommand(
-                    GLOBAL_ENV_VARS.PYTHON,
-                    `-c "import sys; print(sys.executable)"`
-                );
-                originalpythonExecutablePath = stdout.trim();
-            } catch (err) {
-                this.telemetryAI.trackFeatureUsage(
-                    TelemetryEventName.SETUP_NO_PYTHON_PATH
-                );
-                vscode.window
-                    .showErrorMessage(
-                        CONSTANTS.ERROR.NO_PYTHON_PATH,
-                        DialogResponses.INSTALL_PYTHON
-                    )
-                    .then((selection: vscode.MessageItem | undefined) => {
-                        if (selection === DialogResponses.INSTALL_PYTHON) {
-                            const okAction = () => {
-                                this.telemetryAI.trackFeatureUsage(
-                                    TelemetryEventName.SETUP_DOWNLOAD_PYTHON
-                                );
-                                open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-                            };
-                            showPrivacyModal(
-                                okAction,
-                                CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
-                            );
-                        }
-                    });
-                // no python installed, cannot get path
-                return "";
-            }
-        }
-        // fix path to be absolute
-        if (!path.isAbsolute(originalpythonExecutablePath)) {
-            originalpythonExecutablePath = path.join(
-                vscode.workspace.rootPath,
-                originalpythonExecutablePath
-            );
-        }
-
-        if (!fs.existsSync(originalpythonExecutablePath)) {
-            await vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.BAD_PYTHON_PATH
-            );
-            this.telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SETUP_INVALID_PYTHON_INTERPRETER_PATH
-            );
-            return "";
-        }
-
-        if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
-            this.telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SETUP_INVALID_PYTHON_VER
-            );
-            return "";
-        }
-
-        return originalpythonExecutablePath;
-    };
-
 }
