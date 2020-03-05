@@ -11,10 +11,11 @@ on:
 jobs:
   build:
 
-    runs-on: [macos-latest, windows-latest, ubuntu-18.04]
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [macos-latest, windows-latest, ubuntu-18.04]
         node-version: [10.x]
 
     steps:
