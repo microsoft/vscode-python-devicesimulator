@@ -30,4 +30,3 @@ class TestUtils(object):
         expected = "a%20b"
         assert expected == utils.escape_if_OSX(original)
         utils.sys = _utils_sys
-
