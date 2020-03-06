@@ -456,7 +456,6 @@ export async function activate(context: vscode.ExtensionContext) {
     const killProcessIfRunning = () => {
         if (childProcess !== undefined) {
             if (currentPanel) {
-                console.info("Sending clearing state command");
                 currentPanel.webview.postMessage({
                     command: "reset-state",
                     active_device: currentActiveDevice,
@@ -513,8 +512,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
         killProcessIfRunning();
 
-        await updateCurrentFileIfPython(
-            vscode.window.activeTextEditor!.document,
+        await updateCurrentFileFromEditor(
+            vscode.window.activeTextEditor,
             currentPanel
         );
 
@@ -641,7 +640,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     true
                 );
                 if (currentPanel) {
-                    console.log("Sending clearing state command");
                     currentPanel.webview.postMessage({
                         active_device: currentActiveDevice,
                         command: "reset-state",
@@ -1070,13 +1068,20 @@ const getActivePythonFile = () => {
     return activeEditor ? activeEditor.document.fileName : "";
 };
 
-const updateCurrentFileIfPython = async (
-    activeTextDocument: vscode.TextDocument | undefined,
+const updateCurrentFileFromEditor = async (
+    activeTextDocument: Partial<vscode.TextEditor> | undefined,
     currentPanel: vscode.WebviewPanel
 ) => {
-    if (activeTextDocument && activeTextDocument.languageId === "python") {
-        setPathAndSendMessage(currentPanel, activeTextDocument.fileName);
-        currentTextDocument = activeTextDocument;
+    if (
+        activeTextDocument &&
+        activeTextDocument.document &&
+        activeTextDocument.document.languageId === "python"
+    ) {
+        setPathAndSendMessage(
+            currentPanel,
+            activeTextDocument.document.fileName
+        );
+        currentTextDocument = activeTextDocument.document;
     } else if (currentFileAbsPath === "") {
         setPathAndSendMessage(currentPanel, getActivePythonFile() || "");
     }
@@ -1088,6 +1093,19 @@ const updateCurrentFileIfPython = async (
         await vscode.window.showTextDocument(
             currentTextDocument,
             vscode.ViewColumn.One
+        );
+    }
+};
+const updateCurrentFileIfPython = async (
+    activeTextDocument: vscode.TextDocument | undefined,
+    currentPanel: vscode.WebviewPanel
+) => {
+    if (activeTextDocument) {
+        await updateCurrentFileFromEditor(
+            {
+                document: activeTextDocument,
+            },
+            currentPanel
         );
     }
 };
