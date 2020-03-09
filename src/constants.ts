@@ -69,6 +69,7 @@ export const CONSTANTS = {
             "error.installationError",
             "Installation Error"
         ),
+
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
