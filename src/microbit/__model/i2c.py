@@ -17,7 +17,7 @@ class I2c:
         Changing the I²C pins from defaults will make the accelerometer and
         compass stop working, as they are connected internally to those pins.
         """
-        utils.print_for_unimplemented_functions(I2c.init.__qualname__)
+        utils.print_for_unimplemented_functions(I2c.init.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_I2C)
 
     def scan(self):
@@ -27,7 +27,7 @@ class I2c:
         Scan the bus for devices.  Returns a list of 7-bit addresses corresponding
         to those devices that responded to the scan.
         """
-        utils.print_for_unimplemented_functions(I2c.scan.__qualname__)
+        utils.print_for_unimplemented_functions(I2c.scan.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_I2C)
 
     def read(self, addr, n, repeat=False):
@@ -37,7 +37,7 @@ class I2c:
         Read ``n`` bytes from the device with 7-bit address ``addr``. If ``repeat``
         is ``True``, no stop bit will be sent.
         """
-        utils.print_for_unimplemented_functions(I2c.read.__qualname__)
+        utils.print_for_unimplemented_functions(I2c.read.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_I2C)
 
     def write(self, addr, buf, repeat=False):
@@ -47,5 +47,5 @@ class I2c:
         Write bytes from ``buf`` to the device with 7-bit address ``addr``. If
         ``repeat`` is ``True``, no stop bit will be sent.
         """
-        utils.print_for_unimplemented_functions(I2c.write.__qualname__)
+        utils.print_for_unimplemented_functions(I2c.write.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_I2C)

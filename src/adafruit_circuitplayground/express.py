@@ -86,7 +86,7 @@ class Express:
         """  Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_TAPPED)
-        utils.print_for_unimplemented_functions(Express.tap.__qualname__)
+        utils.print_for_unimplemented_functions("tapped")
 
     @property
     def red_led(self):
@@ -154,13 +154,13 @@ class Express:
     def touch_A7(self):
         return self.__touch(7)
 
-    def adjust_touch_threshold(self, adjustement):
+    def adjust_touch_threshold(self, adjustment):
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_ADJUST_THRESHOLD)
         utils.print_for_unimplemented_functions(
-            Express.adjust_touch_threshold.__qualname__
+            Express.adjust_touch_threshold.__name__
         )
 
     def shake(self, shake_threshold=30):
@@ -194,19 +194,19 @@ class Express:
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PLAY_TONE)
-        utils.print_for_unimplemented_functions(Express.play_tone.__qualname__)
+        utils.print_for_unimplemented_functions(Express.play_tone.__name__)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_START_TONE)
-        utils.print_for_unimplemented_functions(Express.start_tone.__qualname__)
+        utils.print_for_unimplemented_functions(Express.start_tone.__name__)
 
     def stop_tone(self):
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_STOP_TONE)
-        utils.print_for_unimplemented_functions(Express.stop_tone.__qualname__)
+        utils.print_for_unimplemented_functions(Express.stop_tone.__name__)
 
     def update_state(self, new_state):
         for event in CONSTANTS.ALL_EXPECTED_INPUT_EVENTS:

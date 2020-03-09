@@ -11,7 +11,7 @@ class Compass:
 
         Starts the calibration process. When this function is called on the physical device, an instructive message will be scrolled to the user after which they will need to rotate the device in order to draw a circle on the LED display on the actual device.
         """
-        utils.print_for_unimplemented_functions(Compass.calibrate.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.calibrate.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def is_calibrated(self):
@@ -21,7 +21,7 @@ class Compass:
         Returns ``True`` if the compass has been successfully calibrated, and
         returns ``False`` otherwise.
         """
-        utils.print_for_unimplemented_functions(Compass.is_calibrated.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.is_calibrated.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def clear_calibration(self):
@@ -30,7 +30,7 @@ class Compass:
 
         Undoes the calibration, making the compass uncalibrated again.
         """
-        utils.print_for_unimplemented_functions(Compass.clear_calibration.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.clear_calibration.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def get_x(self):
@@ -41,7 +41,7 @@ class Compass:
         tesla, as a positive or negative integer, depending on the direction of the
         field.
         """
-        utils.print_for_unimplemented_functions(Compass.get_x.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.get_x.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def get_y(self):
@@ -52,7 +52,7 @@ class Compass:
         tesla, as a positive or negative integer, depending on the direction of the
         field.
         """
-        utils.print_for_unimplemented_functions(Compass.get_y.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.get_y.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def get_z(self):
@@ -63,7 +63,7 @@ class Compass:
         tesla, as a positive or negative integer, depending on the direction of the
         field.
         """
-        utils.print_for_unimplemented_functions(Compass.get_z.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.get_z.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def heading(self):
@@ -74,7 +74,7 @@ class Compass:
         integer in the range from 0 to 360, representing the angle in degrees,
         clockwise, with north as 0.
         """
-        utils.print_for_unimplemented_functions(Compass.heading.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.heading.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)
 
     def get_field_strength(self):
@@ -84,5 +84,5 @@ class Compass:
         Returns an integer indication of the magnitude of the magnetic field around
         the device in nano tesla.
         """
-        utils.print_for_unimplemented_functions(Compass.get_field_strength.__qualname__)
+        utils.print_for_unimplemented_functions(Compass.get_field_strength.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_COMPASS)

@@ -33,7 +33,7 @@ class SPI:
         The ``sclk``, ``mosi`` and ``miso`` arguments specify the pins to use for
         each type of signal.
         """
-        utils.print_for_unimplemented_functions(SPI.init.__qualname__)
+        utils.print_for_unimplemented_functions(SPI.init.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPI)
 
     def read(self, nbytes):
@@ -42,7 +42,7 @@ class SPI:
 
         Read at most ``nbytes``. Returns what was read.
         """
-        utils.print_for_unimplemented_functions(SPI.read.__qualname__)
+        utils.print_for_unimplemented_functions(SPI.read.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPI)
 
     def write(self, buffer):
@@ -51,7 +51,7 @@ class SPI:
 
         Write the ``buffer`` of bytes to the bus.
         """
-        utils.print_for_unimplemented_functions(SPI.write.__qualname__)
+        utils.print_for_unimplemented_functions(SPI.write.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPI)
 
     def write_readinto(self, out, in_):
@@ -62,5 +62,5 @@ class SPI:
         buffer. The length of the buffers should be the same. The buffers can be
         the same object.
         """
-        utils.print_for_unimplemented_functions(SPI.write_readinto.__qualname__)
+        utils.print_for_unimplemented_functions(SPI.write_readinto.__name__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPI)
