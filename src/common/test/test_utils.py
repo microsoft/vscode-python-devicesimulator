@@ -1,6 +1,4 @@
 import sys
-import types
-from io import StringIO
 
 from unittest import mock
 
