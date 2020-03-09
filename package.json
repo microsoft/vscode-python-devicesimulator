@@ -31,12 +31,13 @@
     ],
     "activationEvents": [
         "onCommand:deviceSimulatorExpress.common.installDependencies",
+        "onCommand:deviceSimulatorExpress.common.openSerialMonitor",
         "onCommand:deviceSimulatorExpress.common.runSimulator",
+        "onCommand:deviceSimulatorExpress.common.selectSerialPort",
         "onCommand:deviceSimulatorExpress.cpx.deployToDevice",
         "onCommand:deviceSimulatorExpress.cpx.newFile",
-        "onCommand:deviceSimulatorExpress.cpx.openSerialMonitor",
         "onCommand:deviceSimulatorExpress.cpx.openSimulator",
-        "onCommand:deviceSimulatorExpress.cpx.selectSerialPort",
+        "onCommand:deviceSimulatorExpress.microbit.deployToDevice",
         "onCommand:deviceSimulatorExpress.microbit.newFile",
         "onCommand:deviceSimulatorExpress.microbit.openSimulator",
         "onDebug"
@@ -50,18 +51,28 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
+                "command": "deviceSimulatorExpress.common.changeBaudRate",
+                "title": "%deviceSimulatorExpressExtension.commands.common.changeBaudRate%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.common.closeSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.common.closeSerialMonitor%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.common.openSerialMonitor",
+                "title": "%deviceSimulatorExpressExtension.commands.common.openSerialMonitor%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.common.selectSerialPort",
+                "title": "%deviceSimulatorExpressExtension.commands.common.selectSerialPort%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+            },
+            {
                 "command": "deviceSimulatorExpress.common.runSimulator",
                 "title": "%deviceSimulatorExpressExtension.commands.common.runSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.cpx.changeBaudRate",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.changeBaudRate%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.cpx.closeSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.closeSerialMonitor%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
@@ -75,18 +86,13 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.cpx.openSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.openSerialMonitor%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
                 "command": "deviceSimulatorExpress.cpx.openSimulator",
                 "title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.cpx.selectSerialPort",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.selectSerialPort%",
+                "command": "deviceSimulatorExpress.microbit.deployToDevice",
+                "title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
@@ -102,6 +108,12 @@
         ],
         "menus": {
             "commandPalette": [
+                {
+                    "command": "deviceSimulatorExpress.microbit.deployToDevice",
+                    "title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
+                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
+                    "when": "config.deviceSimulatorExpress.previewMode"
+                },
                 {
                     "command": "deviceSimulatorExpress.microbit.openSimulator",
                     "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
