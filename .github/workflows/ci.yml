@@ -9,7 +9,7 @@ on:
     branches: [ dev, staging ]
 
 jobs:
-  build:
+  build-and-test:
 
     runs-on: ${{ matrix.os }}
 
