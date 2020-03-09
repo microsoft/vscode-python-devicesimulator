@@ -72,14 +72,13 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 };
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
-
     telemetryAI = new TelemetryAI(context);
     setupService = new SetupService(telemetryAI);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
-    const webviewService = new WebviewService(context)
+    const webviewService = new WebviewService(context);
 
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
@@ -147,7 +146,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
-            webviewService.openTutorialPanel()
 
             currentPanel.webview.html = getWebviewContent(context);
             messagingService.setWebview(currentPanel.webview);
@@ -304,6 +302,16 @@ export async function activate(context: vscode.ExtensionContext) {
         );
         openWebview();
     };
+
+    const gettingStartedOpen: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.gettingStarted",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_GETTING_STARTED
+            );
+            webviewService.openTutorialPanel();
+        }
+    );
 
     // Open Simulator on the webview
     const cpxOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
@@ -1043,6 +1051,7 @@ export async function activate(context: vscode.ExtensionContext) {
         microbitOpenSimulator,
         microbitNewFile,
         microbitDeployToDevice,
+        gettingStartedOpen,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
             simulatorDebugConfiguration
