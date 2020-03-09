@@ -1,8 +1,12 @@
 import time
 
+from common import utils
 from .accelerometer import Accelerometer
 from .button import Button
+from .compass import Compass
 from .display import Display
+from .i2c import I2c
+from .spi import SPI
 from . import constants as CONSTANTS
 
 
@@ -12,7 +16,10 @@ class MicrobitModel:
         self.accelerometer = Accelerometer()
         self.button_a = Button()
         self.button_b = Button()
+        self.compass = Compass()
         self.display = Display()
+        self.i2c = I2c()
+        self.spi = SPI()
 
         self.__start_time = time.time()
         self.__temperature = 0
@@ -20,6 +27,18 @@ class MicrobitModel:
             "button_a": self.button_a,
             "button_b": self.button_b,
         }
+
+    def panic(self, n):
+        # Due to the shim, there is another call frame.
+        utils.print_for_unimplemented_functions(
+            MicrobitModel.panic.__qualname__, one_more_call=True
+        )
+
+    def reset(self):
+        # Due to the shim, there is another call frame.
+        utils.print_for_unimplemented_functions(
+            MicrobitModel.reset.__qualname__, one_more_call=True
+        )
 
     def sleep(self, n):
         time.sleep(n / 1000)

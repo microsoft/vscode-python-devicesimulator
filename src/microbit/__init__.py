@@ -6,7 +6,24 @@ from common.telemetry_events import TelemetryEvent
 accelerometer = __mb.accelerometer
 button_a = __mb.button_a
 button_b = __mb.button_b
+compass = __mb.compass
 display = __mb.display
+i2c = __mb.i2c
+spi = __mb.spi
+
+
+def panic(n):
+    """
+    Enter a panic mode. Requires restart. Pass in an arbitrary integer <= 255 to indicate a status
+    """
+    __mb.panic(n)
+
+
+def reset():
+    """
+    Restart the board.
+    """
+    __mb.reset()
 
 
 def sleep(n):
