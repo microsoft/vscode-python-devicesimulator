@@ -81,6 +81,7 @@ export enum VSCODE_MESSAGES_TO_WEBVIEW {
     PAUSE_DEVICE = "pause-device",
     RUN_DEVICE = "run-device",
     RESET = "reset-state",
+    CURRENT_FILE = "current-file",
 }
 export enum DEBUG_COMMANDS {
     STACK_TRACE = "stackTrace",

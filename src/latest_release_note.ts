@@ -1,5 +1,5 @@
 // TODO: find a better way of loading html into a string
-export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes 👩🏾‍💻 👨🏾‍💻 (Mar. 3, 2020)</h1>
+export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes 👩🏾‍💻 👨🏾‍💻 (Feb. 27, 2020)</h1>
 <p>
     Welcome to the first update to the Device Simulator Express! <u>Please feel free to enable our feature flag in
         Settings

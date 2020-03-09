@@ -65,18 +65,11 @@ export const CONSTANTS = {
                 `[ERROR] Failed to open serial port ${port} due to error: ${error}. \n`
             );
         },
-        INCORRECT_FILE_NAME_FOR_DEVICE: localize(
-            "error.incorrectFileNameForDevice",
-            '[ERROR] Can\'t deploy to your Circuit Playground Express device, please rename your file to "code.py" or "main.py". \n'
-        ),
-        INCORRECT_FILE_NAME_FOR_DEVICE_POPUP: localize(
-            "error.incorrectFileNameForDevicePopup",
-            'Seems like you have a different file name than what CPX requires, please rename it to "code.py" or "main.py".'
-        ),
         INSTALLATION_ERROR: localize(
             "error.installationError",
             "Installation Error"
         ),
+
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
@@ -84,6 +77,10 @@ export const CONSTANTS = {
         INVALID_PYTHON_PATH: localize(
             "error.invalidPythonPath",
             'We found that your selected Python interpreter version is too low to run the extension. Please upgrade to version 3.7+ or select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application.'
+        ),
+        LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT: localize(
+            "error.lowPythonVersionForMicrobitDeployment",
+            "To deploy your code to the micro:bit, you must be using Python 3.3+"
         ),
         NO_DEVICE: localize(
             "error.noDevice",
@@ -155,11 +152,11 @@ export const CONSTANTS = {
         ),
         DEPLOY_SUCCESS: localize(
             "info.deploySuccess",
-            "\n[INFO] Code successfully copied! Your Circuit Playground Express should be loading and ready to go shortly.\n"
+            "\n[INFO] Code successfully copied! Your device should be loading and ready to go shortly.\n"
         ),
         EXTENSION_ACTIVATED: localize(
             "info.extensionActivated",
-            "Congratulations, your extension Adafruit_Simulator is now active!"
+            "Congratulations, your extension Device Simulator Express is now active!"
         ),
         FILE_SELECTED: (filePath: string) => {
             return localize(
@@ -170,10 +167,6 @@ export const CONSTANTS = {
         FIRST_TIME_WEBVIEW: localize(
             "info.firstTimeWebview",
             'To reopen the simulator select the command "Open Simulator" from command palette.'
-        ),
-        INCORRECT_FILE_NAME_FOR_SIMULATOR_POPUP: localize(
-            "info.incorrectFileNameForSimulatorPopup",
-            'We want your code to work on your actual board as well. Make sure you name your file "code.py" or "main.py" to be able to run your code on an actual physical device'
         ),
         INSTALLING_PYTHON_VENV: localize(
             "info.installingPythonVenv",
@@ -186,10 +179,6 @@ export const CONSTANTS = {
         INSTALL_PYTHON_VENV: localize(
             "info.installPythonVenv",
             "Do you want us to try and install this extension's dependencies via virtual environment for you?"
-        ),
-        INVALID_FILE_NAME_DEBUG: localize(
-            "info.invalidFileNameDebug",
-            'The file you tried to debug isn\'t named "code.py" or "main.py". Rename your file if you want your code to work on your actual device.'
         ),
         NEW_FILE: localize(
             "info.newFile",
@@ -327,15 +316,16 @@ export enum TelemetryEventName {
     COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
     COMMAND_RUN_PALETTE = "COMMAND.RUN.PALETTE",
     COMMAND_INSTALL_EXTENSION_DEPENDENCIES = "COMMAND.INSTALL.EXTENSION.DEPENDENCIES",
+    COMMAND_SERIAL_MONITOR_CHOOSE_PORT = "COMMAND.SERIAL_MONITOR.CHOOSE_PORT",
+    COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
+    COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
+    COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
 
     CPX_COMMAND_DEPLOY_DEVICE = "CPX.COMMAND.DEPLOY.DEVICE",
     CPX_COMMAND_NEW_FILE = "CPX.COMMAND.NEW.FILE.CPX",
     CPX_COMMAND_OPEN_SIMULATOR = "CPX.COMMAND.OPEN.SIMULATOR",
-    CPX_COMMAND_SERIAL_MONITOR_CHOOSE_PORT = "CPX.COMMAND.SERIAL_MONITOR.CHOOSE_PORT",
-    CPX_COMMAND_SERIAL_MONITOR_OPEN = "CPX.COMMAND.SERIAL_MONITOR.OPEN",
-    CPX_COMMAND_SERIAL_MONITOR_BAUD_RATE = "CPX.COMMAND.SERIAL_MONITOR.BAUD_RATE",
-    CPX_COMMAND_SERIAL_MONITOR_CLOSE = "CPX.COMMAND.SERIAL_MONITOR.CLOSE",
 
+    MICROBIT_COMMAND_DEPLOY_DEVICE = "MICROBIT.COMMAND.DEPLOY.DEVICE",
     MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
@@ -373,14 +363,32 @@ export enum TelemetryEventName {
     CPX_SUCCESS_COMMAND_DEPLOY_DEVICE = "CPX.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     MICROBIT_ERROR_COMMAND_NEW_FILE = "MICROBIT.ERROR.COMMAND.NEW.FILE",
+    MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE = "MICROBIT.ERROR.DEPLOY.WITHOUT.DEVICE",
+    MICROBIT_ERROR_PYTHON_DEVICE_PROCESS = "MICROBIT.ERROR.PYTHON.DEVICE.PROCESS",
+    MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE = "MICROBIT.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
     // Performance
     CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
     CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
     CPX_PERFORMANCE_OPEN_SIMULATOR = "CPX.PERFORMANCE.OPEN.SIMULATOR",
 
+    MICROBIT_PERFORMANCE_DEPLOY_DEVICE = "MICROBIT.PERFORMANCE.DEPLOY.DEVICE",
     MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
+
+    // Venv options
+    SETUP_VENV_CREATION_ERR = "SETUP.VENV.CREATION.ERR",
+    SETUP_NO_PIP = "SETUP.NO.PIP",
+    SETUP_DEP_INSTALL_FAIL = "SETUP.DEP.INSTALL.FAIL",
+    SETUP_AUTO_RESOLVE_PYTHON_PATH = "SETUP.AUTO.RESOLVE.PYTHON.PATH",
+    SETUP_NO_PYTHON_PATH = "SETUP.NO.PYTHON.PATH",
+    SETUP_DOWNLOAD_PYTHON = "SETUP.DOWNLOAD.PYTHON",
+    SETUP_INVALID_PYTHON_INTERPRETER_PATH = "SETUP.INVALID.PYTHON.INTERPRETER.PATH",
+    SETUP_INVALID_PYTHON_VER = "SETUP.INVALID.PYTHON.VER",
+    SETUP_INSTALL_VENV = "SETUP.INSTALL.VENV",
+    SETUP_ORIGINAL_INTERPRETER_DEP_INSTALL = "SETUP.ORIGINAL.INTERPRETER.DEP.INSTALL",
+    SETUP_HAS_VENV = "SETUP.HAS.VENV",
+    SETUP_NO_DEPS_INSTALLED = "SETUP.NO.DEPS.INSTALLED",
 }
 export const DEFAULT_DEVICE = CONSTANTS.DEVICE_NAME.CPX;
 
@@ -450,11 +458,6 @@ export namespace DialogResponses {
 
 export const CPX_CONFIG_FILE = path.join(".vscode", "cpx.json");
 
-export const USER_CODE_NAMES = {
-    CODE_PY: "code.py",
-    MAIN_PY: "main.py",
-};
-
 export const STATUS_BAR_PRIORITY = {
     PORT: 20,
     OPEN_PORT: 30,
@@ -476,6 +479,9 @@ export const HELPER_FILES = {
 
 export const GLOBAL_ENV_VARS = {
     PYTHON: "python",
+};
+export const LANGUAGE_VARS = {
+    PYTHON: { ID: "python", FILE_ENDS: ".py" },
 };
 
 export default CONSTANTS;

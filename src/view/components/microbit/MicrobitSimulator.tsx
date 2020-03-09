@@ -10,7 +10,7 @@ import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
-import { MicrobitImage, BUTTONS_KEYS } from "./MicrobitImage";
+import { BUTTONS_KEYS, MicrobitImage } from "./MicrobitImage";
 
 const DEFAULT_MICROBIT_STATE: IMicrobitState = {
     leds: [

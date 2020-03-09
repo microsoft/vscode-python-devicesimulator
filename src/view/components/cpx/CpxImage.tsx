@@ -183,7 +183,7 @@ const initSvgStyle = (svgElement: HTMLElement, brightness: number): void => {
 
     const ab = outerBtn(165, SvgStyle.MB_HEIGHT - 15, "A+B");
     const abtext = svg.child(ab.outer, "text", {
-        class: "sim-text",
+        class: "sim-text-outside",
         x: SvgStyle.BUTTON_TEXT_BASELINE,
         y: SvgStyle.MB_HEIGHT - 18,
     }) as SVGTextElement;
