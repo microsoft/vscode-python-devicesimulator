@@ -36,6 +36,7 @@ import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
 import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import { WebviewService } from "./service/webviewService";
 
 let telemetryAI: TelemetryAI;
 let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;
@@ -71,7 +72,6 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 };
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
-    console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
 
     telemetryAI = new TelemetryAI(context);
     setupService = new SetupService(telemetryAI);
@@ -79,6 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
     let childProcess: cp.ChildProcess | undefined;
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
+    const webviewService = new WebviewService(context)
 
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
@@ -130,7 +131,7 @@ export async function activate(context: vscode.ExtensionContext) {
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
-                "adafruitSimulator",
+                CONSTANTS.WEBVIEW_TYPE.SIMULATOR,
                 CONSTANTS.LABEL.WEBVIEW_PANEL,
                 { preserveFocus: true, viewColumn: vscode.ViewColumn.Beside },
                 {
@@ -146,6 +147,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     enableScripts: true,
                 }
             );
+            webviewService.openTutorialPanel()
 
             currentPanel.webview.html = getWebviewContent(context);
             messagingService.setWebview(currentPanel.webview);

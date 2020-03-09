@@ -26,6 +26,10 @@ export const CONFIG = {
 };
 
 export const CONSTANTS = {
+    WEBVIEW_TYPE:{
+        SIMULATOR:"simulator",
+        TUTORIAL:"tutorial"
+    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEVICE_NAME: {
         CPX: "CPX",
