@@ -20,7 +20,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ð
     </ul>
     <h3>New features (only available with feature flag enabled):</h3>
     <ul>
-        <li>BBC micro:bit deploy to device and accompanying serial monitor support.
+        <li>BBC micro:bit deploy to device and accompanying serial monitor support.</li>
     </ul>
 </p>
 <br>
