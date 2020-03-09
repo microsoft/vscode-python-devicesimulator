@@ -61,7 +61,6 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                
                 "command": "deviceSimulatorExpress.common.openSerialMonitor",
                 "title": "%deviceSimulatorExpressExtension.commands.common.openSerialMonitor%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
