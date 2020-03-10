@@ -159,9 +159,7 @@ class Express:
         The CPX Simulator doesn't use capacitive touch threshold.
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_ADJUST_THRESHOLD)
-        utils.print_for_unimplemented_functions(
-            Express.adjust_touch_threshold.__name__
-        )
+        utils.print_for_unimplemented_functions(Express.adjust_touch_threshold.__name__)
 
     def shake(self, shake_threshold=30):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_SHAKE)
