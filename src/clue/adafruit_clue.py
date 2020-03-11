@@ -60,7 +60,9 @@ import time
 import array
 import math
 from PIL import Image
-
+import base64
+from io import BytesIO
+import common
 
 # import board # yes? - only if we want to use this exact code for our repo
 # import digitalio # yes - also likely only if we want to use this exact code
@@ -176,8 +178,17 @@ class _ClueSimpleTextDisplay:
         img = Image.new("RGB", (240, 240), "black")  # Create a new black image
         bmp_img = img.load()  # Create the pixel map
         self.text_group.draw(bmp_img)
-        img.show()
-        img.save("test.bmp")
+
+        # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
+        buffered = BytesIO()
+        img.save(buffered, format="BMP")
+        img_str = base64.b64encode(buffered.getvalue())
+        
+        sendable_json = {"screen_bmp": img_str}
+        common.utils.send_to_simulator(sendable_json, "CLUE")
+        # f = open("demofile2.txt", "w")
+        # f.write(str(img_str))
+        # f.close()
 
     def show_terminal(self):
         """Revert to terminalio screen."""
