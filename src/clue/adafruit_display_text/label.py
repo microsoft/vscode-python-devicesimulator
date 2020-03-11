@@ -40,11 +40,13 @@ Implementation Notes
 """
 import sys
 import os
+
 sys.path.append(os.path.join(sys.path[0], "../test"))
 import displayio
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Display_Text.git"
+
 
 class Label(displayio.Group):
     """A label displaying a string of text. The origin point set by ``x`` and ``y``
@@ -58,8 +60,20 @@ class Label(displayio.Group):
        :param int max_glyphs: The largest quantity of glyphs we will display
        :param int color: Color of all text in RGB hex
        :param double line_spacing: Line spacing of text to display"""
-    def __init__(self, font, *, x=0, y=0, text=None, max_glyphs=None, color=0xffffff,
-                 background_color=None, line_spacing=1.25, **kwargs):
+
+    def __init__(
+        self,
+        font,
+        *,
+        x=0,
+        y=0,
+        text=None,
+        max_glyphs=None,
+        color=0xFFFFFF,
+        background_color=None,
+        line_spacing=1.25,
+        **kwargs
+    ):
         if not max_glyphs and not text:
             raise RuntimeError("Please provide a max size, or initial text")
         if not max_glyphs:
@@ -97,45 +111,57 @@ class Label(displayio.Group):
         else:
             return len(self._text)
 
-    def _update_text(self, new_text): # pylint: disable=too-many-locals
+    def _update_text(self, new_text):  # pylint: disable=too-many-locals
         x = 0
         y = 0
         i = 0
         old_c = 0
-        y_offset = int((self.font.get_glyph(ord('M')).height -
-                        new_text.count('\n') * self.height * self.line_spacing) / 2)
-        print("y offset from baseline", y_offset)
+        y_offset = int(
+            (
+                self.font.get_glyph(ord("M")).height
+                - new_text.count("\n") * self.height * self._line_spacing
+            )
+            / 2
+        )
         left = right = top = bottom = 0
         for character in new_text:
-            if character == '\n':
+            if character == "\n":
                 y += int(self.height * self._line_spacing)
                 x = 0
                 continue
             glyph = self.font.get_glyph(ord(character))
             if not glyph:
                 continue
-            right = max(right, x+glyph.width)
-            if y == 0:   # first line, find the Ascender height
-                top = min(top, -glyph.height+y_offset)
-            bottom = max(bottom, y-glyph.dy+y_offset)
+            right = max(right, x + glyph.width)
+            if y == 0:  # first line, find the Ascender height
+                top = min(top, -glyph.height + y_offset)
+            bottom = max(bottom, y - glyph.dy + y_offset)
             position_y = y - glyph.height - glyph.dy + y_offset
-            print(y)
-            print(glyph.height)
-            print(glyph.dy)
-            print(y_offset)
-            print()
             position_x = x + glyph.dx
-            if not self._text or old_c >= len(self._text) or character != self._text[old_c]:
+            if (
+                not self._text
+                or old_c >= len(self._text)
+                or character != self._text[old_c]
+            ):
                 # try:
-                #     face = displayio.TileGrid(glyph.bitmap, pixel_shader=self.palette,
-                #                               default_tile=glyph.tile_index,
-                #                               tile_width=glyph.width, tile_height=glyph.height,
-                #                               position=(position_x, position_y))
+                #     face = displayio.TileGrid(
+                #         glyph.bitmap,
+                #         pixel_shader=self.palette,
+                #         default_tile=glyph.tile_index,
+                #         tile_width=glyph.width,
+                #         tile_height=glyph.height,
+                #         position=(position_x, position_y),
+                #     )
                 # except TypeError:
-                face = displayio.TileGrid(glyph.bitmap, pixel_shader=self.palette,
-                                            default_tile=glyph.tile_index,
-                                            tile_width=glyph.width, tile_height=glyph.height,
-                                            x=position_x, y=position_y)
+                face = displayio.TileGrid(
+                    glyph.bitmap,
+                    pixel_shader=self.palette,
+                    default_tile=glyph.tile_index,
+                    tile_width=glyph.width,
+                    tile_height=glyph.height,
+                    x=position_x,
+                    y=position_y,
+                )
                 if i < len(self):
                     self[i] = face
                 else:
@@ -153,14 +179,20 @@ class Label(displayio.Group):
             i += 1
             old_c += 1
             # skip all non-prinables in the old string
-            while (self._text and old_c < len(self._text) and
-                   (self._text[old_c] == '\n' or not self.font.get_glyph(ord(self._text[old_c])))):
+            while (
+                self._text
+                and old_c < len(self._text)
+                and (
+                    self._text[old_c] == "\n"
+                    or not self.font.get_glyph(ord(self._text[old_c]))
+                )
+            ):
                 old_c += 1
         # Remove the rest
         while len(self) > i:
             self.pop()
         self._text = new_text
-        self._boundingbox = (left, top, left+right, bottom-top)
+        self._boundingbox = (left, top, left + right, bottom - top)
 
     @property
     def bounding_box(self):
@@ -229,10 +261,13 @@ class Label(displayio.Group):
     def anchored_position(self):
         """Position relative to the anchor_point. Tuple containing x,y
            pixel coordinates."""
-        return (self.x-self._boundingbox[2]*self._anchor_point[0],
-                self.y-self._boundingbox[3]*self._anchor_point[1])
+        return (
+            self.x - self._boundingbox[2] * self._anchor_point[0],
+            self.y - self._boundingbox[3] * self._anchor_point[1],
+        )
 
     @anchored_position.setter
     def anchored_position(self, new_position):
-        self.x = int(new_position[0]-(self._boundingbox[2]*self._anchor_point[0]))
-        self.y = int(new_position[1]-(self._boundingbox[3]*self._anchor_point[1]))
+        self.x = int(new_position[0] - (self._boundingbox[2] * self._anchor_point[0]))
+        self.y = int(new_position[1] - (self._boundingbox[3] * self._anchor_point[1]))
+
