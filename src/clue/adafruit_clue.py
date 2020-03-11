@@ -183,8 +183,8 @@ class _ClueSimpleTextDisplay:
         buffered = BytesIO()
         img.save(buffered, format="BMP")
         img_str = base64.b64encode(buffered.getvalue())
-        
-        sendable_json = {"screen_bmp": img_str}
+
+        sendable_json = {"display_base64": img_str}
         common.utils.send_to_simulator(sendable_json, "CLUE")
         # f = open("demofile2.txt", "w")
         # f.write(str(img_str))
