@@ -302,6 +302,12 @@ export async function activate(context: vscode.ExtensionContext) {
         );
         openWebview();
     };
+    const openClueWebview = () => {
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CLUE
+        );
+        openWebview();
+    };
 
     // Open Simulator on the webview
     const cpxOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
@@ -329,6 +335,18 @@ export async function activate(context: vscode.ExtensionContext) {
             );
         }
     );
+    const clueOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.clue.openSimulator",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openClueWebview,
+                TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR
+            );
+        }
+    );
 
     const openCPXTemplateFile = () => {
         deviceSelectionService.setCurrentActiveDevice(
@@ -340,6 +358,12 @@ export async function activate(context: vscode.ExtensionContext) {
     const openMicrobitTemplateFile = () => {
         deviceSelectionService.setCurrentActiveDevice(
             CONSTANTS.DEVICE_NAME.MICROBIT
+        );
+        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
+    };
+    const openClueTemplateFile = () => {
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CLUE
         );
         openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
     };
@@ -428,6 +452,19 @@ export async function activate(context: vscode.ExtensionContext) {
             );
             telemetryAI.runWithLatencyMeasure(
                 openMicrobitTemplateFile,
+                TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
+            );
+        }
+    );
+    const clueNewFile: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.clue.newFile",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.MICROBIT_COMMAND_NEW_FILE
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openClueTemplateFile,
+
                 TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
             );
         }
@@ -1056,6 +1093,8 @@ export async function activate(context: vscode.ExtensionContext) {
         microbitOpenSimulator,
         microbitNewFile,
         microbitDeployToDevice,
+        clueOpenSimulator,
+        clueNewFile,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
             simulatorDebugConfiguration

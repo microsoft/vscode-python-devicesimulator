@@ -7,8 +7,11 @@ import * as React from "react";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
+interface IProps {
+    displayImage: string;
+}
 
-export class MicrobitSvg extends React.Component {
+export class MicrobitSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
 
     private buttonRefs: IRefObject = {
@@ -17,7 +20,7 @@ export class MicrobitSvg extends React.Component {
         BTN_AB: React.createRef(),
     };
 
-    private displayRef: React.RefObject<SVGImageElement>;
+    private displayRef: React.RefObject<SVGImageElement> = React.createRef();
 
     public getSvgRef(): React.RefObject<SVGSVGElement> {
         return this.svgRef;
@@ -27,6 +30,12 @@ export class MicrobitSvg extends React.Component {
     }
     public getDisplayRef(): React.RefObject<SVGImageElement> {
         return this.displayRef;
+    }
+    componentDidMount() {
+        this.updateDisplay();
+    }
+    componentDidUpdate() {
+        this.updateDisplay();
     }
 
     render() {
@@ -1207,5 +1216,13 @@ export class MicrobitSvg extends React.Component {
                 </svg>
             </div>
         );
+    }
+    private updateDisplay() {
+        if (this.displayRef.current) {
+            this.displayRef.current.setAttribute(
+                "href",
+                `data:image/svg+xml;base64,${this.props.displayImage}`
+            );
+        }
     }
 }

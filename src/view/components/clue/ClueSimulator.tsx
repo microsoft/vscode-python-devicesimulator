@@ -12,7 +12,7 @@ import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
-const DEFAULT_MICROBIT_STATE: IMicrobitState = {
+const DEFAULT_CLUE_STATE: IMicrobitState = {
     leds: [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
@@ -21,6 +21,7 @@ const DEFAULT_MICROBIT_STATE: IMicrobitState = {
         [0, 0, 0, 0, 0],
     ],
     buttons: { button_a: false, button_b: false },
+    displayMessage: "",
 };
 
 interface IState {
@@ -28,19 +29,20 @@ interface IState {
     running_file: string;
     play_button: boolean;
     selected_file: string;
-    microbit: IMicrobitState;
+    clue: IMicrobitState;
 }
 
 interface IMicrobitState {
     leds: number[][];
     buttons: { button_a: boolean; button_b: boolean };
+    displayMessage: string;
 }
 export class MicrobitSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
     constructor() {
         super({});
         this.state = {
-            microbit: DEFAULT_MICROBIT_STATE,
+            clue: DEFAULT_CLUE_STATE,
             play_button: false,
             selected_file: "",
             active_editors: [],
@@ -58,14 +60,14 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         switch (message.command) {
             case "reset-state":
                 this.setState({
-                    microbit: DEFAULT_MICROBIT_STATE,
+                    clue: DEFAULT_CLUE_STATE,
                     play_button: false,
                 });
                 break;
             case "set-state":
                 this.setState({
-                    microbit: {
-                        ...this.state.microbit,
+                    clue: {
+                        ...this.state.clue,
                         leds: message.state.leds,
                     },
                 });
@@ -118,7 +120,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                             onMouseLeave: this.onMouseLeave,
                             onKeyEvent: this.onKeyEvent,
                         }}
-                        leds={this.state.microbit.leds}
+                        leds={this.state.clue.leds}
+                        displayMessage={this.state.clue.displayMessage}
                     />
                 </div>
                 <ActionBar
@@ -157,7 +160,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
     protected handleButtonClick = (key: string, isActive: boolean) => {
-        let newButtonState = this.state.microbit.buttons;
+        let newButtonState = this.state.clue.buttons;
         switch (key) {
             case MICROBIT_BUTTONS_KEYS.BTN_A:
                 newButtonState.button_a = isActive;
@@ -174,8 +177,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         }
         sendMessage(WEBVIEW_MESSAGES.BUTTON_PRESS, newButtonState);
         this.setState({
-            microbit: {
-                ...this.state.microbit,
+            clue: {
+                ...this.state.clue,
                 buttons: newButtonState,
             },
         });

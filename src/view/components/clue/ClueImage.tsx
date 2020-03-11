@@ -17,6 +17,7 @@ interface EventTriggers {
 interface IProps {
     eventTriggers: EventTriggers;
     leds: number[][];
+    displayMessage: string;
 }
 
 const BUTTON_CLASSNAME = {
@@ -38,14 +39,14 @@ export class ClueImage extends React.Component<IProps, {}> {
     componentDidMount() {
         const svgElement = this.svgRef.current;
         if (svgElement) {
-            updateAllLeds(this.props.leds, svgElement.getLeds());
+            // updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
             this.setupKeyPresses(this.props.eventTriggers.onKeyEvent);
         }
     }
     componentDidUpdate() {
         if (this.svgRef.current) {
-            updateAllLeds(this.props.leds, this.svgRef.current.getLeds());
+            // updateAllLeds(this.props.leds, this.svgRef.current.getLeds());
             if (this.context === VIEW_STATE.PAUSE) {
                 disableAllButtons(this.svgRef.current.getButtons());
             } else if (this.context === VIEW_STATE.RUNNING) {
@@ -83,7 +84,12 @@ export class ClueImage extends React.Component<IProps, {}> {
         this.props.eventTriggers.onKeyEvent(event, false, event.key);
     };
     render() {
-        return <MicrobitSvg ref={this.svgRef} />;
+        return (
+            <MicrobitSvg
+                ref={this.svgRef}
+                displayImage={this.props.displayMessage}
+            />
+        );
     }
     public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
         if (this.svgRef.current) {
