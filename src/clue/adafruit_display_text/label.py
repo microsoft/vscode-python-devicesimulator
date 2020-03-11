@@ -41,7 +41,7 @@ Implementation Notes
 import sys
 import os
 
-sys.path.append(os.path.join(sys.path[0], "../test"))
+sys.path.append(os.path.join(sys.path[0], ".."))
 import displayio
 
 __version__ = "0.0.0-auto.0"
@@ -143,25 +143,25 @@ class Label(displayio.Group):
                 or old_c >= len(self._text)
                 or character != self._text[old_c]
             ):
-                # try:
-                #     face = displayio.TileGrid(
-                #         glyph.bitmap,
-                #         pixel_shader=self.palette,
-                #         default_tile=glyph.tile_index,
-                #         tile_width=glyph.width,
-                #         tile_height=glyph.height,
-                #         position=(position_x, position_y),
-                #     )
-                # except TypeError:
-                face = displayio.TileGrid(
-                    glyph.bitmap,
-                    pixel_shader=self.palette,
-                    default_tile=glyph.tile_index,
-                    tile_width=glyph.width,
-                    tile_height=glyph.height,
-                    x=position_x,
-                    y=position_y,
-                )
+                try:
+                    face = displayio.TileGrid(
+                        glyph.bitmap,
+                        pixel_shader=self.palette,
+                        default_tile=glyph.tile_index,
+                        tile_width=glyph.width,
+                        tile_height=glyph.height,
+                        position=(position_x, position_y),
+                    )
+                except TypeError:
+                    face = displayio.TileGrid(
+                        glyph.bitmap,
+                        pixel_shader=self.palette,
+                        default_tile=glyph.tile_index,
+                        tile_width=glyph.width,
+                        tile_height=glyph.height,
+                        x=position_x,
+                        y=position_y,
+                    )
                 if i < len(self):
                     self[i] = face
                 else:

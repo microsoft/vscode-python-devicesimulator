@@ -87,16 +87,29 @@ class GroupItem:
 
 class TileGrid(GroupItem):
     def __init__(
-        self, bitmap, pixel_shader, default_tile, tile_width, tile_height, x, y
+        self,
+        bitmap,
+        pixel_shader,
+        default_tile,
+        tile_width,
+        tile_height,
+        x=0,
+        y=0,
+        position=None,
     ):
+        if position and isinstance(position, tuple):
+            self.x = position[0]
+            self.y = position[1]
+        else:
+            self.x = x
+            self.y = y
+
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
 
         self.tile_width = tile_width
         self.tile_height = tile_height
-        self.x = x
-        self.y = y
 
     def draw(self, bmp, x, y, scale):
         self.bitmap.draw(
