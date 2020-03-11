@@ -25,6 +25,7 @@ sys.stdout = user_stdout
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
 sys.path.insert(0, abs_path_to_lib)
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, "clue"))
 
 # This import must happen after the sys.path is modified
 from common.telemetry import telemetry_py
@@ -35,6 +36,8 @@ from adafruit_circuitplayground.constants import CPX
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
+from clue.adafruit_clue import clue
+
 
 # Handle User Inputs Thread
 class UserInput(threading.Thread):
@@ -42,7 +45,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        device_dict = {CPX: cpx, MICROBIT: mb}
+        device_dict = {CPX: cpx, MICROBIT: mb, "CLUE": clue}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
