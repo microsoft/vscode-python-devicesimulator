@@ -164,19 +164,19 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
         }
     }
 };
-const updateAllLeds = (
-    leds: number[][],
-    ledRefs: Array<Array<React.RefObject<SVGRectElement>>>
-) => {
-    for (let j = 0; j < leds.length; j++) {
-        for (let i = 0; i < leds[0].length; i++) {
-            const ledElement = ledRefs[j][i].current;
-            if (ledElement) {
-                setupLed(ledElement, leds[i][j]);
-            }
-        }
-    }
-};
-const setupLed = (ledElement: SVGRectElement, brightness: number) => {
-    ledElement.style.opacity = (brightness / 10).toString();
-};
+// const updateAllLeds = (
+//     leds: number[][],
+//     ledRefs: Array<Array<React.RefObject<SVGRectElement>>>
+// ) => {
+//     for (let j = 0; j < leds.length; j++) {
+//         for (let i = 0; i < leds[0].length; i++) {
+//             const ledElement = ledRefs[j][i].current;
+//             if (ledElement) {
+//                 setupLed(ledElement, leds[i][j]);
+//             }
+//         }
+//     }
+// };
+// const setupLed = (ledElement: SVGRectElement, brightness: number) => {
+//     ledElement.style.opacity = (brightness / 10).toString();
+// };
