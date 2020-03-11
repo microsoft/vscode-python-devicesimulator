@@ -109,11 +109,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -133,11 +133,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -157,11 +157,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -181,11 +181,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -205,11 +205,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -229,11 +229,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -253,11 +253,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -277,11 +277,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -301,11 +301,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -325,11 +325,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -349,11 +349,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -373,11 +373,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -397,11 +397,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -421,11 +421,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -445,11 +445,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -469,11 +469,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -493,11 +493,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -517,11 +517,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -541,11 +541,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -565,11 +565,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -589,11 +589,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -613,11 +613,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -637,11 +637,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -661,11 +661,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -685,11 +685,11 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                         >
                             <stop
                                 offset="0%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
-                                style={{ stopColor: "rgb(212, 175, 55)" }}
+                                style={{ stopColor: "rgb(186, 176, 171)" }}
                             />
                             <stop
                                 offset="100%"
@@ -713,64 +713,18 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
                             fill="#111"
                             style={{ fill: "rgb(17, 17, 17)" }}
                         />
-                        <polygon
-                            className="sim-theme"
-                            points="115,56.7 173.1,0 115,0"
-                            style={{ fill: "rgb(255, 58, 84)" }}
-                        />
-                        <path
-                            className="sim-theme"
-                            d="M114.2,0H25.9C12.1,2.1,0,13.3,0,27.7v83.9L114.2,0z"
-                            style={{ fill: "rgb(255, 58, 84)" }}
-                        />
-                        <polygon
-                            className="sim-theme"
-                            points="173,27.9 202.5,0 173,0"
-                            style={{ fill: "rgb(255, 58, 84)" }}
-                        />
-                        <polygon
-                            className="sim-theme"
-                            points="54.1,242.4 54.1,274.1 22.4,274.1"
-                            style={{ fill: "rgb(255, 58, 84)" }}
-                        />
-                        <polygon
-                            className="sim-theme"
-                            points="446.2,164.6 446.2,132.8 477.9,132.8"
-                            style={{ fill: "rgb(255, 58, 84)" }}
-                        />
+
                         <image
                             ref={this.displayRef}
                             x={152}
-                            y={111}
-                            width={240}
-                            height={240}
+                            y={80}
+                            width={198}
+                            height={200}
                             style={{
                                 fill: "rgb(30,30,30)",
                             }}
                         />
-                        <g className="sim-head no-drag">
-                            <circle
-                                cx={258}
-                                cy={75}
-                                r={100}
-                                fill="transparent"
-                            />
-                            <path
-                                className="sim-theme"
-                                d="M269.9,50.2L269.9,50.2l-39.5,0v0c-14.1,0.1-24.6,10.7-24.6,24.8c0,13.9,10.4,24.4,24.3,24.7v0h39.6c14.2,0,24.8-10.6,24.8-24.7C294.5,61,284,50.3,269.9,50.2 M269.7,89.2L269.7,89.2l-39.3,0c-7.7-0.1-14-6.4-14-14.2c0-7.8,6.4-14.2,14.2-14.2h39.1c7.8,0,14.2,6.4,14.2,14.2C283.9,82.9,277.5,89.2,269.7,89.2"
-                                style={{ fill: "rgb(255, 58, 84)" }}
-                            />
-                            <path
-                                className="sim-theme"
-                                d="M230.6,69.7c-2.9,0-5.3,2.4-5.3,5.3c0,2.9,2.4,5.3,5.3,5.3c2.9,0,5.3-2.4,5.3-5.3C235.9,72.1,233.5,69.7,230.6,69.7"
-                                style={{ fill: "rgb(255, 58, 84)" }}
-                            />
-                            <path
-                                className="sim-theme"
-                                d="M269.7,80.3c2.9,0,5.3-2.4,5.3-5.3c0-2.9-2.4-5.3-5.3-5.3c-2.9,0-5.3,2.4-5.3,5.3C264.4,77.9,266.8,80.3,269.7,80.3"
-                                style={{ fill: "rgb(255, 58, 84)" }}
-                            />
-                        </g>
+
                         <text x={310} y={100} className="sim-text" />
                         <path
                             className="sim-pin sim-pin-touch"
