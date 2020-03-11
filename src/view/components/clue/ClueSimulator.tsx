@@ -68,7 +68,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 this.setState({
                     clue: {
                         ...this.state.clue,
-                        leds: message.state.leds,
+                        displayMessage: message.state.display_base64,
                     },
                 });
                 break;
