@@ -587,11 +587,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                             messageData.device_name ===
                                             deviceSelectionService.getCurrentActiveDevice()
                                         ) {
-                                            currentPanel.webview.postMessage({
-                                                active_device: deviceSelectionService.getCurrentActiveDevice(),
-                                                command: "set-state",
-                                                state: messageData,
-                                            });
+                                            messagingService.sendMessageToWebview(
+                                                VSCODE_MESSAGES_TO_WEBVIEW.SET_STATE,
+                                                messageData
+                                            );
                                         }
                                         break;
 

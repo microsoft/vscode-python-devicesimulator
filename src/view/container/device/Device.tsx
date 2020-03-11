@@ -33,6 +33,7 @@ const loadSelectedDevice = (currentSelectedDevice: string) => {
             return <Cpx />;
         case DEVICE_LIST_KEY.MICROBIT:
             return <Microbit />;
+        case DEVICE_LIST_KEY.CLUE:
         default:
             return null;
     }

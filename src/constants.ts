@@ -30,6 +30,7 @@ export const CONSTANTS = {
     DEVICE_NAME: {
         CPX: "CPX",
         MICROBIT: "micro:bit",
+        CLUE: "CLUE",
     },
     ERROR: {
         BAD_PYTHON_PATH:
