@@ -32,8 +32,8 @@
 .sensor_modal {
     vertical-align: middle;
     width: 360px;
-    max-height: 240px;
-    overflow-y: scroll;
+    max-height: 300px;
+    overflow-y: visible;
     overflow-x: hidden;
     position: relative;
     height: fit-content;
@@ -56,22 +56,53 @@
     width: 320px;
 }
 
+.info-icon {
+    background: var(--vscode-debugToolBar-background);
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    color: var(--vscode-badgeForegroundOverride);
+    border-width: 1px;
+    border-style: solid;
+    padding: 0px 4px 0px 4px;
+    float: right;
+    left: 25px;
+    margin-top: -10px;
+}
+
+.info-icon:hover {
+    background-color: var(--vscode-terminal-selectionBackground);
+    color: var(--vscode-badgeForegroundOverride);
+}
+
+.info-icon:active {
+    background-color: var(--vscode-editor-selectionHighlightBackground);
+    color: var(--vscode-badgeForegroundOverride);
+}
+
 .tag {
     position: absolute;
     left: 200px;
+}
+
+.description-callout {
+    color: var(--vscode-debugToolBar-background);
+    background-color: var(--vscode-debugToolBar-background);
 }
 
 .description {
     -webkit-appearance: none;
     font-size: 14px;
     color: var(--vscode-foreground);
+    background: var(--vscode-debugToolBar-background);
     word-wrap: break-word;
     width: 320px;
+    height: "100%";
     margin-top: 15px;
     text-align: left;
     line-height: 17px;
     font-weight: 100;
     opacity: 50%;
+    overflow-y: hidden;
+    padding: "0 24px 20px";
 }
 
 .title_group {

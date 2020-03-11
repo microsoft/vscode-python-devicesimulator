@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { TooltipHost } from "office-ui-fabric-react";
+import { Callout, TooltipHost } from "office-ui-fabric-react";
+import { initializeIcons } from "@uifabric/icons";
+import { IconButton } from "office-ui-fabric-react/lib/Button";
 import * as React from "react";
 import {
     FormattedMessage,
@@ -19,6 +21,7 @@ import {
 interface IToolbarState {
     currentOpenedId: string;
     showModal: boolean;
+    isDescriptionVisible: boolean;
 }
 
 interface IProps extends WrappedComponentProps {
@@ -35,8 +38,10 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
 
     constructor(props: IProps) {
         super(props);
+        initializeIcons();
         this.state = {
             currentOpenedId: "",
+            isDescriptionVisible: false,
             showModal: false,
         };
     }
@@ -129,6 +134,18 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
         this.changePressedState(label, true);
     };
 
+    private onShowDescriptionClicked = (): void => {
+        this.setState({
+            isDescriptionVisible: !this.state.isDescriptionVisible,
+        });
+    };
+
+    private onDescriptionDismiss = (): void => {
+        this.setState({
+            isDescriptionVisible: false,
+        });
+    };
+
     private getIconModal() {
         if (
             !this.state.showModal ||
@@ -150,6 +167,7 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
         const component = content
             ? content.component
             : DEFAULT_MODAL_CONTENT.component;
+
         return (
             <div className="sensor_modal">
                 <div className="title_group">
@@ -157,12 +175,30 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                         <FormattedMessage id={content.descriptionTitle} />
                         {content.tagInput}
                         {content.tagOutput}
+                        <IconButton
+                            onClick={this.onShowDescriptionClicked}
+                            iconProps={{ iconName: "Info" }}
+                            title="Info"
+                            ariaLabel="More Information Button"
+                            className="info-icon"
+                        />
                     </span>
                 </div>
                 <br />
-                <div className="description">
-                    <FormattedMessage id={content.descriptionText} />
-                </div>
+                {this.state.isDescriptionVisible && (
+                    <Callout
+                        className="description-callout"
+                        gapSpace={0}
+                        role="textbox"
+                        target=".info-icon"
+                        setInitialFocus={true}
+                        onDismiss={this.onDescriptionDismiss}
+                    >
+                        <div className="description">
+                            <FormattedMessage id={content.descriptionText} />
+                        </div>
+                    </Callout>
+                )}
                 <div className="try_area">
                     <br />
                     <span className="description">
