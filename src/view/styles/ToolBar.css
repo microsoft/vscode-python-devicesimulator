@@ -119,11 +119,6 @@
     overflow-y: hidden;
 }
 
-.ms-Callout-content {
-    height: '100%';
-    padding: '0 24px 20px';
-}
-
 .title_group {
     margin-top: 20px;
     width: fit-content;
