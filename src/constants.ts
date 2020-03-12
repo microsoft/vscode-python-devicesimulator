@@ -69,6 +69,7 @@ export const CONSTANTS = {
             "error.installationError",
             "Installation Error"
         ),
+
         INVALID_FILE_EXTENSION_DEBUG: localize(
             "error.invalidFileExtensionDebug",
             "The file you tried to run isn't a Python file."
@@ -478,6 +479,9 @@ export const HELPER_FILES = {
 
 export const GLOBAL_ENV_VARS = {
     PYTHON: "python",
+};
+export const LANGUAGE_VARS = {
+    PYTHON: { ID: "python", FILE_ENDS: ".py" },
 };
 
 export default CONSTANTS;
