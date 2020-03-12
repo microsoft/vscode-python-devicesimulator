@@ -36,7 +36,7 @@ from adafruit_circuitplayground.constants import CPX
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
-from clue.adafruit_clue import clue
+from adafruit_clue import clue
 
 
 # Handle User Inputs Thread
