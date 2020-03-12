@@ -195,13 +195,13 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                         onDismiss={this.onDescriptionDismiss}
                     >
                         <div className="description">
-                            <FormattedMessage id={content.descriptionText} />
+                            <FormattedMessage id={content.descriptionText}tagProps={{style: { color: '#ececec'} }}/>
                         </div>
                     </Callout>
                 )}
                 <div className="try_area">
                     <br />
-                    <span className="description">
+                    <span className="try-it-description">
                         <FormattedMessage id={content.tryItDescription} />
                     </span>
                     <br />

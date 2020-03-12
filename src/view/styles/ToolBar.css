@@ -86,9 +86,11 @@
 .description-callout {
     color: var(--vscode-debugToolBar-background);
     background-color: var(--vscode-debugToolBar-background);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
+    padding: "210px 214px 214px 210px";
 }
 
-.description {
+.try-it-description {
     -webkit-appearance: none;
     font-size: 14px;
     color: var(--vscode-foreground);
@@ -101,8 +103,25 @@
     line-height: 17px;
     font-weight: 100;
     opacity: 50%;
+}
+
+.description {
+    -webkit-appearance: none;
+    color: '#000000';
+    font-size: 14px;
+    word-wrap: break-word;
+    width: 320px;
+    height: '100%';
+    text-align: left;
+    font-weight: 200;
+    padding: 10px 0px 10px 10px;
+    margin: 10px;
     overflow-y: hidden;
-    padding: "0 24px 20px";
+}
+
+.ms-Callout-content {
+    height: '100%';
+    padding: '0 24px 20px';
 }
 
 .title_group {
