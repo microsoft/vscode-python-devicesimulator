@@ -1,3 +1,11 @@
+
+from PIL import Image,ImageColor
+import base64
+from io import BytesIO
+
+img = Image.new("RGB", (240, 240), "black")  # Create a new black image
+bmp_img = img.load()  # Create the pixel map
+
 def get_index(index, width):
     return index[0] + index[1] * width
 
@@ -23,7 +31,13 @@ class Bitmap:
     def __len__(self):
         return self.width * self.height
 
-    def draw(self, bmp, x, y, w, h, pixel_shader, scale):
+    def hex2rgb(self,hex):
+        first_val = (hex & 0xFF0000) >> 16
+        second_val = (hex & 0x00FF00) >> 8
+        third_val = (hex & 0x0000FF)
+        return (first_val,second_val,third_val)
+
+    def draw(self, x, y, w, h, pixel_shader, scale):
         for i in range(h):
             for j in range(w):
                 for i_new in range(scale):
@@ -34,18 +48,11 @@ class Bitmap:
                                 x * scale + (j * scale) + j_new >= 0
                                 and y + (i * scale) + i_new >= 0
                             ):
-                                pix = None
-                                if self[j, i] > 0:
-                                    if not pixel_shader.contents[1].transparent:
-                                        pix = pixel_shader[1]
-                                else:
-                                    if not pixel_shader.contents[0].transparent:
-                                        pix = pixel_shader[0]
-                                if pix:
-                                    bmp[
+                                if not pixel_shader.contents[self[j, i]].transparent:
+                                    bmp_img[
                                         x * scale + (j * scale) + j_new,
                                         y + (i * scale) + i_new,
-                                    ] = pix
+                                    ] = pixel_shader[self[j, i]]
                         except IndexError:
                             continue
 
@@ -55,15 +62,18 @@ class Bitmap:
 
 
 class Group:
-    def __init__(self, max_size, scale=1):
+    def __init__(self, max_size, scale=1,auto_write=True):
         self.contents = []
         self.max_size = max_size
         self.scale = scale
+        self.auto_write = auto_write
 
     def append(self, item):
         self.contents.append(item)
+        if self.auto_write:
+            self.draw(show=True)
 
-    def draw(self, bmp, x=0, y=0, scale=None):
+    def draw(self, x=0, y=0, scale=None, show=False):
         try:
             if isinstance(self.anchored_position, tuple):
                 x = self.anchored_position[0]
@@ -73,15 +83,28 @@ class Group:
         if scale is None:
             scale = self.scale
         for idx, elem in enumerate(self.contents):
-            elem.draw(bmp, x, y, self.scale)
-            # try:
-            #     y = y+elem.tile_height
-            # except AttributeError:
-            #     y = y+elem.height
+            if isinstance(elem,Group):
+                elem.draw(x, y, self.scale, False)
+            else:
+                elem.draw(x, y, self.scale)
+        
+        if show:
+            self.show()
+        
+    def show(self):
+        buffered = BytesIO()
+        img.save(buffered, format="BMP")
+        img.show()
+        img_str = base64.b64encode(buffered.getvalue())
 
+        sendable_json = {"display_base64": img_str}
+        # common.utils.send_to_simulator(sendable_json, "CLUE")
+        # f = open("demofile2.txt", "w")
+        # f.write(str(img_str))
+        # f.close()
 
 class GroupItem:
-    def draw(self, bmp, x, y, scale):
+    def draw(self, x, y, scale):
         pass
 
 
@@ -118,9 +141,8 @@ class TileGrid(GroupItem):
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
 
-    def draw(self, bmp, x, y, scale):
+    def draw(self, x, y, scale):
         self.bitmap.draw(
-            bmp=bmp,
             x=self.x + x,
             y=self.y + y,
             w=self.tile_width,

@@ -60,9 +60,7 @@ import time
 import array
 import math
 from PIL import Image
-import base64
-from io import BytesIO
-import common
+# import common
 
 # import board # yes? - only if we want to use this exact code for our repo
 # import digitalio # yes - also likely only if we want to use this exact code
@@ -118,8 +116,7 @@ class _ClueSimpleTextDisplay:
         self._font = terminalio.FONT
         if font:
             self._font = font
-
-        self.text_group = displayio.Group(max_size=20, scale=text_scale)
+        self.text_group = displayio.Group(max_size=20, scale=text_scale,auto_write=False)
 
         if title:
             # Fail gracefully if title is longer than 60 characters.
@@ -132,6 +129,7 @@ class _ClueSimpleTextDisplay:
                 max_glyphs=60,
                 color=title_color,
                 scale=title_scale,
+                auto_write=False
             )
             title.x = 0
 
@@ -165,7 +163,7 @@ class _ClueSimpleTextDisplay:
 
     def add_text_line(self, color=0xFFFFFF):
         """Adds a line on the display of the specified color and returns the label object."""
-        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color)
+        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color,auto_write=False)
         text_label.x = 0
         text_label.y = self._y
         self._y = text_label.y + 13
@@ -175,20 +173,9 @@ class _ClueSimpleTextDisplay:
 
     def show(self):
         """Call show() to display the data list."""
-        img = Image.new("RGB", (240, 240), "black")  # Create a new black image
-        bmp_img = img.load()  # Create the pixel map
-        self.text_group.draw(bmp_img)
-
+        self.text_group.draw(show=True)
         # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
-        buffered = BytesIO()
-        img.save(buffered, format="BMP")
-        img_str = base64.b64encode(buffered.getvalue())
-
-        sendable_json = {"display_base64": img_str}
-        common.utils.send_to_simulator(sendable_json, "CLUE")
-        # f = open("demofile2.txt", "w")
-        # f.write(str(img_str))
-        # f.close()
+        
 
     def show_terminal(self):
         """Revert to terminalio screen."""
