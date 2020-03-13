@@ -58,6 +58,7 @@ export const MICROBIT_BUTTON_STYLING_CLASSES = {
 export enum DEVICE_LIST_KEY {
     CPX = "CPX",
     MICROBIT = "micro:bit",
+    CLUE = "CLUE",
 }
 
 // Pauses on Debug mode alter the state of the view
@@ -82,6 +83,7 @@ export enum VSCODE_MESSAGES_TO_WEBVIEW {
     RUN_DEVICE = "run-device",
     RESET = "reset-state",
     CURRENT_FILE = "current-file",
+    SET_STATE = "set-state",
 }
 export enum DEBUG_COMMANDS {
     STACK_TRACE = "stackTrace",

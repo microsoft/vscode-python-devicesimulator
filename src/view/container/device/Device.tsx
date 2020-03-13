@@ -4,6 +4,7 @@
 import * as React from "react";
 import { Cpx } from "../../components/cpx/Cpx";
 import { Microbit } from "../../components/microbit/Microbit";
+import { Clue } from "../../components/clue/Clue";
 import { DEVICE_LIST_KEY } from "../../constants";
 
 interface IProps {
@@ -33,6 +34,8 @@ const loadSelectedDevice = (currentSelectedDevice: string) => {
             return <Cpx />;
         case DEVICE_LIST_KEY.MICROBIT:
             return <Microbit />;
+        case DEVICE_LIST_KEY.CLUE:
+            return <Clue />;
         default:
             return null;
     }
