@@ -72,26 +72,34 @@ export const GETTING_STARTED_HTML = `<!DOCTYPE html>
             </div>
             <div id="CPX" class="inv">
                 <h2> Tutorial for CPX </h2>
-                <h3> 1. Import the micro:bit library to use it!</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
-                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
-                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Import the micro:bit library to use it! (required)</h3>
+                <span class="codeBox">
+                    <pre>from adafruit_circuitplayground import cp</pre>
+                </span>
+                <h3> 2. Turn on the little red LED</h3>
+                <span class="codeBox">
+                    <pre>while True:</pre>
+                    <pre>   cp.red_led = True</pre>
+                </span>
+                <h3> 3. Turn up red LED when button A is clicked</h3>
+                <span class="codeBox">
+                    <pre>while True:</pre>
+                    <pre>   if cp.button_a:</pre>
+                    <pre>       cp.red_led = True</pre>
+                </span>
+                <h3> 4. Light up the first neopixel blue</h3>
+                <span class="codeBox">
+                    <pre>cp.pixels[0] = (0, 0, 255)</pre>
+                </span>
+                <h3> And much more! These links have more tutorials:</h3>
+                <h3>
+                    <a href="https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library">
+                    Getting started with CPX and CircuitPython</a>
+                </h3>
+                <h3>
+                    <a href="https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples">
+                    More example code</a>
+                </h3>
             </div>
     
             <script>
