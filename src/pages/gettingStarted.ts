@@ -18,9 +18,9 @@ export const GETTING_STARTED_HTML = `<!DOCTYPE html>
             }
             .codeBox {
                 display: block;
-                width: 90%; height: 50px;
+                width: 90%;
                 margin: 10px;
-                padding: 10px;
+                padding: 15px;
                 text-align: left;
                 background: none;
                 border: 1px solid grey;
@@ -39,10 +39,50 @@ export const GETTING_STARTED_HTML = `<!DOCTYPE html>
     
             <div id="micro:bit" class="visibleElement">
                 <h2> Tutorial for micro:bit </h2>
+                <h3> 1. Import the micro:bit library to use it!</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
                 <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
                 <span class="codeBox">display.show(Image.HEART)</span>
             </div>
-            <div id="CPX" class="inv">Content 2</div>
+            <div id="CPX" class="inv">
+                <h2> Tutorial for CPX </h2>
+                <h3> 1. Import the micro:bit library to use it!</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+                <h3> 1. Light up your micro:bit with love by showing a heart.</h3>
+                <span class="codeBox">display.show(Image.HEART)</span>
+            </div>
     
             <script>
                 document
