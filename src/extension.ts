@@ -682,6 +682,8 @@ export async function activate(context: vscode.ExtensionContext) {
                 DialogResponses.MESSAGE_UNDERSTOOD
             );
         } else {
+            await fileSelectionService.getCurrentTextDocument().save();
+            
             utils.logToOutputChannel(
                 outChannel,
                 CONSTANTS.INFO.FILE_SELECTED(
