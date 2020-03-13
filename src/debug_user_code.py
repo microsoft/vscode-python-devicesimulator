@@ -27,7 +27,7 @@ sys.path.insert(0, abs_path_to_micropython_lib)
 
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
-from micropython.microbit.__model.microbit_model import __mb as mb
+from microbit.__model.microbit_model import __mb as mb
 from common import debugger_communication_client
 
 
