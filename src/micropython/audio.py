@@ -2,6 +2,8 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+# The implementation is based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/audio.html.
+
 
 def play(source, wait=True, pin="pin0", return_pin=None):
     """

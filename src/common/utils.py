@@ -58,5 +58,5 @@ def print_for_unimplemented_functions(function_name, one_more_call=False):
     line_number = sys._getframe(frame_no).f_lineno
     user_file_name = sys._getframe(frame_no).f_code.co_filename
     print(
-        f"{function_name} on line {line_number} in {user_file_name} is not implemented in the simulator but it will work on the actual device!"
+        f"'{function_name}' on line {line_number} in {user_file_name} is not implemented in the simulator but it will work on the actual device!"
     )

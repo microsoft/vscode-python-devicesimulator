@@ -1282,8 +1282,8 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
     );
 
-    // update pylint args to extend system path
-    // to include python libs local to extention
+        // update pylint args to extend system path
+        // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
         ["--init-hook", `import sys; sys.path.append(\"${outPath}\")`],

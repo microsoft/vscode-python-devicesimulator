@@ -4,6 +4,7 @@ from common.telemetry_events import TelemetryEvent
 
 
 class NeoPixel:
+    # The implementation is based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/neopixel.html.
     """
     This class is not implemented in the simulator.
 
@@ -19,6 +20,8 @@ class NeoPixel:
 
     def clear(self):
         """
+        This function is not implemented in the simulator.
+        
         Clear all the pixels.
         """
         utils.print_for_unimplemented_functions(NeoPixel.clear.__name__)
@@ -26,6 +29,8 @@ class NeoPixel:
 
     def show(self):
         """
+        This function is not implemented in the simulator.
+
         Show the pixels. Must be called for any updates to become visible.
         """
         utils.print_for_unimplemented_functions(NeoPixel.show.__name__)

@@ -2,6 +2,8 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+# The implementation is based off of https://microbit-micropython.readthedocs.io/en/v1.0.1/radio.html.
+
 RATE_250KBIT = ""
 
 RATE_1MBIT = ""
