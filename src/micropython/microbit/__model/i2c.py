@@ -17,7 +17,7 @@ class I2c:
         Changing the I²C pins from defaults will make the accelerometer and
         compass stop working, as they are connected internally to those pins.
         """
-        utils.print_for_unimplemented_functions(I2c.init.__name__)
+        utils.print_for_unimplemented_functions(I2c.init.__qualname__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_I2C)
 
     def scan(self):

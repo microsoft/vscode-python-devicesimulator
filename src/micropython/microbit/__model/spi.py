@@ -33,7 +33,7 @@ class SPI:
         The ``sclk``, ``mosi`` and ``miso`` arguments specify the pins to use for
         each type of signal.
         """
-        utils.print_for_unimplemented_functions(SPI.init.__name__)
+        utils.print_for_unimplemented_functions(SPI.init.__qualname__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPI)
 
     def read(self, nbytes):
