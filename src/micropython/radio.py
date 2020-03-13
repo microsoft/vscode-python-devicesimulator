@@ -8,6 +8,7 @@ RATE_1MBIT = ""
 
 RATE_2MBIT = ""
 
+
 def on():
     """
     This function is not implemented in the simulator.
@@ -18,6 +19,7 @@ def on():
     utils.print_for_unimplemented_functions(on.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
 
+
 def off():
     """
     This function is not implemented in the simulator.
@@ -26,6 +28,7 @@ def off():
     """
     utils.print_for_unimplemented_functions(off.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
+
 
 def config(**kwargs):
     """
@@ -74,6 +77,7 @@ def config(**kwargs):
     utils.print_for_unimplemented_functions(config.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
 
+
 def reset():
     """
     This function is not implemented in the simulator.
@@ -84,6 +88,7 @@ def reset():
     utils.print_for_unimplemented_functions(reset.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
 
+
 def send_bytes(message):
     """
     This function is not implemented in the simulator.
@@ -92,6 +97,7 @@ def send_bytes(message):
     """
     utils.print_for_unimplemented_functions(send_bytes.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
+
 
 def receive_bytes():
     """
@@ -102,6 +108,7 @@ def receive_bytes():
     """
     utils.print_for_unimplemented_functions(receive_bytes.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
+
 
 def receive_bytes_into(buffer):
     """
@@ -115,6 +122,7 @@ def receive_bytes_into(buffer):
     utils.print_for_unimplemented_functions(receive_bytes_into.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
 
+
 def send(message):
     """
     This function is not implemented in the simulator.
@@ -123,6 +131,7 @@ def send(message):
     """
     utils.print_for_unimplemented_functions(send.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
+
 
 def receive():
     """
@@ -140,6 +149,7 @@ def receive():
     """
     utils.print_for_unimplemented_functions(receive.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_RADIO)
+
 
 def receive_full():
     """

@@ -2,6 +2,7 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+
 class NeoPixel:
     """
     This class is not implemented in the simulator.
@@ -11,6 +12,7 @@ class NeoPixel:
     are given RGB (red, green, blue) values between 0-255 as a tuple. For
     example, ``(255,255,255)`` is white.
     """
+
     def __init__(self, pin, n):
         utils.print_for_unimplemented_functions(NeoPixel.__init__.__qualname__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_NEOPIXEL)

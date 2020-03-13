@@ -2,6 +2,7 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+
 def set_tempo(ticks=4, bpm=120):
     """
     This function is not implemented in the simulator.
@@ -21,6 +22,7 @@ def set_tempo(ticks=4, bpm=120):
     utils.print_for_unimplemented_functions(set_tempo.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_MUSIC)
 
+
 def get_tempo():
     """
     This function is not implemented in the simulator.
@@ -29,7 +31,6 @@ def get_tempo():
     """
     utils.print_for_unimplemented_functions(get_tempo.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_MUSIC)
-
 
 
 def play(music, pin="microbit.pin0", wait=True, loop=False):
@@ -91,7 +92,6 @@ def stop(pin="microbit.pin0"):
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_MUSIC)
 
 
-
 def reset():
     """
     This function is not implemented in the simulator.
@@ -105,4 +105,3 @@ def reset():
     """
     utils.print_for_unimplemented_functions(reset.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_MUSIC)
-    

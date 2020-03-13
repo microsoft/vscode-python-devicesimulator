@@ -2,6 +2,7 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+
 def play(source, wait=True, pin="pin0", return_pin=None):
     """
     This function is not implemented in the simulator.
@@ -30,6 +31,7 @@ class AudioFrame:
 
     It takes just over 4 ms to play a single frame.
     """
+
     def __init__(self):
         utils.print_for_unimplemented_functions(AudioFrame.__init__.__qualname__)
         telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_AUDIO)

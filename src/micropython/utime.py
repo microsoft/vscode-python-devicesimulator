@@ -14,12 +14,14 @@ def sleep(seconds):
     time.sleep(seconds)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)
 
+
 def sleep_ms(ms):
     """
     Delay for given number of milliseconds, should be positive or 0.
     """
     time.sleep(ms / 1000)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)
+
 
 def sleep_us(us):
     """
@@ -39,6 +41,7 @@ def ticks_ms():
     utils.print_for_unimplemented_functions(ticks_ms.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)
 
+
 def ticks_us():
     """
     This function is not implemented in the simulator.
@@ -47,6 +50,7 @@ def ticks_us():
     """
     utils.print_for_unimplemented_functions(ticks_us.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)
+
 
 def ticks_add(ticks, delta):
     """
@@ -74,6 +78,7 @@ def ticks_add(ticks, delta):
     """
     utils.print_for_unimplemented_functions(ticks_add.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)
+
 
 def ticks_diff(ticks1, ticks2):
     """
@@ -122,4 +127,4 @@ def ticks_diff(ticks1, ticks2):
             task.run(run_faster=true)
     """
     utils.print_for_unimplemented_functions(ticks_diff.__name__)
-    telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)  
+    telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_UTIME)

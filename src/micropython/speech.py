@@ -2,6 +2,7 @@ from common import utils
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 
+
 def translate(words):
     """
     This function is not implemented in the simulator.
@@ -18,6 +19,7 @@ def translate(words):
     utils.print_for_unimplemented_functions(translate.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPEECH)
 
+
 def pronounce(phonemes, pitch=64, speed=72, mouth=128, throat=128):
     """
     This function is not implemented in the simulator.
@@ -30,6 +32,7 @@ def pronounce(phonemes, pitch=64, speed=72, mouth=128, throat=128):
     utils.print_for_unimplemented_functions(pronounce.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPEECH)
 
+
 def say(words, pitch=64, speed=72, mouth=128, throat=128):
     """
     This function is not implemented in the simulator.
@@ -41,7 +44,8 @@ def say(words, pitch=64, speed=72, mouth=128, throat=128):
     """
     utils.print_for_unimplemented_functions(say.__name__)
     telemetry_py.send_telemetry(TelemetryEvent.MICROBIT_API_SPEECH)
-    
+
+
 def sing(phonemes, pitch=64, speed=72, mouth=128, throat=128):
     """
     This function is not implemented in the simulator.
