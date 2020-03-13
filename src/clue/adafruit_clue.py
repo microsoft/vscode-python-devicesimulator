@@ -60,21 +60,8 @@ import time
 import array
 import math
 from PIL import Image
-# import common
 
-# import board # yes? - only if we want to use this exact code for our repo
-# import digitalio # yes - also likely only if we want to use this exact code
-# import neopixel # yes
-# import adafruit_apds9960.apds9960 # no
-# import adafruit_bmp280 # no
-# import adafruit_lis3mdl # no
-# import adafruit_lsm6ds # no
-# import adafruit_sht31d # no
-# import audiobusio # probably no time
-# import audiopwmio # probably no time
-# import audiocore # probably no time
-# import gamepad # probably no time
-# import touchio # probably no time
+# import common
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_CLUE.git"
@@ -92,9 +79,9 @@ class _ClueSimpleTextDisplay:
         font=None,
         colors=None,
     ):
-        import displayio  # yes
-        import terminalio  # yes...?
-        from adafruit_display_text import label  # yes
+        import displayio
+        import terminalio
+        from adafruit_display_text import label
 
         if not colors:
             colors = (
@@ -116,7 +103,9 @@ class _ClueSimpleTextDisplay:
         self._font = terminalio.FONT
         if font:
             self._font = font
-        self.text_group = displayio.Group(max_size=20, scale=text_scale,auto_write=False)
+        self.text_group = displayio.Group(
+            max_size=20, scale=text_scale, auto_write=False
+        )
 
         if title:
             # Fail gracefully if title is longer than 60 characters.
@@ -129,7 +118,7 @@ class _ClueSimpleTextDisplay:
                 max_glyphs=60,
                 color=title_color,
                 scale=title_scale,
-                auto_write=False
+                auto_write=False,
             )
             title.x = 0
 
@@ -163,7 +152,9 @@ class _ClueSimpleTextDisplay:
 
     def add_text_line(self, color=0xFFFFFF):
         """Adds a line on the display of the specified color and returns the label object."""
-        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color,auto_write=False)
+        text_label = self._label.Label(
+            self._font, text="", max_glyphs=45, color=color, auto_write=False
+        )
         text_label.x = 0
         text_label.y = self._y
         self._y = text_label.y + 13
@@ -175,7 +166,6 @@ class _ClueSimpleTextDisplay:
         """Call show() to display the data list."""
         self.text_group.draw(show=True)
         # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
-        
 
     def show_terminal(self):
         """Revert to terminalio screen."""

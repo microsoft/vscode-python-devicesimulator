@@ -38,10 +38,6 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
-import sys
-import os
-
-sys.path.append(os.path.join(sys.path[0], ".."))
 import displayio
 
 __version__ = "0.0.0-auto.0"
