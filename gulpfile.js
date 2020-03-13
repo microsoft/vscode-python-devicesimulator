@@ -34,28 +34,16 @@ gulp.task("clean", () => {
 });
 
 const pythonToMove = [
-<<<<<<< HEAD
-  "./src/adafruit_circuitplayground/*.*",
-  "./src/microbit/*.*",
-  "./src/microbit/!(test)/**/*",
-  "./src/clue/*.*",
-  "./src/clue/!(test)/**/*",
-  "./src/*.py",
-  "./src/common/*.py",
-  "./src/dev-requirements.txt",
-  "./src/requirements.txt",
-  "./src/templates/*.*"
-=======
     "./src/adafruit_circuitplayground/*.*",
-    "./src/clue/*.*",
     "./src/microbit/*.*",
     "./src/microbit/!(test)/**/*",
+    "./src/clue/*.*",
+    "./src/clue/!(test)/**/*",
     "./src/*.py",
     "./src/common/*.py",
     "./src/dev-requirements.txt",
     "./src/requirements.txt",
-    "./src/templates/*.*",
->>>>>>> users/t-xunguy/clue-communication
+    "./src/templates/*.*"
 ];
 
 gulp.task("python-compile", () => {
