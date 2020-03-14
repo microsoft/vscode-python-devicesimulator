@@ -1,6 +1,10 @@
-from .group_item import GroupItem
+from PIL import Image
+from . import constants as CONSTANTS
 
-class TileGrid(GroupItem):
+img = Image.new("RGB", (240, 240), "black")  # Create a new black image
+bmp_img = img.load()  # Create the pixel map
+
+class TileGrid():
     def __init__(
         self,
         bitmap,
@@ -32,13 +36,41 @@ class TileGrid(GroupItem):
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
+        self.in_group = False
+
+    def __setitem__(self, index, value):
+        if isinstance(index, tuple):
+            if index[0] >= self.tile_width or index[1] >= self.tile_height:
+                raise IndexError(CONSTANTS.TILE_OUT_OF_BOUNDS)
+
+        self.bitmap[index] = value
+
+    def __getitem__(self, index):
+        if isinstance(index, tuple):
+            if index[0] >= self.tile_width or index[1] >= self.tile_height:
+                raise IndexError(CONSTANTS.TILE_OUT_OF_BOUNDS)
+
+        return self.bitmap[index]
 
     def draw(self, x, y, scale):
-        self.bitmap.draw(
-            x=self.x + x,
-            y=self.y + y,
-            w=self.tile_width,
-            h=self.tile_height,
-            pixel_shader=self.pixel_shader,
-            scale=scale,
-        )
+        x=self.x + x
+        y=self.y + y
+        for i in range(self.tile_height):
+            for j in range(self.tile_width):
+                self.fill_pixel(i, j, x, y, scale)
+
+    def fill_pixel(self, i, j, x, y, scale):
+        for i_new in range(scale):
+            for j_new in range(scale):
+                try:
+                    if (
+                        x * scale + (j * scale) + j_new >= 0
+                        and y*scale + (i * scale) + i_new >= 0
+                    ):
+                        if not self.pixel_shader._Palette__contents[self.bitmap[j, i]].transparent:
+                            bmp_img[
+                                x * scale + (j * scale) + j_new,
+                                y * scale + (i * scale) + i_new,
+                            ] = self.pixel_shader[self.bitmap[j, i]]
+                except IndexError:
+                    continue

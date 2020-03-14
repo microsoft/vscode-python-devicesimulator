@@ -3,5 +3,5 @@ class ColorType:
         self.rgb888 = rgb888
         self.transparent = False
 
-    def get(self):
-        return self.rgb888
+    def __eq__(self, other):
+        return isinstance(other,ColorType) and self.rgb888 == other.rgb888 and self.transparent == other.transparent
