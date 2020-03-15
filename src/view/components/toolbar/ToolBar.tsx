@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import * as vscode from "vscode";
 import { Callout, TooltipHost } from "office-ui-fabric-react";
 import { initializeIcons } from "@uifabric/icons";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
@@ -188,7 +189,6 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                 {this.state.isDescriptionVisible && (
                     <Callout
                         className="description-callout"
-                        gapSpace={0}
                         role="textbox"
                         target=".info-icon"
                         setInitialFocus={true}
