@@ -107,13 +107,13 @@
 
 .description {
     -webkit-appearance: none;
-    color: '#000000';
+    color: var(--vscode-badgeForegroundOverride);
     font-size: 14px;
     word-wrap: break-word;
     width: 320px;
     height: '100%';
     text-align: left;
-    font-weight: 200;
+    font-weight: 600;
     padding: 10px 0px 10px 10px;
     margin: 10px;
     overflow-y: hidden;
