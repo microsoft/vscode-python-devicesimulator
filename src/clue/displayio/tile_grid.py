@@ -19,6 +19,7 @@ class TileGrid:
         y=0,
         position=None,
     ):
+
         if tile_width is None:
             self.tile_width = bitmap.width
         else:

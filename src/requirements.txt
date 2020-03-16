@@ -7,3 +7,4 @@ PyObjC; platform_system == "darwin"
 uflash==1.3.0
 adafruit-circuitpython-fancyled==1.3.3
 Pillow==7.0.0
+adafruit-circuitpython-bitmap_font==1.0.5

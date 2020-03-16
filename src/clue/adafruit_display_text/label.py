@@ -265,25 +265,12 @@ class Label(displayio.Group):
 
     def draw(self, x=0, y=0, scale=None, show=None):
         try:
-            # print("uwu 1")
-            # print(x)
-            # print(y)
-            # print()
             x += self._anchor_point[0]
             y += self._anchor_point[1]
-            # print(x)
-            # print(y)
-            # print()
             if self._boundingbox is not None and self.anchored_position is not None:
                 x += self.anchored_position[0]
                 y += self.anchored_position[1]
-                # print(x)
-                # print(y)
-                # print()
-
-                # print("uwu 2")
         except AttributeError or TypeError:
-            # print("slkfkd")
             pass
 
         super().draw(x, y, scale, show)
