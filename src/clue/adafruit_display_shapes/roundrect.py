@@ -61,6 +61,7 @@ class RoundRect(displayio.TileGrid):
                    ``height``.
 
     """
+
     def __init__(self, x, y, width, height, r, *, fill=None, outline=None, stroke=1):
         self._palette = displayio.Palette(3)
         self._palette.make_transparent(0)
@@ -68,11 +69,18 @@ class RoundRect(displayio.TileGrid):
 
         if fill is not None:
             print(fill)
-            for i in range(0, width):   # draw the center chunk
-                for j in range(r, height - r):   # draw the center chunk
+            for i in range(0, width):  # draw the center chunk
+                for j in range(r, height - r):  # draw the center chunk
                     self._bitmap[i, j] = 2
-            self._helper(r, r, r, color=2, fill=True,
-                         x_offset=width-2*r-1, y_offset=height-2*r-1)
+            self._helper(
+                r,
+                r,
+                r,
+                color=2,
+                fill=True,
+                x_offset=width - 2 * r - 1,
+                y_offset=height - 2 * r - 1,
+            )
             self._palette[2] = fill
         else:
             self._palette.make_transparent(2)
@@ -83,19 +91,37 @@ class RoundRect(displayio.TileGrid):
             for w in range(r, width - r):
                 for line in range(stroke):
                     self._bitmap[w, line] = 1
-                    self._bitmap[w, height-line-1] = 1
+                    self._bitmap[w, height - line - 1] = 1
             for _h in range(r, height - r):
                 for line in range(stroke):
                     self._bitmap[line, _h] = 1
-                    self._bitmap[width-line-1, _h] = 1
+                    self._bitmap[width - line - 1, _h] = 1
             # draw round corners
-            self._helper(r, r, r, color=1, stroke=stroke,
-                         x_offset=width-2*r-1, y_offset=height-2*r-1)
+            self._helper(
+                r,
+                r,
+                r,
+                color=1,
+                stroke=stroke,
+                x_offset=width - 2 * r - 1,
+                y_offset=height - 2 * r - 1,
+            )
         super().__init__(self._bitmap, pixel_shader=self._palette, x=x, y=y)
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
-    def _helper(self, x0, y0, r, *, color, x_offset=0, y_offset=0,
-                stroke=1, corner_flags=0xF, fill=False):
+    def _helper(
+        self,
+        x0,
+        y0,
+        r,
+        *,
+        color,
+        x_offset=0,
+        y_offset=0,
+        stroke=1,
+        corner_flags=0xF,
+        fill=False
+    ):
         f = 1 - r
         ddF_x = 1
         ddF_y = -2 * r
@@ -112,32 +138,33 @@ class RoundRect(displayio.TileGrid):
             f += ddF_x
             if corner_flags & 0x8:
                 if fill:
-                    for w in range(x0-y, x0+y+x_offset):
-                        self._bitmap[w, y0+x+y_offset] = color
-                    for w in range(x0-x, x0+x+x_offset):
-                        self._bitmap[w, y0+y+y_offset] = color
+                    for w in range(x0 - y, x0 + y + x_offset):
+                        self._bitmap[w, y0 + x + y_offset] = color
+                    for w in range(x0 - x, x0 + x + x_offset):
+                        self._bitmap[w, y0 + y + y_offset] = color
                 else:
                     for line in range(stroke):
-                        self._bitmap[x0-y+line, y0+x+y_offset] = color
-                        self._bitmap[x0-x, y0+y+y_offset-line] = color
+                        self._bitmap[x0 - y + line, y0 + x + y_offset] = color
+                        self._bitmap[x0 - x, y0 + y + y_offset - line] = color
             if corner_flags & 0x1:
                 if fill:
-                    for w in range(x0-y, x0+y+x_offset):
-                        self._bitmap[w, y0-x] = color
-                    for w in range(x0-x, x0+x+x_offset):
-                        self._bitmap[w, y0-y] = color
+                    for w in range(x0 - y, x0 + y + x_offset):
+                        self._bitmap[w, y0 - x] = color
+                    for w in range(x0 - x, x0 + x + x_offset):
+                        self._bitmap[w, y0 - y] = color
                 else:
                     for line in range(stroke):
-                        self._bitmap[x0-y+line, y0-x] = color
-                        self._bitmap[x0-x, y0-y+line] = color
+                        self._bitmap[x0 - y + line, y0 - x] = color
+                        self._bitmap[x0 - x, y0 - y + line] = color
             if corner_flags & 0x4:
                 for line in range(stroke):
-                    self._bitmap[x0+x+x_offset, y0+y+y_offset-line] = color
-                    self._bitmap[x0+y+x_offset-line, y0+x+y_offset] = color
+                    self._bitmap[x0 + x + x_offset, y0 + y + y_offset - line] = color
+                    self._bitmap[x0 + y + x_offset - line, y0 + x + y_offset] = color
             if corner_flags & 0x2:
                 for line in range(stroke):
-                    self._bitmap[x0+x+x_offset, y0-y+line] = color
-                    self._bitmap[x0+y+x_offset-line, y0-x] = color
+                    self._bitmap[x0 + x + x_offset, y0 - y + line] = color
+                    self._bitmap[x0 + y + x_offset - line, y0 - x] = color
+
     # pylint: enable=invalid-name, too-many-locals, too-many-branches
 
     @property

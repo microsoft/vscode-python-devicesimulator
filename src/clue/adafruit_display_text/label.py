@@ -128,7 +128,7 @@ class Label(displayio.Group):
             if y == 0:  # first line, find the Ascender height
                 top = min(top, -glyph.height + y_offset)
             bottom = max(bottom, y - glyph.dy + y_offset)
-            position_y = y - glyph.height - glyph.dy + y_offset -1
+            position_y = y - glyph.height - glyph.dy + y_offset - 1
             position_x = x + glyph.dx
             if (
                 not self._text
@@ -262,6 +262,7 @@ class Label(displayio.Group):
     def anchored_position(self, new_position):
         self.x = int(new_position[0] - (self._boundingbox[2] * self._anchor_point[0]))
         self.y = int(new_position[1] - (self._boundingbox[3] * self._anchor_point[1]))
+
     def draw(self, x=0, y=0, scale=None, show=None):
         try:
             # print("uwu 1")
@@ -286,4 +287,3 @@ class Label(displayio.Group):
             pass
 
         super().draw(x, y, scale, show)
-

@@ -6,6 +6,7 @@ import struct
 
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6glyf.html
 
+
 class TTF:
     def __init__(self, f):
         f.seek(0)
@@ -41,7 +42,7 @@ class TTF:
         while f.tell() < glyf_offset + glyf_length:
             numberOfContours, xMin, yMin, xMax, yMax = read(">hhhhh")
 
-            if numberOfContours > 0: # Simple
+            if numberOfContours > 0:  # Simple
                 print(numberOfContours)
                 ends = []
                 for _ in range(numberOfContours):

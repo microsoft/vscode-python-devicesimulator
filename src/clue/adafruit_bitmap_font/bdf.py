@@ -40,6 +40,7 @@ Implementation Notes
 """
 
 import gc
+
 try:
     from displayio import Glyph
 except ImportError:
@@ -49,8 +50,10 @@ from .glyph_cache import GlyphCache
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Bitmap_Font.git"
 
+
 class BDF(GlyphCache):
     """Loads glyphs from a BDF file in the given bitmap_class."""
+
     def __init__(self, f, bitmap_class):
         super().__init__()
         self.file = f
@@ -119,7 +122,7 @@ class BDF(GlyphCache):
                 pass
             elif line.startswith(b"STARTCHAR"):
                 # print(lineno, line.strip())
-                #_, character_name = line.split()
+                # _, character_name = line.split()
                 character = True
             elif line.startswith(b"ENDCHAR"):
                 character = False
@@ -127,14 +130,16 @@ class BDF(GlyphCache):
                     bounds = current_info["bounds"]
                     shift = current_info["shift"]
                     gc.collect()
-                    self._glyphs[code_point] = Glyph(current_info["bitmap"],
-                                                     0,
-                                                     bounds[0],
-                                                     bounds[1],
-                                                     bounds[2],
-                                                     bounds[3],
-                                                     shift[0],
-                                                     shift[1])
+                    self._glyphs[code_point] = Glyph(
+                        current_info["bitmap"],
+                        0,
+                        bounds[0],
+                        bounds[1],
+                        bounds[2],
+                        bounds[3],
+                        shift[0],
+                        shift[1],
+                    )
                     remaining.remove(code_point)
                     if not remaining:
                         return
@@ -178,7 +183,7 @@ class BDF(GlyphCache):
                     start = current_y * width
                     x = 0
                     for i in range(rounded_x):
-                        val = (bits >> ((rounded_x-i-1)*8)) & 0xFF
+                        val = (bits >> ((rounded_x - i - 1) * 8)) & 0xFF
                         for j in range(7, -1, -1):
                             if x >= width:
                                 break
@@ -189,5 +194,5 @@ class BDF(GlyphCache):
                             x += 1
                     current_y += 1
             elif metadata:
-                #print(lineno, line.strip())
+                # print(lineno, line.strip())
                 pass

@@ -47,6 +47,7 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Bitmap_Font.git"
 
 class GlyphCache:
     """Caches glyphs loaded by a subclass."""
+
     def __init__(self):
         self._glyphs = {}
 

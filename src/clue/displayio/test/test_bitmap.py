@@ -4,7 +4,6 @@ from .. import constants as CONSTANTS
 
 
 class TestBitmap(object):
-
     @pytest.mark.parametrize("x, y", [(1, 1), (2, 6), (0, 0)])
     def test_create_bitmap(self, x, y):
         bitmap = Bitmap(x, y)
@@ -48,4 +47,3 @@ class TestBitmap(object):
     def test_get_len(self, x, y):
         bitmap = Bitmap(x, y)
         assert len(bitmap) == x * y
-

@@ -32,4 +32,3 @@ class TestPalette(object):
 
         palette.make_opaque(2)
         assert palette._Palette__contents[2].transparent == False
-

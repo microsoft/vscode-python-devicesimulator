@@ -1,7 +1,9 @@
 from PIL import Image
 from . import constants as CONSTANTS
 
-img = Image.new("RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black")  # Create a new black image
+img = Image.new(
+    "RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black"
+)  # Create a new black image
 bmp_img = img.load()  # Create the pixel map
 
 
@@ -54,8 +56,8 @@ class TileGrid:
         return self.bitmap[index]
 
     def draw(self, x, y, scale):
-        x = self.x*scale + x
-        y = self.y*scale + y
+        x = self.x * scale + x
+        y = self.y * scale + y
         for i in range(self.tile_height):
             for j in range(self.tile_width):
                 self.fill_pixel(i, j, x, y, scale)
@@ -64,16 +66,12 @@ class TileGrid:
         for i_new in range(scale):
             for j_new in range(scale):
                 try:
-                    if (
-                        x + (j * scale) + j_new >= 0
-                        and y  + (i * scale) + i_new >= 0
-                    ):
+                    if x + (j * scale) + j_new >= 0 and y + (i * scale) + i_new >= 0:
                         if not self.pixel_shader._Palette__contents[
                             self.bitmap[j, i]
                         ].transparent:
                             bmp_img[
-                                x + (j * scale) + j_new,
-                                y + (i * scale) + i_new,
+                                x + (j * scale) + j_new, y + (i * scale) + i_new,
                             ] = self.pixel_shader[self.bitmap[j, i]]
                 except IndexError:
                     continue

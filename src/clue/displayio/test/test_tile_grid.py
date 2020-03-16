@@ -154,13 +154,12 @@ class TestTileGrid(object):
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (
-                    i in range(y_offset + y* scale , y_offset + (y + draw_h) * scale)
+                    i in range(y_offset + y * scale, y_offset + (y + draw_h) * scale)
                 ) and (
-                    j in range(x_offset + x*scale , x_offset + (x + draw_w) * scale)
+                    j in range(x_offset + x * scale, x_offset + (x + draw_w) * scale)
                 ):
                     assert bmp_img[j, i] == accent_color
-                elif (i in range(y_offset* scale , (y_offset + draw_h) * scale)) and (
-                    j in range(x_offset* scale , (x_offset + draw_w) * scale)
+                elif (i in range(y_offset * scale, (y_offset + draw_h) * scale)) and (
+                    j in range(x_offset * scale, (x_offset + draw_w) * scale)
                 ):
                     assert bmp_img[j, i] == bg_color
-

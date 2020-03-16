@@ -4,4 +4,8 @@ class ColorType:
         self.transparent = False
 
     def __eq__(self, other):
-        return isinstance(other,ColorType) and self.rgb888 == other.rgb888 and self.transparent == other.transparent
+        return (
+            isinstance(other, ColorType)
+            and self.rgb888 == other.rgb888
+            and self.transparent == other.transparent
+        )

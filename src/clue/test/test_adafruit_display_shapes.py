@@ -18,8 +18,10 @@ from . import constants as CONSTANTS
 class TestAdafruitDisplayShapes(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
-        
-        displayio.img.paste("black", [0,0,displayio.img.size[0],displayio.img.size[1]])
+
+        displayio.img.paste(
+            "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
+        )
 
     def test_shapes(self):
 
@@ -60,4 +62,3 @@ class TestAdafruitDisplayShapes(object):
         splash.append(roundrect)
 
         helper._Helper__test_image_equality(displayio.bmp_img, expected_images[4])
-

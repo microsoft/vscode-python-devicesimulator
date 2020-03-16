@@ -5,27 +5,28 @@ from .glyph_cache import GlyphCache
 import displayio
 import struct
 
-_PCF_PROPERTIES = (1<<0)
-_PCF_ACCELERATORS = (1<<1)
-_PCF_METRICS = (1<<2)
-_PCF_BITMAPS = (1<<3)
-_PCF_INK_METRICS = (1<<4)
-_PCF_BDF_ENCODINGS = (1<<5)
-_PCF_SWIDTHS = (1<<6)
-_PCF_GLYPH_NAMES = (1<<7)
-_PCF_BDF_ACCELERATORS = (1<<8)
+_PCF_PROPERTIES = 1 << 0
+_PCF_ACCELERATORS = 1 << 1
+_PCF_METRICS = 1 << 2
+_PCF_BITMAPS = 1 << 3
+_PCF_INK_METRICS = 1 << 4
+_PCF_BDF_ENCODINGS = 1 << 5
+_PCF_SWIDTHS = 1 << 6
+_PCF_GLYPH_NAMES = 1 << 7
+_PCF_BDF_ACCELERATORS = 1 << 8
 
 _PCF_DEFAULT_FORMAT = 0x00000000
 _PCF_INKBOUNDS = 0x00000200
 _PCF_ACCEL_W_INKBOUNDS = 0x00000100
 _PCF_COMPRESSED_METRICS = 0x00000100
 
-_PCF_GLYPH_PAD_MASK = (3<<0)        # See the bitmap table for explanation */
-_PCF_BYTE_MASK = (1<<2)        # If set then Most Sig Byte First */
-_PCF_BIT_MASK = (1<<3)        # If set then Most Sig Bit First */
-_PCF_SCAN_UNIT_MASK = (3<<4)
+_PCF_GLYPH_PAD_MASK = 3 << 0  # See the bitmap table for explanation */
+_PCF_BYTE_MASK = 1 << 2  # If set then Most Sig Byte First */
+_PCF_BIT_MASK = 1 << 3  # If set then Most Sig Bit First */
+_PCF_SCAN_UNIT_MASK = 3 << 4
 
 # https://fontforge.github.io/en-US/documentation/reference/pcf-format/
+
 
 class PCF(GlyphCache):
     def __init__(self, f):
@@ -47,17 +48,17 @@ class PCF(GlyphCache):
     def get_bounding_box(self):
         property_table_offset = self.tables[_PCF_PROPERTIES]["offset"]
         self.file.seek(property_table_offset)
-        format, = self.read("<I")
+        (format,) = self.read("<I")
 
         if format & _PCF_BYTE_MASK == 0:
             raise RuntimeError("Only big endian supported")
-        nprops, = self.read(">I")
+        (nprops,) = self.read(">I")
         self.file.seek(property_table_offset + 8 + 9 * nprops)
 
         pos = self.file.tell()
         if pos % 4 > 0:
             self.file.read(4 - pos % 4)
-        string_size, = self.read(">I")
+        (string_size,) = self.read(">I")
 
         strings = self.file.read(string_size)
         string_map = {}
@@ -89,7 +90,7 @@ class PCF(GlyphCache):
 
         x, _, _, _ = self.get_bounding_box()
         # create a scratch bytearray to load pixels into
-        scratch_row = memoryview(bytearray((((x-1)//32)+1) * 4))
+        scratch_row = memoryview(bytearray((((x - 1) // 32) + 1) * 4))
 
         self.file.seek(0)
         while True:
@@ -104,7 +105,7 @@ class PCF(GlyphCache):
                 pass
             elif line.startswith(b"STARTCHAR"):
                 # print(lineno, line.strip())
-                #_, character_name = line.split()
+                # _, character_name = line.split()
                 character = True
             elif line.startswith(b"ENDCHAR"):
                 character = False
@@ -151,10 +152,12 @@ class PCF(GlyphCache):
                 if desired_character:
                     bits = int(line.strip(), 16)
                     for i in range(rounded_x):
-                        val = (bits >> ((rounded_x-i-1)*8)) & 0xFF
+                        val = (bits >> ((rounded_x - i - 1) * 8)) & 0xFF
                         scratch_row[i] = val
-                    current_info["bitmap"]._load_row(current_y, scratch_row[:bytes_per_row])
+                    current_info["bitmap"]._load_row(
+                        current_y, scratch_row[:bytes_per_row]
+                    )
                     current_y += 1
             elif metadata:
-                #print(lineno, line.strip())
+                # print(lineno, line.strip())
                 pass

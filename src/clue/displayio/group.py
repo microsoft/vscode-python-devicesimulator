@@ -28,16 +28,16 @@ class Group:
             self.draw(show=True)
 
     def draw(self, x=0, y=0, scale=None, show=False):
-        
+
         if scale is None:
             scale = self.scale
         else:
             scale *= self.scale
         for idx, elem in enumerate(self.__contents):
             if isinstance(elem, Group):
-                elem.draw(x,y, scale, False)
+                elem.draw(x, y, scale, False)
             else:
-                elem.draw(x,y, scale)
+                elem.draw(x, y, scale)
 
         if show:
             self.show()
