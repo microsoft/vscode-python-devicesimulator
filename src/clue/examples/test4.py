@@ -7,7 +7,7 @@ from adafruit_clue import clue
 # import adafruit_fancyled.adafruit_fancyled as fancy
 from adafruit_bitmap_font import bitmap_font
 
-clue_data = clue.simple_text_display(title="CLUE Sensor Data!", title_scale=5,)
+clue_data = clue.simple_text_display(title="CLUE Sensor Data!", title_scale=8,)
 
 # while True:
 clue_data[0].text = "Acceleration:"

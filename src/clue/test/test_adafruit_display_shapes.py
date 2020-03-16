@@ -13,9 +13,6 @@ from adafruit_display_shapes.roundrect import RoundRect
 
 
 class TestAdafruitDisplayShapes(object):
-    def setup_method(self):
-        pass
-
     def test_shapes(self):
 
         expected_images = []

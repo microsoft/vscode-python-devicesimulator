@@ -1,6 +1,8 @@
 from adafruit_bitmap_font import bitmap_font  # pylint: disable=wrong-import-position
-import sys
-import os
 
-FONT = bitmap_font.load_font(os.path.join(sys.path[0], "..", "ter-u12n.bdf"))
+import os
+import pathlib
+
+abs_path = pathlib.Path(__file__).parent.absolute()
+FONT = bitmap_font.load_font(os.path.join(abs_path, "ter-u12n.bdf"))
 

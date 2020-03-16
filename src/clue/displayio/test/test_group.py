@@ -148,7 +148,7 @@ class TestGroup(object):
         group_main.append(tg2)
 
         group_main.draw(0, 0)
-
+        img.save("group_test_result.bmp")
         expected = Image.open(
             os.path.join(sys.path[0], "displayio", "test", "group_test_result.bmp")
         )

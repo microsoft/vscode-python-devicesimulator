@@ -38,6 +38,7 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+
 import displayio
 
 __version__ = "0.0.0-auto.0"
@@ -101,12 +102,6 @@ class Label(displayio.Group):
         if text is not None:
             self._update_text(str(text))
 
-    def __len__(self):
-        if not self._text:
-            return 0
-        else:
-            return len(self._text)
-
     def _update_text(self, new_text):  # pylint: disable=too-many-locals
         x = 0
         y = 0
@@ -115,10 +110,11 @@ class Label(displayio.Group):
         y_offset = int(
             (
                 self.font.get_glyph(ord("M")).height
-                - new_text.count("\n") * self.height * self._line_spacing
+                - new_text.count("\n") * self.height * self.line_spacing
             )
             / 2
         )
+        # print("y offset from baseline", y_offset)
         left = right = top = bottom = 0
         for character in new_text:
             if character == "\n":
@@ -132,7 +128,7 @@ class Label(displayio.Group):
             if y == 0:  # first line, find the Ascender height
                 top = min(top, -glyph.height + y_offset)
             bottom = max(bottom, y - glyph.dy + y_offset)
-            position_y = y - glyph.height - glyph.dy + y_offset
+            position_y = y - glyph.height - glyph.dy + y_offset -1
             position_x = x + glyph.dx
             if (
                 not self._text
@@ -266,4 +262,28 @@ class Label(displayio.Group):
     def anchored_position(self, new_position):
         self.x = int(new_position[0] - (self._boundingbox[2] * self._anchor_point[0]))
         self.y = int(new_position[1] - (self._boundingbox[3] * self._anchor_point[1]))
+    def draw(self, x=0, y=0, scale=None, show=None):
+        try:
+            # print("uwu 1")
+            # print(x)
+            # print(y)
+            # print()
+            x += self._anchor_point[0]
+            y += self._anchor_point[1]
+            # print(x)
+            # print(y)
+            # print()
+            if self._boundingbox is not None and self.anchored_position is not None:
+                x += self.anchored_position[0]
+                y += self.anchored_position[1]
+                # print(x)
+                # print(y)
+                # print()
+
+                # print("uwu 2")
+        except AttributeError or TypeError:
+            # print("slkfkd")
+            pass
+
+        super().draw(x, y, scale, show)
 
