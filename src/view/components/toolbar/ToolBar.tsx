@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { Callout, TooltipHost } from "office-ui-fabric-react";
-import { initializeIcons } from "@uifabric/icons";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
 import * as React from "react";
 import {
@@ -38,7 +37,6 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
 
     constructor(props: IProps) {
         super(props);
-        initializeIcons();
         this.state = {
             currentOpenedId: "",
             isDescriptionVisible: false,
