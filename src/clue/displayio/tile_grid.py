@@ -1,7 +1,7 @@
 from PIL import Image
 from . import constants as CONSTANTS
 
-img = Image.new("RGB", (240, 240), "black")  # Create a new black image
+img = Image.new("RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black")  # Create a new black image
 bmp_img = img.load()  # Create the pixel map
 
 

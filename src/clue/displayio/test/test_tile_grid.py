@@ -138,8 +138,8 @@ class TestTileGrid(object):
 
         # without scaling
         tg.draw(x_offset, y_offset, 1)
-        for i in range(240):
-            for j in range(240):
+        for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
+            for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (i in range(y_offset + y, y_offset + y + draw_h)) and (
                     j in range(x_offset + x, x_offset + x + draw_w)
                 ):
@@ -151,8 +151,8 @@ class TestTileGrid(object):
 
         tg.draw(x_offset, y_offset, scale)
 
-        for i in range(240):
-            for j in range(240):
+        for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
+            for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (
                     i in range(y_offset + y* scale , y_offset + (y + draw_h) * scale)
                 ) and (

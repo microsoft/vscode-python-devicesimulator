@@ -148,13 +148,12 @@ class TestGroup(object):
         group_main.append(tg2)
 
         group_main.draw(0, 0)
-        img.save("group_test_result.bmp")
         expected = Image.open(
             os.path.join(sys.path[0], "displayio", "test", "group_test_result.bmp")
         )
 
         bmp_img_expected = expected.load()
 
-        for i in range(240):
-            for j in range(240):
+        for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
+            for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 assert bmp_img_expected[j, i] == bmp_img[j, i]

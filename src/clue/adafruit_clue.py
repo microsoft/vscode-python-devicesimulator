@@ -121,16 +121,6 @@ class _ClueSimpleTextDisplay:
                 auto_write=False,
             )
             title.x = 0
-
-            title_count_y = 8
-            for i in range(title_scale - 1):
-                title_count_y -= 4
-                if (i % 2) == 0:
-                    title_count_y -= 2
-
-            # title.y = 1  # 1 -> 4 // 2 -> 2 // 3 -> 2 // 4 -> 2 // 5 -> 1 // 6 -> -18 // 7 -> -22 // 8 -> -28 // 9 -> -32
-            # self._y = 27  # 1 -> 15 // 2 -> 22 // 3 -> 27 // 4 -> 29 // 5 -> 27 // 6 -> 43 // 7 -> 48
-
             title.y = 8
             self._y = title.y + 18
 
