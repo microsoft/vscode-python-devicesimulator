@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { Callout, TooltipHost } from "office-ui-fabric-react";
-import { IconButton } from "office-ui-fabric-react/lib/Button";
+import { IconButton } from "office-ui-fabric-react";
 import * as React from "react";
 import {
     FormattedMessage,
