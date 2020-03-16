@@ -86,6 +86,7 @@
 .description-callout {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
     padding: "210px 214px 214px 210px";
+    border: 2px solid var(--vscode-highContrastButtonBorderOverride-color);
 }
 
 .description-callout .ms-Callout-beak {

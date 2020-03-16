@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import * as vscode from "vscode";
 import { Callout, TooltipHost } from "office-ui-fabric-react";
 import { initializeIcons } from "@uifabric/icons";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
