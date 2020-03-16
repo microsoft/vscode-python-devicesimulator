@@ -14,8 +14,8 @@ import threading
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.constants import CPX
 
-from microbit.__model.microbit_model import __mb as mb
-from microbit.__model.constants import MICROBIT
+from micropython.microbit.__model.microbit_model import __mb as mb
+from micropython.microbit.__model.constants import MICROBIT
 
 
 device_dict = {CPX: cpx, MICROBIT: mb}
