@@ -121,6 +121,7 @@ export const CONSTANTS = {
     FILESYSTEM: {
         OUTPUT_DIRECTORY: "out",
         PYTHON_VENV_DIR: "venv",
+        MICROPYTHON_DIRECTORY: "micropython",
     },
     INFO: {
         ALREADY_SUCCESSFUL_INSTALL: localize(

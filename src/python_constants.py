@@ -16,7 +16,9 @@ ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 ERROR_TRACEBACK = "\n\tTraceback of code execution : \n"
 ERROR_NO_FILE = "Error : No file was passed to the process to execute.\n"
 
-LIBRARY_NAME = "adafruit_circuitplayground"
+ADAFRUIT_LIBRARY_NAME = "adafruit_circuitplayground"
+MICROPYTHON_LIBRARY_NAME = "micropython"
+
 LINUX_OS = "linux"
 
 MAC_OS = "darwin"
