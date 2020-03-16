@@ -1296,7 +1296,10 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
-        ["--init-hook", `import sys; sys.path.extend([\"${outPath}\",\"${micropythonPath}\"])`],
+        [
+            "--init-hook",
+            `import sys; sys.path.extend([\"${outPath}\",\"${micropythonPath}\"])`,
+        ],
         vscode.ConfigurationTarget.Workspace
     );
 };
