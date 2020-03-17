@@ -25,7 +25,7 @@ class TestAdafruitClue(object):
 
     def test_clue_display_text(self):
         expected = Image.open(
-            os.path.join(self.abs_path, f"test_clue_text_1.bmp")
+            os.path.join(self.abs_path, CONSTANTS.IMG_DIR_NAME, f"test_clue_text_1.bmp")
         ).load()
         clue_data = clue.simple_text_display(title="LET'S TEST!", title_scale=2)
 
