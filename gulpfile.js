@@ -23,122 +23,122 @@ const outDest = "out";
 const languages = [{ folderName: "en", id: "en" }];
 
 gulp.task("clean", () => {
-	return del(
-		[
-			"out/*",
-			"package.nls.*.json",
-			"../../dist/*0.0.0-UNTRACKEDVERSION.vsix",
-		],
-		{ force: true }
-	);
+  return del(
+    [
+      "out/*",
+      "package.nls.*.json",
+      "../../dist/*0.0.0-UNTRACKEDVERSION.vsix",
+    ],
+    { force: true }
+  );
 });
 
 const pythonToMove = [
-	"./src/adafruit_circuitplayground/*.*",
-	"./src/microbit/*.*",
-	"./src/microbit/!(test)/**/*",
-	"./src/clue/*.*",
-	"./src/clue/!(test)/**/*",
-	"./src/*.py",
-	"./src/common/*.py",
-	"./src/dev-requirements.txt",
-	"./src/requirements.txt",
-	"./src/templates/*.*",
-	"./src/*.sh"
+  "./src/adafruit_circuitplayground/*.*",
+  "./src/microbit/*.*",
+  "./src/microbit/!(test)/**/*",
+  "./src/clue/*.*",
+  "./src/clue/!(test)/**/*",
+  "./src/*.py",
+  "./src/common/*.py",
+  "./src/dev-requirements.txt",
+  "./src/requirements.txt",
+  "./src/templates/*.*",
+  "./src/*.sh"
 ];
 
 gulp.task("python-compile", () => {
-	// the base option sets the relative root for the set of files,
-	// preserving the folder structure
-	return gulp.src(pythonToMove, { base: "./src/" }).pipe(gulp.dest("out"));
+  // the base option sets the relative root for the set of files,
+  // preserving the folder structure
+  return gulp.src(pythonToMove, { base: "./src/" }).pipe(gulp.dest("out"));
 });
 
 gulp.task("internal-compile", () => {
-	return compile(false);
+  return compile(false);
 });
 
 gulp.task("internal-nls-compile", () => {
-	return compile(true);
+  return compile(true);
 });
 
 gulp.task("add-locales", () => {
-	return gulp
-		.src(["package.nls.json"])
-		.pipe(nls.createAdditionalLanguageFiles(languages, "locales"))
-		.pipe(gulp.dest("."));
+  return gulp
+    .src(["package.nls.json"])
+    .pipe(nls.createAdditionalLanguageFiles(languages, "locales"))
+    .pipe(gulp.dest("."));
 });
 
 gulp.task("vsce:publish", () => {
-	return vsce.publish();
+  return vsce.publish();
 });
 
 gulp.task("vsce:package", () => {
-	return vsce.createVSIX({
-		packagePath:
-			"../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix",
-	});
+  return vsce.createVSIX({
+    packagePath:
+      "../../dist/deviceSimulatorExpress-0.0.0-UNTRACKEDVERSION.vsix",
+  });
 });
 
 gulp.task(
-	"compile",
-	gulp.series("clean", "internal-compile", "python-compile", callback => {
-		callback();
-	})
+  "compile",
+  gulp.series("clean", "internal-compile", "python-compile", callback => {
+    callback();
+  })
 );
 
 gulp.task(
-	"build",
-	gulp.series(
-		"clean",
-		"internal-nls-compile",
-		"python-compile",
-		"add-locales",
-		callback => {
-			callback();
-		}
-	)
+  "build",
+  gulp.series(
+    "clean",
+    "internal-nls-compile",
+    "python-compile",
+    "add-locales",
+    callback => {
+      callback();
+    }
+  )
 );
 
 gulp.task(
-	"publish",
-	gulp.series("compile", "vsce:publish", callback => {
-		callback();
-	})
+  "publish",
+  gulp.series("compile", "vsce:publish", callback => {
+    callback();
+  })
 );
 
 gulp.task(
-	"package",
-	gulp.series("compile", "vsce:package", callback => {
-		callback();
-	})
+  "package",
+  gulp.series("compile", "vsce:package", callback => {
+    callback();
+  })
 );
 
 //---- internal
 
 function compile(buildNls) {
-	var r = tsProject
-		.src()
-		.pipe(sourcemaps.init())
-		.pipe(tsProject())
-		.js.pipe(buildNls ? nls.rewriteLocalizeCalls() : es.through())
-		.pipe(
-			buildNls
-				? nls.createAdditionalLanguageFiles(languages, "locales", "out")
-				: es.through()
-		);
+  var r = tsProject
+    .src()
+    .pipe(sourcemaps.init())
+    .pipe(tsProject())
+    .js.pipe(buildNls ? nls.rewriteLocalizeCalls() : es.through())
+    .pipe(
+      buildNls
+        ? nls.createAdditionalLanguageFiles(languages, "locales", "out")
+        : es.through()
+    );
 
-	if (inlineMap && inlineSource) {
-		r = r.pipe(sourcemaps.write());
-	} else {
-		r = r.pipe(
-			sourcemaps.write("../out", {
-				// no inlined source
-				includeContent: inlineSource,
-				// Return relative source map root directories per file.
-				sourceRoot: "../src",
-			})
-		);
-	}
+  if (inlineMap && inlineSource) {
+    r = r.pipe(sourcemaps.write());
+  } else {
+    r = r.pipe(
+      sourcemaps.write("../out", {
+        // no inlined source
+        includeContent: inlineSource,
+        // Return relative source map root directories per file.
+        sourceRoot: "../src",
+      })
+    );
+  }
 
-	return r.pipe(gulp.dest(outDest));
+  return r.pipe(gulp.dest(outDest));
 }
