@@ -28,7 +28,11 @@ class TestAdafruitDisplayShapes(object):
         expected_images = []
         for i in range(5):
             expected = Image.open(
-                os.path.join(self.abs_path, CONSTANTS.IMG_DIR_NAME, f"test_image_shapes_{i+1}.bmp")
+                os.path.join(
+                    self.abs_path,
+                    CONSTANTS.IMG_DIR_NAME,
+                    f"test_image_shapes_{i+1}.bmp",
+                )
             )
             expected_images.append(expected.load())
 

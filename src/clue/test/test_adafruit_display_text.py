@@ -45,7 +45,11 @@ class TestAdafruitDisplayText(object):
         expected_images = []
         for j in range(4):
             expected = Image.open(
-                os.path.join(self.abs_path, CONSTANTS.IMG_DIR_NAME,f"test_display_text_{j+1}.bmp")
+                os.path.join(
+                    self.abs_path,
+                    CONSTANTS.IMG_DIR_NAME,
+                    f"test_display_text_{j+1}.bmp",
+                )
             )
             expected_images.append(expected.load())
 
