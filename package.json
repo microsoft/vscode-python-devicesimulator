@@ -1,390 +1,390 @@
 {
-    "name": "__EXTENSIONNAME__",
-    "displayName": "__DISPLAYNAME__",
-    "description": "__DESCRIPTION__",
-    "version": "0.0.0-UNTRACKEDVERSION",
-    "publisher": "__PUBLISHER__",
-    "instrumentationKey": "__AIKEY__",
-    "icon": "assets/icon.png",
-    "engines": {
-        "vscode": "^1.34.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "preview": true,
-    "license": "MIT",
-    "homepage": "https://github.com/microsoft/vscode-python-devicesimulator",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/microsoft/vscode-python-devicesimulator"
-    },
-    "bugs": {
-        "url": "https://github.com/microsoft/vscode-python-devicesimulator/issues"
-    },
-    "keywords": [
-        "python",
-        "CircuitPython",
-        "Adafruit",
-        "microbit",
-        "MicroPython"
-    ],
-    "activationEvents": [
-        "onCommand:deviceSimulatorExpress.common.installDependencies",
-        "onCommand:deviceSimulatorExpress.common.openSerialMonitor",
-        "onCommand:deviceSimulatorExpress.common.runSimulator",
-        "onCommand:deviceSimulatorExpress.common.selectSerialPort",
-        "onCommand:deviceSimulatorExpress.cpx.deployToDevice",
-        "onCommand:deviceSimulatorExpress.cpx.newFile",
-        "onCommand:deviceSimulatorExpress.cpx.openSimulator",
-        "onCommand:deviceSimulatorExpress.microbit.deployToDevice",
-        "onCommand:deviceSimulatorExpress.microbit.newFile",
-        "onCommand:deviceSimulatorExpress.microbit.openSimulator",
-        "onCommand:deviceSimulatorExpress.clue.newFile",
-        "onCommand:deviceSimulatorExpress.clue.openSimulator",
-        "onDebug"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "deviceSimulatorExpress.common.installDependencies",
-                "title": "%deviceSimulatorExpressExtension.commands.common.installDependencies%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.common.changeBaudRate",
-                "title": "%deviceSimulatorExpressExtension.commands.common.changeBaudRate%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.common.closeSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.common.closeSerialMonitor%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.common.openSerialMonitor",
-                "title": "%deviceSimulatorExpressExtension.commands.common.openSerialMonitor%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.common.selectSerialPort",
-                "title": "%deviceSimulatorExpressExtension.commands.common.selectSerialPort%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.common.runSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.common.runSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.cpx.deployToDevice",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.deployToDevice%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.cpx.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.newFile%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.cpx.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.deployToDevice",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.clue.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.clue.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.clue.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.clue.newFile%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            }
-        ],
-        "menus": {
-            "commandPalette": [
-                {
-                    "command": "deviceSimulatorExpress.microbit.deployToDevice",
-                    "title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
-                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
-                    "when": "config.deviceSimulatorExpress.previewMode"
-                },
-                {
-                    "command": "deviceSimulatorExpress.microbit.openSimulator",
-                    "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
-                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
-                    "when": "config.deviceSimulatorExpress.previewMode"
-                },
-                {
-                    "command": "deviceSimulatorExpress.microbit.newFile",
-                    "title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
-                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
-                    "when": "config.deviceSimulatorExpress.previewMode"
-                },
-                {
-                    "command": "deviceSimulatorExpress.clue.openSimulator",
-                    "title": "%deviceSimulatorExpressExtension.commands.clue.openSimulator%",
-                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
-                    "when": "config.deviceSimulatorExpress.previewMode"
-                },
-                {
-                    "command": "deviceSimulatorExpress.clue.newFile",
-                    "title": "%deviceSimulatorExpressExtension.commands.clue.newFile%",
-                    "category": "%deviceSimulatorExpressExtension.commands.common.label%",
-                    "when": "config.deviceSimulatorExpress.previewMode"
-                }
-            ]
-        },
-        "colors": [
-            {
-                "id": "highContrastButtonBorderOverride.color",
-                "description": "Color for the high contrast border updated",
-                "defaults": {
-                    "dark": "debugToolBar.background",
-                    "light": "debugToolBar.background",
-                    "highContrast": "#6FC3DF"
-                }
-            },
-            {
-                "id": "badgeForegroundOverride",
-                "description": "Color that fixes the issue with midnight blue ",
-                "defaults": {
-                    "dark": "#FFFFFF",
-                    "light": "badge.foreground",
-                    "highContrast": "#FFFFFF"
-                }
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "%deviceSimulatorExpressExtension.configuration.title%",
-            "properties": {
-                "deviceSimulatorExpress.configNewEnvironmentUponSwitch": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange%",
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.enableUSBDetection": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "deviceSimulatorExpress.showDependencyInstall": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.dependencyChecker%",
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.showNewFilePopup": {
-                    "type": "boolean",
-                    "default": true,
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.debuggerServerPort": {
-                    "type": "number",
-                    "default": 5577,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",
-                    "scope": "resource"
-                },
-                "deviceSimulatorExpress.previewMode": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.previewMode%",
-                    "scope": "resource"
-                }
-            }
-        },
-        "breakpoints": [
-            {
-                "language": "python"
-            }
-        ],
-        "debuggers": [
-            {
-                "type": "deviceSimulatorExpress",
-                "label": "Device Simulator Express Debugger",
-                "languages": [
-                    "python"
-                ],
-                "configurationAttributes": {
-                    "launch": {
-                        "properties": {
-                            "program": {
-                                "type": "string",
-                                "description": "Absolute path to the code file.",
-                                "default": "${file}"
-                            },
-                            "stopOnEntry": {
-                                "type": "boolean",
-                                "description": "Automatically stop after launch.",
-                                "default": true
-                            },
-                            "console": {
-                                "enum": [
-                                    "internalConsole",
-                                    "integratedTerminal",
-                                    "externalTerminal"
-                                ],
-                                "description": "Where to launch the debug target: internal console, integrated terminal, or external terminal.",
-                                "default": "integratedTerminal"
-                            },
-                            "args": {
-                                "type": "array",
-                                "description": "Command line arguments passed to the program.",
-                                "default": [],
-                                "items": {
-                                    "filePath": "string",
-                                    "serverPort": "string"
-                                }
-                            },
-                            "rules": {
-                                "type": "array",
-                                "description": "Debugger rules.",
-                                "default": [],
-                                "items": {
-                                    "path": "string",
-                                    "include": "boolean"
-                                }
-                            }
-                        }
-                    }
-                },
-                "initialConfigurations": [
-                    {
-                        "type": "deviceSimulatorExpress",
-                        "request": "launch",
-                        "name": "Device Simulator Express Debugger",
-                        "console": "integratedTerminal"
-                    }
-                ],
-                "configurationSnippets": [
-                    {
-                        "label": "Device Simulator Express Debugger : Launch",
-                        "description": "Device Simulator Express Debugger - A configuration for debugging a python code file for the Device Simulator Express simulator.",
-                        "body": {
-                            "type": "deviceSimulatorExpress",
-                            "request": "launch",
-                            "name": "Device Simulator Express Debugger",
-                            "console": "integratedTerminal"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    "scripts": {
-        "start": "webpack-dev-server",
-        "vscode:prepublish": "npm run compile",
-        "build": "gulp build",
-        "clean": "gulp clean",
-        "compile": "npm-run-all compile:*",
-        "compile:extension": "gulp compile",
-        "compile:views": "webpack --mode development",
-        "watch": "npm-run-all -p watch:*",
-        "watch:extension": "tsc --watch",
-        "watch:views": "webpack --watch --mode development",
-        "pretest": "npm run compile",
-        "test": "npm-run-all test:*",
-        "test:extension-tests": "node ./out/test/runTest.js",
-        "test:ts": "jest",
-        "test:api-tests": "pytest src",
-        "lint": "npm-run-all lint:*",
-        "lint:ts": "tslint -c tslint.json src/**/*.{ts,tsx}",
-        "lint:python": "pylint src",
-        "format": "npm-run-all format:*",
-        "format:ts": "prettier --config .prettierrc.yaml --write src/**/*.{css,ts,tsx}",
-        "format:python": "black src",
-        "check": "npm-run-all check:*",
-        "check:ts": "prettier --config .prettierrc.yaml --check src/**/*.{css,ts,tsx}",
-        "check:python": "black src --check",
-        "package": "vsce package"
-    },
-    "devDependencies": {
-        "@types/glob": "^7.1.1",
-        "@types/node": "^10.12.21",
-        "@types/react": "16.8.6",
-        "@types/react-dom": "16.8.4",
-        "@types/vscode": "^1.34.0",
-        "css-loader": "^1.0.0",
-        "del": "^4.0.0",
-        "event-stream": "^4.0.1",
-        "gulp": "^4.0.2",
-        "gulp-cli": "^2.1.0",
-        "gulp-filter": "^5.1.0",
-        "gulp-sourcemaps": "^2.6.5",
-        "gulp-typescript": "^5.0.1",
-        "less": "^3.7.0",
-        "less-loader": "^4.1.0",
-        "mocha": "^6.1.4",
-        "npm-run-all": "^4.1.3",
-        "prettier": "^1.19.1",
-        "react-scripts": "^3.4.0",
-        "style-loader": "^0.21.0",
-        "ts-import-plugin": "^1.5.4",
-        "ts-loader": "^4.4.2",
-        "tslint": "^5.12.1",
-        "tslint-config-prettier": "^1.18.0",
-        "tslint-microsoft-contrib": "^6.1.0",
-        "tslint-react": "^3.6.0",
-        "tslint-react-hooks": "^2.0.0",
-        "typescript": "^3.3.1",
-        "typescript-react-intl": "^0.4.0",
-        "version-from-git": "^1.1.1",
-        "vsce": "^1.47.0",
-        "vscode-nls-dev": "^3.2.6",
-        "vscode-test": "^1.0.0",
-        "webpack": "^4.15.1",
-        "webpack-cli": "^3.0.8"
-    },
-    "dependencies": {
-        "@babel/preset-typescript": "^7.8.3",
-        "@testing-library/jest-dom": "^5.0.2",
-        "@testing-library/react": "^9.4.0",
-        "@types/jest": "^24.9.0",
-        "@types/open": "^6.1.0",
-        "@types/react-test-renderer": "^16.9.0",
-        "@types/socket.io": "^2.1.2",
-        "babel-jest": "^25.1.0",
-        "compare-versions": "^3.5.1",
-        "eventemitter2": "^5.0.1",
-        "glob": "^7.1.4",
-        "jest": "^25.1.0",
-        "jest-transform-css": "^2.0.0",
-        "office-ui-fabric-react": "^7.85.0",
-        "open": "^6.4.0",
-        "os": "^0.1.1",
-        "react": "^16.9.0",
-        "react-dom": "^16.9.0",
-        "react-intl": "^3.1.9",
-        "react-test-renderer": "^16.9.0",
-        "socket.io": "^2.2.0",
-        "svg-inline-react": "^3.1.0",
-        "ts-jest": "^25.0.0",
-        "util": "^0.12.1",
-        "vscode-extension-telemetry": "^0.1.1",
-        "vscode-nls": "^4.1.0"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "extensionDependencies": [
-        "ms-python.python"
-    ]
+	"name": "__EXTENSIONNAME__",
+	"displayName": "__DISPLAYNAME__",
+	"description": "__DESCRIPTION__",
+	"version": "0.0.0-UNTRACKEDVERSION",
+	"publisher": "__PUBLISHER__",
+	"instrumentationKey": "__AIKEY__",
+	"icon": "assets/icon.png",
+	"engines": {
+		"vscode": "^1.34.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"preview": true,
+	"license": "MIT",
+	"homepage": "https://github.com/microsoft/vscode-python-devicesimulator",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoft/vscode-python-devicesimulator"
+	},
+	"bugs": {
+		"url": "https://github.com/microsoft/vscode-python-devicesimulator/issues"
+	},
+	"keywords": [
+		"python",
+		"CircuitPython",
+		"Adafruit",
+		"microbit",
+		"MicroPython"
+	],
+	"activationEvents": [
+		"onCommand:deviceSimulatorExpress.common.installDependencies",
+		"onCommand:deviceSimulatorExpress.common.openSerialMonitor",
+		"onCommand:deviceSimulatorExpress.common.runSimulator",
+		"onCommand:deviceSimulatorExpress.common.selectSerialPort",
+		"onCommand:deviceSimulatorExpress.cpx.deployToDevice",
+		"onCommand:deviceSimulatorExpress.cpx.newFile",
+		"onCommand:deviceSimulatorExpress.cpx.openSimulator",
+		"onCommand:deviceSimulatorExpress.microbit.deployToDevice",
+		"onCommand:deviceSimulatorExpress.microbit.newFile",
+		"onCommand:deviceSimulatorExpress.microbit.openSimulator",
+		"onCommand:deviceSimulatorExpress.clue.newFile",
+		"onCommand:deviceSimulatorExpress.clue.openSimulator",
+		"onDebug"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "deviceSimulatorExpress.common.installDependencies",
+				"title": "%deviceSimulatorExpressExtension.commands.common.installDependencies%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.common.changeBaudRate",
+				"title": "%deviceSimulatorExpressExtension.commands.common.changeBaudRate%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.common.closeSerialMonitor",
+				"title": "%deviceSimulatorExpressExtension.commands.common.closeSerialMonitor%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.common.openSerialMonitor",
+				"title": "%deviceSimulatorExpressExtension.commands.common.openSerialMonitor%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.common.selectSerialPort",
+				"title": "%deviceSimulatorExpressExtension.commands.common.selectSerialPort%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.common.runSimulator",
+				"title": "%deviceSimulatorExpressExtension.commands.common.runSimulator%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.cpx.deployToDevice",
+				"title": "%deviceSimulatorExpressExtension.commands.cpx.deployToDevice%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.cpx.newFile",
+				"title": "%deviceSimulatorExpressExtension.commands.cpx.newFile%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.cpx.openSimulator",
+				"title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.microbit.deployToDevice",
+				"title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.microbit.openSimulator",
+				"title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.microbit.newFile",
+				"title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.clue.openSimulator",
+				"title": "%deviceSimulatorExpressExtension.commands.clue.openSimulator%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			},
+			{
+				"command": "deviceSimulatorExpress.clue.newFile",
+				"title": "%deviceSimulatorExpressExtension.commands.clue.newFile%",
+				"category": "%deviceSimulatorExpressExtension.commands.common.label%"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "deviceSimulatorExpress.microbit.deployToDevice",
+					"title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
+					"category": "%deviceSimulatorExpressExtension.commands.common.label%",
+					"when": "config.deviceSimulatorExpress.previewMode"
+				},
+				{
+					"command": "deviceSimulatorExpress.microbit.openSimulator",
+					"title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
+					"category": "%deviceSimulatorExpressExtension.commands.common.label%",
+					"when": "config.deviceSimulatorExpress.previewMode"
+				},
+				{
+					"command": "deviceSimulatorExpress.microbit.newFile",
+					"title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
+					"category": "%deviceSimulatorExpressExtension.commands.common.label%",
+					"when": "config.deviceSimulatorExpress.previewMode"
+				},
+				{
+					"command": "deviceSimulatorExpress.clue.openSimulator",
+					"title": "%deviceSimulatorExpressExtension.commands.clue.openSimulator%",
+					"category": "%deviceSimulatorExpressExtension.commands.common.label%",
+					"when": "config.deviceSimulatorExpress.previewMode"
+				},
+				{
+					"command": "deviceSimulatorExpress.clue.newFile",
+					"title": "%deviceSimulatorExpressExtension.commands.clue.newFile%",
+					"category": "%deviceSimulatorExpressExtension.commands.common.label%",
+					"when": "config.deviceSimulatorExpress.previewMode"
+				}
+			]
+		},
+		"colors": [
+			{
+				"id": "highContrastButtonBorderOverride.color",
+				"description": "Color for the high contrast border updated",
+				"defaults": {
+					"dark": "debugToolBar.background",
+					"light": "debugToolBar.background",
+					"highContrast": "#6FC3DF"
+				}
+			},
+			{
+				"id": "badgeForegroundOverride",
+				"description": "Color that fixes the issue with midnight blue ",
+				"defaults": {
+					"dark": "#FFFFFF",
+					"light": "badge.foreground",
+					"highContrast": "#FFFFFF"
+				}
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "%deviceSimulatorExpressExtension.configuration.title%",
+			"properties": {
+				"deviceSimulatorExpress.configNewEnvironmentUponSwitch": {
+					"type": "boolean",
+					"default": false,
+					"description": "%deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange%",
+					"scope": "resource"
+				},
+				"deviceSimulatorExpress.enableUSBDetection": {
+					"type": "boolean",
+					"default": true
+				},
+				"deviceSimulatorExpress.showDependencyInstall": {
+					"type": "boolean",
+					"default": true,
+					"description": "%deviceSimulatorExpressExtension.configuration.properties.dependencyChecker%",
+					"scope": "resource"
+				},
+				"deviceSimulatorExpress.showNewFilePopup": {
+					"type": "boolean",
+					"default": true,
+					"scope": "resource"
+				},
+				"deviceSimulatorExpress.debuggerServerPort": {
+					"type": "number",
+					"default": 5577,
+					"description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",
+					"scope": "resource"
+				},
+				"deviceSimulatorExpress.previewMode": {
+					"type": "boolean",
+					"default": false,
+					"description": "%deviceSimulatorExpressExtension.configuration.properties.previewMode%",
+					"scope": "resource"
+				}
+			}
+		},
+		"breakpoints": [
+			{
+				"language": "python"
+			}
+		],
+		"debuggers": [
+			{
+				"type": "deviceSimulatorExpress",
+				"label": "Device Simulator Express Debugger",
+				"languages": [
+					"python"
+				],
+				"configurationAttributes": {
+					"launch": {
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Absolute path to the code file.",
+								"default": "${file}"
+							},
+							"stopOnEntry": {
+								"type": "boolean",
+								"description": "Automatically stop after launch.",
+								"default": true
+							},
+							"console": {
+								"enum": [
+									"internalConsole",
+									"integratedTerminal",
+									"externalTerminal"
+								],
+								"description": "Where to launch the debug target: internal console, integrated terminal, or external terminal.",
+								"default": "integratedTerminal"
+							},
+							"args": {
+								"type": "array",
+								"description": "Command line arguments passed to the program.",
+								"default": [],
+								"items": {
+									"filePath": "string",
+									"serverPort": "string"
+								}
+							},
+							"rules": {
+								"type": "array",
+								"description": "Debugger rules.",
+								"default": [],
+								"items": {
+									"path": "string",
+									"include": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"initialConfigurations": [
+					{
+						"type": "deviceSimulatorExpress",
+						"request": "launch",
+						"name": "Device Simulator Express Debugger",
+						"console": "integratedTerminal"
+					}
+				],
+				"configurationSnippets": [
+					{
+						"label": "Device Simulator Express Debugger : Launch",
+						"description": "Device Simulator Express Debugger - A configuration for debugging a python code file for the Device Simulator Express simulator.",
+						"body": {
+							"type": "deviceSimulatorExpress",
+							"request": "launch",
+							"name": "Device Simulator Express Debugger",
+							"console": "integratedTerminal"
+						}
+					}
+				]
+			}
+		]
+	},
+	"scripts": {
+		"start": "webpack-dev-server",
+		"vscode:prepublish": "npm run compile",
+		"build": "gulp build",
+		"clean": "gulp clean",
+		"compile": "npm-run-all compile:*",
+		"compile:extension": "gulp compile",
+		"compile:views": "webpack --mode development",
+		"watch": "npm-run-all -p watch:*",
+		"watch:extension": "tsc --watch",
+		"watch:views": "webpack --watch --mode development",
+		"pretest": "npm run compile",
+		"test": "npm-run-all test:*",
+		"test:extension-tests": "node ./out/test/runTest.js",
+		"test:ts": "jest",
+		"test:api-tests": "pytest src",
+		"lint": "npm-run-all lint:*",
+		"lint:ts": "tslint -c tslint.json src/**/*.{ts,tsx}",
+		"lint:python": "pylint src",
+		"format": "npm-run-all format:*",
+		"format:ts": "prettier --config .prettierrc.yaml --write src/**/*.{css,ts,tsx}",
+		"format:python": "black src",
+		"check": "npm-run-all check:*",
+		"check:ts": "prettier --config .prettierrc.yaml --check src/**/*.{css,ts,tsx}",
+		"check:python": "black src --check",
+		"package": "vsce package"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/node": "^10.12.21",
+		"@types/react": "16.8.6",
+		"@types/react-dom": "16.8.4",
+		"@types/vscode": "^1.34.0",
+		"css-loader": "^1.0.0",
+		"del": "^4.0.0",
+		"event-stream": "^4.0.1",
+		"gulp": "^4.0.2",
+		"gulp-cli": "^2.1.0",
+		"gulp-filter": "^5.1.0",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-typescript": "^5.0.1",
+		"less": "^3.7.0",
+		"less-loader": "^4.1.0",
+		"mocha": "^6.1.4",
+		"npm-run-all": "^4.1.3",
+		"prettier": "^1.19.1",
+		"react-scripts": "^3.4.0",
+		"style-loader": "^0.21.0",
+		"ts-import-plugin": "^1.5.4",
+		"ts-loader": "^4.4.2",
+		"tslint": "^5.12.1",
+		"tslint-config-prettier": "^1.18.0",
+		"tslint-microsoft-contrib": "^6.1.0",
+		"tslint-react": "^3.6.0",
+		"tslint-react-hooks": "^2.0.0",
+		"typescript": "^3.3.1",
+		"typescript-react-intl": "^0.4.0",
+		"version-from-git": "^1.1.1",
+		"vsce": "^1.47.0",
+		"vscode-nls-dev": "^3.2.6",
+		"vscode-test": "^1.0.0",
+		"webpack": "^4.15.1",
+		"webpack-cli": "^3.0.8"
+	},
+	"dependencies": {
+		"@babel/preset-typescript": "^7.8.3",
+		"@testing-library/jest-dom": "^5.0.2",
+		"@testing-library/react": "^9.4.0",
+		"@types/jest": "^24.9.0",
+		"@types/open": "^6.1.0",
+		"@types/react-test-renderer": "^16.9.0",
+		"@types/socket.io": "^2.1.2",
+		"babel-jest": "^25.1.0",
+		"compare-versions": "^3.5.1",
+		"eventemitter2": "^5.0.1",
+		"glob": "^7.1.4",
+		"jest": "^25.1.0",
+		"jest-transform-css": "^2.0.0",
+		"office-ui-fabric-react": "^7.85.0",
+		"open": "^6.4.0",
+		"os": "^0.1.1",
+		"react": "^16.9.0",
+		"react-dom": "^16.9.0",
+		"react-intl": "^3.1.9",
+		"react-test-renderer": "^16.9.0",
+		"socket.io": "^2.2.0",
+		"svg-inline-react": "^3.1.0",
+		"ts-jest": "^25.0.0",
+		"util": "^0.12.1",
+		"vscode-extension-telemetry": "^0.1.1",
+		"vscode-nls": "^4.1.0"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"extensionDependencies": [
+		"ms-python.python"
+	]
 }
