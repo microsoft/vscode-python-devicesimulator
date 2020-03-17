@@ -150,11 +150,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             state: !this.state.play_button,
         });
     };
-    protected onSelectFile(event: React.FocusEvent<HTMLSelectElement>) {
-        this.setState({
-            selected_file: event.currentTarget.value,
-        });
-    }
+
     protected refreshSimulatorClick = () => {
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
