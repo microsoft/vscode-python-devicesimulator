@@ -18,6 +18,7 @@
 
 .file-selector {
     padding: 20px;
+    min-height: 10px;
 }
 
 .shake-pressed {
