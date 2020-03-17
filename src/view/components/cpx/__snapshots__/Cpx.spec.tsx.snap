@@ -3938,7 +3938,7 @@ Array [
         className="toolbar-icon"
       >
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4005,7 +4005,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4072,7 +4072,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4137,7 +4137,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4213,7 +4213,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4280,7 +4280,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4347,7 +4347,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4450,7 +4450,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4510,7 +4510,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4572,7 +4572,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}
@@ -4632,7 +4632,7 @@ Array [
           </button>
         </div>
         <div
-          className="ms-TooltipHost root-81"
+          className="ms-TooltipHost root-49"
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
           onKeyDown={[Function]}

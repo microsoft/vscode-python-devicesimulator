@@ -3946,7 +3946,7 @@ exports[`App component  should render correctly 1`] = `
             className="toolbar-icon"
           >
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4013,7 +4013,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4080,7 +4080,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4145,7 +4145,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4221,7 +4221,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4288,7 +4288,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4355,7 +4355,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4458,7 +4458,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4518,7 +4518,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4580,7 +4580,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
@@ -4640,7 +4640,7 @@ exports[`App component  should render correctly 1`] = `
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-81"
+              className="ms-TooltipHost root-49"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
