@@ -4,4 +4,4 @@ import os
 import pathlib
 
 abs_path = pathlib.Path(__file__).parent.absolute()
-FONT = bitmap_font.load_font(os.path.join(abs_path, "ter-u12n.bdf"))
+FONT = bitmap_font.load_font(os.path.join(abs_path, "fonts", "ter-u12n.bdf"))

@@ -149,7 +149,9 @@ class TestGroup(object):
 
         group_main.draw(0, 0)
         expected = Image.open(
-            os.path.join(sys.path[0], "displayio", "test", "group_test_result.bmp")
+            os.path.join(
+                sys.path[0], "displayio", "test", "img", "group_test_result.bmp"
+            )
         )
 
         bmp_img_expected = expected.load()
