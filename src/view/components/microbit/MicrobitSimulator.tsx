@@ -8,7 +8,6 @@ import {
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
-import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, MicrobitImage } from "./MicrobitImage";
 
@@ -25,7 +24,8 @@ const DEFAULT_MICROBIT_STATE: IMicrobitState = {
 
 interface IState {
     active_editors: string[];
-    running_file: string;
+    running_file?: string;
+    currently_selected_file: string;
     play_button: boolean;
     selected_file: string;
     microbit: IMicrobitState;
@@ -44,7 +44,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             play_button: false,
             selected_file: "",
             active_editors: [],
-            running_file: "",
+            running_file: undefined,
+            currently_selected_file: "",
         };
         this.onKeyEvent = this.onKeyEvent.bind(this);
     }
@@ -71,8 +72,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "activate-play":
+                const newRunningFile = this.state.currently_selected_file;
                 this.setState({
                     play_button: !this.state.play_button,
+                    running_file: newRunningFile,
                 });
                 break;
             case "visible-editors":
@@ -81,9 +84,18 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "current-file":
-                this.setState({
-                    running_file: message.state.running_file,
-                });
+                if (this.state.play_button) {
+                    this.setState({
+                        currently_selected_file: message.state.running_file,
+                    });
+                } else {
+                    this.setState({
+                        running_file: message.state.running_file,
+
+                        currently_selected_file: message.state.running_file,
+                    });
+                }
+
                 break;
         }
     };
@@ -100,14 +112,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         return (
             <div className="simulator">
                 <div className="file-selector">
-                    <Dropdown
-                        label={"file-dropdown"}
-                        styleLabel={"dropdown"}
-                        lastChosen={this.state.running_file}
-                        width={300}
-                        textOptions={this.state.active_editors}
-                        onBlur={this.onSelectFile}
-                    />
+                    {this.state.running_file
+                        ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
+                        : CONSTANTS.NO_FILES_AVAILABLE}
                 </div>
                 <div className="microbit-container">
                     <MicrobitImage
@@ -130,6 +137,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             </div>
         );
     }
+
     protected togglePlayClick = () => {
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
