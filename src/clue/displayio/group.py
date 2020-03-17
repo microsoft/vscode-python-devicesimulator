@@ -4,6 +4,7 @@ from PIL import Image
 from .tile_grid import bmp_img, img
 from .tile_grid import TileGrid
 from . import constants as CONSTANTS
+import adafruit_display_text
 
 
 class Group:
@@ -33,6 +34,18 @@ class Group:
             scale = self.scale
         else:
             scale *= self.scale
+
+        try:
+            if isinstance(self, adafruit_display_text.label.Label):
+                y -= scale
+                x += self._anchor_point[0]
+                y += self._anchor_point[1]
+                if self._boundingbox is not None and self.anchored_position is not None:
+                    x += self.anchored_position[0]
+                    y += self.anchored_position[1]
+        except AttributeError:
+            pass
+
         for idx, elem in enumerate(self.__contents):
             if isinstance(elem, Group):
                 elem.draw(x, y, scale, False)
