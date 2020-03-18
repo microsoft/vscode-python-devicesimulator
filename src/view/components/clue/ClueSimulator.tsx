@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
     CONSTANTS,
-    DEVICE_LIST_KEY,
+    // DEVICE_LIST_KEY,
     MICROBIT_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
 } from "../../constants";
@@ -11,6 +11,8 @@ import { sendMessage } from "../../utils/MessageUtils";
 import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
+
+// import * as fs from "fs";
 
 const DEFAULT_CLUE_STATE: IMicrobitState = {
     leds: [
@@ -52,10 +54,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-
-        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
-            return;
-        }
+        console.log("oowoo")
+        // if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
+        //     return;
+        // }
 
         switch (message.command) {
             case "reset-state":
@@ -65,6 +67,17 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "set-state":
+                console.log("uwu")
+
+                // fs.writeFile('C:\\Users\\t-anmah\\Documents\\python_ds_2\\src\\output2.txt', `process output: ${message}`, function (err) {
+                //     if (err) {
+                //         return console.error(err);
+                //     }
+                //     console.log("File created!");
+                // });
+                // const uwu = "str \
+                // ing"
+
                 this.setState({
                     clue: {
                         ...this.state.clue,

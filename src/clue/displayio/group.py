@@ -6,7 +6,7 @@ import adafruit_display_text
 from .tile_grid import TileGrid, bmp_img, img
 from . import constants as CONSTANTS
 
-# import common
+import common
 
 # Group implementation loosely based on the
 # displayio.Group class in Adafruit CircuitPython
@@ -80,11 +80,12 @@ class Group:
         img.show()
         img_str = base64.b64encode(buffered.getvalue())
 
-        sendable_json = {"display_base64": img_str}
-        # common.utils.send_to_simulator(sendable_json, "CLUE")
-        # f = open("demofile2.txt", "w")
-        # f.write(str(img_str))
-        # f.close()
+        sendable_json = {"display_base64": str(img_str)[2:-1]}
+        common.utils.send_to_simulator(sendable_json, "CLUE")
+        print("sent to sim")
+        f = open("demofile2.txt", "w")
+        f.write(str(img_str)[2:-1])
+        f.close()
 
     def __len__(self):
         if not self.__contents:

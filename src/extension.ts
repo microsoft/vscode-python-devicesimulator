@@ -614,9 +614,18 @@ export async function activate(context: vscode.ExtensionContext) {
                                 // Check the JSON is a state
                                 switch (messageToWebview.type) {
                                     case "state":
-                                        console.log(
-                                            `Process state output = ${messageToWebview.data}`
-                                        );
+                                        console.log("over here1")
+
+                                        // fs.writeFile('C:\\Users\\t-anmah\\Documents\\python_ds_2\\src\\output.txt', `Process state output = ${messageToWebview.data}`, function (err) {
+                                        //     if (err) {
+                                        //         return console.error(err);
+                                        //     }
+                                        //     console.log("File created!");
+                                        // });
+                                        // console.log(
+                                        //     `Process state output = ${messageToWebview.data}`
+                                        // );
+                                        console.log("over here2")
                                         const messageData = JSON.parse(
                                             messageToWebview.data
                                         );
@@ -742,7 +751,9 @@ export async function activate(context: vscode.ExtensionContext) {
             // Data received from Python process
             deviceProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
+                console.log("here 1")
                 console.log(`Device output = ${dataFromTheProcess}`);
+                console.log("here 2")
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
