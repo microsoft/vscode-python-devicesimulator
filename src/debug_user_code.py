@@ -11,14 +11,19 @@ import check_python_dependencies
 # will propagate errors if dependencies aren't sufficient
 check_python_dependencies.check_for_dependencies()
 
-# Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
-sys.path.insert(0, abs_path_to_lib)
 
-# Insert absolute path to python libraries into sys.path
-abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, abs_path_to_lib)
+# Insert absolute path to Adafruit library for CPX into sys.path
+abs_path_to_adafruit_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.ADAFRUIT_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_adafruit_lib)
+
+# Insert absolute path to Micropython libraries for micro:bit into sys.path
+abs_path_to_micropython_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.MICROPYTHON_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_micropython_lib)
 
 # This import must happen after the sys.path is modified
 from adafruit_circuitplayground.express import cpx
