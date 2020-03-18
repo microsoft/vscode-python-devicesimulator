@@ -1,3 +1,4 @@
+# Datatype for the items within a palette
 class ColorType:
     def __init__(self, rgb888):
         self.rgb888 = rgb888

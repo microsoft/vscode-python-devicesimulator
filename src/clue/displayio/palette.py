@@ -1,12 +1,19 @@
 from .color_type import ColorType
 from . import constants as CONSTANTS
 
+# Palette implementation loosely based on the
+# displayio.Palette class in Adafruit CircuitPython
+# (with only the functions needed for the CLUE)
+
+# https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/displayio/Palette.html
+
 
 class Palette:
     def __init__(self, color_count):
         self.color_count = color_count
         self.__contents = []
 
+        # set all colours to black by default
         for i in range(self.color_count):
             self.__contents.append(ColorType((0, 0, 0)))
 

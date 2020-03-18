@@ -1,10 +1,18 @@
 import base64
 from io import BytesIO
 from PIL import Image
-from .tile_grid import bmp_img, img
-from .tile_grid import TileGrid
-from . import constants as CONSTANTS
 import adafruit_display_text
+
+from .tile_grid import TileGrid, bmp_img, img
+from . import constants as CONSTANTS
+
+# import common
+
+# Group implementation loosely based on the
+# displayio.Group class in Adafruit CircuitPython
+# (with only the functions needed for the CLUE)
+
+# https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/displayio/Group.html
 
 
 class Group:
@@ -29,7 +37,8 @@ class Group:
             self.draw(show=True)
 
     def draw(self, x=0, y=0, scale=None, show=False):
-
+        # this function is not a part of the orignal implementation
+        # it is what prints itself and its children to the frontend
         if scale is None:
             scale = self.scale
         else:
@@ -37,7 +46,16 @@ class Group:
 
         try:
             if isinstance(self, adafruit_display_text.label.Label):
+                # adafruit_display_text has some positioning considerations
+                # that need to be handled.
+
+                # found manually, display must be positioned upwards
+                # 1 unit (1 unit * scale = scale)
                 y -= scale
+
+                # group is positioned against anchored_position (default (0,0)),
+                # which is positioned against anchor_point
+
                 x += self._anchor_point[0]
                 y += self._anchor_point[1]
                 if self._boundingbox is not None and self.anchored_position is not None:
@@ -56,6 +74,7 @@ class Group:
             self.show()
 
     def show(self):
+        # sends current bmp_img to the frontend
         buffered = BytesIO()
         img.save(buffered, format="BMP")
         img.show()

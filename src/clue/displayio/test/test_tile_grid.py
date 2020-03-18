@@ -136,7 +136,7 @@ class TestTileGrid(object):
         tg = TileGrid(bitmap=bmp, pixel_shader=palette, position=(0, 0))
         tg2 = TileGrid(bitmap=bmp, pixel_shader=palette, position=(0, 0))
 
-        # without scaling
+        # without scaling, test output
         tg.draw(x_offset, y_offset, 1)
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
@@ -149,8 +149,8 @@ class TestTileGrid(object):
                 ):
                     assert bmp_img[j, i] == bg_color
 
+        # with scaling, test output
         tg.draw(x_offset, y_offset, scale)
-
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (

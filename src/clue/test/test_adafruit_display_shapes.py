@@ -1,16 +1,15 @@
-# import sys
-import os
 import pytest
-from adafruit_clue import clue
 
-# from displayio.tile_grid import img, bmp_img
 import displayio
+
 from PIL import Image
 import pathlib
+import os
 
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_shapes.circle import Circle
 from adafruit_display_shapes.roundrect import RoundRect
+
 from .test_helpers import helper
 from . import constants as CONSTANTS
 
@@ -19,6 +18,7 @@ class TestAdafruitDisplayShapes(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
 
+        # reset bmp_img to all black
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )
@@ -37,6 +37,7 @@ class TestAdafruitDisplayShapes(object):
             expected_images.append(expected.load())
 
         # TAKEN FROM ADAFRUIT'S DISPLAY SHAPES LIBRARY
+        # https://github.com/ladyada/Adafruit_CircuitPython_Display_Shapes/blob/master/examples/display_shapes_simpletest.py
         splash = displayio.Group(max_size=10)
 
         color_bitmap = displayio.Bitmap(320, 240, 1)

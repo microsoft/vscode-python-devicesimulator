@@ -1,3 +1,9 @@
+# overriden terminalio library, which uses
+# adafruit_bitmap_font to load the default font
+
+# original implementation docs for terminalio:
+# https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/terminalio/__init__.html
+
 from adafruit_bitmap_font import bitmap_font  # pylint: disable=wrong-import-position
 
 import os

@@ -1,11 +1,29 @@
 from . import constants as CONSTANTS
 
+# Bitmap implementation loosely based on the
+# displayio.Bitmap class in Adafruit CircuitPython
+
+# https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/displayio/Bitmap.html
+
+# The colour of a certain pixel is interpreted
+# within the TileGrid instance that the object
+# lives within. Each pixel is an integer value
+# that refers to the colours in the palette via index.
+
 
 class Bitmap:
-    def __init__(self, width, height, bits_per_value=24):
-        self.width = width
-        self.height = height
+    def __init__(self, width, height, value_count=255):
+        self.__width = width
+        self.__height = height
         self.values = bytearray(width * height)
+
+    @property
+    def width(self):
+        return self.__width
+
+    @property
+    def height(self):
+        return self.__height
 
     def __setitem__(self, index, value):
         if isinstance(index, tuple):

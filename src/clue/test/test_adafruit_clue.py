@@ -1,16 +1,13 @@
+import pytest
+
+import os
+import pathlib
 from PIL import Image
 
-# import sys
-# import os
-import pytest
-from adafruit_clue import clue
-import os
-
-# from adafruit_display_text import label
-# from displayio import bmp_img, img
 import displayio
 import terminalio
-import pathlib
+
+from adafruit_clue import clue
 from .test_helpers import helper
 from . import constants as CONSTANTS
 
@@ -19,6 +16,7 @@ class TestAdafruitClue(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
 
+        # reset bmp_img to all black
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )

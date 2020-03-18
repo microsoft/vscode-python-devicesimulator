@@ -43,3 +43,5 @@ DEFAULT_PORT = "5577"
 CPX = "CPX"
 
 MICROBIT = "micro:bit"
+
+CLUE = "CLUE"

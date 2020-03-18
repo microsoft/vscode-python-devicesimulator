@@ -1,10 +1,24 @@
 from PIL import Image
 from . import constants as CONSTANTS
 
+# TileGrid implementation loosely based on the
+# displayio.TileGrid class in Adafruit CircuitPython
+# (with only the functions needed for the CLUE)
+# this version of the class only supports a single tile,
+# therefore, get/set functionality is a bit different.
+
+# https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/displayio/TileGrid.html
+
+
+# Create a new black (default) image
 img = Image.new(
     "RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black"
-)  # Create a new black image
-bmp_img = img.load()  # Create the pixel map
+)
+
+# Create the pixel map
+# All displayio classes can access this
+# instance to read and write to the output image.
+bmp_img = img.load()
 
 
 class TileGrid:
@@ -42,6 +56,8 @@ class TileGrid:
         self.default_tile = default_tile
         self.in_group = False
 
+    # setitem for an index simply gets the index of the bitmap
+    # rather than the tile index
     def __setitem__(self, index, value):
         if isinstance(index, tuple):
             if index[0] >= self.tile_width or index[1] >= self.tile_height:
@@ -49,6 +65,8 @@ class TileGrid:
 
         self.bitmap[index] = value
 
+    # getitem for an index simply gets the index of the bitmap
+    # rather than the tile index
     def __getitem__(self, index):
         if isinstance(index, tuple):
             if index[0] >= self.tile_width or index[1] >= self.tile_height:
@@ -56,13 +74,20 @@ class TileGrid:
 
         return self.bitmap[index]
 
+    # methods that are not in the origin class:
+
     def draw(self, x, y, scale):
+
+        # draw the current bitmap with
+        # appropriate scale on the global bmp_img
         x = self.x * scale + x
         y = self.y * scale + y
         for i in range(self.tile_height):
             for j in range(self.tile_width):
                 self.fill_pixel(i, j, x, y, scale)
 
+    # helper method for drawing pixels on bmp_img
+    # given the src, offset, and scale
     def fill_pixel(self, i, j, x, y, scale):
         for i_new in range(scale):
             for j_new in range(scale):

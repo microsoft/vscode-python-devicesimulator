@@ -1,34 +1,29 @@
-# from displayio.tile_grid import img, bmp_img
-# import displayio
-from PIL import Image
-
-# import sys
-# import os
 import pytest
 
-# from adafruit_clue import clue
 import os
-from adafruit_display_text import label
+import pathlib
+from PIL import Image
 
-# from displayio import bmp_img, img
 import displayio
 import terminalio
-import pathlib
+
+from adafruit_display_text import label
+
 from .test_helpers import helper
 from . import constants as CONSTANTS
 
+# to keep track of test # to find right expected bmp
 test_count = 0
 
 
 class TestAdafruitDisplayText(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
-        # displayio.img = Image.new("RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black")  # Create a new black image
 
+        # reset bmp_img to all black
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )
-        displayio.bmp_img = displayio.img.load()  # Create the pixel map
 
     @pytest.mark.parametrize(
         "text, x,y, scale, color",
@@ -63,5 +58,5 @@ class TestAdafruitDisplayText(object):
         helper._Helper__test_image_equality(
             displayio.bmp_img, expected_images[test_count]
         )
-        # displayio.img.save(f"test_display_text_{test_count+1}.bmp")
+
         test_count += 1
