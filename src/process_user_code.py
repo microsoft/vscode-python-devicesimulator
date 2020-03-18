@@ -21,11 +21,20 @@ threads = []
 user_stdout = io.StringIO()
 sys.stdout = user_stdout
 
-# Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
-sys.path.insert(0, abs_path_to_lib)
 sys.path.insert(0, os.path.join(abs_path_to_parent_dir, "clue"))
+
+# Insert absolute path to Adafruit library for CPX into sys.path
+abs_path_to_adafruit_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.ADAFRUIT_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_adafruit_lib)
+
+# Insert absolute path to Micropython libraries for micro:bit into sys.path
+abs_path_to_micropython_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.MICROPYTHON_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_micropython_lib)
 
 # This import must happen after the sys.path is modified
 from common.telemetry import telemetry_py

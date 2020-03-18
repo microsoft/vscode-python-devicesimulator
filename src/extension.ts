@@ -1311,7 +1311,10 @@ const handleNewFileErrorTelemetry = () => {
 const updatePythonExtraPaths = () => {
     updateConfigLists(
         "python.autoComplete.extraPaths",
-        [__dirname],
+        [
+            __dirname,
+            path.join(__dirname, CONSTANTS.FILESYSTEM.MICROPYTHON_DIRECTORY),
+        ],
         vscode.ConfigurationTarget.Global
     );
 };
@@ -1321,12 +1324,20 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         context.extensionPath,
         CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY
     );
+    const micropythonPath: string = utils.createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        CONSTANTS.FILESYSTEM.MICROPYTHON_DIRECTORY
+    );
 
     // update pylint args to extend system path
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
-        ["--init-hook", `import sys; sys.path.append(\"${outPath}\")`],
+        [
+            "--init-hook",
+            `import sys; sys.path.extend([\"${outPath}\",\"${micropythonPath}\"])`,
+        ],
         vscode.ConfigurationTarget.Workspace
     );
 };
