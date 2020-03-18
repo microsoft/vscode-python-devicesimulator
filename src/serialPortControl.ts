@@ -9,7 +9,7 @@ import { CONSTANTS } from "./constants";
 import { logToOutputChannel } from "./extension_utils/utils";
 
 interface ISerialPortDetail {
-    comName: string;
+    path: string;
     manufacturer: string;
     vendorId: string;
     productId: string;
@@ -18,7 +18,7 @@ interface ISerialPortDetail {
 export class SerialPortControl {
     public static get serialport(): any {
         if (!SerialPortControl._serialport) {
-            SerialPortControl._serialport = require("../vendor/node-usb-native").SerialPort;
+            SerialPortControl._serialport = require("usb-native").SerialPort;
         }
         return SerialPortControl._serialport;
     }
@@ -26,13 +26,8 @@ export class SerialPortControl {
     public static list(): Promise<ISerialPortDetail[]> {
         return new Promise((resolve, reject) => {
             SerialPortControl.serialport.list(
-                (error: any, ports: ISerialPortDetail[]) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(ports);
-                    }
-                }
+                (ports) => resolve(ports),
+                (err) => reject(err),
             );
         });
     }
@@ -53,7 +48,7 @@ export class SerialPortControl {
     }
 
     public get isActive(): boolean {
-        return this._currentSerialPort && this._currentSerialPort.isOpen();
+        return this._currentSerialPort && this._currentSerialPort.isOpen;
     }
 
     public get currentPort(): string {
@@ -66,7 +61,7 @@ export class SerialPortControl {
             CONSTANTS.INFO.OPENING_SERIAL_PORT(this._currentPort)
         );
         return new Promise((resolve, reject) => {
-            if (this._currentSerialPort && this._currentSerialPort.isOpen()) {
+            if (this._currentSerialPort && this._currentSerialPort.isOpen) {
                 this._currentSerialPort.close((err: any) => {
                     if (err) {
                         return reject(err);
