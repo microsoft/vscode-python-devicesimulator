@@ -2,7 +2,7 @@ import sys
 
 from unittest import mock
 
-from .. import constants as CONSTANTS
+from common import constants as CONSTANTS
 from common import utils
 
 
