@@ -62,7 +62,7 @@
     color: var(--vscode-badgeForegroundOverride);
     border-width: 1px;
     border-style: solid;
-    padding: 0px 4px 0px 4px;
+    padding: 0px 4px;
     float: right;
     left: 25px;
     margin-top: -10px;
@@ -103,7 +103,6 @@
 .try-it-description {
     -webkit-appearance: none;
     font-size: 14px;
-    color: var(--vscode-foreground);
     background: var(--vscode-debugToolBar-background);
     word-wrap: break-word;
     width: 320px;
