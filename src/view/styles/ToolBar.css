@@ -111,7 +111,6 @@
     text-align: left;
     line-height: 17px;
     font-weight: 100;
-    opacity: 50%;
 }
 
 .description {
@@ -140,7 +139,7 @@
     text-align: left;
     line-height: 17px;
     font-weight: 100;
-    opacity: 50%;
+    opacity: 90%;
     font-size: 14px;
     word-wrap: break-word;
 }
