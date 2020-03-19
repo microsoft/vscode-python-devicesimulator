@@ -44,14 +44,14 @@ export class GettingStartedPage extends React.Component {
                         <pre>from microbit import *</pre>
                     </span>
                     <h3>
-                        2. Light up your micro:bit with love by showing a heart.
+                        2. Light up your micro:bit with love by showing a heart
                     </h3>
                     <span className="codeBox">
                         <pre>display.show(Image.HEART)</pre>
                     </span>
                     <h3>
                         3. Use your micro:bit to tell the world how you’re
-                        feeling.
+                        feeling
                     </h3>
                     <span className="codeBox">
                         <pre>while True:</pre>
