@@ -18,6 +18,10 @@
 
 .file-selector {
     padding: 20px;
+    width: 80%;
+    height: 30px;
+    border: 1px solid var(--vscode-debugToolBar-background);
+    border-radius: 3px;
 }
 
 .shake-pressed {
@@ -70,4 +74,5 @@
 }
 .cpx-container {
     width: 100%;
+    padding-top: 10px;
 }

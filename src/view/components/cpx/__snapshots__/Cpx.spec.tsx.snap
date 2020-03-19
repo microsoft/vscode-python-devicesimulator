@@ -8,21 +8,7 @@ Array [
     <div
       className="file-selector"
     >
-      <div>
-        <select
-          className="dropdown"
-          id="file-dropdown"
-          onBlur={[Function]}
-        >
-          <option
-            disabled={true}
-            selected={true}
-            value=""
-          >
-            Choose a .py file to run on the Simulator
-          </option>
-        </select>
-      </div>
+      The simulator will run the .py file you have focused on.
     </div>
     <div
       className="cpx-container"
