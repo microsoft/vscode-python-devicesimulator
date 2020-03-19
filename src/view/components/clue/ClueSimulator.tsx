@@ -54,10 +54,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-        console.log("oowoo")
-        // if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
-        //     return;
-        // }
 
         switch (message.command) {
             case "reset-state":
@@ -67,17 +63,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "set-state":
-                console.log("uwu")
-
-                // fs.writeFile('C:\\Users\\t-anmah\\Documents\\python_ds_2\\src\\output2.txt', `process output: ${message}`, function (err) {
-                //     if (err) {
-                //         return console.error(err);
-                //     }
-                //     console.log("File created!");
-                // });
-                // const uwu = "str \
-                // ing"
-
                 this.setState({
                     clue: {
                         ...this.state.clue,

@@ -1175,7 +1175,7 @@ export class MicrobitSvg extends React.Component<IProps, {}> {
         if (this.displayRef.current) {
             this.displayRef.current.setAttribute(
                 "href",
-                `data:image/svg+xml;base64,${this.props.displayImage}`
+                `data:image/png;base64,${this.props.displayImage}`
             );
         }
     }

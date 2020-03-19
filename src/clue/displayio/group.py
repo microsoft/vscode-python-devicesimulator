@@ -77,15 +77,11 @@ class Group:
         # sends current bmp_img to the frontend
         buffered = BytesIO()
         img.save(buffered, format="BMP")
-        img.show()
-        img_str = base64.b64encode(buffered.getvalue())
+        byte_base64 = base64.b64encode(buffered.getvalue())
+        img_str = str(byte_base64)[2:-1]
 
-        sendable_json = {"display_base64": str(img_str)[2:-1]}
+        sendable_json = {"display_base64": img_str}
         common.utils.send_to_simulator(sendable_json, "CLUE")
-        print("sent to sim")
-        f = open("demofile2.txt", "w")
-        f.write(str(img_str)[2:-1])
-        f.close()
 
     def __len__(self):
         if not self.__contents:

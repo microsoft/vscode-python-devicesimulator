@@ -16,14 +16,6 @@ export class MessagingService {
 
     // Send a message to webview if it exists
     public sendMessageToWebview(command: string, stateToSend: Object) {
-
-        // fs.writeFile('C:\\Users\\t-anmah\\Documents\\python_ds_2\\src\\output2.txt', `process output: ${stateToSend}`, function (err) {
-        //     if (err) {
-        //         return console.error(err);
-        //     }
-        //     console.log("File created!");
-        // });
-
         if (this.currentWebviewTarget) {
             this.currentWebviewTarget.postMessage({
                 command,
