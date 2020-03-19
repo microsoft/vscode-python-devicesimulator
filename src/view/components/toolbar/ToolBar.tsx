@@ -164,9 +164,9 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
             this.props.sensorValues
         ) as IModalContent;
 
-        const component = content
-            ? content.component
-            : DEFAULT_MODAL_CONTENT.component;
+        const components = content
+            ? content.components
+            : DEFAULT_MODAL_CONTENT.components;
 
         return (
             <div className="sensor_modal">
@@ -205,7 +205,7 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                     </span>
                     <br />
 
-                    <div>{component}</div>
+                    <div>{components}</div>
                 </div>
             </div>
         );
