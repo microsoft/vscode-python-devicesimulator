@@ -20,7 +20,6 @@ export const CONFIG = {
     CONFIG_ENV_ON_SWITCH:
         "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
     PYTHON_PATH: "python.pythonPath",
-    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
 };
