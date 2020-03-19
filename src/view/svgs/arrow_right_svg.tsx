@@ -7,6 +7,7 @@ export const ARROW_RIGHT_SVG = (
         viewBox="0 0 14 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        transform="translate(-2,2.5)"
     >
         <path
             fill-rule="evenodd"
