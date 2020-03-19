@@ -739,9 +739,9 @@ export async function activate(context: vscode.ExtensionContext) {
             // Data received from Python process
             deviceProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
-                console.log("here 1")
+                console.log("here 1");
                 console.log(`Device output = ${dataFromTheProcess}`);
-                console.log("here 2")
+                console.log("here 2");
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
