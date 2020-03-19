@@ -20,7 +20,10 @@ export const TRY_IT_MAKE_CODE = (
 
 export const FEATURE_REQUEST_ON_GITHUB = (
     <div className="link-parent">
-        <a href="https://github.com/microsoft/vscode-python-devicesimulator/issues/268" className="link">
+        <a
+            href="https://github.com/microsoft/vscode-python-devicesimulator/issues/268"
+            className="link"
+        >
             Upvote feature requests on GitHub {ARROW_RIGHT_SVG}
         </a>
     </div>
@@ -68,7 +71,7 @@ export const MICROBIT_TOOLBAR_ID = {
 };
 
 export interface IModalContent {
-    component: any;
+    components: any;
     descriptionText: string;
     descriptionTitle: string;
     id: string;
@@ -83,7 +86,7 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
     tagOutput: undefined,
     descriptionText: "none",
     tryItDescription: "none",
-    component: undefined,
+    components: undefined,
     id: "none",
 };
 
@@ -97,7 +100,7 @@ export const GPIO_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-gpio.description",
         tryItDescription: "toolbar-gpio.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "GPIO",
     };
 };
@@ -112,7 +115,7 @@ export const IR_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-ir-sensor.description",
         tryItDescription: "toolbar-ir-sensor.tryItDescription",
-        component: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
+        components: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
         id: "IR",
     };
 };
@@ -126,12 +129,12 @@ export const LIGHT_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
-        component: [(
+        components: [
             <LightSensorBar
                 onUpdateValue={onUpdateValue}
                 value={sensorValues[SENSOR_LIST.LIGHT]}
-            />
-        )],
+            />,
+        ],
         id: "light_sensor",
     };
 };
@@ -150,12 +153,14 @@ export const MOTION_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-motion-sensor.description",
         tryItDescription: "toolbar-motion-sensor.tryItDescription",
-        component: [(
+        components: [
             <MotionSensorBar
                 onUpdateValue={onUpdateValue}
                 axisValues={motionSensorValues}
-            />
-        ), TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
+            />,
+            TRY_IT_MAKE_CODE,
+            FEATURE_REQUEST_ON_GITHUB,
+        ],
         id: "motion_sensor",
     };
 };
@@ -169,7 +174,7 @@ export const NEOP_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-neo-pixels.description",
         tryItDescription: "toolbar-neo-pixels.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "neon_pixel",
     };
 };
@@ -183,7 +188,7 @@ export const PUSHB_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-push-button.description",
         tryItDescription: "toolbar-push-button.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "push_btn",
     };
 };
@@ -197,7 +202,7 @@ export const RED_LED_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-red-led.description",
         tryItDescription: "toolbar-red-led.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "red_LED",
     };
 };
@@ -211,7 +216,7 @@ export const SOUND_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-sound-sensor.description",
         tryItDescription: "toolbar-sound-sensor.tryItDescription",
-        component: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
+        components: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
         id: "sound_sensor",
     };
 };
@@ -225,7 +230,7 @@ export const SWITCH_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-slider-switch.description",
         tryItDescription: "toolbar-slider-switch.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "slider_switch",
     };
 };
@@ -239,7 +244,7 @@ export const SPEAKER_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-speaker.description",
         tryItDescription: "toolbar-speaker.tryItDescription",
-        component: [FEATURE_REQUEST_ON_GITHUB],
+        components: [FEATURE_REQUEST_ON_GITHUB],
         id: "speaker",
     };
 };
@@ -248,12 +253,12 @@ export const TEMPERATURE_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        component: [(
+        components: [
             <TemperatureSensorBar
                 onUpdateSensor={onUpdateValue}
                 value={sensorValues[SENSOR_LIST.TEMPERATURE]}
-            />
-        )],
+            />,
+        ],
         descriptionText: "toolbar-temperature-sensor.description",
         descriptionTitle: "toolbar-temperature-sensor.title",
         id: "temperature",
@@ -273,7 +278,7 @@ export const ACCELEROMETER_MODAL_CONTENT = (
         Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
-        component: (
+        components: (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
@@ -297,7 +302,7 @@ export const MICROBIT_LED_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-microbit-led.description",
         tryItDescription: "toolbar-microbit-led.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "microbit_LED",
     };
 };
@@ -312,7 +317,7 @@ export const MICROBIT_BUTTON_CONTENT = (
         tagOutput: TAG_INPUT_SVG,
         descriptionText: "toolbar-microbit-button.description",
         tryItDescription: "toolbar-microbit-button.tryItDescription",
-        component: undefined,
+        components: undefined,
         id: "microbit_button",
     };
 };
