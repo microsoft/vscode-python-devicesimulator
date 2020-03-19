@@ -18,6 +18,14 @@ export const TRY_IT_MAKE_CODE = (
     </div>
 );
 
+export const FEATURE_REQUEST_ON_GITHUB = (
+    <div className="link-parent">
+        <a href="https://github.com/microsoft/vscode-python-devicesimulator/issues/268" className="link">
+            Upvote feature requests on GitHub {ARROW_RIGHT_SVG}
+        </a>
+    </div>
+);
+
 export const TOOLBAR_ICON_LABEL = {
     GPIO: "GPIO",
     IR: "IR",
@@ -104,7 +112,7 @@ export const IR_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-ir-sensor.description",
         tryItDescription: "toolbar-ir-sensor.tryItDescription",
-        component: TRY_IT_MAKE_CODE,
+        component: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
         id: "IR",
     };
 };
@@ -118,12 +126,12 @@ export const LIGHT_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
-        component: (
+        component: [(
             <LightSensorBar
                 onUpdateValue={onUpdateValue}
                 value={sensorValues[SENSOR_LIST.LIGHT]}
             />
-        ),
+        )],
         id: "light_sensor",
     };
 };
@@ -142,12 +150,12 @@ export const MOTION_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-motion-sensor.description",
         tryItDescription: "toolbar-motion-sensor.tryItDescription",
-        component: (
+        component: [(
             <MotionSensorBar
                 onUpdateValue={onUpdateValue}
                 axisValues={motionSensorValues}
             />
-        ),
+        ), TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
         id: "motion_sensor",
     };
 };
@@ -203,7 +211,7 @@ export const SOUND_MODAL_CONTENT = (
         tagOutput: undefined,
         descriptionText: "toolbar-sound-sensor.description",
         tryItDescription: "toolbar-sound-sensor.tryItDescription",
-        component: TRY_IT_MAKE_CODE,
+        component: [TRY_IT_MAKE_CODE, FEATURE_REQUEST_ON_GITHUB],
         id: "sound_sensor",
     };
 };
@@ -231,7 +239,7 @@ export const SPEAKER_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-speaker.description",
         tryItDescription: "toolbar-speaker.tryItDescription",
-        component: undefined,
+        component: [FEATURE_REQUEST_ON_GITHUB],
         id: "speaker",
     };
 };
@@ -240,12 +248,12 @@ export const TEMPERATURE_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        component: (
+        component: [(
             <TemperatureSensorBar
                 onUpdateSensor={onUpdateValue}
                 value={sensorValues[SENSOR_LIST.TEMPERATURE]}
             />
-        ),
+        )],
         descriptionText: "toolbar-temperature-sensor.description",
         descriptionTitle: "toolbar-temperature-sensor.title",
         id: "temperature",
