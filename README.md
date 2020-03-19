@@ -9,13 +9,13 @@ result when you plug in your actual microcontroller. Curious about the output of
 monitor allows you to observe the device output.
 
 ## Devices we support:
-- [**Adafruit Circuit Playground Express (CPX)**](#circuit-playground-express-(cpx)-simulator)
+- [**Adafruit Circuit Playground Express (CPX)**](#Circuit-Playground-Express-(CPX)-Simulator)
   
-  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx_img.png'>](#circuit-playground-express-(cpx)-simulator)
+  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx_img.png'>](#Circuit-Playground-Express-(CPX)-Simulator)
 
-- [**BBC micro:bit**](#bbc-micro:bit-simulator)
+- [**BBC micro:bit**](#BBC-micro:bit-Simulator)
   
-  [<img alt='bbc micro:bit' src=assets/readmeFiles/microbit/microbit.png>](#bbc-micro:bit-simulator)
+  [<img alt='bbc micro:bit' src=assets/readmeFiles/microbit/microbit.png>](#BBC-micro:bit-Simulator)
 
 
 ## Build Status
