@@ -15,7 +15,9 @@ exports[`App component  should render correctly 1`] = `
       >
         <div
           className="file-selector"
-        />
+        >
+          The simulator will run the .py file you have focused on.
+        </div>
         <div
           className="cpx-container"
         >

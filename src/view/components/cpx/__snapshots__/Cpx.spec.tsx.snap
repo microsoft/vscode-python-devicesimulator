@@ -7,7 +7,9 @@ Array [
   >
     <div
       className="file-selector"
-    />
+    >
+      The simulator will run the .py file you have focused on.
+    </div>
     <div
       className="cpx-container"
     >
