@@ -5,16 +5,20 @@ export class GettingStartedPage extends React.Component {
     private selectRef: React.RefObject<HTMLSelectElement> = React.createRef();
 
     componentDidMount() {
-        this.selectRef!.current!.addEventListener("change", (event: any) => {
-            const visibleElement = document.querySelector(".visibleElement");
-            const target = document.getElementById(event!.target!.value);
-            if (visibleElement !== null) {
-                visibleElement.className = "inv";
-            }
-            if (target !== null) {
-                target.className = "visibleElement";
-            }
-        });
+        if (this.selectRef.current) {
+            this.selectRef.current.addEventListener("change", (event: any) => {
+                const visibleElement = document.querySelector(
+                    ".visibleElement"
+                );
+                const target = document.getElementById(event!.target!.value);
+                if (visibleElement !== null) {
+                    visibleElement.className = "inv";
+                }
+                if (target !== null) {
+                    target.className = "visibleElement";
+                }
+            });
+        }
     }
 
     render() {
