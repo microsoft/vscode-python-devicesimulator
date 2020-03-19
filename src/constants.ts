@@ -403,6 +403,9 @@ export namespace DialogResponses {
     export const CANCEL: MessageItem = {
         title: localize("dialogResponses.cancel", "Cancel"),
     };
+    export const SELECT: MessageItem = {
+        title: localize("dialogResponses.select", "Select"),
+    };
     export const HELP: MessageItem = {
         title: localize("dialogResponses.help", "I need help"),
     };
