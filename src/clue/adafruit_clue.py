@@ -199,7 +199,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
-        self._pixel = neopixel.NeoPixel(pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB)
+        self._pixel = neopixel.NeoPixel(
+            pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
+        )
 
     @property
     def pixel(self):

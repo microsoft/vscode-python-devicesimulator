@@ -10,4 +10,6 @@ import os
 import pathlib
 
 abs_path = pathlib.Path(__file__).parent.absolute()
+
+# load default font
 FONT = bitmap_font.load_font(os.path.join(abs_path, "fonts", "ter-u12n.bdf"))

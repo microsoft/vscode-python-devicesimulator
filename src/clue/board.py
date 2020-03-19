@@ -11,4 +11,9 @@ class Display:
 
 
 DISPLAY = Display()
+
+# deafult pin,
+# shows that this could
+# refer to the CPX
+# or CLUE neopixel pin
 NEOPIXEL = "D00"
