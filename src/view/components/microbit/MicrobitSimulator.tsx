@@ -91,7 +91,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 } else {
                     this.setState({
                         running_file: message.state.running_file,
-
                         currently_selected_file: message.state.running_file,
                     });
                 }
