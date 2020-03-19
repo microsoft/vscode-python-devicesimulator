@@ -26,8 +26,8 @@ export class SerialPortControl {
     public static list(): Promise<ISerialPortDetail[]> {
         return new Promise((resolve, reject) => {
             SerialPortControl.serialport.list().then(
-                (ports) => resolve(ports),
-                (err) => reject(err),
+                ports => resolve(ports),
+                err => reject(err)
             );
         });
     }
