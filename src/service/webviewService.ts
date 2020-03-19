@@ -1,7 +1,6 @@
 import * as path from "path";
 import * as vscode from "vscode";
 import CONSTANTS from "../constants";
-import { GETTING_STARTED_HTML } from "../pages/gettingStarted";
 import { WEBVIEW_ATTRIBUTES_KEY, WEBVIEW_TYPES } from "../view/constants";
 import { DeviceSelectionService } from "./deviceSelectionService";
 
