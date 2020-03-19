@@ -1,6 +1,7 @@
 .inv {
     display: none;
 }
+
 .deviceSelector {
     width: 250px;
     border: 1px solid #3d484c;
@@ -10,6 +11,7 @@
     font-size: 12px;
     padding-right: 30px;
 }
+
 .codeBox {
     display: block;
     width: 90%;
@@ -19,4 +21,9 @@
     background: none;
     border: 1px solid grey;
     border-radius: 4px;
+}
+
+.container {
+    text-align: left;
+    padding: 0 10px 0 10px;
 }
