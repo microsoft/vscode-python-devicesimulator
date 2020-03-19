@@ -67,6 +67,7 @@ import os
 abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
 import neopixel
+import constants as CONSTANTS
 
 # REVISED VERSION OF THE ADAFRUIT CLUE LIBRARY FOR DSX
 
@@ -198,7 +199,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
-        self._pixel = neopixel.NeoPixel(0, 1)
+        self._pixel = neopixel.NeoPixel(pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB)
 
     @property
     def pixel(self):

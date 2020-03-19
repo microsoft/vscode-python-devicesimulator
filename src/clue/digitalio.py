@@ -6,6 +6,7 @@
 
 class DigitalInOut:
     def __init__(self, pin):
+        self.pin = pin
         pass
 
     def deinit(self):

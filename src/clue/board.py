@@ -11,3 +11,4 @@ class Display:
 
 
 DISPLAY = Display()
+NEOPIXEL = "D00"
