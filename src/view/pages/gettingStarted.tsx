@@ -38,7 +38,10 @@ export class GettingStartedPage extends React.Component {
                         <option value="micro:bit">micro:bit</option>
                         <option value="CPX">CPX</option>
                     </select>
-
+                    <h3>
+                        Copy these snippets of code to a .py file and run the
+                        simulator
+                    </h3>
                     <div id="micro:bit" className="visibleElement">
                         <h2> Tutorial for micro:bit </h2>
                         <h3>
@@ -72,10 +75,7 @@ export class GettingStartedPage extends React.Component {
                             <pre> temp = temperature()</pre>
                             <pre> display.show(temp)</pre>
                         </span>
-                        <h3>
-                            {" "}
-                            And much more! These links have more tutorials:
-                        </h3>
+                        <h3>And much more! These links have more tutorials:</h3>
                         <h3>
                             <a href="https://microbit.org/projects/make-it-code-it/">
                                 Microbit Tutorials
@@ -111,10 +111,7 @@ export class GettingStartedPage extends React.Component {
                         <span className="codeBox">
                             <pre>cp.pixels[0] = (0, 0, 255)</pre>
                         </span>
-                        <h3>
-                            {" "}
-                            And much more! These links have more tutorials:
-                        </h3>
+                        <h3>And much more! These links have more tutorials:</h3>
                         <h3>
                             <a href="https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library">
                                 Getting started with CPX and CircuitPython

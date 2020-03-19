@@ -28,6 +28,9 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       CPX
     </option>
   </select>
+  <h3>
+    Copy these snippets of code to a .py file and run the simulator
+  </h3>
   <div
     className="visibleElement"
     id="micro:bit"
@@ -94,7 +97,6 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       </pre>
     </span>
     <h3>
-       
       And much more! These links have more tutorials:
     </h3>
     <h3>
@@ -169,7 +171,6 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       </pre>
     </span>
     <h3>
-       
       And much more! These links have more tutorials:
     </h3>
     <h3>
