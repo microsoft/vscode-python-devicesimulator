@@ -151,9 +151,6 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 
 ## BBC micro:bit Simulator
->**NOTE 1**: this feature is hidden by default. To use it, enable the feature flag in the "deviceSimulatorExpress.previewMode" user setting.
-
->**NOTE 2**: micro:bit simulation is still in development. Features may not work as intended.
 
 ### Features
 - IntelliSense and syntax highlighting for micro:bit code 
