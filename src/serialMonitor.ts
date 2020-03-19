@@ -160,10 +160,10 @@ export class SerialMonitor implements vscode.Disposable {
         if (!this._currentPort) {
             const ans = await vscode.window.showInformationMessage(
                 CONSTANTS.WARNING.NO_SERIAL_PORT_SELECTED,
-                DialogResponses.YES,
-                DialogResponses.NO
+                DialogResponses.SELECT,
+                DialogResponses.CANCEL
             );
-            if (ans === DialogResponses.YES) {
+            if (ans === DialogResponses.SELECT) {
                 await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
