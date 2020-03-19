@@ -17,13 +17,13 @@ import { GettingStartedPage } from "./pages/gettingStarted";
 interface IState {
     currentDevice: string;
     viewState: VIEW_STATE;
-    type?:WEBVIEW_TYPES;
+    type?: WEBVIEW_TYPES;
 }
 
 const defaultState = {
     currentDevice: DEVICE_LIST_KEY.CPX,
     viewState: VIEW_STATE.RUNNING,
-    type:undefined
+    type: undefined,
 };
 
 class App extends React.Component<{}, IState> {
@@ -33,12 +33,13 @@ class App extends React.Component<{}, IState> {
     }
     componentDidMount() {
         if (document.currentScript) {
+            console.log("componentdidmount");
             const webviewTypeAttribute = document.currentScript.getAttribute(
                 WEBVIEW_ATTRIBUTES_KEY.TYPE
             ) as WEBVIEW_TYPES;
             if (webviewTypeAttribute) {
-                this.setState({type:webviewTypeAttribute})
-
+                this.setState({ type: webviewTypeAttribute });
+                console.dir(webviewTypeAttribute);
             } else {
                 const initialDevice = document.currentScript.getAttribute(
                     "initialDevice"
@@ -61,19 +62,24 @@ class App extends React.Component<{}, IState> {
             <div className="App">
                 <main className="App-main">
                     <ViewStateContext.Provider value={this.state.viewState}>
-                        <GettingStartedPage />
-                        <Device
-                            currentSelectedDevice={this.state.currentDevice}
-                        />
-                        {this.loadContent}
+                        {this.loadContent()}
                     </ViewStateContext.Provider>
                 </main>
             </div>
         );
     }
-    loadConten()=>{
-        switch()
-    }
+    loadContent = () => {
+        console.log(this.state.type);
+        switch (this.state.type) {
+            case WEBVIEW_TYPES.GETTING_STARTED:
+                return <GettingStartedPage />;
+            case WEBVIEW_TYPES.SIMULATOR:
+                return (
+                    <Device currentSelectedDevice={this.state.currentDevice} />
+                );
+        }
+        return;
+    };
 
     handleMessage = (event: any): void => {
         const message = event.data;
