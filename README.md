@@ -11,7 +11,7 @@ monitor allows you to observe the device output.
 ## Devices we support:
 - [**Adafruit Circuit Playground Express (CPX)**](#Circuit-Playground-Express-(CPX)-Simulator)
   
-  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx_img.png'>](#Circuit-Playground-Express-(CPX)-Simulator)
+  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx-img.png'>](#Circuit-Playground-Express-(CPX)-Simulator)
 
 - [**BBC micro:bit**](#BBC-micro:bit-Simulator)
   
