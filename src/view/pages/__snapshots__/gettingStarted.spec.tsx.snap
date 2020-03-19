@@ -1,10 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GettingStartedPage component  should render correctly 1`] = `
-Array [
+<div
+  className="container"
+>
   <h1>
     Getting started
-  </h1>,
+  </h1>
   <select
     className="deviceSelector"
     id="target"
@@ -25,7 +27,7 @@ Array [
     >
       CPX
     </option>
-  </select>,
+  </select>
   <div
     className="visibleElement"
     id="micro:bit"
@@ -92,7 +94,8 @@ Array [
       </pre>
     </span>
     <h3>
-       And much more! These links have more tutorials:
+       
+      And much more! These links have more tutorials:
     </h3>
     <h3>
       <a
@@ -108,7 +111,7 @@ Array [
         Microbit official documentation
       </a>
     </h3>
-  </div>,
+  </div>
   <div
     className="inv"
     id="CPX"
@@ -166,7 +169,8 @@ Array [
       </pre>
     </span>
     <h3>
-       And much more! These links have more tutorials:
+       
+      And much more! These links have more tutorials:
     </h3>
     <h3>
       <a
@@ -182,6 +186,6 @@ Array [
         More example code
       </a>
     </h3>
-  </div>,
-]
+  </div>
+</div>
 `;
