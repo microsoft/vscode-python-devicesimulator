@@ -32,8 +32,8 @@
 .sensor_modal {
     vertical-align: middle;
     width: 360px;
-    max-height: 240px;
-    overflow-y: scroll;
+    max-height: 300px;
+    overflow-y: visible;
     overflow-x: hidden;
     position: relative;
     height: fit-content;
@@ -56,22 +56,75 @@
     width: 320px;
 }
 
+.info-icon {
+    background: var(--vscode-debugToolBar-background);
+    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    color: var(--vscode-badgeForegroundOverride);
+    border-width: 1px;
+    border-style: solid;
+    padding: 0px 4px;
+    float: right;
+    left: 25px;
+    margin-top: -10px;
+}
+
+.info-icon:hover {
+    background-color: var(--vscode-terminal-selectionBackground);
+    color: var(--vscode-badgeForegroundOverride);
+}
+
+.info-icon:active {
+    background-color: var(--vscode-editor-selectionHighlightBackground);
+    color: var(--vscode-badgeForegroundOverride);
+}
+
 .tag {
     position: absolute;
     left: 200px;
 }
 
-.description {
+.description-callout {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
+    padding: "210px 214px 214px 210px";
+    border: 2px solid var(--vscode-highContrastButtonBorderOverride-color);
+}
+
+.description-callout .ms-Callout-beak {
+    background-color: var(--vscode-debugToolBar-background);
+}
+
+.description-callout .ms-Callout-main {
+    background-color: var(--vscode-debugToolBar-background);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: -1px;
+}
+
+.try-it-description {
     -webkit-appearance: none;
     font-size: 14px;
-    color: var(--vscode-foreground);
+    background: var(--vscode-debugToolBar-background);
     word-wrap: break-word;
     width: 320px;
+    height: "100%";
     margin-top: 15px;
     text-align: left;
     line-height: 17px;
     font-weight: 100;
-    opacity: 50%;
+}
+
+.description {
+    -webkit-appearance: none;
+    color: var(--vscode-badgeForegroundOverride);
+    font-size: 14px;
+    word-wrap: break-word;
+    width: 320px;
+    height: "100%";
+    text-align: left;
+    font-weight: 400;
+    padding: 10px 0px 10px 10px;
+    margin: 10px;
+    overflow-y: hidden;
 }
 
 .title_group {
@@ -86,7 +139,7 @@
     text-align: left;
     line-height: 17px;
     font-weight: 100;
-    opacity: 50%;
+    opacity: 90%;
     font-size: 14px;
     word-wrap: break-word;
 }
