@@ -36,6 +36,12 @@ class Group:
         if self.auto_write:
             self.draw(show=True)
 
+    def __getitem__(self, index):
+        return self.__contents[index]
+
+    def __setitem__(self, index, val):
+        self.__contents[index] = val
+
     def draw(self, x=0, y=0, scale=None, show=False):
         # this function is not a part of the orignal implementation
         # it is what prints itself and its children to the frontend
