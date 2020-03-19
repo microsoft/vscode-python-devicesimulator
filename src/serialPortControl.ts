@@ -25,7 +25,7 @@ export class SerialPortControl {
 
     public static list(): Promise<ISerialPortDetail[]> {
         return new Promise((resolve, reject) => {
-            SerialPortControl.serialport.list(
+            SerialPortControl.serialport.list().then(
                 (ports) => resolve(ports),
                 (err) => reject(err),
             );
@@ -84,8 +84,7 @@ export class SerialPortControl {
                 this._outputChannel.show();
                 this._currentSerialPort.on("open", () => {
                     this._currentSerialPort.write(
-                        CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN,
-                        "Both NL & CR",
+                        CONSTANTS.MISC.SERIAL_MONITOR_TEST_IF_OPEN + os.EOL,
                         (err: any) => {
                             if (
                                 err &&
