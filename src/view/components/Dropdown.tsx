@@ -20,7 +20,7 @@ const Dropdown: React.FC<IDropdownProps> = props => {
     const defaultText =
         props.lastChosen !== ""
             ? CONSTANTS.CURRENTLY_RUNNING(parsedPath[1])
-            : CONSTANTS.NO_FILES_AVAILABLE;
+            : CONSTANTS.FILES_PLACEHOLDER;
     return (
         <div>
             <select
