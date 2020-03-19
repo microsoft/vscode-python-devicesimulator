@@ -33,20 +33,18 @@ class App extends React.Component<{}, IState> {
     }
     componentDidMount() {
         if (document.currentScript) {
-            console.log("componentdidmount");
             const webviewTypeAttribute = document.currentScript.getAttribute(
                 WEBVIEW_ATTRIBUTES_KEY.TYPE
             ) as WEBVIEW_TYPES;
             if (webviewTypeAttribute) {
                 this.setState({ type: webviewTypeAttribute });
-                console.dir(webviewTypeAttribute);
-            } else {
+            }
+            if (webviewTypeAttribute === WEBVIEW_TYPES.SIMULATOR) {
                 const initialDevice = document.currentScript.getAttribute(
-                    "initialDevice"
+                    WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
                 );
 
                 if (initialDevice) {
-                    // Attach message listeners only for devices
                     this.setState({ currentDevice: initialDevice });
                     window.addEventListener("message", this.handleMessage);
                 }

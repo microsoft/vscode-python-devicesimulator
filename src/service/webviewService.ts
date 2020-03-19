@@ -3,26 +3,20 @@ import * as vscode from "vscode";
 import CONSTANTS from "../constants";
 import { GETTING_STARTED_HTML } from "../pages/gettingStarted";
 import { WEBVIEW_ATTRIBUTES_KEY, WEBVIEW_TYPES } from "../view/constants";
+import { DeviceSelectionService } from "./deviceSelectionService";
 
 // Manages different type of webview
 export class WebviewService {
-    static loadScript(
-        context: vscode.ExtensionContext,
-        attributeKey: WEBVIEW_ATTRIBUTES_KEY,
-        attributeValue: string,
-        scriptPath: string
-    ) {
-        return `<script ${attributeKey}=${attributeValue} src="${vscode.Uri.file(
-            context.asAbsolutePath(scriptPath)
-        )
-            .with({ scheme: "vscode-resource" })
-            .toString()}"></script>`;
-    }
     private tutorialPanel: vscode.WebviewPanel | undefined;
     private context: vscode.ExtensionContext;
+    private deviceSelectionService: DeviceSelectionService;
 
-    constructor(context: vscode.ExtensionContext) {
+    constructor(
+        context: vscode.ExtensionContext,
+        deviceSelectionService: DeviceSelectionService
+    ) {
         this.context = context;
+        this.deviceSelectionService = deviceSelectionService;
     }
 
     public openTutorialPanel() {
@@ -32,30 +26,7 @@ export class WebviewService {
             this.createTutorialPanel();
         }
     }
-    private createTutorialPanel() {
-        this.tutorialPanel = vscode.window.createWebviewPanel(
-            CONSTANTS.WEBVIEW_TYPE.TUTORIAL,
-            CONSTANTS.LABEL.WEBVIEW_PANEL,
-            { preserveFocus: true, viewColumn: vscode.ViewColumn.One },
-            {
-                enableScripts: true,
-            }
-        );
-        this.tutorialPanel.webview.html = this.getWebviewContent(
-            WEBVIEW_ATTRIBUTES_KEY.TYPE,
-            WEBVIEW_TYPES.GETTING_STARTED
-        );
-        this.tutorialPanel.onDidDispose(() => {
-            this.disposeTutorialPanel();
-        });
-    }
-    private disposeTutorialPanel() {
-        this.tutorialPanel = undefined;
-    }
-    private getWebviewContent(
-        attributeKey: WEBVIEW_ATTRIBUTES_KEY,
-        attributeValue: string
-    ) {
+    public getWebviewContent(webviewType: string, hasDevice: boolean) {
         return `<!DOCTYPE html>
               <html lang="en">
               <head>
@@ -70,19 +41,61 @@ export class WebviewService {
                   const vscode = acquireVsCodeApi();
                 </script>
                 <script ></script>
-                ${WebviewService.loadScript(
+                ${this.loadScript(
                     this.context,
-                    attributeKey,
-                    attributeValue,
-                    "out/vendor.js"
+                    webviewType,
+                    "out/vendor.js",
+                    hasDevice
                 )}
-                ${WebviewService.loadScript(
+                ${this.loadScript(
                     this.context,
-                    attributeKey,
-                    attributeValue,
-                    "out/simulator.js"
+                    webviewType,
+                    "out/simulator.js",
+                    hasDevice
                 )}
               </body>
               </html>`;
+    }
+    private createTutorialPanel() {
+        this.tutorialPanel = vscode.window.createWebviewPanel(
+            CONSTANTS.WEBVIEW_TYPE.TUTORIAL,
+            CONSTANTS.LABEL.WEBVIEW_PANEL,
+            { preserveFocus: true, viewColumn: vscode.ViewColumn.One },
+            {
+                enableScripts: true,
+            }
+        );
+        this.tutorialPanel.webview.html = this.getWebviewContent(
+            WEBVIEW_TYPES.GETTING_STARTED,
+            false
+        );
+        this.tutorialPanel.onDidDispose(() => {
+            this.disposeTutorialPanel();
+        });
+    }
+    private disposeTutorialPanel() {
+        this.tutorialPanel = undefined;
+    }
+    private loadScript(
+        context: vscode.ExtensionContext,
+        attributeValue: string,
+        scriptPath: string,
+        hasDevice: boolean
+    ) {
+        let attributeString: string;
+        if (hasDevice) {
+            attributeString = `${
+                WEBVIEW_ATTRIBUTES_KEY.TYPE
+            }=${attributeValue} ${
+                WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
+            }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
+        } else {
+            attributeString = `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${attributeValue} `;
+        }
+        return `<script ${attributeString} src="${vscode.Uri.file(
+            context.asAbsolutePath(scriptPath)
+        )
+            .with({ scheme: "vscode-resource" })
+            .toString()}"></script>`;
     }
 }
