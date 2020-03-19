@@ -32,7 +32,6 @@
 .sensor_modal {
     vertical-align: middle;
     width: 360px;
-    max-height: 300px;
     overflow-y: visible;
     overflow-x: hidden;
     position: relative;
@@ -142,20 +141,19 @@
     opacity: 90%;
     font-size: 14px;
     word-wrap: break-word;
+    padding-right: 10px;
 }
 
 .link-parent {
     padding-top: 12px;
     -webkit-appearance: none;
-    padding-left: 150px;
-    color: var(--vscode-textLink-activeForeground);
+    color: var(--vscode-textLink-foreground);
     text-align: right;
     text-decoration: none;
     font-weight: bold;
 }
 .link-parent:hover {
     -webkit-appearance: none;
-    padding-left: 150px;
     color: var(--vscode-textLink-activeForeground);
     text-decoration: none;
 }
