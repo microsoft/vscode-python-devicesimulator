@@ -26,6 +26,7 @@ export class WebviewService {
             this.createTutorialPanel();
         }
     }
+
     public getWebviewContent(webviewType: string, hasDevice: boolean) {
         return `<!DOCTYPE html>
               <html lang="en">
@@ -56,6 +57,7 @@ export class WebviewService {
               </body>
               </html>`;
     }
+
     private createTutorialPanel() {
         this.tutorialPanel = vscode.window.createWebviewPanel(
             CONSTANTS.WEBVIEW_TYPE.TUTORIAL,
@@ -73,9 +75,11 @@ export class WebviewService {
             this.disposeTutorialPanel();
         });
     }
+
     private disposeTutorialPanel() {
         this.tutorialPanel = undefined;
     }
+
     private loadScript(
         context: vscode.ExtensionContext,
         attributeValue: string,
