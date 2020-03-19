@@ -148,7 +148,7 @@ class Simulator extends React.Component<{}, IState> {
                 <div className="file-selector">
                     {this.state.running_file && this.state.play_button
                         ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
-                        : null}
+                        : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
                 <div className="cpx-container">
                     <CpxImage

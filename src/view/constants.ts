@@ -42,7 +42,8 @@ export const CONSTANTS = {
         NUMERIC_SIX: "Digit6",
         NUMERIC_SEVEN: "Digit7",
     },
-    NO_FILES_AVAILABLE: "Save a .py file to run on the Simulator",
+    FILES_PLACEHOLDER:
+        "The simulator will run the .py file you have focused on.",
     SIMULATOR_BUTTON_WIDTH: 60,
     TOOLBAR_INFO: `Explore what's on the board:`,
 };

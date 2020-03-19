@@ -114,7 +114,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 <div className="file-selector">
                     {this.state.running_file && this.state.play_button
                         ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
-                        : null}
+                        : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
                 <div className="microbit-container">
                     <MicrobitImage
