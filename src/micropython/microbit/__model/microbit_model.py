@@ -64,6 +64,7 @@ class MicrobitModel:
         self.__update_motion(new_state)
         self.__update_light(new_state)
         self.__update_temp(new_state)
+        self.__update_gesture(new_state)
 
     # helpers
     def __update_buttons(self, new_state):
@@ -75,7 +76,7 @@ class MicrobitModel:
     def __update_motion(self, new_state):
         # set motion_x, motion_y, motion_z
         for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL.items():
-            self.accelerometer._Accelerometer__update(direction, new_state.get(name))
+            self.accelerometer._Accelerometer__update_motion(direction, new_state.get(name))
 
     def __update_light(self, new_state):
         # set light level
@@ -89,6 +90,11 @@ class MicrobitModel:
             previous_temp = self.temperature()
             if new_temp != previous_temp:
                 self._MicrobitModel__set_temperature(new_temp)
+
+    def __update_gesture(self, new_state):
+        # set gesture
+        new_gesture = new_state.get(CONSTANTS.EXPECTED_INPUT_GESTURE)
+        self.accelerometer._Accelerometer__update_gesture(new_gesture)
 
     def __set_debug_mode(self, mode):
         self.display._Display__debug_mode = mode

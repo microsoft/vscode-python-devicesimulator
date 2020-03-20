@@ -123,8 +123,14 @@ class Accelerometer:
             self.__gestures.append(self.__current_gesture)
             self.__prev_gestures.add(self.__current_gesture)
 
-    def __update(self, axis, accel):
+    def __update_motion(self, axis, accel):
         if accel is not None:
             previous_accel = self.__get_accel(axis)
             if accel != previous_accel:
                 self.__set_accel(axis, accel)
+
+    def __update_gesture(self, gesture):
+        if gesture is not None:
+            previous_gesture = self.__current_gesture
+            if previous_gesture != gesture:
+                self.__set_gesture(gesture)
