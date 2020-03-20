@@ -29,7 +29,7 @@ def neopixel_write(gpio, buf):
 
 
 def send_clue(buf):
-    sendable_json = {CONSTANTS.PIXELS: [tuple(buf)]}
+    sendable_json = {CONSTANTS.PIXELS: tuple(buf)}
 
     # for now, just print pixels
     print(sendable_json)
