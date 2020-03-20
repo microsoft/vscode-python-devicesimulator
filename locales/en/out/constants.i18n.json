@@ -2,6 +2,7 @@
   "dialogResponses.agreeAndRun": "Agree and Run",
   "dialogResponses.acceptPrivacy": "Got it",
   "dialogResponses.cancel": "Cancel",
+  "dialogResponses.select": "Select",
   "dialogResponses.dontShowAgain": "Don't Show Again",
   "dialogResponses.exampleCode": "Example Code on GitHub",
   "dialogResponses.help": "I need help",

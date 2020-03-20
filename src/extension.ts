@@ -35,7 +35,12 @@ import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurati
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
 import { UsbDetector } from "./usbDetector";
-import { VSCODE_MESSAGES_TO_WEBVIEW, WEBVIEW_MESSAGES } from "./view/constants";
+import {
+    VSCODE_MESSAGES_TO_WEBVIEW,
+    WEBVIEW_MESSAGES,
+    WEBVIEW_TYPES,
+} from "./view/constants";
+import { WebviewService } from "./service/webviewService";
 
 let telemetryAI: TelemetryAI;
 let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;
@@ -53,14 +58,6 @@ const fileSelectionService = new FileSelectionService(messagingService);
 
 export let outChannel: vscode.OutputChannel | undefined;
 
-function loadScript(context: vscode.ExtensionContext, scriptPath: string) {
-    return `<script initialDevice=${deviceSelectionService.getCurrentActiveDevice()} src="${vscode.Uri.file(
-        context.asAbsolutePath(scriptPath)
-    )
-        .with({ scheme: "vscode-resource" })
-        .toString()}"></script>`;
-}
-
 const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
     if (currentPanel) {
         currentPanel.webview.postMessage({
@@ -71,14 +68,13 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 };
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
-    console.info(CONSTANTS.INFO.EXTENSION_ACTIVATED);
-
     telemetryAI = new TelemetryAI(context);
     setupService = new SetupService(telemetryAI);
     let currentPanel: vscode.WebviewPanel | undefined;
     let childProcess: cp.ChildProcess | undefined;
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
+    const webviewService = new WebviewService(context, deviceSelectionService);
 
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
@@ -130,7 +126,7 @@ export async function activate(context: vscode.ExtensionContext) {
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
-                "adafruitSimulator",
+                CONSTANTS.WEBVIEW_TYPE.SIMULATOR,
                 CONSTANTS.LABEL.WEBVIEW_PANEL,
                 { preserveFocus: true, viewColumn: vscode.ViewColumn.Beside },
                 {
@@ -147,7 +143,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
             );
 
-            currentPanel.webview.html = getWebviewContent(context);
+            currentPanel.webview.html = webviewService.getWebviewContent(
+                WEBVIEW_TYPES.SIMULATOR,
+                true
+            );
             messagingService.setWebview(currentPanel.webview);
 
             if (messageListener !== undefined) {
@@ -302,6 +301,16 @@ export async function activate(context: vscode.ExtensionContext) {
         );
         openWebview();
     };
+
+    const gettingStartedOpen: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.gettingStarted",
+        () => {
+            telemetryAI.trackFeatureUsage(
+                TelemetryEventName.COMMAND_GETTING_STARTED
+            );
+            webviewService.openTutorialPanel();
+        }
+    );
 
     // Open Simulator on the webview
     const cpxOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
@@ -1059,6 +1068,7 @@ export async function activate(context: vscode.ExtensionContext) {
         microbitOpenSimulator,
         microbitNewFile,
         microbitDeployToDevice,
+        gettingStartedOpen,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
             simulatorDebugConfiguration
@@ -1320,27 +1330,6 @@ const updateConfigLists = (
         .getConfiguration()
         .update(section, Array.from(extraItemsSet), scope);
 };
-
-function getWebviewContent(context: vscode.ExtensionContext) {
-    return `<!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-            <title>${CONSTANTS.NAME}</title>
-            </head>
-          <body>
-            <div id="root"></div>
-            <script >
-              const vscode = acquireVsCodeApi();
-            </script>
-            <script ></script>
-            ${loadScript(context, "out/vendor.js")}
-            ${loadScript(context, "out/simulator.js")}
-          </body>
-          </html>`;
-}
 
 // this method is called when your extension is deactivated
 export async function deactivate() {
