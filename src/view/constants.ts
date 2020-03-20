@@ -99,4 +99,18 @@ export enum SENSOR_LIST {
     MOTION_Z = "motion_z",
 }
 
+export const GESTURES = [
+    "shake",
+    "up",
+    "down",
+    "left",
+    "right",
+    "face up",
+    "face down",
+    "freefall",
+    "3g",
+    "6g",
+    "8g",
+];
+
 export default CONSTANTS;

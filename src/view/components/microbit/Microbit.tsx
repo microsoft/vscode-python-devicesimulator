@@ -7,6 +7,7 @@ import {
     SENSOR_LIST,
     VSCODE_MESSAGES_TO_WEBVIEW,
     WEBVIEW_MESSAGES,
+    GESTURES,
 } from "../../constants";
 import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
@@ -27,7 +28,7 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
     },
-    currentSelectedGesture: undefined,
+    currentSelectedGesture: GESTURES[0],
 };
 
 export class Microbit extends React.Component<{}, IState> {

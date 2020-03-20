@@ -1,6 +1,6 @@
 .dropdown {
     background: var(--vscode-debugToolBar-background);
-    border-color: var(--vscode-highContrastButtonBorderOverride-color);
+    border-color: var(--vscode-foreground);
     border-radius: 2px;
     max-width: 300px;
     min-width: 240px;

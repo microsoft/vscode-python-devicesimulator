@@ -216,7 +216,7 @@ export async function activate(context: vscode.ExtensionContext) {
                                 }
 
                                 break;
-
+                            case WEBVIEW_MESSAGES.GESTURE:
                             case WEBVIEW_MESSAGES.SENSOR_CHANGED:
                                 handleGestureTelemetry(message.text);
                                 console.log(`Sensor changed ${messageJson} \n`);

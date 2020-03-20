@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SENSOR_LIST } from "../../../constants";
+import { SENSOR_LIST, GESTURES } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { Dropdown } from "../../Dropdown";
@@ -50,7 +50,7 @@ interface IProps {
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     onSendGesture?: () => void;
 }
-const GESTURES = ["shake", "up"];
+
 const GESTURE_BUTTON_MESSAGE = "Send Gesture";
 
 export const Accelerometer: React.FC<IProps> = (props: IProps) => {
