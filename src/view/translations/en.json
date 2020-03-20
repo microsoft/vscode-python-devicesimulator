@@ -34,7 +34,7 @@
     "toolbar-temperature-sensor.tryItDescription": "You can set the temperature range from your code!",
     "toolbar-accelerometer-sensor.title": "Accelerometer",
     "toolbar-accelerometer-sensor.description": "An accelerometer measures the acceleration of your micro:bit; this component senses when the micro:bit is moved.",
-    "toolbar-accelerometer-sensor.tryItDescription": "Change the acceleration here.",
+    "toolbar-accelerometer-sensor.tryItDescription": "Send a gesture or change the acceleration here.",
     "toolbar-microbit-led.title": "LEDs",
     "toolbar-microbit-led.description": "The microbit has 25 LEDs for you to play with. The LEDs have 9 levels of brightness.",
     "toolbar-microbit-led.tryItDescription": "Run your code and see the LEDs light up!",
