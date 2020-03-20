@@ -61,7 +61,7 @@ You will be prompted to install the Python dependencies during the first use.
   - Temperature sensor
   - 7 Capacitive Touch sensors
 
-The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **"tap" on Motion Sensor**. 
+The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **"tap" on Motion Sensor**.
 The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.  
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
@@ -84,7 +84,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 #### 1. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
 
-1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL/CMD + SHIFT + P` to open the command palette).  
+1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
    <img alt='"New File" animation' src='assets/readmeFiles/cpx/cpx-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: [Circuit Playground Express] New File"` Command.
@@ -132,7 +132,7 @@ or by using the toolbar.
 
 ### Commands
 
-Device Simulator Express provides several commands in the Command Palette (`F1` or `Ctrl + Shift + P` / `Cmd + Shift + `P for Mac OS) for working with \*.py files:
+Device Simulator Express provides several commands in the Command Palette (`F1` or `CTRL + SHIFT + P` / `CMD + SHIFT + P` for Mac OS) for working with \*.py files:
 
 - `Device Simulator Express: [Circuit Playground Express] New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [Circuit Playground Express] Open Simulator`: Opens the simulator in the webView
@@ -177,7 +177,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 #### 1. Start with the "Device Simulator Express [micro:bit]: New File" Command.
 
-1. Type in `"Device Simulator Express: [micro:bit] New File"` in the command palette (`CTRL/CMD + SHIFT + P` to open the command palette).  
+1. Type in `"Device Simulator Express: [micro:bit] New File"` in the command palette (`CTRL + SHFT + P / CMD + SHIFT + P` to open the command palette).  
    <img alt='"New File" animation' src='assets/readmeFiles/microbit/microbit-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 
