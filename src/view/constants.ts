@@ -113,4 +113,12 @@ export const GESTURES = [
     "8g",
 ];
 
+export enum WEBVIEW_ATTRIBUTES_KEY {
+    INITIAL_DEVICE = "initial_device",
+    TYPE = "webview_type",
+}
+export enum WEBVIEW_TYPES {
+    SIMULATOR = "simulator",
+    GETTING_STARTED = "getting_started",
+}
 export default CONSTANTS;

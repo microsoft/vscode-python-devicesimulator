@@ -7,18 +7,23 @@ import {
     DEVICE_LIST_KEY,
     VIEW_STATE,
     VSCODE_MESSAGES_TO_WEBVIEW,
+    WEBVIEW_ATTRIBUTES_KEY,
+    WEBVIEW_TYPES,
 } from "./constants";
 import { Device } from "./container/device/Device";
 import { ViewStateContext } from "./context";
+import { GettingStartedPage } from "./pages/gettingStarted";
 
 interface IState {
     currentDevice: string;
     viewState: VIEW_STATE;
+    type?: WEBVIEW_TYPES;
 }
 
 const defaultState = {
     currentDevice: DEVICE_LIST_KEY.CPX,
     viewState: VIEW_STATE.RUNNING,
+    type: undefined,
 };
 
 class App extends React.Component<{}, IState> {
@@ -28,15 +33,23 @@ class App extends React.Component<{}, IState> {
     }
     componentDidMount() {
         if (document.currentScript) {
-            const initialDevice = document.currentScript.getAttribute(
-                "initialDevice"
-            );
+            const webviewTypeAttribute = document.currentScript.getAttribute(
+                WEBVIEW_ATTRIBUTES_KEY.TYPE
+            ) as WEBVIEW_TYPES;
+            if (webviewTypeAttribute) {
+                this.setState({ type: webviewTypeAttribute });
+            }
+            if (webviewTypeAttribute === WEBVIEW_TYPES.SIMULATOR) {
+                const initialDevice = document.currentScript.getAttribute(
+                    WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
+                );
 
-            if (initialDevice) {
-                this.setState({ currentDevice: initialDevice });
+                if (initialDevice) {
+                    this.setState({ currentDevice: initialDevice });
+                    window.addEventListener("message", this.handleMessage);
+                }
             }
         }
-        window.addEventListener("message", this.handleMessage);
     }
     componentWillUnmount() {
         window.removeEventListener("message", this.handleMessage);
@@ -47,14 +60,24 @@ class App extends React.Component<{}, IState> {
             <div className="App">
                 <main className="App-main">
                     <ViewStateContext.Provider value={this.state.viewState}>
-                        <Device
-                            currentSelectedDevice={this.state.currentDevice}
-                        />
+                        {this.loadContent()}
                     </ViewStateContext.Provider>
                 </main>
             </div>
         );
     }
+    loadContent = () => {
+        console.log(this.state.type);
+        switch (this.state.type) {
+            case WEBVIEW_TYPES.GETTING_STARTED:
+                return <GettingStartedPage />;
+            case WEBVIEW_TYPES.SIMULATOR:
+                return (
+                    <Device currentSelectedDevice={this.state.currentDevice} />
+                );
+        }
+        return;
+    };
 
     handleMessage = (event: any): void => {
         const message = event.data;
