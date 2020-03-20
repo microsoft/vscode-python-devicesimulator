@@ -14,12 +14,12 @@ select.dropdown:hover,
 select.dropdown:focus,
 select.dropdown:active {
     outline: 1px solid var(--vscode-button-background);
-    outline-offset: 1px;
 }
 
 option {
     height: 32px;
     background: var(--vscode-debugToolBar-background);
+    outline: 0;
     align-items: center;
     font-size: 14px;
     color: var(--vscode-foreground);

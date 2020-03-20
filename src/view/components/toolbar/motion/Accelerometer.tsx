@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SENSOR_LIST, GESTURES } from "../../../constants";
+import CONSTANTS, { SENSOR_LIST, GESTURES } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { Dropdown } from "../../Dropdown";
@@ -70,6 +70,12 @@ export const Accelerometer: React.FC<IProps> = (props: IProps) => {
                         props.onSendGesture(false);
                     }
                 }}
+                onKeyDown={(e: React.KeyboardEvent) => {
+                    handleOnKeyDown(e, props.onSendGesture);
+                }}
+                onKeyUp={(e: React.KeyboardEvent) => {
+                    handleOnKeyUp(e, props.onSendGesture);
+                }}
                 type="gesture"
             />
             <ThreeDimensionSlider
@@ -79,4 +85,22 @@ export const Accelerometer: React.FC<IProps> = (props: IProps) => {
             />
         </div>
     );
+};
+const handleOnKeyDown = (
+    e: React.KeyboardEvent,
+    onSendGesture?: (isActive: boolean) => void
+) => {
+    if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+        console.log("gestures");
+        if (onSendGesture) onSendGesture(true);
+    }
+};
+const handleOnKeyUp = (
+    e: React.KeyboardEvent,
+    onSendGesture?: (isActive: boolean) => void
+) => {
+    if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+        console.log("gesturesUp");
+        if (onSendGesture) onSendGesture(false);
+    }
 };

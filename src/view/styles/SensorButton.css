@@ -3,6 +3,7 @@
     text-align: center;
     background-color: var(--vscode-button-background);
     width: 90%;
+    max-width: 320px;
     height: 32px;
     font-weight: bolder;
     float: left;

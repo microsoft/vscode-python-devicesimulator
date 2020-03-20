@@ -29,6 +29,7 @@ interface IState {
     play_button: boolean;
     selected_file: string;
     microbit: IMicrobitState;
+    sendGesture?: (isActive: boolean) => void;
 }
 
 interface IMicrobitState {
@@ -198,6 +199,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         event.stopPropagation();
         if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+            console.log(`buttonKey ${key}`);
+
             this.handleButtonClick(key, active);
             if (this.imageRef.current) {
                 if (key === BUTTONS_KEYS.BTN_A) {
