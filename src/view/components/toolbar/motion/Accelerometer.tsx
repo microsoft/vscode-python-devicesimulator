@@ -2,6 +2,9 @@ import * as React from "react";
 import { SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
+import { Dropdown } from "../../Dropdown";
+import Button from "../../Button";
+import SensorButton from "../SensorButton";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -44,12 +47,27 @@ interface IProps {
         Z_AXIS: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onSendGesture?: () => void;
 }
+const GESTURES = ["shake", "up"];
+const GESTURE_BUTTON_MESSAGE = "Send Gesture";
+
 export const Accelerometer: React.FC<IProps> = (props: IProps) => {
     return (
         <div className="AccelerometerBar">
             <br />
             {/* Implement Gestures Here */}
+            <Dropdown options={GESTURES} onSelect={props.onSelectGestures} />
+            <SensorButton
+                label={GESTURE_BUTTON_MESSAGE}
+                onMouseDown={() => {
+                    if (props.onSendGesture) {
+                        props.onSendGesture();
+                    }
+                }}
+                type="gesture"
+            />
             <ThreeDimensionSlider
                 axisProperties={MOTION_SENSOR_PROPERTIES}
                 onUpdateValue={props.onUpdateValue}

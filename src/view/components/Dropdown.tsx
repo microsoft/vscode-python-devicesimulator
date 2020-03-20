@@ -2,36 +2,19 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-
-import { CONSTANTS } from "../constants";
 import "../styles/Dropdown.css";
 
 export interface IDropdownProps {
-    label: string;
-    textOptions: string[];
-    lastChosen: string;
-    styleLabel: string;
-    width: number;
-    onBlur: (event: React.FocusEvent<HTMLSelectElement>) => void;
+    options: string[];
+    // styleLabel: string;
+    onSelect?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown: React.FC<IDropdownProps> = props => {
-    const parsedPath = parsePath(props.lastChosen);
-    const defaultText =
-        props.lastChosen !== ""
-            ? CONSTANTS.CURRENTLY_RUNNING(parsedPath[1])
-            : CONSTANTS.FILES_PLACEHOLDER;
+export const Dropdown: React.FC<IDropdownProps> = props => {
     return (
         <div>
-            <select
-                id={props.label}
-                className={props.styleLabel}
-                onBlur={props.onBlur}
-            >
-                <option value="" disabled selected>
-                    {defaultText}
-                </option>
-                {renderOptions(props.textOptions)}
+            <select className="dropdown" onChange={props.onSelect}>
+                {renderOptions(props.options)}
             </select>
         </div>
     );
@@ -39,22 +22,10 @@ const Dropdown: React.FC<IDropdownProps> = props => {
 
 const renderOptions = (options: string[]) => {
     return options.map((name, index) => {
-        const key = `option-${index}`;
-        const parsedPath = parsePath(name);
         return (
-            <option key={key} value={name}>
-                {`${parsedPath[1]} : ${parsedPath[0]}`}
+            <option key={name} value={name}>
+                {name}
             </option>
         );
     });
 };
-
-const parsePath = (filePath: string) => {
-    const lastSlash =
-        filePath.lastIndexOf("/") !== -1
-            ? filePath.lastIndexOf("/")
-            : filePath.lastIndexOf("\\");
-    return [filePath.slice(0, lastSlash), filePath.substr(lastSlash + 1)];
-};
-
-export default Dropdown;

@@ -31,6 +31,8 @@ interface IProps extends WrappedComponentProps {
     }>;
     onUpdateSensor: (sensor: SENSOR_LIST, value: number) => void;
     sensorValues: { [key: string]: number };
+    onSelectGesture?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    sendGesture?: () => void;
 }
 
 class ToolBar extends React.Component<IProps, IToolbarState, any> {
@@ -152,7 +154,9 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
             !getModalContent(
                 this.state.currentOpenedId,
                 this.props.onUpdateSensor,
-                this.props.sensorValues
+                this.props.sensorValues,
+                this.props.onSelectGesture,
+                this.props.sendGesture
             )
         ) {
             return null;
@@ -161,7 +165,9 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
         const content = getModalContent(
             this.state.currentOpenedId,
             this.props.onUpdateSensor,
-            this.props.sensorValues
+            this.props.sensorValues,
+            this.props.onSelectGesture,
+            this.props.sendGesture
         ) as IModalContent;
 
         const components = content

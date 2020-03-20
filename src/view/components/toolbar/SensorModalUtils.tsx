@@ -270,7 +270,9 @@ export const TEMPERATURE_MODAL_CONTENT = (
 
 export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
+    sensorValues: { [key: string]: number },
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    sendGesture?: () => void
 ): IModalContent => {
     const accelerometerSensorValues = {
         X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
@@ -282,6 +284,8 @@ export const ACCELEROMETER_MODAL_CONTENT = (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
+                onSelectGestures={onSelectGestures}
+                onSendGesture={sendGesture}
             />
         ),
         descriptionText: "toolbar-accelerometer-sensor.description",
@@ -342,12 +346,22 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
 export const getModalContent = (
     label: string,
     onUpdateValue: (onUpdateValue: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
+    sensorValues: { [key: string]: number },
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    sendGesture?: () => void
 ) => {
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
     );
     if (modalContentConstructor) {
+        if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
+            return modalContentConstructor(
+                onUpdateValue,
+                sensorValues,
+                onSelectGestures,
+                sendGesture
+            );
+        }
         return modalContentConstructor(onUpdateValue, sensorValues);
     } else {
         return;

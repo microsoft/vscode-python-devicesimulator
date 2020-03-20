@@ -74,6 +74,7 @@ export enum WEBVIEW_MESSAGES {
     TOGGLE_PLAY_STOP = "toggle-play-stop",
     BUTTON_PRESS = "button-press",
     SENSOR_CHANGED = "sensor-changed",
+    GESTURE = "gesture",
     SLIDER_TELEMETRY = "slider-telemetry",
 }
 

@@ -16,10 +16,10 @@ export interface ISliderProps {
 export interface ISensorButtonProps {
     label: string;
     type: string;
-    onMouseUp: (event: React.PointerEvent<HTMLButtonElement>) => void;
-    onMouseDown: (event: React.PointerEvent<HTMLButtonElement>) => void;
-    onKeyUp: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
-    onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onMouseUp?: (event: React.PointerEvent<HTMLButtonElement>) => void;
+    onMouseDown?: (event: React.PointerEvent<HTMLButtonElement>) => void;
+    onKeyUp?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 export interface ISensorProps {
     LABEL: string;
