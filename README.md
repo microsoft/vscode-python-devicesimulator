@@ -34,7 +34,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 - _**[Visual Studio Code](https://code.visualstudio.com/)**_
 - _**[Node](https://nodejs.org/en/download/)**_
-- _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
+- _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added Python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
 ## Adafruit Circuit Playground Express (CPX) Simulator
@@ -95,7 +95,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 2. Name and save your file somewhere, and we’re good to go!
 3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: [Circuit Playground Express] New File"` Command.
 
-#### III. Start from an existing python file.
+#### III. Start from an existing Python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run `Device Simulator Express: [Circuit Playground Express] Open Simulator` from the command palette or icon in the editor toolbar.
@@ -108,7 +108,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 #### V. Deploy your code to the physical device
 
-Before deploying the python code to your CPX device, you need to format your device following these tutorials:
+Before deploying the Python code to your CPX device, you need to format your device by following these tutorials:
 
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart).
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
@@ -140,8 +140,8 @@ or by using the toolbar.
 
 Device Simulator Express provides several commands in the Command Palette (`F1` or `CTRL + SHIFT + P` / `CMD + SHIFT + P` for Mac OS) for working with \*.py files:
 
-- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension and code they can write to play with the simulators.
-- `Device Simulator Express: Run Simulator`: Runs python code on the simulator.
+- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension. Here, users can browse through code that they can use to play with the simulators.
+- `Device Simulator Express: Run Simulator`: Runs Python code on the simulator.
 - `Device Simulator Express: [Circuit Playground Express] New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [Circuit Playground Express] Open Simulator`: Opens the simulator in the webView
 - `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies the current file to CIRCUITPY drive if detected a CPX is plugged in.
@@ -194,7 +194,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
    <img alt='"New File" animation' src='assets/readmeFiles/microbit/microbit-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 
-#### III. Start from an existing python file.
+#### III. Start from an existing Python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run `Device Simulator Express: [micro:bit] Open Simulator` from the command palette or icon in the editor toolbar.
@@ -233,8 +233,8 @@ or by using the toolbar.
 
 ### Commands
 Using the simulator for the micro:bit is similar to using the one for the CPX. The only difference is that the commands in the command palette display `Device Simulator Express: [micro:bit] <command>` instead of `Device Simulator Express: [Circuit Playground Express] <command>`. Currently, we support the following commands for micro:bit:
-- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension and code they can write to play with the simulators.
-- `Device Simulator Express: Run Simulator`: Runs python code on the simulator.
+- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension. Here, users can browse through code that they can use to play with the simulators.
+- `Device Simulator Express: Run Simulator`: Runs Python code on the simulator.
 - `Device Simulator Express: [micro:bit] Open Simulator`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [micro:bit] New File`: Opens the simulator in the webView.
 - `Device Simulator Express: [micro:bit] Deploy to Device`: Copies the current file to the micro:bit if the device is detected.
@@ -252,6 +252,8 @@ Using the simulator for the micro:bit is similar to using the one for the CPX. T
 [See here for steps to run the extension locally.](https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/docs/developers-setup.md)
 
 ## Provide feedback
+
+To add a review for our extension, please do so on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-python.devicesimulatorexpress)
 
 To report issues, provide feedback or requests, please use this link: [Provide Feedback](https://github.com/microsoft/vscode-python-devicesimulator/issues).  
 We would love to hear from you about your experience to keep improving our project.
