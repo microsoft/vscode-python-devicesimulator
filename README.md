@@ -9,9 +9,9 @@ result when you plug in your actual microcontroller. Curious about the output of
 monitor allows you to observe the device output.
 
 ## Devices we support:
-- [**Adafruit Circuit Playground Express (CPX)**](#circuit-playground-express-cpx-simulator)
+- [**Adafruit Circuit Playground Express (CPX)**](#adafruit-circuit-playground-express-cpx-simulator)
   
-  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx-img.png'>](#circuit-playground-express-cpx-simulator)
+  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx-img.png'>](#adafruit-circuit-playground-express-cpx-simulator)
 
 - [**BBC micro:bit**](#bbc-microbit-simulator)
   
@@ -37,7 +37,7 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
-## Circuit Playground Express (CPX) Simulator
+## Adafruit Circuit Playground Express (CPX) Simulator
 
 ### Features
 
