@@ -3,7 +3,6 @@
 # original implementation docs for neopixel_write:
 # https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/neopixel_write/__init__.html
 
-import constants as CONSTANTS
 
 import pathlib
 import sys
@@ -11,6 +10,7 @@ import os
 
 from common import utils
 from adafruit_circuitplayground import cp
+import base_cp_constants as CONSTANTS
 
 
 def neopixel_write(gpio, buf):
@@ -30,6 +30,10 @@ def neopixel_write(gpio, buf):
 
 def send_clue(buf):
     sendable_json = {CONSTANTS.PIXELS: [tuple(buf)]}
+
+    # for now, just print pixels
+    print(sendable_json)
+
     utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 

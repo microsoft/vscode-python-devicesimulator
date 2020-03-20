@@ -67,7 +67,7 @@ import os
 abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
 import neopixel
-import constants as CONSTANTS
+from base_circuitpython import base_cp_constants as CONSTANTS
 
 # REVISED VERSION OF THE ADAFRUIT CLUE LIBRARY FOR DSX
 
