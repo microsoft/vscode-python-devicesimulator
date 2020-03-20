@@ -68,6 +68,8 @@ export const MICROBIT_TOOLBAR_ID = {
     ACCELEROMETER: "toolbar-accelerometer-sensor",
     LEDS: "toolbar-microbit-led",
     PUSH_BUTTON: "toolbar-microbit-button",
+    GPIO: "toolbar-gpio",
+    SOUND: "toolbar-microbit-sound-sensor",
 };
 
 export interface IModalContent {
@@ -337,6 +339,8 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
     [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
     [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ID.GPIO, GPIO_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.SOUND, SOUND_MODAL_CONTENT],
 ]);
 
 export const getModalContent = (
