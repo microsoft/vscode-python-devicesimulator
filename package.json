@@ -34,6 +34,7 @@
         "onCommand:deviceSimulatorExpress.common.openSerialMonitor",
         "onCommand:deviceSimulatorExpress.common.runSimulator",
         "onCommand:deviceSimulatorExpress.common.selectSerialPort",
+        "onCommand:deviceSimulatorExpress.common.gettingStarted",
         "onCommand:deviceSimulatorExpress.cpx.deployToDevice",
         "onCommand:deviceSimulatorExpress.cpx.newFile",
         "onCommand:deviceSimulatorExpress.cpx.openSimulator",
@@ -73,6 +74,11 @@
             {
                 "command": "deviceSimulatorExpress.common.runSimulator",
                 "title": "%deviceSimulatorExpressExtension.commands.common.runSimulator%",
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+            },
+            {
+                "command": "deviceSimulatorExpress.common.gettingStarted",
+                "title": "%deviceSimulatorExpressExtension.commands.common.gettingStarted%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {

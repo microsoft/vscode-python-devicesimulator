@@ -97,5 +97,12 @@ export enum SENSOR_LIST {
     MOTION_Y = "motion_y",
     MOTION_Z = "motion_z",
 }
-
+export enum WEBVIEW_ATTRIBUTES_KEY {
+    INITIAL_DEVICE = "initial_device",
+    TYPE = "webview_type",
+}
+export enum WEBVIEW_TYPES {
+    SIMULATOR = "simulator",
+    GETTING_STARTED = "getting_started",
+}
 export default CONSTANTS;
