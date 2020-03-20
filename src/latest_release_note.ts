@@ -14,6 +14,9 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ð
     <ul>
         <li>Removed feature flag for the micro:bit simulator!</li>
         <li>New "Getting Started" page containing CPX and micro:bit example code.</li>
+        <li>Support for gesture simulation on the micro:bit. The simulated gestures are: up, down, left, right, face
+            up,
+            face down, freefall, 3g, 6g, 8g, and shake.</li>
         <li>Tab UI now has callout for "about" information on each sensor/input.</li>
         <li>Removed the simulator dropdown to only indicate the file being run.</li>
     </ul>
