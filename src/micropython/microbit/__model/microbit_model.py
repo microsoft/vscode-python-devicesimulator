@@ -76,7 +76,9 @@ class MicrobitModel:
     def __update_motion(self, new_state):
         # set motion_x, motion_y, motion_z
         for name, direction in CONSTANTS.EXPECTED_INPUT_ACCEL.items():
-            self.accelerometer._Accelerometer__update_motion(direction, new_state.get(name))
+            self.accelerometer._Accelerometer__update_motion(
+                direction, new_state.get(name)
+            )
 
     def __update_light(self, new_state):
         # set light level
