@@ -1,10 +1,14 @@
 import pytest
+import pathlib
+import os
 
 import displayio
 
 from PIL import Image
-import pathlib
-import os
+from unittest import mock
+
+from common import utils
+
 
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_shapes.circle import Circle
@@ -22,6 +26,8 @@ class TestAdafruitDisplayShapes(object):
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )
+
+        utils.send_to_simulator = mock.Mock()
 
     def test_shapes(self):
 

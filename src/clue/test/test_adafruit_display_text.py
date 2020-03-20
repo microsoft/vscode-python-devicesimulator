@@ -1,8 +1,12 @@
 import pytest
 
 import os
+import sys
 import pathlib
 from PIL import Image
+from unittest import mock
+
+from common import utils
 
 import displayio
 import terminalio
@@ -24,6 +28,8 @@ class TestAdafruitDisplayText(object):
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )
+
+        utils.send_to_simulator = mock.Mock()
 
     @pytest.mark.parametrize(
         "text, x,y, scale, color",

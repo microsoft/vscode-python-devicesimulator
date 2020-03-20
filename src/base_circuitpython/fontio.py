@@ -6,6 +6,7 @@
 # file taken from adafruit_bitmap_font's examples:
 # https://github.com/adafruit/Adafruit_CircuitPython_Bitmap_Font/blob/master/test/fontio.py
 import collections
+import displayio
 
 Glyph = collections.namedtuple(
     "Glyph",

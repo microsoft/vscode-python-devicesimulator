@@ -4,7 +4,12 @@
 # https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/neopixel_write/__init__.html
 
 import constants as CONSTANTS
-import common
+
+import pathlib
+import sys
+import os
+
+from common import utils
 from adafruit_circuitplayground import cp
 
 
@@ -25,7 +30,7 @@ def neopixel_write(gpio, buf):
 
 def send_clue(buf):
     sendable_json = {CONSTANTS.PIXELS: [tuple(buf)]}
-    common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+    utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 
 def send_cpx(buf):

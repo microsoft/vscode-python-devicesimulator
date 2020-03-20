@@ -4,10 +4,15 @@ import os
 import pathlib
 from PIL import Image
 
+from unittest import mock
+from unittest.mock import MagicMock, patch
+
+from common import utils
+
 import displayio
 import terminalio
 
-from adafruit_clue import clue
+from ..adafruit_clue import clue
 from .test_helpers import helper
 from . import constants as CONSTANTS
 
@@ -20,6 +25,8 @@ class TestAdafruitClue(object):
         displayio.img.paste(
             "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
         )
+
+        utils.send_to_simulator = mock.Mock()
 
     def test_clue_display_text(self):
         expected = Image.open(

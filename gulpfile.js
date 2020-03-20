@@ -37,6 +37,7 @@ const pythonToMove = [
   "./src/adafruit_circuitplayground/*.*",
   "./src/clue/*.*",
   "./src/clue/!(test)/**/*",
+  "./src/base_circuitpython/**/*",
   "./src/micropython/*.*",
   "./src/micropython/microbit/*.*",
   "./src/micropython/microbit/!(test)/**/*",

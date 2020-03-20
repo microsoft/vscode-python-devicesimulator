@@ -1,6 +1,12 @@
 import sys
 import os
 import pytest
+import pathlib
+
+from unittest import mock
+
+from common import utils
+
 from ..tile_grid import TileGrid, img, bmp_img
 from ..group import Group
 from ..palette import Palette
@@ -11,9 +17,12 @@ from PIL import Image
 
 class TestGroup(object):
     def setup_method(self):
+        self.abs_path = pathlib.Path(__file__).parent.absolute()
         self.dummy_bitmap = Bitmap(500, 500)
         self.dummy_palette = Palette(5)
         self.dummy_pos = (0, 0)
+
+        utils.send_to_simulator = mock.Mock()
 
     def test_append_tilegrid_group_to_group(self):
         tg1 = TileGrid(
@@ -149,9 +158,7 @@ class TestGroup(object):
 
         group_main.draw(0, 0)
         expected = Image.open(
-            os.path.join(
-                sys.path[0], "displayio", "test", "img", "group_test_result.bmp"
-            )
+            os.path.join(self.abs_path, "img", "group_test_result.bmp")
         )
 
         bmp_img_expected = expected.load()

@@ -86,8 +86,8 @@ class Group:
         byte_base64 = base64.b64encode(buffered.getvalue())
         img_str = str(byte_base64)[2:-1]
 
-        sendable_json = {"display_base64": img_str}
-        common.utils.send_to_simulator(sendable_json, "CLUE")
+        sendable_json = {CONSTANTS.BASE_64: img_str}
+        common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
     def __len__(self):
         if not self.__contents:

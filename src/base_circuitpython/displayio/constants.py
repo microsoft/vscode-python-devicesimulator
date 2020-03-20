@@ -6,3 +6,6 @@ LAYER_ALREADY_IN_GROUP = "Layer already in a group."
 GROUP_FULL = "Group Full"
 
 SCREEN_HEIGHT_WIDTH = 240
+
+CLUE = "CLUE"
+BASE_64 = "display_base64"
