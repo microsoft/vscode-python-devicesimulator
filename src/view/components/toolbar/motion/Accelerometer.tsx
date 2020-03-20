@@ -3,7 +3,6 @@ import { SENSOR_LIST, GESTURES } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { Dropdown } from "../../Dropdown";
-import Button from "../../Button";
 import SensorButton from "../SensorButton";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {

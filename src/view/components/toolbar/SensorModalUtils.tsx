@@ -355,7 +355,7 @@ export const getModalContent = (
     );
     if (modalContentConstructor) {
         if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
-            return modalContentConstructor(
+            return ACCELEROMETER_MODAL_CONTENT(
                 onUpdateValue,
                 sensorValues,
                 onSelectGestures,
