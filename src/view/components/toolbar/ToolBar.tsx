@@ -32,7 +32,7 @@ interface IProps extends WrappedComponentProps {
     onUpdateSensor: (sensor: SENSOR_LIST, value: number) => void;
     sensorValues: { [key: string]: number };
     onSelectGesture?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    sendGesture?: () => void;
+    sendGesture?: (isActive: boolean) => void;
 }
 
 class ToolBar extends React.Component<IProps, IToolbarState, any> {

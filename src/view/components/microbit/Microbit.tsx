@@ -71,11 +71,17 @@ export class Microbit extends React.Component<{}, IState> {
     updateGesture = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.setState({ currentSelectedGesture: event.target.value });
     };
-    sendGesture = () => {
+    sendGesture = (isActive: boolean) => {
         if (this.state.currentSelectedGesture) {
-            sendMessage(WEBVIEW_MESSAGES.GESTURE, {
-                gesture: this.state.currentSelectedGesture,
-            });
+            if (isActive) {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: this.state.currentSelectedGesture,
+                });
+            } else {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: "",
+                });
+            }
         }
     };
 }

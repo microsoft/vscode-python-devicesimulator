@@ -2,8 +2,7 @@
     background: var(--vscode-debugToolBar-background);
     border-color: var(--vscode-foreground);
     border-radius: 2px;
-    max-width: 300px;
-    min-width: 240px;
+    width: 90%;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.22);
     color: var(--vscode-foreground);
     height: 32px;

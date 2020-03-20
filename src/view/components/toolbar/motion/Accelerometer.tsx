@@ -47,7 +47,7 @@ interface IProps {
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    onSendGesture?: () => void;
+    onSendGesture?: (isActive: boolean) => void;
 }
 
 const GESTURE_BUTTON_MESSAGE = "Send Gesture";
@@ -62,7 +62,12 @@ export const Accelerometer: React.FC<IProps> = (props: IProps) => {
                 label={GESTURE_BUTTON_MESSAGE}
                 onMouseDown={() => {
                     if (props.onSendGesture) {
-                        props.onSendGesture();
+                        props.onSendGesture(true);
+                    }
+                }}
+                onMouseUp={() => {
+                    if (props.onSendGesture) {
+                        props.onSendGesture(false);
                     }
                 }}
                 type="gesture"

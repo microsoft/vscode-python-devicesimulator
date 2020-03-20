@@ -272,7 +272,7 @@ export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number },
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: () => void
+    sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
     const accelerometerSensorValues = {
         X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
@@ -348,7 +348,7 @@ export const getModalContent = (
     onUpdateValue: (onUpdateValue: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number },
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: () => void
+    sendGesture?: (isActive: boolean) => void
 ) => {
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
