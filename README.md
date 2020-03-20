@@ -82,25 +82,31 @@ As we only support CPX library now, other libraries (i.e. simpleio) can’t run 
 
 To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
-#### 1. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
+#### I. Take a look at the "Device Simulator Express: Getting Started" Command.
+1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
+<img alt="Deploy to Device" src='assets/readmeFiles/getting_started.png'>
+1. Choose the `CPX` option from the dropdown.
+2. Read, copy and learn some of the things you can do with the simulator!
+
+#### II. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
 
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
    <img alt='"New File" animation' src='assets/readmeFiles/cpx/cpx-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: [Circuit Playground Express] New File"` Command.
 
-#### 2. Start from an existing python file.
+#### III. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run `Device Simulator Express: [Circuit Playground Express] Open Simulator` from the command palette or icon in the editor toolbar.
 
-#### 3. Run your code on the simulator.
+#### IV. Run your code on the simulator.
 
 <img alt='How to run the simulator animation' src='assets/readmeFiles/cpx/cpx-run.gif'>
 
-- Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
+1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
 
-#### 4. Deploy your code to the physical device
+#### V. Deploy your code to the physical device
 
 Before deploying the python code to your CPX device, you need to format your device following these tutorials:
 
@@ -109,14 +115,14 @@ Before deploying the python code to your CPX device, you need to format your dev
 
 <img alt="Deploy to Device" src='assets/readmeFiles/cpx/cpx-deploy.png'>
 
-#### 5. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
+#### VI. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
 
 1. Plug in your CPX device (make sure it’s formatted properly already).
 2. Run the command `"Device Simulator Express: Open Serial Monitor"`.
 3. Select your baud rate for the serial port.
-4. The print() statements in your code will show in the output console.
+4. The `print()` statements in your code will show in the output console.
 
-#### 6. Use the sensors in the Device Simulator Express
+#### VII. Use the sensors in the Device Simulator Express
 
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
@@ -125,7 +131,7 @@ or by using the toolbar.
 - **Temperature sensor, Light sensor, Acceleration sensor:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
 - **Shake detection:** go to the motion sensor section in the toolbar and click on the shake button.
 
-#### 7. Debug your project on the simulator
+#### VIII. Debug your project on the simulator
 
 1. Add breakpoints in your code
 2. Press F5 to enter the debugging mode, and you can start debugging line by line!
@@ -134,10 +140,11 @@ or by using the toolbar.
 
 Device Simulator Express provides several commands in the Command Palette (`F1` or `CTRL + SHIFT + P` / `CMD + SHIFT + P` for Mac OS) for working with \*.py files:
 
+- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension and code they can write to play with the simulators.
+- `Device Simulator Express: Run Simulator`: Runs python code on the simulator.
 - `Device Simulator Express: [Circuit Playground Express] New File`: Opens an unsaved .py file with template code, also opens the simulator.
 - `Device Simulator Express: [Circuit Playground Express] Open Simulator`: Opens the simulator in the webView
-- `Device Simulator Express: Run Simulator`: Runs python code on the simulator
-- `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies the current file to CIRCUITPY drive if detected a CPX is plugged in
+- `Device Simulator Express: [Circuit Playground Express] Deploy to Device`: Copies the current file to CIRCUITPY drive if detected a CPX is plugged in.
 - `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Device Simulator Express: Change Baud Rate`: Changes the baud rate of the selected serial port. For Adafruit CPX, the default baud rate is 115200.
@@ -175,37 +182,43 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 ### How to use
 
-#### 1. Start with the "Device Simulator Express [micro:bit]: New File" Command.
+#### I. Take a look at the "Device Simulator Express: Getting Started" Command.
+1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
+<img alt="Deploy to Device" src='assets/readmeFiles/getting_started.png'>
+2. Choose the `micro:bit` option from the dropdown.
+2. Read, copy and learn some of the things you can do with the simulator!
+   
+#### II. Start with the "Device Simulator Express [micro:bit]: New File" Command.
 
 1. Type in `"Device Simulator Express: [micro:bit] New File"` in the command palette (`CTRL + SHFT + P / CMD + SHIFT + P` to open the command palette).  
    <img alt='"New File" animation' src='assets/readmeFiles/microbit/microbit-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 
-#### 2. Start from an existing python file.
+#### III. Start from an existing python file.
 
 1. Open the folder or your .py file in Visual Studio Code.
 2. Run `Device Simulator Express: [micro:bit] Open Simulator` from the command palette or icon in the editor toolbar.
 
-#### 3. Run your code on the simulator.
+#### IV. Run your code on the simulator.
 
 <img alt='How to run the simulator animation' src='assets/readmeFiles/microbit/microbit-run.gif'>
 
-- Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
+1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
 
-#### 4. Deploy your code to the physical device
+#### V. Deploy your code to the physical device
 
-- Run `[micro:bit] Deploy to Device` from the command palette
+1. Run `[micro:bit] Deploy to Device` from the command palette
 
 <img alt="Deploy to Device" src="assets/readmeFiles/microbit/microbit-deploy.png">
 
-#### 5. Use the Serial Monitor for your BBC micro:bit device (available on Windows and Mac only)
+#### VI. Use the Serial Monitor for your BBC micro:bit device (available on Windows and Mac only)
 
 1. Plug in your BBC micro:bit.
 2. Run the command `"Device Simulator Express: Open Serial Monitor"`.
 3. Select your baud rate for the serial port.
-4. The print() statements in your code will show in the output console.
+4. The `print()` statements in your code will show in the output console.
 
-#### 6. Use the sensors in the Device Simulator Express
+#### VII. Use the sensors in the Device Simulator Express
 
 Generating input for the sensors can be done by interacting directly with device on the webview
 or by using the toolbar.
@@ -213,16 +226,18 @@ or by using the toolbar.
 - **Push buttons:** click directly on the buttons on the device or use the keybindings.
 - **Temperature sensor, Light sensor, Acceleration sensor:** click on the corresponding button in the toolbar and change the value using the slider or the input box attached to it.
 
-#### 7. Debug your project on the simulator
+#### VIII. Debug your project on the simulator
 
 1. Add breakpoints in your code
 2. Press F5 to enter the debugging mode, and you can start debugging line by line!
 
 ### Commands
 Using the simulator for the micro:bit is similar to using the one for the CPX. The only difference is that the commands in the command palette display `Device Simulator Express: [micro:bit] <command>` instead of `Device Simulator Express: [Circuit Playground Express] <command>`. Currently, we support the following commands for micro:bit:
+- `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension and code they can write to play with the simulators.
+- `Device Simulator Express: Run Simulator`: Runs python code on the simulator.
 - `Device Simulator Express: [micro:bit] Open Simulator`: Opens an unsaved .py file with template code, also opens the simulator.
-- `Device Simulator Express: [micro:bit] New File`: Opens the simulator in the webView
-- `Device Simulator Express: [micro:bit] Deploy to Device`: Copies the current file to the micro:bit if the device is detected
+- `Device Simulator Express: [micro:bit] New File`: Opens the simulator in the webView.
+- `Device Simulator Express: [micro:bit] Deploy to Device`: Copies the current file to the micro:bit if the device is detected.
 - `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
 - `Device Simulator Express: Change Baud Rate`: Changes the baud rate of the selected serial port. For BBC micro:bit, the default baud rate is 115200.
