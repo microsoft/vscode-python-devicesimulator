@@ -47,7 +47,7 @@ You will be prompted to install the Python dependencies during the first use.
 - Serial monitor (available on Windows and Mac only)
 - Output panel for the simulator
 - Deploy CircuitPython code to the physical device.
-- Simulation of the Adafruit Circuit Playground Express device, including:
+- Simulation of the CPX device, including:
   - Green LED
   - Red LED
   - Push Buttons A and B
@@ -290,7 +290,7 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 - The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
 - To open the output panel again after closing it go to VS Code menu: `View->Output`.
-- If you try to deploy to the Circuit Playground Express while it's plugged in but you still get an error saying it cannot find the board, make sure your device is formatted correctly and that its name matches `CIRCUITPY`.
+- If you try to deploy to the CPX while it's plugged in but you still get an error saying it cannot find the board, make sure your device is formatted correctly and that its name matches `CIRCUITPY`.
 - If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: [<device_name>] Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
