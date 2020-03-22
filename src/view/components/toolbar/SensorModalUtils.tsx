@@ -45,6 +45,7 @@ export const TOOLBAR_ICON_LABEL = {
     TAG_INPUT: "Tag Input",
     TAG_OUTPUT: "Tag Output",
     TEMPERATURE: "Temperature Sensor",
+    WIRELESS: "Bluetooth and Radio",
 };
 export const CPX_TOOLBAR_ICON_ID = {
     GPIO: "toolbar-gpio",
@@ -348,7 +349,7 @@ export const MICROBIT_GPIO_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-microbit-gpio.description",
         tryItDescription: "toolbar-microbit-gpio.tryItDescription",
-        components: undefined,
+        components: [FEATURE_REQUEST_ON_GITHUB],
         id: "microbit_gpio",
     };
 };
@@ -362,7 +363,7 @@ export const MICROBIT_WIRELESS_MODAL_CONTENT = (
         tagOutput: TAG_OUTPUT_SVG,
         descriptionText: "toolbar-microbit-wireless.description",
         tryItDescription: "toolbar-microbit-wireless.tryItDescription",
-        components: undefined,
+        components: [FEATURE_REQUEST_ON_GITHUB],
         id: "microbit_wireless",
     };
 };
