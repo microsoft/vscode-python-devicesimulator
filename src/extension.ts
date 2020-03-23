@@ -16,9 +16,9 @@ import {
     DialogResponses,
     GLOBAL_ENV_VARS,
     HELPER_FILES,
+    LANGUAGE_VARS,
     SERVER_INFO,
     TelemetryEventName,
-    LANGUAGE_VARS,
 } from "./constants";
 import { CPXWorkspace } from "./cpxWorkspace";
 import { DebugAdapterFactory } from "./debugger/debugAdapterFactory";
@@ -31,6 +31,7 @@ import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
 import { SetupService } from "./service/SetupService";
+import { WebviewService } from "./service/webviewService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
@@ -40,7 +41,6 @@ import {
     WEBVIEW_MESSAGES,
     WEBVIEW_TYPES,
 } from "./view/constants";
-import { WebviewService } from "./service/webviewService";
 
 let telemetryAI: TelemetryAI;
 let pythonExecutablePath: string = GLOBAL_ENV_VARS.PYTHON;

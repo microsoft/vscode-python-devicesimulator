@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import { initializeIcons } from "@uifabric/icons";
 import { Callout, TooltipHost } from "office-ui-fabric-react";
 import { IconButton } from "office-ui-fabric-react";
-import { initializeIcons } from "@uifabric/icons";
 import * as React from "react";
 import {
     FormattedMessage,

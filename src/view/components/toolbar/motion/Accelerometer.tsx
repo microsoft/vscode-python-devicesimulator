@@ -1,9 +1,10 @@
 import * as React from "react";
-import { SENSOR_LIST, GESTURES, CONSTANTS } from "../../../constants";
+import { CONSTANTS, GESTURES, SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
-import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { Dropdown } from "../../Dropdown";
 import SensorButton from "../SensorButton";
+import "../../../styles/ToolBar.css";
+import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -60,35 +61,35 @@ export class Accelerometer extends React.Component<IProps> {
     private sensorButtonRef: React.RefObject<SensorButton> = React.createRef();
     render() {
         return (
-            <div className="AccelerometerBar">
+            <div className="accelerometer">
                 <br />
-                <Dropdown
-                    options={GESTURES}
-                    onSelect={this.props.onSelectGestures}
-                />
-                <SensorButton
-                    ref={this.sensorButtonRef}
-                    label={GESTURE_BUTTON_MESSAGE}
-                    onMouseDown={() => {
-                        if (this.props.onSendGesture) {
-                            this.props.onSendGesture(true);
-                        }
-                    }}
-                    onMouseUp={() => {
-                        if (this.props.onSendGesture) {
-                            this.props.onSendGesture(false);
-                        }
-                    }}
-                    onKeyDown={(e: React.KeyboardEvent) => {
-                        this.handleOnKeyDown(e, this.props.onSendGesture);
-                    }}
-                    onKeyUp={(e: React.KeyboardEvent) => {
-                        this.handleOnKeyUp(e, this.props.onSendGesture);
-                    }}
-                    type="gesture"
-                />
+                <div className="gesture-container">
+                    <Dropdown
+                        options={GESTURES}
+                        onSelect={this.props.onSelectGestures}
+                    />
+                    <SensorButton
+                        ref={this.sensorButtonRef}
+                        label={GESTURE_BUTTON_MESSAGE}
+                        onMouseDown={() => {
+                            if (this.props.onSendGesture) {
+                                this.props.onSendGesture(true);
+                            }
+                        }}
+                        onMouseUp={() => {
+                            if (this.props.onSendGesture) {
+                                this.props.onSendGesture(false);
+                            }
+                        }}
+                        onKeyDown={this.handleOnKeyDown}
+                        onKeyUp={this.handleOnKeyUp}
+                        type="gesture"
+                    />
+                </div>
                 <br />
-                <p>{MANUAL_ACCELERATION_MESSAGE}</p>
+                <div style={{}}>
+                    <p>{MANUAL_ACCELERATION_MESSAGE}</p>
+                </div>
 
                 <ThreeDimensionSlider
                     axisProperties={MOTION_SENSOR_PROPERTIES}
@@ -98,13 +99,12 @@ export class Accelerometer extends React.Component<IProps> {
             </div>
         );
     }
-    private handleOnKeyDown = (
-        e: React.KeyboardEvent,
-        onSendGesture?: (isActive: boolean) => void
-    ) => {
+    private handleOnKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
             this.sensorButtonRef!.current!.setButtonClass(true);
-            if (onSendGesture) onSendGesture(true);
+            if (this.props.onSendGesture) {
+                this.props.onSendGesture(true);
+            }
         }
     };
 
@@ -115,7 +115,9 @@ export class Accelerometer extends React.Component<IProps> {
         if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
             this.sensorButtonRef!.current!.setButtonClass(false);
 
-            if (onSendGesture) onSendGesture(false);
+            if (this.props.onSendGesture) {
+                this.props.onSendGesture(false);
+            }
         }
     };
 }

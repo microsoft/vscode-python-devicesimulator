@@ -2,17 +2,13 @@
     color: var(--vscode-badgeForegroundOverride);
     text-align: center;
     background-color: var(--vscode-button-background);
-    width: 90%;
-    max-width: 320px;
+    width: 100%;
     height: 32px;
     font-weight: bolder;
-    float: left;
-    padding-left: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
     border-color: var(--vscode-highContrastButtonBorderOverride-color);
     border-width: 1px;
     border-style: solid;
+    padding: 4px;
 }
 
 .sensor-button:focus,

@@ -12,11 +12,9 @@ export interface IDropdownProps {
 
 export const Dropdown: React.FC<IDropdownProps> = props => {
     return (
-        <div>
-            <select className="dropdown" onChange={props.onSelect}>
-                {renderOptions(props.options)}
-            </select>
-        </div>
+        <select className="dropdown" onChange={props.onSelect}>
+            {renderOptions(props.options)}
+        </select>
     );
 };
 
