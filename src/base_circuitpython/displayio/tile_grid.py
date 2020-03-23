@@ -22,10 +22,6 @@ img = Image.new(
 bmp_img = img.load()
 
 
-def func(x, y):
-    return x + y
-
-
 class TileGrid:
     def __init__(
         self,
