@@ -1,8 +1,8 @@
 # Device Simulator Express, a Microsoft Garage project
 
-<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.7%2B-blue.svg" alt="Python versions: 3.7+" /></a> <img src="https://img.shields.io/badge/VS%20Code-v1.43+-blue" alt="VS Code version 1.43"> <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>  <img src="https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg" alt="Platforms Supported: Windows, MacOSX"/>
+<a href='https://www.python.org/downloads/'><img src='https://img.shields.io/badge/Python-3.7%2B-blue.svg' alt='Python versions: 3.7+' /></a> <img src='https://img.shields.io/badge/VS%20Code-v1.43+-blue' alt='VS Code version 1.43'> <img src='https://www.repostatus.org/badges/latest/active.svg' alt='Project Status: Active – The project has reached a stable, usable state and is being actively developed.' /> <a href='LICENSE'><img src='https://img.shields.io/badge/license-MIT-blue.svg' alt='License: We are using the MIT License'></a> <a href='CONTRIBUTING.md'><img src='https://img.shields.io/badge/PRs-Welcome-brightgreen.svg' alt='We are welcoming PRS!'></a>  <img src='https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg' alt='Platforms Supported: Windows, MacOSX'/>
 
-<a href="https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/"><img src="https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28" alt="Azure DevOps Board Badge" /></a>
+<a href='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/'><img src='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28' alt='Azure DevOps Board Badge' /></a>
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX) or your BBC micro:bit! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
@@ -11,11 +11,11 @@ monitor allows you to observe the device output.
 ## Devices we support:
 - [**Adafruit Circuit Playground Express (CPX)**](#adafruit-circuit-playground-express-cpx-simulator)
   
-  [<img alt='CircuitPlayground Express' src='assets/readmeFiles/cpx/cpx-img.png'>](#adafruit-circuit-playground-express-cpx-simulator)
+  [<img alt='CircuitPlayground Express' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx/cpx-img.png'>](#adafruit-circuit-playground-express-cpx-simulator)
 
 - [**BBC micro:bit**](#bbc-microbit-simulator)
   
-  [<img alt='bbc micro:bit' src=assets/readmeFiles/microbit/microbit.png>](#bbc-microbit-simulator)
+  [<img alt='bbc micro:bit' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/microbit/microbit.png'>](#bbc-microbit-simulator)
 
 
 ## Build Status
@@ -84,14 +84,14 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 #### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
-<img alt="Deploy to Device" src='assets/readmeFiles/getting_started.png'>
+<img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
 1. Choose the `CPX` option from the dropdown.
 2. Read, copy and learn some of the things you can do with the simulator!
 
 #### II. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
 
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
-   <img alt='"New File" animation' src='assets/readmeFiles/cpx/cpx-new-file.gif'>
+   <img alt='"New CPX File" animation' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx/cpx-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 3. Start with some examples: you can find examples files and tutorials inside the comments, as well as in the notification pop up when you run the `"Device Simulator Express: [Circuit Playground Express] New File"` Command.
 
@@ -102,7 +102,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 #### IV. Run your code on the simulator.
 
-<img alt='How to run the simulator animation' src='assets/readmeFiles/cpx/cpx-run.gif'>
+<img alt='How to run the CPX simulator animation' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx/cpx-run.gif'>
 
 1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
 
@@ -113,7 +113,7 @@ Before deploying the Python code to your CPX device, you need to format your dev
 1. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart).
 2. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).  
 
-<img alt="Deploy to Device" src='assets/readmeFiles/cpx/cpx-deploy.png'>
+<img alt='Deploy to CPX Device' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/cpx/cpx-deploy.png'>
 
 #### VI. Use the Serial Monitor for your Adafruit CPX device (available on Windows and Mac only)
 
@@ -184,14 +184,14 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 #### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
-<img alt="Deploy to Device" src='assets/readmeFiles/getting_started.png'>
-2. Choose the `micro:bit` option from the dropdown.
+<img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
+1. Choose the `micro:bit` option from the dropdown.
 2. Read, copy and learn some of the things you can do with the simulator!
    
 #### II. Start with the "Device Simulator Express [micro:bit]: New File" Command.
 
 1. Type in `"Device Simulator Express: [micro:bit] New File"` in the command palette (`CTRL + SHFT + P / CMD + SHIFT + P` to open the command palette).  
-   <img alt='"New File" animation' src='assets/readmeFiles/microbit/microbit-new-file.gif'>
+   <img alt='"New micro:bit File" animation' src='https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/assets/readmeFiles/microbit/microbit-new-file.gif'>
 2. Name and save your file somewhere, and we’re good to go!
 
 #### III. Start from an existing Python file.
@@ -201,7 +201,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 #### IV. Run your code on the simulator.
 
-<img alt='How to run the simulator animation' src='assets/readmeFiles/microbit/microbit-run.gif'>
+<img alt='How to run the micro:bit simulator animation' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/microbit/microbit-run.gif'>
 
 1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
 
@@ -209,7 +209,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 1. Run `[micro:bit] Deploy to Device` from the command palette
 
-<img alt="Deploy to Device" src="assets/readmeFiles/microbit/microbit-deploy.png">
+<img alt='Deploy to micro:bit device' src='https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/assets/readmeFiles/microbit/microbit-deploy.png'>
 
 #### VI. Use the Serial Monitor for your BBC micro:bit device (available on Windows and Mac only)
 
