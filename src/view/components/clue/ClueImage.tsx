@@ -6,7 +6,7 @@ import { VIEW_STATE } from "../../constants";
 import CONSTANTS, { MICROBIT_BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import "../../styles/Microbit.css";
-import { IRefObject, MicrobitSvg } from "./Clue_svg";
+import { IRefObject, ClueSvg } from "./Clue_svg";
 
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
@@ -16,7 +16,6 @@ interface EventTriggers {
 }
 interface IProps {
     eventTriggers: EventTriggers;
-    leds: number[][];
     displayMessage: string;
 }
 
@@ -32,21 +31,19 @@ export enum BUTTONS_KEYS {
 }
 // Displays the SVG and call necessary svg modification.
 export class ClueImage extends React.Component<IProps, {}> {
-    private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
+    private svgRef: React.RefObject<ClueSvg> = React.createRef();
     constructor(props: IProps) {
         super(props);
     }
     componentDidMount() {
         const svgElement = this.svgRef.current;
         if (svgElement) {
-            // updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
             this.setupKeyPresses(this.props.eventTriggers.onKeyEvent);
         }
     }
     componentDidUpdate() {
         if (this.svgRef.current) {
-            // updateAllLeds(this.props.leds, this.svgRef.current.getLeds());
             if (this.context === VIEW_STATE.PAUSE) {
                 disableAllButtons(this.svgRef.current.getButtons());
             } else if (this.context === VIEW_STATE.RUNNING) {
@@ -85,7 +82,7 @@ export class ClueImage extends React.Component<IProps, {}> {
     };
     render() {
         return (
-            <MicrobitSvg
+            <ClueSvg
                 ref={this.svgRef}
                 displayImage={this.props.displayMessage}
             />

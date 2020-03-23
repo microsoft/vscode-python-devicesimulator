@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     CONSTANTS,
     DEVICE_LIST_KEY,
-    MICROBIT_BUTTONS_KEYS,
+    AB_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
@@ -162,13 +162,13 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected handleButtonClick = (key: string, isActive: boolean) => {
         let newButtonState = this.state.microbit.buttons;
         switch (key) {
-            case MICROBIT_BUTTONS_KEYS.BTN_A:
+            case AB_BUTTONS_KEYS.BTN_A:
                 newButtonState.button_a = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_B:
+            case AB_BUTTONS_KEYS.BTN_B:
                 newButtonState.button_b = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_AB:
+            case AB_BUTTONS_KEYS.BTN_AB:
                 newButtonState = {
                     button_a: isActive,
                     button_b: isActive,

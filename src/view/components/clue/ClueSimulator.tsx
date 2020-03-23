@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     CONSTANTS,
     // DEVICE_LIST_KEY,
-    MICROBIT_BUTTONS_KEYS,
+    AB_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
@@ -14,14 +14,7 @@ import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
 // import * as fs from "fs";
 
-const DEFAULT_CLUE_STATE: IMicrobitState = {
-    leds: [
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-    ],
+const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: "",
 };
@@ -31,15 +24,14 @@ interface IState {
     running_file: string;
     play_button: boolean;
     selected_file: string;
-    clue: IMicrobitState;
+    clue: IClueState;
 }
 
-interface IMicrobitState {
-    leds: number[][];
+interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
 }
-export class MicrobitSimulator extends React.Component<any, IState> {
+export class ClueSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
     constructor() {
         super({});
@@ -118,7 +110,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                             onMouseLeave: this.onMouseLeave,
                             onKeyEvent: this.onKeyEvent,
                         }}
-                        leds={this.state.clue.leds}
                         displayMessage={this.state.clue.displayMessage}
                     />
                 </div>
@@ -160,13 +151,13 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected handleButtonClick = (key: string, isActive: boolean) => {
         let newButtonState = this.state.clue.buttons;
         switch (key) {
-            case MICROBIT_BUTTONS_KEYS.BTN_A:
+            case AB_BUTTONS_KEYS.BTN_A:
                 newButtonState.button_a = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_B:
+            case AB_BUTTONS_KEYS.BTN_B:
                 newButtonState.button_b = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_AB:
+            case AB_BUTTONS_KEYS.BTN_AB:
                 newButtonState = {
                     button_a: isActive,
                     button_b: isActive,

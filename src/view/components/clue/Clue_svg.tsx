@@ -11,7 +11,7 @@ interface IProps {
     displayImage: string;
 }
 
-export class MicrobitSvg extends React.Component<IProps, {}> {
+export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
 
     private buttonRefs: IRefObject = {
