@@ -2649,7 +2649,7 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar a-b-push"
+            aria-label="toolbar microbit-a-b-push"
             className="toolbar-button button"
             id="toolbar-microbit-a-b-push-button"
             onClick={[Function]}
