@@ -52,7 +52,7 @@ export const AB_BUTTONS_KEYS = {
     BTN_B: "BTN_B",
     BTN_AB: "BTN_AB",
 };
-export const MICROBIT_BUTTON_STYLING_CLASSES = {
+export const BUTTON_STYLING_CLASSES = {
     DEFAULT: "sim-button-outer",
     KEYPRESSED: "sim-button-key-press",
 };

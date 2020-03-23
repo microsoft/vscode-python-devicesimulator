@@ -25,6 +25,7 @@ interface IState {
     play_button: boolean;
     selected_file: string;
     clue: IClueState;
+    currently_selected_file: string;
 }
 
 interface IClueState {
@@ -40,7 +41,8 @@ export class ClueSimulator extends React.Component<any, IState> {
             play_button: false,
             selected_file: "",
             active_editors: [],
-            running_file: "",
+            running_file: undefined,
+            currently_selected_file: "",
         };
         this.onKeyEvent = this.onKeyEvent.bind(this);
     }
@@ -63,8 +65,10 @@ export class ClueSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "activate-play":
+                const newRunningFile = this.state.currently_selected_file;
                 this.setState({
                     play_button: !this.state.play_button,
+                    running_file: newRunningFile,
                 });
                 break;
             case "visible-editors":
@@ -73,9 +77,17 @@ export class ClueSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "current-file":
-                this.setState({
-                    running_file: message.state.running_file,
-                });
+                if (this.state.play_button) {
+                    this.setState({
+                        currently_selected_file: message.state.running_file,
+                    });
+                } else {
+                    this.setState({
+                        running_file: message.state.running_file,
+                        currently_selected_file: message.state.running_file,
+                    });
+                }
+
                 break;
         }
     };
@@ -92,15 +104,11 @@ export class ClueSimulator extends React.Component<any, IState> {
         return (
             <div className="simulator">
                 <div className="file-selector">
-                    <Dropdown
-                        label={"file-dropdown"}
-                        styleLabel={"dropdown"}
-                        lastChosen={this.state.running_file}
-                        width={300}
-                        textOptions={this.state.active_editors}
-                        onBlur={this.onSelectFile}
-                    />
+                    {this.state.running_file && this.state.play_button
+                        ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
+                        : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
+
                 <div className="microbit-container">
                     <ClueImage
                         ref={this.imageRef}

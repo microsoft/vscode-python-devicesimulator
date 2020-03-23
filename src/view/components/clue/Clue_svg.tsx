@@ -716,10 +716,10 @@ export class ClueSvg extends React.Component<IProps, {}> {
 
                         <image
                             ref={this.displayRef}
-                            x={152}
-                            y={80}
-                            width={198}
-                            height={200}
+                            x={122}
+                            y={50}
+                            width={268}
+                            height={260}
                             style={{
                                 fill: "rgb(30,30,30)",
                             }}
