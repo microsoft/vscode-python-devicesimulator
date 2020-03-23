@@ -85,8 +85,8 @@ To use Device Simulator Express, install the extension from the marketplace and 
 #### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
 <img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
-1. Choose the `CPX` option from the dropdown.
-2. Read, copy and learn some of the things you can do with the simulator!
+2. Choose the `CPX` option from the dropdown.
+3. Read, copy and learn some of the things you can do with the simulator!
 
 #### II. Start with the "Device Simulator Express [Circuit Playground Express]: New File" Command.
 
@@ -185,8 +185,8 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 #### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: [Circuit Playground Express] New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
 <img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
-1. Choose the `micro:bit` option from the dropdown.
-2. Read, copy and learn some of the things you can do with the simulator!
+2. Choose the `micro:bit` option from the dropdown.
+3. Read, copy and learn some of the things you can do with the simulator!
    
 #### II. Start with the "Device Simulator Express [micro:bit]: New File" Command.
 
