@@ -3,24 +3,28 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
 <p>
     Thanks for using our extension! <b>Support for micro:bit simulation is now officially released on the
         Device Simulator Express</b>. 💖✨</p>
+
+
+<h2>Fixes:</h2>
+<ul>
+    <li>Fixed serial port selection for serial monitor.</li>
+</ul>
+
 <h2>Changes</h2>
-<p>
-    <h3>Fixes:</h3>
-    <ul>
-        <li>Fixed serial port selection for serial monitor.</li>
-        <li>Fixed debugger runtime issue that appeared on select machines.</li>
-    </ul>
-    <h3>New features:</h3>
-    <ul>
-        <li>Removed feature flag for the micro:bit simulator!</li>
-        <li>New "Getting Started" page containing CPX and micro:bit example code.</li>
-        <li>Support for gesture simulation on the micro:bit. The simulated gestures are: up, down, left, right, face
-            up,
-            face down, freefall, 3g, 6g, 8g, and shake.</li>
-        <li>Tab UI now has callout for "about" information on each sensor/input.</li>
-        <li>Removed the simulator dropdown to only indicate the file being run.</li>
-    </ul>
-</p>
+<ul>
+    <li>Removed feature flag for the micro:bit simulator!</li>
+    <li>Due to necessary serial monitor fixes, <b>the extension is now only supported on VS Code v1.43+</b></li>
+</ul>
+<h2>New features:</h2>
+<ul>
+    <li>New "Getting Started" page containing CPX and micro:bit example code.</li>
+    <li>Support for gesture simulation on the micro:bit. The simulated gestures are: up, down, left, right, face
+        up,
+        face down, freefall, 3g, 6g, 8g, and shake.</li>
+    <li>Tab UI now has callout for "about" information on each sensor/input.</li>
+    <li>Removed the simulator dropdown to only indicate the file being run.</li>
+</ul>
+
 <br>
 <p><b>Stay healthy while you hack 🥰🌼,</b><br>
     &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`
