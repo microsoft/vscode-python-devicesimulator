@@ -1,5 +1,5 @@
 import * as React from "react";
-import CONSTANTS, { SENSOR_LIST, GESTURES } from "../../../constants";
+import { SENSOR_LIST, GESTURES, CONSTANTS } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 import { Dropdown } from "../../Dropdown";
@@ -13,6 +13,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     minValue: -1023,
     type: SENSOR_LIST.MOTION_X,
 };
+
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     axisLabel: "Y",
     maxLabel: "Front",
@@ -21,6 +22,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Y,
 };
+
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     axisLabel: "Z",
     maxLabel: "Down",
@@ -39,6 +41,7 @@ const MOTION_SENSOR_PROPERTIES: ISensorProps = {
     ],
     unitLabel: "Lux",
 };
+
 interface IProps {
     axisValues: {
         X_AXIS: number;
@@ -51,56 +54,68 @@ interface IProps {
 }
 
 const GESTURE_BUTTON_MESSAGE = "Send Gesture";
+const MANUAL_ACCELERATION_MESSAGE = "Set the acceleration manually here";
 
-export const Accelerometer: React.FC<IProps> = (props: IProps) => {
-    return (
-        <div className="AccelerometerBar">
-            <br />
-            {/* Implement Gestures Here */}
-            <Dropdown options={GESTURES} onSelect={props.onSelectGestures} />
-            <SensorButton
-                label={GESTURE_BUTTON_MESSAGE}
-                onMouseDown={() => {
-                    if (props.onSendGesture) {
-                        props.onSendGesture(true);
-                    }
-                }}
-                onMouseUp={() => {
-                    if (props.onSendGesture) {
-                        props.onSendGesture(false);
-                    }
-                }}
-                onKeyDown={(e: React.KeyboardEvent) => {
-                    handleOnKeyDown(e, props.onSendGesture);
-                }}
-                onKeyUp={(e: React.KeyboardEvent) => {
-                    handleOnKeyUp(e, props.onSendGesture);
-                }}
-                type="gesture"
-            />
-            <ThreeDimensionSlider
-                axisProperties={MOTION_SENSOR_PROPERTIES}
-                onUpdateValue={props.onUpdateValue}
-                axisValues={props.axisValues}
-            />
-        </div>
-    );
-};
-const handleOnKeyDown = (
-    e: React.KeyboardEvent,
-    onSendGesture?: (isActive: boolean) => void
-) => {
-    if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
-        console.log("gestures");
-        if (onSendGesture) onSendGesture(true);
+export class Accelerometer extends React.Component<IProps> {
+    private sensorButtonRef: React.RefObject<SensorButton> = React.createRef();
+    render() {
+        return (
+            <div className="AccelerometerBar">
+                <br />
+                <Dropdown
+                    options={GESTURES}
+                    onSelect={this.props.onSelectGestures}
+                />
+                <SensorButton
+                    ref={this.sensorButtonRef}
+                    label={GESTURE_BUTTON_MESSAGE}
+                    onMouseDown={() => {
+                        if (this.props.onSendGesture) {
+                            this.props.onSendGesture(true);
+                        }
+                    }}
+                    onMouseUp={() => {
+                        if (this.props.onSendGesture) {
+                            this.props.onSendGesture(false);
+                        }
+                    }}
+                    onKeyDown={(e: React.KeyboardEvent) => {
+                        this.handleOnKeyDown(e, this.props.onSendGesture);
+                    }}
+                    onKeyUp={(e: React.KeyboardEvent) => {
+                        this.handleOnKeyUp(e, this.props.onSendGesture);
+                    }}
+                    type="gesture"
+                />
+                <br />
+                <p>{MANUAL_ACCELERATION_MESSAGE}</p>
+
+                <ThreeDimensionSlider
+                    axisProperties={MOTION_SENSOR_PROPERTIES}
+                    onUpdateValue={this.props.onUpdateValue}
+                    axisValues={this.props.axisValues}
+                />
+            </div>
+        );
     }
-};
-const handleOnKeyUp = (
-    e: React.KeyboardEvent,
-    onSendGesture?: (isActive: boolean) => void
-) => {
-    if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
-        console.log("gesturesUp");
-        if (onSendGesture) onSendGesture(false);
-    }
-};
+    private handleOnKeyDown = (
+        e: React.KeyboardEvent,
+        onSendGesture?: (isActive: boolean) => void
+    ) => {
+        if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+            this.sensorButtonRef!.current!.setButtonClass(true);
+            if (onSendGesture) onSendGesture(true);
+        }
+    };
+
+    private handleOnKeyUp = (
+        e: React.KeyboardEvent,
+        onSendGesture?: (isActive: boolean) => void
+    ) => {
+        if (e.key === CONSTANTS.KEYBOARD_KEYS.ENTER) {
+            this.sensorButtonRef!.current!.setButtonClass(false);
+
+            if (onSendGesture) onSendGesture(false);
+        }
+    };
+}

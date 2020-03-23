@@ -5,20 +5,35 @@ import * as React from "react";
 import "../../styles/SensorButton.css";
 import { ISensorButtonProps } from "../../viewUtils";
 
-const SensorButton: React.FC<ISensorButtonProps> = props => {
-    return (
-        <button
-            id={`${props.label}-button`}
-            onMouseUp={props.onMouseUp}
-            onMouseDown={props.onMouseDown}
-            onKeyUp={props.onKeyUp}
-            onKeyDown={props.onKeyDown}
-            aria-label={`${props.type} sensor button`}
-            className="sensor-button"
-        >
-            {props.label}
-        </button>
-    );
-};
+class SensorButton extends React.Component<ISensorButtonProps> {
+    private buttonRef: React.RefObject<HTMLButtonElement> = React.createRef();
+
+    public setButtonClass = (isActive: boolean) => {
+        if (isActive) {
+            this.buttonRef!.current!.setAttribute(
+                "class",
+                "sensor-button active-button"
+            );
+        } else {
+            this.buttonRef!.current!.setAttribute("class", "sensor-button");
+        }
+    };
+    render() {
+        return (
+            <button
+                id={`${this.props.label}-button`}
+                ref={this.buttonRef}
+                onMouseUp={this.props.onMouseUp}
+                onMouseDown={this.props.onMouseDown}
+                onKeyUp={this.props.onKeyUp}
+                onKeyDown={this.props.onKeyDown}
+                aria-label={`${this.props.type} sensor button`}
+                className="sensor-button"
+            >
+                {this.props.label}
+            </button>
+        );
+    }
+}
 
 export default SensorButton;
