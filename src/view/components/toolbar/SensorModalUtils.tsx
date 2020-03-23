@@ -187,11 +187,11 @@ export const PUSHB_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-push-button.title",
+        descriptionTitle: "toolbar-a-b-push.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-push-button.description",
-        tryItDescription: "toolbar-push-button.tryItDescription",
+        descriptionText: "toolbar-a-b-push.description",
+        tryItDescription: "toolbar-a-b-push.tryItDescription",
         components: undefined,
         id: "push_btn",
     };
@@ -316,11 +316,11 @@ export const MICROBIT_BUTTON_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-button.title",
+        descriptionTitle: "toolbar-microbit-a-b-push.title",
         tagInput: undefined,
         tagOutput: TAG_INPUT_SVG,
-        descriptionText: "toolbar-microbit-button.description",
-        tryItDescription: "toolbar-microbit-button.tryItDescription",
+        descriptionText: "toolbar-microbit-a-b-push.description",
+        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
         components: undefined,
         id: "microbit_button",
     };
