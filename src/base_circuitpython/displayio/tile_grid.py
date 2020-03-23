@@ -1,5 +1,6 @@
 from PIL import Image
 from . import constants as CONSTANTS
+import threading
 
 # TileGrid implementation loosely based on the
 # displayio.TileGrid class in Adafruit CircuitPython
@@ -19,6 +20,10 @@ img = Image.new(
 # All displayio classes can access this
 # instance to read and write to the output image.
 bmp_img = img.load()
+
+
+def func(x, y):
+    return x + y
 
 
 class TileGrid:
@@ -82,22 +87,59 @@ class TileGrid:
         # appropriate scale on the global bmp_img
         x = self.x * scale + x
         y = self.y * scale + y
-        for i in range(self.tile_height):
-            for j in range(self.tile_width):
+
+        if self.tile_height > 1 and self.tile_width > 1:
+            y_mid = int(self.tile_height / 2)
+            x_mid = int(self.tile_width / 2)
+            thread_1 = threading.Thread(
+                target=self.draw_group, args=(x, y, 0, y_mid, 0, x_mid, scale,),
+            )
+            thread_2 = threading.Thread(
+                target=self.draw_group,
+                args=(x, y, 0, y_mid, x_mid, self.tile_width, scale),
+            )
+            thread_3 = threading.Thread(
+                target=self.draw_group,
+                args=(x, y, y_mid, self.tile_height, 0, x_mid, scale),
+            )
+            thread_4 = threading.Thread(
+                target=self.draw_group,
+                args=(x, y, y_mid, self.tile_height, x_mid, self.tile_width, scale,),
+            )
+            thread_1.start()
+            thread_2.start()
+            thread_3.start()
+            thread_4.start()
+
+            thread_1.join()
+            thread_2.join()
+            thread_3.join()
+            thread_4.join()
+        else:
+            self.draw_group(
+                x, y, 0, self.tile_height, 0, self.tile_width, scale,
+            )
+
+    def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
+        # return
+        for i in range(y_start, y_end):
+            for j in range(x_start, x_end):
                 self.fill_pixel(i, j, x, y, scale)
 
     # helper method for drawing pixels on bmp_img
     # given the src, offset, and scale
     def fill_pixel(self, i, j, x, y, scale):
-        for i_new in range(scale):
-            for j_new in range(scale):
-                try:
-                    if x + (j * scale) + j_new >= 0 and y + (i * scale) + i_new >= 0:
-                        if not self.pixel_shader._Palette__contents[
-                            self.bitmap[j, i]
-                        ].transparent:
-                            bmp_img[
-                                x + (j * scale) + j_new, y + (i * scale) + i_new,
-                            ] = self.pixel_shader[self.bitmap[j, i]]
-                except IndexError:
-                    continue
+
+        curr_val = self.bitmap[j, i]
+        transparent = self.pixel_shader._Palette__contents[curr_val].transparent
+        if not transparent:
+            x_offset = x + (j * scale)
+            y_offset = y + (i * scale)
+            x_max = min(x_offset + scale, 240)
+            y_max = min(y_offset + scale, 240)
+
+            curr_colour = self.pixel_shader[curr_val]
+            for new_y in range(y_offset, y_max):
+                for new_x in range(x_offset, x_max):
+                    if curr_val != bmp_img[new_x, new_y]:
+                        bmp_img[new_x, new_y] = curr_colour
