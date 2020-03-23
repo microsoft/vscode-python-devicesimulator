@@ -14,6 +14,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ð
 <ul>
     <li>Removed feature flag for the micro:bit simulator!</li>
     <li>Due to necessary serial monitor fixes, <b>the extension is now only supported on VS Code v1.43+</b></li>
+    <li>Removed the simulator dropdown to only indicate the file being run.</li>
 </ul>
 <h2>New features:</h2>
 <ul>
@@ -22,9 +23,8 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ð
         up,
         face down, freefall, 3g, 6g, 8g, and shake.</li>
     <li>Tab UI now has callout for "about" information on each sensor/input.</li>
-    <li>Removed the simulator dropdown to only indicate the file being run.</li>
 </ul>
 
 <br>
 <p><b>Stay healthy while you hack ðŸ¥°ðŸŒ¼,</b><br>
-    &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`
+    &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;
