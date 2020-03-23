@@ -45,6 +45,7 @@ export const TOOLBAR_ICON_LABEL = {
     TAG_INPUT: "Tag Input",
     TAG_OUTPUT: "Tag Output",
     TEMPERATURE: "Temperature Sensor",
+    WIRELESS: "Bluetooth and Radio",
 };
 export const CPX_TOOLBAR_ICON_ID = {
     GPIO: "toolbar-gpio",
@@ -68,6 +69,9 @@ export const MICROBIT_TOOLBAR_ID = {
     ACCELEROMETER: "toolbar-accelerometer-sensor",
     LEDS: "toolbar-microbit-led",
     PUSH_BUTTON: "toolbar-microbit-button",
+    GPIO: "toolbar-gpio",
+    SOUND: "toolbar-microbit-sound",
+    WIRELESS: "toolbar-microbit-wireless",
 };
 
 export interface IModalContent {
@@ -325,6 +329,48 @@ export const MICROBIT_BUTTON_CONTENT = (
         id: "microbit_button",
     };
 };
+export const MICROBIT_SOUND_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-sound.title",
+        tagInput: undefined,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-sound.description",
+        tryItDescription: "toolbar-microbit-sound.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_sound",
+    };
+};
+export const MICROBIT_GPIO_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-gpio.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-gpio.description",
+        tryItDescription: "toolbar-microbit-gpio.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_gpio",
+    };
+};
+export const MICROBIT_WIRELESS_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-wireless.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-wireless.description",
+        tryItDescription: "toolbar-microbit-wireless.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_wireless",
+    };
+};
 
 export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.GPIO, GPIO_MODAL_CONTENT],
@@ -341,6 +387,9 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
     [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
     [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
 ]);
 
 export const getModalContent = (

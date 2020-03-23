@@ -40,5 +40,14 @@
     "toolbar-microbit-led.tryItDescription": "Run your code and see the LEDs light up!",
     "toolbar-microbit-button.title": "Buttons",
     "toolbar-microbit-button.description": "There are two buttons on the front of the micro:bit (labelled A and B). The third button is to trigger both A and B buttons. You can detect when these buttons are pressed, allowing you to trigger code on the device.",
-    "toolbar-microbit-button.tryItDescription": "Click them with your mouse or by pressing “A” and/or “B” on your keyboard!"
+    "toolbar-microbit-button.tryItDescription": "Click them with your mouse or by pressing “A” and/or “B” on your keyboard!",
+    "toolbar-microbit-sound.title": "Sound",
+    "toolbar-microbit-sound.description": "Your BBC micro:bit can be programmed to make a wide variety of sounds - from single notes, tones and beats to your own musical compositions.",
+    "toolbar-microbit-sound.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
+    "toolbar-microbit-gpio.title": "GPIO (Pins)",
+    "toolbar-microbit-gpio.description": "On the bottom edge of your BBC micro:bit there are 25 gold strips, called pins. These pins allow you to really get creative. You can create circuits, connect external things like buzzers and motors and make your own fun projects.",
+    "toolbar-microbit-gpio.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
+    "toolbar-microbit-wireless.title": "Bluetooth  & Radio",
+    "toolbar-microbit-wireless.description": "micro:bits can use radio waves and bluetooth services to communicate with each other",
+    "toolbar-microbit-wireless.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!"
 }
