@@ -128,9 +128,10 @@ class TileGrid:
 
         curr_val = self.bitmap[j, i]
         transparent = self.pixel_shader._Palette__contents[curr_val].transparent
-        if not transparent:
-            x_offset = x + (j * scale)
-            y_offset = y + (i * scale)
+        x_offset = x + (j * scale)
+        y_offset = y + (i * scale)
+        if not transparent and x_offset >= 0 and y_offset >= 0:
+
             x_max = min(x_offset + scale, 240)
             y_max = min(y_offset + scale, 240)
 
