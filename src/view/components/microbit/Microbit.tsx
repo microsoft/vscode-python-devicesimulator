@@ -81,4 +81,16 @@ const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
         image: TOOLBAR_SVG.MOTION_SVG,
         label: MICROBIT_TOOLBAR_ID.ACCELEROMETER,
     },
+    {
+        image: TOOLBAR_SVG.GPIO_SVG,
+        label: MICROBIT_TOOLBAR_ID.GPIO,
+    },
+    {
+        image: TOOLBAR_SVG.SPEAKER_SVG,
+        label: MICROBIT_TOOLBAR_ID.SOUND,
+    },
+    {
+        image: TOOLBAR_SVG.WIRELESS_SVG,
+        label: MICROBIT_TOOLBAR_ID.WIRELESS,
+    },
 ];
