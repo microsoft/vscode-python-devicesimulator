@@ -130,7 +130,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
           </span>
         </span>
         <input
-          aria-label="motion_x sensor slider"
+          aria-label="motion_x sensor"
           aria-valuemax={1023}
           aria-valuemin={-1023}
           aria-valuenow={1}
@@ -196,7 +196,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
           </span>
         </span>
         <input
-          aria-label="motion_y sensor slider"
+          aria-label="motion_y sensor"
           aria-valuemax={1023}
           aria-valuemin={-1023}
           aria-valuenow={0}
@@ -262,7 +262,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
           </span>
         </span>
         <input
-          aria-label="motion_z sensor slider"
+          aria-label="motion_z sensor"
           aria-valuemax={1023}
           aria-valuemin={-1023}
           aria-valuenow={1}

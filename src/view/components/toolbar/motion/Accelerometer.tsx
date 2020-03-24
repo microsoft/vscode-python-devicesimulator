@@ -72,6 +72,7 @@ export class Accelerometer extends React.Component<IProps> {
                     }}
                 >
                     <Dropdown
+                        name="gesture selection"
                         options={GESTURES}
                         onSelect={this.props.onSelectGestures}
                     />
