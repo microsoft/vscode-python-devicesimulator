@@ -3,15 +3,22 @@
 
 import * as React from "react";
 import { MICROBIT_TOOLBAR_ID } from "../../components/toolbar/SensorModalUtils";
-import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
+import {
+    GESTURES,
+    SENSOR_LIST,
+    VSCODE_MESSAGES_TO_WEBVIEW,
+    WEBVIEW_MESSAGES,
+} from "../../constants";
 import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
+import { sendMessage } from "../../utils/MessageUtils";
 import ToolBar from "../toolbar/ToolBar";
 import { MicrobitSimulator } from "./MicrobitSimulator";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {
     sensors: { [key: string]: number };
+    currentSelectedGesture?: string;
 }
 const DEFAULT_STATE = {
     sensors: {
@@ -21,6 +28,7 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
     },
+    currentSelectedGesture: GESTURES[0],
 };
 
 export class Microbit extends React.Component<{}, IState> {
@@ -51,12 +59,30 @@ export class Microbit extends React.Component<{}, IState> {
                     buttonList={MICROBIT_TOOLBAR_BUTTONS}
                     onUpdateSensor={this.updateSensor}
                     sensorValues={this.state.sensors}
+                    onSelectGesture={this.updateGesture}
+                    sendGesture={this.sendGesture}
                 />
             </React.Fragment>
         );
     }
     updateSensor = (sensor: SENSOR_LIST, value: number) => {
         this.setState({ sensors: { ...this.state.sensors, [sensor]: value } });
+    };
+    updateGesture = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ currentSelectedGesture: event.target.value });
+    };
+    sendGesture = (isActive: boolean) => {
+        if (this.state.currentSelectedGesture) {
+            if (isActive) {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: this.state.currentSelectedGesture,
+                });
+            } else {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: "",
+                });
+            }
+        }
     };
 }
 
