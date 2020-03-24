@@ -2,6 +2,7 @@
   "deviceSimulatorExpressExtension.commands.common.installDependencies": "Install Extension Dependencies",
   "deviceSimulatorExpressExtension.commands.common.label": "Device Simulator Express",
   "deviceSimulatorExpressExtension.commands.common.runSimulator": "Run Simulator",
+  "deviceSimulatorExpressExtension.commands.common.gettingStarted": "Getting Started",
   "deviceSimulatorExpressExtension.commands.common.changeBaudRate": "Change Baud Rate",
   "deviceSimulatorExpressExtension.commands.common.closeSerialMonitor": "Close Serial Monitor",
   "deviceSimulatorExpressExtension.commands.common.openSerialMonitor": "Open Serial Monitor",
