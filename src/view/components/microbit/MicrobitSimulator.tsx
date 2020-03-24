@@ -29,6 +29,7 @@ interface IState {
     play_button: boolean;
     selected_file: string;
     microbit: IMicrobitState;
+    sendGesture?: (isActive: boolean) => void;
 }
 
 interface IMicrobitState {

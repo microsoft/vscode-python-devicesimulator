@@ -10,7 +10,11 @@
 }
 
 .MotionSensorBar {
-    width: 440px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.sensor-button-container {
+    padding: 10px 0;
 }
