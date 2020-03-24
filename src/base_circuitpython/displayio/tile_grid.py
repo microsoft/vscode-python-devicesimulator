@@ -1,6 +1,7 @@
-from PIL import Image
+from PIL import Image, ImageColor
 from . import constants as CONSTANTS
 import threading
+import queue
 
 # TileGrid implementation loosely based on the
 # displayio.TileGrid class in Adafruit CircuitPython
@@ -13,7 +14,7 @@ import threading
 
 # Create a new black (default) image
 img = Image.new(
-    "RGB", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), "black"
+    "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), (0, 0, 0, 0)
 )
 
 # Create the pixel map
@@ -84,59 +85,71 @@ class TileGrid:
         x = self.x * scale + x
         y = self.y * scale + y
 
-        if self.tile_height > 1 and self.tile_width > 1:
-            y_mid = int(self.tile_height / 2)
-            x_mid = int(self.tile_width / 2)
-            thread_1 = threading.Thread(
-                target=self.draw_group, args=(x, y, 0, y_mid, 0, x_mid, scale,),
-            )
-            thread_2 = threading.Thread(
-                target=self.draw_group,
-                args=(x, y, 0, y_mid, x_mid, self.tile_width, scale),
-            )
-            thread_3 = threading.Thread(
-                target=self.draw_group,
-                args=(x, y, y_mid, self.tile_height, 0, x_mid, scale),
-            )
-            thread_4 = threading.Thread(
-                target=self.draw_group,
-                args=(x, y, y_mid, self.tile_height, x_mid, self.tile_width, scale,),
-            )
-            thread_1.start()
-            thread_2.start()
-            thread_3.start()
-            thread_4.start()
+        new_shape = self.draw_group(
+            x, y, 0, self.tile_height, 0, self.tile_width, scale
+        )
 
-            thread_1.join()
-            thread_2.join()
-            thread_3.join()
-            thread_4.join()
-        else:
-            self.draw_group(
-                x, y, 0, self.tile_height, 0, self.tile_width, scale,
-            )
+        img.paste(new_shape, (x, y), new_shape)
 
     def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
-        # return
+        height = y_end - y_start
+        width = x_end - x_start
+
+        this_img = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
+        this_img.putalpha(0)
+        this_bmp_img = this_img.load()
+
         for i in range(y_start, y_end):
             for j in range(x_start, x_end):
-                self.fill_pixel(i, j, x, y, scale)
+                x_offset = j * scale
+                y_offset = i * scale
+
+                x_max = min(x_offset + scale, width * scale)
+                y_max = min(y_offset + scale, height * scale)
+
+                curr_val = self.bitmap[j, i]
+                transparent = self.pixel_shader._Palette__contents[curr_val].transparent
+
+                if not transparent and x_offset >= 0 and y_offset >= 0:
+
+                    curr_colour = self.pixel_shader[curr_val]
+                    self.fill_pixel(
+                        curr_val,
+                        curr_colour,
+                        x_offset,
+                        y_offset,
+                        scale,
+                        x_max,
+                        y_max,
+                        this_bmp_img,
+                    )
+
+        return this_img
 
     # helper method for drawing pixels on bmp_img
     # given the src, offset, and scale
-    def fill_pixel(self, i, j, x, y, scale):
+    def fill_pixel(
+        self,
+        curr_val,
+        curr_colour,
+        x_offset,
+        y_offset,
+        scale,
+        x_max,
+        y_max,
+        this_bmp_img,
+    ):
 
-        curr_val = self.bitmap[j, i]
-        transparent = self.pixel_shader._Palette__contents[curr_val].transparent
-        x_offset = x + (j * scale)
-        y_offset = y + (i * scale)
-        if not transparent and x_offset >= 0 and y_offset >= 0:
-
-            x_max = min(x_offset + scale, 240)
-            y_max = min(y_offset + scale, 240)
-
-            curr_colour = self.pixel_shader[curr_val]
-            for new_y in range(y_offset, y_max):
-                for new_x in range(x_offset, x_max):
-                    if curr_val != bmp_img[new_x, new_y]:
-                        bmp_img[new_x, new_y] = curr_colour
+        for new_y in range(y_offset, y_max):
+            for new_x in range(x_offset, x_max):
+                try:
+                    if isinstance(curr_colour, tuple):
+                        this_bmp_img[new_x, new_y] = curr_colour
+                    else:
+                        this_bmp_img[new_x, new_y] = (
+                            (curr_colour >> 16) & 255,
+                            (curr_colour >> 8) & 255,
+                            (curr_colour) & 255,
+                        )
+                except IndexError:
+                    pass
