@@ -18,6 +18,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
   >
     <select
       className="dropdown"
+      name="gesture selection"
     >
       <option
         value="shake"
@@ -76,9 +77,9 @@ exports[`Accelerometer component  should render correctly 1`] = `
       </option>
     </select>
     <button
-      aria-label="gesture sensor button"
+      aria-label="gesture sensor"
       className="sensor-button"
-      id="Send Gesture-button"
+      id="Send Gesture"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       onMouseDown={[Function]}
