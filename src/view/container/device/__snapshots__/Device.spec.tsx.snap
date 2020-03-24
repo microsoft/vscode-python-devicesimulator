@@ -2651,9 +2651,9 @@ exports[`Device component  should render correctly 1`] = `
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar microbit-button"
+            aria-label="toolbar microbit-a-b-push"
             className="toolbar-button button"
-            id="toolbar-microbit-button-button"
+            id="toolbar-microbit-a-b-push-button"
             onClick={[Function]}
             role="button"
             style={

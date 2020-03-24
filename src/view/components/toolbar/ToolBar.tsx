@@ -185,7 +185,7 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                             onClick={this.onShowDescriptionClicked}
                             iconProps={{ iconName: "Info" }}
                             title="Info"
-                            ariaLabel="More Information Button"
+                            ariaLabel="More Information"
                             className="info-icon"
                         />
                     </span>

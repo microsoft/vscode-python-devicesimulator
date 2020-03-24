@@ -21,13 +21,13 @@ class SensorButton extends React.Component<ISensorButtonProps> {
     render() {
         return (
             <button
-                id={`${this.props.label}-button`}
+                id={this.props.label}
                 ref={this.buttonRef}
                 onMouseUp={this.props.onMouseUp}
                 onMouseDown={this.props.onMouseDown}
                 onKeyUp={this.props.onKeyUp}
                 onKeyDown={this.props.onKeyDown}
-                aria-label={`${this.props.type} sensor button`}
+                aria-label={`${this.props.type} sensor`}
                 className="sensor-button"
             >
                 {this.props.label}

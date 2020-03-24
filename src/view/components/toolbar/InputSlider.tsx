@@ -51,7 +51,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                         onMouseUp={this.sendTelemetry}
                         aria-valuenow={this.state.value}
                         value={this.props.value}
-                        aria-label={`${this.props.type} sensor slider`}
+                        aria-label={`${this.props.type} sensor`}
                         defaultValue={this.props.minValue.toLocaleString()}
                         disabled={isInputDisabled}
                     />

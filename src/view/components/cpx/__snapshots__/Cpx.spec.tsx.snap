@@ -4015,9 +4015,9 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar push-button"
+            aria-label="toolbar a-b-push"
             className="toolbar-button button"
-            id="toolbar-push-button-button"
+            id="toolbar-a-b-push-button"
             onClick={[Function]}
             role="button"
             style={

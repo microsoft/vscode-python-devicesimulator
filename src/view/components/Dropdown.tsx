@@ -7,12 +7,17 @@ import "../styles/Dropdown.css";
 export interface IDropdownProps {
     options: string[];
     // styleLabel: string;
+    name: string;
     onSelect?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const Dropdown: React.FC<IDropdownProps> = props => {
     return (
-        <select className="dropdown" onChange={props.onSelect}>
+        <select
+            className="dropdown"
+            onChange={props.onSelect}
+            name={props.name}
+        >
             {renderOptions(props.options)}
         </select>
     );
