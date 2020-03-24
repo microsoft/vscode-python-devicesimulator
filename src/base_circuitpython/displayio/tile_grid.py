@@ -144,7 +144,6 @@ class TileGrid:
         width = x_end - x_start
 
         this_img = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
-        this_img.putalpha(0)
         this_bmp_img = this_img.load()
 
         for i in range(0, height):
