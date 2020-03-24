@@ -309,7 +309,7 @@ const setupPins = (props: IProps): void => {
             svgPin.onkeydown = e => props.onKeyEvent(e, true);
             accessibility.setAria(
                 svgPin,
-                "Pin",
+                "button",
                 `Touch pin ${pinName.substr(pinName.length - 2)}`
             );
         }
