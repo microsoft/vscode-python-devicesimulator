@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { VIEW_STATE } from "../../constants";
-import CONSTANTS, { MICROBIT_BUTTON_STYLING_CLASSES } from "../../constants";
+import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import "../../styles/Microbit.css";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
@@ -93,12 +93,12 @@ export class MicrobitImage extends React.Component<IProps, {}> {
                 if (isActive) {
                     button.children[0].setAttribute(
                         "class",
-                        MICROBIT_BUTTON_STYLING_CLASSES.KEYPRESSED
+                        BUTTON_STYLING_CLASSES.KEYPRESSED
                     );
                 } else {
                     button.children[0].setAttribute(
                         "class",
-                        MICROBIT_BUTTON_STYLING_CLASSES.DEFAULT
+                        BUTTON_STYLING_CLASSES.DEFAULT
                     );
                 }
                 button.setAttribute("pressed", `${isActive}`);

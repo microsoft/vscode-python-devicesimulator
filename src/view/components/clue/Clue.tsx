@@ -7,7 +7,7 @@ import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import ToolBar from "../toolbar/ToolBar";
-import { MicrobitSimulator } from "./ClueSimulator";
+import { ClueSimulator } from "./ClueSimulator";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {
@@ -46,7 +46,7 @@ export class Clue extends React.Component<{}, IState> {
     render() {
         return (
             <React.Fragment>
-                <MicrobitSimulator />
+                <ClueSimulator />
                 <ToolBar
                     buttonList={MICROBIT_TOOLBAR_BUTTONS}
                     onUpdateSensor={this.updateSensor}
