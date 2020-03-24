@@ -8,7 +8,6 @@ import {
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
-import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
@@ -21,7 +20,7 @@ const DEFAULT_CLUE_STATE: IClueState = {
 
 interface IState {
     active_editors: string[];
-    running_file: string;
+    running_file?: string;
     play_button: boolean;
     selected_file: string;
     clue: IClueState;
