@@ -18,10 +18,12 @@
     outline: 2px solid var(--vscode-focusBorder);
     background-color: var(--vscode-button-hoverBackground);
 }
+
 .sensor-button:active,
 .active-button {
     opacity: 0.5;
 }
+
 .sensor-button:hover {
     background-color: var(--vscode-button-hoverBackground);
 }
