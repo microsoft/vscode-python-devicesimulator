@@ -85,13 +85,61 @@ class TileGrid:
         x = self.x * scale + x
         y = self.y * scale + y
 
-        new_shape = self.draw_group(
-            x, y, 0, self.tile_height, 0, self.tile_width, scale
-        )
+        self.split_threading(x, y, 0, self.tile_height, 0, self.tile_width, scale)
 
-        img.paste(new_shape, (x, y), new_shape)
+    def split_threading(self, x, y, start_y, height, start_x, width, scale):
 
-    def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
+        target = self.draw_group
+
+        # if the height or width is larger than 1/3 of the screen, use multithreading
+        if height * scale > 80 or width * scale > 80:
+            y_mid = int(height / 2)
+            x_mid = int(width / 2)
+
+            queues = []
+            threads = []
+
+            for i in range(4):
+                queues.append(queue.Queue())
+
+            offset_tuples = [
+                (x, y),
+                (x + x_mid * scale, y),
+                (x, y + y_mid * scale),
+                (x + x_mid * scale, y + y_mid * scale),
+            ]
+
+            thread_args = [
+                offset_tuples[0] + (0, y_mid, 0, x_mid, scale, queues[0]),
+                offset_tuples[1] + (0, y_mid, x_mid, width, scale, queues[1]),
+                offset_tuples[2] + (y_mid, height, 0, x_mid, scale, queues[2]),
+                offset_tuples[3] + (y_mid, height, x_mid, width, scale, queues[3]),
+            ]
+
+            for i in range(4):
+                thread = threading.Thread(target=target, args=thread_args[i],)
+                threads.append(thread)
+
+            for t in threads:
+                t.start()
+
+            for t in threads:
+                t.join()
+
+            for idx, t in enumerate(threads):
+
+                result = queues[idx].get()
+                img.paste(
+                    result, offset_tuples[idx], result,
+                )
+
+        else:
+            q = queue.Queue()
+            self.draw_group(x, y, 0, height, 0, width, scale, q)
+            result = q.get()
+            img.paste(result, (x, y), result)
+
+    def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale, q):
         height = y_end - y_start
         width = x_end - x_start
 
@@ -99,45 +147,30 @@ class TileGrid:
         this_img.putalpha(0)
         this_bmp_img = this_img.load()
 
-        for i in range(y_start, y_end):
-            for j in range(x_start, x_end):
+        for i in range(0, height):
+            for j in range(0, width):
                 x_offset = j * scale
                 y_offset = i * scale
 
-                x_max = min(x_offset + scale, width * scale)
-                y_max = min(y_offset + scale, height * scale)
-
-                curr_val = self.bitmap[j, i]
+                curr_val = self.bitmap[x_start + j, y_start + i]
                 transparent = self.pixel_shader._Palette__contents[curr_val].transparent
 
                 if not transparent and x_offset >= 0 and y_offset >= 0:
 
+                    x_max = min(x_offset + scale, width * scale)
+                    y_max = min(y_offset + scale, height * scale)
+
                     curr_colour = self.pixel_shader[curr_val]
                     self.fill_pixel(
-                        curr_val,
-                        curr_colour,
-                        x_offset,
-                        y_offset,
-                        scale,
-                        x_max,
-                        y_max,
-                        this_bmp_img,
+                        curr_colour, x_offset, y_offset, x_max, y_max, this_bmp_img,
                     )
-
+        q.put(this_img)
         return this_img
 
     # helper method for drawing pixels on bmp_img
     # given the src, offset, and scale
     def fill_pixel(
-        self,
-        curr_val,
-        curr_colour,
-        x_offset,
-        y_offset,
-        scale,
-        x_max,
-        y_max,
-        this_bmp_img,
+        self, curr_colour, x_offset, y_offset, x_max, y_max, this_bmp_img,
     ):
 
         for new_y in range(y_offset, y_max):
