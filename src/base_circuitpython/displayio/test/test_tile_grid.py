@@ -97,8 +97,8 @@ class TestTileGrid(object):
     @pytest.mark.parametrize(
         "size_w, size_h, x, y, draw_w, draw_h, bg_color, accent_color, x_offset, y_offset, scale",
         [
-            (10, 10, 5, 5, 5, 5, (3, 0, 0), (244, 255, 23), 2, 0, 2),
-            (100, 30, 2, 3, 6, 3, (255, 255, 255), (45, 45, 77), 0, 7, 5),
+            (10, 10, 5, 5, 5, 5, (3, 0, 0, 255), (244, 255, 23, 255), 2, 0, 2),
+            (100, 30, 2, 3, 6, 3, (255, 255, 255, 255), (45, 45, 77, 255), 0, 7, 5),
         ],
     )
     def test_draw(

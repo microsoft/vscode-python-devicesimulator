@@ -29,9 +29,11 @@ class TestAdafruitClue(object):
         utils.send_to_simulator = mock.Mock()
 
     def test_clue_display_text(self):
-        expected = Image.open(
+        img = Image.open(
             os.path.join(self.abs_path, CONSTANTS.IMG_DIR_NAME, f"test_clue_text_1.bmp")
-        ).load()
+        )
+        img.putalpha(255)
+        expected = img.load()
         clue_data = clue.simple_text_display(title="LET'S TEST!", title_scale=2)
 
         clue_data[0].text = "Lorem ipsum"
