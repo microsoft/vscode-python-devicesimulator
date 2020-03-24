@@ -3,7 +3,6 @@ import { CONSTANTS, GESTURES, SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import { Dropdown } from "../../Dropdown";
 import SensorButton from "../SensorButton";
-import "../../../styles/ToolBar.css";
 import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
@@ -63,7 +62,15 @@ export class Accelerometer extends React.Component<IProps> {
         return (
             <div className="accelerometer">
                 <br />
-                <div className="gesture-container">
+                <div
+                    className="gesture"
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        height: "75px",
+                    }}
+                >
                     <Dropdown
                         options={GESTURES}
                         onSelect={this.props.onSelectGestures}
@@ -87,7 +94,7 @@ export class Accelerometer extends React.Component<IProps> {
                     />
                 </div>
                 <br />
-                <div style={{}}>
+                <div>
                     <p>{MANUAL_ACCELERATION_MESSAGE}</p>
                 </div>
 
