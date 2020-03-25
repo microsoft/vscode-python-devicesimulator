@@ -7,9 +7,5 @@
         "out": true // set this to false to include "out" folder in search results
     },
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off",
-    "python.linting.pylintArgs": [
-        "--init-hook",
-        "import sys; sys.path.append(\"\"c:\\\\Users\\\\t-anmah\\\\.vscode\\\\extensions\\\\microbits.dsxtest-0.0.9-UNTRACKEDVERSION\\\\out\"\")"
-    ]
+    "typescript.tsc.autoDetect": "off"
 }
