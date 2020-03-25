@@ -347,13 +347,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const clueOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.clue.openSimulator",
         () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR
-            );
-            telemetryAI.runWithLatencyMeasure(
-                openClueWebview,
-                TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR
-            );
+            telemetryAI.runWithLatencyMeasure(openClueWebview, "");
         }
     );
 
@@ -465,17 +459,11 @@ export async function activate(context: vscode.ExtensionContext) {
             );
         }
     );
+
     const clueNewFile: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.clue.newFile",
         () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_COMMAND_NEW_FILE
-            );
-            telemetryAI.runWithLatencyMeasure(
-                openClueTemplateFile,
-
-                TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
-            );
+            telemetryAI.runWithLatencyMeasure(openClueTemplateFile, "");
         }
     );
 
@@ -748,9 +736,7 @@ export async function activate(context: vscode.ExtensionContext) {
             // Data received from Python process
             deviceProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
-                console.log("here 1");
-                console.log(`Device output = ${dataFromTheProcess}`);
-                console.log("here 2");
+
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
