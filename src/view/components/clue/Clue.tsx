@@ -58,4 +58,6 @@ export class Clue extends React.Component<{}, IState> {
     };
 }
 
-const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [];
+const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
+    //TODO: CLUE TOOLBAR
+];

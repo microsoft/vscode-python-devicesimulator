@@ -11,8 +11,6 @@ import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
-// import * as fs from "fs";
-
 const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: "",
