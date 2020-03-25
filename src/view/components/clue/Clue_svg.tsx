@@ -915,20 +915,17 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     <g id="Frame">
                         <rect
                             className="cls-22"
-                            x="64.9"
-                            y="26.42"
-                            width="176"
-                            height="152.2"
+                            x="62"
+                            y="25"
+                            width="182"
+                            height="158"
                         />
                         <image
                             ref={this.displayRef}
-                            x={64.9}
-                            y={26.42}
-                            width={175.97}
-                            height={152.12}
-                            style={{
-                                fill: "rgb(30,30,30)",
-                            }}
+                            x={65}
+                            y={28}
+                            width={176}
+                            height={152}
                         />
                         <rect
                             className="cls-23"
