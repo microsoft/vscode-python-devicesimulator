@@ -51,6 +51,7 @@ from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
 from adafruit_clue import clue
+from base_circuitpython.base_cp_constants import CLUE
 
 
 # Handle User Inputs Thread
@@ -59,7 +60,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        device_dict = {CPX: cpx, MICROBIT: mb, "CLUE": clue}
+        device_dict = {CPX: cpx, MICROBIT: mb, CLUE: clue}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()

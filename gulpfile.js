@@ -45,8 +45,7 @@ const pythonToMove = [
   "./src/common/*.py",
   "./src/dev-requirements.txt",
   "./src/requirements.txt",
-  "./src/templates/*.*",
-  "./src/*.sh"
+  "./src/templates/*.*"
 ];
 
 gulp.task("python-compile", () => {
