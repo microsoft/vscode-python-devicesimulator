@@ -25,6 +25,10 @@ export const CONFIG = {
 };
 
 export const CONSTANTS = {
+    WEBVIEW_TYPE: {
+        SIMULATOR: "simulator",
+        TUTORIAL: "tutorial",
+    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEVICE_NAME: {
         CPX: "CPX",
@@ -321,6 +325,7 @@ export enum TelemetryEventName {
     COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
     COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
     COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
+    COMMAND_GETTING_STARTED = "COMMAND.GETTING_STARTED",
 
     CPX_COMMAND_DEPLOY_DEVICE = "CPX.COMMAND.DEPLOY.DEVICE",
     CPX_COMMAND_NEW_FILE = "CPX.COMMAND.NEW.FILE.CPX",
@@ -403,6 +408,9 @@ export namespace DialogResponses {
     };
     export const CANCEL: MessageItem = {
         title: localize("dialogResponses.cancel", "Cancel"),
+    };
+    export const SELECT: MessageItem = {
+        title: localize("dialogResponses.select", "Select"),
     };
     export const HELP: MessageItem = {
         title: localize("dialogResponses.help", "I need help"),

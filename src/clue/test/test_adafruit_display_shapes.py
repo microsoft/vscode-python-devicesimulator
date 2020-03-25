@@ -33,14 +33,16 @@ class TestAdafruitDisplayShapes(object):
 
         expected_images = []
         for i in range(5):
-            expected = Image.open(
+            img = Image.open(
                 os.path.join(
                     self.abs_path,
                     CONSTANTS.IMG_DIR_NAME,
                     f"test_image_shapes_{i+1}.bmp",
                 )
             )
-            expected_images.append(expected.load())
+
+            img.putalpha(255)
+            expected_images.append(img.load())
 
         # TAKEN FROM ADAFRUIT'S DISPLAY SHAPES LIBRARY
         # https://github.com/ladyada/Adafruit_CircuitPython_Display_Shapes/blob/master/examples/display_shapes_simpletest.py

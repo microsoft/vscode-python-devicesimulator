@@ -45,6 +45,7 @@ export const TOOLBAR_ICON_LABEL = {
     TAG_INPUT: "Tag Input",
     TAG_OUTPUT: "Tag Output",
     TEMPERATURE: "Temperature Sensor",
+    WIRELESS: "Bluetooth and Radio",
 };
 export const CPX_TOOLBAR_ICON_ID = {
     GPIO: "toolbar-gpio",
@@ -53,7 +54,7 @@ export const CPX_TOOLBAR_ICON_ID = {
     LIGHT: "toolbar-light-sensor",
     MOTION: "toolbar-motion-sensor",
     NEO_PIXEL: "toolbar-neo-pixels",
-    PUSH_BUTTON: "toolbar-push-button",
+    PUSH_BUTTON: "toolbar-a-b-push",
     RED_LED: "toolbar-red-led",
     RIGHT_EDGE: "right-edge",
     SOUND: "toolbar-sound-sensor",
@@ -67,7 +68,10 @@ export const MICROBIT_TOOLBAR_ID = {
     LIGHT: "toolbar-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer-sensor",
     LEDS: "toolbar-microbit-led",
-    PUSH_BUTTON: "toolbar-microbit-button",
+    PUSH_BUTTON: "toolbar-microbit-a-b-push",
+    GPIO: "toolbar-gpio",
+    SOUND: "toolbar-microbit-sound",
+    WIRELESS: "toolbar-microbit-wireless",
 };
 
 export interface IModalContent {
@@ -183,11 +187,11 @@ export const PUSHB_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-push-button.title",
+        descriptionTitle: "toolbar-a-b-push.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-push-button.description",
-        tryItDescription: "toolbar-push-button.tryItDescription",
+        descriptionText: "toolbar-a-b-push.description",
+        tryItDescription: "toolbar-a-b-push.tryItDescription",
         components: undefined,
         id: "push_btn",
     };
@@ -270,7 +274,9 @@ export const TEMPERATURE_MODAL_CONTENT = (
 
 export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
+    sensorValues: { [key: string]: number },
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
     const accelerometerSensorValues = {
         X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
@@ -282,6 +288,8 @@ export const ACCELEROMETER_MODAL_CONTENT = (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
+                onSelectGestures={onSelectGestures}
+                onSendGesture={sendGesture}
             />
         ),
         descriptionText: "toolbar-accelerometer-sensor.description",
@@ -312,13 +320,55 @@ export const MICROBIT_BUTTON_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-button.title",
+        descriptionTitle: "toolbar-microbit-a-b-push.title",
         tagInput: undefined,
         tagOutput: TAG_INPUT_SVG,
-        descriptionText: "toolbar-microbit-button.description",
-        tryItDescription: "toolbar-microbit-button.tryItDescription",
+        descriptionText: "toolbar-microbit-a-b-push.description",
+        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
         components: undefined,
         id: "microbit_button",
+    };
+};
+export const MICROBIT_SOUND_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-sound.title",
+        tagInput: undefined,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-sound.description",
+        tryItDescription: "toolbar-microbit-sound.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_sound",
+    };
+};
+export const MICROBIT_GPIO_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-gpio.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-gpio.description",
+        tryItDescription: "toolbar-microbit-gpio.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_gpio",
+    };
+};
+export const MICROBIT_WIRELESS_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-wireless.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-wireless.description",
+        tryItDescription: "toolbar-microbit-wireless.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_wireless",
     };
 };
 
@@ -337,17 +387,30 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
     [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
     [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
 ]);
 
 export const getModalContent = (
     label: string,
     onUpdateValue: (onUpdateValue: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
+    sensorValues: { [key: string]: number },
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    sendGesture?: (isActive: boolean) => void
 ) => {
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
     );
     if (modalContentConstructor) {
+        if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
+            return ACCELEROMETER_MODAL_CONTENT(
+                onUpdateValue,
+                sensorValues,
+                onSelectGestures,
+                sendGesture
+            );
+        }
         return modalContentConstructor(onUpdateValue, sensorValues);
     } else {
         return;

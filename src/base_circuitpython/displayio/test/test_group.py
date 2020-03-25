@@ -160,7 +160,7 @@ class TestGroup(object):
         expected = Image.open(
             os.path.join(self.abs_path, "img", "group_test_result.bmp")
         )
-
+        expected.putalpha(255)
         bmp_img_expected = expected.load()
 
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):

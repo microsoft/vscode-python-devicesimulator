@@ -35,7 +35,7 @@ class TestAdafruitDisplayText(object):
         "text, x,y, scale, color",
         [
             ("Hello World", 1, 10, 4, (0, 22, 103)),
-            ("WWWWwwwmMMmmm", 30, 6, 1, 0xDEADBE),
+            ("WWWWwwwmMMmmm", 30, 6, 1, (190, 173, 222)),
             ("wOooo00ooo", 104, 49, 9, 0xEFEFEF),
             ("!!!\n  yay!", 100, 100, 5, (200, 200, 255)),
         ],
@@ -43,16 +43,16 @@ class TestAdafruitDisplayText(object):
     def test_display_text(self, text, x, y, scale, color):
         global test_count
 
-        expected_images = []
-        for j in range(4):
-            expected = Image.open(
-                os.path.join(
-                    self.abs_path,
-                    CONSTANTS.IMG_DIR_NAME,
-                    f"test_display_text_{j+1}.bmp",
-                )
+        expected_image = Image.open(
+            os.path.join(
+                self.abs_path,
+                CONSTANTS.IMG_DIR_NAME,
+                f"test_display_text_{test_count+1}.bmp",
             )
-            expected_images.append(expected.load())
+        )
+        expected_image.convert("RGBA")
+        expected_image.putalpha(255)
+        loaded_img = expected_image.load()
 
         text_area = label.Label(
             terminalio.FONT, text=text, auto_write=False, scale=scale, color=color
@@ -61,8 +61,6 @@ class TestAdafruitDisplayText(object):
         text_area.y = y
         text_area.draw(show=True)
 
-        helper._Helper__test_image_equality(
-            displayio.bmp_img, expected_images[test_count]
-        )
-
+        helper._Helper__test_image_equality(displayio.bmp_img, loaded_img)
+        # displayio.img.save(f"test_image_text_{test_count+1}.bmp")
         test_count += 1

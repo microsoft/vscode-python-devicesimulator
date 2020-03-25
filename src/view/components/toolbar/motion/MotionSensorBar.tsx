@@ -61,14 +61,16 @@ class MotionSensorBar extends React.Component<IProps> {
     render() {
         return (
             <div className="MotionSensorBar">
-                <SensorButton
-                    label="Shake"
-                    type="shake"
-                    onMouseUp={this.onMouseUp}
-                    onMouseDown={this.onMouseDown}
-                    onKeyUp={this.onKeyUp}
-                    onKeyDown={this.onKeyDown}
-                />
+                <div className="sensor-button-container">
+                    <SensorButton
+                        label="Shake"
+                        type="shake"
+                        onMouseUp={this.onMouseUp}
+                        onMouseDown={this.onMouseDown}
+                        onKeyUp={this.onKeyUp}
+                        onKeyDown={this.onKeyDown}
+                    />
+                </div>
                 <br />
                 <ThreeDimensionSlider
                     axisProperties={MOTION_SENSOR_PROPERTIES}

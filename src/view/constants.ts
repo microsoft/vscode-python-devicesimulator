@@ -75,6 +75,7 @@ export enum WEBVIEW_MESSAGES {
     TOGGLE_PLAY_STOP = "toggle-play-stop",
     BUTTON_PRESS = "button-press",
     SENSOR_CHANGED = "sensor-changed",
+    GESTURE = "gesture",
     SLIDER_TELEMETRY = "slider-telemetry",
 }
 
@@ -100,4 +101,26 @@ export enum SENSOR_LIST {
     MOTION_Z = "motion_z",
 }
 
+export const GESTURES = [
+    "shake",
+    "up",
+    "down",
+    "left",
+    "right",
+    "face up",
+    "face down",
+    "freefall",
+    "3g",
+    "6g",
+    "8g",
+];
+
+export enum WEBVIEW_ATTRIBUTES_KEY {
+    INITIAL_DEVICE = "initial_device",
+    TYPE = "webview_type",
+}
+export enum WEBVIEW_TYPES {
+    SIMULATOR = "simulator",
+    GETTING_STARTED = "getting_started",
+}
 export default CONSTANTS;
