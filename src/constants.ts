@@ -96,7 +96,7 @@ export const CONSTANTS = {
         ),
         NO_FILE_TO_DEPLOY: localize(
             "error.noFileToDeploy",
-            '[ERROR] We can\'t find a Python file to deploy to your device.\n'
+            "[ERROR] We can't find a Python file to deploy to your device.\n"
         ),
         NO_FOLDER_OPENED: localize(
             "error.noFolderCreated",
@@ -253,8 +253,7 @@ export const CONSTANTS = {
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
         CPX_HELP:
             "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
-        CLUE_HELP:
-            "https://learn.adafruit.com/adafruit-clue/circuitpython",
+        CLUE_HELP: "https://learn.adafruit.com/adafruit-clue/circuitpython",
         INSTALL:
             "https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/docs/install.md",
         PRIVACY: "https://www.adafruit.com/privacy",
@@ -346,7 +345,6 @@ export enum TelemetryEventName {
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
     CLUE_COMMAND_DEPLOY_DEVICE = "CLUE.COMMAND.DEPLOY.DEVICE",
-
 
     // Simulator interaction
     CPX_SIMULATOR_BUTTON_A = "CPX.SIMULATOR.BUTTON.A",

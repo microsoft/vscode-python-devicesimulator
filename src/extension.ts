@@ -706,7 +706,7 @@ export async function activate(context: vscode.ExtensionContext) {
             );
             vscode.window.showErrorMessage(
                 CONSTANTS.ERROR.NO_FILE_TO_DEPLOY,
-                DialogResponses.MESSAGE_UNDERSTOOD 
+                DialogResponses.MESSAGE_UNDERSTOOD
             );
         } else {
             await fileSelectionService.getCurrentTextDocument().save();
@@ -744,7 +744,10 @@ export async function activate(context: vscode.ExtensionContext) {
                             true
                         );
                     }
-                    handleDeployToDeviceFinishedTelemetry(messageToWebview, device);
+                    handleDeployToDeviceFinishedTelemetry(
+                        messageToWebview,
+                        device
+                    );
                 } catch (err) {
                     console.log(
                         `Non-JSON output from the process :  ${dataFromTheProcess}`
@@ -777,23 +780,29 @@ export async function activate(context: vscode.ExtensionContext) {
         let deployPerformanceTelemetryEvent: string;
         switch (device) {
             case CONSTANTS.DEVICE_NAME.CPX:
-                deployTelemetryEvent = TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent = TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+                deployTelemetryEvent =
+                    TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent =
+                    TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
                 break;
             case CONSTANTS.DEVICE_NAME.MICROBIT:
-                deployTelemetryEvent = TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent = TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+                deployTelemetryEvent =
+                    TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent =
+                    TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
                 break;
             case CONSTANTS.DEVICE_NAME.CLUE:
-                deployTelemetryEvent = TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent = TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+                deployTelemetryEvent =
+                    TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent =
+                    TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
                 break;
         }
         return {
             deployTelemetryEvent: deployTelemetryEvent,
-            deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent
-        }
-    }
+            deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent,
+        };
+    };
 
     const handleDeployToDeviceErrorTelemetry = (
         data: string,
@@ -802,7 +811,8 @@ export async function activate(context: vscode.ExtensionContext) {
         let telemetryErrorName: string;
         switch (device) {
             case CONSTANTS.DEVICE_NAME.CPX:
-                telemetryErrorName = TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
+                telemetryErrorName =
+                    TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
                 break;
             case CONSTANTS.DEVICE_NAME.MICROBIT:
                 telemetryErrorName =
@@ -814,7 +824,10 @@ export async function activate(context: vscode.ExtensionContext) {
         telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
     };
 
-    const handleDeployToDeviceFinishedTelemetry = (message: any, device: string) => {
+    const handleDeployToDeviceFinishedTelemetry = (
+        message: any,
+        device: string
+    ) => {
         let successCommandDeployDevice: string;
         let errorCommandDeployWithoutDevice: string;
         switch (device) {
@@ -844,7 +857,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 break;
             case "no-device":
                 telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
-                if (device === CONSTANTS.DEVICE_NAME.CPX || device === CONSTANTS.DEVICE_NAME.CLUE) {
+                if (
+                    device === CONSTANTS.DEVICE_NAME.CPX ||
+                    device === CONSTANTS.DEVICE_NAME.CLUE
+                ) {
                     vscode.window
                         .showErrorMessage(
                             CONSTANTS.ERROR.NO_DEVICE,
@@ -857,10 +873,14 @@ export async function activate(context: vscode.ExtensionContext) {
                                     let helpTelemetryEvent: string;
                                     if (device === CONSTANTS.DEVICE_NAME.CPX) {
                                         helpLink = CONSTANTS.LINKS.CPX_HELP;
-                                        helpTelemetryEvent = CONSTANTS.LINKS.CPX_HELP;
-                                    } else if (device === CONSTANTS.DEVICE_NAME.CLUE) {
+                                        helpTelemetryEvent =
+                                            CONSTANTS.LINKS.CPX_HELP;
+                                    } else if (
+                                        device === CONSTANTS.DEVICE_NAME.CLUE
+                                    ) {
                                         helpLink = CONSTANTS.LINKS.CLUE_HELP;
-                                        helpTelemetryEvent = CONSTANTS.LINKS.CLUE_HELP;
+                                        helpTelemetryEvent =
+                                            CONSTANTS.LINKS.CLUE_HELP;
                                     }
                                     open(helpLink);
                                     telemetryAI.trackFeatureUsage(
@@ -906,15 +926,14 @@ export async function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            const telemetryEvents = getTelemetryEventsForStartingDeployToDevice(chosen_device);
+            const telemetryEvents = getTelemetryEventsForStartingDeployToDevice(
+                chosen_device
+            );
 
-            telemetryAI.trackFeatureUsage(
-                telemetryEvents.deployTelemetryEvent
-            );
-            telemetryAI.runWithLatencyMeasure(
-                () => {deployCode(chosen_device);},
-                telemetryEvents.deployPerformanceTelemetryEvent
-            );
+            telemetryAI.trackFeatureUsage(telemetryEvents.deployTelemetryEvent);
+            telemetryAI.runWithLatencyMeasure(() => {
+                deployCode(chosen_device);
+            }, telemetryEvents.deployPerformanceTelemetryEvent);
         }
     );
 

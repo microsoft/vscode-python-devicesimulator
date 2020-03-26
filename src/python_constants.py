@@ -24,7 +24,9 @@ LINUX_OS = "linux"
 MAC_OS = "darwin"
 MOUNT_COMMAND = "mount"
 
-NO_ADAFRUIT_DEVICE_DETECTED_ERROR_TITLE = "No Adafruit device (Circuit Playground Express or Clue) detected"
+NO_ADAFRUIT_DEVICE_DETECTED_ERROR_TITLE = (
+    "No Adafruit device (Circuit Playground Express or Clue) detected"
+)
 NO_ADAFRUIT_DEVICE_DETECTED_ERROR_DETAIL = (
     "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
 )
