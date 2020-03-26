@@ -100,6 +100,7 @@ user_prints.start()
 # Execute User Code Thread
 def execute_user_code(abs_path_to_code_file):
     cpx._Express__abs_path_to_code_file = abs_path_to_code_file
+    clue._SlideShow__abs_path_to_code_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
         user_code = user_code_file.read()
