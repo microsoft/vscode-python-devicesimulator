@@ -43,7 +43,7 @@ sys.path.insert(0, abs_path_to_micropython_lib)
 
 # This import must happen after the sys.path is modified
 from common.telemetry import telemetry_py
-
+from common import utils
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.constants import CPX
 
@@ -99,8 +99,7 @@ user_prints.start()
 
 # Execute User Code Thread
 def execute_user_code(abs_path_to_code_file):
-    cpx._Express__abs_path_to_code_file = abs_path_to_code_file
-    clue._SlideShow__abs_path_to_code_file = abs_path_to_code_file
+    utils.abs_path_to_user_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
         user_code = user_code_file.read()

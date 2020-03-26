@@ -48,7 +48,6 @@ class Express:
             "shake": False,
         }
         self.__debug_mode = False
-        self.__abs_path_to_code_file = ""
         self.pixels = Pixel(self.__state, self.__debug_mode)
 
     @property
@@ -169,7 +168,7 @@ class Express:
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PLAY_FILE)
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
-            os.path.join(self.__abs_path_to_code_file, os.pardir)
+            os.path.join(utils.abs_path_to_user_file, os.pardir)
         )
         abs_path_wav_file = os.path.normpath(
             os.path.join(abs_path_parent_dir, file_name)

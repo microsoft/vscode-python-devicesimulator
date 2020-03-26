@@ -8,6 +8,7 @@ from base_circuitpython import base_cp_constants as CONSTANTS
 import time
 import collections
 from random import shuffle
+from common import utils
 
 # taken from adafruit
 class PlayBackOrder:
@@ -52,9 +53,8 @@ class SlideShow:
 
         self.auto_advance = auto_advance
 
-        self.__abs_path_to_code_file = ""
         abs_path_parent_dir = os.path.abspath(
-            os.path.join(self.__abs_path_to_code_file, os.pardir)
+            os.path.join(utils.abs_path_to_user_file, os.pardir)
         )
         abs_path_folder = os.path.normpath(os.path.join(abs_path_parent_dir, folder))
 
