@@ -6,7 +6,7 @@ import { VIEW_STATE } from "../../constants";
 import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import "../../styles/Microbit.css";
-import { IRefObject, ClueSvg } from "./Clue_svg";
+import { ClueSvg, IRefObject } from "./Clue_svg";
 
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
