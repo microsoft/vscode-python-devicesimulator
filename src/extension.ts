@@ -3,16 +3,13 @@
 
 import * as cp from "child_process";
 import * as fs from "fs";
-import { registerDefaultFontFaces } from "office-ui-fabric-react";
 import * as open from "open";
-import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import {
     CONFIG,
     CONSTANTS,
     CPX_CONFIG_FILE,
-    DEFAULT_DEVICE,
     DialogResponses,
     GLOBAL_ENV_VARS,
     HELPER_FILES,
@@ -704,12 +701,12 @@ export async function activate(context: vscode.ExtensionContext) {
         if (fileSelectionService.getCurrentFileAbsPath() === "") {
             utils.logToOutputChannel(
                 outChannel,
-                CONSTANTS.ERROR.NO_FILE_TO_RUN,
+                CONSTANTS.ERROR.NO_FILE_TO_DEPLOY,
                 true
             );
             vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.NO_FILE_TO_RUN,
-                DialogResponses.MESSAGE_UNDERSTOOD
+                CONSTANTS.ERROR.NO_FILE_TO_DEPLOY,
+                DialogResponses.MESSAGE_UNDERSTOOD 
             );
         } else {
             await fileSelectionService.getCurrentTextDocument().save();
@@ -747,7 +744,7 @@ export async function activate(context: vscode.ExtensionContext) {
                             true
                         );
                     }
-                    handleDeployToDeviceTelemetry(messageToWebview, device);
+                    handleDeployToDeviceFinishedTelemetry(messageToWebview, device);
                 } catch (err) {
                     console.log(
                         `Non-JSON output from the process :  ${dataFromTheProcess}`
@@ -775,42 +772,79 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
+    const getTelemetryEventsForStartingDeployToDevice = (device: string) => {
+        let deployTelemetryEvent: string;
+        let deployPerformanceTelemetryEvent: string;
+        switch (device) {
+            case CONSTANTS.DEVICE_NAME.CPX:
+                deployTelemetryEvent = TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent = TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+                break;
+            case CONSTANTS.DEVICE_NAME.MICROBIT:
+                deployTelemetryEvent = TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent = TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                deployTelemetryEvent = TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+                deployPerformanceTelemetryEvent = TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+                break;
+        }
+        return {
+            deployTelemetryEvent: deployTelemetryEvent,
+            deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent
+        }
+    }
+
     const handleDeployToDeviceErrorTelemetry = (
         data: string,
         device: string
     ) => {
         let telemetryErrorName: string;
-        if (device === CONSTANTS.DEVICE_NAME.CPX) {
-            telemetryErrorName =
-                TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
-        } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-            telemetryErrorName =
-                TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
+        switch (device) {
+            case CONSTANTS.DEVICE_NAME.CPX:
+                telemetryErrorName = TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
+                break;
+            case CONSTANTS.DEVICE_NAME.MICROBIT:
+                telemetryErrorName =
+                    TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                telemetryErrorName =
+                    TelemetryEventName.CLUE_ERROR_PYTHON_DEVICE_PROCESS;
         }
         telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
     };
 
-    const handleDeployToDeviceTelemetry = (message: any, device: string) => {
+    const handleDeployToDeviceFinishedTelemetry = (message: any, device: string) => {
         let successCommandDeployDevice: string;
         let errorCommandDeployWithoutDevice: string;
-        if (device === CONSTANTS.DEVICE_NAME.CPX) {
-            successCommandDeployDevice =
-                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice =
-                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
-        } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-            successCommandDeployDevice =
-                TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice =
-                TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
+        switch (device) {
+            case CONSTANTS.DEVICE_NAME.CPX:
+                successCommandDeployDevice =
+                    TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
+                errorCommandDeployWithoutDevice =
+                    TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
+                break;
+            case CONSTANTS.DEVICE_NAME.MICROBIT:
+                successCommandDeployDevice =
+                    TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
+                errorCommandDeployWithoutDevice =
+                    TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                successCommandDeployDevice =
+                    TelemetryEventName.CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE;
+                errorCommandDeployWithoutDevice =
+                    TelemetryEventName.CLUE_ERROR_DEPLOY_WITHOUT_DEVICE;
+                break;
         }
+
         switch (message.type) {
             case "complete":
                 telemetryAI.trackFeatureUsage(successCommandDeployDevice);
                 break;
             case "no-device":
                 telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
-                if (device === CONSTANTS.DEVICE_NAME.CPX) {
+                if (device === CONSTANTS.DEVICE_NAME.CPX || device === CONSTANTS.DEVICE_NAME.CLUE) {
                     vscode.window
                         .showErrorMessage(
                             CONSTANTS.ERROR.NO_DEVICE,
@@ -819,9 +853,18 @@ export async function activate(context: vscode.ExtensionContext) {
                         .then((selection: vscode.MessageItem | undefined) => {
                             if (selection === DialogResponses.HELP) {
                                 const okAction = () => {
-                                    open(CONSTANTS.LINKS.HELP);
+                                    let helpLink: string;
+                                    let helpTelemetryEvent: string;
+                                    if (device === CONSTANTS.DEVICE_NAME.CPX) {
+                                        helpLink = CONSTANTS.LINKS.CPX_HELP;
+                                        helpTelemetryEvent = CONSTANTS.LINKS.CPX_HELP;
+                                    } else if (device === CONSTANTS.DEVICE_NAME.CLUE) {
+                                        helpLink = CONSTANTS.LINKS.CLUE_HELP;
+                                        helpTelemetryEvent = CONSTANTS.LINKS.CLUE_HELP;
+                                    }
+                                    open(helpLink);
                                     telemetryAI.trackFeatureUsage(
-                                        TelemetryEventName.CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE
+                                        helpTelemetryEvent
                                     );
                                 };
                                 utils.showPrivacyModal(
@@ -847,36 +890,30 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const cpxDeployCodeToDevice = () => {
-        deployCode(CONSTANTS.DEVICE_NAME.CPX);
-    };
+    const deployToDevice: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.deployToDevice",
+        async () => {
+            const chosen_device = await vscode.window.showQuickPick(
+                Object.values(CONSTANTS.DEVICE_NAME)
+            );
 
-    const microbitDeployCodeToDevice = () => {
-        deployCode(CONSTANTS.DEVICE_NAME.MICROBIT);
-    };
+            if (!chosen_device) {
+                utils.logToOutputChannel(
+                    outChannel,
+                    CONSTANTS.INFO.NO_DEVICE_CHOSEN_TO_DEPLOY_TO,
+                    true
+                );
+                return;
+            }
 
-    const cpxDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.deployToDevice",
-        () => {
+            const telemetryEvents = getTelemetryEventsForStartingDeployToDevice(chosen_device);
+
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE
+                telemetryEvents.deployTelemetryEvent
             );
             telemetryAI.runWithLatencyMeasure(
-                cpxDeployCodeToDevice,
-                TelemetryEventName.CPX_PERFORMANCE_DEPLOY_DEVICE
-            );
-        }
-    );
-
-    const microbitDeployToDevice: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.microbit.deployToDevice",
-        () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE
-            );
-            telemetryAI.runWithLatencyMeasure(
-                microbitDeployCodeToDevice,
-                TelemetryEventName.MICROBIT_PERFORMANCE_DEPLOY_DEVICE
+                () => {deployCode(chosen_device);},
+                telemetryEvents.deployPerformanceTelemetryEvent
             );
         }
     );
@@ -1081,14 +1118,13 @@ export async function activate(context: vscode.ExtensionContext) {
         runSimulator,
         changeBaudRate,
         closeSerialMonitor,
-        cpxDeployToDevice,
+        deployToDevice,
         cpxNewFile,
         openSerialMonitor,
         cpxOpenSimulator,
         selectSerialPort,
         microbitOpenSimulator,
         microbitNewFile,
-        microbitDeployToDevice,
         clueOpenSimulator,
         clueNewFile,
         gettingStartedOpen,

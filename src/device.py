@@ -22,9 +22,9 @@ class Device:
         self.connected = False
         self.error_message = None
 
-    def find_cpx_directory(self):
+    def find_adafruit_device_directory(self):
         """
-        Check if the Circuit Playground Express is available/plugged in
+        Check if the Adafruit Device is available/plugged in
         """
         found_directory = None
 
@@ -39,7 +39,7 @@ class Device:
             )
             for mount in mounted:
                 drive_path = mount.split()[2] if mount else ""
-                if drive_path.endswith(CONSTANTS.CPX_DRIVE_NAME):
+                if drive_path.endswith(CONSTANTS.ADAFRUIT_DRIVE_NAME):
                     found_directory = drive_path
                     break
         elif sys.platform == CONSTANTS.WINDOWS_OS:
@@ -48,7 +48,7 @@ class Device:
                 drive_path = "{}:{}".format(drive_letter, os.sep)
                 if os.path.exists(drive_path):
                     drive_name = win32api.GetVolumeInformation(drive_path)[0]
-                    if drive_name == CONSTANTS.CPX_DRIVE_NAME:
+                    if drive_name == CONSTANTS.ADAFRUIT_DRIVE_NAME:
                         found_directory = drive_path
                         break
         else:
@@ -57,16 +57,16 @@ class Device:
         if not found_directory:
             self.connected = False
             self.error_message = (
-                CONSTANTS.NO_CPX_DETECTED_ERROR_TITLE,
-                CONSTANTS.NO_CPX_DETECTED_ERROR_DETAIL.format(sys.platform),
+                CONSTANTS.NO_ADAFRUIT_DEVICE_DETECTED_ERROR_TITLE,
+                CONSTANTS.NO_ADAFRUIT_DEVICE_DETECTED_ERROR_DETAIL.format(sys.platform),
             )
         else:
             self.connected = True
             self.error_message = None
         return found_directory
 
-    def deployToCPX(self):
-        device_directory = self.find_cpx_directory()
+    def deployToAdafruitDevice(self):
+        device_directory = self.find_adafruit_device_directory()
         if self.error_message:
             print(
                 "{}:\t{}".format(self.error_message[0], self.error_message[1]),
@@ -109,8 +109,8 @@ class Device:
     def deploy(self):
         if self.name == CONSTANTS.MICROBIT:
             return self.deployToMicrobit()
-        elif self.name == CONSTANTS.CPX:
-            return self.deployToCPX()
+        elif self.name == CONSTANTS.CPX or self.name == CONSTANTS.CLUE:
+            return self.deployToAdafruitDevice()
         else:
             return {"type": "no-device"}
 

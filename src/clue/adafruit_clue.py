@@ -204,6 +204,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         )
 
     @property
+    def accerleration(self):
+        return [1, 2, 2]
+
+    @property
     def pixel(self):
         """The NeoPixel RGB LED.
         .. image :: ../docs/_static/neopixel.jpg
