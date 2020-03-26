@@ -51,6 +51,7 @@ class SlideShow:
         direction=PlayBackDirection.FORWARD,
     ):
 
+        self._curr_img_handle = Image.new("RGBA", (240, 240))
         self.auto_advance = auto_advance
 
         abs_path_parent_dir = os.path.abspath(
@@ -63,10 +64,13 @@ class SlideShow:
         self.loop = loop
         self.BASE_DWELL = 0.3
         self.BASE_DWELL_DARK = 0.7
+        self.TRANSITION_INCREMENTS = 18
+        self.fade_frames = 8
         if fade_effect:
-            self.fade_frames = 10
+            self.advance = self.advance_with_fade
         else:
-            self.fade_frames = 0
+            self.advance = self.advance_no_fade
+
         self.brightness = 1.0
         self.dwell = self.BASE_DWELL + dwell
         self.direction = direction
@@ -107,8 +111,10 @@ class SlideShow:
         dir_imgs = []
         for d in self.dirs:
             try:
-                dir_imgs.append(os.path.join(self.folder, d))
-            except Exception:
+                new_path = os.path.join(self.folder, d)
+                if os.path.splitext(new_path)[1] == ".bmp":
+                    dir_imgs.append(new_path)
+            except Exception as e:
                 continue
         if self._order == PlayBackOrder.RANDOM:
             shuffle(dir_imgs)
@@ -128,16 +134,17 @@ class SlideShow:
 
         return True
 
-    def advance(self, new_path):
+    def advance_with_fade(self, new_path):
         try:
             img = Image.open(new_path)
             self._curr_img = new_path
-            img.convert("RGBA")
 
+            img = img.convert("RGBA")
+            img = img.crop((0, 0, 240, 240))
             img.putalpha(255)
 
             black_overlay = Image.new("RGBA", img.size)
-        except Exception:
+        except Exception as e:
             return False
 
         time.sleep(self.BASE_DWELL_DARK)
@@ -152,6 +159,30 @@ class SlideShow:
                 black_overlay, img, i * self.brightness / self.fade_frames
             )
             self._send(new_img)
+        return True
+
+    def advance_no_fade(self, new_path):
+        old_img = self._curr_img_handle
+
+        try:
+            new_img = Image.open(new_path)
+            new_img = new_img.crop((0, 0, 240, 240))
+            self._curr_img = new_path
+            new_img = new_img.convert("RGBA")
+
+            new_img.putalpha(255)
+        except Exception as e:
+            return False
+
+        for i in range(self.TRANSITION_INCREMENTS + 1):
+            img_piece = new_img.crop((0, 0, 240, i * 240 / self.TRANSITION_INCREMENTS))
+
+            old_img.paste(img_piece)
+            self._send(old_img)
+
+        self._curr_img_handle = new_img
+
+        time.sleep(self.dwell)
         return True
 
     def _send(self, img):
