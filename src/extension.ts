@@ -775,141 +775,6 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const getTelemetryEventsForStartingDeployToDevice = (device: string) => {
-        let deployTelemetryEvent: string;
-        let deployPerformanceTelemetryEvent: string;
-        switch (device) {
-            case CONSTANTS.DEVICE_NAME.CPX:
-                deployTelemetryEvent =
-                    TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent =
-                    TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
-                break;
-            case CONSTANTS.DEVICE_NAME.MICROBIT:
-                deployTelemetryEvent =
-                    TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent =
-                    TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
-                break;
-            case CONSTANTS.DEVICE_NAME.CLUE:
-                deployTelemetryEvent =
-                    TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
-                deployPerformanceTelemetryEvent =
-                    TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
-                break;
-        }
-        return {
-            deployTelemetryEvent: deployTelemetryEvent,
-            deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent,
-        };
-    };
-
-    const handleDeployToDeviceErrorTelemetry = (
-        data: string,
-        device: string
-    ) => {
-        let telemetryErrorName: string;
-        switch (device) {
-            case CONSTANTS.DEVICE_NAME.CPX:
-                telemetryErrorName =
-                    TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
-                break;
-            case CONSTANTS.DEVICE_NAME.MICROBIT:
-                telemetryErrorName =
-                    TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
-            case CONSTANTS.DEVICE_NAME.CLUE:
-                telemetryErrorName =
-                    TelemetryEventName.CLUE_ERROR_PYTHON_DEVICE_PROCESS;
-        }
-        telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
-    };
-
-    const handleDeployToDeviceFinishedTelemetry = (
-        message: any,
-        device: string
-    ) => {
-        let successCommandDeployDevice: string;
-        let errorCommandDeployWithoutDevice: string;
-        switch (device) {
-            case CONSTANTS.DEVICE_NAME.CPX:
-                successCommandDeployDevice =
-                    TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
-                errorCommandDeployWithoutDevice =
-                    TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
-                break;
-            case CONSTANTS.DEVICE_NAME.MICROBIT:
-                successCommandDeployDevice =
-                    TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
-                errorCommandDeployWithoutDevice =
-                    TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
-                break;
-            case CONSTANTS.DEVICE_NAME.CLUE:
-                successCommandDeployDevice =
-                    TelemetryEventName.CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE;
-                errorCommandDeployWithoutDevice =
-                    TelemetryEventName.CLUE_ERROR_DEPLOY_WITHOUT_DEVICE;
-                break;
-        }
-
-        switch (message.type) {
-            case "complete":
-                telemetryAI.trackFeatureUsage(successCommandDeployDevice);
-                break;
-            case "no-device":
-                telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
-                if (
-                    device === CONSTANTS.DEVICE_NAME.CPX ||
-                    device === CONSTANTS.DEVICE_NAME.CLUE
-                ) {
-                    vscode.window
-                        .showErrorMessage(
-                            CONSTANTS.ERROR.NO_DEVICE,
-                            DialogResponses.HELP
-                        )
-                        .then((selection: vscode.MessageItem | undefined) => {
-                            if (selection === DialogResponses.HELP) {
-                                const okAction = () => {
-                                    let helpLink: string;
-                                    let helpTelemetryEvent: string;
-                                    if (device === CONSTANTS.DEVICE_NAME.CPX) {
-                                        helpLink = CONSTANTS.LINKS.CPX_HELP;
-                                        helpTelemetryEvent =
-                                            CONSTANTS.LINKS.CPX_HELP;
-                                    } else if (
-                                        device === CONSTANTS.DEVICE_NAME.CLUE
-                                    ) {
-                                        helpLink = CONSTANTS.LINKS.CLUE_HELP;
-                                        helpTelemetryEvent =
-                                            CONSTANTS.LINKS.CLUE_HELP;
-                                    }
-                                    open(helpLink);
-                                    telemetryAI.trackFeatureUsage(
-                                        helpTelemetryEvent
-                                    );
-                                };
-                                utils.showPrivacyModal(
-                                    okAction,
-                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
-                                );
-                            }
-                        });
-                } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-                    vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
-                }
-                break;
-            case "low-python-version":
-                vscode.window.showErrorMessage(
-                    CONSTANTS.ERROR.LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
-                );
-                break;
-            default:
-                console.log(
-                    `Non-state JSON output from the process : ${message}`
-                );
-                break;
-        }
-    };
-
     const deployToDevice: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.deployToDevice",
         async () => {
@@ -1354,6 +1219,141 @@ const handleNewFileErrorTelemetry = () => {
             );
             break;
         default:
+            break;
+    }
+};
+
+const getTelemetryEventsForStartingDeployToDevice = (device: string) => {
+    let deployTelemetryEvent: string;
+    let deployPerformanceTelemetryEvent: string;
+    switch (device) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            deployTelemetryEvent =
+                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+            deployPerformanceTelemetryEvent =
+                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            deployTelemetryEvent =
+                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+            deployPerformanceTelemetryEvent =
+                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
+            break;
+        case CONSTANTS.DEVICE_NAME.CLUE:
+            deployTelemetryEvent =
+                TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+            deployPerformanceTelemetryEvent =
+                TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
+            break;
+    }
+    return {
+        deployTelemetryEvent: deployTelemetryEvent,
+        deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent,
+    };
+};
+
+const handleDeployToDeviceErrorTelemetry = (
+    data: string,
+    device: string
+) => {
+    let telemetryErrorName: string;
+    switch (device) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            telemetryErrorName =
+                TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            telemetryErrorName =
+                TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
+        case CONSTANTS.DEVICE_NAME.CLUE:
+            telemetryErrorName =
+                TelemetryEventName.CLUE_ERROR_PYTHON_DEVICE_PROCESS;
+    }
+    telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
+};
+
+const handleDeployToDeviceFinishedTelemetry = (
+    message: any,
+    device: string
+) => {
+    let successCommandDeployDevice: string;
+    let errorCommandDeployWithoutDevice: string;
+    switch (device) {
+        case CONSTANTS.DEVICE_NAME.CPX:
+            successCommandDeployDevice =
+                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
+            break;
+        case CONSTANTS.DEVICE_NAME.MICROBIT:
+            successCommandDeployDevice =
+                TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
+            break;
+        case CONSTANTS.DEVICE_NAME.CLUE:
+            successCommandDeployDevice =
+                TelemetryEventName.CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE;
+            errorCommandDeployWithoutDevice =
+                TelemetryEventName.CLUE_ERROR_DEPLOY_WITHOUT_DEVICE;
+            break;
+    }
+
+    switch (message.type) {
+        case "complete":
+            telemetryAI.trackFeatureUsage(successCommandDeployDevice);
+            break;
+        case "no-device":
+            telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
+            if (
+                device === CONSTANTS.DEVICE_NAME.CPX ||
+                device === CONSTANTS.DEVICE_NAME.CLUE
+            ) {
+                vscode.window
+                    .showErrorMessage(
+                        CONSTANTS.ERROR.NO_DEVICE,
+                        DialogResponses.HELP
+                    )
+                    .then((selection: vscode.MessageItem | undefined) => {
+                        if (selection === DialogResponses.HELP) {
+                            const okAction = () => {
+                                let helpLink: string;
+                                let helpTelemetryEvent: string;
+                                if (device === CONSTANTS.DEVICE_NAME.CPX) {
+                                    helpLink = CONSTANTS.LINKS.CPX_HELP;
+                                    helpTelemetryEvent =
+                                        CONSTANTS.LINKS.CPX_HELP;
+                                } else if (
+                                    device === CONSTANTS.DEVICE_NAME.CLUE
+                                ) {
+                                    helpLink = CONSTANTS.LINKS.CLUE_HELP;
+                                    helpTelemetryEvent =
+                                        CONSTANTS.LINKS.CLUE_HELP;
+                                }
+                                open(helpLink);
+                                telemetryAI.trackFeatureUsage(
+                                    helpTelemetryEvent
+                                );
+                            };
+                            utils.showPrivacyModal(
+                                okAction,
+                                CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
+                            );
+                        }
+                    });
+            } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
+                vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
+            }
+            break;
+        case "low-python-version":
+            vscode.window.showErrorMessage(
+                CONSTANTS.ERROR.LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
+            );
+            break;
+        default:
+            console.log(
+                `Non-state JSON output from the process : ${message}`
+            );
             break;
     }
 };
