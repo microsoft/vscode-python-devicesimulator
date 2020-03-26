@@ -168,7 +168,7 @@ class _ClueSimpleTextDisplay:
 
     def show_terminal(self):
         """Revert to terminalio screen."""
-        # self._display.show(None)
+        # TODO: implement terminal for clue screen
         return
 
 

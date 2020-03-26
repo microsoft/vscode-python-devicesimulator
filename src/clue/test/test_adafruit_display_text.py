@@ -14,7 +14,7 @@ import terminalio
 from adafruit_display_text import label
 
 from .test_helpers import helper
-from . import constants as CONSTANTS
+from base_circuitpython import base_cp_constants as CONSTANTS
 
 # to keep track of test # to find right expected bmp
 test_count = 0

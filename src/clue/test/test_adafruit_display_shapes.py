@@ -15,7 +15,7 @@ from adafruit_display_shapes.circle import Circle
 from adafruit_display_shapes.roundrect import RoundRect
 
 from .test_helpers import helper
-from . import constants as CONSTANTS
+from base_circuitpython import base_cp_constants as CONSTANTS
 
 
 class TestAdafruitDisplayShapes(object):

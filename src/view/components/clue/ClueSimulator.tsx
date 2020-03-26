@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
-    CONSTANTS,
-    // DEVICE_LIST_KEY,
     AB_BUTTONS_KEYS,
+    // DEVICE_LIST_KEY,
+    CONSTANTS,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
@@ -10,8 +10,6 @@ import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
-
-// import * as fs from "fs";
 
 const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },

@@ -70,7 +70,7 @@ class Group:
         except AttributeError:
             pass
 
-        for idx, elem in enumerate(self.__contents):
+        for elem in self.__contents:
             if isinstance(elem, Group):
                 elem.draw(x, y, scale, False)
             else:

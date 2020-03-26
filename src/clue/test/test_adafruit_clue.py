@@ -14,7 +14,7 @@ import terminalio
 
 from ..adafruit_clue import clue
 from .test_helpers import helper
-from . import constants as CONSTANTS
+from base_circuitpython import base_cp_constants as CONSTANTS
 
 
 class TestAdafruitClue(object):

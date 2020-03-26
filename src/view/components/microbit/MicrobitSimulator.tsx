@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
+    AB_BUTTONS_KEYS,
     CONSTANTS,
     DEVICE_LIST_KEY,
-    AB_BUTTONS_KEYS,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
