@@ -1,47 +1,40 @@
 import * as React from "react";
 import {
     AB_BUTTONS_KEYS,
+    // DEVICE_LIST_KEY,
     CONSTANTS,
-    DEVICE_LIST_KEY,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
-import { BUTTONS_KEYS, MicrobitImage } from "./MicrobitImage";
+import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
-const DEFAULT_MICROBIT_STATE: IMicrobitState = {
-    leds: [
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-    ],
+const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
+    displayMessage: "",
 };
 
 interface IState {
     active_editors: string[];
     running_file?: string;
-    currently_selected_file: string;
     play_button: boolean;
     selected_file: string;
-    microbit: IMicrobitState;
-    sendGesture?: (isActive: boolean) => void;
+    clue: IClueState;
+    currently_selected_file: string;
 }
 
-interface IMicrobitState {
-    leds: number[][];
+interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
+    displayMessage: string;
 }
-export class MicrobitSimulator extends React.Component<any, IState> {
-    private imageRef: React.RefObject<MicrobitImage> = React.createRef();
+export class ClueSimulator extends React.Component<any, IState> {
+    private imageRef: React.RefObject<ClueImage> = React.createRef();
     constructor() {
         super({});
         this.state = {
-            microbit: DEFAULT_MICROBIT_STATE,
+            clue: DEFAULT_CLUE_STATE,
             play_button: false,
             selected_file: "",
             active_editors: [],
@@ -53,22 +46,18 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     handleMessage = (event: any): void => {
         const message = event.data;
 
-        if (message.active_device !== DEVICE_LIST_KEY.MICROBIT) {
-            return;
-        }
-
         switch (message.command) {
             case "reset-state":
                 this.setState({
-                    microbit: DEFAULT_MICROBIT_STATE,
+                    clue: DEFAULT_CLUE_STATE,
                     play_button: false,
                 });
                 break;
             case "set-state":
                 this.setState({
-                    microbit: {
-                        ...this.state.microbit,
-                        leds: message.state.leds,
+                    clue: {
+                        ...this.state.clue,
+                        displayMessage: message.state.display_base64,
                     },
                 });
                 break;
@@ -116,8 +105,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                         ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
                         : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
+
                 <div className="microbit-container">
-                    <MicrobitImage
+                    <ClueImage
                         ref={this.imageRef}
                         eventTriggers={{
                             onMouseDown: this.onMouseDown,
@@ -125,7 +115,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                             onMouseLeave: this.onMouseLeave,
                             onKeyEvent: this.onKeyEvent,
                         }}
-                        leds={this.state.microbit.leds}
+                        displayMessage={this.state.clue.displayMessage}
                     />
                 </div>
                 <ActionBar
@@ -137,7 +127,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             </div>
         );
     }
-
     protected togglePlayClick = () => {
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
@@ -150,7 +139,11 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             state: !this.state.play_button,
         });
     };
-
+    protected onSelectFile(event: React.FocusEvent<HTMLSelectElement>) {
+        this.setState({
+            selected_file: event.currentTarget.value,
+        });
+    }
     protected refreshSimulatorClick = () => {
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
@@ -161,7 +154,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     };
     protected handleButtonClick = (key: string, isActive: boolean) => {
-        let newButtonState = this.state.microbit.buttons;
+        let newButtonState = this.state.clue.buttons;
         switch (key) {
             case AB_BUTTONS_KEYS.BTN_A:
                 newButtonState.button_a = isActive;
@@ -178,8 +171,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         }
         sendMessage(WEBVIEW_MESSAGES.BUTTON_PRESS, newButtonState);
         this.setState({
-            microbit: {
-                ...this.state.microbit,
+            clue: {
+                ...this.state.clue,
                 buttons: newButtonState,
             },
         });

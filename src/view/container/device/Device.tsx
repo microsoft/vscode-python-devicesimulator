@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { Clue } from "../../components/clue/Clue";
 import { Cpx } from "../../components/cpx/Cpx";
 import { Microbit } from "../../components/microbit/Microbit";
 import { DEVICE_LIST_KEY } from "../../constants";
@@ -33,6 +34,8 @@ const loadSelectedDevice = (currentSelectedDevice: string) => {
             return <Cpx />;
         case DEVICE_LIST_KEY.MICROBIT:
             return <Microbit />;
+        case DEVICE_LIST_KEY.CLUE:
+            return <Clue />;
         default:
             return null;
     }

@@ -448,10 +448,10 @@ export class SetupService {
         context: vscode.ExtensionContext,
         pythonPath: string
     ) => {
-        const requirementsPath: string = getPathToScript(
+        const requirementsPyInstallPath: string = getPathToScript(
             context,
             CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
-            "requirements.txt"
+            "install_dependencies.py"
         );
 
         if (!this.isPipInstalled(pythonPath)) {
@@ -462,15 +462,15 @@ export class SetupService {
         try {
             const { stdout } = await this.executePythonCommand(
                 pythonPath,
-                `-m pip install -r "${requirementsPath}"`
+                `"${requirementsPyInstallPath}"`
             );
-
-            console.info(stdout);
+            console.log(`DSE ${stdout}`);
             vscode.window.showInformationMessage(
                 CONSTANTS.INFO.SUCCESSFUL_INSTALL
             );
             return true;
         } catch (err) {
+            console.log(`DSE ${err}`);
             return false;
         }
     };

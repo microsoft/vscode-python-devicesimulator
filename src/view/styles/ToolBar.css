@@ -152,6 +152,7 @@
     text-decoration: none;
     font-weight: bold;
 }
+
 .link-parent:hover {
     -webkit-appearance: none;
     color: var(--vscode-textLink-activeForeground);

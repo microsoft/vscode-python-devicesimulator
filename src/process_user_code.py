@@ -23,6 +23,12 @@ sys.stdout = user_stdout
 
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 
+# Insert absolute path to library for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
+
+# Insert absolute path to Circuitpython libraries for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
+
 # Insert absolute path to Adafruit library for CPX into sys.path
 abs_path_to_adafruit_lib = os.path.join(
     abs_path_to_parent_dir, CONSTANTS.ADAFRUIT_LIBRARY_NAME
@@ -44,6 +50,9 @@ from adafruit_circuitplayground.constants import CPX
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
+from adafruit_clue import clue
+from base_circuitpython.base_cp_constants import CLUE
+
 
 # Handle User Inputs Thread
 class UserInput(threading.Thread):
@@ -51,7 +60,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        device_dict = {CPX: cpx, MICROBIT: mb}
+        device_dict = {CPX: cpx, MICROBIT: mb, CLUE: clue}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()

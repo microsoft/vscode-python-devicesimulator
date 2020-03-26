@@ -6,7 +6,7 @@ import { VIEW_STATE } from "../../constants";
 import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import "../../styles/Microbit.css";
-import { IRefObject, MicrobitSvg } from "./Microbit_svg";
+import { ClueSvg, IRefObject } from "./Clue_svg";
 
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
@@ -16,7 +16,7 @@ interface EventTriggers {
 }
 interface IProps {
     eventTriggers: EventTriggers;
-    leds: number[][];
+    displayMessage: string;
 }
 
 const BUTTON_CLASSNAME = {
@@ -30,22 +30,20 @@ export enum BUTTONS_KEYS {
     BTN_AB = "BTN_AB",
 }
 // Displays the SVG and call necessary svg modification.
-export class MicrobitImage extends React.Component<IProps, {}> {
-    private svgRef: React.RefObject<MicrobitSvg> = React.createRef();
+export class ClueImage extends React.Component<IProps, {}> {
+    private svgRef: React.RefObject<ClueSvg> = React.createRef();
     constructor(props: IProps) {
         super(props);
     }
     componentDidMount() {
         const svgElement = this.svgRef.current;
         if (svgElement) {
-            updateAllLeds(this.props.leds, svgElement.getLeds());
             setupAllButtons(this.props.eventTriggers, svgElement.getButtons());
             this.setupKeyPresses(this.props.eventTriggers.onKeyEvent);
         }
     }
     componentDidUpdate() {
         if (this.svgRef.current) {
-            updateAllLeds(this.props.leds, this.svgRef.current.getLeds());
             if (this.context === VIEW_STATE.PAUSE) {
                 disableAllButtons(this.svgRef.current.getButtons());
             } else if (this.context === VIEW_STATE.RUNNING) {
@@ -83,7 +81,12 @@ export class MicrobitImage extends React.Component<IProps, {}> {
         this.props.eventTriggers.onKeyEvent(event, false, event.key);
     };
     render() {
-        return <MicrobitSvg ref={this.svgRef} />;
+        return (
+            <ClueSvg
+                ref={this.svgRef}
+                displayImage={this.props.displayMessage}
+            />
+        );
     }
     public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
         if (this.svgRef.current) {
@@ -108,7 +111,7 @@ export class MicrobitImage extends React.Component<IProps, {}> {
     }
 }
 
-MicrobitImage.contextType = ViewStateContext;
+ClueImage.contextType = ViewStateContext;
 const setupButton = (
     buttonElement: SVGRectElement,
     eventTriggers: EventTriggers,
@@ -157,20 +160,4 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);
         }
     }
-};
-const updateAllLeds = (
-    leds: number[][],
-    ledRefs: Array<Array<React.RefObject<SVGRectElement>>>
-) => {
-    for (let j = 0; j < leds.length; j++) {
-        for (let i = 0; i < leds[0].length; i++) {
-            const ledElement = ledRefs[j][i].current;
-            if (ledElement) {
-                setupLed(ledElement, leds[i][j]);
-            }
-        }
-    }
-};
-const setupLed = (ledElement: SVGRectElement, brightness: number) => {
-    ledElement.style.opacity = (brightness / 10).toString();
 };

@@ -301,6 +301,12 @@ export async function activate(context: vscode.ExtensionContext) {
         );
         openWebview();
     };
+    const openClueWebview = () => {
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CLUE
+        );
+        openWebview();
+    };
 
     const gettingStartedOpen: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.gettingStarted",
@@ -338,6 +344,12 @@ export async function activate(context: vscode.ExtensionContext) {
             );
         }
     );
+    const clueOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.clue.openSimulator",
+        () => {
+            telemetryAI.runWithLatencyMeasure(openClueWebview, "");
+        }
+    );
 
     const openCPXTemplateFile = () => {
         deviceSelectionService.setCurrentActiveDevice(
@@ -349,6 +361,12 @@ export async function activate(context: vscode.ExtensionContext) {
     const openMicrobitTemplateFile = () => {
         deviceSelectionService.setCurrentActiveDevice(
             CONSTANTS.DEVICE_NAME.MICROBIT
+        );
+        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
+    };
+    const openClueTemplateFile = () => {
+        deviceSelectionService.setCurrentActiveDevice(
+            CONSTANTS.DEVICE_NAME.CLUE
         );
         openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
     };
@@ -439,6 +457,13 @@ export async function activate(context: vscode.ExtensionContext) {
                 openMicrobitTemplateFile,
                 TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
             );
+        }
+    );
+
+    const clueNewFile: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.clue.newFile",
+        () => {
+            telemetryAI.runWithLatencyMeasure(openClueTemplateFile, "");
         }
     );
 
@@ -586,9 +611,6 @@ export async function activate(context: vscode.ExtensionContext) {
                                 // Check the JSON is a state
                                 switch (messageToWebview.type) {
                                     case "state":
-                                        console.log(
-                                            `Process state output = ${messageToWebview.data}`
-                                        );
                                         const messageData = JSON.parse(
                                             messageToWebview.data
                                         );
@@ -596,11 +618,10 @@ export async function activate(context: vscode.ExtensionContext) {
                                             messageData.device_name ===
                                             deviceSelectionService.getCurrentActiveDevice()
                                         ) {
-                                            currentPanel.webview.postMessage({
-                                                active_device: deviceSelectionService.getCurrentActiveDevice(),
-                                                command: "set-state",
-                                                state: messageData,
-                                            });
+                                            messagingService.sendMessageToWebview(
+                                                VSCODE_MESSAGES_TO_WEBVIEW.SET_STATE,
+                                                messageData
+                                            );
                                         }
                                         break;
 
@@ -715,7 +736,7 @@ export async function activate(context: vscode.ExtensionContext) {
             // Data received from Python process
             deviceProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
-                console.log(`Device output = ${dataFromTheProcess}`);
+
                 let messageToWebview;
                 try {
                     messageToWebview = JSON.parse(dataFromTheProcess);
@@ -1068,6 +1089,8 @@ export async function activate(context: vscode.ExtensionContext) {
         microbitOpenSimulator,
         microbitNewFile,
         microbitDeployToDevice,
+        clueOpenSimulator,
+        clueNewFile,
         gettingStartedOpen,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,

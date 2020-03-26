@@ -3,7 +3,6 @@
     "deviceSimulatorExpressExtension.commands.common.label": "Device Simulator Express",
     "deviceSimulatorExpressExtension.commands.common.runSimulator": "Run Simulator",
     "deviceSimulatorExpressExtension.commands.common.gettingStarted": "Getting Started",
-
     "deviceSimulatorExpressExtension.commands.common.changeBaudRate": "Change Baud Rate",
     "deviceSimulatorExpressExtension.commands.common.closeSerialMonitor": "Close Serial Monitor",
     "deviceSimulatorExpressExtension.commands.common.openSerialMonitor": "Open Serial Monitor",
@@ -14,6 +13,8 @@
     "deviceSimulatorExpressExtension.commands.microbit.deployToDevice": "[micro:bit] Deploy to Device",
     "deviceSimulatorExpressExtension.commands.microbit.openSimulator": "[micro:bit] Open Simulator",
     "deviceSimulatorExpressExtension.commands.microbit.newFile": "[micro:bit] New File",
+    "deviceSimulatorExpressExtension.commands.clue.openSimulator": "[Clue] Open Simulator",
+    "deviceSimulatorExpressExtension.commands.clue.newFile": "[Clue] New File",
     "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
     "deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange": "When you change the Python interpreter, the Device Simulator Express will automatically configure itself for the required dependencies.",
     "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger.",
