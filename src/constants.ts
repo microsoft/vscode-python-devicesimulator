@@ -35,6 +35,11 @@ export const CONSTANTS = {
         MICROBIT: "micro:bit",
         CLUE: "CLUE",
     },
+    DEVICE_NAME_FORMAL: {
+        CPX: "Circuit Playground Express",
+        MICROBIT: "micro:bit",
+        CLUE: "CLUE",
+    },
     ERROR: {
         BAD_PYTHON_PATH:
             'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application',
