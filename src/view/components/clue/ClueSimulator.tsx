@@ -4,7 +4,10 @@ import {
     // DEVICE_LIST_KEY,
     CONSTANTS,
     WEBVIEW_MESSAGES,
+<<<<<<< HEAD
     DEFAULT_IMG_CLUE,
+=======
+>>>>>>> origin/dev
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
@@ -14,7 +17,11 @@ import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
 const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
+<<<<<<< HEAD
     displayMessage: DEFAULT_IMG_CLUE,
+=======
+    displayMessage: "",
+>>>>>>> origin/dev
 };
 
 interface IState {
@@ -67,10 +74,13 @@ export class ClueSimulator extends React.Component<any, IState> {
                 this.setState({
                     play_button: !this.state.play_button,
                     running_file: newRunningFile,
+<<<<<<< HEAD
                     clue: {
                         ...this.state.clue,
                         displayMessage: DEFAULT_IMG_CLUE,
                     },
+=======
+>>>>>>> origin/dev
                 });
                 break;
             case "visible-editors":
