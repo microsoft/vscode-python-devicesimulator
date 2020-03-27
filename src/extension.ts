@@ -30,7 +30,7 @@ import { DeviceSelectionService } from "./service/deviceSelectionService";
 import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
-import { SetupService } from "./service/SetupService";
+import { SetupService } from "./service/setupService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
