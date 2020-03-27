@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { DEFAULT_IMG_CLUE } from "../../constants";
 import "../../styles/Clue.css";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
