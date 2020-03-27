@@ -73,21 +73,25 @@ class SlideShow:
         """Specify the playback direction.  Default is ``PlayBackDirection.FORWARD``.  Can also be
         ``PlayBackDirection.BACKWARD``."""
 
-        self.advance = self._advance_no_fade
+        self.advance = self._advance_with_fade
         """Displays the next image. Returns True when a new image was displayed, False otherwise.
         """
 
-        if fade_effect:
-            self.advance = self._advance_with_fade
+        # assign new advance method if fade is disabled
+        if not fade_effect:
+            self.advance = self._advance_no_fade
 
         self._img_start = None
 
         self.brightness = 1.0
 
+        # blank screen for start
         self._curr_img_handle = Image.new(
             "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
         )
 
+        # if path is relative, this makes sure that
+        # it's relative to the users's code file
         abs_path_parent_dir = os.path.abspath(
             os.path.join(utils.abs_path_to_user_file, os.pardir)
         )
@@ -95,11 +99,14 @@ class SlideShow:
 
         self.folder = abs_path_folder
 
+        # get files within specified directory
         self.dirs = os.listdir(self.folder)
 
         self._order = order
         self._curr_img = ""
-        self._reorder_images()
+
+        # load images into main queue
+        self._load_images()
 
         # show the first working image
         self.advance()
@@ -121,7 +128,7 @@ class SlideShow:
             raise ValueError("Order must be either 'RANDOM' or 'ALPHABETICAL'")
 
         self._order = order
-        self._reorder_images()
+        self._load_images()
 
     @property
     def brightness(self):
@@ -146,9 +153,10 @@ class SlideShow:
 
     def _get_next_img(self):
 
+        # handle empty queue
         if not len(self.pic_queue):
             if self.loop:
-                self._reorder_images()
+                self._load_images()
             else:
                 return ""
 
@@ -157,11 +165,13 @@ class SlideShow:
         else:
             return self.pic_queue.pop()
 
-    def _reorder_images(self):
+    def _load_images(self):
         dir_imgs = []
         for d in self.dirs:
             try:
                 new_path = os.path.join(self.folder, d)
+
+                # only add bmp imgs
                 if os.path.splitext(new_path)[1] == ".bmp":
                     dir_imgs.append(new_path)
             except Image.UnidentifiedImageError as e:
@@ -169,12 +179,13 @@ class SlideShow:
         if self._order == PlayBackOrder.RANDOM:
             shuffle(dir_imgs)
 
+        # convert list to queue
+        # (must be list beforehand for potential randomization)
         self.pic_queue = collections.deque(dir_imgs)
 
     def _advance_with_fade(self):
 
         old_img = self._curr_img_handle
-
         advance_sucessful = False
 
         while not advance_sucessful:
@@ -192,11 +203,21 @@ class SlideShow:
                     (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
                 )
 
+                if new_img.size[0] < 240 or new_img.size[1] < 240:
+                    black_overlay = Image.new(
+                        "RGBA",
+                        CONSTANTS.SCREEN_HEIGHT_WIDTH,
+                        CONSTANTS.SCREEN_HEIGHT_WIDTH,
+                    )
+                    black_overlay.paste(new_img)
+                    new_img = black_overlay
+
                 black_overlay = Image.new("RGBA", new_img.size)
                 advance_sucessful = True
             except Image.UnidentifiedImageError as e:
                 pass
 
+        # fade out old photo
         for i in range(self.fade_frames, -1, -1):
             sendable_img = Image.blend(
                 black_overlay, old_img, i * self.brightness / self.fade_frames
@@ -205,6 +226,7 @@ class SlideShow:
 
         time.sleep(self._BASE_DWELL_DARK)
 
+        # fade in new photo
         for i in range(self.fade_frames + 1):
             sendable_img = Image.blend(
                 black_overlay, new_img, i * self.brightness / self.fade_frames
@@ -229,9 +251,19 @@ class SlideShow:
 
             try:
                 new_img = Image.open(new_path)
+
                 new_img = new_img.crop(
                     (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
                 )
+
+                if new_img.size[0] < 240 or new_img.size[1] < 240:
+                    black_overlay = Image.new(
+                        "RGBA",
+                        CONSTANTS.SCREEN_HEIGHT_WIDTH,
+                        CONSTANTS.SCREEN_HEIGHT_WIDTH,
+                    )
+                    black_overlay.paste(new_img)
+                    new_img = black_overlay
 
                 self._curr_img = new_path
 
@@ -245,6 +277,7 @@ class SlideShow:
             black_overlay = Image.new("RGBA", new_img.size)
             new_img = Image.blend(black_overlay, new_img, self.brightness)
 
+        # gradually scroll new img over old img
         for i in range(self._NO_FADE_TRANSITION_INCREMENTS + 1):
             curr_y = (
                 i * CONSTANTS.SCREEN_HEIGHT_WIDTH / self._NO_FADE_TRANSITION_INCREMENTS
