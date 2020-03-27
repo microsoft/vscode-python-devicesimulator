@@ -11,7 +11,7 @@ import { logToOutputChannel } from "./extension_utils/utils";
 import { SerialPortControl } from "./serialPortControl";
 
 export interface ISerialPortDetail {
-    comName: string;
+    path: string;
     manufacturer: string;
     vendorId: string;
     productId: string;
@@ -127,7 +127,7 @@ export class SerialMonitor implements vscode.Disposable {
                 foundPort &&
                 !(this._serialPortControl && this._serialPortControl.isActive)
             ) {
-                this.updatePortListStatus(foundPort.comName);
+                this.updatePortListStatus(foundPort.path);
             }
         } else {
             const chosen = await vscode.window.showQuickPick(
@@ -136,7 +136,7 @@ export class SerialMonitor implements vscode.Disposable {
                         (port: ISerialPortDetail): vscode.QuickPickItem => {
                             return {
                                 description: port.manufacturer,
-                                label: port.comName,
+                                label: port.path,
                             };
                         }
                     )
@@ -160,10 +160,10 @@ export class SerialMonitor implements vscode.Disposable {
         if (!this._currentPort) {
             const ans = await vscode.window.showInformationMessage(
                 CONSTANTS.WARNING.NO_SERIAL_PORT_SELECTED,
-                DialogResponses.YES,
-                DialogResponses.NO
+                DialogResponses.SELECT,
+                DialogResponses.CANCEL
             );
-            if (ans === DialogResponses.YES) {
+            if (ans === DialogResponses.SELECT) {
                 await this.selectSerialPort(null, null);
             }
             if (!this._currentPort) {
