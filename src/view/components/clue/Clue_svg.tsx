@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { DEFAULT_IMG_CLUE } from "../../constants";
 import "../../styles/Clue.css";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
@@ -33,7 +32,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     componentDidMount() {
         this.updateDisplay();
-        this.setDefaultDisplay();
     }
     componentDidUpdate() {
         this.updateDisplay();
@@ -944,16 +942,11 @@ export class ClueSvg extends React.Component<IProps, {}> {
         );
     }
     private updateDisplay() {
-        if (this.displayRef.current) {
+        if (this.displayRef.current && this.props.displayImage) {
             this.displayRef.current.setAttribute(
                 "href",
                 `data:image/png;base64,${this.props.displayImage}`
             );
-        }
-    }
-    private setDefaultDisplay() {
-        if (this.displayRef.current) {
-            this.displayRef.current.setAttribute("href", DEFAULT_IMG_CLUE);
         }
     }
 }
