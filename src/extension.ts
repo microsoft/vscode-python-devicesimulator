@@ -795,12 +795,13 @@ export async function activate(context: vscode.ExtensionContext) {
             const chosen_device = await vscode.window.showQuickPick(
                 Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
             );
-            
+
             const formalNameToNickNameMapping = {
                 [CONSTANTS.DEVICE_NAME_FORMAL.CPX]: CONSTANTS.DEVICE_NAME.CPX,
-                [CONSTANTS.DEVICE_NAME_FORMAL.MICROBIT]: CONSTANTS.DEVICE_NAME.MICROBIT,
+                [CONSTANTS.DEVICE_NAME_FORMAL.MICROBIT]:
+                    CONSTANTS.DEVICE_NAME.MICROBIT,
                 [CONSTANTS.DEVICE_NAME_FORMAL.CLUE]: CONSTANTS.DEVICE_NAME.CLUE,
-            }
+            };
 
             if (!chosen_device) {
                 utils.logToOutputChannel(
@@ -810,7 +811,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 );
                 return;
             }
-            
+
             const device = formalNameToNickNameMapping[chosen_device];
 
             const telemetryEvents = telemetryHandlerService.getTelemetryEventsForStartingDeployToDevice(
