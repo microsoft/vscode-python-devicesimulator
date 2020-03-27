@@ -32,6 +32,7 @@ import { WebviewService } from "./service/webviewService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
+import { TelemetryHandlerService } from "./service/telemetryHandlerService";
 import { UsbDetector } from "./usbDetector";
 import {
     VSCODE_MESSAGES_TO_WEBVIEW,
@@ -72,6 +73,10 @@ export async function activate(context: vscode.ExtensionContext) {
     let messageListener: vscode.Disposable;
     let activeEditorListener: vscode.Disposable;
     const webviewService = new WebviewService(context, deviceSelectionService);
+    const telemetryHandlerService = new TelemetryHandlerService(
+        telemetryAI,
+        deviceSelectionService
+    );
 
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
@@ -175,7 +180,9 @@ export async function activate(context: vscode.ExtensionContext) {
                         switch (message.command) {
                             case WEBVIEW_MESSAGES.BUTTON_PRESS:
                                 // Send input to the Python process
-                                handleButtonPressTelemetry(message.text);
+                                telemetryHandlerService.handleButtonPressTelemetry(
+                                    message.text
+                                );
                                 console.log(`About to write ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -214,7 +221,9 @@ export async function activate(context: vscode.ExtensionContext) {
                                 break;
                             case WEBVIEW_MESSAGES.GESTURE:
                             case WEBVIEW_MESSAGES.SENSOR_CHANGED:
-                                handleGestureTelemetry(message.text);
+                                telemetryHandlerService.handleGestureTelemetry(
+                                    message.text
+                                );
                                 console.log(`Sensor changed ${messageJson} \n`);
                                 if (
                                     inDebugMode &&
@@ -234,7 +243,9 @@ export async function activate(context: vscode.ExtensionContext) {
                                 runSimulatorCommand();
                                 break;
                             case WEBVIEW_MESSAGES.SLIDER_TELEMETRY:
-                                handleSensorTelemetry(message.text);
+                                telemetryHandlerService.handleSensorTelemetry(
+                                    message.text
+                                );
                                 break;
                             case WEBVIEW_MESSAGES.SWITCH_DEVICE:
                                 deviceSelectionService.setCurrentActiveDevice(
@@ -426,7 +437,7 @@ export async function activate(context: vscode.ExtensionContext) {
             }),
             // tslint:disable-next-line: no-unused-expression
             (error: any) => {
-                handleNewFileErrorTelemetry();
+                telemetryHandlerService.handleNewFileErrorTelemetry();
                 console.error(`Failed to open a new text document:  ${error}`);
             };
     };
@@ -744,7 +755,7 @@ export async function activate(context: vscode.ExtensionContext) {
                             true
                         );
                     }
-                    handleDeployToDeviceFinishedTelemetry(
+                    telemetryHandlerService.handleDeployToDeviceFinishedTelemetry(
                         messageToWebview,
                         device
                     );
@@ -757,7 +768,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
             // Std error output
             deviceProcess.stderr.on("data", data => {
-                handleDeployToDeviceErrorTelemetry(data, device);
+                telemetryHandlerService.handleDeployToDeviceErrorTelemetry(
+                    data,
+                    device
+                );
                 console.error(
                     `Error from the Python device process through stderr: ${data}`
                 );
@@ -791,7 +805,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            const telemetryEvents = getTelemetryEventsForStartingDeployToDevice(
+            const telemetryEvents = telemetryHandlerService.getTelemetryEventsForStartingDeployToDevice(
                 chosen_device
             );
 
@@ -942,7 +956,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     )
                 );
 
-                handleDebuggerTelemetry();
+                telemetryHandlerService.handleDebuggerTelemetry();
 
                 openWebview();
                 if (currentPanel) {
@@ -960,7 +974,7 @@ export async function activate(context: vscode.ExtensionContext) {
                         `Error trying to init the server on port ${utils.getServerPortConfig()}`
                     );
 
-                    handleDebuggerFailTelemetry();
+                    telemetryHandlerService.handleDebuggerFailTelemetry();
 
                     vscode.window.showErrorMessage(
                         CONSTANTS.ERROR.DEBUGGER_SERVER_INIT_FAILED(
@@ -1021,342 +1035,6 @@ export async function activate(context: vscode.ExtensionContext) {
         configsChanged
     );
 }
-
-const handleDebuggerTelemetry = () => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_DEBUGGER_INIT_SUCCESS
-            );
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_DEBUGGER_INIT_SUCCESS
-            );
-            break;
-        default:
-            break;
-    }
-};
-
-const handleDebuggerFailTelemetry = () => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_DEBUGGER_INIT_FAIL
-            );
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_DEBUGGER_INIT_FAIL
-            );
-            break;
-        default:
-            break;
-    }
-};
-
-const handleButtonPressTelemetry = (buttonState: any) => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            handleCPXButtonPressTelemetry(buttonState);
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            handleMicrobitButtonPressTelemetry(buttonState);
-            break;
-        default:
-            break;
-    }
-};
-
-const handleGestureTelemetry = (sensorState: any) => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            handleCPXGestureTelemetry(sensorState);
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            break;
-        default:
-            break;
-    }
-};
-
-const handleSensorTelemetry = (sensor: string) => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            handleCPXSensorTelemetry(sensor);
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            handleMicrobitSensorTelemetry(sensor);
-            break;
-        default:
-            break;
-    }
-};
-
-const handleCPXButtonPressTelemetry = (buttonState: any) => {
-    if (buttonState.button_a && buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.CPX_SIMULATOR_BUTTON_AB
-        );
-    } else if (buttonState.button_a) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.CPX_SIMULATOR_BUTTON_A
-        );
-    } else if (buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.CPX_SIMULATOR_BUTTON_B
-        );
-    } else if (buttonState.switch) {
-        telemetryAI.trackFeatureUsage(TelemetryEventName.CPX_SIMULATOR_SWITCH);
-    }
-};
-
-const handleCPXGestureTelemetry = (sensorState: any) => {
-    if (sensorState.shake) {
-        handleCPXSensorTelemetry("shake");
-    } else if (sensorState.touch) {
-        handleCPXSensorTelemetry("touch");
-    }
-};
-
-const handleCPXSensorTelemetry = (sensor: string) => {
-    switch (sensor) {
-        case "temperature":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_TEMPERATURE_SENSOR
-            );
-            break;
-        case "light":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_LIGHT_SENSOR
-            );
-            break;
-        case "motion_x":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-        case "motion_y":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-        case "motion_z":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-        case "shake":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_SHAKE
-            );
-            break;
-        case "touch":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_SIMULATOR_CAPACITIVE_TOUCH
-            );
-            break;
-    }
-};
-
-const handleMicrobitButtonPressTelemetry = (buttonState: any) => {
-    if (buttonState.button_a && buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_AB
-        );
-    } else if (buttonState.button_a) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_A
-        );
-    } else if (buttonState.button_b) {
-        telemetryAI.trackFeatureUsage(
-            TelemetryEventName.MICROBIT_SIMULATOR_BUTTON_B
-        );
-    }
-};
-
-const handleMicrobitSensorTelemetry = (sensor: string) => {
-    switch (sensor) {
-        case "temperature":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_SIMULATOR_TEMPERATURE_SENSOR
-            );
-            break;
-        case "light":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_SIMULATOR_LIGHT_SENSOR
-            );
-            break;
-        case "motion_x":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-        case "motion_y":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-        case "motion_z":
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
-            );
-            break;
-    }
-};
-
-const handleNewFileErrorTelemetry = () => {
-    switch (deviceSelectionService.getCurrentActiveDevice()) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_ERROR_COMMAND_NEW_FILE
-            );
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_ERROR_COMMAND_NEW_FILE
-            );
-            break;
-        default:
-            break;
-    }
-};
-
-const getTelemetryEventsForStartingDeployToDevice = (device: string) => {
-    let deployTelemetryEvent: string;
-    let deployPerformanceTelemetryEvent: string;
-    switch (device) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            deployTelemetryEvent =
-                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
-            deployPerformanceTelemetryEvent =
-                TelemetryEventName.CPX_COMMAND_DEPLOY_DEVICE;
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            deployTelemetryEvent =
-                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
-            deployPerformanceTelemetryEvent =
-                TelemetryEventName.MICROBIT_COMMAND_DEPLOY_DEVICE;
-            break;
-        case CONSTANTS.DEVICE_NAME.CLUE:
-            deployTelemetryEvent =
-                TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
-            deployPerformanceTelemetryEvent =
-                TelemetryEventName.CLUE_COMMAND_DEPLOY_DEVICE;
-            break;
-    }
-    return {
-        deployTelemetryEvent: deployTelemetryEvent,
-        deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent,
-    };
-};
-
-const handleDeployToDeviceErrorTelemetry = (
-    data: string,
-    device: string
-) => {
-    let telemetryErrorName: string;
-    switch (device) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            telemetryErrorName =
-                TelemetryEventName.CPX_ERROR_PYTHON_DEVICE_PROCESS;
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            telemetryErrorName =
-                TelemetryEventName.MICROBIT_ERROR_PYTHON_DEVICE_PROCESS;
-        case CONSTANTS.DEVICE_NAME.CLUE:
-            telemetryErrorName =
-                TelemetryEventName.CLUE_ERROR_PYTHON_DEVICE_PROCESS;
-    }
-    telemetryAI.trackFeatureUsage(telemetryErrorName, { error: `${data}` });
-};
-
-const handleDeployToDeviceFinishedTelemetry = (
-    message: any,
-    device: string
-) => {
-    let successCommandDeployDevice: string;
-    let errorCommandDeployWithoutDevice: string;
-    switch (device) {
-        case CONSTANTS.DEVICE_NAME.CPX:
-            successCommandDeployDevice =
-                TelemetryEventName.CPX_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice =
-                TelemetryEventName.CPX_ERROR_DEPLOY_WITHOUT_DEVICE;
-            break;
-        case CONSTANTS.DEVICE_NAME.MICROBIT:
-            successCommandDeployDevice =
-                TelemetryEventName.MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice =
-                TelemetryEventName.MICROBIT_ERROR_DEPLOY_WITHOUT_DEVICE;
-            break;
-        case CONSTANTS.DEVICE_NAME.CLUE:
-            successCommandDeployDevice =
-                TelemetryEventName.CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE;
-            errorCommandDeployWithoutDevice =
-                TelemetryEventName.CLUE_ERROR_DEPLOY_WITHOUT_DEVICE;
-            break;
-    }
-
-    switch (message.type) {
-        case "complete":
-            telemetryAI.trackFeatureUsage(successCommandDeployDevice);
-            break;
-        case "no-device":
-            telemetryAI.trackFeatureUsage(errorCommandDeployWithoutDevice);
-            if (
-                device === CONSTANTS.DEVICE_NAME.CPX ||
-                device === CONSTANTS.DEVICE_NAME.CLUE
-            ) {
-                vscode.window
-                    .showErrorMessage(
-                        CONSTANTS.ERROR.NO_DEVICE,
-                        DialogResponses.HELP
-                    )
-                    .then((selection: vscode.MessageItem | undefined) => {
-                        if (selection === DialogResponses.HELP) {
-                            const okAction = () => {
-                                let helpLink: string;
-                                let helpTelemetryEvent: string;
-                                if (device === CONSTANTS.DEVICE_NAME.CPX) {
-                                    helpLink = CONSTANTS.LINKS.CPX_HELP;
-                                    helpTelemetryEvent =
-                                        CONSTANTS.LINKS.CPX_HELP;
-                                } else if (
-                                    device === CONSTANTS.DEVICE_NAME.CLUE
-                                ) {
-                                    helpLink = CONSTANTS.LINKS.CLUE_HELP;
-                                    helpTelemetryEvent =
-                                        CONSTANTS.LINKS.CLUE_HELP;
-                                }
-                                open(helpLink);
-                                telemetryAI.trackFeatureUsage(
-                                    helpTelemetryEvent
-                                );
-                            };
-                            utils.showPrivacyModal(
-                                okAction,
-                                CONSTANTS.INFO.THIRD_PARTY_WEBSITE_ADAFRUIT
-                            );
-                        }
-                    });
-            } else if (device === CONSTANTS.DEVICE_NAME.MICROBIT) {
-                vscode.window.showErrorMessage(CONSTANTS.ERROR.NO_DEVICE);
-            }
-            break;
-        case "low-python-version":
-            vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.LOW_PYTHON_VERSION_FOR_MICROBIT_DEPLOYMENT
-            );
-            break;
-        default:
-            console.log(
-                `Non-state JSON output from the process : ${message}`
-            );
-            break;
-    }
-};
 
 const updatePythonExtraPaths = () => {
     updateConfigLists(
