@@ -33,7 +33,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     componentDidMount() {
         this.updateDisplay();
-        this.setDefaultDisplay();
     }
     componentDidUpdate() {
         this.updateDisplay();
@@ -44,7 +43,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
             <div className="microbit-svg">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 304.89 250.98"
+                    viewBox="0 0 330 250.98"
                     ref={this.svgRef}
                     x="0px"
                     y="0px"
@@ -939,21 +938,27 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
+                    <g id="g2144" transform="translate(320 51.193)">
+                        <circle
+                            y={200}
+                            x={320}
+                            id="CLUE_NEOPIXEL"
+                            fill="#c8c8c8"
+                        />
+                    </g>
                 </svg>
             </div>
         );
     }
     private updateDisplay() {
-        if (this.displayRef.current) {
+        if (this.displayRef.current && this.props.displayImage) {
             this.displayRef.current.setAttribute(
                 "href",
                 `data:image/png;base64,${this.props.displayImage}`
             );
-        }
-    }
-    private setDefaultDisplay() {
-        if (this.displayRef.current) {
-            this.displayRef.current.setAttribute("href", DEFAULT_IMG_CLUE);
+            console.log(
+                `newDisplay ${this.props.displayImage.substring(0, 100)}`
+            );
         }
     }
 }
