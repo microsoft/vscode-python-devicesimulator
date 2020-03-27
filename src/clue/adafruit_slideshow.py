@@ -50,9 +50,43 @@ class SlideShow:
         auto_advance=True,
         direction=PlayBackDirection.FORWARD,
     ):
+        self._BASE_DWELL = 0.3
+        self._BASE_DWELL_DARK = 0.7
+        self._NO_FADE_TRANSITION_INCREMENTS = 18
 
-        self._curr_img_handle = Image.new("RGBA", (240, 240))
         self.auto_advance = auto_advance
+        """Enable auto-advance based on dwell time.  Set to ``False`` to manually control."""
+
+        self.loop = loop
+        """Specifies whether to loop through the images continuously or play through the list once.
+        ``True`` will continue to loop, ``False`` will play only once."""
+
+        self.fade_frames = 8
+        """Whether to include the fade effect between images. ``True`` tells the code to fade the
+           backlight up and down between image display transitions. ``False`` maintains max
+           brightness on the backlight between image transitions."""
+
+        self.dwell = self._BASE_DWELL + dwell
+        """The number of seconds each image displays, in seconds."""
+
+        self.direction = direction
+        """Specify the playback direction.  Default is ``PlayBackDirection.FORWARD``.  Can also be
+        ``PlayBackDirection.BACKWARD``."""
+
+        self.advance = self._advance_no_fade
+        """Displays the next image. Returns True when a new image was displayed, False otherwise.
+        """
+
+        if fade_effect:
+            self.advance = self._advance_with_fade
+
+        self._img_start = None
+
+        self.brightness = 1.0
+
+        self._curr_img_handle = Image.new(
+            "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
+        )
 
         abs_path_parent_dir = os.path.abspath(
             os.path.join(utils.abs_path_to_user_file, os.pardir)
@@ -60,24 +94,15 @@ class SlideShow:
         abs_path_folder = os.path.normpath(os.path.join(abs_path_parent_dir, folder))
 
         self.folder = abs_path_folder
-        self.dirs = os.listdir(self.folder)
-        self.loop = loop
-        self.BASE_DWELL = 0.3
-        self.BASE_DWELL_DARK = 0.7
-        self.TRANSITION_INCREMENTS = 18
-        self.fade_frames = 8
-        if fade_effect:
-            self.advance = self.advance_with_fade
-        else:
-            self.advance = self.advance_no_fade
 
-        self.brightness = 1.0
-        self.dwell = self.BASE_DWELL + dwell
-        self.direction = direction
+        self.dirs = os.listdir(self.folder)
+
         self._order = order
-        self._load_pic_queue()
-        self.update()
-        self.curr_img = ""
+        self._curr_img = ""
+        self._reorder_images()
+
+        # show the first working image
+        self.advance()
 
     @property
     def current_image_name(self):
@@ -98,105 +123,9 @@ class SlideShow:
         self._order = order
         self._reorder_images()
 
-    def _reorder_images(self):
-        self._load_pic_queue()
-
-    def _get_img(self):
-        if self.direction == PlayBackDirection.FORWARD:
-            return self.pic_queue.popleft()
-        else:
-            return self.pic_queue.pop()
-
-    def _load_pic_queue(self):
-        dir_imgs = []
-        for d in self.dirs:
-            try:
-                new_path = os.path.join(self.folder, d)
-                if os.path.splitext(new_path)[1] == ".bmp":
-                    dir_imgs.append(new_path)
-            except Exception as e:
-                continue
-        if self._order == PlayBackOrder.RANDOM:
-            shuffle(dir_imgs)
-
-        self.pic_queue = collections.deque(dir_imgs)
-
-    def update(self):
-
-        successful = False
-        while self.auto_advance and not successful:
-            if len(self.pic_queue):
-                successful = self.advance(self._get_img())
-            elif self.loop:
-                self._load_pic_queue()
-            else:
-                return False
-
-        return True
-
-    def advance_with_fade(self, new_path):
-        try:
-            img = Image.open(new_path)
-            self._curr_img = new_path
-
-            img = img.convert("RGBA")
-            img = img.crop((0, 0, 240, 240))
-            img.putalpha(255)
-
-            black_overlay = Image.new("RGBA", img.size)
-        except Exception as e:
-            return False
-
-        time.sleep(self.BASE_DWELL_DARK)
-        for i in range(self.fade_frames + 1):
-            new_img = Image.blend(
-                black_overlay, img, i * self.brightness / self.fade_frames
-            )
-            self._send(new_img)
-        time.sleep(self.dwell)
-        for i in range(self.fade_frames, -1, -1):
-            new_img = Image.blend(
-                black_overlay, img, i * self.brightness / self.fade_frames
-            )
-            self._send(new_img)
-        return True
-
-    def advance_no_fade(self, new_path):
-        old_img = self._curr_img_handle
-
-        try:
-            new_img = Image.open(new_path)
-            new_img = new_img.crop((0, 0, 240, 240))
-            self._curr_img = new_path
-            new_img = new_img.convert("RGBA")
-
-            new_img.putalpha(255)
-        except Exception as e:
-            return False
-
-        for i in range(self.TRANSITION_INCREMENTS + 1):
-            img_piece = new_img.crop((0, 0, 240, i * 240 / self.TRANSITION_INCREMENTS))
-
-            old_img.paste(img_piece)
-            self._send(old_img)
-
-        self._curr_img_handle = new_img
-
-        time.sleep(self.dwell)
-        return True
-
-    def _send(self, img):
-        # sends current bmp_img to the frontend
-        buffered = BytesIO()
-        img.save(buffered, format="BMP")
-        byte_base64 = base64.b64encode(buffered.getvalue())
-        img_str = str(byte_base64)[2:-1]
-
-        sendable_json = {CONSTANTS.BASE_64: img_str}
-        common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
-
     @property
     def brightness(self):
+        """Brightness of the backlight when an image is displaying. Clamps to 0 to 1.0"""
         return self._brightness
 
     @brightness.setter
@@ -206,3 +135,137 @@ class SlideShow:
         elif brightness > 1.0:
             brightness = 1.0
         self._brightness = brightness
+
+    def update(self):
+        """Updates the slideshow to the next image."""
+        now = time.monotonic()
+        if not self.auto_advance or now - self._img_start < self.dwell:
+            return True
+
+        return self.advance()
+
+    def _get_next_img(self):
+
+        if not len(self.pic_queue):
+            if self.loop:
+                self._reorder_images()
+            else:
+                return ""
+
+        if self.direction == PlayBackDirection.FORWARD:
+            return self.pic_queue.popleft()
+        else:
+            return self.pic_queue.pop()
+
+    def _reorder_images(self):
+        dir_imgs = []
+        for d in self.dirs:
+            try:
+                new_path = os.path.join(self.folder, d)
+                if os.path.splitext(new_path)[1] == ".bmp":
+                    dir_imgs.append(new_path)
+            except Image.UnidentifiedImageError as e:
+                continue
+        if self._order == PlayBackOrder.RANDOM:
+            shuffle(dir_imgs)
+
+        self.pic_queue = collections.deque(dir_imgs)
+
+    def _advance_with_fade(self):
+
+        old_img = self._curr_img_handle
+
+        advance_sucessful = False
+
+        while not advance_sucessful:
+            new_path = self._get_next_img()
+            if new_path == "":
+                return False
+
+            try:
+                new_img = Image.open(new_path)
+
+                new_img = new_img.convert("RGBA")
+                new_img.putalpha(255)
+
+                new_img = new_img.crop(
+                    (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
+                )
+
+                black_overlay = Image.new("RGBA", new_img.size)
+                advance_sucessful = True
+            except Image.UnidentifiedImageError as e:
+                pass
+
+        for i in range(self.fade_frames, -1, -1):
+            sendable_img = Image.blend(
+                black_overlay, old_img, i * self.brightness / self.fade_frames
+            )
+            self._send(sendable_img)
+
+        time.sleep(self._BASE_DWELL_DARK)
+
+        for i in range(self.fade_frames + 1):
+            sendable_img = Image.blend(
+                black_overlay, new_img, i * self.brightness / self.fade_frames
+            )
+            self._send(sendable_img)
+
+        self._curr_img_handle = new_img
+        self._curr_img = new_path
+        self._img_start = time.monotonic()
+        return True
+
+    def _advance_no_fade(self):
+
+        old_img = self._curr_img_handle
+
+        advance_sucessful = False
+
+        while not advance_sucessful:
+            new_path = self._get_next_img()
+            if new_path == "":
+                return False
+
+            try:
+                new_img = Image.open(new_path)
+                new_img = new_img.crop(
+                    (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
+                )
+
+                self._curr_img = new_path
+
+                new_img = new_img.convert("RGBA")
+                new_img.putalpha(255)
+                advance_sucessful = True
+            except Image.UnidentifiedImageError as e:
+                pass
+
+        if self.brightness < 1.0:
+            black_overlay = Image.new("RGBA", new_img.size)
+            new_img = Image.blend(black_overlay, new_img, self.brightness)
+
+        for i in range(self._NO_FADE_TRANSITION_INCREMENTS + 1):
+            curr_y = (
+                i * CONSTANTS.SCREEN_HEIGHT_WIDTH / self._NO_FADE_TRANSITION_INCREMENTS
+            )
+            img_piece = new_img.crop((0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, curr_y))
+            old_img.paste(img_piece)
+            self._send(old_img)
+
+        self._curr_img_handle = new_img
+        self._curr_img = new_path
+        self._img_start = time.monotonic()
+        return True
+
+    def _send(self, img):
+        # sends current bmp_img to the frontend
+        buffered = BytesIO()
+        img.save(buffered, format="BMP")
+        byte_base64 = base64.b64encode(buffered.getvalue())
+
+        # only send the base_64 string contents
+        img_str = str(byte_base64)[2:-1]
+
+        sendable_json = {CONSTANTS.BASE_64: img_str}
+        common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
