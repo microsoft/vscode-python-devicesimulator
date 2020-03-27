@@ -16,6 +16,9 @@ You will be prompted to install the Python dependencies during the first use.
 - _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added python and pip to your PATH in your environment variables. (1)
 - _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
+### Linux-only Requirements
+To successfully run the virtual environment setup on your first run, please run the following command: `sudo apt install python3.8-venv`
+
 ## Circuit Playground Express (CPX) Simulator
 
 ### Features
