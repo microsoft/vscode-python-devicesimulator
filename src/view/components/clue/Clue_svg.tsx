@@ -14,6 +14,7 @@ interface IProps {
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
     private neopixel: React.RefObject<SVGCircleElement> = React.createRef()
+    private pixelStopGradient: React.RefObject<SVGStopElement> = React.createRef()
 
     private buttonRefs: IRefObject = {
         BTN_A: React.createRef(),
@@ -52,7 +53,11 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     width="100%"
                     height="100%"
                 >
-                    <defs />
+                    <defs >
+                        <radialGradient id="grad1" cx="50%" cy="50%" r="70%" fx="50%" fy="50%" >
+                            <stop offset="0%" stopColor="rgb(0,0,255)" stopOpacity="1" ref={this.pixelStopGradient} />
+                            <stop offset="100%" stopOpacity="0" />
+                        </radialGradient></defs>
                     <g id="Green">
                         <rect
                             className="cls-1"
@@ -939,6 +944,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
+                    <circle cx={330} cy={100} r="30" fill="url(#grad1)" />
                     <circle cx={330} cy={100} r="12" ref={this.neopixel} />
                 </svg>
             </div>
@@ -954,10 +960,14 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     private updateNeopixel() {
         const { neopixel } = this.props
+        const rgbColor = `rgb(${neopixel[0]},${neopixel[1]},${neopixel[2]})`
+
         if (this.neopixel.current) {
-            const rgbColor = `rgb(${neopixel[0]},${neopixel[1]},${neopixel[2]})`
             console.log(rgbColor)
             this.neopixel.current.setAttribute('fill', rgbColor)
+        }
+        if (this.pixelStopGradient.current) {
+            this.pixelStopGradient.current.setAttribute('stop-color', rgbColor)
         }
 
     }
