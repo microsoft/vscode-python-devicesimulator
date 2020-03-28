@@ -1,4 +1,3 @@
-import common
 from PIL import Image
 
 import os
@@ -301,4 +300,4 @@ class SlideShow:
         img_str = str(byte_base64)[2:-1]
 
         sendable_json = {CONSTANTS.BASE_64: img_str}
-        common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+        utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
