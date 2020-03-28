@@ -12,7 +12,7 @@ import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 
-const DEFAULT_CLUE_STATE: IClueState = {
+export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: DEFAULT_IMG_CLUE,
     neopixel: [0, 0, 0]

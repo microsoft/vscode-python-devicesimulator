@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import "../../styles/Clue.css";
+import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -10,7 +11,7 @@ interface IProps {
     displayImage: string;
     neopixel: number[]
 }
-
+const LED_TINT_FACTOR = 0.5
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
     private neopixel: React.RefObject<SVGCircleElement> = React.createRef()
@@ -35,6 +36,8 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     componentDidMount() {
         this.updateDisplay();
+        this.updateNeopixel()
+
     }
     componentDidUpdate() {
         this.updateDisplay();
@@ -46,7 +49,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
             <div className="microbit-svg">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 350 250.98"
+                    viewBox="0 0 375 250.98"
                     ref={this.svgRef}
                     x="0px"
                     y="0px"
@@ -55,7 +58,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                 >
                     <defs >
                         <radialGradient id="grad1" cx="50%" cy="50%" r="70%" fx="50%" fy="50%" >
-                            <stop offset="0%" stopColor="rgb(0,0,255)" stopOpacity="1" ref={this.pixelStopGradient} />
+                            <stop offset="0%" stopColor="rgb(0,0,0)" stopOpacity="1" ref={this.pixelStopGradient} />
                             <stop offset="100%" stopOpacity="0" />
                         </radialGradient></defs>
                     <g id="Green">
@@ -944,8 +947,8 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
-                    <circle cx={330} cy={100} r="30" fill="url(#grad1)" />
-                    <circle cx={330} cy={100} r="12" ref={this.neopixel} />
+                    <circle cx={340} cy={100} r="30" fill="url(#grad1)" />
+                    <circle cx={340} cy={100} r="12" ref={this.neopixel} />
                 </svg>
             </div>
         );
@@ -960,13 +963,21 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     private updateNeopixel() {
         const { neopixel } = this.props
-        const rgbColor = `rgb(${neopixel[0]},${neopixel[1]},${neopixel[2]})`
+        const rgbColor = `rgb(${neopixel[0] + (255 - neopixel[0]) * LED_TINT_FACTOR},
+        ${neopixel[1] + (255 - neopixel[1]) * LED_TINT_FACTOR},${neopixel[2] + (255 - neopixel[2]) * LED_TINT_FACTOR})`
 
         if (this.neopixel.current) {
-            console.log(rgbColor)
             this.neopixel.current.setAttribute('fill', rgbColor)
         }
         if (this.pixelStopGradient.current) {
+            if (neopixel === DEFAULT_CLUE_STATE.neopixel) {
+                console.log("remove opacity")
+
+                this.pixelStopGradient.current.setAttribute('stop-opacity', '0')
+            } else {
+                this.pixelStopGradient.current.setAttribute('stop-opacity', '1')
+
+            }
             this.pixelStopGradient.current.setAttribute('stop-color', rgbColor)
         }
 
