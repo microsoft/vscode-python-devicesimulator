@@ -9,19 +9,6 @@ module.exports = {
     path: path.resolve(__dirname, "out"),
     filename: "[name].js"
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          chunks: "initial",
-          name: "vendor",
-          priority: 10,
-          enforce: true
-        }
-      }
-    }
-  },
   devtool: "eval-source-map",
   resolve: {
     extensions: [".js", ".ts", ".tsx", ".json"]

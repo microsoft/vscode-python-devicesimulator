@@ -7,7 +7,7 @@
     "instrumentationKey": "__AIKEY__",
     "icon": "assets/icon.png",
     "engines": {
-        "vscode": "^1.34.0"
+        "vscode": "^1.43.0"
     },
     "categories": [
         "Other"
@@ -353,6 +353,7 @@
         "socket.io": "^2.2.0",
         "svg-inline-react": "^3.1.0",
         "ts-jest": "^25.0.0",
+        "usb-native": "^5.0.1",
         "util": "^0.12.1",
         "vscode-extension-telemetry": "^0.1.1",
         "vscode-nls": "^4.1.0"
