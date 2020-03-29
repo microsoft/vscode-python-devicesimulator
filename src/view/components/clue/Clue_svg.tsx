@@ -319,8 +319,8 @@ export class ClueSvg extends React.Component<IProps, {}> {
                         <circle cx="85.24" cy="210.35" r="12.23" />
                         <circle cx="153.2" cy="210.35" r="12.23" />
                         <circle cx="220.8" cy="210.35" r="12.23" />
-                        <circle cx="280.98" cy="210.98" r="12.23" />
-                        <circle cx="25.35" cy="210.72" r="12.23" />
+                        <circle cx="280.98" cy="210.35" r="12.23" />
+                        <circle cx="25.35" cy="210.35" r="12.23" />
                         <rect
                             className="cls-10"
                             x="40.39"
@@ -947,8 +947,11 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
-                    <circle cx={340} cy={100} r="30" fill="url(#grad1)" />
-                    <circle cx={340} cy={100} r="12" ref={this.neopixel} />
+                    <text x={318} y={85} className="sim-text-outside">
+                        Neopixel
+                        </text>
+                    <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
+                    <circle cx={345} cy={115} r="12" ref={this.neopixel} />
                 </svg>
             </div>
         );
