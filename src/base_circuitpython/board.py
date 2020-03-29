@@ -7,7 +7,7 @@ class Display:
         pass
 
     def show(self, group):
-        group.draw()
+        group.draw(show=True)
 
 
 DISPLAY = Display()
