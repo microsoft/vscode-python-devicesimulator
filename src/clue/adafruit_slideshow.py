@@ -107,6 +107,7 @@ class SlideShow:
         # load images into main queue
         self._load_images()
 
+        display.show(str(self))
         # show the first working image
         self.advance()
 

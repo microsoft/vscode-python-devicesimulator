@@ -63,6 +63,7 @@ from PIL import Image
 import pathlib
 import sys
 import os
+import board
 
 abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
@@ -105,6 +106,7 @@ class _ClueSimpleTextDisplay:
                 Clue.PURPLE,
             )
 
+        self._display = board.DISPLAY
         self._colors = colors
         self._label = label
         # self._display = board.DISPLAY
@@ -160,11 +162,13 @@ class _ClueSimpleTextDisplay:
 
     def show(self):
         """Call show() to display the data list."""
-        self.text_group.draw(show=True)
+        self._display.show(self.text_group)
         # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
 
     def show_terminal(self):
         """Revert to terminalio screen."""
+
+        self._display.show(None)
         # TODO: implement terminal for clue screen
         return
 

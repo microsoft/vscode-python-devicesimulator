@@ -2,12 +2,26 @@
 # https://learn.adafruit.com/arduino-to-circuitpython/the-board-module
 
 
+import terminal_handler
+
+
 class Display:
     def __init__(self):
-        pass
+        self.active_group = None
+        self.terminal = terminal_handler.Terminal()
 
-    def show(self, group):
-        group.draw(show=True)
+    def show(self, group=None):
+
+        self.active_group = group
+
+        # show can take a string if context is
+        # not in the traditional Group + TileGrid style
+        if not isinstance(group, str):
+            if group == None:
+                print("Here")
+                self.terminal.configure(no_verif=True)
+            else:
+                group.draw(show=True)
 
 
 DISPLAY = Display()
