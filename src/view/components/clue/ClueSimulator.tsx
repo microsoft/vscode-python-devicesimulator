@@ -5,6 +5,7 @@ import {
     CONSTANTS,
     WEBVIEW_MESSAGES,
     DEFAULT_IMG_CLUE,
+    DEVICE_LIST_KEY,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
@@ -15,7 +16,7 @@ import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: DEFAULT_IMG_CLUE,
-    neopixel: [0, 0, 0]
+    neopixel: [0, 0, 0],
 };
 
 interface IState {
@@ -30,7 +31,7 @@ interface IState {
 interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
-    neopixel: number[]
+    neopixel: number[];
 }
 export class ClueSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
@@ -48,7 +49,9 @@ export class ClueSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-
+        if (message.active_device !== DEVICE_LIST_KEY.CLUE) {
+            return;
+        }
         switch (message.command) {
             case "reset-state":
                 this.setState({
@@ -57,22 +60,24 @@ export class ClueSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "set-state":
-                console.log(`message received ${JSON.stringify(message.state)}`)
+                console.log(
+                    `message received ${JSON.stringify(message.state)}`
+                );
                 if (message.state.display_base64) {
                     this.setState({
                         clue: {
                             ...this.state.clue,
                             displayMessage: message.state.display_base64,
                         },
-                    })
+                    });
                 } else if (message.state.pixels) {
                     this.setState({
                         clue: {
                             ...this.state.clue,
                             neopixel: message.state.pixels,
                         },
-                    })
-                };
+                    });
+                }
 
                 break;
             case "activate-play":

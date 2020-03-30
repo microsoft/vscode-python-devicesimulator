@@ -3,16 +3,13 @@
 
 import * as cp from "child_process";
 import * as fs from "fs";
-import { registerDefaultFontFaces } from "office-ui-fabric-react";
 import * as open from "open";
-import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import {
     CONFIG,
     CONSTANTS,
     CPX_CONFIG_FILE,
-    DEFAULT_DEVICE,
     DialogResponses,
     GLOBAL_ENV_VARS,
     HELPER_FILES,
