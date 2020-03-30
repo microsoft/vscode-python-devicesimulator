@@ -783,10 +783,9 @@ export async function activate(context: vscode.ExtensionContext) {
             );
 
             telemetryAI.trackFeatureUsage(telemetryEvents.deployTelemetryEvent);
-            telemetryAI.runWithLatencyMeasure(
-                () => deployCode(device),
-                telemetryEvents.deployPerformanceTelemetryEvent
-            );
+            telemetryAI.runWithLatencyMeasure(() => {
+                deployCode(device);
+            }, telemetryEvents.deployPerformanceTelemetryEvent);
         }
     );
 
