@@ -3,7 +3,7 @@
 
 ACTIVE_DEVICE_FIELD = "active_device"
 
-CPX_DRIVE_NAME = "CIRCUITPY"
+ADAFRUIT_DRIVE_NAME = "CIRCUITPY"
 
 DEPEND_ERR = 'The required dependencies aren\'t downloaded. Please use CTRL+SHIFT+P to open the command palette and select "Device Simulator Express: Install Extension Dependencies".'
 
@@ -24,8 +24,10 @@ LINUX_OS = "linux"
 MAC_OS = "darwin"
 MOUNT_COMMAND = "mount"
 
-NO_CPX_DETECTED_ERROR_TITLE = "No Circuit Playground Express detected"
-NO_CPX_DETECTED_ERROR_DETAIL = (
+NO_ADAFRUIT_DEVICE_DETECTED_ERROR_TITLE = (
+    "No Adafruit device (Circuit Playground Express or Clue) detected"
+)
+NO_ADAFRUIT_DEVICE_DETECTED_ERROR_DETAIL = (
     "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
 )
 NO_MICROBIT_DETECTED_ERROR_TITLE = "No micro:bit detected"
