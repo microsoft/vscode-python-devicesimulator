@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import "../../styles/Clue.css";
+import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
@@ -762,47 +762,16 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             transform="translate(-49.27 -48.48)"
                         />
                     </g>
-                    <g id="Buttons">
+                    <g
+                        className="sim-button-group"
+                        focusable="true"
+                        tabIndex={0}
+                        role="button"
+                        aria-label="a"
+                        ref={this.buttonRefs.BTN_A}
+                    >
                         <rect
-                            className="cls-10"
-                            x="258.06"
-                            y="100.27"
-                            width="35.04"
-                            height="34.82"
-                            rx="1.79"
-                        />
-                        <circle
-                            className="cls-13"
-                            cx="275.58"
-                            cy="117.58"
-                            r="11.6"
-                        />
-                        <circle
-                            className="cls-14"
-                            cx="262.37"
-                            cy="104.6"
-                            r="3.23"
-                        />
-                        <circle
-                            className="cls-14"
-                            cx="288.79"
-                            cy="104.6"
-                            r="3.23"
-                        />
-                        <circle
-                            className="cls-14"
-                            cx="288.8"
-                            cy="130.74"
-                            r="3.23"
-                        />
-                        <circle
-                            className="cls-14"
-                            cx="262.37"
-                            cy="130.74"
-                            r="3.23"
-                        />
-                        <rect
-                            className="cls-15"
+                            className="sim-button-outer"
                             x="13.19"
                             y="100.56"
                             width="35.04"
@@ -810,7 +779,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="1.79"
                         />
                         <circle
-                            className="cls-13"
+                            className="sim-button"
                             cx="30.71"
                             cy="117.86"
                             r="11.6"
@@ -840,6 +809,56 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             r="3.23"
                         />
                     </g>
+                    <g
+                        className="sim-button-group"
+                        focusable="true"
+                        tabIndex={0}
+                        role="button"
+                        aria-label="b"
+                        ref={this.buttonRefs.BTN_B}
+                    >
+                        <rect
+                            className="sim-button-outer"
+                            x="258.06"
+                            y="100.27"
+                            width="35.04"
+                            height="34.82"
+                            rx="1.79"
+                        />
+                        <circle
+                            className="sim-button"
+                            focusable="false"
+                            cx="275.58"
+                            cy="117.58"
+                            r="11.6"
+                            style={{ strokeWidth: 0 }}
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="262.37"
+                            cy="104.6"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="288.79"
+                            cy="104.6"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="288.8"
+                            cy="130.74"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="262.37"
+                            cy="130.74"
+                            r="3.23"
+                        />
+                    </g>
+
                     <g id="Buttons_at_top" data-name="Buttons at top">
                         <rect
                             className="cls-16"
@@ -953,7 +972,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
                     <circle cx={345} cy={115} r="12" ref={this.neopixel} />
                 </svg>
-            </div>
+            </div >
         );
     }
     private updateDisplay() {

@@ -5,7 +5,6 @@ import * as React from "react";
 import { VIEW_STATE } from "../../constants";
 import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
-import "../../styles/Microbit.css";
 import { ClueSvg, IRefObject } from "./Clue_svg";
 
 interface EventTriggers {
@@ -17,7 +16,7 @@ interface EventTriggers {
 interface IProps {
     eventTriggers: EventTriggers;
     displayMessage: string;
-    neopixel:number[]
+    neopixel: number[]
 }
 
 const BUTTON_CLASSNAME = {
