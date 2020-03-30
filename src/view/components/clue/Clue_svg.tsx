@@ -858,7 +858,58 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             r="3.23"
                         />
                     </g>
-
+                    <g
+                        className="sim-button-group"
+                        focusable="true"
+                        tabIndex={0}
+                        role="button"
+                        aria-label="ab"
+                        ref={this.buttonRefs.BTN_AB}
+                    >
+                        <rect
+                            className="sim-button-outer"
+                            x="327.48"
+                            y="192.69"
+                            width="35.04"
+                            height="34.82"
+                            rx="1.79"
+                        />
+                        <circle
+                            className="sim-button"
+                            focusable="false"
+                            cx="345"
+                            cy="210"
+                            r="11.6"
+                            style={{ strokeWidth: 0 }}
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="331.79"
+                            cy="197.02"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="358.21"
+                            cy="197.02"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="358.21"
+                            cy="223.16"
+                            r="3.23"
+                        />
+                        <circle
+                            className="cls-14"
+                            cx="331.79"
+                            cy="223.16"
+                            r="3.23"
+                        />
+                    </g>
+                    <text x={330} y={180} className="sim-text-outside">
+                        A+B
+                        </text>
                     <g id="Buttons_at_top" data-name="Buttons at top">
                         <rect
                             className="cls-16"
