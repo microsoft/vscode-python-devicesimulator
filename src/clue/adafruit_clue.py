@@ -199,15 +199,63 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
+        self._a = False
+        self._b = False
+        self.__pressed_buttons = set()
         self._pixel = neopixel.NeoPixel(
             pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
         )
 
     @property
+    def button_a(self):
+        """``True`` when Button A is pressed. ``False`` if not.
+        This example prints when button A is pressed.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.button_a:
+                  print("Button A pressed")
+        """
+        return self._a
+
+    @property
+    def button_b(self):
+        """``True`` when Button B is pressed. ``False`` if not.
+        This example prints when button B is pressed.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.button_b:
+                  print("Button B pressed")
+        """
+        return self._b
+
+    def __press_button(self, button):
+        if button == "button_a":
+            self.__were_pressed.add("A")
+            self._a = True
+        elif button == "button_b":
+            self.__were_pressed.add("B")
+            self._b = True
+
+    @property
+    def were_pressed(self):
+        """Returns a set of the buttons that have been pressed.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print(clue.were_pressed)
+        """
+        ret = self.__pressed_buttons.copy()
+        self.__pressed_buttons.clear()
+        return ret
+
+    @property
     def pixel(self):
         """The NeoPixel RGB LED.
-        .. image :: ../docs/_static/neopixel.jpg
-          :alt: NeoPixel
         This example turns the NeoPixel purple.
         To use with the CLUE:
         .. code-block:: python
