@@ -36,12 +36,8 @@
         "onCommand:deviceSimulatorExpress.common.selectSerialPort",
         "onCommand:deviceSimulatorExpress.common.gettingStarted",
         "onCommand:deviceSimulatorExpress.common.deployToDevice",
-        "onCommand:deviceSimulatorExpress.cpx.newFile",
-        "onCommand:deviceSimulatorExpress.cpx.openSimulator",
-        "onCommand:deviceSimulatorExpress.microbit.newFile",
-        "onCommand:deviceSimulatorExpress.microbit.openSimulator",
-        "onCommand:deviceSimulatorExpress.clue.newFile",
-        "onCommand:deviceSimulatorExpress.clue.openSimulator",
+        "onCommand:deviceSimulatorExpress.common.newFile",
+        "onCommand:deviceSimulatorExpress.common.openSimulator",
         "onDebug"
     ],
     "main": "./out/extension.js",
@@ -88,33 +84,13 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.cpx.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.newFile%",
+                "command": "deviceSimulatorExpress.common.newFile",
+                "title": "%deviceSimulatorExpressExtension.commands.common.newFile%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.cpx.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.newFile%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.clue.openSimulator",
-                "title": "%deviceSimulatorExpressExtension.commands.clue.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.clue.newFile",
-                "title": "%deviceSimulatorExpressExtension.commands.clue.newFile%",
+                "command": "deviceSimulatorExpress.common.openSimulator",
+                "title": "%deviceSimulatorExpressExtension.commands.common.openSimulator%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             }
         ],

@@ -4,6 +4,7 @@
 import * as React from "react";
 import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
+import CONSTANTS from "../../constants";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -11,7 +12,6 @@ interface IProps {
     displayImage: string;
     neopixel: number[];
 }
-const LED_TINT_FACTOR = 0.5;
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
     private neopixel: React.RefObject<SVGCircleElement> = React.createRef();
@@ -921,7 +921,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             r="3.23"
                         />
                     </g>
-                    <text x={330} y={180} className="sim-text-outside">
+                    <text x={330} y={180} className="sim-text-outside-clue">
                         A+B
                     </text>
                     <g id="Buttons_at_top" data-name="Buttons at top">
@@ -1031,7 +1031,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
-                    <text x={318} y={85} className="sim-text-outside">
+                    <text x={318} y={85} className="sim-text-outside-clue">
                         Neopixel
                     </text>
                     <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
@@ -1040,6 +1040,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
             </div>
         );
     }
+
     private updateDisplay() {
         if (this.displayRef.current && this.props.displayImage) {
             this.displayRef.current.setAttribute(
@@ -1048,20 +1049,20 @@ export class ClueSvg extends React.Component<IProps, {}> {
             );
         }
     }
+
     private updateNeopixel() {
         const { neopixel } = this.props;
         const rgbColor = `rgb(${neopixel[0] +
-            (255 - neopixel[0]) * LED_TINT_FACTOR},
-        ${neopixel[1] + (255 - neopixel[1]) * LED_TINT_FACTOR},${neopixel[2] +
-            (255 - neopixel[2]) * LED_TINT_FACTOR})`;
+            (255 - neopixel[0]) * CONSTANTS.LED_TINT_FACTOR},
+        ${neopixel[1] +
+            (255 - neopixel[1]) * CONSTANTS.LED_TINT_FACTOR},${neopixel[2] +
+            (255 - neopixel[2]) * CONSTANTS.LED_TINT_FACTOR})`;
 
         if (this.neopixel.current) {
             this.neopixel.current.setAttribute("fill", rgbColor);
         }
         if (this.pixelStopGradient.current) {
             if (neopixel === DEFAULT_CLUE_STATE.neopixel) {
-                console.log("remove opacity");
-
                 this.pixelStopGradient.current.setAttribute(
                     "stop-opacity",
                     "0"

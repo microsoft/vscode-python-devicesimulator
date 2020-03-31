@@ -358,4 +358,62 @@ export class TelemetryHandlerService {
                 break;
         }
     };
+
+    public getTelemetryEventsForOpenSimulator = (device: string) => {
+        let openSimulatorTelemetryEvent: string;
+        let openSimulatorPerformanceTelemetryEvent: string;
+        switch (device) {
+            case CONSTANTS.DEVICE_NAME.CPX:
+                openSimulatorTelemetryEvent =
+                    TelemetryEventName.CPX_COMMAND_OPEN_SIMULATOR;
+                openSimulatorPerformanceTelemetryEvent =
+                    TelemetryEventName.CPX_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+            case CONSTANTS.DEVICE_NAME.MICROBIT:
+                openSimulatorTelemetryEvent =
+                    TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR;
+                openSimulatorPerformanceTelemetryEvent =
+                    TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                openSimulatorTelemetryEvent =
+                    TelemetryEventName.CLUE_COMMAND_OPEN_SIMULATOR;
+                openSimulatorPerformanceTelemetryEvent =
+                    TelemetryEventName.CLUE_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+        }
+        return {
+            openSimulatorTelemetryEvent: openSimulatorTelemetryEvent,
+            openSimulatorPerformanceTelemetryEvent: openSimulatorPerformanceTelemetryEvent,
+        };
+    };
+
+    public getTelemetryEventsForNewFile = (device: string) => {
+        let newFileTelemetryEvent: string;
+        let newFilePerformanceTelemetryEvent: string;
+        switch (device) {
+            case CONSTANTS.DEVICE_NAME.CPX:
+                newFileTelemetryEvent =
+                    TelemetryEventName.CPX_COMMAND_OPEN_SIMULATOR;
+                newFilePerformanceTelemetryEvent =
+                    TelemetryEventName.CPX_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+            case CONSTANTS.DEVICE_NAME.MICROBIT:
+                newFileTelemetryEvent =
+                    TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR;
+                newFilePerformanceTelemetryEvent =
+                    TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                newFileTelemetryEvent =
+                    TelemetryEventName.CLUE_COMMAND_OPEN_SIMULATOR;
+                newFilePerformanceTelemetryEvent =
+                    TelemetryEventName.CLUE_PERFORMANCE_OPEN_SIMULATOR;
+                break;
+        }
+        return {
+            newFileTelemetryEvent: newFileTelemetryEvent,
+            newFilePerformanceTelemetryEvent: newFilePerformanceTelemetryEvent,
+        };
+    };
 }

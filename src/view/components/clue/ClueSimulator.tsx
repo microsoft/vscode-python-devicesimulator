@@ -3,9 +3,9 @@ import {
     AB_BUTTONS_KEYS,
     // DEVICE_LIST_KEY,
     CONSTANTS,
-    WEBVIEW_MESSAGES,
     DEFAULT_IMG_CLUE,
     DEVICE_LIST_KEY,
+    WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
