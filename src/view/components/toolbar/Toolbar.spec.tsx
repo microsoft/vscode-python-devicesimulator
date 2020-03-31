@@ -4,17 +4,17 @@ import { IntlProvider } from "react-intl";
 import * as testRenderer from "react-test-renderer";
 import { SENSOR_LIST } from "../../constants";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
-import { MICROBIT_TOOLBAR_ID } from "./SensorModalUtils";
+import { MICROBIT_TOOLBAR_ICON_ID } from "./SensorModalUtils";
 import Toolbar from "./ToolBar";
 
 const MOCK_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
         image: TOOLBAR_SVG.LIGHT_SVG,
-        label: MICROBIT_TOOLBAR_ID.LIGHT,
+        label: MICROBIT_TOOLBAR_ICON_ID.LIGHT,
     },
     {
         image: TOOLBAR_SVG.MOTION_SVG,
-        label: MICROBIT_TOOLBAR_ID.ACCELEROMETER,
+        label: MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
     },
 ];
 const mockUpdateSensors = () => {

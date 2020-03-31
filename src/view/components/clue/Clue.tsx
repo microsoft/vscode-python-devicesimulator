@@ -6,6 +6,8 @@ import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
 import "../../styles/Simulator.css";
 import ToolBar from "../toolbar/ToolBar";
 import { ClueSimulator } from "./ClueSimulator";
+import { CLUE_TOOLBAR_ICON_ID } from "../toolbar/SensorModalUtils";
+import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {
@@ -59,5 +61,8 @@ export class Clue extends React.Component<{}, IState> {
 }
 
 const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
-    // TODO: CLUE TOOLBAR
+    {
+        label: CLUE_TOOLBAR_ICON_ID.TEMPERATURE,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
 ];

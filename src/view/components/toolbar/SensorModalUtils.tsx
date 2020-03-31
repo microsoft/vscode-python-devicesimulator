@@ -9,6 +9,7 @@ import LightSensorBar from "./LightSensorBar";
 import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
+import { CLUE_TEMPERATURE_MODAL_CONTENT } from "./modalContent/ClueModalContent";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -63,7 +64,7 @@ export const CPX_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
 };
 
-export const MICROBIT_TOOLBAR_ID = {
+export const MICROBIT_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
     LIGHT: "toolbar-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer-sensor",
@@ -72,6 +73,23 @@ export const MICROBIT_TOOLBAR_ID = {
     GPIO: "toolbar-gpio",
     SOUND: "toolbar-microbit-sound",
     WIRELESS: "toolbar-microbit-wireless",
+};
+
+export const CLUE_TOOLBAR_ICON_ID = {
+    TEMPERATURE: "toolbar-temperature-sensor",
+    LIGHT: "toolbar-light-sensor",
+    ACCELEROMETER: "toolbar-accelerometer-sensor",
+    LEDS: "toolbar-microbit-led",
+    PUSH_BUTTON: "toolbar-microbit-a-b-push",
+    GPIO: "toolbar-gpio",
+    SPEAKER: "toolbar-speaker",
+    SOUND: "toolbar-sound-sensor",
+    PRESSURE: "toolbar-pressure-sensor",
+    HUMIDITY: "toolbar-humidity-sensor",
+    GESTURE: "toolbar-gesture-sensor",
+    PROXIMITY: "toolbar-proximity-sensor",
+    ALTITUDE: "toolbar-altitude-sensor",
+    BLUETOOTH: "toolbar-microbit-bluetooth",
 };
 
 export interface IModalContent {
@@ -384,12 +402,13 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.SPEAKER, SPEAKER_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
-    [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
-    [MICROBIT_TOOLBAR_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.LEDS, MICROBIT_LED_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.TEMPERATURE, CLUE_TEMPERATURE_MODAL_CONTENT],
 ]);
 
 export const getModalContent = (
@@ -403,7 +422,7 @@ export const getModalContent = (
         label
     );
     if (modalContentConstructor) {
-        if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
+        if (label === MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER) {
             return ACCELEROMETER_MODAL_CONTENT(
                 onUpdateValue,
                 sensorValues,
