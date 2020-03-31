@@ -184,6 +184,8 @@ class SlideShow:
 
         if self._order == PlayBackOrder.RANDOM:
             shuffle(dir_imgs)
+        else:
+            dir_imgs.sort()
 
         # convert list to queue
         # (must be list beforehand for potential randomization)
