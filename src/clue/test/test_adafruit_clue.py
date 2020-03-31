@@ -53,7 +53,7 @@ class TestAdafruitClue(object):
         clue_data.show()
 
         helper._Helper__test_image_equality(displayio.bmp_img, expected)
-    
+
     def test_buttons(self):
         BUTTON_A = "button_a"
         BUTTON_B = "button_b"
