@@ -24,7 +24,7 @@ svg.sim.grayscale {
 }
 .sim-text-outside {
     font-size: 25px;
-    fill: var(--vscode-descriptionForeground);
+    fill: var(--vscode-foreground);
 }
 .sim-board,
 .sim-display,

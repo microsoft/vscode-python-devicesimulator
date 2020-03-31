@@ -46,6 +46,7 @@ export const CONSTANTS = {
         "The simulator will run the .py file you have focused on.",
     SIMULATOR_BUTTON_WIDTH: 60,
     TOOLBAR_INFO: `Explore what's on the board:`,
+    LED_TINT_FACTOR: 0.5,
 };
 export const AB_BUTTONS_KEYS = {
     BTN_A: "BTN_A",
