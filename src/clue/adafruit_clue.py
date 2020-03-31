@@ -232,13 +232,15 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         """
         return self._b
 
-    def __press_button(self, button):
+    def __update_button(self, button, value):
         if button == "button_a":
-            self.__were_pressed.add("A")
-            self._a = True
+            if value:
+                self.__pressed_buttons.add("A")
+            self._a = value
         elif button == "button_b":
-            self.__were_pressed.add("B")
-            self._b = True
+            if value:
+                self.__pressed_buttons.add("B")
+            self._b = value
 
     @property
     def were_pressed(self):
@@ -331,6 +333,15 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             font=font,
             colors=colors,
         )
+    
+    def update_state(self, new_state):
+        self.__update_buttons(new_state)
+
+    # helpers
+    def __update_buttons(self, new_state):
+        # get button pushes
+        for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
+            self.__update_button(button_name, new_state.get(button_name))
 
 
 clue = Clue()  # pylint: disable=invalid-name
