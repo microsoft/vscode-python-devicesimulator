@@ -35,10 +35,9 @@
         "onCommand:deviceSimulatorExpress.common.runSimulator",
         "onCommand:deviceSimulatorExpress.common.selectSerialPort",
         "onCommand:deviceSimulatorExpress.common.gettingStarted",
-        "onCommand:deviceSimulatorExpress.cpx.deployToDevice",
+        "onCommand:deviceSimulatorExpress.common.deployToDevice",
         "onCommand:deviceSimulatorExpress.cpx.newFile",
         "onCommand:deviceSimulatorExpress.cpx.openSimulator",
-        "onCommand:deviceSimulatorExpress.microbit.deployToDevice",
         "onCommand:deviceSimulatorExpress.microbit.newFile",
         "onCommand:deviceSimulatorExpress.microbit.openSimulator",
         "onCommand:deviceSimulatorExpress.clue.newFile",
@@ -84,8 +83,8 @@
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
-                "command": "deviceSimulatorExpress.cpx.deployToDevice",
-                "title": "%deviceSimulatorExpressExtension.commands.cpx.deployToDevice%",
+                "command": "deviceSimulatorExpress.common.deployToDevice",
+                "title": "%deviceSimulatorExpressExtension.commands.common.deployToDevice%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
@@ -96,11 +95,6 @@
             {
                 "command": "deviceSimulatorExpress.cpx.openSimulator",
                 "title": "%deviceSimulatorExpressExtension.commands.cpx.openSimulator%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
-            },
-            {
-                "command": "deviceSimulatorExpress.microbit.deployToDevice",
-                "title": "%deviceSimulatorExpressExtension.commands.microbit.deployToDevice%",
                 "category": "%deviceSimulatorExpressExtension.commands.common.label%"
             },
             {
