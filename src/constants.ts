@@ -202,6 +202,14 @@ export const CONSTANTS = {
             "info.noDeviceChosenToDeployTo",
             "\n[INFO] No device was selected to deploy to.\n"
         ),
+        NO_DEVICE_CHOSEN_TO_SIMULATE_TO: localize(
+            "info.noDeviceChosenToSimulateTo",
+            "\n[INFO] No device was selected to simulate.\n"
+        ),
+        NO_DEVICE_CHOSEN_FOR_NEW_FILE: localize(
+            "info.noDeviceChosenForNewFile",
+            "\n[INFO] No device was selected to open a template file for.\n"
+        ),
         OPENED_SERIAL_PORT: (port: string) => {
             return localize(
                 "info.openedSerialPort",
@@ -283,6 +291,7 @@ export const CONSTANTS = {
     TEMPLATE: {
         CPX: "cpx_template.py",
         MICROBIT: "microbit_template.py",
+        CLUE: "clue_template.py",
     },
     WARNING: {
         ACCEPT_AND_RUN: localize(
@@ -350,6 +359,8 @@ export enum TelemetryEventName {
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
     CLUE_COMMAND_DEPLOY_DEVICE = "CLUE.COMMAND.DEPLOY.DEVICE",
+    CLUE_COMMAND_NEW_FILE = "CLUE.COMMAND.NEW.FILE.CPX",
+    CLUE_COMMAND_OPEN_SIMULATOR = "CLUE.COMMAND.OPEN.SIMULATOR",
 
     // Simulator interaction
     CPX_SIMULATOR_BUTTON_A = "CPX.SIMULATOR.BUTTON.A",
@@ -405,6 +416,8 @@ export enum TelemetryEventName {
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
 
     CLUE_PERFORMANCE_DEPLOY_DEVICE = "CLUE.PERFORMANCE.DEPLOY.DEVICE",
+    CLUE_PERFORMANCE_NEW_FILE = "CLUE.PERFORMANCE.NEW.FILE",
+    CLUE_PERFORMANCE_OPEN_SIMULATOR = "CLUE.PERFORMANCE.OPEN.SIMULATOR",
 
     // Venv options
     SETUP_VENV_CREATION_ERR = "SETUP.VENV.CREATION.ERR",

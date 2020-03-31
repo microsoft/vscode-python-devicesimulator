@@ -24,7 +24,7 @@ svg.sim.grayscale {
 }
 .sim-text-outside {
     font-size: 25px;
-    fill: var(--vscode-descriptionForeground);
+    fill: var(--vscode-foreground);
 }
 .sim-board,
 .sim-display,
@@ -305,7 +305,7 @@ sim-button {
 .cls-22 {
     stroke: #7e7272;
 }
-.sim-text-outside {
+.sim-text-outside-clue {
     font-size: 14px;
-    fill: var(--vscode-descriptionForeground);
+    fill: var(--vscode-foreground);
 }
