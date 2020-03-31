@@ -16,7 +16,7 @@ interface EventTriggers {
 interface IProps {
     eventTriggers: EventTriggers;
     displayMessage: string;
-    neopixel: number[]
+    neopixel: number[];
 }
 
 const BUTTON_CLASSNAME = {

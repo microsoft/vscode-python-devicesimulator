@@ -333,7 +333,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             font=font,
             colors=colors,
         )
-    
+
     def update_state(self, new_state):
         self.__update_buttons(new_state)
 

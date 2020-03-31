@@ -38,9 +38,8 @@ sim-button {
 .sim-button-outer:active {
     fill: orange;
 }
-.sim-button-outer{
+.sim-button-outer {
     fill: #7e7272;
-
 }
 
 .sim-button-key-press {
@@ -178,11 +177,11 @@ sim-button {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-.sim-button{
-    stroke:none
+.sim-button {
+    stroke: none;
 }
-.sim-button:active{
-    stroke:none
+.sim-button:active {
+    stroke: none;
 }
 .cls-1 {
     fill: #097054;
