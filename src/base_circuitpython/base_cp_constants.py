@@ -14,4 +14,3 @@ BMP_IMG = "BMP"
 BMP_IMG_ENDING = ".bmp"
 
 NO_VALID_IMGS_ERR = "No valid images"
-
