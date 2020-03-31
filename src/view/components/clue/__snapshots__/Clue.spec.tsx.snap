@@ -928,7 +928,7 @@ Array [
             />
           </g>
           <text
-            className="sim-text-outside"
+            className="sim-text-outside-clue"
             x={330}
             y={180}
           >
@@ -1064,7 +1064,7 @@ Array [
             />
           </g>
           <text
-            className="sim-text-outside"
+            className="sim-text-outside-clue"
             x={318}
             y={85}
           >
