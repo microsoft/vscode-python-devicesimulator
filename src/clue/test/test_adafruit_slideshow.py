@@ -2,7 +2,7 @@ from ..adafruit_slideshow import SlideShow, PlayBackDirection, PlayBackOrder
 import board
 import pathlib
 import os
-
+import time
 from PIL import Image
 from .test_helpers import helper
 from base_circuitpython import base_cp_constants as CONSTANTS
@@ -64,10 +64,16 @@ class TestAdafruitSlideShow(object):
         slideshow._send = self._send_helper
 
         # first image's appear time is unstable,since it fades/scrolls in
-        # can oly predict following ones...
+        # can only predict following ones...
+
+        # time that allows slideshow to settle on next photo
+        time.sleep(1)
 
         for i in range(1, 8):
             slideshow.advance()
+            print(i)
+            # time that allows slideshow to settle on next photo
+            time.sleep(0.7)
             helper._Helper__test_image_equality(
                 self.main_img.load(), slideshow_images[i].load()
             )
@@ -92,6 +98,8 @@ class TestAdafruitSlideShow(object):
 
         for i in range(6, -1, -1):
             slideshow2.advance()
+            # time that allows slideshow to settle on next photo
+            time.sleep(0.7)
             helper._Helper__test_image_equality(
                 self.main_img.load(), slideshow_images[i].load()
             )
