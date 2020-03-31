@@ -53,3 +53,20 @@ class TestAdafruitClue(object):
         clue_data.show()
 
         helper._Helper__test_image_equality(displayio.bmp_img, expected)
+    
+    def test_buttons(self):
+        BUTTON_A = "button_a"
+        BUTTON_B = "button_b"
+
+        clue._Clue__update_button(BUTTON_A, True)
+        assert clue.button_a
+        clue._Clue_update_button(BUTTON_A, False)
+        assert not clue.button_a
+
+        clue._Clue__update_button(BUTTON_B, True)
+        assert clue.button_b
+        clue._Clue_update_button(BUTTON_B, False)
+        assert not clue.button_b
+
+        assert set(["A", "B"]) == clue.were_pressed
+        assert set() == clue.were_pressed
