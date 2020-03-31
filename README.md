@@ -119,18 +119,18 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 ### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: Getting Started"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
+2. Choose the the device you want to play with from the dropdown.
+3. Read, copy and learn some of the things you can do with the simulator!
+
 <img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
-1. Choose the the device you want to play with from the dropdown.
-2. Read, copy and learn some of the things you can do with the simulator!
 
 ### II. Start with the "Device Simulator Express: New File" Command.
-
-<img alt='"New File" animation' src='assets/readmeFiles/new_file.gif'>
-
 1. Type in `"Device Simulator Express: New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
 2. Select the device you want to use.
 3. Name and save your file somewhere, and we’re good to go!
 4. Start with some examples: you can find examples files and tutorials inside the comments at the top of the file.
+
+<img alt='"New File" animation' src='assets/readmeFiles/new_file.gif'>
 
 ### III. Start from an existing Python file.
 
@@ -140,20 +140,20 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 ### IV. Run your code on the simulator.
 
-<img alt='How to run the simulator animation' src='assets/readmeFiles/run.gif'>
-
 1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
+
+<img alt='How to run the simulator animation' src='assets/readmeFiles/run.gif'>
 
 ### V. Deploy your code to the physical device
 
 Before deploying the Python code to your CPX device, you need to format your device by following these tutorials:
 
-*For the CPX*:
-i. Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart).
-ii. Download the lastest version of the cpx library (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).
+- *For the CPX*:
+    - Download the firmware with the .uf2 file (link: https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart).
+    - Download the lastest versions of the cpx libraries (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).
 
-*For the micro:bit*:
-i. Download the firmware with the .hex file (link: https://microbit.org/get-started/user-guide/firmware/)
+- *For the micro:bit*:
+    - Download the firmware with the .hex file (link: https://microbit.org/get-started/user-guide/firmware/).
 
 1. Plug in your device (make sure it’s formatted properly already).
 2. Run the command `"Device Simulator Express: Deploy to Device"`.
