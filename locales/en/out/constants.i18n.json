@@ -30,6 +30,8 @@
   "error.invalidFileExtensionDebug": "The file you tried to run isn\\'t a Python file.",
   "info.newFile": "New to Python or the Circuit Playground Express? We are here to help!",
   "info.noDeviceChosenToDeployTo": "\n[INFO] No device was selected to deploy to.\n",
+  "info.noDeviceChosenToSimulateTo": "\n[INFO] No device was selected to simulate.\n",
+  "info.noDeviceChosenForNewFile": "\n[INFO] No device was selected to open a template file for.\n",
   "info.redirect": "You are being redirected.",
   "info.runningCode": "Running user code",
   "info.privacyStatement": "Privacy Statement",
