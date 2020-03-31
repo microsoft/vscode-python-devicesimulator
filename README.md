@@ -179,7 +179,7 @@ Device Simulator Express provides several commands in the Command Palette (`F1` 
 - `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension. Here, users can browse through code that they can use to play with the simulators.
 - `Device Simulator Express: Run Simulator`: Runs Python code on the simulator.
 - `Device Simulator Express: New File`: Opens an unsaved .py file with template code, also opens the simulator for the selected device.
-- `Device Simulator Express: Open Simulator`: Opens the simulator in the webview for the selected device
+- `Device Simulator Express: Open Simulator`: Opens the simulator in the simulator window for the selected device
 - `Device Simulator Express: Deploy to Device`: Copies the current file to the selected device.
 - `Device Simulator Express: Open Serial Monitor`: Opens the serial monitor in the integrated output window.
 - `Device Simulator Express: Close Serial Monitor`: Stops the serial monitor and releases the serial port.
