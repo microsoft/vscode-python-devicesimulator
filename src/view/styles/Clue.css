@@ -131,5 +131,5 @@
 }
 .sim-text-outside {
     font-size: 14px;
-    fill: var(--vscode-descriptionForeground);
+    fill: var(--vscode-foreground);
 }

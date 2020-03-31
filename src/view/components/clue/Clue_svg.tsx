@@ -4,18 +4,20 @@
 import * as React from "react";
 import "../../styles/Clue.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
+import CONSTANTS from "../../constants";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
 interface IProps {
     displayImage: string;
-    neopixel: number[]
+    neopixel: number[];
 }
-const LED_TINT_FACTOR = 0.5
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
-    private neopixel: React.RefObject<SVGCircleElement> = React.createRef()
-    private pixelStopGradient: React.RefObject<SVGStopElement> = React.createRef()
+    private neopixel: React.RefObject<SVGCircleElement> = React.createRef();
+    private pixelStopGradient: React.RefObject<
+        SVGStopElement
+    > = React.createRef();
 
     private buttonRefs: IRefObject = {
         BTN_A: React.createRef(),
@@ -36,12 +38,11 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     componentDidMount() {
         this.updateDisplay();
-        this.updateNeopixel()
-
+        this.updateNeopixel();
     }
     componentDidUpdate() {
         this.updateDisplay();
-        this.updateNeopixel()
+        this.updateNeopixel();
     }
 
     render() {
@@ -56,11 +57,24 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     width="100%"
                     height="100%"
                 >
-                    <defs >
-                        <radialGradient id="grad1" cx="50%" cy="50%" r="70%" fx="50%" fy="50%" >
-                            <stop offset="0%" stopColor="rgb(0,0,0)" stopOpacity="1" ref={this.pixelStopGradient} />
+                    <defs>
+                        <radialGradient
+                            id="grad1"
+                            cx="50%"
+                            cy="50%"
+                            r="70%"
+                            fx="50%"
+                            fy="50%"
+                        >
+                            <stop
+                                offset="0%"
+                                stopColor="rgb(0,0,0)"
+                                stopOpacity="1"
+                                ref={this.pixelStopGradient}
+                            />
                             <stop offset="100%" stopOpacity="0" />
-                        </radialGradient></defs>
+                        </radialGradient>
+                    </defs>
                     <g id="Green">
                         <rect
                             className="cls-1"
@@ -949,13 +963,14 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     </g>
                     <text x={318} y={85} className="sim-text-outside">
                         Neopixel
-                        </text>
+                    </text>
                     <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
                     <circle cx={345} cy={115} r="12" ref={this.neopixel} />
                 </svg>
             </div>
         );
     }
+
     private updateDisplay() {
         if (this.displayRef.current && this.props.displayImage) {
             this.displayRef.current.setAttribute(
@@ -964,25 +979,31 @@ export class ClueSvg extends React.Component<IProps, {}> {
             );
         }
     }
+
     private updateNeopixel() {
-        const { neopixel } = this.props
-        const rgbColor = `rgb(${neopixel[0] + (255 - neopixel[0]) * LED_TINT_FACTOR},
-        ${neopixel[1] + (255 - neopixel[1]) * LED_TINT_FACTOR},${neopixel[2] + (255 - neopixel[2]) * LED_TINT_FACTOR})`
+        const { neopixel } = this.props;
+        const rgbColor = `rgb(${neopixel[0] +
+            (255 - neopixel[0]) * CONSTANTS.LED_TINT_FACTOR},
+        ${neopixel[1] +
+            (255 - neopixel[1]) * CONSTANTS.LED_TINT_FACTOR},${neopixel[2] +
+            (255 - neopixel[2]) * CONSTANTS.LED_TINT_FACTOR})`;
 
         if (this.neopixel.current) {
-            this.neopixel.current.setAttribute('fill', rgbColor)
+            this.neopixel.current.setAttribute("fill", rgbColor);
         }
         if (this.pixelStopGradient.current) {
             if (neopixel === DEFAULT_CLUE_STATE.neopixel) {
-                console.log("remove opacity")
-
-                this.pixelStopGradient.current.setAttribute('stop-opacity', '0')
+                this.pixelStopGradient.current.setAttribute(
+                    "stop-opacity",
+                    "0"
+                );
             } else {
-                this.pixelStopGradient.current.setAttribute('stop-opacity', '1')
-
+                this.pixelStopGradient.current.setAttribute(
+                    "stop-opacity",
+                    "1"
+                );
             }
-            this.pixelStopGradient.current.setAttribute('stop-color', rgbColor)
+            this.pixelStopGradient.current.setAttribute("stop-color", rgbColor);
         }
-
     }
 }

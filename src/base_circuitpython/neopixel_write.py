@@ -30,10 +30,6 @@ def neopixel_write(gpio, buf):
 
 def send_clue(buf):
     sendable_json = {CONSTANTS.PIXELS: tuple(buf)}
-
-    # for now, just print pixels
-    print(sendable_json)
-
     utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 
