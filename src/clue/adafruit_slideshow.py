@@ -10,6 +10,9 @@ from random import shuffle
 from common import utils
 
 # taken from adafruit
+# https://github.com/adafruit/Adafruit_CircuitPython_Slideshow/blob/master/adafruit_slideshow.py
+
+
 class PlayBackOrder:
     """Defines possible slideshow playback orders."""
 
@@ -41,7 +44,7 @@ class SlideShow:
         display,
         backlight_pwm=None,
         *,
-        folder="/",
+        folder=".",
         order=PlayBackOrder.ALPHABETICAL,
         loop=True,
         dwell=3,
@@ -171,10 +174,14 @@ class SlideShow:
                 new_path = os.path.join(self.folder, d)
 
                 # only add bmp imgs
-                if os.path.splitext(new_path)[1] == ".bmp":
+                if os.path.splitext(new_path)[1] == CONSTANTS.BMP_IMG_ENDING:
                     dir_imgs.append(new_path)
             except Image.UnidentifiedImageError as e:
                 continue
+
+        if not len(dir_imgs):
+            raise RuntimeError(CONSTANTS.NO_VALID_IMGS_ERR)
+
         if self._order == PlayBackOrder.RANDOM:
             shuffle(dir_imgs)
 
@@ -293,7 +300,7 @@ class SlideShow:
     def _send(self, img):
         # sends current bmp_img to the frontend
         buffered = BytesIO()
-        img.save(buffered, format="BMP")
+        img.save(buffered, format=CONSTANTS.BMP_IMG)
         byte_base64 = base64.b64encode(buffered.getvalue())
 
         # only send the base_64 string contents
