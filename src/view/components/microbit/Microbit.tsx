@@ -4,7 +4,7 @@
 import * as React from "react";
 import { MICROBIT_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import {
-    GESTURES,
+    GESTURES_MICROBIT,
     SENSOR_LIST,
     VSCODE_MESSAGES_TO_WEBVIEW,
     WEBVIEW_MESSAGES,
@@ -28,7 +28,7 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
     },
-    currentSelectedGesture: GESTURES[0],
+    currentSelectedGesture: GESTURES_MICROBIT[0],
 };
 
 export class Microbit extends React.Component<{}, IState> {

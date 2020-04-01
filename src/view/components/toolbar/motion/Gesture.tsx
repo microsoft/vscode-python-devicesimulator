@@ -1,7 +1,7 @@
 import * as React from "react";
 import SensorButton from "../SensorButton";
 import { Dropdown } from "../../Dropdown";
-import CONSTANTS, { GESTURES } from "../../../constants";
+import { CONSTANTS } from "../../../constants";
 
 const GESTURE_BUTTON_MESSAGE = "Send Gesture";
 interface IProps {

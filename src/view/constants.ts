@@ -109,7 +109,7 @@ export enum SENSOR_LIST {
     PROXIMITY = "proximity",
 }
 
-export const GESTURES = [
+export const GESTURES_MICROBIT = [
     "shake",
     "up",
     "down",
@@ -122,6 +122,7 @@ export const GESTURES = [
     "6g",
     "8g",
 ];
+export const GESTURES_CLUE = ["up", "down", "left", "right"];
 
 export enum WEBVIEW_ATTRIBUTES_KEY {
     INITIAL_DEVICE = "initial_device",

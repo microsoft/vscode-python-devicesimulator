@@ -1,11 +1,11 @@
 import * as React from "react";
 import { IModalContent, FEATURE_REQUEST_ON_GITHUB } from "../SensorModalUtils";
-import { SENSOR_LIST } from "../../../constants";
+import { SENSOR_LIST, GESTURES_CLUE } from "../../../constants";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import TemperatureSensorBar from "../TemperatureSensorBar";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { Accelerometer } from "../motion/Accelerometer";
-import LightSensorBar from "../LightSensorBar";
+import { Gesture } from "../motion/Gesture";
 import { ThreeDimensionSlider } from "../motion/threeDimensionSlider/ThreeDimensionSlider";
 import * as SENSOR_PROPERTIES from "./ClueSensorProperties";
 export const CLUE_TEMPERATURE_MODAL_CONTENT = (
@@ -44,9 +44,7 @@ export const CLUE_GPIO_MODAL_CONTENT = (
 };
 export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number },
-    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: (isActive: boolean) => void
+    sensorValues: { [key: string]: number }
 ): IModalContent => {
     const accelerometerSensorValues = {
         X: sensorValues[SENSOR_LIST.MOTION_X],
@@ -58,8 +56,6 @@ export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
-                onSelectGestures={onSelectGestures}
-                onSendGesture={sendGesture}
             />
         ),
         descriptionText: "toolbar-accelerometer-sensor.description",
@@ -121,8 +117,8 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
     };
 };
 export const CLUE_GESTURE_MODAL_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
+    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
     return {
         descriptionTitle: "toolbar-light-sensor.title",
@@ -131,9 +127,10 @@ export const CLUE_GESTURE_MODAL_CONTENT = (
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
         components: [
-            <LightSensorBar
-                onUpdateValue={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.LIGHT]}
+            <Gesture
+                gestures={GESTURES_CLUE}
+                onSelectGestures={onSelectGestures}
+                onSendGesture={sendGesture}
             />,
         ],
         id: "light_sensor",

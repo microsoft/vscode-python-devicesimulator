@@ -48,8 +48,6 @@ interface IProps {
         Z: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
-    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    onSendGesture?: (isActive: boolean) => void;
 }
 
 export class Accelerometer extends React.Component<IProps> {

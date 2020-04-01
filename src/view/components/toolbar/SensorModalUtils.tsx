@@ -87,7 +87,7 @@ export const CLUE_TOOLBAR_ICON_ID = {
     PRESSURE: "toolbar-clue-pressure-sensor",
     HUMIDITY: "toolbar-clue-humidity-sensor",
     GESTURE: "toolbar-clue-gesture-sensor",
-    PROXIMITY: "toolbar--clue-proximity-sensor",
+    PROXIMITY: "toolbar-clue-proximity-sensor",
     BLUETOOTH: "toolbar-clue-bluetooth",
 };
 
@@ -291,9 +291,7 @@ export const TEMPERATURE_MODAL_CONTENT = (
 
 export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number },
-    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: (isActive: boolean) => void
+    sensorValues: { [key: string]: number }
 ): IModalContent => {
     // this object will be accessed with the axis label
     const accelerometerSensorValues = {
@@ -306,8 +304,6 @@ export const ACCELEROMETER_MODAL_CONTENT = (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
-                onSelectGestures={onSelectGestures}
-                onSendGesture={sendGesture}
             />
         ),
         descriptionText: "toolbar-accelerometer-sensor.description",
@@ -423,7 +419,6 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CLUE_TOOLBAR_ICON_ID.SOUND, CLUE_MODAL.CLUE_SOUND_MODAL_CONTENT],
     [CLUE_TOOLBAR_ICON_ID.PRESSURE, CLUE_MODAL.CLUE_PRESSURE_MODAL_CONTENT],
     [CLUE_TOOLBAR_ICON_ID.HUMIDITY, CLUE_MODAL.CLUE_HUMIDITY_MODAL_CONTENT],
-    [CLUE_TOOLBAR_ICON_ID.GESTURE, CLUE_MODAL.CLUE_GESTURE_MODAL_CONTENT],
     [CLUE_TOOLBAR_ICON_ID.PROXIMITY, CLUE_MODAL.CLUE_PROXIMITY_MODAL_CONTENT],
     [CLUE_TOOLBAR_ICON_ID.BLUETOOTH, CLUE_MODAL.CLUE_BLUETOOTH_CONTENT],
     [
@@ -439,18 +434,17 @@ export const getModalContent = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ) => {
+    if (label === CLUE_TOOLBAR_ICON_ID.GESTURE) {
+        console.log("gestures");
+        return CLUE_MODAL.CLUE_GESTURE_MODAL_CONTENT(
+            onSelectGestures,
+            sendGesture
+        );
+    }
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
     );
     if (modalContentConstructor) {
-        if (label === MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER) {
-            return ACCELEROMETER_MODAL_CONTENT(
-                onUpdateValue,
-                sensorValues,
-                onSelectGestures,
-                sendGesture
-            );
-        }
         return modalContentConstructor(onUpdateValue, sensorValues);
     } else {
         return;
