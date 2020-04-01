@@ -62,7 +62,51 @@ export class Clue extends React.Component<{}, IState> {
 
 const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
+        label: CLUE_TOOLBAR_ICON_ID.PUSH_BUTTON,
+        image: TOOLBAR_SVG.PUSH_BUTTON_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.LEDS,
+        image: TOOLBAR_SVG.NEO_PIXEL_SVG,
+    },
+    {
         label: CLUE_TOOLBAR_ICON_ID.TEMPERATURE,
         image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.LIGHT,
+        image: TOOLBAR_SVG.LIGHT_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.ACCELEROMETER,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.HUMIDITY,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.PRESSURE,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.PROXIMITY,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.GESTURE,
+        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.GPIO,
+        image: TOOLBAR_SVG.GPIO_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.SOUND,
+        image: TOOLBAR_SVG.SOUND_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.SPEAKER,
+        image: TOOLBAR_SVG.SPEAKER_SVG,
     },
 ];

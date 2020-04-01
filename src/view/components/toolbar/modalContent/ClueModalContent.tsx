@@ -41,7 +41,7 @@ export const CLUE_GPIO_MODAL_CONTENT = (
         id: "GPIO",
     };
 };
-export const ACCELEROMETER_MODAL_CONTENT = (
+export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number },
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
@@ -70,7 +70,7 @@ export const ACCELEROMETER_MODAL_CONTENT = (
     };
 };
 
-export const LIGHT_MODAL_CONTENT = (
+export const CLUE_LIGHT_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -89,7 +89,7 @@ export const LIGHT_MODAL_CONTENT = (
         id: "light_sensor",
     };
 };
-export const MICROBIT_BUTTON_CONTENT = (
+export const CLUE_BUTTON_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {

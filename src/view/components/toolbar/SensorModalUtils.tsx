@@ -9,7 +9,10 @@ import LightSensorBar from "./LightSensorBar";
 import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
-import { CLUE_TEMPERATURE_MODAL_CONTENT } from "./modalContent/ClueModalContent";
+import {
+    CLUE_TEMPERATURE_MODAL_CONTENT,
+    CLUE_ACCELEROMETER_MODAL_CONTENT,
+} from "./modalContent/ClueModalContent";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -77,19 +80,18 @@ export const MICROBIT_TOOLBAR_ICON_ID = {
 
 export const CLUE_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
-    LIGHT: "toolbar-light-sensor",
-    ACCELEROMETER: "toolbar-accelerometer-sensor",
-    LEDS: "toolbar-microbit-led",
-    PUSH_BUTTON: "toolbar-microbit-a-b-push",
-    GPIO: "toolbar-gpio",
+    LIGHT: "toolbar-clue-light-sensor",
+    ACCELEROMETER: "toolbar-clue-accelerometer-sensor",
+    LEDS: "toolbar-clue-led",
+    PUSH_BUTTON: "toolbar-clue-a-b-push",
+    GPIO: "toolbar-clue-gpio",
     SPEAKER: "toolbar-speaker",
-    SOUND: "toolbar-sound-sensor",
-    PRESSURE: "toolbar-pressure-sensor",
-    HUMIDITY: "toolbar-humidity-sensor",
-    GESTURE: "toolbar-gesture-sensor",
-    PROXIMITY: "toolbar-proximity-sensor",
-    ALTITUDE: "toolbar-altitude-sensor",
-    BLUETOOTH: "toolbar-microbit-bluetooth",
+    SOUND: "toolbar-clue-sound-sensor",
+    PRESSURE: "toolbar-clue-pressure-sensor",
+    HUMIDITY: "toolbar-clue-humidity-sensor",
+    GESTURE: "toolbar-clue-gesture-sensor",
+    PROXIMITY: "toolbar--clue-proximity-sensor",
+    BLUETOOTH: "toolbar-clue-bluetooth",
 };
 
 export interface IModalContent {
@@ -409,6 +411,7 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [MICROBIT_TOOLBAR_ICON_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
     [MICROBIT_TOOLBAR_ICON_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
     [CLUE_TOOLBAR_ICON_ID.TEMPERATURE, CLUE_TEMPERATURE_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.ACCELEROMETER, CLUE_ACCELEROMETER_MODAL_CONTENT],
 ]);
 
 export const getModalContent = (
