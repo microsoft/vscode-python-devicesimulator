@@ -100,7 +100,7 @@ class TestAdafruitClue(object):
             }
         )
         assert clue.color == (MOCK_COLOR_R_A, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
-        assert clue._Clue__state["color_sensor"]["r"] == MOCK_COLOR_R_B
+        clue._Clue__state["color_sensor"]["r"] = MOCK_COLOR_R_B
         assert clue.color == (MOCK_COLOR_R_B, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
 
     def test_temperature(self):

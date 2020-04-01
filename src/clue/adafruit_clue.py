@@ -203,7 +203,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             "button_a": False,
             "button_b": False,
             "pressed_buttons": set(),
-            "accelerometer": {"x": 0, "y": 0, "z": 0},
+            "acceleration": {"x": 0, "y": 0, "z": 0},
             "color_sensor": {"r": 0, "g": 0, "b": 0, "c": 0},
             "magnetometer": {"x": 0, "y": 0, "z": 0},
             "gyro": {"x": 0, "y": 0, "z": 0},
@@ -268,9 +268,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
         """
         return (
-            self.__state["accelerometer"]["x"],
-            self.__state["accelerometer"]["y"],
-            self.__state["accelerometer"]["z"],
+            self.__state["acceleration"]["x"],
+            self.__state["acceleration"]["y"],
+            self.__state["acceleration"]["z"],
         )
 
     @property
