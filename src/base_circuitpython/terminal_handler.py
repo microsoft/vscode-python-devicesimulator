@@ -1,6 +1,6 @@
 import displayio
 import terminalio
-from adafruit_display_text import label
+import adafruit_display_text
 from PIL import Image
 import threading
 
@@ -39,13 +39,15 @@ class Terminal:
 
         self.__lock.acquire()
         splash = displayio.Group(
-            max_size=20, auto_write=False, has_active_group_ref=False
+            max_size=20, auto_write=False, check_active_group_ref=False
         )
 
         curr_y = 5 + (16 * (15 - len(self.output_values)))
         for o in reversed(self.output_values):
             if len(o):
-                text_area = label.Label(terminalio.FONT, text=o, line_spacing=1.25)
+                text_area = adafruit_display_text.label.Label(
+                    terminalio.FONT, text=o, line_spacing=1.25
+                )
 
                 text_area.y = curr_y
                 text_area.x = 15

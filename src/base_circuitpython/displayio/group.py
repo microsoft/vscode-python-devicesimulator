@@ -17,9 +17,9 @@ import board
 
 
 class Group:
-    def __init__(self, max_size, scale=1, auto_write=True, has_active_group_ref=True):
+    def __init__(self, max_size, scale=1, auto_write=True, check_active_group_ref=True):
 
-        self.has_active_group_ref = has_active_group_ref
+        self.__check_active_group_ref = check_active_group_ref
 
         self.__contents = []
         self.max_size = max_size
@@ -57,7 +57,7 @@ class Group:
         # it is what prints itself and its children to the frontend
         if (
             not check_active_ref
-            or not self.has_active_group_ref
+            or not self.__check_active_group_ref
             or board.DISPLAY.active_group == self
         ):
             if scale is None:

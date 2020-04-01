@@ -23,12 +23,7 @@ test_count = 0
 class TestAdafruitDisplayText(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
-
-        # reset bmp_img to all black
-        displayio.img.paste(
-            "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
-        )
-
+        # Create a new black (default) image
         utils.send_to_simulator = mock.Mock()
 
     @pytest.mark.parametrize(
@@ -55,12 +50,17 @@ class TestAdafruitDisplayText(object):
         loaded_img = expected_image.load()
 
         text_area = label.Label(
-            terminalio.FONT, text=text, auto_write=False, scale=scale, color=color
+            terminalio.FONT,
+            text=text,
+            auto_write=False,
+            scale=scale,
+            color=color,
+            check_active_group_ref=False,
         )
         text_area.x = x
         text_area.y = y
-        text_area.draw(show=True)
 
-        helper._Helper__test_image_equality(displayio.bmp_img, loaded_img)
-        # displayio.img.save(f"test_image_text_{test_count+1}.bmp")
+        main_img = text_area.draw()
+
+        helper._Helper__test_image_equality(main_img.load(), loaded_img)
         test_count += 1
