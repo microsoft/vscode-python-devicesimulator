@@ -5,83 +5,45 @@ import {
     X_SLIDER_INDEX,
     Y_SLIDER_INDEX,
     Z_SLIDER_INDEX,
+    ISliderProps,
 } from "../../../../viewUtils";
 import InputSlider from "../../InputSlider";
 
 interface IProps {
     axisProperties: ISensorProps;
     axisValues: {
-        X_AXIS: number;
-        Y_AXIS: number;
-        Z_AXIS: number;
+        X: number;
+        Y: number;
+        Z: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
 export const ThreeDimensionSlider: React.FC<IProps> = props => {
     return (
         <div className="ThreeDimensionSlider">
-            <InputSlider
-                minValue={
-                    props.axisProperties.sliderProps[X_SLIDER_INDEX].minValue
+            {props.axisProperties.sliderProps.map(
+                (sliderProperties: ISliderProps, index: number) => {
+                    return (
+                        <React.Fragment key={index}>
+                            <InputSlider
+                                minValue={sliderProperties.minValue}
+                                maxValue={sliderProperties.maxValue}
+                                type={sliderProperties.type}
+                                minLabel={sliderProperties.minLabel}
+                                maxLabel={sliderProperties.maxLabel}
+                                axisLabel={sliderProperties.axisLabel}
+                                onUpdateValue={props.onUpdateValue}
+                                value={
+                                    props.axisValues[
+                                        sliderProperties.axisLabel as keyof IProps["axisValues"]
+                                    ]
+                                }
+                            />
+                            <br />
+                        </React.Fragment>
+                    );
                 }
-                maxValue={
-                    props.axisProperties.sliderProps[X_SLIDER_INDEX].maxValue
-                }
-                type={props.axisProperties.sliderProps[X_SLIDER_INDEX].type}
-                minLabel={
-                    props.axisProperties.sliderProps[X_SLIDER_INDEX].minLabel
-                }
-                maxLabel={
-                    props.axisProperties.sliderProps[X_SLIDER_INDEX].maxLabel
-                }
-                axisLabel={
-                    props.axisProperties.sliderProps[X_SLIDER_INDEX].axisLabel
-                }
-                onUpdateValue={props.onUpdateValue}
-                value={props.axisValues.X_AXIS}
-            />
-            <br />
-            <InputSlider
-                minValue={
-                    props.axisProperties.sliderProps[Y_SLIDER_INDEX].minValue
-                }
-                maxValue={
-                    props.axisProperties.sliderProps[Y_SLIDER_INDEX].maxValue
-                }
-                type={props.axisProperties.sliderProps[Y_SLIDER_INDEX].type}
-                minLabel={
-                    props.axisProperties.sliderProps[Y_SLIDER_INDEX].minLabel
-                }
-                maxLabel={
-                    props.axisProperties.sliderProps[Y_SLIDER_INDEX].maxLabel
-                }
-                axisLabel={
-                    props.axisProperties.sliderProps[Y_SLIDER_INDEX].axisLabel
-                }
-                onUpdateValue={props.onUpdateValue}
-                value={props.axisValues.Y_AXIS}
-            />
-            <br />
-            <InputSlider
-                minValue={
-                    props.axisProperties.sliderProps[Z_SLIDER_INDEX].minValue
-                }
-                maxValue={
-                    props.axisProperties.sliderProps[Z_SLIDER_INDEX].maxValue
-                }
-                type={props.axisProperties.sliderProps[Z_SLIDER_INDEX].type}
-                minLabel={
-                    props.axisProperties.sliderProps[Z_SLIDER_INDEX].minLabel
-                }
-                maxLabel={
-                    props.axisProperties.sliderProps[Z_SLIDER_INDEX].maxLabel
-                }
-                axisLabel={
-                    props.axisProperties.sliderProps[Z_SLIDER_INDEX].axisLabel
-                }
-                onUpdateValue={props.onUpdateValue}
-                value={props.axisValues.Z_AXIS}
-            />
+            )}
         </div>
     );
 };

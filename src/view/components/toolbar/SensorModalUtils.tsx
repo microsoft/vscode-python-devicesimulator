@@ -164,9 +164,9 @@ export const MOTION_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const motionSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+        X: sensorValues[SENSOR_LIST.MOTION_X],
+        Y: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
         descriptionTitle: "toolbar-motion-sensor.title",
@@ -296,9 +296,9 @@ export const ACCELEROMETER_MODAL_CONTENT = (
     sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
     const accelerometerSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+        X: sensorValues[SENSOR_LIST.MOTION_X],
+        Y: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
         components: (

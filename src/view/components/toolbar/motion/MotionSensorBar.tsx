@@ -46,9 +46,9 @@ const MOTION_SENSOR_PROPERTIES: ISensorProps = {
 };
 interface IProps {
     axisValues: {
-        X_AXIS: number;
-        Y_AXIS: number;
-        Z_AXIS: number;
+        X: number;
+        Y: number;
+        Z: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
