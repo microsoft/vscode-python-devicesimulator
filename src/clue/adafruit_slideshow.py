@@ -63,7 +63,7 @@ class SlideShow:
         """Specifies whether to loop through the images continuously or play through the list once.
         ``True`` will continue to loop, ``False`` will play only once."""
 
-        self.fade_frames = 8
+        self.fade_effect = fade_effect
         """Whether to include the fade effect between images. ``True`` tells the code to fade the
            backlight up and down between image display transitions. ``False`` maintains max
            brightness on the backlight between image transitions."""
@@ -78,6 +78,8 @@ class SlideShow:
         self.advance = self._advance_with_fade
         """Displays the next image. Returns True when a new image was displayed, False otherwise.
         """
+
+        self.fade_frames = 8
 
         # assign new advance method if fade is disabled
         if not fade_effect:
@@ -264,7 +266,10 @@ class SlideShow:
                     (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
                 )
 
-                if new_img.size[0] < 240 or new_img.size[1] < 240:
+                if (
+                    new_img.size[0] < CONSTANTS.SCREEN_HEIGHT_WIDTH
+                    or new_img.size[1] < CONSTANTS.SCREEN_HEIGHT_WIDTH
+                ):
                     black_overlay = Image.new(
                         "RGBA",
                         CONSTANTS.SCREEN_HEIGHT_WIDTH,
