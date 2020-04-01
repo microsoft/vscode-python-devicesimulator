@@ -101,6 +101,9 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const humiditySensorValues = {
+        H: sensorValues[SENSOR_LIST.HUMIDITY],
+    };
     return {
         descriptionTitle: "toolbar-light-sensor.title",
         tagInput: TAG_INPUT_SVG,
@@ -108,9 +111,10 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
         components: [
-            <LightSensorBar
+            <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.LIGHT]}
+                axisValues={humiditySensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE_HUMIDITY_PROPERTIES}
             />,
         ],
         id: "light_sensor",
@@ -139,6 +143,9 @@ export const CLUE_PROXIMITY_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const proximitySensorValues = {
+        P: sensorValues[SENSOR_LIST.PROXIMITY],
+    };
     return {
         descriptionTitle: "toolbar-light-sensor.title",
         tagInput: TAG_INPUT_SVG,
@@ -146,9 +153,10 @@ export const CLUE_PROXIMITY_MODAL_CONTENT = (
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
         components: [
-            <LightSensorBar
+            <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.LIGHT]}
+                axisValues={proximitySensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE__PROXIMITY_PROPERTIES}
             />,
         ],
         id: "light_sensor",
@@ -158,6 +166,9 @@ export const CLUE_PRESSURE_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const pressureSensorValues = {
+        P: sensorValues[SENSOR_LIST.PRESSURE],
+    };
     return {
         descriptionTitle: "toolbar-light-sensor.title",
         tagInput: TAG_INPUT_SVG,
@@ -165,9 +176,10 @@ export const CLUE_PRESSURE_MODAL_CONTENT = (
         descriptionText: "toolbar-light-sensor.description",
         tryItDescription: "toolbar-light-sensor.tryItDescription",
         components: [
-            <LightSensorBar
+            <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.LIGHT]}
+                axisValues={pressureSensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE_PRESSURE_PROPERTIES}
             />,
         ],
         id: "light_sensor",

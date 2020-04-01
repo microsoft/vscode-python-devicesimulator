@@ -40,3 +40,45 @@ export const CLUE_LIGHT_PROPERTIES: ISensorProps = {
     sliderProps: [CLUE_SLIDER_R, CLUE_SLIDER_G, CLUE_SLIDER_B, CLUE_SLIDER_C],
     unitLabel: "Lux",
 };
+export const CLUE_HUMIDITY_PROPERTIES: ISensorProps = {
+    LABEL: "Humidity Sensor",
+    sliderProps: [
+        {
+            axisLabel: "H",
+            maxLabel: "Max",
+            maxValue: 100,
+            minLabel: "Min",
+            minValue: 0,
+            type: SENSOR_LIST.HUMIDITY,
+        },
+    ],
+    unitLabel: "%",
+};
+export const CLUE__PROXIMITY_PROPERTIES: ISensorProps = {
+    LABEL: "Humidity Sensor",
+    sliderProps: [
+        {
+            axisLabel: "P",
+            maxLabel: "Max",
+            maxValue: 100,
+            minLabel: "Min",
+            minValue: 0,
+            type: SENSOR_LIST.PROXIMITY,
+        },
+    ],
+    unitLabel: "%",
+};
+export const CLUE_PRESSURE_PROPERTIES: ISensorProps = {
+    LABEL: "Humidity Sensor",
+    sliderProps: [
+        {
+            axisLabel: "P",
+            maxLabel: "Max",
+            maxValue: 100,
+            minLabel: "Min",
+            minValue: 0,
+            type: SENSOR_LIST.PRESSURE,
+        },
+    ],
+    unitLabel: "%",
+};

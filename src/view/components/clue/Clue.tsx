@@ -23,6 +23,9 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_X]: 0,
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
+        [SENSOR_LIST.HUMIDITY]: 0,
+        [SENSOR_LIST.PRESSURE]: 0,
+        [SENSOR_LIST.PROXIMITY]: 0,
     },
 };
 

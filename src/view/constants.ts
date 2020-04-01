@@ -103,6 +103,9 @@ export enum SENSOR_LIST {
     LIGHT_G = "light_g",
     LIGHT_B = "light_b",
     LIGHT_C = "light_c",
+    HUMIDITY = "humidity",
+    PRESSURE = "pressure",
+    PROXIMITY = "proximity",
 }
 
 export const GESTURES = [
