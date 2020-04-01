@@ -11,16 +11,18 @@ class Display:
         self.terminal = terminal_handler.Terminal()
 
     def show(self, group=None):
+        if group != self.active_group:
+            self.active_group = group
 
-        self.active_group = group
-
-        # show can take a string if context is
-        # not in the traditional Group + TileGrid style
-        if not isinstance(group, str):
             if group == None:
-                self.terminal.configure(no_verif=True)
-            else:
-                group.draw(show=True)
+                self.terminal.configure()
+                return
+
+            # if the group has no attribute called
+            # "draw", then it is liable for updating itself
+            # when it calls show
+            if hasattr(group, "draw"):
+                group.draw()
 
 
 DISPLAY = Display()

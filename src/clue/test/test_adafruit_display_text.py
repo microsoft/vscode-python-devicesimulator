@@ -52,7 +52,6 @@ class TestAdafruitDisplayText(object):
         text_area = label.Label(
             terminalio.FONT,
             text=text,
-            auto_write=False,
             scale=scale,
             color=color,
             check_active_group_ref=False,

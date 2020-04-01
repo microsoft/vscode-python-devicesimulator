@@ -8,6 +8,7 @@ import time
 import collections
 from random import shuffle
 from common import utils
+import board
 
 # taken from adafruit
 class PlayBackOrder:
@@ -107,7 +108,7 @@ class SlideShow:
         # load images into main queue
         self._load_images()
 
-        display.show(str(self))
+        display.show(self)
         # show the first working image
         self.advance()
 
@@ -184,6 +185,8 @@ class SlideShow:
         self.pic_queue = collections.deque(dir_imgs)
 
     def _advance_with_fade(self):
+        if board.DISPLAY.active_group != self:
+            return
 
         old_img = self._curr_img_handle
         advance_sucessful = False
@@ -239,6 +242,8 @@ class SlideShow:
         return True
 
     def _advance_no_fade(self):
+        if board.DISPLAY.active_group != self:
+            return
 
         old_img = self._curr_img_handle
 

@@ -45,7 +45,11 @@ class TileGrid:
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
-        self.in_group = False
+        self.parent = None
+
+    @property
+    def in_group(self):
+        return self.parent != None
 
     # setitem for an index simply gets the index of the bitmap
     # rather than the tile index

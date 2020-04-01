@@ -1,86 +1,105 @@
-import displayio
-import terminalio
-import adafruit_display_text
+
+
 from PIL import Image
 import threading
-
 import os
 import base64
 from io import BytesIO
-import base_cp_constants as CONSTANTS
 import time
 import collections
+import pathlib
+
 from common import utils
 import board
-import pathlib
+import base_cp_constants as CONSTANTS
+import displayio
+import terminalio
 
 
 class Terminal:
     def __init__(self):
-        self.abs_path = pathlib.Path(__file__).parent.absolute()
-        self.output_values = collections.deque()
+        self.__output_values = collections.deque()
         self.__lock = threading.Lock()
-        self.base_img = Image.open(os.path.join(self.abs_path, "blinka.bmp"))
+        self.__abs_path = pathlib.Path(__file__).parent.absolute()
+        self.__base_img = Image.open(
+            os.path.join(self.__abs_path, CONSTANTS.IMG_DIR_NAME,CONSTANTS.BLINKA_BMP)
+        )
 
-    def _create_newline(self, str_list):
-
+    def __create_newline(self, str_list):
         self.__lock.acquire()
         for string in str_list:
-            self.output_values.appendleft(string)
+            self.__output_values.appendleft(string)
 
-        over = len(self.output_values) - 15
+        over = len(self.__output_values) - CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX
+
+        # max CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX items in output_values
         if over > 0:
             for i in range(over):
-                self.output_values.pop()
+                self.__output_values.pop()
 
         self.__lock.release()
 
     def configure(self, no_verif=False):
 
+        import adafruit_display_text.label
         self.__lock.acquire()
+
+        # no need to check the active group within the Group class
+        # since the caller of configure already did
         splash = displayio.Group(
-            max_size=20, auto_write=False, check_active_group_ref=False
+            max_size=20, check_active_group_ref=False,auto_write=False
         )
 
-        curr_y = 5 + (16 * (15 - len(self.output_values)))
-        for o in reversed(self.output_values):
+        # since the text starts from the bottom,
+        # we need to find an offset if there are empty spots
+
+        # handling of output_values already ensures that there are 
+        # max CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX items in output_values deque
+        num_empty_slots = CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX - len(self.__output_values)
+        curr_y = CONSTANTS.CLUE_TERMINAL_Y_OFFSET + (CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT * num_empty_slots)
+        for o in reversed(self.__output_values):
             if len(o):
                 text_area = adafruit_display_text.label.Label(
                     terminalio.FONT, text=o, line_spacing=1.25
                 )
 
                 text_area.y = curr_y
-                text_area.x = 15
+                text_area.x = CONSTANTS.CLUE_TERMINAL_X_OFFSET
                 splash.append(text_area)
 
-            curr_y += 16
+            curr_y += CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT
 
-        splash.draw(img=self.base_img.copy(), show=True)
+        splash.draw(img=self.__base_img.copy())
 
         self.__lock.release()
 
     def add_str_to_terminal(self, curr_display_string=""):
 
-        line_break_amt = 37
+        line_break_amt = CONSTANTS.CLUE_TERMINAL_LINE_BREAK_AMT
+
+        # characters until forced newline
         newline_expected_val = line_break_amt
         out_str = ""
         new_strs = []
         for idx, d in enumerate(curr_display_string):
-            if d == "\n":
-                newline_expected_val = line_break_amt
-                new_strs.append(out_str)
-                out_str = ""
-                continue
-            elif newline_expected_val == 0:
+            # handle custom or forced newline
+            if d == "\n" or newline_expected_val == 0:
                 new_strs.append(out_str)
                 out_str = ""
                 newline_expected_val = line_break_amt
+
+                # if it was a custom newline, no longer need to 
+                # process the character
+                if d == "\n":
+                    continue
             else:
                 newline_expected_val -= 1
             out_str += d
         new_strs.append(out_str)
 
-        self._create_newline(new_strs)
+        self.__create_newline(new_strs)
 
+        # only go ahead to configure the screen
+        # if the terminal is actively on the screen
         if board.DISPLAY.active_group == None:
             self.configure()

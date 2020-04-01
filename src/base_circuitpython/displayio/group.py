@@ -17,15 +17,18 @@ import board
 
 
 class Group:
-    def __init__(self, max_size, scale=1, auto_write=True, check_active_group_ref=True):
+    def __init__(self, max_size, scale=1, check_active_group_ref=True, auto_write=True):
 
         self.__check_active_group_ref = check_active_group_ref
-
+        self.__auto_write = auto_write
         self.__contents = []
         self.max_size = max_size
         self.scale = scale
-        self.auto_write = auto_write
-        self.in_group = False
+        self.parent = None
+
+    @property
+    def in_group(self):
+        return self.parent != None
 
     def append(self, item):
         if len(self.__contents) == self.max_size:
@@ -36,77 +39,90 @@ class Group:
             raise ValueError(CONSTANTS.LAYER_ALREADY_IN_GROUP)
 
         self.__contents.append(item)
-        item.in_group = True
-        if self.auto_write:
-            self.draw(show=True)
+        item.parent = self
+
+        self.__elem_changed()
+
+    def __elem_changed(self):
+        # ensure that this group is what the board is currently showing
+        # otherwise, don't bother to draw it
+        if (
+            self.__auto_write
+            and self.__check_active_group_ref
+            and board.DISPLAY.active_group == self
+        ):
+            self.draw()
+
+        elif self.in_group:
+
+            # if a sub-group is modified,
+            # propagate to top level to
+            # see if one of the parents are the
+            # current active group
+            self.parent.__elem_changed()
 
     def __getitem__(self, index):
         return self.__contents[index]
 
     def __setitem__(self, index, val):
-        self.__contents[index] = val
+        old_val = self.__contents[index] 
 
-    def draw(self, img=None, x=0, y=0, scale=None, show=True, check_active_ref=True):
+        self.__contents[index] = val
+        
+        if old_val != val:
+            self.__elem_changed()
+
+    def draw(self, img=None, x=0, y=0, scale=None, show=True):
+
+        # this function is not a part of the orignal implementation
+        # it is what draws itself and its children and potentially shows it to the
+        # frontend
         if img == None:
             img = Image.new(
                 "RGBA",
                 (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH),
                 (0, 0, 0, 0),
             )
-        # this function is not a part of the orignal implementation
-        # it is what prints itself and its children to the frontend
-        if (
-            not check_active_ref
-            or not self.__check_active_group_ref
-            or board.DISPLAY.active_group == self
-        ):
-            if scale is None:
-                scale = self.scale
+        if scale is None:
+            scale = self.scale
+        else:
+            scale *= self.scale
+
+        try:
+            if isinstance(self, adafruit_display_text.label.Label):
+                # adafruit_display_text has some positioning considerations
+                # that need to be handled.
+
+                # found manually, display must be positioned upwards
+                # 1 unit (1 unit * scale = scale)
+                y -= scale
+
+                # group is positioned against anchored_position (default (0,0)),
+                # which is positioned against anchor_point
+
+                x += self._anchor_point[0]
+                y += self._anchor_point[1]
+                if self._boundingbox is not None and self.anchored_position is not None:
+                    x += self.anchored_position[0]
+                    y += self.anchored_position[1]
+        except AttributeError:
+            pass
+
+        for elem in self.__contents:
+            if isinstance(elem, Group):
+                img = elem.draw(img=img, x=x, y=y, scale=scale, show=False,)
             else:
-                scale *= self.scale
+                img = elem.draw(img=img, x=x, y=y, scale=scale)
 
-            try:
-                if isinstance(self, adafruit_display_text.label.Label):
-                    # adafruit_display_text has some positioning considerations
-                    # that need to be handled.
+        # show should only be true to the highest parent group
+        if show:
+            self.show(img)
 
-                    # found manually, display must be positioned upwards
-                    # 1 unit (1 unit * scale = scale)
-                    y -= scale
-
-                    # group is positioned against anchored_position (default (0,0)),
-                    # which is positioned against anchor_point
-
-                    x += self._anchor_point[0]
-                    y += self._anchor_point[1]
-                    if (
-                        self._boundingbox is not None
-                        and self.anchored_position is not None
-                    ):
-                        x += self.anchored_position[0]
-                        y += self.anchored_position[1]
-            except AttributeError:
-                pass
-
-            for elem in self.__contents:
-                if isinstance(elem, Group):
-                    img = elem.draw(
-                        img=img,
-                        x=x,
-                        y=y,
-                        scale=scale,
-                        show=False,
-                        check_active_ref=False,
-                    )
-                else:
-                    img = elem.draw(img=img, x=x, y=y, scale=scale)
-
-            if show:
-                self.show(img)
-            return img
+        # return value only used if this is within another group
+        return img
 
     def show(self, img):
-        # sends current bmp_img to the frontend
+        # sends current img to the frontend
         buffered = BytesIO()
         img.save(buffered, format="BMP")
         byte_base64 = base64.b64encode(buffered.getvalue())
