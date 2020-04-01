@@ -203,18 +203,19 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             "button_a": False,
             "button_b": False,
             "pressed_buttons": set(),
-            "accelerometer": {'x': 0, 'y': 0, 'z': 0},
-            "color_sensor": {'r': 0, 'g': 0, 'b': 0, 'c': 0},
-            "magnetometer": {'x': 0, 'y': 0, 'z': 0},
-            "gyro": {'x': 0, 'y': 0, 'z': 0},
+            "accelerometer": {"x": 0, "y": 0, "z": 0},
+            "color_sensor": {"r": 0, "g": 0, "b": 0, "c": 0},
+            "magnetometer": {"x": 0, "y": 0, "z": 0},
+            "gyro": {"x": 0, "y": 0, "z": 0},
             "sea_level_pressure": 1013.25,
             "temperature": 0,
             "proximity": 0,
-            "gesture": 0, # Can only be 0, 1, 2, 3, 4
+            "gesture": 0,  # Can only be 0, 1, 2, 3, 4
             "humidity": 0,
             "pressure": 0,
             "pixel": neopixel.NeoPixel(
-            pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB)
+                pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
+            ),
         }
 
     @property
@@ -266,7 +267,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
             print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
         """
-        return (self.__state["accelerometer"]['x'], self.__state["accelerometer"]['y'], self.__state["accelerometer"]['z'])
+        return (
+            self.__state["accelerometer"]["x"],
+            self.__state["accelerometer"]["y"],
+            self.__state["accelerometer"]["z"],
+        )
 
     @property
     def color(self):
@@ -279,7 +284,12 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
         """
-        return (self.__state["color_sensor"]['r'], self.__state["color_sensor"]['g'], self.__state["color_sensor"]['b'], self.__state["color_sensor"]['c'])
+        return (
+            self.__state["color_sensor"]["r"],
+            self.__state["color_sensor"]["g"],
+            self.__state["color_sensor"]["b"],
+            self.__state["color_sensor"]["c"],
+        )
 
     @property
     def temperature(self):
@@ -302,7 +312,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
         """
-        return (self.__state["magnetometer"]['x'], self.__state["magnetometer"]['y'], self.__state["magnetometer"]['z'])
+        return (
+            self.__state["magnetometer"]["x"],
+            self.__state["magnetometer"]["y"],
+            self.__state["magnetometer"]["z"],
+        )
 
     @property
     def proximity(self):
@@ -323,7 +337,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         This example prints the values. Try moving the board to see how the printed values change.
               print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
         """
-        return (self.__state["gyro"]['x'], self.__state["gyro"]['y'], self.__state["gyro"]['z'])
+        return (
+            self.__state["gyro"]["x"],
+            self.__state["gyro"]["y"],
+            self.__state["gyro"]["z"],
+        )
 
     @property
     def gesture(self):
@@ -372,7 +390,12 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             clue.sea_level_pressure = 1015
             print("Altitude: {:.1f}m".format(clue.altitude))
         """
-        altitude = 44330 * (1.0 - math.pow(self.__state["pressure"] / self.__state["sea_level_pressure"], 0.1903))
+        altitude = 44330 * (
+            1.0
+            - math.pow(
+                self.__state["pressure"] / self.__state["sea_level_pressure"], 0.1903
+            )
+        )
         return altitude
 
     @property
@@ -489,7 +512,6 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             if value:
                 self.__state["pressed_buttons"].add("B")
             self.__state["button_b"] = value
-            
 
 
 clue = Clue()  # pylint: disable=invalid-name
