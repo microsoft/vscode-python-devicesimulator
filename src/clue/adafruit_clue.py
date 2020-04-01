@@ -199,12 +199,24 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
-        self._a = False
-        self._b = False
-        self.__pressed_buttons = set()
-        self._pixel = neopixel.NeoPixel(
-            pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
-        )
+        self.__state = {
+            "button_a": False,
+            "button_b": False,
+            "pressed_buttons": set(),
+            "acceleration": {"x": 0, "y": 0, "z": 0},
+            "color_sensor": {"r": 0, "g": 0, "b": 0, "c": 0},
+            "magnetometer": {"x": 0, "y": 0, "z": 0},
+            "gyro": {"x": 0, "y": 0, "z": 0},
+            "sea_level_pressure": 1013.25,
+            "temperature": 0,
+            "proximity": 0,
+            "gesture": 0,  # Can only be 0, 1, 2, 3, 4
+            "humidity": 0,
+            "pressure": 0,
+            "pixel": neopixel.NeoPixel(
+                pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
+            ),
+        }
 
     @property
     def button_a(self):
@@ -217,7 +229,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_a:
                   print("Button A pressed")
         """
-        return self._a
+        return self.__state["button_a"]
 
     @property
     def button_b(self):
@@ -230,17 +242,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_b:
                   print("Button B pressed")
         """
-        return self._b
-
-    def __update_button(self, button, value):
-        if button == "button_a":
-            if value:
-                self.__pressed_buttons.add("A")
-            self._a = value
-        elif button == "button_b":
-            if value:
-                self.__pressed_buttons.add("B")
-            self._b = value
+        return self.__state["button_b"]
 
     @property
     def were_pressed(self):
@@ -251,9 +253,167 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print(clue.were_pressed)
         """
-        ret = self.__pressed_buttons.copy()
-        self.__pressed_buttons.clear()
+        ret = self.__state["pressed_buttons"].copy()
+        self.__state["pressed_buttons"].clear()
         return ret
+
+    @property
+    def acceleration(self):
+        """Obtain acceleration data from the x, y and z axes.
+        This example prints the values. Try moving the board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+            print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
+        """
+        return (
+            self.__state["acceleration"]["x"],
+            self.__state["acceleration"]["y"],
+            self.__state["acceleration"]["z"],
+        )
+
+    @property
+    def color(self):
+        """The red, green, blue, and clear light values. (r, g, b, c)
+        This example prints the values. Try holding something up to the sensor to see the values
+        change. Works best with white LEDs enabled.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
+        """
+        return (
+            self.__state["color_sensor"]["r"],
+            self.__state["color_sensor"]["g"],
+            self.__state["color_sensor"]["b"],
+            self.__state["color_sensor"]["c"],
+        )
+
+    @property
+    def temperature(self):
+        """The temperature in degrees Celsius.
+        This example prints the value. Try touching the sensor to see the value change.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            print("Temperature: {:.1f}C".format(clue.temperature))
+        """
+        return self.__state["temperature"]
+
+    @property
+    def magnetic(self):
+        """Obtain x, y, z magnetic values in microteslas.
+        This example prints the values. Try moving the board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
+        """
+        return (
+            self.__state["magnetometer"]["x"],
+            self.__state["magnetometer"]["y"],
+            self.__state["magnetometer"]["z"],
+        )
+
+    @property
+    def proximity(self):
+        """A relative proximity to the sensor in values from 0 - 255.
+        This example prints the value. Try moving your hand towards and away from the front of the
+        board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Proximity: {}".format(clue.proximity))
+        """
+        return self.__state["proximity"]
+
+    @property
+    def gyro(self):
+        """Obtain x, y, z angular velocity values in degrees/second.
+        This example prints the values. Try moving the board to see how the printed values change.
+              print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
+        """
+        return (
+            self.__state["gyro"]["x"],
+            self.__state["gyro"]["y"],
+            self.__state["gyro"]["z"],
+        )
+
+    @property
+    def gesture(self):
+        """A gesture code if gesture is detected. Shows ``0`` if no gesture detected.
+        ``1`` if an UP gesture is detected, ``2`` if DOWN, ``3`` if LEFT, and ``4`` if RIGHT.
+        This example prints the gesture values. Try moving your hand up, down, left or right over
+        the sensor to see the value change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Gesture: {}".format(clue.gesture))
+        """
+        return self.__state["gesture"]
+
+    @property
+    def humidity(self):
+        """The measured relative humidity in percent.
+        This example prints the value. Try breathing on the sensor to see the values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Humidity: {:.1f}%".format(clue.humidity))
+        """
+        return self.__state["humidity"]
+
+    @property
+    def pressure(self):
+        """The barometric pressure in hectoPascals.
+        This example prints the value.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            print("Pressure: {:.3f}hPa".format(clue.pressure))
+        """
+        return self.__state["pressure"]
+
+    @property
+    def altitude(self):
+        """The altitude in meters based on the sea level pressure at your location. You must set
+        ``sea_level_pressure`` to receive an accurate reading.
+        This example prints the value. Try moving the board vertically to see the value change.
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.sea_level_pressure = 1015
+            print("Altitude: {:.1f}m".format(clue.altitude))
+        """
+        altitude = 44330 * (
+            1.0
+            - math.pow(
+                self.__state["pressure"] / self.__state["sea_level_pressure"], 0.1903
+            )
+        )
+        return altitude
+
+    @property
+    def sea_level_pressure(self):
+        """Set to the pressure at sea level at your location, before reading altitude for
+        the most accurate altitude measurement.
+        This example prints the value.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.sea_level_pressure = 1015
+            print("Pressure: {:.3f}hPa".format(clue.pressure))
+        """
+        return self.__state["sea_level_pressure"]
+
+    @sea_level_pressure.setter
+    def sea_level_pressure(self, value):
+        self.__state["sea_level_pressure"] = value
 
     @property
     def pixel(self):
@@ -265,7 +425,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             while True:
                 clue.pixel.fill((255, 0, 255))
         """
-        return self._pixel
+        return self.__state["pixel"]
 
     @staticmethod
     def simple_text_display(
@@ -335,13 +495,23 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         )
 
     def update_state(self, new_state):
-        self.__update_buttons(new_state)
+        for event in new_state.keys():
+            if event in CONSTANTS.EXPECTED_INPUT_BUTTONS:
+                self.__update_button(event, new_state.get(event))
+            elif event in CONSTANTS.ALL_EXPECTED_INPUT_EVENTS:
+                if self.__state[event] != new_state[event]:
+                    self.__state[event] = new_state.get(event)
 
     # helpers
-    def __update_buttons(self, new_state):
-        # get button pushes
-        for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
-            self.__update_button(button_name, new_state.get(button_name))
+    def __update_button(self, button, value):
+        if button == "button_a":
+            if value:
+                self.__state["pressed_buttons"].add("A")
+            self.__state["button_a"] = value
+        elif button == "button_b":
+            if value:
+                self.__state["pressed_buttons"].add("B")
+            self.__state["button_b"] = value
 
 
 clue = Clue()  # pylint: disable=invalid-name
