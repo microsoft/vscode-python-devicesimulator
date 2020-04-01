@@ -4,6 +4,7 @@ import {
     // DEVICE_LIST_KEY,
     CONSTANTS,
     DEFAULT_IMG_CLUE,
+    DEVICE_LIST_KEY,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
@@ -48,7 +49,9 @@ export class ClueSimulator extends React.Component<any, IState> {
     }
     handleMessage = (event: any): void => {
         const message = event.data;
-
+        if (message.active_device !== DEVICE_LIST_KEY.CLUE) {
+            return;
+        }
         switch (message.command) {
             case "reset-state":
                 this.setState({

@@ -38,6 +38,9 @@ sim-button {
 .sim-button-outer:active {
     fill: orange;
 }
+.sim-button-outer {
+    fill: #7e7272;
+}
 
 .sim-button-key-press {
     fill: orange;
@@ -173,4 +176,136 @@ sim-button {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+}
+.sim-button {
+    stroke: none;
+}
+.sim-button:active {
+    stroke: none;
+}
+.cls-1 {
+    fill: #097054;
+}
+.cls-1,
+.cls-14,
+.cls-23,
+.cls-9 {
+    stroke: #000;
+}
+.cls-1,
+.cls-11,
+.cls-12,
+.cls-14,
+.cls-17,
+.cls-22,
+.cls-23,
+.cls-3,
+.cls-4,
+.cls-5,
+.cls-6,
+.cls-9 {
+    stroke-miterlimit: 10;
+}
+.cls-1,
+.cls-23 {
+    stroke-width: 1.99px;
+}
+.cls-18,
+.cls-2 {
+    fill: #fff;
+}
+.cls-11,
+.cls-12,
+.cls-17,
+.cls-23,
+.cls-3,
+.cls-4,
+.cls-5,
+.cls-6,
+.cls-7,
+.cls-8 {
+    fill: none;
+}
+.cls-11,
+.cls-12,
+.cls-17,
+.cls-3,
+.cls-4,
+.cls-5,
+.cls-6,
+.cls-7,
+.cls-8 {
+    stroke: #fff;
+}
+.cls-3 {
+    stroke-width: 2px;
+}
+.cls-12,
+.cls-17,
+.cls-4,
+.cls-5,
+.cls-6,
+.cls-7,
+.cls-8 {
+    stroke-linecap: round;
+}
+.cls-4,
+.cls-7 {
+    stroke-width: 1.63px;
+}
+.cls-5 {
+    stroke-width: 1.41px;
+}
+.cls-6 {
+    stroke-width: 1.6px;
+}
+.cls-7,
+.cls-8 {
+    stroke-linejoin: round;
+}
+.cls-8 {
+    stroke-width: 1.63px;
+}
+.cls-10,
+.cls-9 {
+    fill: #7e7272;
+}
+.cls-22,
+.cls-9 {
+    stroke-width: 1.5px;
+}
+.cls-12 {
+    stroke-width: 1.71px;
+}
+
+.cls-14 {
+    stroke-width: 0.25px;
+}
+.cls-16 {
+    fill: #ffde00;
+}
+.cls-17 {
+    stroke-width: 2.02px;
+}
+.cls-18 {
+    font-size: 7px;
+    font-family: SegoeUI-Bold, Segoe UI;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.cls-19 {
+    letter-spacing: -0.03em;
+}
+.cls-20 {
+    letter-spacing: -0.05em;
+}
+.cls-21 {
+    letter-spacing: 0em;
+}
+.cls-22 {
+    stroke: #7e7272;
+}
+.sim-text-outside-clue {
+    font-size: 14px;
+    fill: var(--vscode-foreground);
 }
