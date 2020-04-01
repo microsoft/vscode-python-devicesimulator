@@ -16,11 +16,6 @@ class TestPixel(object):
             }
         )
 
-    @pytest.mark.parametrize("debug_mode", [True, False])
-    def test_set_debug_mode(self, debug_mode):
-        self.pixel._Pixel__set_debug_mode(debug_mode)
-        assert debug_mode == self.pixel._Pixel__debug_mode
-
     def test_get_item_out_of_bounds(self):
         with pytest.raises(IndexError):
             p = self.pixel[3]

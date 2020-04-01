@@ -10,7 +10,7 @@ import sys
 previous_state = {}
 
 abs_path_to_user_file = ""
-
+debug_mode=False
 
 def update_state_with_device_name(state, device_name):
     updated_state = dict(state)

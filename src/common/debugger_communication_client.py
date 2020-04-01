@@ -27,6 +27,7 @@ previous_state = {}
 def debug_send_to_simulator(state, active_device):
     global previous_state
     if state != previous_state:
+        print("here!")
         previous_state = copy.deepcopy(state)
 
         updated_state = utils.update_state_with_device_name(state, active_device)

@@ -52,9 +52,7 @@ debugger_communication_client.init_connection(server_port)
 
 # Init API variables
 utils.abs_path_to_user_file = abs_path_to_code_file
-cpx._Express__debug_mode = True
-cpx.pixels._Pixel__set_debug_mode(True)
-mb._MicrobitModel__set_debug_mode(True)
+utils.debug_mode = True
 
 # Execute the user's code file
 with open(abs_path_to_code_file, encoding="utf8") as user_code_file:

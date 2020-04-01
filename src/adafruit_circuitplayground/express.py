@@ -47,8 +47,7 @@ class Express:
             "touch": [False] * 7,
             "shake": False,
         }
-        self.__debug_mode = False
-        self.pixels = Pixel(self.__state, self.__debug_mode)
+        self.pixels = Pixel(self.__state)
 
     @property
     def acceleration(self):
@@ -114,7 +113,7 @@ class Express:
         return self.__state["light"]
 
     def __show(self):
-        if self.__debug_mode:
+        if utils.debug_mode:
             common.debugger_communication_client.debug_send_to_simulator(
                 self.__state, CONSTANTS.CPX
             )
