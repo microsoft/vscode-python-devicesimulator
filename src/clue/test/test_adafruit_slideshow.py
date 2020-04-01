@@ -64,7 +64,7 @@ class TestAdafruitSlideShow(object):
         slideshow._send = self._send_helper
 
         # first image's appear time is unstable,since it fades/scrolls in
-        # can oly predict following ones...
+        # can only predict following ones...
 
         for i in range(1, 8):
             slideshow.advance()

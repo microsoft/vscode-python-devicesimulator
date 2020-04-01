@@ -7,6 +7,7 @@ import traceback
 from pathlib import Path
 import python_constants as CONSTANTS
 import check_python_dependencies
+from common import utils
 
 # will propagate errors if dependencies aren't sufficient
 check_python_dependencies.check_for_dependencies()
@@ -50,7 +51,7 @@ if len(sys.argv) > 2:
 debugger_communication_client.init_connection(server_port)
 
 # Init API variables
-cpx._Express__abs_path_to_code_file = abs_path_to_code_file
+utils.abs_path_to_user_file = abs_path_to_code_file
 cpx._Express__debug_mode = True
 cpx.pixels._Pixel__set_debug_mode(True)
 mb._MicrobitModel__set_debug_mode(True)

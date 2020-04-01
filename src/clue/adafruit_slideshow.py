@@ -11,6 +11,9 @@ from common import utils
 import board
 
 # taken from adafruit
+# https://github.com/adafruit/Adafruit_CircuitPython_Slideshow/blob/master/adafruit_slideshow.py
+
+
 class PlayBackOrder:
     """Defines possible slideshow playback orders."""
 
@@ -42,7 +45,7 @@ class SlideShow:
         display,
         backlight_pwm=None,
         *,
-        folder="/",
+        folder=".",
         order=PlayBackOrder.ALPHABETICAL,
         loop=True,
         dwell=3,
@@ -61,7 +64,7 @@ class SlideShow:
         """Specifies whether to loop through the images continuously or play through the list once.
         ``True`` will continue to loop, ``False`` will play only once."""
 
-        self.fade_frames = 8
+        self.fade_effect = fade_effect
         """Whether to include the fade effect between images. ``True`` tells the code to fade the
            backlight up and down between image display transitions. ``False`` maintains max
            brightness on the backlight between image transitions."""
@@ -76,6 +79,8 @@ class SlideShow:
         self.advance = self._advance_with_fade
         """Displays the next image. Returns True when a new image was displayed, False otherwise.
         """
+
+        self.fade_frames = 8
 
         # assign new advance method if fade is disabled
         if not fade_effect:
@@ -173,12 +178,18 @@ class SlideShow:
                 new_path = os.path.join(self.folder, d)
 
                 # only add bmp imgs
-                if os.path.splitext(new_path)[1] == ".bmp":
+                if os.path.splitext(new_path)[1] == CONSTANTS.BMP_IMG_ENDING:
                     dir_imgs.append(new_path)
             except Image.UnidentifiedImageError as e:
                 continue
+
+        if not len(dir_imgs):
+            raise RuntimeError(CONSTANTS.NO_VALID_IMGS_ERR)
+
         if self._order == PlayBackOrder.RANDOM:
             shuffle(dir_imgs)
+        else:
+            dir_imgs.sort()
 
         # convert list to queue
         # (must be list beforehand for potential randomization)
@@ -261,7 +272,10 @@ class SlideShow:
                     (0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
                 )
 
-                if new_img.size[0] < 240 or new_img.size[1] < 240:
+                if (
+                    new_img.size[0] < CONSTANTS.SCREEN_HEIGHT_WIDTH
+                    or new_img.size[1] < CONSTANTS.SCREEN_HEIGHT_WIDTH
+                ):
                     black_overlay = Image.new(
                         "RGBA",
                         CONSTANTS.SCREEN_HEIGHT_WIDTH,
@@ -299,7 +313,7 @@ class SlideShow:
     def _send(self, img):
         # sends current bmp_img to the frontend
         buffered = BytesIO()
-        img.save(buffered, format="BMP")
+        img.save(buffered, format=CONSTANTS.BMP_IMG)
         byte_base64 = base64.b64encode(buffered.getvalue())
 
         # only send the base_64 string contents

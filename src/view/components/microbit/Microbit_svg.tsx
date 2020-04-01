@@ -4,6 +4,8 @@
 // Adapted from : https://makecode.microbit.org/#editor
 
 import * as React from "react";
+import "../../styles/SimulatorSvg.css";
+
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }

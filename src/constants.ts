@@ -35,6 +35,11 @@ export const CONSTANTS = {
         MICROBIT: "micro:bit",
         CLUE: "CLUE",
     },
+    DEVICE_NAME_FORMAL: {
+        CPX: "Circuit Playground Express",
+        MICROBIT: "micro:bit",
+        CLUE: "CLUE",
+    },
     ERROR: {
         BAD_PYTHON_PATH:
             'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application',
@@ -88,11 +93,15 @@ export const CONSTANTS = {
         ),
         NO_DEVICE: localize(
             "error.noDevice",
-            "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+            "The device is not detected. Please double check if your board is connected and/or properly formatted"
         ),
         NO_FILE_TO_RUN: localize(
             "error.noFileToRun",
             '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
+        ),
+        NO_FILE_TO_DEPLOY: localize(
+            "error.noFileToDeploy",
+            "[ERROR] We can't find a Python file to deploy to your device.\n"
         ),
         NO_FOLDER_OPENED: localize(
             "error.noFolderCreated",
@@ -189,6 +198,18 @@ export const CONSTANTS = {
             "info.newFile",
             "New to Python or the Circuit Playground Express? We are here to help!"
         ),
+        NO_DEVICE_CHOSEN_TO_DEPLOY_TO: localize(
+            "info.noDeviceChosenToDeployTo",
+            "\n[INFO] No device was selected to deploy to.\n"
+        ),
+        NO_DEVICE_CHOSEN_TO_SIMULATE_TO: localize(
+            "info.noDeviceChosenToSimulateTo",
+            "\n[INFO] No device was selected to simulate.\n"
+        ),
+        NO_DEVICE_CHOSEN_FOR_NEW_FILE: localize(
+            "info.noDeviceChosenForNewFile",
+            "\n[INFO] No device was selected to open a template file for.\n"
+        ),
         OPENED_SERIAL_PORT: (port: string) => {
             return localize(
                 "info.openedSerialPort",
@@ -243,8 +264,9 @@ export const CONSTANTS = {
         DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
         EXAMPLE_CODE:
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
-        HELP:
+        CPX_HELP:
             "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+        CLUE_HELP: "https://learn.adafruit.com/adafruit-clue/circuitpython",
         INSTALL:
             "https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/docs/install.md",
         PRIVACY: "https://www.adafruit.com/privacy",
@@ -269,6 +291,7 @@ export const CONSTANTS = {
     TEMPLATE: {
         CPX: "cpx_template.py",
         MICROBIT: "microbit_template.py",
+        CLUE: "clue_template.py",
     },
     WARNING: {
         ACCEPT_AND_RUN: localize(
@@ -335,6 +358,10 @@ export enum TelemetryEventName {
     MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
 
+    CLUE_COMMAND_DEPLOY_DEVICE = "CLUE.COMMAND.DEPLOY.DEVICE",
+    CLUE_COMMAND_NEW_FILE = "CLUE.COMMAND.NEW.FILE.CPX",
+    CLUE_COMMAND_OPEN_SIMULATOR = "CLUE.COMMAND.OPEN.SIMULATOR",
+
     // Simulator interaction
     CPX_SIMULATOR_BUTTON_A = "CPX.SIMULATOR.BUTTON.A",
     CPX_SIMULATOR_BUTTON_B = "CPX.SIMULATOR.BUTTON.B",
@@ -362,6 +389,8 @@ export enum TelemetryEventName {
     CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CPX.CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
     CPX_CLICK_DIALOG_TUTORIALS = "CPX.CLICK.DIALOG.TUTORIALS",
 
+    CLUE_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CLUE.CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
+
     ERROR_PYTHON_PROCESS = "ERROR.PYTHON.PROCESS",
     CPX_ERROR_COMMAND_NEW_FILE = "CPX.ERROR.COMMAND.NEW.FILE",
     CPX_ERROR_DEPLOY_WITHOUT_DEVICE = "CPX.ERROR.DEPLOY.WITHOUT.DEVICE",
@@ -373,6 +402,10 @@ export enum TelemetryEventName {
     MICROBIT_ERROR_PYTHON_DEVICE_PROCESS = "MICROBIT.ERROR.PYTHON.DEVICE.PROCESS",
     MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE = "MICROBIT.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
+    CLUE_ERROR_DEPLOY_WITHOUT_DEVICE = "CLUE.ERROR.DEPLOY.WITHOUT.DEVICE",
+    CLUE_ERROR_PYTHON_DEVICE_PROCESS = "CLUE.ERROR.PYTHON.DEVICE.PROCESS",
+    CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE = "CLUE.SUCCESS.COMMAND.DEPLOY.DEVICE",
+
     // Performance
     CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
     CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
@@ -381,6 +414,10 @@ export enum TelemetryEventName {
     MICROBIT_PERFORMANCE_DEPLOY_DEVICE = "MICROBIT.PERFORMANCE.DEPLOY.DEVICE",
     MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
+
+    CLUE_PERFORMANCE_DEPLOY_DEVICE = "CLUE.PERFORMANCE.DEPLOY.DEVICE",
+    CLUE_PERFORMANCE_NEW_FILE = "CLUE.PERFORMANCE.NEW.FILE",
+    CLUE_PERFORMANCE_OPEN_SIMULATOR = "CLUE.PERFORMANCE.OPEN.SIMULATOR",
 
     // Venv options
     SETUP_VENV_CREATION_ERR = "SETUP.VENV.CREATION.ERR",
