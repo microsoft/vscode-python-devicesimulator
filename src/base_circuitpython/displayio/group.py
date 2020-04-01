@@ -94,3 +94,6 @@ class Group:
             return 0
         else:
             return len(self.__contents)
+
+    def pop(self, i=-1):
+        return self.__contents.pop(i)

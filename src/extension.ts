@@ -77,6 +77,11 @@ export async function activate(context: vscode.ExtensionContext) {
         telemetryAI,
         deviceSelectionService
     );
+    const formalNameToNickNameMapping = {
+        [CONSTANTS.DEVICE_NAME_FORMAL.CPX]: CONSTANTS.DEVICE_NAME.CPX,
+        [CONSTANTS.DEVICE_NAME_FORMAL.MICROBIT]: CONSTANTS.DEVICE_NAME.MICROBIT,
+        [CONSTANTS.DEVICE_NAME_FORMAL.CLUE]: CONSTANTS.DEVICE_NAME.CLUE,
+    };
 
     // Add our library path to settings.json for autocomplete functionality
     updatePythonExtraPaths();
@@ -296,25 +301,37 @@ export async function activate(context: vscode.ExtensionContext) {
         sendCurrentDeviceMessage(currentPanel);
     };
 
-    const openCPXWebview = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.CPX
-        );
-        openWebview();
-    };
+    // Open Simulator on the webview
+    const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.openSimulator",
+        async () => {
+            const chosen_device = await vscode.window.showQuickPick(
+                Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
+            );
 
-    const openMicrobitWebview = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.MICROBIT
-        );
-        openWebview();
-    };
-    const openClueWebview = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.CLUE
-        );
-        openWebview();
-    };
+            if (!chosen_device) {
+                utils.logToOutputChannel(
+                    outChannel,
+                    CONSTANTS.INFO.NO_DEVICE_CHOSEN_TO_SIMULATE_TO,
+                    true
+                );
+                return;
+            }
+
+            const device = formalNameToNickNameMapping[chosen_device];
+            deviceSelectionService.setCurrentActiveDevice(device);
+            const telemetryEvents = telemetryHandlerService.getTelemetryEventsForOpenSimulator(
+                device
+            );
+            telemetryAI.trackFeatureUsage(
+                telemetryEvents.openSimulatorTelemetryEvent
+            );
+            telemetryAI.runWithLatencyMeasure(
+                openWebview,
+                telemetryEvents.openSimulatorPerformanceTelemetryEvent
+            );
+        }
+    );
 
     const gettingStartedOpen: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.gettingStarted",
@@ -325,59 +342,6 @@ export async function activate(context: vscode.ExtensionContext) {
             webviewService.openTutorialPanel();
         }
     );
-
-    // Open Simulator on the webview
-    const cpxOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.openSimulator",
-        () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_COMMAND_OPEN_SIMULATOR
-            );
-            telemetryAI.runWithLatencyMeasure(
-                openCPXWebview,
-                TelemetryEventName.CPX_PERFORMANCE_OPEN_SIMULATOR
-            );
-        }
-    );
-
-    const microbitOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.microbit.openSimulator",
-        () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_COMMAND_OPEN_SIMULATOR
-            );
-            telemetryAI.runWithLatencyMeasure(
-                openMicrobitWebview,
-                TelemetryEventName.MICROBIT_PERFORMANCE_OPEN_SIMULATOR
-            );
-        }
-    );
-    const clueOpenSimulator: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.clue.openSimulator",
-        () => {
-            telemetryAI.runWithLatencyMeasure(openClueWebview, "");
-        }
-    );
-
-    const openCPXTemplateFile = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.CPX
-        );
-        openTemplateFile(CONSTANTS.TEMPLATE.CPX);
-    };
-
-    const openMicrobitTemplateFile = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.MICROBIT
-        );
-        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
-    };
-    const openClueTemplateFile = () => {
-        deviceSelectionService.setCurrentActiveDevice(
-            CONSTANTS.DEVICE_NAME.CLUE
-        );
-        openTemplateFile(CONSTANTS.TEMPLATE.MICROBIT);
-    };
 
     const openTemplateFile = (template: string) => {
         const fileName = template;
@@ -442,36 +406,43 @@ export async function activate(context: vscode.ExtensionContext) {
             };
     };
 
-    const cpxNewFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.cpx.newFile",
-        () => {
+    const newFile: vscode.Disposable = vscode.commands.registerCommand(
+        "deviceSimulatorExpress.common.newFile",
+        async () => {
+            const chosen_device = await vscode.window.showQuickPick(
+                Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
+            );
+
+            if (!chosen_device) {
+                utils.logToOutputChannel(
+                    outChannel,
+                    CONSTANTS.INFO.NO_DEVICE_CHOSEN_FOR_NEW_FILE,
+                    true
+                );
+                return;
+            }
+
+            const device = formalNameToNickNameMapping[chosen_device];
+            deviceSelectionService.setCurrentActiveDevice(device);
+
+            const deviceToTemplateMapping = {
+                [CONSTANTS.DEVICE_NAME.CPX]: CONSTANTS.TEMPLATE.CPX,
+                [CONSTANTS.DEVICE_NAME.MICROBIT]: CONSTANTS.TEMPLATE.MICROBIT,
+                [CONSTANTS.DEVICE_NAME.CLUE]: CONSTANTS.TEMPLATE.CLUE,
+            };
+            const templateFile = deviceToTemplateMapping[device];
+
+            const telemetryEvents = telemetryHandlerService.getTelemetryEventsForNewFile(
+                device
+            );
+
             telemetryAI.trackFeatureUsage(
-                TelemetryEventName.CPX_COMMAND_NEW_FILE
+                telemetryEvents.newFileTelemetryEvent
             );
             telemetryAI.runWithLatencyMeasure(
-                openCPXTemplateFile,
-                TelemetryEventName.CPX_PERFORMANCE_NEW_FILE
+                () => openTemplateFile(templateFile),
+                telemetryEvents.newFilePerformanceTelemetryEvent
             );
-        }
-    );
-
-    const microbitNewFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.microbit.newFile",
-        () => {
-            telemetryAI.trackFeatureUsage(
-                TelemetryEventName.MICROBIT_COMMAND_NEW_FILE
-            );
-            telemetryAI.runWithLatencyMeasure(
-                openMicrobitTemplateFile,
-                TelemetryEventName.MICROBIT_PERFORMANCE_NEW_FILE
-            );
-        }
-    );
-
-    const clueNewFile: vscode.Disposable = vscode.commands.registerCommand(
-        "deviceSimulatorExpress.clue.newFile",
-        () => {
-            telemetryAI.runWithLatencyMeasure(openClueTemplateFile, "");
         }
     );
 
@@ -796,13 +767,6 @@ export async function activate(context: vscode.ExtensionContext) {
                 Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
             );
 
-            const formalNameToNickNameMapping = {
-                [CONSTANTS.DEVICE_NAME_FORMAL.CPX]: CONSTANTS.DEVICE_NAME.CPX,
-                [CONSTANTS.DEVICE_NAME_FORMAL.MICROBIT]:
-                    CONSTANTS.DEVICE_NAME.MICROBIT,
-                [CONSTANTS.DEVICE_NAME_FORMAL.CLUE]: CONSTANTS.DEVICE_NAME.CLUE,
-            };
-
             if (!chosen_device) {
                 utils.logToOutputChannel(
                     outChannel,
@@ -1026,14 +990,10 @@ export async function activate(context: vscode.ExtensionContext) {
         changeBaudRate,
         closeSerialMonitor,
         deployToDevice,
-        cpxNewFile,
+        newFile,
+        openSimulator,
         openSerialMonitor,
-        cpxOpenSimulator,
         selectSerialPort,
-        microbitOpenSimulator,
-        microbitNewFile,
-        clueOpenSimulator,
-        clueNewFile,
         gettingStartedOpen,
         vscode.debug.registerDebugConfigurationProvider(
             CONSTANTS.DEBUG_CONFIGURATION_TYPE,
