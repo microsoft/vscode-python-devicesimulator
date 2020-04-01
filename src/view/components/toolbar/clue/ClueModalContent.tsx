@@ -89,6 +89,82 @@ export const CLUE_LIGHT_MODAL_CONTENT = (
         id: "light_sensor",
     };
 };
+export const CLUE_HUMIDITY_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-light-sensor.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        descriptionText: "toolbar-light-sensor.description",
+        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        components: [
+            <LightSensorBar
+                onUpdateValue={onUpdateValue}
+                value={sensorValues[SENSOR_LIST.LIGHT]}
+            />,
+        ],
+        id: "light_sensor",
+    };
+};
+export const CLUE_GESTURE_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-light-sensor.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        descriptionText: "toolbar-light-sensor.description",
+        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        components: [
+            <LightSensorBar
+                onUpdateValue={onUpdateValue}
+                value={sensorValues[SENSOR_LIST.LIGHT]}
+            />,
+        ],
+        id: "light_sensor",
+    };
+};
+export const CLUE_PROXIMITY_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-light-sensor.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        descriptionText: "toolbar-light-sensor.description",
+        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        components: [
+            <LightSensorBar
+                onUpdateValue={onUpdateValue}
+                value={sensorValues[SENSOR_LIST.LIGHT]}
+            />,
+        ],
+        id: "light_sensor",
+    };
+};
+export const CLUE_PRESSURE_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-light-sensor.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        descriptionText: "toolbar-light-sensor.description",
+        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        components: [
+            <LightSensorBar
+                onUpdateValue={onUpdateValue}
+                value={sensorValues[SENSOR_LIST.LIGHT]}
+            />,
+        ],
+        id: "light_sensor",
+    };
+};
 export const CLUE_BUTTON_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
@@ -103,21 +179,23 @@ export const CLUE_BUTTON_CONTENT = (
         id: "microbit_button",
     };
 };
-export const MICROBIT_SOUND_MODAL_CONTENT = (
+
+export const CLUE_BLUETOOTH_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-sound.title",
+        descriptionTitle: "toolbar-microbit-a-b-push.title",
         tagInput: undefined,
-        tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-sound.description",
-        tryItDescription: "toolbar-microbit-sound.tryItDescription",
-        components: [FEATURE_REQUEST_ON_GITHUB],
-        id: "microbit_sound",
+        tagOutput: TAG_INPUT_SVG,
+        descriptionText: "toolbar-microbit-a-b-push.description",
+        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
+        components: undefined,
+        id: "microbit_button",
     };
 };
-export const SPEAKER_MODAL_CONTENT = (
+
+export const CLUE_SOUND_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -131,7 +209,7 @@ export const SPEAKER_MODAL_CONTENT = (
         id: "speaker",
     };
 };
-export const MICROBIT_LED_CONTENT = (
+export const CLUE_LED_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
