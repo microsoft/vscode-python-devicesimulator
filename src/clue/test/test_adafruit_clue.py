@@ -91,7 +91,7 @@ class TestAdafruitClue(object):
         MOCK_COLOR_C = 4
         MOCK_COLOR_R_B = 5
 
-        clue._Clue__state["color"].update(
+        clue._Clue__state["color_sensor"].update(
             {
                 "r": MOCK_COLOR_R_A,
                 "g": MOCK_COLOR_G,
@@ -100,7 +100,7 @@ class TestAdafruitClue(object):
             }
         )
         assert clue.color == (MOCK_COLOR_R_A, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
-        assert clue._Clue__state["color"]["r"] == MOCK_COLOR_R_B
+        assert clue._Clue__state["color_sensor"]["r"] == MOCK_COLOR_R_B
         assert clue.color == (MOCK_COLOR_R_B, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
 
     def test_temperature(self):
@@ -120,17 +120,9 @@ class TestAdafruitClue(object):
         clue._Clue__state["magnetometer"].update(
             {"x": MOCK_MAGNETIC_X_A, "y": MOCK_MAGNETIC_Y, "z": MOCK_MAGNETIC_Z,}
         )
-        assert clue.acceleration == (
-            MOCK_MAGNETIC_X_A,
-            MOCK_MAGNETIC_Y,
-            MOCK_MAGNETIC_Z,
-        )
+        assert clue.magnetic == (MOCK_MAGNETIC_X_A, MOCK_MAGNETIC_Y, MOCK_MAGNETIC_Z,)
         clue._Clue__state["magnetometer"]["x"] = MOCK_MAGNETIC_X_B
-        assert clue.acceleration == (
-            MOCK_MAGNETIC_X_B,
-            MOCK_MAGNETIC_Y,
-            MOCK_MAGNETIC_Z,
-        )
+        assert clue.magnetic == (MOCK_MAGNETIC_X_B, MOCK_MAGNETIC_Y, MOCK_MAGNETIC_Z,)
 
     def test_proximity(self):
         MOCK_DISTANCE_A = 10
@@ -198,6 +190,6 @@ class TestAdafruitClue(object):
         MOCK_RED = (255, 0, 0)
         MOCK_WHITE = (255, 255, 255)
         clue.pixel.fill(MOCK_RED)
-        assert [MOCK_RED] == clue.pixel
+        assert MOCK_RED == clue.pixel[0]
         clue.pixel.fill(MOCK_WHITE)
-        assert [MOCK_WHITE] == clue.pixel
+        assert MOCK_WHITE == clue.pixel[0]
