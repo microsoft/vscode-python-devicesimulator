@@ -65,10 +65,10 @@ class Group:
         return self.__contents[index]
 
     def __setitem__(self, index, val):
-        old_val = self.__contents[index] 
+        old_val = self.__contents[index]
 
         self.__contents[index] = val
-        
+
         if old_val != val:
             self.__elem_changed()
 

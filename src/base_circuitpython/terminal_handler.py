@@ -1,5 +1,3 @@
-
-
 from PIL import Image
 import threading
 import os
@@ -22,7 +20,7 @@ class Terminal:
         self.__lock = threading.Lock()
         self.__abs_path = pathlib.Path(__file__).parent.absolute()
         self.__base_img = Image.open(
-            os.path.join(self.__abs_path, CONSTANTS.IMG_DIR_NAME,CONSTANTS.BLINKA_BMP)
+            os.path.join(self.__abs_path, CONSTANTS.IMG_DIR_NAME, CONSTANTS.BLINKA_BMP)
         )
 
     def __create_newline(self, str_list):
@@ -42,21 +40,26 @@ class Terminal:
     def configure(self, no_verif=False):
 
         import adafruit_display_text.label
+
         self.__lock.acquire()
 
         # no need to check the active group within the Group class
         # since the caller of configure already did
         splash = displayio.Group(
-            max_size=20, check_active_group_ref=False,auto_write=False
+            max_size=20, check_active_group_ref=False, auto_write=False
         )
 
         # since the text starts from the bottom,
         # we need to find an offset if there are empty spots
 
-        # handling of output_values already ensures that there are 
+        # handling of output_values already ensures that there are
         # max CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX items in output_values deque
-        num_empty_slots = CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX - len(self.__output_values)
-        curr_y = CONSTANTS.CLUE_TERMINAL_Y_OFFSET + (CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT * num_empty_slots)
+        num_empty_slots = CONSTANTS.CLUE_TERMINAL_LINE_NUM_MAX - len(
+            self.__output_values
+        )
+        curr_y = CONSTANTS.CLUE_TERMINAL_Y_OFFSET + (
+            CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT * num_empty_slots
+        )
         for o in reversed(self.__output_values):
             if len(o):
                 text_area = adafruit_display_text.label.Label(
@@ -88,7 +91,7 @@ class Terminal:
                 out_str = ""
                 newline_expected_val = line_break_amt
 
-                # if it was a custom newline, no longer need to 
+                # if it was a custom newline, no longer need to
                 # process the character
                 if d == "\n":
                     continue
