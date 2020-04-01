@@ -79,7 +79,7 @@ const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.ACCELEROMETER,
-        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+        image: TOOLBAR_SVG.MOTION_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.HUMIDITY,

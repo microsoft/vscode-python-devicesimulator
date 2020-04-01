@@ -295,6 +295,7 @@ export const ACCELEROMETER_MODAL_CONTENT = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
+    // this object will be accessed with the axis label
     const accelerometerSensorValues = {
         X: sensorValues[SENSOR_LIST.MOTION_X],
         Y: sensorValues[SENSOR_LIST.MOTION_Y],

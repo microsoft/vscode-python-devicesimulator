@@ -12,9 +12,8 @@ import InputSlider from "../../InputSlider";
 interface IProps {
     axisProperties: ISensorProps;
     axisValues: {
-        X: number;
-        Y: number;
-        Z: number;
+        // key is accessed with axisLabel
+        [key: string]: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
@@ -34,9 +33,7 @@ export const ThreeDimensionSlider: React.FC<IProps> = props => {
                                 axisLabel={sliderProperties.axisLabel}
                                 onUpdateValue={props.onUpdateValue}
                                 value={
-                                    props.axisValues[
-                                        sliderProperties.axisLabel as keyof IProps["axisValues"]
-                                    ]
+                                    props.axisValues[sliderProperties.axisLabel]
                                 }
                             />
                             <br />
