@@ -130,7 +130,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 3. Name and save your file somewhere, and we’re good to go!
 4. Start with some examples: you can find examples files and tutorials inside the comments at the top of the file.
 
-<img alt='"New File" animation' src='assets/readmeFiles/new_file.gif'>
+<img alt='"New File" animation' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/new_file.gif'>
 
 ### III. Start from an existing Python file.
 
@@ -142,7 +142,7 @@ To use Device Simulator Express, install the extension from the marketplace and 
 
 1. Run `Run Simulator` from the command palette or use the `Play` button on the simulator webview.
 
-<img alt='How to run the simulator animation' src='assets/readmeFiles/run.gif'>
+<img alt='How to run the simulator animation' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/run.gif'>
 
 ### V. Deploy your code to the physical device
 
@@ -158,7 +158,7 @@ Before deploying the Python code to your CPX device, you need to format your dev
 1. Plug in your device (make sure it’s formatted properly already).
 2. Run the command `"Device Simulator Express: Deploy to Device"`.
 
-<img alt='Deploy to Device' src='assets/readmeFiles/deploy.png'>
+<img alt='Deploy to Device' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/deploy.png'>
 
 ### VI. Use the Serial Monitor for your device (available on Windows and Mac only)
 
