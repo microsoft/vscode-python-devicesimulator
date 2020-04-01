@@ -7,9 +7,9 @@ import { Accelerometer } from "./Accelerometer";
 describe("Accelerometer component ", () => {
     const mockProps = {
         axisValues: {
-            X_AXIS: 1,
-            Y_AXIS: 0,
-            Z_AXIS: 1,
+            X: 1,
+            Y: 0,
+            Z: 1,
         },
         onUpdateValue: () => {},
     };
