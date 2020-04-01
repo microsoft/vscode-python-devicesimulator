@@ -203,10 +203,6 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             "button_a": False,
             "button_b": False,
             "pressed_buttons": set(),
-            "acceleration": {"x": 0, "y": 0, "z": 0},
-            "color_sensor": {"r": 0, "g": 0, "b": 0, "c": 0},
-            "magnetometer": {"x": 0, "y": 0, "z": 0},
-            "gyro": {"x": 0, "y": 0, "z": 0},
             "sea_level_pressure": 1013.25,
             "temperature": 0,
             "proximity": 0,
@@ -216,6 +212,23 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             "pixel": neopixel.NeoPixel(
                 pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
             ),
+            # Accelerometer
+            "motion_x": 0,
+            "motion_y": 0,
+            "motion_z": 0,
+            # Light/color sensor
+            "light_r": 0,
+            "light_g": 0,
+            "light_b": 0,
+            "light_c": 0,
+            # Magnetometer
+            "magnet_x": 0,
+            "magnet_y": 0,
+            "magnet_z": 0,
+            # Gyroscope
+            "gyro_x": 0,
+            "gyro_y": 0,
+            "gyro_z": 0,
         }
 
     @property
@@ -268,9 +281,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
         """
         return (
-            self.__state["acceleration"]["x"],
-            self.__state["acceleration"]["y"],
-            self.__state["acceleration"]["z"],
+            self.__state["motion_x"],
+            self.__state["motion_y"],
+            self.__state["motion_z"],
         )
 
     @property
@@ -285,10 +298,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
         """
         return (
-            self.__state["color_sensor"]["r"],
-            self.__state["color_sensor"]["g"],
-            self.__state["color_sensor"]["b"],
-            self.__state["color_sensor"]["c"],
+            self.__state["light_r"],
+            self.__state["light_g"],
+            self.__state["light_b"],
+            self.__state["light_c"],
         )
 
     @property
@@ -313,9 +326,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
         """
         return (
-            self.__state["magnetometer"]["x"],
-            self.__state["magnetometer"]["y"],
-            self.__state["magnetometer"]["z"],
+            self.__state["magnet_x"],
+            self.__state["magnet_y"],
+            self.__state["magnet_z"],
         )
 
     @property
@@ -338,9 +351,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
         """
         return (
-            self.__state["gyro"]["x"],
-            self.__state["gyro"]["y"],
-            self.__state["gyro"]["z"],
+            self.__state["gyro_x"],
+            self.__state["gyro_y"],
+            self.__state["gyro_z"],
         )
 
     @property
