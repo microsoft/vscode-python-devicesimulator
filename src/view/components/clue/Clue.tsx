@@ -16,7 +16,10 @@ interface IState {
 const DEFAULT_STATE = {
     sensors: {
         [SENSOR_LIST.TEMPERATURE]: 0,
-        [SENSOR_LIST.LIGHT]: 0,
+        [SENSOR_LIST.LIGHT_R]: 0,
+        [SENSOR_LIST.LIGHT_G]: 0,
+        [SENSOR_LIST.LIGHT_B]: 0,
+        [SENSOR_LIST.LIGHT_C]: 0,
         [SENSOR_LIST.MOTION_X]: 0,
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,

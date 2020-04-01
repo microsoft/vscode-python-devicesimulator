@@ -6,7 +6,8 @@ import TemperatureSensorBar from "../TemperatureSensorBar";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { Accelerometer } from "../motion/Accelerometer";
 import LightSensorBar from "../LightSensorBar";
-
+import { ThreeDimensionSlider } from "../motion/threeDimensionSlider/ThreeDimensionSlider";
+import * as SENSOR_PROPERTIES from "./ClueSensorProperties";
 export const CLUE_TEMPERATURE_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
@@ -74,19 +75,26 @@ export const CLUE_LIGHT_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const accelerometerSensorValues = {
+        R: sensorValues[SENSOR_LIST.LIGHT_R],
+        G: sensorValues[SENSOR_LIST.LIGHT_G],
+        B: sensorValues[SENSOR_LIST.LIGHT_B],
+        C: sensorValues[SENSOR_LIST.LIGHT_C],
+    };
     return {
-        descriptionTitle: "toolbar-light-sensor.title",
+        components: (
+            <ThreeDimensionSlider
+                onUpdateValue={onUpdateValue}
+                axisValues={accelerometerSensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE_LIGHT_PROPERTIES}
+            />
+        ),
+        descriptionText: "toolbar-accelerometer-sensor.description",
+        descriptionTitle: "toolbar-accelerometer-sensor.title",
+        id: "accelerometer",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-light-sensor.description",
-        tryItDescription: "toolbar-light-sensor.tryItDescription",
-        components: [
-            <LightSensorBar
-                onUpdateValue={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.LIGHT]}
-            />,
-        ],
-        id: "light_sensor",
+        tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
     };
 };
 export const CLUE_HUMIDITY_MODAL_CONTENT = (

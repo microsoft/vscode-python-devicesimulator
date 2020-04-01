@@ -99,6 +99,10 @@ export enum SENSOR_LIST {
     MOTION_X = "motion_x",
     MOTION_Y = "motion_y",
     MOTION_Z = "motion_z",
+    LIGHT_R = "light_r",
+    LIGHT_G = "light_g",
+    LIGHT_B = "light_b",
+    LIGHT_C = "light_c",
 }
 
 export const GESTURES = [
