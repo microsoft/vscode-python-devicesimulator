@@ -18,7 +18,6 @@ class Display:
         # not in the traditional Group + TileGrid style
         if not isinstance(group, str):
             if group == None:
-                print("Here")
                 self.terminal.configure(no_verif=True)
             else:
                 group.draw(show=True)

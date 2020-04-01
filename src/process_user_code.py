@@ -91,8 +91,9 @@ def handle_user_prints():
     global curr_terminal
     while True:
         if user_stdout.getvalue():
-            # curr_terminal.add_str_to_terminal(user_stdout.getvalue())
+
             message = {"type": "print", "data": user_stdout.getvalue()}
+            curr_terminal.add_str_to_terminal(str(message["data"])[:-1])
             print(json.dumps(message), file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
             user_stdout.seek(0)
@@ -127,10 +128,8 @@ def execute_user_code(abs_path_to_code_file):
 
             curr_terminal.add_str_to_terminal(errorMessage)
 
-        curr_terminal.add_str_to_terminal("\nCode done running. Waiting for reload.")
-        board.DISPLAY.show(None)
-        while True:
-            pass
+    curr_terminal.add_str_to_terminal("\nCode done running. Waiting for reload.")
+    board.DISPLAY.show(None)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)
