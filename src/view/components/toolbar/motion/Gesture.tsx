@@ -5,6 +5,7 @@ import CONSTANTS, { GESTURES } from "../../../constants";
 
 const GESTURE_BUTTON_MESSAGE = "Send Gesture";
 interface IProps {
+    gestures: string[];
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     onSendGesture?: (isActive: boolean) => void;
 }
@@ -23,7 +24,7 @@ export class Gesture extends React.Component<IProps> {
             >
                 <Dropdown
                     name="gesture selection"
-                    options={GESTURES}
+                    options={this.props.gestures}
                     onSelect={this.props.onSelectGestures}
                 />
                 <SensorButton
