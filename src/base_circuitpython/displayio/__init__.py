@@ -9,4 +9,4 @@ from .group import Group
 from .palette import Palette
 
 # references to img and bmp_img are for testing purposes
-from .tile_grid import TileGrid, img, bmp_img
+from .tile_grid import TileGrid

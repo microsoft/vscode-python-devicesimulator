@@ -41,7 +41,7 @@ You will be prompted to install the Python dependencies during the first use.
 
 ### Features
 
-- IntelliSense and syntax highlighting for CircuitPython code
+- IntelliSense and syntax highlighting for CircuitPython code for the CPX library
 - Template file generation
 - Integrated Python Debugging for the Simulator
 - Serial monitor (available on Windows and Mac only)
@@ -91,7 +91,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 ## BBC micro:bit Simulator
 
 ### Features
-- IntelliSense and syntax highlighting for micro:bit code 
+- IntelliSense and syntax highlighting for MicroPython code for the micro:bit library 
 - Template file generation
 - Integrated Python Debugging for the Simulator
 - Deploy MicroPython code to the physical device

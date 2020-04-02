@@ -1,5 +1,6 @@
 import pytest
-from ..tile_grid import TileGrid, img, bmp_img
+from PIL import Image
+from ..tile_grid import TileGrid
 from ..palette import Palette
 from ..bitmap import Bitmap
 from .. import constants as CONSTANTS
@@ -135,9 +136,12 @@ class TestTileGrid(object):
 
         tg = TileGrid(bitmap=bmp, pixel_shader=palette, position=(0, 0))
         tg2 = TileGrid(bitmap=bmp, pixel_shader=palette, position=(0, 0))
-
+        img = Image.new(
+            "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
+        )
         # without scaling, test output
-        tg.draw(x_offset, y_offset, 1)
+        img = tg.draw(img, x_offset, y_offset, 1)
+        bmp_img = img.load()
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (i in range(y_offset + y, y_offset + y + draw_h)) and (
@@ -149,8 +153,12 @@ class TestTileGrid(object):
                 ):
                     assert bmp_img[j, i] == bg_color
 
+        img = Image.new(
+            "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
+        )
         # with scaling, test output
-        tg.draw(x_offset, y_offset, scale)
+        img = tg.draw(img, x_offset, y_offset, scale)
+        bmp_img = img.load()
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 if (

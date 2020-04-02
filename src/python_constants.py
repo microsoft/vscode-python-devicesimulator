@@ -49,3 +49,6 @@ MICROBIT = "micro:bit"
 CLUE = "CLUE"
 
 CIRCUITPYTHON = "base_circuitpython"
+
+CODE_START_MSG_CLUE = "soft reboot\ncode.py output:"
+CODE_FINISHED_MSG_CLUE = "\nCode done running. Waiting for reload."

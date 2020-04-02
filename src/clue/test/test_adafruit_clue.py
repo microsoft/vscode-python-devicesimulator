@@ -21,9 +21,10 @@ class TestAdafruitClue(object):
     def setup_method(self):
         self.abs_path = pathlib.Path(__file__).parent.absolute()
 
-        # reset bmp_img to all black
-        displayio.img.paste(
-            "black", [0, 0, displayio.img.size[0], displayio.img.size[1]]
+        self.main_img = Image.new(
+            "RGBA",
+            (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH),
+            (0, 0, 0, 0),
         )
 
         utils.send_to_simulator = mock.Mock()
@@ -32,9 +33,13 @@ class TestAdafruitClue(object):
         img = Image.open(
             os.path.join(self.abs_path, CONSTANTS.IMG_DIR_NAME, f"test_clue_text_1.bmp")
         )
+
         img.putalpha(255)
         expected = img.load()
         clue_data = clue.simple_text_display(title="LET'S TEST!", title_scale=2)
+
+        clue_data.text_group.show = self._send_helper
+        clue_data.text_group._Group__check_active_group_ref = False
 
         clue_data[0].text = "Lorem ipsum"
         clue_data[1].text = "dolor sit amet, consectetur "
@@ -51,8 +56,10 @@ class TestAdafruitClue(object):
         clue_data[13].text = "Ut enim ad"
         clue_data[14].text = "Excepteur sint"
         clue_data.show()
+        helper._Helper__test_image_equality(self.main_img.load(), expected)
 
-        helper._Helper__test_image_equality(displayio.bmp_img, expected)
+    def _send_helper(self, image):
+        self.main_img = image
 
     def test_buttons(self):
         BUTTON_A = "button_a"

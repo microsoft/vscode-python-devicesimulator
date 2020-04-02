@@ -7,7 +7,7 @@ from unittest import mock
 
 from common import utils
 
-from ..tile_grid import TileGrid, img, bmp_img
+from ..tile_grid import TileGrid
 from ..group import Group
 from ..palette import Palette
 from ..bitmap import Bitmap
@@ -149,20 +149,22 @@ class TestGroup(object):
         tg = TileGrid(bitmap=bmp_1, pixel_shader=palette, position=(0, 0))
         tg2 = TileGrid(bitmap=bmp_2, pixel_shader=palette, position=(50, 50))
 
-        group_main = Group(max_size=10, scale=scale_main)
+        group_main = Group(max_size=10, scale=scale_main, check_active_group_ref=False)
         group_sub = Group(max_size=10, scale=scale_sub)
 
         group_sub.append(tg)
         group_main.append(group_sub)
         group_main.append(tg2)
+        # img = Image.new("RGBA", (240, 240))
+        img = group_main.draw()
 
-        group_main.draw(0, 0)
+        img.putalpha(255)
         expected = Image.open(
             os.path.join(self.abs_path, "img", "group_test_result.bmp")
         )
         expected.putalpha(255)
         bmp_img_expected = expected.load()
-
+        bmp_img = img.load()
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
                 assert bmp_img_expected[j, i] == bmp_img[j, i]

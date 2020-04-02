@@ -63,6 +63,7 @@ from PIL import Image
 import pathlib
 import sys
 import os
+import board
 
 abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
@@ -105,15 +106,14 @@ class _ClueSimpleTextDisplay:
                 Clue.PURPLE,
             )
 
+        self._display = board.DISPLAY
         self._colors = colors
         self._label = label
         # self._display = board.DISPLAY
         self._font = terminalio.FONT
         if font:
             self._font = font
-        self.text_group = displayio.Group(
-            max_size=20, scale=text_scale, auto_write=False
-        )
+        self.text_group = displayio.Group(max_size=20, scale=text_scale)
 
         if title:
             # Fail gracefully if title is longer than 60 characters.
@@ -126,7 +126,6 @@ class _ClueSimpleTextDisplay:
                 max_glyphs=60,
                 color=title_color,
                 scale=title_scale,
-                auto_write=False,
             )
             title.x = 0
             title.y = 8
@@ -151,9 +150,7 @@ class _ClueSimpleTextDisplay:
 
     def add_text_line(self, color=0xFFFFFF):
         """Adds a line on the display of the specified color and returns the label object."""
-        text_label = self._label.Label(
-            self._font, text="", max_glyphs=45, color=color, auto_write=False
-        )
+        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color)
         text_label.x = 0
         text_label.y = self._y
         self._y = text_label.y + 13
@@ -163,11 +160,13 @@ class _ClueSimpleTextDisplay:
 
     def show(self):
         """Call show() to display the data list."""
-        self.text_group.draw(show=True)
+        self._display.show(self.text_group)
         # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
 
     def show_terminal(self):
         """Revert to terminalio screen."""
+
+        self._display.show(None)
         # TODO: implement terminal for clue screen
         return
 

@@ -52,7 +52,11 @@ from microbit.__model.constants import MICROBIT
 
 from adafruit_clue import clue
 from base_circuitpython.base_cp_constants import CLUE
+from base_circuitpython import terminal_handler
+from base_circuitpython import board
 
+# get handle to terminal for clue
+curr_terminal = board.DISPLAY.terminal
 
 # Handle User Inputs Thread
 class UserInput(threading.Thread):
@@ -85,9 +89,20 @@ user_input.start()
 # Handle User's Print Statements Thread
 def handle_user_prints():
     global user_stdout
+    global curr_terminal
     while True:
         if user_stdout.getvalue():
             message = {"type": "print", "data": user_stdout.getvalue()}
+
+            # when I use the value for user_stdout.getvalue() directly
+            # as the argument for add_str_to_terminal, it only sends the first
+            # line of the stream.
+
+            # hence, I parse it out of the message dict and take off the
+            # extra newline at the end.
+
+            data_str = str(message["data"])
+            curr_terminal.add_str_to_terminal(data_str[:-1])
             print(json.dumps(message), file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
             user_stdout.seek(0)
@@ -100,6 +115,8 @@ user_prints.start()
 
 # Execute User Code Thread
 def execute_user_code(abs_path_to_code_file):
+    global curr_terminal
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_START_MSG_CLUE)
     utils.abs_path_to_user_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
@@ -116,6 +133,11 @@ def execute_user_code(abs_path_to_code_file):
             for frameIndex in range(2, len(stackTrace) - 1):
                 errorMessage += "\t" + str(stackTrace[frameIndex])
             print(e, errorMessage, file=sys.stderr, flush=True)
+
+            curr_terminal.add_str_to_terminal(errorMessage)
+
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_FINISHED_MSG_CLUE)
+    board.DISPLAY.show(None)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)

@@ -3,10 +3,25 @@ import json  # Remove
 from unittest import mock
 import socketio
 import threading
+import os
+import sys
 
-from adafruit_circuitplayground import express
-from common import debugger_communication_client
 from common import constants as CONSTANTS
+
+abs_path_to_parent_dir = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", ".."
+)
+
+sys.path.insert(0, abs_path_to_parent_dir)
+# Insert absolute path to Micropython libraries for micro:bit into sys.path
+abs_path_to_micropython_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.MICROPYTHON_LIBRARY_NAME
+)
+
+sys.path.insert(0, abs_path_to_micropython_lib)
+
+from common import debugger_communication_client
+from adafruit_circuitplayground import express
 from adafruit_circuitplayground.constants import CPX
 
 
