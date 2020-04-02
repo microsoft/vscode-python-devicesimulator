@@ -1,4 +1,6 @@
 """
+To get started, check out the "Device Simulator Express: Getting Started" command in the command pallete, which you can access with `CMD + SHIFT + P` For Mac and `CTRL + SHIFT + P` for Windows and Linux.
+
 Getting started with CPX and CircuitPython intro on:
 https://learn.adafruit.com/circuitpython-made-easy-on-circuit-playground-express/circuit-playground-express-library
 
