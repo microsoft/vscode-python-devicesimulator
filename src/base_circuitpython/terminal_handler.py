@@ -60,10 +60,10 @@ class Terminal:
         curr_y = CONSTANTS.CLUE_TERMINAL_Y_OFFSET + (
             CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT * num_empty_slots
         )
-        for o in reversed(self.__output_values):
-            if len(o):
+        for output_val in reversed(self.__output_values):
+            if len(output_val):
                 text_area = adafruit_display_text.label.Label(
-                    terminalio.FONT, text=o, line_spacing=1.25
+                    terminalio.FONT, text=output_val, line_spacing=1.25
                 )
 
                 text_area.y = curr_y
@@ -72,9 +72,9 @@ class Terminal:
 
             curr_y += CONSTANTS.CLUE_TERMINAL_LINE_HEIGHT
 
-        splash.draw(img=self.__base_img.copy())
-
         self.__lock.release()
+
+        splash.draw(img=self.__base_img.copy())
 
     def add_str_to_terminal(self, curr_display_string=""):
 
