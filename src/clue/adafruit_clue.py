@@ -199,37 +199,36 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
-        self.__state = {
-            "button_a": False,
-            "button_b": False,
-            "pressed_buttons": set(),
-            "sea_level_pressure": 1013.25,
-            "temperature": 0,
-            "proximity": 0,
-            "gesture": "",
-            "humidity": 0,
-            "pressure": 0,
-            "pixel": neopixel.NeoPixel(
-                pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
-            ),
-            # Accelerometer
-            "motion_x": 0,
-            "motion_y": 0,
-            "motion_z": 0,
-            # Light/color sensor
-            "light_r": 0,
-            "light_g": 0,
-            "light_b": 0,
-            "light_c": 0,
-            # Magnetometer
-            "magnet_x": 0,
-            "magnet_y": 0,
-            "magnet_z": 0,
-            # Gyroscope
-            "gyro_x": 0,
-            "gyro_y": 0,
-            "gyro_z": 0,
-        }
+        self.__state = {}
+        self.__state[CONSTANTS.CLUE_STATE.BUTTON_A] = False
+        self.__state[CONSTANTS.CLUE_STATE.BUTTON_B] = False
+        self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS] = set()
+        self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE] = 1013.25
+        self.__state[CONSTANTS.CLUE_STATE.TEMPERATURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PROXIMITY] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GESTURE] = ""
+        self.__state[CONSTANTS.CLUE_STATE.HUMIDITY] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PIXEL] = neopixel.NeoPixel(
+            pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
+        )
+        # Accelerometer
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_Z] = 0
+        # Light/color sensor
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_R] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_G] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_B] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_C] = 0
+        # Magnetometer
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_Z] = 0
+        # Gyroscope
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_Z] = 0
 
     @property
     def button_a(self):
@@ -242,7 +241,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_a:
                   print("Button A pressed")
         """
-        return self.__state["button_a"]
+        return self.__state[CONSTANTS.CLUE_STATE.BUTTON_A]
 
     @property
     def button_b(self):
@@ -255,7 +254,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_b:
                   print("Button B pressed")
         """
-        return self.__state["button_b"]
+        return self.__state[CONSTANTS.CLUE_STATE.BUTTON_B]
 
     @property
     def were_pressed(self):
@@ -266,8 +265,8 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print(clue.were_pressed)
         """
-        ret = self.__state["pressed_buttons"].copy()
-        self.__state["pressed_buttons"].clear()
+        ret = self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].copy()
+        self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].clear()
         return ret
 
     @property
@@ -281,9 +280,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
         """
         return (
-            self.__state["motion_x"],
-            self.__state["motion_y"],
-            self.__state["motion_z"],
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_X],
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_Y],
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_Z],
         )
 
     def shake(self, shake_threshold=30, avg_count=10, total_delay=0.1):
@@ -313,10 +312,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
         """
         return (
-            self.__state["light_r"],
-            self.__state["light_g"],
-            self.__state["light_b"],
-            self.__state["light_c"],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_R],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_G],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_B],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_C],
         )
 
     @property
@@ -328,7 +327,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             print("Temperature: {:.1f}C".format(clue.temperature))
         """
-        return self.__state["temperature"]
+        return self.__state[CONSTANTS.CLUE_STATE.TEMPERATURE]
 
     @property
     def magnetic(self):
@@ -341,9 +340,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
         """
         return (
-            self.__state["magnet_x"],
-            self.__state["magnet_y"],
-            self.__state["magnet_z"],
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_X],
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_Y],
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_Z],
         )
 
     @property
@@ -357,7 +356,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Proximity: {}".format(clue.proximity))
         """
-        return self.__state["proximity"]
+        return self.__state[CONSTANTS.CLUE_STATE.PROXIMITY]
 
     @property
     def gyro(self):
@@ -366,9 +365,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
         """
         return (
-            self.__state["gyro_x"],
-            self.__state["gyro_y"],
-            self.__state["gyro_z"],
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_X],
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_Y],
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_Z],
         )
 
     @property
@@ -384,7 +383,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Gesture: {}".format(clue.gesture))
         """
         gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
-        return gesture_mapping[self.__state["gesture"]]
+        return gesture_mapping[self.__state[CONSTANTS.CLUE_STATE.GESTURE]]
 
     @property
     def humidity(self):
@@ -396,7 +395,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Humidity: {:.1f}%".format(clue.humidity))
         """
-        return self.__state["humidity"]
+        return self.__state[CONSTANTS.CLUE_STATE.HUMIDITY]
 
     @property
     def pressure(self):
@@ -407,7 +406,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             print("Pressure: {:.3f}hPa".format(clue.pressure))
         """
-        return self.__state["pressure"]
+        return self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
 
     @property
     def altitude(self):
@@ -422,7 +421,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         altitude = 44330 * (
             1.0
             - math.pow(
-                self.__state["pressure"] / self.__state["sea_level_pressure"], 0.1903
+                self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
+                / self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE],
+                0.1903,
             )
         )
         return altitude
@@ -438,11 +439,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             clue.sea_level_pressure = 1015
             print("Pressure: {:.3f}hPa".format(clue.pressure))
         """
-        return self.__state["sea_level_pressure"]
+        return self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE]
 
     @sea_level_pressure.setter
     def sea_level_pressure(self, value):
-        self.__state["sea_level_pressure"] = value
+        self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE] = value
 
     @property
     def pixel(self):
@@ -454,7 +455,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             while True:
                 clue.pixel.fill((255, 0, 255))
         """
-        return self.__state["pixel"]
+        return self.__state[CONSTANTS.CLUE_STATE.PIXEL]
 
     @property
     def touch_0(self):
@@ -729,14 +730,14 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
 
     # helpers
     def __update_button(self, button, value):
-        if button == "button_a":
+        if button == CONSTANTS.CLUE_STATE.BUTTON_A:
             if value:
-                self.__state["pressed_buttons"].add("A")
-            self.__state["button_a"] = value
-        elif button == "button_b":
+                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("A")
+            self.__state[CONSTANTS.CLUE_STATE.BUTTON_A] = value
+        elif button == CONSTANTS.CLUE_STATE.BUTTON_B:
             if value:
-                self.__state["pressed_buttons"].add("B")
-            self.__state["button_b"] = value
+                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("B")
+            self.__state[CONSTANTS.CLUE_STATE.BUTTON_B] = value
 
 
 clue = Clue()  # pylint: disable=invalid-name
