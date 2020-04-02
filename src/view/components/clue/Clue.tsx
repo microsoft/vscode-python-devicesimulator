@@ -115,19 +115,19 @@ const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.HUMIDITY,
-        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+        image: TOOLBAR_SVG.HUMIDITY_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.PRESSURE,
-        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+        image: TOOLBAR_SVG.PRESSURE_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.PROXIMITY,
-        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+        image: TOOLBAR_SVG.PROXIMITY_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.GESTURE,
-        image: TOOLBAR_SVG.TEMPERATURE_SVG,
+        image: TOOLBAR_SVG.GESTURE_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.GPIO,
