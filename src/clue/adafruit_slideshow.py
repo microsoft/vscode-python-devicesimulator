@@ -8,11 +8,8 @@ import time
 import collections
 from random import shuffle
 from common import utils
-<<<<<<< HEAD
 from common import debugger_communication_client
-=======
 import board
->>>>>>> users/t-xunguy/clue-sensors
 
 # taken from adafruit
 # https://github.com/adafruit/Adafruit_CircuitPython_Slideshow/blob/master/adafruit_slideshow.py
