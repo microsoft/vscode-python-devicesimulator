@@ -9,6 +9,7 @@ import sys
 import os
 
 from common import utils
+from common import debugger_communication_client
 from adafruit_circuitplayground import cp
 import base_cp_constants as CONSTANTS
 
@@ -30,7 +31,12 @@ def neopixel_write(gpio, buf):
 
 def send_clue(buf):
     sendable_json = {CONSTANTS.PIXELS: tuple(buf)}
-    utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+    if utils.debug_mode:
+        debugger_communication_client.debug_send_to_simulator(
+            sendable_json, CONSTANTS.CLUE
+        )
+    else:
+        utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 
 def send_cpx(buf):

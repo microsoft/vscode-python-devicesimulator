@@ -87,7 +87,13 @@ class Group:
         img_str = str(byte_base64)[2:-1]
 
         sendable_json = {CONSTANTS.BASE_64: img_str}
-        common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+
+        if common.utils.debug_mode:
+            common.debugger_communication_client.debug_send_to_simulator(
+                sendable_json, CONSTANTS.CLUE
+            )
+        else:
+            common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
     def __len__(self):
         if not self.__contents:
