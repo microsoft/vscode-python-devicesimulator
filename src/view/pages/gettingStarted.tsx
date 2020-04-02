@@ -139,7 +139,7 @@ export class GettingStartedPage extends React.Component {
                         </span>
                         <h3> 2. Display text on the CLUE and change the text when a button is pressed</h3>
                         <span className="codeBox">
-                            <pre>clue_data = clue.simple_text_display(title="CLUE!", title_scale=2, text_scale=2)</pre>
+                            <pre>clue_data = clue.simple_text_display(title="CLUE!", text_scale=2)</pre>
                             <pre>while True:</pre>
                             <pre>    clue_data[1].text = "Hello World!"</pre>
                             <pre>    clue_data[3].text = "Temperature: {}".format(clue.temperature)</pre>
@@ -150,11 +150,11 @@ export class GettingStartedPage extends React.Component {
                             <pre>    clue_data.show()</pre>
                         </span>
                         <h3> 3. Create a slide show on the CLUE</h3>
-                        <h4>There must be some .bmp photos in the same directory as the code file</h4>
+                        <p>There must be some .bmp photos in the same directory as the code file</p>
                         <span className="codeBox">
                             <pre>import board</pre>
                             <pre>from adafruit_slideshow import SlideShow</pre>
-
+                            <pre> </pre>
                             <pre>slideshow = SlideShow(board.DISPLAY, auto_advance=True)</pre>
                             <pre>while slideshow.update():</pre>
                             <pre>     pass</pre>
@@ -163,16 +163,17 @@ export class GettingStartedPage extends React.Component {
                         <span className="codeBox">
                             <pre>clue.pixel.fill(clue.GREEN)</pre>
                         </span>
-                        <h3> 5. Draw a rectangle on the screen</h3>
+                        <h3> 5. Draw a blue rectangle on the screen</h3>
                         <span className="codeBox">
                             <pre>import board</pre>
                             <pre>import displayio</pre>
                             <pre>from adafruit_display_shapes.rect import Rect</pre>
+                            <pre> </pre>
                             <pre>splash = displayio.Group(max_size=20)</pre>
                             <pre>board.DISPLAY.show(splash)</pre>
-                            <pre>rect = Rect(80, 20, 41, 41, fill=0x0)</pre>
+                            <pre> </pre>
+                            <pre>rect = Rect(80, 20, 41, 41, fill=0x0000FF)</pre>
                             <pre>splash.append(rect)</pre>
-                            <pre>splash.draw(show=True)</pre>
                         </span>
                         <h3>And much more! These links have more tutorials:</h3>
                         <h3>
