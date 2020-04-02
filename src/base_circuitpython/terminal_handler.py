@@ -41,13 +41,13 @@ class Terminal:
 
         import adafruit_display_text.label
 
-        self.__lock.acquire()
-
         # no need to check the active group within the Group class
         # since the caller of draw already did
         splash = displayio.Group(
             max_size=20, check_active_group_ref=False, auto_write=False
         )
+
+        self.__lock.acquire()
 
         # since the text starts from the bottom,
         # we need to find an offset if there are empty spots
