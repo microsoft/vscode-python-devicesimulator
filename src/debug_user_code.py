@@ -26,14 +26,16 @@ abs_path_to_micropython_lib = os.path.join(
 )
 sys.path.insert(0, abs_path_to_micropython_lib)
 
+# Insert absolute path to library for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
+
+# Insert absolute path to Circuitpython libraries for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
+
 # This import must happen after the sys.path is modified
-from adafruit_circuitplayground.express import cpx
-from microbit.__model.microbit_model import __mb as mb
 from common import debugger_communication_client
 
-
 ## Execute User Code ##
-
 
 # Get user's code path
 abs_path_to_code_file = ""

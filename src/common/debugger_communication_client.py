@@ -17,8 +17,10 @@ from adafruit_circuitplayground.constants import CPX
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
+from base_circuitpython.base_cp_constants import CLUE
+from adafruit_clue import clue
 
-device_dict = {CPX: cpx, MICROBIT: mb}
+device_dict = {CPX: cpx, MICROBIT: mb, CLUE: clue}
 processing_state_event = threading.Event()
 previous_state = {}
 
@@ -27,7 +29,6 @@ previous_state = {}
 def debug_send_to_simulator(state, active_device):
     global previous_state
     if state != previous_state:
-        print("here!")
         previous_state = copy.deepcopy(state)
 
         updated_state = utils.update_state_with_device_name(state, active_device)
