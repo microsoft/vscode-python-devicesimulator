@@ -149,12 +149,12 @@ class TestAdafruitClue(object):
         assert clue.gyro == (MOCK_GYRO_X_B, MOCK_GYRO_Y, MOCK_GYRO_Z)
 
     def test_gesture(self):
-        NONE = 0
-        UP = 1
+        NONE = ""
+        UP = "up"
         clue._Clue__state["gesture"] = NONE
-        assert NONE == clue.gesture
+        assert 0 == clue.gesture
         clue._Clue__state["gesture"] = UP
-        assert UP == clue.gesture
+        assert 1 == clue.gesture
 
     def test_humidity(self):
         MOCK_HUMIDITY_A = 10

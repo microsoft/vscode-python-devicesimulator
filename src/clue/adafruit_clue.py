@@ -69,6 +69,7 @@ abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
 import neopixel
 from base_circuitpython import base_cp_constants as CONSTANTS
+from common import utils
 
 # REVISED VERSION OF THE ADAFRUIT CLUE LIBRARY FOR DSX
 
@@ -205,7 +206,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             "sea_level_pressure": 1013.25,
             "temperature": 0,
             "proximity": 0,
-            "gesture": 0,  # Can only be 0, 1, 2, 3, 4
+            "gesture": "",
             "humidity": 0,
             "pressure": 0,
             "pixel": neopixel.NeoPixel(
@@ -284,6 +285,21 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             self.__state["motion_y"],
             self.__state["motion_z"],
         )
+
+    def shake(self, shake_threshold=30, avg_count=10, total_delay=0.1):
+        """Not implemented!
+        Detect when the accelerometer is shaken. Optional parameters:
+        :param shake_threshold: Increase or decrease to change shake sensitivity. This
+                                requires a minimum value of 10. 10 is the total
+                                acceleration if the board is not moving, therefore
+                                anything less than 10 will erroneously report a constant
+                                shake detected. (Default 30)
+        :param avg_count: The number of readings taken and used for the average
+                          acceleration. (Default 10)
+        :param total_delay: The total time in seconds it takes to obtain avg_count
+                            readings from acceleration. (Default 0.1)
+        """
+        utils.print_for_unimplemented_functions(Clue.shake.__name__)
 
     @property
     def color(self):
@@ -367,7 +383,8 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Gesture: {}".format(clue.gesture))
         """
-        return self.__state["gesture"]
+        gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
+        return gesture_mapping[self.__state["gesture"]]
 
     @property
     def humidity(self):
@@ -438,6 +455,202 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                 clue.pixel.fill((255, 0, 255))
         """
         return self.__state["pixel"]
+
+    @property
+    def touch_0(self):
+        """Not Implemented!
+
+        Detect touch on capacitive touch pad 0.
+        .. image :: ../docs/_static/pad_0.jpg
+          :alt: Pad 0
+        This example prints when pad 0 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_0:
+                  print("Touched pad 0")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_0.__name__)
+
+    @property
+    def touch_1(self):
+        """Not Implemented!
+        
+        Detect touch on capacitive touch pad 1.
+        .. image :: ../docs/_static/pad_1.jpg
+          :alt: Pad 1
+        This example prints when pad 1 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_1:
+                  print("Touched pad 1")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_1.__name__)
+
+    @property
+    def touch_2(self):
+        """Not Implemented!
+        
+        Detect touch on capacitive touch pad 2.
+        .. image :: ../docs/_static/pad_2.jpg
+          :alt: Pad 2
+        This example prints when pad 2 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_2:
+                  print("Touched pad 2")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_2.__name__)
+
+    @property
+    def white_leds(self):
+        """Not Implemented!
+        
+        The red led next to the USB plug labeled LED.
+        .. image :: ../docs/_static/white_leds.jpg
+          :alt: White LEDs
+        This example turns on the white LEDs.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.white_leds = True
+        """
+        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+
+    @white_leds.setter
+    def white_leds(self, value):
+        """Not Implemented!"""
+        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+
+    @property
+    def red_led(self):
+        """Not Implemented!
+        
+        The red led next to the USB plug labeled LED.
+        .. image :: ../docs/_static/red_led.jpg
+          :alt: Red LED
+        This example turns on the red LED.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.red_led = True
+        """
+        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+
+    @red_led.setter
+    def red_led(self, value):
+        """Not Implemented!"""
+        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+
+    def play_tone(self, frequency, duration):
+        """ Not Implemented!
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
+        :param int frequency: The frequency of the tone in Hz
+        :param float duration: The duration of the tone in seconds
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 880 Hz tone for a duration of 1 second.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.play_tone(880, 1)
+        """
+        utils.print_for_unimplemented_functions(Clue.play_tone.__name__)
+
+    def start_tone(self, frequency):
+        """ Not Implemented!
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
+        :param int frequency: The frequency of the tone in Hz
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 523Hz tone when button A is pressed and a 587Hz tone when button B is
+        pressed, only while the buttons are being pressed.
+        To use with the CLUE:
+        .. code-block:: python
+             from adafruit_clue import clue
+             while True:
+                 if clue.button_a:
+                     clue.start_tone(523)
+                 elif clue.button_b:
+                     clue.start_tone(587)
+                 else:
+                     clue.stop_tone()
+        """
+        utils.print_for_unimplemented_functions(Clue.start_tone.__name__)
+
+    def stop_tone(self):
+        """ Not Implemented!
+        Use with start_tone to stop the tone produced.
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 523Hz tone when button A is pressed and a 587Hz tone when button B is
+        pressed, only while the buttons are being pressed.
+        To use with the CLUE:
+        .. code-block:: python
+             from adafruit_clue import clue
+             while True:
+                 if clue.button_a:
+                     clue.start_tone(523)
+                 elif clue.button_b:
+                     clue.start_tone(587)
+                 else:
+                     clue.stop_tone()
+        """
+        utils.print_for_unimplemented_functions(Clue.stop_tone.__name__)
+
+    @property
+    def sound_level(self):
+        """Not Implemented!
+        Obtain the sound level from the microphone (sound sensor).
+        .. image :: ../docs/_static/microphone.jpg
+          :alt: Microphone (sound sensor)
+        This example prints the sound levels. Try clapping or blowing on
+        the microphone to see the levels change.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print(clue.sound_level)
+        """
+        utils.print_for_unimplemented_functions(Clue.sound_level.__name__)
+
+    def loud_sound(self, sound_threshold=200):
+        """Not Implemented!
+        Utilise a loud sound as an input.
+        :param int sound_threshold: Threshold sound level must exceed to return true (Default: 200)
+        .. image :: ../docs/_static/microphone.jpg
+          :alt: Microphone (sound sensor)
+        This example turns the NeoPixel LED blue each time you make a loud sound.
+        Try clapping or blowing onto the microphone to trigger it.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.loud_sound():
+                  clue.pixel.fill((0, 50, 0))
+              else:
+                  clue.pixel.fill(0)
+        You may find that the code is not responding how you would like.
+        If this is the case, you can change the loud sound threshold to
+        make it more or less responsive. Setting it to a higher number
+        means it will take a louder sound to trigger. Setting it to a
+        lower number will take a quieter sound to trigger. The following
+        example shows the threshold being set to a higher number than
+        the default.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.loud_sound(sound_threshold=300):
+                  clue.pixel.fill((0, 50, 0))
+              else:
+                  clue.pixel.fill(0)
+        """
+        utils.print_for_unimplemented_functions(Clue.loud_sound.__name__)
 
     @staticmethod
     def simple_text_display(
