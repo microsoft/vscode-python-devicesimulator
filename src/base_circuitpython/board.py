@@ -15,7 +15,7 @@ class Display:
             self.active_group = group
 
             if group == None:
-                self.terminal.configure()
+                self.terminal.draw()
                 return
 
             # if the group has no attribute called

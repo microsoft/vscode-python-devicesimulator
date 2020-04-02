@@ -37,14 +37,14 @@ class Terminal:
 
         self.__lock.release()
 
-    def configure(self, no_verif=False):
+    def draw(self, no_verif=False):
 
         import adafruit_display_text.label
 
         self.__lock.acquire()
 
         # no need to check the active group within the Group class
-        # since the caller of configure already did
+        # since the caller of draw already did
         splash = displayio.Group(
             max_size=20, check_active_group_ref=False, auto_write=False
         )
@@ -102,7 +102,7 @@ class Terminal:
 
         self.__create_newline(new_strs)
 
-        # only go ahead to configure the screen
+        # only go ahead to draw the screen
         # if the terminal is actively on the screen
         if board.DISPLAY.active_group == None:
-            self.configure()
+            self.draw()

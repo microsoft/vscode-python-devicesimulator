@@ -18,7 +18,6 @@ import board
 
 class Group:
     def __init__(self, max_size, scale=1, check_active_group_ref=True, auto_write=True):
-
         self.__check_active_group_ref = check_active_group_ref
         self.__auto_write = auto_write
         self.__contents = []
@@ -44,8 +43,8 @@ class Group:
         self.__elem_changed()
 
     def __elem_changed(self):
-        # ensure that this group is what the board is currently showing
-        # otherwise, don't bother to draw it
+        # Ensure that this group is what the board is currently showing.
+        # Otherwise, don't bother to draw it.
         if (
             self.__auto_write
             and self.__check_active_group_ref
@@ -55,10 +54,8 @@ class Group:
 
         elif self.in_group:
 
-            # if a sub-group is modified,
-            # propagate to top level to
-            # see if one of the parents are the
-            # current active group
+            # If a sub-group is modified, propagate to top level to
+            # see if one of the parents are the current active group.
             self.parent.__elem_changed()
 
     def __getitem__(self, index):
@@ -73,7 +70,6 @@ class Group:
             self.__elem_changed()
 
     def draw(self, img=None, x=0, y=0, scale=None, show=True):
-
         # this function is not a part of the orignal implementation
         # it is what draws itself and its children and potentially shows it to the
         # frontend
@@ -93,11 +89,11 @@ class Group:
                 # adafruit_display_text has some positioning considerations
                 # that need to be handled.
 
-                # found manually, display must be positioned upwards
+                # This was found manually, display must be positioned upwards
                 # 1 unit (1 unit * scale = scale)
                 y -= scale
 
-                # group is positioned against anchored_position (default (0,0)),
+                # Group is positioned against anchored_position (default (0,0)),
                 # which is positioned against anchor_point
 
                 x += self._anchor_point[0]
@@ -138,4 +134,7 @@ class Group:
             return len(self.__contents)
 
     def pop(self, i=-1):
-        return self.__contents.pop(i)
+        item = self.__contents.pop(i)
+        item.parent = None
+        self.__elem_changed()
+        return item
