@@ -240,3 +240,17 @@ export const CLUE_LED_CONTENT = (
         id: "clue_neopixel",
     };
 };
+export const CLUE_SPEAKER_MODAL_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-speaker.title",
+        tagInput: undefined,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-clue-speaker.description",
+        tryItDescription: "toolbar-speaker.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "speaker",
+    };
+};
