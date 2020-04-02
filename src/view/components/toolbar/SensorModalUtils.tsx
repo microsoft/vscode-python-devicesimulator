@@ -76,7 +76,7 @@ export const MICROBIT_TOOLBAR_ICON_ID = {
 };
 
 export const CLUE_TOOLBAR_ICON_ID = {
-    TEMPERATURE: "toolbar-temperature-sensor",
+    TEMPERATURE: "toolbar-clue-temperature-sensor",
     LIGHT: "toolbar-clue-light-sensor",
     ACCELEROMETER: "toolbar-clue-accelerometer-sensor",
     LEDS: "toolbar-clue-led",

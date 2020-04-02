@@ -20,11 +20,11 @@ export const CLUE_TEMPERATURE_MODAL_CONTENT = (
             />,
         ],
         descriptionText: "toolbar-clue-temperature-sensor.description",
-        descriptionTitle: "toolbar-temperature-sensor.title",
+        descriptionTitle: "toolbar-clue-temperature-sensor.title",
         id: "temperature",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        tryItDescription: "toolbar-temperature-sensor.tryItDescription",
+        tryItDescription: "toolbar-clue-temperature-sensor.tryItDescription",
     };
 };
 
@@ -33,11 +33,11 @@ export const CLUE_GPIO_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-gpio.title",
+        descriptionTitle: "toolbar-clue-gpio.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-gpio.description",
-        tryItDescription: "toolbar-gpio.tryItDescription",
+        descriptionText: "toolbar-clue-gpio.description",
+        tryItDescription: "toolbar-clue-gpio.tryItDescription",
         components: undefined,
         id: "GPIO",
     };
@@ -58,12 +58,12 @@ export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
                 axisValues={accelerometerSensorValues}
             />
         ),
-        descriptionText: "toolbar-accelerometer-sensor.description",
-        descriptionTitle: "toolbar-accelerometer-sensor.title",
+        descriptionText: "toolbar-clue-accelerometer-sensor.description",
+        descriptionTitle: "toolbar-clue-accelerometer-sensor.title",
         id: "accelerometer",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
+        tryItDescription: "toolbar-clue-accelerometer-sensor.tryItDescription",
     };
 };
 
@@ -85,12 +85,12 @@ export const CLUE_LIGHT_MODAL_CONTENT = (
                 axisProperties={SENSOR_PROPERTIES.CLUE_LIGHT_PROPERTIES}
             />
         ),
-        descriptionText: "toolbar-accelerometer-sensor.description",
-        descriptionTitle: "toolbar-accelerometer-sensor.title",
-        id: "accelerometer",
+        descriptionText: "toolbar-clue-light-sensor.description",
+        descriptionTitle: "toolbar-clue-light-sensor.title",
+        id: "light_sensor",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
+        tryItDescription: "toolbar-clue-light-sensor.tryItDescription",
     };
 };
 export const CLUE_HUMIDITY_MODAL_CONTENT = (
@@ -101,11 +101,11 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
         H: sensorValues[SENSOR_LIST.HUMIDITY],
     };
     return {
-        descriptionTitle: "toolbar-light-sensor.title",
+        descriptionTitle: "toolbar-clue-humidity-sensor.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-light-sensor.description",
-        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        descriptionText: "toolbar-clue-humidity-sensor.description",
+        tryItDescription: "toolbar-clue-humidity-sensor.tryItDescription",
         components: [
             <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
@@ -113,7 +113,7 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
                 axisProperties={SENSOR_PROPERTIES.CLUE_HUMIDITY_PROPERTIES}
             />,
         ],
-        id: "light_sensor",
+        id: "humidity_sensor",
     };
 };
 export const CLUE_GESTURE_MODAL_CONTENT = (
@@ -121,11 +121,11 @@ export const CLUE_GESTURE_MODAL_CONTENT = (
     sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-light-sensor.title",
+        descriptionTitle: "toolbar-clue-gesture-sensor.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-light-sensor.description",
-        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        descriptionText: "toolbar-clue-gesture-sensor.description",
+        tryItDescription: "toolbar-clue-gesture-sensor.tryItDescription",
         components: [
             <Gesture
                 gestures={GESTURES_CLUE}
@@ -133,7 +133,7 @@ export const CLUE_GESTURE_MODAL_CONTENT = (
                 onSendGesture={sendGesture}
             />,
         ],
-        id: "light_sensor",
+        id: "gesture_sensor",
     };
 };
 export const CLUE_PROXIMITY_MODAL_CONTENT = (
@@ -144,11 +144,11 @@ export const CLUE_PROXIMITY_MODAL_CONTENT = (
         P: sensorValues[SENSOR_LIST.PROXIMITY],
     };
     return {
-        descriptionTitle: "toolbar-light-sensor.title",
+        descriptionTitle: "toolbar-clue-proximity-sensor.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-light-sensor.description",
-        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        descriptionText: "toolbar-clue-proximity-sensor.description",
+        tryItDescription: "toolbar-clue-proximity-sensor.tryItDescription",
         components: [
             <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
@@ -156,7 +156,7 @@ export const CLUE_PROXIMITY_MODAL_CONTENT = (
                 axisProperties={SENSOR_PROPERTIES.CLUE__PROXIMITY_PROPERTIES}
             />,
         ],
-        id: "light_sensor",
+        id: "proximity_sensor",
     };
 };
 export const CLUE_PRESSURE_MODAL_CONTENT = (
@@ -167,11 +167,11 @@ export const CLUE_PRESSURE_MODAL_CONTENT = (
         P: sensorValues[SENSOR_LIST.PRESSURE],
     };
     return {
-        descriptionTitle: "toolbar-light-sensor.title",
+        descriptionTitle: "toolbar-clue-pressure-sensor.title",
         tagInput: TAG_INPUT_SVG,
         tagOutput: undefined,
-        descriptionText: "toolbar-light-sensor.description",
-        tryItDescription: "toolbar-light-sensor.tryItDescription",
+        descriptionText: "toolbar-clue-pressure-sensor.description",
+        tryItDescription: "toolbar-clue-pressure-sensor.tryItDescription",
         components: [
             <ThreeDimensionSlider
                 onUpdateValue={onUpdateValue}
@@ -179,7 +179,7 @@ export const CLUE_PRESSURE_MODAL_CONTENT = (
                 axisProperties={SENSOR_PROPERTIES.CLUE_PRESSURE_PROPERTIES}
             />,
         ],
-        id: "light_sensor",
+        id: "pressure_sensor",
     };
 };
 export const CLUE_BUTTON_CONTENT = (
@@ -187,11 +187,11 @@ export const CLUE_BUTTON_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-a-b-push.title",
+        descriptionTitle: "toolbar-clue-a-b-push.title",
         tagInput: undefined,
         tagOutput: TAG_INPUT_SVG,
-        descriptionText: "toolbar-microbit-a-b-push.description",
-        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
+        descriptionText: "toolbar-clue-a-b-push.description",
+        tryItDescription: "toolbar-clue-a-b-push.tryItDescription",
         components: undefined,
         id: "microbit_button",
     };
@@ -202,13 +202,13 @@ export const CLUE_BLUETOOTH_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-a-b-push.title",
+        descriptionTitle: "toolbar-clue-bluetooth.title",
         tagInput: undefined,
         tagOutput: TAG_INPUT_SVG,
-        descriptionText: "toolbar-microbit-a-b-push.description",
-        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
+        descriptionText: "toolbar-clue-bluetooth.description",
+        tryItDescription: "toolbar-clue-bluetooth.tryItDescription",
         components: undefined,
-        id: "microbit_button",
+        id: "bluetooth",
     };
 };
 
@@ -217,13 +217,13 @@ export const CLUE_SOUND_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-speaker.title",
+        descriptionTitle: "toolbar-clue-sound-sensor.title",
         tagInput: undefined,
         tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-speaker.description",
-        tryItDescription: "toolbar-speaker.tryItDescription",
+        descriptionText: "toolbar-clue-sound-sensor.description",
+        tryItDescription: "toolbar-clue-sound-sensor.tryItDescription",
         components: [FEATURE_REQUEST_ON_GITHUB],
-        id: "speaker",
+        id: "sound_sensor",
     };
 };
 export const CLUE_LED_CONTENT = (
@@ -231,12 +231,12 @@ export const CLUE_LED_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     return {
-        descriptionTitle: "toolbar-microbit-led.title",
+        descriptionTitle: "toolbar-clue-led.title",
         tagInput: undefined,
         tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-led.description",
-        tryItDescription: "toolbar-microbit-led.tryItDescription",
+        descriptionText: "toolbar-clue-led.description",
+        tryItDescription: "toolbar-clue-led.tryItDescription",
         components: undefined,
-        id: "microbit_LED",
+        id: "clue_neopixel",
     };
 };
