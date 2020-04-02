@@ -135,7 +135,7 @@ export class GettingStartedPage extends React.Component {
                             1. Import the the main CLUE library (This is required)
                         </h3>
                         <span className="codeBox">
-                            <pre>from adafruit_clue import clue # Required</pre>
+                            <pre>from adafruit_clue import clue</pre>
                         </span>
                         <h3> 2. Display text on the CLUE and change the text when a button is pressed</h3>
                         <span className="codeBox">
