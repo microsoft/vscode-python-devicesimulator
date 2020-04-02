@@ -9,6 +9,7 @@ import LightSensorBar from "./LightSensorBar";
 import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
+import * as CLUE_MODAL from "./clue/ClueModalContent";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -63,7 +64,7 @@ export const CPX_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
 };
 
-export const MICROBIT_TOOLBAR_ID = {
+export const MICROBIT_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
     LIGHT: "toolbar-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer-sensor",
@@ -72,6 +73,22 @@ export const MICROBIT_TOOLBAR_ID = {
     GPIO: "toolbar-gpio",
     SOUND: "toolbar-microbit-sound",
     WIRELESS: "toolbar-microbit-wireless",
+};
+
+export const CLUE_TOOLBAR_ICON_ID = {
+    TEMPERATURE: "toolbar-clue-temperature-sensor",
+    LIGHT: "toolbar-clue-light-sensor",
+    ACCELEROMETER: "toolbar-clue-accelerometer-sensor",
+    LEDS: "toolbar-clue-led",
+    PUSH_BUTTON: "toolbar-clue-a-b-push",
+    GPIO: "toolbar-clue-gpio",
+    SPEAKER: "toolbar-speaker",
+    SOUND: "toolbar-clue-sound-sensor",
+    PRESSURE: "toolbar-clue-pressure-sensor",
+    HUMIDITY: "toolbar-clue-humidity-sensor",
+    GESTURE: "toolbar-clue-gesture-sensor",
+    PROXIMITY: "toolbar-clue-proximity-sensor",
+    BLUETOOTH: "toolbar-clue-bluetooth",
 };
 
 export interface IModalContent {
@@ -147,9 +164,9 @@ export const MOTION_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const motionSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+        X: sensorValues[SENSOR_LIST.MOTION_X],
+        Y: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
         descriptionTitle: "toolbar-motion-sensor.title",
@@ -274,22 +291,19 @@ export const TEMPERATURE_MODAL_CONTENT = (
 
 export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number },
-    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: (isActive: boolean) => void
+    sensorValues: { [key: string]: number }
 ): IModalContent => {
+    // this object will be accessed with the axis label
     const accelerometerSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+        X: sensorValues[SENSOR_LIST.MOTION_X],
+        Y: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
         components: (
             <Accelerometer
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
-                onSelectGestures={onSelectGestures}
-                onSendGesture={sendGesture}
             />
         ),
         descriptionText: "toolbar-accelerometer-sensor.description",
@@ -384,12 +398,33 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.SPEAKER, SPEAKER_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
-    [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
-    [MICROBIT_TOOLBAR_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.LEDS, MICROBIT_LED_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
+    [
+        CLUE_TOOLBAR_ICON_ID.TEMPERATURE,
+        CLUE_MODAL.CLUE_TEMPERATURE_MODAL_CONTENT,
+    ],
+    [
+        CLUE_TOOLBAR_ICON_ID.ACCELEROMETER,
+        CLUE_MODAL.CLUE_ACCELEROMETER_MODAL_CONTENT,
+    ],
+    [CLUE_TOOLBAR_ICON_ID.PUSH_BUTTON, CLUE_MODAL.CLUE_BUTTON_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.GPIO, CLUE_MODAL.CLUE_GPIO_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.LIGHT, CLUE_MODAL.CLUE_LIGHT_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.LEDS, CLUE_MODAL.CLUE_LED_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.SOUND, CLUE_MODAL.CLUE_SOUND_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.PRESSURE, CLUE_MODAL.CLUE_PRESSURE_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.HUMIDITY, CLUE_MODAL.CLUE_HUMIDITY_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.PROXIMITY, CLUE_MODAL.CLUE_PROXIMITY_MODAL_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.BLUETOOTH, CLUE_MODAL.CLUE_BLUETOOTH_CONTENT],
+    [
+        CLUE_TOOLBAR_ICON_ID.ACCELEROMETER,
+        CLUE_MODAL.CLUE_ACCELEROMETER_MODAL_CONTENT,
+    ],
 ]);
 
 export const getModalContent = (
@@ -399,18 +434,17 @@ export const getModalContent = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ) => {
+    if (label === CLUE_TOOLBAR_ICON_ID.GESTURE) {
+        console.log("gestures");
+        return CLUE_MODAL.CLUE_GESTURE_MODAL_CONTENT(
+            onSelectGestures,
+            sendGesture
+        );
+    }
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
     );
     if (modalContentConstructor) {
-        if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
-            return ACCELEROMETER_MODAL_CONTENT(
-                onUpdateValue,
-                sensorValues,
-                onSelectGestures,
-                sendGesture
-            );
-        }
         return modalContentConstructor(onUpdateValue, sensorValues);
     } else {
         return;

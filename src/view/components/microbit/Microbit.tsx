@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { MICROBIT_TOOLBAR_ID } from "../../components/toolbar/SensorModalUtils";
+import { MICROBIT_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
 import {
-    GESTURES,
+    GESTURES_MICROBIT,
     SENSOR_LIST,
     VSCODE_MESSAGES_TO_WEBVIEW,
     WEBVIEW_MESSAGES,
@@ -28,7 +28,7 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
     },
-    currentSelectedGesture: GESTURES[0],
+    currentSelectedGesture: GESTURES_MICROBIT[0],
 };
 
 export class Microbit extends React.Component<{}, IState> {
@@ -89,34 +89,34 @@ export class Microbit extends React.Component<{}, IState> {
 const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
         image: TOOLBAR_SVG.PUSH_BUTTON_SVG,
-        label: MICROBIT_TOOLBAR_ID.PUSH_BUTTON,
+        label: MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON,
     },
     {
         image: TOOLBAR_SVG.RED_LED_SVG,
-        label: MICROBIT_TOOLBAR_ID.LEDS,
+        label: MICROBIT_TOOLBAR_ICON_ID.LEDS,
     },
     {
         image: TOOLBAR_SVG.TEMPERATURE_SVG,
-        label: MICROBIT_TOOLBAR_ID.TEMPERATURE,
+        label: MICROBIT_TOOLBAR_ICON_ID.TEMPERATURE,
     },
     {
         image: TOOLBAR_SVG.LIGHT_SVG,
-        label: MICROBIT_TOOLBAR_ID.LIGHT,
+        label: MICROBIT_TOOLBAR_ICON_ID.LIGHT,
     },
     {
         image: TOOLBAR_SVG.MOTION_SVG,
-        label: MICROBIT_TOOLBAR_ID.ACCELEROMETER,
+        label: MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
     },
     {
         image: TOOLBAR_SVG.GPIO_SVG,
-        label: MICROBIT_TOOLBAR_ID.GPIO,
+        label: MICROBIT_TOOLBAR_ICON_ID.GPIO,
     },
     {
         image: TOOLBAR_SVG.SPEAKER_SVG,
-        label: MICROBIT_TOOLBAR_ID.SOUND,
+        label: MICROBIT_TOOLBAR_ICON_ID.SOUND,
     },
     {
         image: TOOLBAR_SVG.WIRELESS_SVG,
-        label: MICROBIT_TOOLBAR_ID.WIRELESS,
+        label: MICROBIT_TOOLBAR_ICON_ID.WIRELESS,
     },
 ];
