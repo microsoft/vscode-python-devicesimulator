@@ -153,6 +153,14 @@ class TestAdafruitClue(object):
         clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = UP
         assert 1 == clue.gesture
 
+    def test_shake(self):
+        NONE = "none"
+        SHAKE = "shake"
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = SHAKE
+        assert clue.shake()
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = NONE
+        assert not clue.shake()
+
     def test_humidity(self):
         MOCK_HUMIDITY_A = 10
         MOCK_HUMIDITY_B = 50

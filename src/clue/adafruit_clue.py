@@ -286,8 +286,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         )
 
     def shake(self, shake_threshold=30, avg_count=10, total_delay=0.1):
-        """Not implemented!
-        Detect when the accelerometer is shaken. Optional parameters:
+        """Detect when the accelerometer is shaken. Optional parameters:
         :param shake_threshold: Increase or decrease to change shake sensitivity. This
                                 requires a minimum value of 10. 10 is the total
                                 acceleration if the board is not moving, therefore
@@ -298,7 +297,8 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         :param total_delay: The total time in seconds it takes to obtain avg_count
                             readings from acceleration. (Default 0.1)
         """
-        utils.print_for_unimplemented_functions(Clue.shake.__name__)
+        is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == "shake"
+        return is_shaken
 
     @property
     def color(self):
@@ -383,7 +383,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Gesture: {}".format(clue.gesture))
         """
         gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
-        return gesture_mapping[self.__state[CONSTANTS.CLUE_STATE.GESTURE]]
+        return gesture_mapping.get(self.__state[CONSTANTS.CLUE_STATE.GESTURE], 0)
 
     @property
     def humidity(self):
