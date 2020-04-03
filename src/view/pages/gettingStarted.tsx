@@ -169,12 +169,12 @@ export class GettingStartedPage extends React.Component {
                             <pre>import board</pre>
                             <pre>from adafruit_slideshow import SlideShow</pre>
                             <pre> </pre>
-                            <pre>slideshow = SlideShow(board.DISPLAY, auto_advance=True)
+                            <pre>slideshow = SlideShow(board.DISPLAY, auto_advance=True, dwell=3, fade_effect=True)
                             </pre>
                             <pre>while slideshow.update():</pre>
                             <pre>    pass</pre>
                         </span>
-                        <h3> 4. Light up the back neopixel green</h3>
+                        <h3> 4. Light up the neopixel green</h3>
                         <span className="codeBox">
                             <pre>clue.pixel.fill(clue.GREEN)</pre>
                         </span>

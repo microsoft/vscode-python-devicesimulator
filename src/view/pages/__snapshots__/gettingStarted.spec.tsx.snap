@@ -278,7 +278,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
          
       </pre>
       <pre>
-        slideshow = SlideShow(board.DISPLAY, auto_advance=True)
+        slideshow = SlideShow(board.DISPLAY, auto_advance=True, dwell=3, fade_effect=True)
       </pre>
       <pre>
         while slideshow.update():
@@ -288,7 +288,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       </pre>
     </span>
     <h3>
-       4. Light up the back neopixel green
+       4. Light up the neopixel green
     </h3>
     <span
       className="codeBox"
