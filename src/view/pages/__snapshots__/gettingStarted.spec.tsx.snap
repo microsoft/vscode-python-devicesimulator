@@ -63,7 +63,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         cp.red_led = True
+            cp.red_led = True
       </pre>
     </span>
     <h3>
@@ -76,10 +76,10 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         if cp.button_a:
+            if cp.button_a:
       </pre>
       <pre>
-         cp.red_led = True
+                cp.red_led = True
       </pre>
     </span>
     <h3>
@@ -147,16 +147,16 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         if button_a.is_pressed():
+            if button_a.is_pressed():
       </pre>
       <pre>
-         display.show(Image.HAPPY)
+            display.show(Image.HAPPY)
       </pre>
       <pre>
-         if button_b.is_pressed():
+            if button_b.is_pressed():
       </pre>
       <pre>
-         display.show(Image.SAD)
+                display.show(Image.SAD)
       </pre>
     </span>
     <h3>
@@ -169,10 +169,10 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         temp = temperature()
+            temp = temperature()
       </pre>
       <pre>
-         display.show(temp)
+            display.show(temp)
       </pre>
     </span>
     <h3>
@@ -186,7 +186,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         display.show("Your name")
+            display.show("Your name")
       </pre>
     </span>
     <h3>
@@ -238,27 +238,25 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while True:
       </pre>
       <pre>
-         clue_data[1].text = "Hello World!"
+            clue_data[1].text = "Hello World!"
       </pre>
       <pre>
-         
-        clue_data[3].text = "Temperature: 
-        ".format(clue.temperature)
+            clue_data[3].text = "Temperature: {}".format(clue.temperature)
       </pre>
       <pre>
-         if clue.button_a:
+            if clue.button_a:
       </pre>
       <pre>
-         clue_data[5].text = "A is pressed!"
+                clue_data[5].text = "A is pressed!"
       </pre>
       <pre>
-         else:
+            else:
       </pre>
       <pre>
-         clue_data[5].text = "A is not pressed!"
+                clue_data[5].text = "A is not pressed!"
       </pre>
       <pre>
-         clue_data.show()
+            clue_data.show()
       </pre>
     </span>
     <h3>
@@ -286,7 +284,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
         while slideshow.update():
       </pre>
       <pre>
-         pass
+            pass
       </pre>
     </span>
     <h3>
