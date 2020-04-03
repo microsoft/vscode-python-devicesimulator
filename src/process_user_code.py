@@ -52,8 +52,7 @@ from microbit.__model.constants import MICROBIT
 
 from adafruit_clue import clue
 from base_circuitpython.base_cp_constants import CLUE
-from base_circuitpython import terminal_handler
-from base_circuitpython import board
+import board
 
 # get handle to terminal for clue
 curr_terminal = board.DISPLAY.terminal
@@ -102,7 +101,7 @@ def handle_user_prints():
             # extra newline at the end.
 
             data_str = str(message["data"])
-            curr_terminal.add_str_to_terminal(data_str[:-1])
+            # curr_terminal.add_str_to_terminal(data_str[:-1])
             print(json.dumps(message), file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
             user_stdout.seek(0)
