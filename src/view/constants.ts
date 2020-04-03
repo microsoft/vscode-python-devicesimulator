@@ -122,7 +122,7 @@ export const GESTURES_MICROBIT = [
     "6g",
     "8g",
 ];
-export const GESTURES_CLUE = ["up", "down", "left", "right"];
+export const GESTURES_CLUE = ["up", "down", "left", "right", "shake"];
 
 export enum WEBVIEW_ATTRIBUTES_KEY {
     INITIAL_DEVICE = "initial_device",
