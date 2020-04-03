@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { VIEW_STATE } from "../../constants";
+import { VIEW_STATE, BUTTON_CLASSNAME } from "../../constants";
 import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import { ClueSvg, IRefObject } from "./Clue_svg";
@@ -18,11 +18,6 @@ interface IProps {
     displayMessage: string;
     neopixel: number[];
 }
-
-const BUTTON_CLASSNAME = {
-    ACTIVE: "sim-button-outer",
-    DEACTIVATED: "sim-button-deactivated",
-};
 
 export enum BUTTONS_KEYS {
     BTN_A = "BTN_A",
@@ -118,6 +113,7 @@ const setupButton = (
     eventTriggers: EventTriggers,
     key: string
 ) => {
+    buttonElement.setAttribute("class", BUTTON_CLASSNAME.ACTIVE);
     buttonElement.onmousedown = e => {
         buttonElement.focus();
         eventTriggers.onMouseDown(e, key);
