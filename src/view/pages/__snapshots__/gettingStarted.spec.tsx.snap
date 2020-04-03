@@ -240,8 +240,8 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       </pre>
       <pre>
             clue_data[3].text = "Temperature: 
-            {}
-            ".format(clue.temperature)
+        {}
+        ".format(clue.temperature)
       </pre>
       <pre>
             if clue.button_a:
