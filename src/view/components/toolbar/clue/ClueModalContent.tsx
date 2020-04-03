@@ -8,7 +8,8 @@ import { Accelerometer } from "../motion/Accelerometer";
 import { Gesture } from "../motion/Gesture";
 import { ThreeDimensionSlider } from "../motion/threeDimensionSlider/ThreeDimensionSlider";
 import * as SENSOR_PROPERTIES from "./ClueSensorProperties";
-export const CLUE_TEMPERATURE_MODAL_CONTENT = (
+
+export const TEMPERATURE_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -28,7 +29,7 @@ export const CLUE_TEMPERATURE_MODAL_CONTENT = (
     };
 };
 
-export const CLUE_GPIO_MODAL_CONTENT = (
+export const GPIO_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -42,7 +43,8 @@ export const CLUE_GPIO_MODAL_CONTENT = (
         id: "GPIO",
     };
 };
-export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
+
+export const ACCELEROMETER_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -67,7 +69,7 @@ export const CLUE_ACCELEROMETER_MODAL_CONTENT = (
     };
 };
 
-export const CLUE_LIGHT_MODAL_CONTENT = (
+export const LIGHT_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -93,7 +95,8 @@ export const CLUE_LIGHT_MODAL_CONTENT = (
         tryItDescription: "toolbar-clue-light-sensor.tryItDescription",
     };
 };
-export const CLUE_HUMIDITY_MODAL_CONTENT = (
+
+export const HUMIDITY_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -116,7 +119,8 @@ export const CLUE_HUMIDITY_MODAL_CONTENT = (
         id: "humidity_sensor",
     };
 };
-export const CLUE_GESTURE_MODAL_CONTENT = (
+
+export const GESTURE_CONTENT = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ): IModalContent => {
@@ -136,7 +140,8 @@ export const CLUE_GESTURE_MODAL_CONTENT = (
         id: "gesture_sensor",
     };
 };
-export const CLUE_PROXIMITY_MODAL_CONTENT = (
+
+export const PROXIMITY_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -159,7 +164,8 @@ export const CLUE_PROXIMITY_MODAL_CONTENT = (
         id: "proximity_sensor",
     };
 };
-export const CLUE_PRESSURE_MODAL_CONTENT = (
+
+export const PRESSURE_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -182,7 +188,8 @@ export const CLUE_PRESSURE_MODAL_CONTENT = (
         id: "pressure_sensor",
     };
 };
-export const CLUE_BUTTON_CONTENT = (
+
+export const BUTTON_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -197,7 +204,7 @@ export const CLUE_BUTTON_CONTENT = (
     };
 };
 
-export const CLUE_BLUETOOTH_CONTENT = (
+export const BLUETOOTH_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -212,7 +219,7 @@ export const CLUE_BLUETOOTH_CONTENT = (
     };
 };
 
-export const CLUE_SOUND_MODAL_CONTENT = (
+export const SOUND_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -226,7 +233,8 @@ export const CLUE_SOUND_MODAL_CONTENT = (
         id: "sound_sensor",
     };
 };
-export const CLUE_LED_CONTENT = (
+
+export const LED_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -240,7 +248,8 @@ export const CLUE_LED_CONTENT = (
         id: "clue_neopixel",
     };
 };
-export const CLUE_SPEAKER_MODAL_CONTENT = (
+
+export const SPEAKER_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {

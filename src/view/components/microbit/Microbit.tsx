@@ -108,6 +108,10 @@ const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
         label: MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
     },
     {
+        image: TOOLBAR_SVG.GESTURE_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.GESTURE,
+    },
+    {
         image: TOOLBAR_SVG.GPIO_SVG,
         label: MICROBIT_TOOLBAR_ICON_ID.GPIO,
     },
