@@ -130,7 +130,7 @@ class _ClueSimpleTextDisplay:
             )
             title.x = 0
             title.y = 8
-            self._y = title.y + 18
+            self._y = title.y + 18 * text_scale
 
             self.text_group.append(title)
         else:
@@ -139,6 +139,7 @@ class _ClueSimpleTextDisplay:
         self._lines = []
         for num in range(1):
             self._lines.append(self.add_text_line(color=colors[num % len(colors)]))
+        self.text_scale = text_scale
 
     def __getitem__(self, item):
         """Fetch the Nth text line Group"""
@@ -156,7 +157,7 @@ class _ClueSimpleTextDisplay:
         )
         text_label.x = 0
         text_label.y = self._y
-        self._y = text_label.y + 13
+        self._y = text_label.y + 13 * self.text_scale
         self.text_group.append(text_label)
 
         return text_label
