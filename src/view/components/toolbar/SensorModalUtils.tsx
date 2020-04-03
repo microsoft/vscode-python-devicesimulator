@@ -8,7 +8,6 @@ import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
 import * as CLUE_MODAL from "./clue/ClueModalContent";
 import LightSensorBar from "./LightSensorBar";
 import * as MICROBIT_MODAL from "./microbit/MicrobitModalContent";
-import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
 
