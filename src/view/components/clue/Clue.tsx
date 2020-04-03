@@ -3,17 +3,17 @@
 
 import * as React from "react";
 import {
+    GESTURES_CLUE,
     SENSOR_LIST,
     VSCODE_MESSAGES_TO_WEBVIEW,
-    GESTURES_CLUE,
     WEBVIEW_MESSAGES,
 } from "../../constants";
 import "../../styles/Simulator.css";
-import ToolBar from "../toolbar/ToolBar";
-import { ClueSimulator } from "./ClueSimulator";
-import { CLUE_TOOLBAR_ICON_ID } from "../toolbar/SensorModalUtils";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
 import { sendMessage } from "../../utils/MessageUtils";
+import { CLUE_TOOLBAR_ICON_ID } from "../toolbar/SensorModalUtils";
+import ToolBar from "../toolbar/ToolBar";
+import { ClueSimulator } from "./ClueSimulator";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {

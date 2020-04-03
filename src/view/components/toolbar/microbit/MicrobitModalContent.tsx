@@ -1,14 +1,10 @@
 import * as React from "react";
-import { IModalContent, FEATURE_REQUEST_ON_GITHUB } from "../SensorModalUtils";
-import {
-    SENSOR_LIST,
-    GESTURES_CLUE,
-    GESTURES_MICROBIT,
-} from "../../../constants";
+import { GESTURES_MICROBIT, SENSOR_LIST } from "../../../constants";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { Accelerometer } from "../motion/Accelerometer";
 import { Gesture } from "../motion/Gesture";
+import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
 
 export const ACCELEROMETER_MODAL_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,

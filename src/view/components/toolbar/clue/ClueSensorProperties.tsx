@@ -1,5 +1,6 @@
-import { ISliderProps, ISensorProps } from "../../../viewUtils";
 import { SENSOR_LIST } from "../../../constants";
+import { ISensorProps, ISliderProps } from "../../../viewUtils";
+
 const CLUE_SLIDER_R: ISliderProps = {
     axisLabel: "R",
     maxLabel: "Max",

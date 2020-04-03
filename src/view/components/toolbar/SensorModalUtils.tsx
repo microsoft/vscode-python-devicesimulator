@@ -5,12 +5,12 @@ import { SENSOR_LIST } from "../../constants";
 import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
+import * as CLUE_MODAL from "./clue/ClueModalContent";
 import LightSensorBar from "./LightSensorBar";
+import * as MICROBIT_MODAL from "./microbit/MicrobitModalContent";
 import { Accelerometer } from "./motion/Accelerometer";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
-import * as CLUE_MODAL from "./clue/ClueModalContent";
-import * as MICROBIT_MODAL from "./microbit/MicrobitModalContent";
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
