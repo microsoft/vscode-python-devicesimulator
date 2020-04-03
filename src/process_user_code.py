@@ -52,8 +52,7 @@ from microbit.__model.constants import MICROBIT
 
 from adafruit_clue import clue
 from base_circuitpython.base_cp_constants import CLUE
-from base_circuitpython import terminal_handler
-from base_circuitpython import board
+import board
 
 # get handle to terminal for clue
 curr_terminal = board.DISPLAY.terminal
