@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import CONSTANTS from "../../constants";
 import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import CONSTANTS from "../../constants";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }

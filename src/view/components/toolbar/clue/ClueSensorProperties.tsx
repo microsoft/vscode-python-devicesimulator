@@ -1,5 +1,6 @@
-import { ISliderProps, ISensorProps } from "../../../viewUtils";
 import { SENSOR_LIST } from "../../../constants";
+import { ISensorProps, ISliderProps } from "../../../viewUtils";
+
 const CLUE_SLIDER_R: ISliderProps = {
     axisLabel: "R",
     maxLabel: "Max",
@@ -60,13 +61,13 @@ export const CLUE__PROXIMITY_PROPERTIES: ISensorProps = {
         {
             axisLabel: "P",
             maxLabel: "Max",
-            maxValue: 100,
+            maxValue: 255,
             minLabel: "Min",
             minValue: 0,
             type: SENSOR_LIST.PROXIMITY,
         },
     ],
-    unitLabel: "%",
+    unitLabel: "",
 };
 export const CLUE_PRESSURE_PROPERTIES: ISensorProps = {
     LABEL: "Humidity Sensor",
@@ -74,11 +75,11 @@ export const CLUE_PRESSURE_PROPERTIES: ISensorProps = {
         {
             axisLabel: "P",
             maxLabel: "Max",
-            maxValue: 100,
+            maxValue: 1100,
             minLabel: "Min",
-            minValue: 0,
+            minValue: 800,
             type: SENSOR_LIST.PRESSURE,
         },
     ],
-    unitLabel: "%",
+    unitLabel: "hPa",
 };

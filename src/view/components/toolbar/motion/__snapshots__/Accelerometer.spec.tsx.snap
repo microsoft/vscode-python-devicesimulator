@@ -4,96 +4,6 @@ exports[`Accelerometer component  should render correctly 1`] = `
 <div
   className="accelerometer"
 >
-  <br />
-  <div
-    className="gesture"
-    style={
-      Object {
-        "display": "flex",
-        "flexDirection": "column",
-        "height": "75px",
-        "justifyContent": "space-between",
-      }
-    }
-  >
-    <select
-      className="dropdown"
-      name="gesture selection"
-    >
-      <option
-        value="shake"
-      >
-        shake
-      </option>
-      <option
-        value="up"
-      >
-        up
-      </option>
-      <option
-        value="down"
-      >
-        down
-      </option>
-      <option
-        value="left"
-      >
-        left
-      </option>
-      <option
-        value="right"
-      >
-        right
-      </option>
-      <option
-        value="face up"
-      >
-        face up
-      </option>
-      <option
-        value="face down"
-      >
-        face down
-      </option>
-      <option
-        value="freefall"
-      >
-        freefall
-      </option>
-      <option
-        value="3g"
-      >
-        3g
-      </option>
-      <option
-        value="6g"
-      >
-        6g
-      </option>
-      <option
-        value="8g"
-      >
-        8g
-      </option>
-    </select>
-    <button
-      aria-label="gesture sensor"
-      className="sensor-button"
-      id="Send Gesture"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-    >
-      Send Gesture
-    </button>
-  </div>
-  <br />
-  <div>
-    <p>
-      Set the acceleration manually here
-    </p>
-  </div>
   <div
     className="ThreeDimensionSlider"
   >
@@ -294,6 +204,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
         </span>
       </span>
     </div>
+    <br />
   </div>
 </div>
 `;
