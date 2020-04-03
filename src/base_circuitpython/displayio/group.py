@@ -64,7 +64,6 @@ class Group:
         old_val = self.__contents[index]
 
         self.__contents[index] = val
-        # print("Here!" + str(self))
         if old_val != val:
             self.elem_changed()
 
