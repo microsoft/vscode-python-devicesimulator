@@ -163,7 +163,7 @@ export class GettingStartedPage extends React.Component {
                         <h3> 3. Create a slide show on the CLUE</h3>
                         <p>
                             There must be some .bmp photos in the same directory
-                            as the code file.5
+                            as the code file.
                         </p>
                         <span className="codeBox">
                             <pre>import board</pre>
