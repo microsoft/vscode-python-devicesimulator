@@ -12,17 +12,6 @@ import queue
 # https://circuitpython.readthedocs.io/en/5.0.x/shared-bindings/displayio/TileGrid.html
 
 
-# Create a new black (default) image
-img = Image.new(
-    "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH), (0, 0, 0, 0)
-)
-
-# Create the pixel map
-# All displayio classes can access this
-# instance to read and write to the output image.
-bmp_img = img.load()
-
-
 class TileGrid:
     def __init__(
         self,
@@ -56,7 +45,11 @@ class TileGrid:
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
-        self.in_group = False
+        self.parent = None
+
+    @property
+    def in_group(self):
+        return self.parent != None
 
     # setitem for an index simply gets the index of the bitmap
     # rather than the tile index
@@ -78,8 +71,7 @@ class TileGrid:
 
     # methods that are not in the origin class:
 
-    def draw(self, x, y, scale):
-
+    def draw(self, img, x, y, scale):
         # draw the current bitmap with
         # appropriate scale on the global bmp_img
         x = self.x * scale + x
@@ -90,6 +82,7 @@ class TileGrid:
         )
 
         img.paste(new_shape, (x, y), new_shape)
+        return img
 
     def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
         height = y_end - y_start
