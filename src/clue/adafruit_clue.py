@@ -114,7 +114,7 @@ class _ClueSimpleTextDisplay:
         if font:
             self._font = font
         self.text_group = displayio.Group(max_size=20, scale=text_scale)
-
+        self.text_scale = text_scale
         if title:
             # Fail gracefully if title is longer than 60 characters.
             if len(title) > 60:
@@ -126,7 +126,6 @@ class _ClueSimpleTextDisplay:
                 max_glyphs=60,
                 color=title_color,
                 scale=title_scale,
-                auto_write=False,
             )
             title.x = 0
             title.y = 8
@@ -139,7 +138,6 @@ class _ClueSimpleTextDisplay:
         self._lines = []
         for num in range(1):
             self._lines.append(self.add_text_line(color=colors[num % len(colors)]))
-        self.text_scale = text_scale
 
     def __getitem__(self, item):
         """Fetch the Nth text line Group"""
@@ -152,9 +150,7 @@ class _ClueSimpleTextDisplay:
 
     def add_text_line(self, color=0xFFFFFF):
         """Adds a line on the display of the specified color and returns the label object."""
-        text_label = self._label.Label(
-            self._font, text="", max_glyphs=45, color=color, auto_write=False
-        )
+        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color)
         text_label.x = 0
         text_label.y = self._y
         self._y = text_label.y + 13 * self.text_scale
