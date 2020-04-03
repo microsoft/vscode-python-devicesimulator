@@ -39,24 +39,23 @@ class Group:
 
         self.__contents.append(item)
         item.parent = self
+        self.elem_changed()
 
-        self.__elem_changed()
-
-    def __elem_changed(self):
+    def elem_changed(self):
         # Ensure that this group is what the board is currently showing.
         # Otherwise, don't bother to draw it.
-        if (
-            self.__auto_write
-            and self.__check_active_group_ref
-            and board.DISPLAY.active_group == self
-        ):
+        if self.__auto_write:
+            self.trigger_draw()
+
+    def trigger_draw(self):
+        # select the correct parent to draw from if necessary
+        if self.__check_active_group_ref and board.DISPLAY.active_group == self:
             self.draw()
 
         elif self.in_group:
-
             # If a sub-group is modified, propagate to top level to
             # see if one of the parents are the current active group.
-            self.parent.__elem_changed()
+            self.parent.elem_changed()
 
     def __getitem__(self, index):
         return self.__contents[index]
@@ -65,9 +64,9 @@ class Group:
         old_val = self.__contents[index]
 
         self.__contents[index] = val
-
+        # print("Here!" + str(self))
         if old_val != val:
-            self.__elem_changed()
+            self.elem_changed()
 
     def draw(self, img=None, x=0, y=0, scale=None, show=True):
         # this function is not a part of the orignal implementation
@@ -136,5 +135,5 @@ class Group:
     def pop(self, i=-1):
         item = self.__contents.pop(i)
         item.parent = None
-        self.__elem_changed()
+        self.elem_changed()
         return item
