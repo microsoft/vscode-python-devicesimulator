@@ -7,7 +7,7 @@
     "toolbar-ir-sensor.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
     "toolbar-light-sensor.description": "An analog light sensor can be used to detect ambient light, with similar spectral response to the human eye.",
     "toolbar-light-sensor.title": "Light Sensor",
-    "toolbar-light-sensor.tryItDescription": "Change the brightness from 0 - 255 here!",
+    "toolbar-light-sensor.tryItDescription": "Change the brightness detected by the sensor here!",
     "toolbar-motion-sensor.description": "Detects acceleration in X, Y and Z orientations. It can also detect 'tap' and 'double tap' strikes on the board and when the board is shaken.",
     "toolbar-motion-sensor.title": "Motion Sensor",
     "toolbar-motion-sensor.tryItDescription": "Change the acceleration here and click or click on the button to simulate a shake. The tap feature is not supported by the Device Simulator Express. If you would like to see the 'tap' feature implemented, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
