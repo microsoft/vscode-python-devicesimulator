@@ -15,14 +15,14 @@ class Display:
             self.active_group = group
 
             if group == None:
-                self.terminal.draw()
+                self.terminal._Terminal__draw()
                 return
 
             # if the group has no attribute called
             # "draw", then it is liable for updating itself
             # when it calls show
-            if hasattr(group, "draw"):
-                group.draw()
+            if hasattr(group, "_Group__draw"):
+                group._Group__draw()
 
 
 DISPLAY = Display()

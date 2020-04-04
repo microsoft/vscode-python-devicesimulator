@@ -140,7 +140,7 @@ class TestTileGrid(object):
             "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
         )
         # without scaling, test output
-        img = tg.draw(img, x_offset, y_offset, 1)
+        img = tg._TileGrid__draw(img, x_offset, y_offset, 1)
         bmp_img = img.load()
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
@@ -157,7 +157,7 @@ class TestTileGrid(object):
             "RGBA", (CONSTANTS.SCREEN_HEIGHT_WIDTH, CONSTANTS.SCREEN_HEIGHT_WIDTH)
         )
         # with scaling, test output
-        img = tg.draw(img, x_offset, y_offset, scale)
+        img = tg._TileGrid__draw(img, x_offset, y_offset, scale)
         bmp_img = img.load()
         for i in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):
             for j in range(CONSTANTS.SCREEN_HEIGHT_WIDTH):

@@ -76,7 +76,7 @@ class SlideShow:
         """Specify the playback direction.  Default is ``PlayBackDirection.FORWARD``.  Can also be
         ``PlayBackDirection.BACKWARD``."""
 
-        self.advance = self._advance_with_fade
+        self.advance = self.__advance_with_fade
         """Displays the next image. Returns True when a new image was displayed, False otherwise.
         """
 
@@ -84,7 +84,7 @@ class SlideShow:
 
         # assign new advance method if fade is disabled
         if not fade_effect:
-            self.advance = self._advance_no_fade
+            self.advance = self.__advance_no_fade
 
         self._img_start = None
 
@@ -111,7 +111,7 @@ class SlideShow:
         self._curr_img = ""
 
         # load images into main queue
-        self._load_images()
+        self.__load_images()
 
         display.show(self)
         # show the first working image
@@ -134,7 +134,7 @@ class SlideShow:
             raise ValueError("Order must be either 'RANDOM' or 'ALPHABETICAL'")
 
         self._order = order
-        self._load_images()
+        self.__load_images()
 
     @property
     def brightness(self):
@@ -157,12 +157,12 @@ class SlideShow:
 
         return self.advance()
 
-    def _get_next_img(self):
+    def __get_next_img(self):
 
         # handle empty queue
         if not len(self.pic_queue):
             if self.loop:
-                self._load_images()
+                self.__load_images()
             else:
                 return ""
 
@@ -171,7 +171,7 @@ class SlideShow:
         else:
             return self.pic_queue.pop()
 
-    def _load_images(self):
+    def __load_images(self):
         dir_imgs = []
         for d in self.dirs:
             try:
@@ -195,7 +195,7 @@ class SlideShow:
         # (must be list beforehand for potential randomization)
         self.pic_queue = collections.deque(dir_imgs)
 
-    def _advance_with_fade(self):
+    def __advance_with_fade(self):
         if board.DISPLAY.active_group != self:
             return
 
@@ -203,7 +203,7 @@ class SlideShow:
         advance_sucessful = False
 
         while not advance_sucessful:
-            new_path = self._get_next_img()
+            new_path = self.__get_next_img()
             if new_path == "":
                 return False
 
@@ -236,7 +236,7 @@ class SlideShow:
             sendable_img = Image.blend(
                 black_overlay, old_img, i * self.brightness / self.fade_frames
             )
-            self._send(sendable_img)
+            self.__send(sendable_img)
 
         time.sleep(self._BASE_DWELL_DARK)
 
@@ -245,14 +245,14 @@ class SlideShow:
             sendable_img = Image.blend(
                 black_overlay, new_img, i * self.brightness / self.fade_frames
             )
-            self._send(sendable_img)
+            self.__send(sendable_img)
 
         self._curr_img_handle = new_img
         self._curr_img = new_path
         self._img_start = time.monotonic()
         return True
 
-    def _advance_no_fade(self):
+    def __advance_no_fade(self):
         if board.DISPLAY.active_group != self:
             return
 
@@ -261,7 +261,7 @@ class SlideShow:
         advance_sucessful = False
 
         while not advance_sucessful:
-            new_path = self._get_next_img()
+            new_path = self.__get_next_img()
             if new_path == "":
                 return False
 
@@ -303,14 +303,14 @@ class SlideShow:
             )
             img_piece = new_img.crop((0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, curr_y))
             old_img.paste(img_piece)
-            self._send(old_img)
+            self.__send(old_img)
 
         self._curr_img_handle = new_img
         self._curr_img = new_path
         self._img_start = time.monotonic()
         return True
 
-    def _send(self, img):
+    def __send(self, img):
         # sends current bmp_img to the frontend
         buffered = BytesIO()
         img.save(buffered, format=CONSTANTS.BMP_IMG)

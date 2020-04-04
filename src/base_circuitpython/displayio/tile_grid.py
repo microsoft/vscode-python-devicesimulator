@@ -71,20 +71,20 @@ class TileGrid:
 
     # methods that are not in the origin class:
 
-    def draw(self, img, x, y, scale):
+    def __draw(self, img, x, y, scale):
         # draw the current bitmap with
         # appropriate scale on the global bmp_img
         x = self.x * scale + x
         y = self.y * scale + y
 
-        new_shape = self.draw_group(
+        new_shape = self.__draw_group(
             x, y, 0, self.tile_height, 0, self.tile_width, scale
         )
 
         img.paste(new_shape, (x, y), new_shape)
         return img
 
-    def draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
+    def __draw_group(self, x, y, y_start, y_end, x_start, x_end, scale):
         height = y_end - y_start
         width = x_end - x_start
 
@@ -106,7 +106,7 @@ class TileGrid:
                 if not transparent and x_offset >= 0 and y_offset >= 0:
 
                     curr_colour = self.pixel_shader[curr_val]
-                    self.fill_pixel(
+                    self.__fill_pixel(
                         curr_val,
                         curr_colour,
                         x_offset,
@@ -121,7 +121,7 @@ class TileGrid:
 
     # helper method for drawing pixels on bmp_img
     # given the src, offset, and scale
-    def fill_pixel(
+    def __fill_pixel(
         self,
         curr_val,
         curr_colour,

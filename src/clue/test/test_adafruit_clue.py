@@ -38,7 +38,7 @@ class TestAdafruitClue(object):
         expected = img.load()
         clue_data = clue.simple_text_display(title="LET'S TEST!", title_scale=2)
 
-        clue_data.text_group.show = self._send_helper
+        clue_data.text_group._Group__show = self.__send_helper
         clue_data.text_group._Group__check_active_group_ref = False
 
         clue_data[0].text = "Lorem ipsum"
@@ -58,7 +58,7 @@ class TestAdafruitClue(object):
         clue_data.show()
         helper._Helper__test_image_equality(self.main_img.load(), expected)
 
-    def _send_helper(self, image):
+    def __send_helper(self, image):
         self.main_img = image
 
     def test_buttons(self):

@@ -50,7 +50,7 @@ class Group:
     def trigger_draw(self):
         # select the correct parent to draw from if necessary
         if self.__check_active_group_ref and board.DISPLAY.active_group == self:
-            self.draw()
+            self.__draw()
 
         elif self.in_group:
             # If a sub-group is modified, propagate to top level to
@@ -67,7 +67,7 @@ class Group:
         if old_val != val:
             self.elem_changed()
 
-    def draw(self, img=None, x=0, y=0, scale=None, show=True):
+    def __draw(self, img=None, x=0, y=0, scale=None, show=True):
         # this function is not a part of the orignal implementation
         # it is what draws itself and its children and potentially shows it to the
         # frontend
@@ -104,18 +104,18 @@ class Group:
 
         for elem in self.__contents:
             if isinstance(elem, Group):
-                img = elem.draw(img=img, x=x, y=y, scale=scale, show=False,)
+                img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
             else:
-                img = elem.draw(img=img, x=x, y=y, scale=scale)
+                img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
 
         # show should only be true to the highest parent group
         if show:
-            self.show(img)
+            self.__show(img)
 
         # return value only used if this is within another group
         return img
 
-    def show(self, img):
+    def __show(self, img):
         # sends current img to the frontend
         buffered = BytesIO()
         img.save(buffered, format="BMP")
