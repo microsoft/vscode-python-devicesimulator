@@ -23,11 +23,20 @@ class Group:
         self.__contents = []
         self.max_size = max_size
         self.scale = scale
-        self.parent = None
+        self.__parent = None
 
     @property
     def in_group(self):
-        return self.parent != None
+        return self.__parent != None
+
+    @property
+    def hidden(self):
+        if self.__check_active_group_ref and board.DISPLAY.active_group == self:
+            return False
+        elif self.in_group:
+            return self.__parent.hidden
+        else:
+            return True
 
     def append(self, item):
         if len(self.__contents) == self.max_size:
@@ -38,16 +47,60 @@ class Group:
             raise ValueError(CONSTANTS.LAYER_ALREADY_IN_GROUP)
 
         self.__contents.append(item)
-        item.parent = self
-        self.elem_changed()
+        if isinstance(item, TileGrid):
+            item._TileGrid__parent = self
+        else:
+            item._Group__parent = self
+        self.__elem_changed()
 
-    def elem_changed(self):
+    def insert(self, idx, item):
+        if len(self.__contents) == self.max_size:
+            raise RuntimeError(CONSTANTS.GROUP_FULL)
+        elif not isinstance(item, TileGrid) and not isinstance(item, Group):
+            raise ValueError(CONSTANTS.INCORR_SUBCLASS)
+        elif item.in_group:
+            raise ValueError(CONSTANTS.LAYER_ALREADY_IN_GROUP)
+
+        self.__contents.insert(idx, item)
+        if isinstance(item, TileGrid):
+            item._TileGrid__parent = self
+        else:
+            item._Group__parent = self
+        self.__elem_changed()
+
+    def index(self, layer):
+        for idx, elem in enumerate(self.__contents):
+            if elem == layer:
+                return idx
+
+        return ValueError()
+
+    def remove(self, layer):
+        idx = self.index(layer)
+        item = self.__contents[idx]
+        if isinstance(item, TileGrid):
+            item._TileGrid__parent = None
+        else:
+            item._Group__parent = None
+        self.__contents.pop(idx)
+        self.__elem_changed()
+
+    def __delitem__(self, index):
+        item = self.__contents[index]
+        if isinstance(item, TileGrid):
+            item._TileGrid__parent = None
+        else:
+            item._Group__parent = None
+        del self.__contents[index]
+        self.__elem_changed()
+
+    def __elem_changed(self):
         # Ensure that this group is what the board is currently showing.
         # Otherwise, don't bother to draw it.
         if self.__auto_write:
-            self.trigger_draw()
+            self.__trigger_draw()
 
-    def trigger_draw(self):
+    def __trigger_draw(self):
         # select the correct parent to draw from if necessary
         if self.__check_active_group_ref and board.DISPLAY.active_group == self:
             self.__draw()
@@ -55,7 +108,7 @@ class Group:
         elif self.in_group:
             # If a sub-group is modified, propagate to top level to
             # see if one of the parents are the current active group.
-            self.parent.elem_changed()
+            self.__parent._Group__elem_changed()
 
     def __getitem__(self, index):
         return self.__contents[index]
@@ -65,7 +118,7 @@ class Group:
 
         self.__contents[index] = val
         if old_val != val:
-            self.elem_changed()
+            self.__elem_changed()
 
     def __draw(self, img=None, x=0, y=0, scale=None, show=True):
         # this function is not a part of the orignal implementation
@@ -133,6 +186,10 @@ class Group:
 
     def pop(self, i=-1):
         item = self.__contents.pop(i)
-        item.parent = None
-        self.elem_changed()
+
+        if isinstance(item, TileGrid):
+            item._TileGrid__parent = None
+        else:
+            item._Group__parent = None
+        self.__elem_changed()
         return item

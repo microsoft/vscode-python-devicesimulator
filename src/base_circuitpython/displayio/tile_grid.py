@@ -45,11 +45,55 @@ class TileGrid:
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
-        self.parent = None
+        self.__parent = None
+        
+        # unimplemented features
+        self.__flip_x = False
+        self.__flip_y = False
+        self.__transpose_xy = False
 
     @property
     def in_group(self):
-        return self.parent != None
+        return self.__parent != None
+
+        # unimplemented features
+        self.__flip_x = False
+        self.__flip_y = False
+        self.__transpose_xy = False
+
+    @property
+    def hidden(self):
+        if self.__parent == None:
+            return True
+        else:
+            return self.__parent.hidden
+
+    @property
+    def flip_x(self):
+        return self.__flip_x
+
+    @flip_x.setter
+    def flip_x(self, val):
+        print("feature not implemented")
+        self.__flip_x = val
+
+    @property
+    def flip_y(self):
+        return self.__flip_y
+
+    @flip_y.setter
+    def flip_y(self, val):
+        print("feature not implemented")
+        self.__flip_y = val
+
+    @property
+    def transpose_xy(self):
+        return self.__transpose_xy
+
+    @transpose_xy.setter
+    def transpose_xy(self, val):
+        print("feature not implemented")
+        self.__transpose_xy = val
 
     # setitem for an index simply gets the index of the bitmap
     # rather than the tile index

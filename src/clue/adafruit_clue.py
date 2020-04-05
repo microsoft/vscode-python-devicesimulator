@@ -161,14 +161,10 @@ class _ClueSimpleTextDisplay:
     def show(self):
         """Call show() to display the data list."""
         self._display.show(self.text_group)
-        # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
 
     def show_terminal(self):
         """Revert to terminalio screen."""
-
         self._display.show(None)
-        # TODO: implement terminal for clue screen
-        return
 
 
 class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-methods

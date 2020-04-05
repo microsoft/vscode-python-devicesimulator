@@ -1,4 +1,4 @@
-from .color_type import ColorType
+from .color_type import _ColorType
 from . import constants as CONSTANTS
 
 # Palette implementation loosely based on the
@@ -15,7 +15,7 @@ class Palette:
 
         # set all colours to black by default
         for i in range(self.color_count):
-            self.__contents.append(ColorType((0, 0, 0)))
+            self.__contents.append(_ColorType((0, 0, 0)))
 
     def __getitem__(self, index):
         if index >= self.color_count:

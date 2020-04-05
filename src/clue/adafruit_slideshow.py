@@ -40,6 +40,62 @@ class PlayBackDirection:
 
 # custom
 class SlideShow:
+    """
+    Class for displaying a slideshow of .bmp images on displays.
+    :param str folder: Specify the folder containing the image files, in quotes. Default is
+                       the root directory, ``"/"``.
+    :param PlayBackOrder order: The order in which the images display. You can choose random
+                                (``RANDOM``) or alphabetical (``ALPHABETICAL``). Default is
+                                ``ALPHABETICAL``.
+    :param bool loop: Specify whether to loop the images or play through the list once. `True`
+                 if slideshow will continue to loop, ``False`` if it will play only once.
+                 Default is ``True``.
+    :param int dwell: The number of seconds each image displays, in seconds. Default is 3.
+    :param bool fade_effect: Specify whether to include the fade effect between images. ``True``
+                        tells the code to fade the backlight up and down between image display
+                        transitions. ``False`` maintains max brightness on the backlight between
+                        image transitions. Default is ``True``.
+    :param bool auto_advance: Specify whether to automatically advance after dwell seconds. ``True``
+                 if slideshow should auto play, ``False`` if you want to control advancement
+                 manually.  Default is ``True``.
+    :param PlayBackDirection direction: The playback direction.
+    Example code for Hallowing Express. With this example, the slideshow will play through once
+    in alphabetical order:
+    .. code-block:: python
+        from adafruit_slideshow import PlayBackOrder, SlideShow
+        import board
+        import pulseio
+        slideshow = SlideShow(board.DISPLAY, pulseio.PWMOut(board.TFT_BACKLIGHT), folder="/",
+                              loop=False, order=PlayBackOrder.ALPHABETICAL)
+        while slideshow.update():
+            pass
+    Example code for Hallowing Express. Sets ``dwell`` to 0 seconds, turns ``auto_advance`` off,
+    and uses capacitive touch to advance backwards and forwards through the images and to control
+    the brightness level of the backlight:
+    .. code-block:: python
+        from adafruit_slideshow import PlayBackOrder, SlideShow, PlayBackDirection
+        import touchio
+        import board
+        import pulseio
+        forward_button = touchio.TouchIn(board.TOUCH4)
+        back_button = touchio.TouchIn(board.TOUCH1)
+        brightness_up = touchio.TouchIn(board.TOUCH3)
+        brightness_down = touchio.TouchIn(board.TOUCH2)
+        slideshow = SlideShow(board.DISPLAY, pulseio.PWMOut(board.TFT_BACKLIGHT), folder="/",
+                              auto_advance=False, dwell=0)
+        while True:
+            if forward_button.value:
+                slideshow.direction = PlayBackDirection.FORWARD
+                slideshow.advance()
+            if back_button.value:
+                slideshow.direction = PlayBackDirection.BACKWARD
+                slideshow.advance()
+            if brightness_up.value:
+                slideshow.brightness += 0.001
+            elif brightness_down.value:
+                slideshow.brightness -= 0.001
+    """
+
     def __init__(
         self,
         display,
