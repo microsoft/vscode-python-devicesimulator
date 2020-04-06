@@ -93,7 +93,8 @@
     "toolbar-clue-gesture-sensor.description": "The gesture sensor can detect directional gestures (left to right, right to left, up to down, down to up), but in theory more complicated gestures like zig-zag, clockwise or counterclockwise circle, near to far, etc. could also be detected with additional code. ",
     "toolbar-clue-gesture-sensor.tryItDescription": "Select a gesture and send it by clicking the button.",
     "toolbar-clue-proximity-sensor.title": "Proximity",
-    "toolbar-clue-proximity-sensor.description": "The proximity sensor uses APDS9960 and is able to return how close an object is to the front of the sensor.",
+    "toolbar-clue-proximity-sensor.description": "The proximity sensor uses APDS9960 and is able to return how close an object is to the front of the sensor. This is a number from 0 to 255 where the higher the number the closer an object is to the sensor. You won't be able to translate this into an absolute value in units like inches or millimeters, you can only see how it changes relative to other values",
+
     "toolbar-clue-proximity-sensor.tryItDescription": "Set relative proximity to the sensor in values from 0 - 255",
     "toolbar-clue-bluetooth.title": "Bluetooth",
     "toolbar-clue-bluetooth.description": "You can transmit data over Bluetooth to a computer or mobile device for data plotting and logging, or save it to the built in storage.",
