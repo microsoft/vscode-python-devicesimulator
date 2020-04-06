@@ -53,6 +53,9 @@
     "toolbar-microbit-gesture-sensor.title": "Gesture",
     "toolbar-microbit-gesture-sensor.description": "If you move your BBC micro:bit in a certain way (as a gesture) then micro:bit is able to detect this. micro:bit is able to recognise the following gestures: up, down, left, right, face up, face down, freefall, 3g, 6g, 8g, shake.)",
     "toolbar-microbit-gesture-sensor.tryItDescription": "Select a gesture and send it by clicking the button.",
+    "toolbar-microbit-compass-sensor.title": "Compass",
+    "toolbar-microbit-compass-sensor.description": "A digital compass is an input sensor that detects magnetic fields. Your BBC micro:bit has an inbuilt compass that can detect the direction in which it is facing.",
+    "toolbar-microbit-compass-sensor.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub!",
     "toolbar-clue-temperature-sensor.title": "Temperature",
     "toolbar-clue-temperature-sensor.description": "CLUE uses the BMP280 sensor, an environmental sensor with temperature.This precision sensor from Bosch is the best low-cost, precision sensing solution for measuring temperature with ±1.0°C accuracy.",
     "toolbar-clue-temperature-sensor.tryItDescription": "You can set the temperature range from your code!",
@@ -89,5 +92,11 @@
     "toolbar-clue-bluetooth.title": "Bluetooth",
     "toolbar-clue-bluetooth.description": "You can transmit data over Bluetooth to a computer or mobile device for data plotting and logging, or save it to the built in storage.",
     "toolbar-clue-bluetooth.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! ",
-    "toolbar-clue-speaker.description": "The CLUE has a buzzer/speaker for playing tones and beeps."
+    "toolbar-clue-speaker.description": "The CLUE has a buzzer/speaker for playing tones and beeps.",
+    "toolbar-clue-magnet-sensor.title": "Magnetometer",
+    "toolbar-clue-magnet-sensor.description": "Sense the magnetic fields that surround us with this handy triple-axis magnetometer (compass) module. Magnetometers can sense where the strongest magnetic force is coming from, generally used to detect magnetic north, but can also be used for measuring magnetic fields.",
+    "toolbar-clue-magnet-sensor.tryItDescription": "You can set the magnetic field value in microTeslas (uT)",
+    "toolbar-clue-gyroscope-sensor.title": "Gyroscope",
+    "toolbar-clue-gyroscope-sensor.description": "The 3-axis gyroscope that can measure spin and twist users LSM6DS33",
+    "toolbar-clue-gyroscope-sensor.tryItDescription": "Set the angular velocity in degrees/second."
 }
