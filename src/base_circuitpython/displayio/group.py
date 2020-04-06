@@ -268,9 +268,9 @@ class Group:
         for elem in self.__contents:
             if not elem.hidden:
                 if isinstance(elem, Group):
-                    img = elem._Group__draw(img=img, x=x+self.x, y=y+self.y, scale=scale, show=False,)
+                    img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
                 else:
-                    img = elem._TileGrid__draw(img=img, x=x+self.x, y=y+self.y, scale=scale)
+                    img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
 
         # show should only be true to the highest parent group
         if show:
