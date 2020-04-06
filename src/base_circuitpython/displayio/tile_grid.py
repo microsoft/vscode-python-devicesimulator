@@ -2,6 +2,7 @@ from PIL import Image, ImageColor
 from . import constants as CONSTANTS
 import threading
 import queue
+from common import utils
 
 # TileGrid implementation loosely based on the
 # displayio.TileGrid class in Adafruit CircuitPython
@@ -45,8 +46,9 @@ class TileGrid:
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
+        self.hidden = False
         self.__parent = None
-        
+
         # unimplemented features
         self.__flip_x = False
         self.__flip_y = False
@@ -62,19 +64,12 @@ class TileGrid:
         self.__transpose_xy = False
 
     @property
-    def hidden(self):
-        if self.__parent == None:
-            return True
-        else:
-            return self.__parent.hidden
-
-    @property
     def flip_x(self):
         return self.__flip_x
 
     @flip_x.setter
     def flip_x(self, val):
-        print("feature not implemented")
+        utils.print_for_unimplemented_functions(TileGrid.flip_x.__name_)
         self.__flip_x = val
 
     @property
@@ -83,7 +78,7 @@ class TileGrid:
 
     @flip_y.setter
     def flip_y(self, val):
-        print("feature not implemented")
+        utils.print_for_unimplemented_functions(TileGrid.flip_y.__name_)
         self.__flip_y = val
 
     @property
@@ -92,7 +87,7 @@ class TileGrid:
 
     @transpose_xy.setter
     def transpose_xy(self, val):
-        print("feature not implemented")
+        utils.print_for_unimplemented_functions(TileGrid.transpose_xy.__name_)
         self.__transpose_xy = val
 
     # setitem for an index simply gets the index of the bitmap

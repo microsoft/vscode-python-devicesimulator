@@ -24,6 +24,7 @@ class Group:
         self.max_size = max_size
         self.scale = scale
         self.__parent = None
+        self.__hidden = False
 
     @property
     def in_group(self):
@@ -31,12 +32,18 @@ class Group:
 
     @property
     def hidden(self):
-        if self.__check_active_group_ref and board.DISPLAY.active_group == self:
-            return False
-        elif self.in_group:
-            return self.__parent.hidden
-        else:
-            return True
+        return self.__hidden
+
+    @hidden.setter
+    def hidden(self, val):
+        changed = val != self.__hidden
+
+        self.__hidden = val
+        for elem in self.__contents:
+            img = elem.hidden = val
+
+        if changed:
+            self.__elem_changed()
 
     def append(self, item):
         if len(self.__contents) == self.max_size:
@@ -156,10 +163,11 @@ class Group:
             pass
 
         for elem in self.__contents:
-            if isinstance(elem, Group):
-                img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
-            else:
-                img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
+            if not elem.hidden:
+                if isinstance(elem, Group):
+                    img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
+                else:
+                    img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
 
         # show should only be true to the highest parent group
         if show:
