@@ -735,7 +735,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             CONSTANTS.CLUE_STATE.BUTTON_B: "B",
         }
         if value:
-            self.__state[button].add(buttonMapping[button])
+            self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add(buttonMapping[button])
         self.__state[button] = value
 
 
