@@ -20,9 +20,6 @@ class TestPalette(object):
         with pytest.raises(IndexError, match=CONSTANTS.PALETTE_OUT_OF_RANGE):
             palette[palette_index] = 0
 
-        with pytest.raises(IndexError, match=CONSTANTS.PALETTE_OUT_OF_RANGE):
-            pal = palette[palette_index]
-
     def test_set_transparency(self):
         palette = Palette(5)
         assert palette._Palette__contents[2].transparent == False

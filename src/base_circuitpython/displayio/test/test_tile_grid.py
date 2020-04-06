@@ -42,11 +42,11 @@ class TestTileGrid(object):
         tile_grids = [tg1, tg2]
 
         for tg in tile_grids:
-            assert tg.bitmap.width == bitmap_w
-            assert tg.bitmap.height == bitmap_h
+            assert tg._TileGrid__bitmap.width == bitmap_w
+            assert tg._TileGrid__bitmap.height == bitmap_h
             assert len(tg.pixel_shader._Palette__contents) == palette_num
-            assert tg.tile_width == tile_width
-            assert tg.tile_height == tile_height
+            assert tg._TileGrid__tile_width == tile_width
+            assert tg._TileGrid__tile_height == tile_height
             assert tg.x == position[0]
             assert tg.y == position[1]
 
@@ -58,11 +58,11 @@ class TestTileGrid(object):
             y=position[1],
         )
 
-        assert tg3.bitmap.width == bitmap_w
-        assert tg3.bitmap.height == bitmap_h
+        assert tg3._TileGrid__bitmap.width == bitmap_w
+        assert tg3._TileGrid__bitmap.height == bitmap_h
         assert len(tg3.pixel_shader._Palette__contents) == palette_num
-        assert tg3.tile_width == bitmap_w
-        assert tg3.tile_height == bitmap_h
+        assert tg3._TileGrid__tile_width == bitmap_w
+        assert tg3._TileGrid__tile_height == bitmap_h
         assert tg3.x == position[0]
         assert tg3.y == position[1]
 
@@ -79,7 +79,7 @@ class TestTileGrid(object):
         )
 
         tg_x_y = tg[x, y]
-        assert tg_x_y == tg.bitmap[x, y]
+        assert tg_x_y == tg._TileGrid__bitmap[x, y]
 
     @pytest.mark.parametrize(
         "w, h, x, y", [(55, 56, 100, 1), (55, 56, 0, 56), (66, 88, 66, 88)]

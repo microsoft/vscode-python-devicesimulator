@@ -15,7 +15,7 @@ from common import utils
 
 class TileGrid:
     """
-    :class:`TileGrid` -- A grid of tiles sourced out of one bitmap
+    `TileGrid` -- A grid of tiles sourced out of one bitmap
     ==========================================================================
 
     Position a grid of tiles sourced from a bitmap and pixel_shader combination. Multiple grids
@@ -31,15 +31,15 @@ class TileGrid:
 
     tile_width and tile_height match the height of the bitmap by default.
 
-    :param displayio.Bitmap bitmap: The bitmap storing one or more tiles.
-    :param displayio.Palette pixel_shader: The pixel shader that produces colors from values
-    :param int width: Width of the grid in tiles.
-    :param int height: Height of the grid in tiles.
-    :param int tile_width: Width of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
-    :param int tile_height: Height of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
-    :param int default_tile: Default tile index to show.
-    :param int x: Initial x position of the left edge within the parent.
-    :param int y: Initial y position of the top edge within the parent.
+        :param displayio.Bitmap bitmap: The bitmap storing one or more tiles.
+        :param displayio.Palette pixel_shader: The pixel shader that produces colors from values
+        :param int width: Width of the grid in tiles.
+        :param int height: Height of the grid in tiles.
+        :param int tile_width: Width of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
+        :param int tile_height: Height of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
+        :param int default_tile: Default tile index to show.
+        :param int x: Initial x position of the left edge within the parent.
+        :param int y: Initial y position of the top edge within the parent.
     """
 
     def __init__(
@@ -53,24 +53,44 @@ class TileGrid:
         y=0,
         position=None,
     ):
-
-        if tile_width is None:
-            self.tile_width = bitmap.width
-        else:
-            self.tile_width = tile_width
-
-        if tile_height is None:
-            self.tile_height = bitmap.height
-        else:
-            self.tile_height = tile_height
-
         self.x = None
         """
         .. attribute:: x
-    
+        
             X position of the left edge in the parent.
         """
         self.y = None
+        """
+        .. attribute:: y
+
+            Y position of the top edge in the parent.
+        """
+        self.pixel_shader = pixel_shader
+        """
+        .. attribute:: pixel_shader
+
+            The pixel shader of the tilegrid.
+        """
+        self.hidden = False
+        """
+        .. attribute:: hidden
+
+            True when the TileGrid is hidden. This may be False even when a part of a hidden Group.
+        """
+
+        self.__bitmap = bitmap
+        self.__tile_width = None
+        self.__tile_height = None
+
+        if tile_width is None:
+            self.__tile_width = bitmap.width
+        else:
+            self.__tile_width = tile_width
+
+        if tile_height is None:
+            self.__tile_height = bitmap.height
+        else:
+            self.__tile_height = tile_height
 
         if position and isinstance(position, tuple):
             self.x = position[0]
@@ -79,17 +99,6 @@ class TileGrid:
             self.x = x
             self.y = y
 
-        self.bitmap = bitmap
-        self.pixel_shader = pixel_shader
-        self.default_tile = default_tile
-
-        self.hidden = False
-        """
-        .. attribute:: hidden
-
-        True when the TileGrid is hidden. This may be False even when a part of a hidden Group.
-        """
-
         self.__parent = None
 
         # unimplemented features
@@ -97,12 +106,14 @@ class TileGrid:
         self.__flip_y = False
         self.__transpose_xy = False
 
-    @property
-    def __in_group(self):
-        return self.__parent != None
 
     @property
     def flip_x(self):
+        """
+        .. attribute:: flip_x
+
+            If true, the left edge rendered will be the right edge of the right-most tile.
+        """
         return self.__flip_x
 
     @flip_x.setter
@@ -112,6 +123,12 @@ class TileGrid:
 
     @property
     def flip_y(self):
+        
+        """
+        .. attribute:: flip_y
+
+            If true, the top edge rendered will be the bottom edge of the bottom-most tile.
+        """
         return self.__flip_y
 
     @flip_y.setter
@@ -121,6 +138,13 @@ class TileGrid:
 
     @property
     def transpose_xy(self):
+        
+        """
+        .. attribute:: transpose_xy
+
+            If true, the TileGrid's axis will be swapped. When combined with mirroring, any 90 degree
+            rotation can be achieved along with the corresponding mirrored version.
+        """
         return self.__transpose_xy
 
     @transpose_xy.setter
@@ -128,23 +152,50 @@ class TileGrid:
         utils.print_for_unimplemented_functions(TileGrid.transpose_xy.__name_)
         self.__transpose_xy = val
 
+
     # setitem for an index simply gets the index of the bitmap
     # rather than the tile index
     def __setitem__(self, index, value):
+        """
+        .. method:: __setitem__(index, tile_index)
+            Sets the tile index at the given index. The index can either be an x,y tuple or an int equal
+            to ``y * width + x``.
+
+            This allows you to::
+
+                grid[0] = 10
+
+            or::
+
+                grid[0,0] = 10
+        """
         if isinstance(index, tuple):
-            if index[0] >= self.tile_width or index[1] >= self.tile_height:
+            if index[0] >= self.__tile_width or index[1] >= self.__tile_height:
                 raise IndexError(CONSTANTS.TILE_OUT_OF_BOUNDS)
 
-        self.bitmap[index] = value
+        self.__bitmap[index] = value
 
     # getitem for an index simply gets the index of the bitmap
     # rather than the tile index
     def __getitem__(self, index):
+        """
+        .. method:: __getitem__(index)
+            Returns the tile index at the given index. The index can either be an x,y tuple or an int equal
+            to ``y * width + x``.
+
+            This allows you to::
+
+                print(grid[0])
+        """
         if isinstance(index, tuple):
-            if index[0] >= self.tile_width or index[1] >= self.tile_height:
+            if index[0] >= self.__tile_width or index[1] >= self.__tile_height:
                 raise IndexError(CONSTANTS.TILE_OUT_OF_BOUNDS)
 
-        return self.bitmap[index]
+        return self.__bitmap[index]
+
+    @property
+    def __in_group(self):
+        return self.__parent != None
 
     # methods that are not in the origin class:
 
@@ -155,7 +206,7 @@ class TileGrid:
         y = self.y * scale + y
 
         new_shape = self.__draw_group(
-            x, y, 0, self.tile_height, 0, self.tile_width, scale
+            x, y, 0, self.__tile_height, 0, self.__tile_width, scale
         )
 
         img.paste(new_shape, (x, y), new_shape)
@@ -177,12 +228,14 @@ class TileGrid:
                 x_max = min(x_offset + scale, width * scale)
                 y_max = min(y_offset + scale, height * scale)
 
-                curr_val = self.bitmap[j, i]
-                transparent = self.pixel_shader._Palette__contents[curr_val].transparent
+                curr_val = self.__bitmap[j, i]
+                palette_obj = self.pixel_shader._Palette__contents[curr_val]
+
+                transparent = palette_obj.transparent
 
                 if not transparent and x_offset >= 0 and y_offset >= 0:
 
-                    curr_colour = self.pixel_shader[curr_val]
+                    curr_colour = palette_obj.rgb888
                     self.__fill_pixel(
                         curr_val,
                         curr_colour,

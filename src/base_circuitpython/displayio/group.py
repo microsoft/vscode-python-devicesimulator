@@ -17,27 +17,64 @@ import board
 
 
 class Group:
-    def __init__(self, max_size, scale=1, check_active_group_ref=True, auto_write=True):
+    '''
+    `Group` -- Group together sprites and subgroups
+    ==========================================================================
+
+    Manage a group of sprites and groups and how they are inter-related.
+
+    .. class:: Group(*, max_size=4, scale=1, x=0, y=0)
+    Create a Group of a given size and scale. Scale is in one dimension. For example, scale=2
+    leads to a layer's pixel being 2x2 pixels when in the group.
+        :param int max_size: The maximum group size.
+        :param int scale: Scale of layer pixels in one dimension.
+        :param int x: Initial x position within the parent.
+        :param int y: Initial y position within the parent.
+    '''
+    def __init__(self, max_size, scale=1, x=0,y=0,check_active_group_ref=True, auto_write=True):
         self.__check_active_group_ref = check_active_group_ref
         self.__auto_write = auto_write
         self.__contents = []
-        self.max_size = max_size
+        self.__max_size = max_size
         self.scale = scale
+        '''
+            .. attribute:: scale
+
+        Scales each pixel within the Group in both directions. For example, when scale=2 each pixel
+        will be represented by 2x2 pixels.
+
+        '''
+        self.x = x
+        '''
+        .. attribute:: x
+
+            X position of the Group in the parent.
+
+        '''
+        self.y = y
+        '''
+        .. attribute:: y
+
+            Y position of the Group in the parent.
+        '''
         self.__parent = None
         self.__hidden = False
+        
 
-    @property
-    def in_group(self):
-        return self.__parent != None
 
     @property
     def hidden(self):
+        '''
+        .. attribute:: hidden
+
+            True when the Group and all of it's layers are not visible. When False, the Group's layers
+            are visible if they haven't been hidden.
+        '''
         return self.__hidden
 
     @hidden.setter
     def hidden(self, val):
         changed = val != self.__hidden
-
         self.__hidden = val
         for elem in self.__contents:
             img = elem.hidden = val
@@ -46,16 +83,31 @@ class Group:
             self.__elem_changed()
 
     def append(self, item):
+        '''
+        .. method:: append(layer)
+
+            Append a layer to the group. It will be drawn above other layers.
+        '''
         self.__prepare_for_add(item)
         self.__contents.append(item)
         self.__elem_changed()
 
     def insert(self, idx, item):
+        '''
+        .. method:: insert(index, layer)
+
+            Insert a layer into the group.
+        '''
         self.__prepare_for_add(item)
         self.__contents.insert(idx, item)
         self.__elem_changed()
 
     def index(self, layer):
+        '''
+        .. method:: index(layer)
+
+            Returns the index of the first copy of layer. Raises ValueError if not found.
+        '''
         for idx, elem in enumerate(self.__contents):
             if elem == layer:
                 return idx
@@ -63,12 +115,22 @@ class Group:
         return ValueError()
 
     def pop(self, i=-1):
+        '''
+        .. method:: pop(i=-1)
+
+            Remove the ith item and return it.
+        '''
         item = self.__contents.pop(i)
         self.__set_parent(item, None)
         self.__elem_changed()
         return item
 
     def remove(self, layer):
+        '''
+        .. method:: remove(layer)
+
+            Remove the first copy of layer. Raises ValueError if it is not present.
+        '''
         idx = self.index(layer)
         item = self.__contents[idx]
 
@@ -77,15 +139,43 @@ class Group:
         self.__elem_changed()
 
     def __delitem__(self, index):
+        '''
+        .. method:: __delitem__(index)
+
+            Deletes the value at the given index.
+
+            This allows you to::
+
+                del group[0]
+        '''
         item = self.__contents[index]
         self.__set_parent(item, None)
         del self.__contents[index]
         self.__elem_changed()
 
     def __getitem__(self, index):
+        '''
+        .. method:: __getitem__(index)
+
+            Returns the value at the given index.
+
+            This allows you to::
+
+                print(group[0])
+
+        '''
         return self.__contents[index]
 
     def __setitem__(self, index, val):
+        '''
+        .. method:: __setitem__(index, value)
+
+            Sets the value at the given index.
+
+            This allows you to::
+
+                group[0] = sprite
+        '''
         old_val = self.__contents[index]
 
         self.__contents[index] = val
@@ -93,17 +183,26 @@ class Group:
             self.__elem_changed()
 
     def __len__(self):
+        '''
+        .. method:: __len__()
+
+            Returns the number of layers in a Group
+        '''
         if not self.__contents:
             return 0
         else:
             return len(self.__contents)
 
+    @property
+    def __in_group(self):
+        return self.__parent != None
+
     def __prepare_for_add(self, item):
-        if len(self.__contents) == self.max_size:
+        if len(self.__contents) == self.__max_size:
             raise RuntimeError(CONSTANTS.GROUP_FULL)
         elif not isinstance(item, TileGrid) and not isinstance(item, Group):
             raise ValueError(CONSTANTS.INCORR_SUBCLASS)
-        elif (isinstance(item, Group) and item.in_group) or (
+        elif (isinstance(item, Group) and item._Group__in_group) or (
             isinstance(item, TileGrid) and item._TileGrid__in_group
         ):
             raise ValueError(CONSTANTS.LAYER_ALREADY_IN_GROUP)
@@ -126,7 +225,7 @@ class Group:
         if self.__check_active_group_ref and board.DISPLAY.active_group == self:
             self.__draw()
 
-        elif self.in_group:
+        elif self.__in_group:
             # If a sub-group is modified, propagate to top level to
             # see if one of the parents are the current active group.
             self.__parent._Group__elem_changed()
@@ -169,9 +268,9 @@ class Group:
         for elem in self.__contents:
             if not elem.hidden:
                 if isinstance(elem, Group):
-                    img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
+                    img = elem._Group__draw(img=img, x=x+self.x, y=y+self.y, scale=scale, show=False,)
                 else:
-                    img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
+                    img = elem._TileGrid__draw(img=img, x=x+self.x, y=y+self.y, scale=scale)
 
         # show should only be true to the highest parent group
         if show:
