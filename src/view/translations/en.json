@@ -48,7 +48,8 @@
     "toolbar-microbit-gpio.description": "On the bottom edge of your BBC micro:bit there are 25 gold strips, called pins. These pins allow you to really get creative. You can create circuits, connect external things like buzzers and motors and make your own fun projects.",
     "toolbar-microbit-gpio.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
     "toolbar-microbit-wireless.title": "Bluetooth  & Radio",
-    "toolbar-microbit-wireless.description": "micro:bits can use radio waves and bluetooth services to communicate with each other",
+    "toolbar-microbit-wireless.description": "micro:bits can use radio waves and bluetooth services to communicate with each other.",
+
     "toolbar-microbit-wireless.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub! For now, you can try it on MakeCode!",
     "toolbar-microbit-gesture-sensor.title": "Gesture",
     "toolbar-microbit-gesture-sensor.description": "If you move your BBC micro:bit in a certain way (as a gesture) then micro:bit is able to detect this. micro:bit is able to recognise the following gestures: up, down, left, right, face up, face down, freefall, 3g, 6g, 8g, shake.)",
