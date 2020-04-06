@@ -59,7 +59,8 @@
     "toolbar-microbit-compass-sensor.description": "A digital compass is an input sensor that detects magnetic fields. Your BBC micro:bit has an inbuilt compass that can detect the direction in which it is facing.",
     "toolbar-microbit-compass-sensor.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub!",
     "toolbar-clue-temperature-sensor.title": "Temperature",
-    "toolbar-clue-temperature-sensor.description": "CLUE uses the BMP280 sensor, an environmental sensor with temperature.This precision sensor from Bosch is the best low-cost, precision sensing solution for measuring temperature with ±1.0°C accuracy.",
+    "toolbar-clue-temperature-sensor.description": "CLUE uses the BMP280 sensor, an environmental sensor with temperature. This precision sensor from Bosch is the best low-cost, precision sensing solution for measuring temperature with ±1.0°C accuracy.",
+
     "toolbar-clue-temperature-sensor.tryItDescription": "You can simulate the temperature in your code!",
 
     "toolbar-clue-light-sensor.title": "Light/Color Sensor",
