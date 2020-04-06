@@ -82,7 +82,8 @@
     "toolbar-clue-sound-sensor.description": "The CLUE uses a PDM MEMS microphone. PDM is a little like 1-bit PWM. You clock the mic with a 1 MHz - 3 MHz clock rate, and on the data line you'll get a square wave out that syncs with the clock.",
     "toolbar-clue-sound-sensor.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub!",
     "toolbar-clue-pressure-sensor.title": "Pressure",
-    "toolbar-clue-pressure-sensor.description": "CLUE uses the BMP280 sensor for barometric pressure. Because pressure changes with altitude, and the pressure measurements are so good, you can also use it as an altimeter with  ±1 meter accuracy.",
+    "toolbar-clue-pressure-sensor.description": "CLUE uses the BMP280 sensor for barometric pressure. Because pressure changes with altitude, you can also use it as an altimeter with ±1 meter accuracy.",
+
     "toolbar-clue-pressure-sensor.tryItDescription": "You can set the pressure here in hectoPascals (hPa).",
     "toolbar-clue-humidity-sensor.title": "Humidity",
     "toolbar-clue-humidity-sensor.description": "The SHT30-D sensor has an excellent ±2% relative humidity and ±0.5°C accuracy for most uses.",
