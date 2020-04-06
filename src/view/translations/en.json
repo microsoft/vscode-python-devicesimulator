@@ -60,7 +60,8 @@
     "toolbar-microbit-compass-sensor.tryItDescription": "If you would like to see this sensor supported, please +1 the feature addition issue on GitHub!",
     "toolbar-clue-temperature-sensor.title": "Temperature",
     "toolbar-clue-temperature-sensor.description": "CLUE uses the BMP280 sensor, an environmental sensor with temperature.This precision sensor from Bosch is the best low-cost, precision sensing solution for measuring temperature with ±1.0°C accuracy.",
-    "toolbar-clue-temperature-sensor.tryItDescription": "You can set the temperature range from your code!",
+    "toolbar-clue-temperature-sensor.tryItDescription": "You can simulate the temperature in your code!",
+
     "toolbar-clue-light-sensor.title": "Light/Color Sensor",
     "toolbar-clue-light-sensor.description": "The light sensor uses APDS9960 and is able to return the red, blue, green and clear light.",
     "toolbar-clue-light-sensor.tryItDescription": "You can set the color values of the light detected.",
