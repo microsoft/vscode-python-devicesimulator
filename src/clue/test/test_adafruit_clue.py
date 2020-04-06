@@ -86,7 +86,7 @@ class TestAdafruitClue(object):
 
     @pytest.mark.parametrize(
         "mock_color_r, mock_color_g,mock_color_b,mock_color_c",
-        [(1, 2, 3, 4), (255, 255, 255, 255), (120, 140, 160)],
+        [(1, 2, 3, 4), (255, 255, 255, 255), (120, 140, 160, 180)],
     )
     def test_color(self, mock_color_r, mock_color_g, mock_color_b, mock_color_c):
         clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_R] = mock_color_r
