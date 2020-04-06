@@ -72,86 +72,66 @@ class TestAdafruitClue(object):
         clue._Clue__update_button(CONSTANTS.CLUE_STATE.BUTTON_B, False)
         assert not clue.button_b
 
-        assert set(["A", "B"]) == clue.were_pressed
-        assert set() == clue.were_pressed
+        assert clue.were_pressed == set(["A", "B"])
+        assert clue.were_pressed == set()
 
-    def test_acceleration(self):
-        MOCK_MOTION_X_A = 1
-        MOCK_MOTION_Y = 2
-        MOCK_MOTION_Z = 3
-        MOCK_MOTION_X_B = 4
+    @pytest.mark.parametrize(
+        "mock_x, mock_y, mock_z", [(1, 2, 3), (0, 0, 0), (4, 6, 100)]
+    )
+    def test_acceleration(self, mock_x, mock_y, mock_z):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_X] = mock_x
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_Y] = mock_y
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_Z] = mock_z
+        assert clue.acceleration == (mock_x, mock_y, mock_z)
 
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_X] = MOCK_MOTION_X_A
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_Y] = MOCK_MOTION_Y
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_Z] = MOCK_MOTION_Z
-        assert clue.acceleration == (MOCK_MOTION_X_A, MOCK_MOTION_Y, MOCK_MOTION_Z)
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MOTION_X] = MOCK_MOTION_X_B
-        assert clue.acceleration == (MOCK_MOTION_X_B, MOCK_MOTION_Y, MOCK_MOTION_Z)
+    @pytest.mark.parametrize(
+        "mock_color_r, mock_color_g,mock_color_b,mock_color_c",
+        [(1, 2, 3, 4), (255, 255, 255, 255), (120, 140, 160)],
+    )
+    def test_color(self, mock_color_r, mock_color_g, mock_color_b, mock_color_c):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_R] = mock_color_r
+        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_G] = mock_color_g
+        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_B] = mock_color_b
+        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_C] = mock_color_c
+        assert clue.color == (mock_color_r, mock_color_g, mock_color_b, mock_color_c)
 
-    def test_color(self):
-        MOCK_COLOR_R_A = 1
-        MOCK_COLOR_G = 2
-        MOCK_COLOR_B = 3
-        MOCK_COLOR_C = 4
-        MOCK_COLOR_R_B = 5
+    @pytest.mark.parametrize("mock_temperature", [-10, 0, 10])
+    def test_temperature(self, mock_temperature):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.TEMPERATURE] = mock_temperature
+        assert clue.temperature == mock_temperature
 
-        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_R] = MOCK_COLOR_R_A
-        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_G] = MOCK_COLOR_G
-        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_B] = MOCK_COLOR_B
-        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_C] = MOCK_COLOR_C
-        assert clue.color == (MOCK_COLOR_R_A, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
-        clue._Clue__state[CONSTANTS.CLUE_STATE.LIGHT_R] = MOCK_COLOR_R_B
-        assert clue.color == (MOCK_COLOR_R_B, MOCK_COLOR_G, MOCK_COLOR_B, MOCK_COLOR_C)
+    @pytest.mark.parametrize(
+        "mock_magnetic_x, mock_magnetic_y, mock_magnetic_z",
+        [(1, 2, 3), (100, 150, 200), (10, 5, 15)],
+    )
+    def test_magnetic(self, mock_magnetic_x, mock_magnetic_y, mock_magnetic_z):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_X] = mock_magnetic_x
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_Y] = mock_magnetic_y
+        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_Z] = mock_magnetic_z
+        assert clue.magnetic == (mock_magnetic_x, mock_magnetic_y, mock_magnetic_z,)
 
-    def test_temperature(self):
-        MOCK_TEMP_A = 10
-        MOCK_TEMP_B = -10
-        clue._Clue__state[CONSTANTS.CLUE_STATE.TEMPERATURE] = MOCK_TEMP_A
-        assert MOCK_TEMP_A == clue.temperature
-        clue._Clue__state[CONSTANTS.CLUE_STATE.TEMPERATURE] = MOCK_TEMP_B
-        assert MOCK_TEMP_B == clue.temperature
+    @pytest.mark.parametrize("mock_distance", (0, 10, 250, 255))
+    def test_proximity(self, mock_distance):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.PROXIMITY] = mock_distance
+        assert clue.proximity == mock_distance
 
-    def test_magnetic(self):
-        MOCK_MAGNETIC_X_A = 1
-        MOCK_MAGNETIC_Y = 2
-        MOCK_MAGNETIC_Z = 3
-        MOCK_MAGNETIC_X_B = 4
+    @pytest.mark.parametrize(
+        "mock_gyro_x, mock_gyro_y, mock_gyro_z",
+        [(1, 2, 3), (100, 150, 200), (10, 5, 15)],
+    )
+    def test_gyro(self, mock_gyro_x, mock_gyro_y, mock_gyro_z):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_X] = mock_gyro_x
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_Y] = mock_gyro_y
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_Z] = mock_gyro_z
+        assert clue.gyro == (mock_gyro_x, mock_gyro_y, mock_gyro_z)
 
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_X] = MOCK_MAGNETIC_X_A
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_Y] = MOCK_MAGNETIC_Y
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_Z] = MOCK_MAGNETIC_Z
-        assert clue.magnetic == (MOCK_MAGNETIC_X_A, MOCK_MAGNETIC_Y, MOCK_MAGNETIC_Z,)
-        clue._Clue__state[CONSTANTS.CLUE_STATE.MAGNET_X] = MOCK_MAGNETIC_X_B
-        assert clue.magnetic == (MOCK_MAGNETIC_X_B, MOCK_MAGNETIC_Y, MOCK_MAGNETIC_Z,)
-
-    def test_proximity(self):
-        MOCK_DISTANCE_A = 10
-        MOCK_DISTANCE_B = 250
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PROXIMITY] = MOCK_DISTANCE_A
-        assert MOCK_DISTANCE_A == clue.proximity
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PROXIMITY] = MOCK_DISTANCE_B
-        assert MOCK_DISTANCE_B == clue.proximity
-
-    def test_gyro(self):
-        MOCK_GYRO_X_A = 1
-        MOCK_GYRO_Y = 2
-        MOCK_GYRO_Z = 3
-        MOCK_GYRO_X_B = 4
-
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_X] = MOCK_GYRO_X_A
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_Y] = MOCK_GYRO_Y
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_Z] = MOCK_GYRO_Z
-        assert clue.gyro == (MOCK_GYRO_X_A, MOCK_GYRO_Y, MOCK_GYRO_Z)
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GYRO_X] = MOCK_GYRO_X_B
-        assert clue.gyro == (MOCK_GYRO_X_B, MOCK_GYRO_Y, MOCK_GYRO_Z)
-
-    def test_gesture(self):
-        NONE = ""
-        UP = "up"
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = NONE
-        assert 0 == clue.gesture
-        clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = UP
-        assert 1 == clue.gesture
+    @pytest.mark.parametrize(
+        "gesture_word, gesture_number",
+        [("", 0), ("up", 1), ("down", 2), ("left", 3), ("right", 4)],
+    )
+    def test_gesture(self, gesture_word, gesture_number):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = gesture_word
+        assert clue.gesture == gesture_number
 
     def test_shake(self):
         NONE = "none"
@@ -161,43 +141,37 @@ class TestAdafruitClue(object):
         clue._Clue__state[CONSTANTS.CLUE_STATE.GESTURE] = NONE
         assert not clue.shake()
 
-    def test_humidity(self):
-        MOCK_HUMIDITY_A = 10
-        MOCK_HUMIDITY_B = 50
-        clue._Clue__state[CONSTANTS.CLUE_STATE.HUMIDITY] = MOCK_HUMIDITY_A
-        assert MOCK_HUMIDITY_A == clue.humidity
-        clue._Clue__state[CONSTANTS.CLUE_STATE.HUMIDITY] = MOCK_HUMIDITY_B
-        assert MOCK_HUMIDITY_B == clue.humidity
+    @pytest.mark.parametrize("mock_humidity", [0, 10, 50, 100])
+    def test_humidity(self, mock_humidity):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.HUMIDITY] = mock_humidity
+        assert clue.humidity == mock_humidity
 
-    def test_pressure(self):
-        MOCK_PRESSURE_A = 10
-        MOCK_PRESSURE_B = 50
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = MOCK_PRESSURE_A
-        assert MOCK_PRESSURE_A == clue.pressure
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = MOCK_PRESSURE_B
-        assert MOCK_PRESSURE_B == clue.pressure
+    @pytest.mark.parametrize("mock_pressure", [0, 10, 50, 100])
+    def test_pressure(self, mock_pressure):
+        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = mock_pressure
+        assert clue.pressure == mock_pressure
 
-    def test_altitude(self):
-        MOCK_PRESSURE_A = 1000
-        MOCK_PRESSURE_B = 1030
-        MOCK_ALTITUDE_A = 125.42255615546036
-        MOCK_ALTITUDE_B = -123.93061640175468
-        SEA_LEVEL_PRESSURE = 1015
-        clue.sea_level_pressure = SEA_LEVEL_PRESSURE
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = MOCK_PRESSURE_A
-        assert MOCK_ALTITUDE_A == pytest.approx(clue.altitude)
-        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = MOCK_PRESSURE_B
-        assert MOCK_ALTITUDE_B == pytest.approx(clue.altitude)
+    @pytest.mark.parametrize(
+        "mock_pressure, mock_sea_level_pressure, expected_altitude",
+        [
+            (1000, 1015, 125.42255615546036),
+            (1030, 1015, -123.93061640175468),
+            (1020, 1013, -58.13176263932101),
+        ],
+    )
+    def test_altitude(self, mock_pressure, mock_sea_level_pressure, expected_altitude):
+        clue.sea_level_pressure = mock_sea_level_pressure
+        clue._Clue__state[CONSTANTS.CLUE_STATE.PRESSURE] = mock_pressure
+        assert expected_altitude == pytest.approx(clue.altitude)
 
-    def test_sea_level_pressure(self):
-        MOCK_PRESSURE = 1040
-        clue.sea_level_pressure = MOCK_PRESSURE
-        assert MOCK_PRESSURE == clue.sea_level_pressure
+    @pytest.mark.parametrize("mock_sea_level_pressure", [1040, 1015, 1013])
+    def test_sea_level_pressure(self, mock_sea_level_pressure):
+        clue.sea_level_pressure = mock_sea_level_pressure
+        assert mock_sea_level_pressure == clue.sea_level_pressure
 
-    def test_pixel(self):
-        MOCK_RED = (255, 0, 0)
-        MOCK_WHITE = (255, 255, 255)
-        clue.pixel.fill(MOCK_RED)
-        assert MOCK_RED == clue.pixel[0]
-        clue.pixel.fill(MOCK_WHITE)
-        assert MOCK_WHITE == clue.pixel[0]
+    @pytest.mark.parametrize(
+        "mock_color", [(255, 0, 0), (255, 255, 255), (123, 123, 123)]
+    )
+    def test_pixel(self, mock_color):
+        clue.pixel.fill(mock_color)
+        assert clue.pixel[0] == mock_color

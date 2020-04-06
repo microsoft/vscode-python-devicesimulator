@@ -730,14 +730,13 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
 
     # helpers
     def __update_button(self, button, value):
-        if button == CONSTANTS.CLUE_STATE.BUTTON_A:
-            if value:
-                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("A")
-            self.__state[CONSTANTS.CLUE_STATE.BUTTON_A] = value
-        elif button == CONSTANTS.CLUE_STATE.BUTTON_B:
-            if value:
-                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("B")
-            self.__state[CONSTANTS.CLUE_STATE.BUTTON_B] = value
+        buttonMapping = {
+            CONSTANTS.CLUE_STATE.BUTTON_A: "A",
+            CONSTANTS.CLUE_STATE.BUTTON_B: "B",
+        }
+        if value:
+            self.__state[button].add(buttonMapping[button])
+        self.__state[button] = value
 
 
 clue = Clue()  # pylint: disable=invalid-name
