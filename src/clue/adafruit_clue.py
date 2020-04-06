@@ -423,12 +423,16 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             print("Altitude: {:.1f}m".format(clue.altitude))
         """
         # National Oceanic and Atmospheric Administration (NOAA) formula for converting atmospheric pressure to pressure altitude.
-        altitude = 44330 * (
-            1.0
+        OUTSIDE_MULTIPLER_CONSTANT = 44330
+        POWER_CONSTANT = 0.1903
+        WHOLE_CONSTANT = 1
+
+        altitude = OUTSIDE_MULTIPLER_CONSTANT * (
+            WHOLE_CONSTANT
             - math.pow(
                 self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
                 / self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE],
-                0.1903,
+                POWER_CONSTANT,
             )
         )
         return altitude
