@@ -188,6 +188,6 @@ class TestAdafruitClue(object):
         "value, expected",
         [(True, True), (False, False), (1, True), ("a", True), (0, False), ("", False)],
     )
-    def test_white_leds(self):
+    def test_white_leds(self, value, expected):
         clue.white_leds = value
         assert clue.white_leds == expected
