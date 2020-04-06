@@ -229,6 +229,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         self.__state[CONSTANTS.CLUE_STATE.GYRO_X] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Y] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Z] = 0
+        self.button_mapping = {
+            CONSTANTS.CLUE_STATE.BUTTON_A: "A",
+            CONSTANTS.CLUE_STATE.BUTTON_B: "B",
+        }
 
     @property
     def button_a(self):
@@ -297,7 +301,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         :param total_delay: The total time in seconds it takes to obtain avg_count
                             readings from acceleration. (Default 0.1)
         """
-        is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == "shake"
+        is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == CONSTANTS.SHAKE
         return is_shaken
 
     @property
@@ -418,6 +422,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             clue.sea_level_pressure = 1015
             print("Altitude: {:.1f}m".format(clue.altitude))
         """
+        # National Oceanic and Atmospheric Administration (NOAA) formula for converting atmospheric pressure to pressure altitude.
         altitude = 44330 * (
             1.0
             - math.pow(
@@ -730,13 +735,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
 
     # helpers
     def __update_button(self, button, value):
-        buttonMapping = {
-            CONSTANTS.CLUE_STATE.BUTTON_A: "A",
-            CONSTANTS.CLUE_STATE.BUTTON_B: "B",
-        }
         if value:
             self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add(
-                buttonMapping[button]
+                self.button_mapping[button]
             )
         self.__state[button] = value
 

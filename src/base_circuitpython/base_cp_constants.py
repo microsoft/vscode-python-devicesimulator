@@ -31,6 +31,7 @@ class CLUE_STATE:
 CPX = "CPX"
 CLUE = "CLUE"
 PIXELS = "pixels"
+SHAKE = "shake"
 
 CLUE_PIN = "D18"
 
