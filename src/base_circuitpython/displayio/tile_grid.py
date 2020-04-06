@@ -14,6 +14,34 @@ from common import utils
 
 
 class TileGrid:
+    """
+    :class:`TileGrid` -- A grid of tiles sourced out of one bitmap
+    ==========================================================================
+
+    Position a grid of tiles sourced from a bitmap and pixel_shader combination. Multiple grids
+    can share bitmaps and pixel shaders.
+
+    A single tile grid is also known as a Sprite.
+
+    .. class:: TileGrid(bitmap, *, pixel_shader, width=1, height=1, tile_width=None, tile_height=None, default_tile=0, x=0, y=0)
+
+    Create a TileGrid object. The bitmap is source for 2d pixels. The pixel_shader is used to
+    convert the value and its location to a display native pixel color. This may be a simple color
+    palette lookup, a gradient, a pattern or a color transformer.
+
+    tile_width and tile_height match the height of the bitmap by default.
+
+    :param displayio.Bitmap bitmap: The bitmap storing one or more tiles.
+    :param displayio.Palette pixel_shader: The pixel shader that produces colors from values
+    :param int width: Width of the grid in tiles.
+    :param int height: Height of the grid in tiles.
+    :param int tile_width: Width of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
+    :param int tile_height: Height of a single tile in pixels. Defaults to the full Bitmap and must evenly divide into the Bitmap's dimensions.
+    :param int default_tile: Default tile index to show.
+    :param int x: Initial x position of the left edge within the parent.
+    :param int y: Initial y position of the top edge within the parent.
+    """
+
     def __init__(
         self,
         bitmap,
@@ -36,6 +64,14 @@ class TileGrid:
         else:
             self.tile_height = tile_height
 
+        self.x = None
+        """
+        .. attribute:: x
+    
+            X position of the left edge in the parent.
+        """
+        self.y = None
+
         if position and isinstance(position, tuple):
             self.x = position[0]
             self.y = position[1]
@@ -46,7 +82,14 @@ class TileGrid:
         self.bitmap = bitmap
         self.pixel_shader = pixel_shader
         self.default_tile = default_tile
+
         self.hidden = False
+        """
+        .. attribute:: hidden
+
+        True when the TileGrid is hidden. This may be False even when a part of a hidden Group.
+        """
+
         self.__parent = None
 
         # unimplemented features
@@ -55,13 +98,8 @@ class TileGrid:
         self.__transpose_xy = False
 
     @property
-    def in_group(self):
+    def __in_group(self):
         return self.__parent != None
-
-        # unimplemented features
-        self.__flip_x = False
-        self.__flip_y = False
-        self.__transpose_xy = False
 
     @property
     def flip_x(self):
