@@ -28,11 +28,11 @@ import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
 import { SetupService } from "./service/SetupService";
+import { TelemetryHandlerService } from "./service/telemetryHandlerService";
 import { WebviewService } from "./service/webviewService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
 import getPackageInfo from "./telemetry/getPackageInfo";
 import TelemetryAI from "./telemetry/telemetryAI";
-import { TelemetryHandlerService } from "./service/telemetryHandlerService";
 import { UsbDetector } from "./usbDetector";
 import {
     VSCODE_MESSAGES_TO_WEBVIEW,
