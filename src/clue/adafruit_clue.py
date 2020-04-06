@@ -69,6 +69,7 @@ abs_path = pathlib.Path(__file__).parent.absolute()
 sys.path.insert(0, os.path.join(abs_path))
 import neopixel
 from base_circuitpython import base_cp_constants as CONSTANTS
+from common import utils
 
 # REVISED VERSION OF THE ADAFRUIT CLUE LIBRARY FOR DSX
 
@@ -198,12 +199,40 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
     RAINBOW = (RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
 
     def __init__(self):
-        self._a = False
-        self._b = False
-        self.__pressed_buttons = set()
-        self._pixel = neopixel.NeoPixel(
+        self.__state = {}
+        self.__state[CONSTANTS.CLUE_STATE.BUTTON_A] = False
+        self.__state[CONSTANTS.CLUE_STATE.BUTTON_B] = False
+        self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS] = set()
+        self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE] = 1013.25
+        self.__state[CONSTANTS.CLUE_STATE.TEMPERATURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PROXIMITY] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GESTURE] = ""
+        self.__state[CONSTANTS.CLUE_STATE.HUMIDITY] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PIXEL] = neopixel.NeoPixel(
             pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
         )
+        # Accelerometer
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MOTION_Z] = 0
+        # Light/color sensor
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_R] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_G] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_B] = 0
+        self.__state[CONSTANTS.CLUE_STATE.LIGHT_C] = 0
+        # Magnetometer
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.MAGNET_Z] = 0
+        # Gyroscope
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_X] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_Y] = 0
+        self.__state[CONSTANTS.CLUE_STATE.GYRO_Z] = 0
+        self.button_mapping = {
+            CONSTANTS.CLUE_STATE.BUTTON_A: "A",
+            CONSTANTS.CLUE_STATE.BUTTON_B: "B",
+        }
 
     @property
     def button_a(self):
@@ -216,7 +245,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_a:
                   print("Button A pressed")
         """
-        return self._a
+        return self.__state[CONSTANTS.CLUE_STATE.BUTTON_A]
 
     @property
     def button_b(self):
@@ -229,17 +258,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_b:
                   print("Button B pressed")
         """
-        return self._b
-
-    def __update_button(self, button, value):
-        if button == "button_a":
-            if value:
-                self.__pressed_buttons.add("A")
-            self._a = value
-        elif button == "button_b":
-            if value:
-                self.__pressed_buttons.add("B")
-            self._b = value
+        return self.__state[CONSTANTS.CLUE_STATE.BUTTON_B]
 
     @property
     def were_pressed(self):
@@ -250,9 +269,190 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print(clue.were_pressed)
         """
-        ret = self.__pressed_buttons.copy()
-        self.__pressed_buttons.clear()
+        ret = self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].copy()
+        self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].clear()
         return ret
+
+    @property
+    def acceleration(self):
+        """Obtain acceleration data from the x, y and z axes.
+        This example prints the values. Try moving the board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+            print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
+        """
+        return (
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_X],
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_Y],
+            self.__state[CONSTANTS.CLUE_STATE.MOTION_Z],
+        )
+
+    def shake(self, shake_threshold=30, avg_count=10, total_delay=0.1):
+        """Detect when the accelerometer is shaken. Optional parameters:
+        :param shake_threshold: Increase or decrease to change shake sensitivity. This
+                                requires a minimum value of 10. 10 is the total
+                                acceleration if the board is not moving, therefore
+                                anything less than 10 will erroneously report a constant
+                                shake detected. (Default 30)
+        :param avg_count: The number of readings taken and used for the average
+                          acceleration. (Default 10)
+        :param total_delay: The total time in seconds it takes to obtain avg_count
+                            readings from acceleration. (Default 0.1)
+        """
+        is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == CONSTANTS.SHAKE
+        return is_shaken
+
+    @property
+    def color(self):
+        """The red, green, blue, and clear light values. (r, g, b, c)
+        This example prints the values. Try holding something up to the sensor to see the values
+        change. Works best with white LEDs enabled.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
+        """
+        return (
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_R],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_G],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_B],
+            self.__state[CONSTANTS.CLUE_STATE.LIGHT_C],
+        )
+
+    @property
+    def temperature(self):
+        """The temperature in degrees Celsius.
+        This example prints the value. Try touching the sensor to see the value change.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            print("Temperature: {:.1f}C".format(clue.temperature))
+        """
+        return self.__state[CONSTANTS.CLUE_STATE.TEMPERATURE]
+
+    @property
+    def magnetic(self):
+        """Obtain x, y, z magnetic values in microteslas.
+        This example prints the values. Try moving the board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
+        """
+        return (
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_X],
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_Y],
+            self.__state[CONSTANTS.CLUE_STATE.MAGNET_Z],
+        )
+
+    @property
+    def proximity(self):
+        """A relative proximity to the sensor in values from 0 - 255.
+        This example prints the value. Try moving your hand towards and away from the front of the
+        board to see how the printed values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Proximity: {}".format(clue.proximity))
+        """
+        return self.__state[CONSTANTS.CLUE_STATE.PROXIMITY]
+
+    @property
+    def gyro(self):
+        """Obtain x, y, z angular velocity values in degrees/second.
+        This example prints the values. Try moving the board to see how the printed values change.
+              print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
+        """
+        return (
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_X],
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_Y],
+            self.__state[CONSTANTS.CLUE_STATE.GYRO_Z],
+        )
+
+    @property
+    def gesture(self):
+        """A gesture code if gesture is detected. Shows ``0`` if no gesture detected.
+        ``1`` if an UP gesture is detected, ``2`` if DOWN, ``3`` if LEFT, and ``4`` if RIGHT.
+        This example prints the gesture values. Try moving your hand up, down, left or right over
+        the sensor to see the value change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Gesture: {}".format(clue.gesture))
+        """
+        gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
+        return gesture_mapping.get(self.__state[CONSTANTS.CLUE_STATE.GESTURE], 0)
+
+    @property
+    def humidity(self):
+        """The measured relative humidity in percent.
+        This example prints the value. Try breathing on the sensor to see the values change.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print("Humidity: {:.1f}%".format(clue.humidity))
+        """
+        return self.__state[CONSTANTS.CLUE_STATE.HUMIDITY]
+
+    @property
+    def pressure(self):
+        """The barometric pressure in hectoPascals.
+        This example prints the value.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            print("Pressure: {:.3f}hPa".format(clue.pressure))
+        """
+        return self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
+
+    @property
+    def altitude(self):
+        """The altitude in meters based on the sea level pressure at your location. You must set
+        ``sea_level_pressure`` to receive an accurate reading.
+        This example prints the value. Try moving the board vertically to see the value change.
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.sea_level_pressure = 1015
+            print("Altitude: {:.1f}m".format(clue.altitude))
+        """
+        # National Oceanic and Atmospheric Administration (NOAA) formula for converting atmospheric pressure to pressure altitude.
+        OUTSIDE_MULTIPLER_CONSTANT = 44330
+        POWER_CONSTANT = 0.1903
+        WHOLE_CONSTANT = 1
+
+        altitude = OUTSIDE_MULTIPLER_CONSTANT * (
+            WHOLE_CONSTANT
+            - math.pow(
+                self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
+                / self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE],
+                POWER_CONSTANT,
+            )
+        )
+        return altitude
+
+    @property
+    def sea_level_pressure(self):
+        """Set to the pressure at sea level at your location, before reading altitude for
+        the most accurate altitude measurement.
+        This example prints the value.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.sea_level_pressure = 1015
+            print("Pressure: {:.3f}hPa".format(clue.pressure))
+        """
+        return self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE]
+
+    @sea_level_pressure.setter
+    def sea_level_pressure(self, value):
+        self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE] = value
 
     @property
     def pixel(self):
@@ -264,7 +464,203 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             while True:
                 clue.pixel.fill((255, 0, 255))
         """
-        return self._pixel
+        return self.__state[CONSTANTS.CLUE_STATE.PIXEL]
+
+    @property
+    def touch_0(self):
+        """Not Implemented!
+
+        Detect touch on capacitive touch pad 0.
+        .. image :: ../docs/_static/pad_0.jpg
+          :alt: Pad 0
+        This example prints when pad 0 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_0:
+                  print("Touched pad 0")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_0.__name__)
+
+    @property
+    def touch_1(self):
+        """Not Implemented!
+        
+        Detect touch on capacitive touch pad 1.
+        .. image :: ../docs/_static/pad_1.jpg
+          :alt: Pad 1
+        This example prints when pad 1 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_1:
+                  print("Touched pad 1")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_1.__name__)
+
+    @property
+    def touch_2(self):
+        """Not Implemented!
+        
+        Detect touch on capacitive touch pad 2.
+        .. image :: ../docs/_static/pad_2.jpg
+          :alt: Pad 2
+        This example prints when pad 2 is touched.
+        To use with the CLUE:
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.touch_2:
+                  print("Touched pad 2")
+        """
+        utils.print_for_unimplemented_functions(Clue.touch_2.__name__)
+
+    @property
+    def white_leds(self):
+        """Not Implemented!
+        
+        The red led next to the USB plug labeled LED.
+        .. image :: ../docs/_static/white_leds.jpg
+          :alt: White LEDs
+        This example turns on the white LEDs.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.white_leds = True
+        """
+        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+
+    @white_leds.setter
+    def white_leds(self, value):
+        """Not Implemented!"""
+        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+
+    @property
+    def red_led(self):
+        """Not Implemented!
+        
+        The red led next to the USB plug labeled LED.
+        .. image :: ../docs/_static/red_led.jpg
+          :alt: Red LED
+        This example turns on the red LED.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.red_led = True
+        """
+        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+
+    @red_led.setter
+    def red_led(self, value):
+        """Not Implemented!"""
+        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+
+    def play_tone(self, frequency, duration):
+        """ Not Implemented!
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
+        :param int frequency: The frequency of the tone in Hz
+        :param float duration: The duration of the tone in seconds
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 880 Hz tone for a duration of 1 second.
+        To use with the CLUE:
+        .. code-block:: python
+            from adafruit_clue import clue
+            clue.play_tone(880, 1)
+        """
+        utils.print_for_unimplemented_functions(Clue.play_tone.__name__)
+
+    def start_tone(self, frequency):
+        """ Not Implemented!
+        Produce a tone using the speaker. Try changing frequency to change
+        the pitch of the tone.
+        :param int frequency: The frequency of the tone in Hz
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 523Hz tone when button A is pressed and a 587Hz tone when button B is
+        pressed, only while the buttons are being pressed.
+        To use with the CLUE:
+        .. code-block:: python
+             from adafruit_clue import clue
+             while True:
+                 if clue.button_a:
+                     clue.start_tone(523)
+                 elif clue.button_b:
+                     clue.start_tone(587)
+                 else:
+                     clue.stop_tone()
+        """
+        utils.print_for_unimplemented_functions(Clue.start_tone.__name__)
+
+    def stop_tone(self):
+        """ Not Implemented!
+        Use with start_tone to stop the tone produced.
+        .. image :: ../docs/_static/speaker.jpg
+          :alt: Speaker
+        This example plays a 523Hz tone when button A is pressed and a 587Hz tone when button B is
+        pressed, only while the buttons are being pressed.
+        To use with the CLUE:
+        .. code-block:: python
+             from adafruit_clue import clue
+             while True:
+                 if clue.button_a:
+                     clue.start_tone(523)
+                 elif clue.button_b:
+                     clue.start_tone(587)
+                 else:
+                     clue.stop_tone()
+        """
+        utils.print_for_unimplemented_functions(Clue.stop_tone.__name__)
+
+    @property
+    def sound_level(self):
+        """Not Implemented!
+        Obtain the sound level from the microphone (sound sensor).
+        .. image :: ../docs/_static/microphone.jpg
+          :alt: Microphone (sound sensor)
+        This example prints the sound levels. Try clapping or blowing on
+        the microphone to see the levels change.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              print(clue.sound_level)
+        """
+        utils.print_for_unimplemented_functions(Clue.sound_level.__name__)
+
+    def loud_sound(self, sound_threshold=200):
+        """Not Implemented!
+        Utilise a loud sound as an input.
+        :param int sound_threshold: Threshold sound level must exceed to return true (Default: 200)
+        .. image :: ../docs/_static/microphone.jpg
+          :alt: Microphone (sound sensor)
+        This example turns the NeoPixel LED blue each time you make a loud sound.
+        Try clapping or blowing onto the microphone to trigger it.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.loud_sound():
+                  clue.pixel.fill((0, 50, 0))
+              else:
+                  clue.pixel.fill(0)
+        You may find that the code is not responding how you would like.
+        If this is the case, you can change the loud sound threshold to
+        make it more or less responsive. Setting it to a higher number
+        means it will take a louder sound to trigger. Setting it to a
+        lower number will take a quieter sound to trigger. The following
+        example shows the threshold being set to a higher number than
+        the default.
+        .. code-block:: python
+          from adafruit_clue import clue
+          while True:
+              if clue.loud_sound(sound_threshold=300):
+                  clue.pixel.fill((0, 50, 0))
+              else:
+                  clue.pixel.fill(0)
+        """
+        utils.print_for_unimplemented_functions(Clue.loud_sound.__name__)
 
     @staticmethod
     def simple_text_display(
@@ -334,13 +730,20 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         )
 
     def update_state(self, new_state):
-        self.__update_buttons(new_state)
+        for event in new_state.keys():
+            if event in CONSTANTS.EXPECTED_INPUT_BUTTONS:
+                self.__update_button(event, new_state.get(event))
+            elif event in CONSTANTS.ALL_EXPECTED_INPUT_EVENTS:
+                if self.__state[event] != new_state[event]:
+                    self.__state[event] = new_state.get(event)
 
     # helpers
-    def __update_buttons(self, new_state):
-        # get button pushes
-        for button_name in CONSTANTS.EXPECTED_INPUT_BUTTONS:
-            self.__update_button(button_name, new_state.get(button_name))
+    def __update_button(self, button, value):
+        if value:
+            self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add(
+                self.button_mapping[button]
+            )
+        self.__state[button] = value
 
 
 clue = Clue()  # pylint: disable=invalid-name
