@@ -162,7 +162,7 @@ export class GettingStartedPage extends React.Component {
                         </span>
                         <h3> 3. Create a slide show on the CLUE</h3>
                         <p>
-                            There must be some .bmp photos in the same directory
+                            Make sure there are bitmap (.bmp) pictures of your choice in the same directory
                             as the code file.
                         </p>
                         <span className="codeBox">
