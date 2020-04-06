@@ -114,7 +114,7 @@ class _ClueSimpleTextDisplay:
         if font:
             self._font = font
         self.text_group = displayio.Group(max_size=20, scale=text_scale)
-
+        self.text_scale = text_scale
         if title:
             # Fail gracefully if title is longer than 60 characters.
             if len(title) > 60:
@@ -129,7 +129,7 @@ class _ClueSimpleTextDisplay:
             )
             title.x = 0
             title.y = 8
-            self._y = title.y + 18
+            self._y = title.y + 18 * text_scale
 
             self.text_group.append(title)
         else:
@@ -153,7 +153,7 @@ class _ClueSimpleTextDisplay:
         text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color)
         text_label.x = 0
         text_label.y = self._y
-        self._y = text_label.y + 13
+        self._y = text_label.y + 13 * self.text_scale
         self.text_group.append(text_label)
 
         return text_label
