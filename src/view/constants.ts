@@ -107,6 +107,12 @@ export enum SENSOR_LIST {
     HUMIDITY = "humidity",
     PRESSURE = "pressure",
     PROXIMITY = "proximity",
+    MAGNET_X = "magnet_x",
+    MAGNET_Y = "magnet_y",
+    MAGNET_Z = "magnet_z",
+    GYRO_X = "gyro_x",
+    GYRO_Y = "gyro_y",
+    GYRO_Z = "gyro_z",
 }
 
 export const GESTURES_MICROBIT = [

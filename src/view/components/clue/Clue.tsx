@@ -33,6 +33,12 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.HUMIDITY]: 0,
         [SENSOR_LIST.PRESSURE]: 0,
         [SENSOR_LIST.PROXIMITY]: 0,
+        [SENSOR_LIST.GYRO_X]: 0,
+        [SENSOR_LIST.GYRO_Y]: 0,
+        [SENSOR_LIST.GYRO_Z]: 0,
+        [SENSOR_LIST.MAGNET_X]: 0,
+        [SENSOR_LIST.MAGNET_Y]: 0,
+        [SENSOR_LIST.MAGNET_Z]: 0,
     },
     currentSelectedGesture: GESTURES_CLUE[0],
 };
@@ -128,6 +134,14 @@ const CLUE_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
         label: CLUE_TOOLBAR_ICON_ID.GESTURE,
         image: TOOLBAR_SVG.GESTURE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.GYROSCOPE,
+        image: TOOLBAR_SVG.GYROSCOPE_SVG,
+    },
+    {
+        label: CLUE_TOOLBAR_ICON_ID.MAGNETOSCOPE,
+        image: TOOLBAR_SVG.MAGNET_SVG,
     },
     {
         label: CLUE_TOOLBAR_ICON_ID.GPIO,

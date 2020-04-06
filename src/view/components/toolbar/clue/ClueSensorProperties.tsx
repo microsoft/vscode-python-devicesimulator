@@ -41,6 +41,69 @@ export const CLUE_LIGHT_PROPERTIES: ISensorProps = {
     sliderProps: [CLUE_SLIDER_R, CLUE_SLIDER_G, CLUE_SLIDER_B, CLUE_SLIDER_C],
     unitLabel: "Lux",
 };
+
+// Range for magnet found here https://www.adafruit.com/product/4479
+const CLUE_MAGNET_X: ISliderProps = {
+    axisLabel: "X",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1600,
+    minValue: 400,
+    type: SENSOR_LIST.MAGNET_X,
+};
+const CLUE_MAGNET_Y: ISliderProps = {
+    axisLabel: "Y",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1600,
+    minValue: 400,
+    type: SENSOR_LIST.MAGNET_Y,
+};
+const CLUE_MAGNET_Z: ISliderProps = {
+    axisLabel: "Z",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1600,
+    minValue: 400,
+    type: SENSOR_LIST.MAGNET_Z,
+};
+
+export const CLUE_MAGNET_PROPERTIES: ISensorProps = {
+    LABEL: "Magnetoscope",
+    sliderProps: [CLUE_MAGNET_X, CLUE_MAGNET_Y, CLUE_MAGNET_Z],
+    unitLabel: "μT",
+};
+const CLUE_GYRO_X: ISliderProps = {
+    axisLabel: "X",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1000,
+    minValue: -1000,
+    type: SENSOR_LIST.GYRO_X,
+};
+const CLUE_GYRO_Y: ISliderProps = {
+    axisLabel: "Y",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1000,
+    minValue: -1000,
+    type: SENSOR_LIST.GYRO_Y,
+};
+const CLUE_GYRO_Z: ISliderProps = {
+    axisLabel: "Z",
+    maxLabel: "Max",
+    minLabel: "Min",
+    maxValue: 1000,
+    minValue: -1000,
+    type: SENSOR_LIST.GYRO_Z,
+};
+
+export const CLUE_GYRO_PROPERTIES: ISensorProps = {
+    LABEL: "Gyroscope",
+    sliderProps: [CLUE_GYRO_X, CLUE_GYRO_Y, CLUE_GYRO_Z],
+    unitLabel: "deg/s",
+};
+
 export const CLUE_HUMIDITY_PROPERTIES: ISensorProps = {
     LABEL: "Humidity Sensor",
     sliderProps: [
