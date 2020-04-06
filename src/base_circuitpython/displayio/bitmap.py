@@ -12,7 +12,7 @@ from . import constants as CONSTANTS
 
 
 class Bitmap:
-    '''
+    """
     .. currentmodule:: displayio
     
     `Bitmap` -- Stores values in a 2D array
@@ -30,7 +30,8 @@ class Bitmap:
         :param int height: The number of values high
         :param int value_count: The number of possible pixel values.
     
-    '''
+    """
+
     def __init__(self, width, height, value_count=255):
         self.__width = width
         self.__height = height
@@ -38,26 +39,26 @@ class Bitmap:
 
     @property
     def width(self):
-        '''
+        """
         .. attribute:: width
         
            Width of the bitmap. (read only)
         
-        '''
+        """
         return self.__width
 
     @property
     def height(self):
-        '''
+        """
         .. attribute:: height
         
            Height of the bitmap. (read only)
         
-        '''
+        """
         return self.__height
 
     def __setitem__(self, index, value):
-        '''
+        """
         .. method:: __setitem__(index, value)
         
         Sets the value at the given index. The index can either be an x,y tuple or an int equal
@@ -67,7 +68,7 @@ class Bitmap:
         
             bitmap[0,1] = 3
         
-        '''
+        """
         if isinstance(index, tuple):
             if index[0] >= self.width or index[1] >= self.height:
                 raise IndexError(CONSTANTS.PIXEL_OUT_OF_BOUNDS)
@@ -80,7 +81,7 @@ class Bitmap:
             raise IndexError(CONSTANTS.PIXEL_OUT_OF_BOUNDS)
 
     def __getitem__(self, index):
-        '''
+        """
         .. method:: __getitem__(index)
         
             Returns the value at the given index. The index can either be an x,y tuple or an int equal
@@ -90,7 +91,7 @@ class Bitmap:
         
                 print(bitmap[0,1])
         
-        '''
+        """
 
         if isinstance(index, tuple):
             if index[0] >= self.width or index[1] >= self.height:

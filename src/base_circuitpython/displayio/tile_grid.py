@@ -106,7 +106,6 @@ class TileGrid:
         self.__flip_y = False
         self.__transpose_xy = False
 
-
     @property
     def flip_x(self):
         """
@@ -123,7 +122,7 @@ class TileGrid:
 
     @property
     def flip_y(self):
-        
+
         """
         .. attribute:: flip_y
 
@@ -138,7 +137,7 @@ class TileGrid:
 
     @property
     def transpose_xy(self):
-        
+
         """
         .. attribute:: transpose_xy
 
@@ -151,7 +150,6 @@ class TileGrid:
     def transpose_xy(self, val):
         utils.print_for_unimplemented_functions(TileGrid.transpose_xy.__name_)
         self.__transpose_xy = val
-
 
     # setitem for an index simply gets the index of the bitmap
     # rather than the tile index

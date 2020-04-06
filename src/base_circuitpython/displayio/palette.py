@@ -9,7 +9,7 @@ from . import constants as CONSTANTS
 
 
 class Palette:
-    '''
+    """
     `Palette` -- Stores a mapping from bitmap pixel palette_indexes to display colors
     =========================================================================================
 
@@ -21,7 +21,8 @@ class Palette:
     Create a Palette object to store a set number of colors.
 
         :param int color_count: The number of colors in the Palette
-    '''
+    """
+
     def __init__(self, color_count):
         self.__color_count = color_count
         self.__contents = []
@@ -30,9 +31,8 @@ class Palette:
         for i in range(self.__color_count):
             self.__contents.append(_ColorType((0, 0, 0)))
 
-
     def __setitem__(self, index, value):
-        '''
+        """
         .. method:: __setitem__(index, value)
     
             Sets the pixel color at the given index. The index should be an integer in the range 0 to color_count-1.
@@ -49,30 +49,31 @@ class Palette:
                 palette[3] = bytearray(b'\x00\x00\xFF')   # set using a bytearay of 3 or 4 bytes
                 palette[4] = (10, 20, 30)                 # set using a tuple of 3 integers
         
-        '''
+        """
         if index >= self.__color_count:
             raise IndexError(CONSTANTS.PALETTE_OUT_OF_RANGE)
 
         self.__contents[index].rgb888 = value
+
     def __len__(self):
-        '''
+        """
         .. method:: __len__()
     
             Returns the number of colors in a Palette
         
-        '''
+        """
         return self.__color_count
 
     def make_transparent(self, index):
-        '''
+        """
         .. method:: make_transparent(palette_index)
-        '''
+        """
         self.__toggle_transparency(index, True)
 
     def make_opaque(self, index):
-        '''
+        """
         .. method:: make_opaque(palette_index)
-        '''
+        """
         self.__toggle_transparency(index, False)
 
     def __toggle_transparency(self, index, transparency):
