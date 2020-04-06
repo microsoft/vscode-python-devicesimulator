@@ -21,6 +21,7 @@
 }
 
 .toolbar-icon {
+    min-width: 360px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 30%);
     border-color: var(--vscode-highContrastButtonBorderOverride-color);
     border-width: 1px;
