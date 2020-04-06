@@ -1,4 +1,6 @@
 """
+To get started, check out the "Device Simulator Express: Getting Started" command in the command pallete, which you can access with `CMD + SHIFT + P` For Mac and `CTRL + SHIFT + P` for Windows and Linux.
+
 To learn more about the CLUE and CircuitPython, check this link out:
 https://learn.adafruit.com/adafruit-clue/circuitpython
 
