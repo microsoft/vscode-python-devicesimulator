@@ -549,11 +549,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.red_led = True
         """
-        return self.__state[CONSTANTS.CLUE_STATE.RED_LEDS]
+        return self.__state[CONSTANTS.CLUE_STATE.RED_LED]
 
     @red_led.setter
     def red_led(self, value):
-        self.__set_leds(CONSTANTS.CLUE_STATE.RED_LEDS, value)
+        self.__set_leds(CONSTANTS.CLUE_STATE.RED_LED, value)
 
     def play_tone(self, frequency, duration):
         """ Not Implemented!
