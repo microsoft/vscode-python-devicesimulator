@@ -14,7 +14,14 @@ interface IProps {
 }
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
-    private neopixel: React.RefObject<SVGCircleElement> = React.createRef();
+    private ledsRefs = {
+        neopixel: React.createRef<SVGCircleElement>(),
+        red_led: React.createRef(),
+        white_leds: [
+            React.createRef<SVGRectElement>(),
+            React.createRef<SVGRectElement>(),
+        ],
+    };
     private pixelStopGradient: React.RefObject<
         SVGStopElement
     > = React.createRef();
@@ -927,12 +934,14 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     <g id="Buttons_at_top" data-name="Buttons at top">
                         <rect
                             className="cls-16"
+                            ref={this.ledsRefs.white_leds[0]}
                             x="105.78"
                             y="5.76"
                             width="17.4"
                             height="8.98"
                         />
                         <rect
+                            ref={this.ledsRefs.white_leds[1]}
                             className="cls-16"
                             x="182.92"
                             y="7.04"
@@ -1035,7 +1044,12 @@ export class ClueSvg extends React.Component<IProps, {}> {
                         Neopixel
                     </text>
                     <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
-                    <circle cx={345} cy={115} r="12" ref={this.neopixel} />
+                    <circle
+                        cx={345}
+                        cy={115}
+                        r="12"
+                        ref={this.ledsRefs.neopixel}
+                    />
                 </svg>
             </div>
         );
@@ -1058,8 +1072,8 @@ export class ClueSvg extends React.Component<IProps, {}> {
             (255 - neopixel[1]) * CONSTANTS.LED_TINT_FACTOR},${neopixel[2] +
             (255 - neopixel[2]) * CONSTANTS.LED_TINT_FACTOR})`;
 
-        if (this.neopixel.current) {
-            this.neopixel.current.setAttribute("fill", rgbColor);
+        if (this.ledsRefs.neopixel.current) {
+            this.ledsRefs.neopixel.current.setAttribute("fill", rgbColor);
         }
         if (this.pixelStopGradient.current) {
             if (neopixel === DEFAULT_CLUE_STATE.neopixel) {
