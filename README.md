@@ -115,7 +115,10 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 ## How to use
 
-To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
+To use Device Simulator Express, install the extension from the marketplace 
+and reload VS Code.
+
+To access many of the commands, you need to open the command palette. This can be done with `CTRL + SHIFT + P` for Windows and Linux / `CMD + SHIFT + P` for Mac. It can also be accessed from the toolbar `View -> Command Palette`.
 
 ### I. Take a look at the "Device Simulator Express: Getting Started" Command.
 1. Type in `"Device Simulator Express: Getting Started"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
