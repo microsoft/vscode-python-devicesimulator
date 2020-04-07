@@ -24,7 +24,7 @@ sys.stdout = user_stdout
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Insert absolute path to library for CLUE into sys.path
-sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE_DIR))
 
 # Insert absolute path to Circuitpython libraries for CLUE into sys.path
 sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
