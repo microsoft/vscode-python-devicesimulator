@@ -4,7 +4,7 @@
 import * as React from "react";
 import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import CONSTANTS from "../../constants";
+import CONSTANTS, { CLUE_LEDS_COLORS } from "../../constants";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -1093,15 +1093,20 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     private updateLeds() {
         // update white led
-        if (this.props.whiteLedStatus) {
-            this.ledsRefs.white_leds.map(
-                (ledRef: React.RefObject<SVGRectElement>) => {
-                    if (ledRef.current) {
-                        ledRef.current.setAttribute("fill", "white");
-                    }
+        this.ledsRefs.white_leds.map(
+            (ledRef: React.RefObject<SVGRectElement>) => {
+                if (ledRef.current && this.props.whiteLedStatus) {
+                    ledRef.current.setAttribute(
+                        "fill",
+                        CLUE_LEDS_COLORS.WHITE_LEDS_ON
+                    );
+                } else if (ledRef.current) {
+                    ledRef.current.setAttribute(
+                        "fill",
+                        CLUE_LEDS_COLORS.WHITE_LEDS_OFF
+                    );
                 }
-            );
-        } else {
-        }
+            }
+        );
     }
 }
