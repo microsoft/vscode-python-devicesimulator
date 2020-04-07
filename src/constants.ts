@@ -132,9 +132,11 @@ export const CONSTANTS = {
         ),
     },
     FILESYSTEM: {
-        OUTPUT_DIRECTORY: "out",
+        BASE_CIRCUITPYTHON: "base_circuitpython",
+        CLUE: "clue",
         PYTHON_VENV_DIR: "venv",
         MICROPYTHON_DIRECTORY: "micropython",
+        OUTPUT_DIRECTORY: "out",
     },
     INFO: {
         ALREADY_SUCCESSFUL_INSTALL: localize(

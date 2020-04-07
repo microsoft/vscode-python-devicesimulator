@@ -155,8 +155,7 @@ class TestGroup(object):
         group_sub.append(tg)
         group_main.append(group_sub)
         group_main.append(tg2)
-        # img = Image.new("RGBA", (240, 240))
-        img = group_main.draw()
+        img = group_main._Group__draw()
 
         img.putalpha(255)
         expected = Image.open(

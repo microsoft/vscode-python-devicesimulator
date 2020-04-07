@@ -42,8 +42,3 @@ class TestBitmap(object):
 
         with pytest.raises(IndexError, match=CONSTANTS.PIXEL_OUT_OF_BOUNDS):
             val = bitmap[i]
-
-    @pytest.mark.parametrize("x, y", [(1, 231), (342, 36), (0, 0)])
-    def test_get_len(self, x, y):
-        bitmap = Bitmap(x, y)
-        assert len(bitmap) == x * y
