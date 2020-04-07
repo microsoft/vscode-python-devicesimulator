@@ -37,7 +37,7 @@ class Terminal:
 
         self.__lock.release()
 
-    def draw(self, no_verif=False):
+    def __draw(self, no_verif=False):
 
         import adafruit_display_text.label
 
@@ -74,7 +74,7 @@ class Terminal:
 
         self.__lock.release()
 
-        splash.draw(img=self.__base_img.copy())
+        splash._Group__draw(img=self.__base_img.copy())
 
     def add_str_to_terminal(self, curr_display_string=""):
 
@@ -105,4 +105,4 @@ class Terminal:
         # only go ahead to draw the screen
         # if the terminal is actively on the screen
         if board.DISPLAY.active_group == None:
-            self.draw()
+            self.__draw()
