@@ -29,6 +29,11 @@ export class TelemetryHandlerService {
                     TelemetryEventName.MICROBIT_DEBUGGER_INIT_SUCCESS
                 );
                 break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                    this.telemetryAI.trackFeatureUsage(
+                        TelemetryEventName.CLUE_DEBUGGER_INIT_SUCCESS
+                    );
+                    break;
             default:
                 break;
         }
@@ -46,6 +51,11 @@ export class TelemetryHandlerService {
                     TelemetryEventName.MICROBIT_DEBUGGER_INIT_FAIL
                 );
                 break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_DEBUGGER_INIT_FAIL
+                );
+                break;
             default:
                 break;
         }
@@ -59,6 +69,8 @@ export class TelemetryHandlerService {
             case CONSTANTS.DEVICE_NAME.MICROBIT:
                 this.handleMicrobitButtonPressTelemetry(buttonState);
                 break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                this.handleClueButtonPressTelemetry(buttonState)
             default:
                 break;
         }
@@ -83,6 +95,9 @@ export class TelemetryHandlerService {
                 break;
             case CONSTANTS.DEVICE_NAME.MICROBIT:
                 this.handleMicrobitSensorTelemetry(sensor);
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                this.handleClueSensorTelemetry(sensor);
                 break;
             default:
                 break;
@@ -200,6 +215,122 @@ export class TelemetryHandlerService {
                     TelemetryEventName.MICROBIT_SIMULATOR_MOTION_SENSOR
                 );
                 break;
+            case "gesture":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.MICROBIT_SIMULATOR_GESTURE_SENSOR
+                );
+                break;
+        }
+    };
+
+    public handleClueButtonPressTelemetry = (buttonState: any) => {
+        if (buttonState.button_a && buttonState.button_b) {
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLUE_SIMULATOR_BUTTON_AB
+            );
+        } else if (buttonState.button_a) {
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLUE_SIMULATOR_BUTTON_A
+            );
+        } else if (buttonState.button_b) {
+            this.telemetryAI.trackFeatureUsage(
+                TelemetryEventName.CLUE_SIMULATOR_BUTTON_B
+            );
+        }
+    }
+
+    public handleClueSensorTelemetry = (sensor: string) => {
+        switch (sensor) {
+            case "temperature":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_TEMPERATURE_SENSOR
+                );
+                break;
+            case "light_r":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_LIGHT_SENSOR
+                );
+                break;
+            case "light_g":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_LIGHT_SENSOR
+                );
+                break;
+            case "light_b":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_LIGHT_SENSOR
+                );
+                break;
+            case "light_c":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_LIGHT_SENSOR
+                );
+                break;
+            case "motion_x":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MOTION_SENSOR
+                );
+                break;
+            case "motion_y":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MOTION_SENSOR
+                );
+                break;
+            case "motion_z":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MOTION_SENSOR
+                );
+                break;
+            case "gesture":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_GESTURE_SENSOR
+                );
+                break;
+            case "humidity":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_HUMIDITY_SENSOR
+                );
+                break;
+            case "pressure":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_PRESSURE_SENSOR
+                );
+                break;
+            case "proximity":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_PROXIMITY_SENSOR
+                );
+                break;
+            case "gyro_x":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_GYRO_SENSOR
+                );
+                break;
+            case "gyro_y":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_GYRO_SENSOR
+                );
+                break;
+            case "gyro_z":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_GYRO_SENSOR
+                );
+                break;
+            case "magnet_x":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MAGNET_SENSOR
+                );
+                break;
+            case "magnet_y":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MAGNET_SENSOR
+                );
+                break;
+            case "magnet_z":
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_SIMULATOR_MAGNET_SENSOR
+                );
+                break;
         }
     };
 
@@ -213,6 +344,11 @@ export class TelemetryHandlerService {
             case CONSTANTS.DEVICE_NAME.MICROBIT:
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.MICROBIT_ERROR_COMMAND_NEW_FILE
+                );
+                break;
+            case CONSTANTS.DEVICE_NAME.CLUE:
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_ERROR_COMMAND_NEW_FILE
                 );
                 break;
             default:
