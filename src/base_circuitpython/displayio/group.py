@@ -78,7 +78,7 @@ class Group:
         changed = val != self.__hidden
         self.__hidden = val
         for elem in self.__contents:
-            img = elem.hidden = val
+            elem.hidden = val
 
         if changed:
             self.__elem_changed()
