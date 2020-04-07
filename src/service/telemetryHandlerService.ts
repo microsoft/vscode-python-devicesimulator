@@ -2,8 +2,8 @@ import * as open from "open";
 import * as vscode from "vscode";
 import { CONSTANTS, DialogResponses, TelemetryEventName } from "../constants";
 import * as utils from "../extension_utils/utils";
-import { DeviceSelectionService } from "./deviceSelectionService";
 import TelemetryAI from "../telemetry/telemetryAI";
+import { DeviceSelectionService } from "./deviceSelectionService";
 
 export class TelemetryHandlerService {
     private telemetryAI: TelemetryAI;
@@ -244,8 +244,8 @@ export class TelemetryHandlerService {
                 break;
         }
         return {
-            deployTelemetryEvent: deployTelemetryEvent,
-            deployPerformanceTelemetryEvent: deployPerformanceTelemetryEvent,
+            deployTelemetryEvent,
+            deployPerformanceTelemetryEvent,
         };
     };
 
@@ -383,8 +383,8 @@ export class TelemetryHandlerService {
                 break;
         }
         return {
-            openSimulatorTelemetryEvent: openSimulatorTelemetryEvent,
-            openSimulatorPerformanceTelemetryEvent: openSimulatorPerformanceTelemetryEvent,
+            openSimulatorTelemetryEvent,
+            openSimulatorPerformanceTelemetryEvent,
         };
     };
 
@@ -412,8 +412,8 @@ export class TelemetryHandlerService {
                 break;
         }
         return {
-            newFileTelemetryEvent: newFileTelemetryEvent,
-            newFilePerformanceTelemetryEvent: newFilePerformanceTelemetryEvent,
+            newFileTelemetryEvent,
+            newFilePerformanceTelemetryEvent,
         };
     };
 }

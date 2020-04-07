@@ -5,8 +5,9 @@ import { SENSOR_LIST } from "../../constants";
 import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
 import { TAG_INPUT_SVG } from "../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../svgs/tag_output_svg";
+import * as CLUE_MODAL from "./clue/ClueModalContent";
 import LightSensorBar from "./LightSensorBar";
-import { Accelerometer } from "./motion/Accelerometer";
+import * as MICROBIT_MODAL from "./microbit/MicrobitModalContent";
 import MotionSensorBar from "./motion/MotionSensorBar";
 import TemperatureSensorBar from "./TemperatureSensorBar";
 
@@ -63,7 +64,7 @@ export const CPX_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
 };
 
-export const MICROBIT_TOOLBAR_ID = {
+export const MICROBIT_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
     LIGHT: "toolbar-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer-sensor",
@@ -72,6 +73,26 @@ export const MICROBIT_TOOLBAR_ID = {
     GPIO: "toolbar-gpio",
     SOUND: "toolbar-microbit-sound",
     WIRELESS: "toolbar-microbit-wireless",
+    GESTURE: "toolbar-microbit-gesture-sensor",
+    COMPASS: "toolbar-microbit-compass-sensor",
+};
+
+export const CLUE_TOOLBAR_ICON_ID = {
+    TEMPERATURE: "toolbar-clue-temperature-sensor",
+    LIGHT: "toolbar-clue-light-sensor",
+    ACCELEROMETER: "toolbar-clue-accelerometer-sensor",
+    LEDS: "toolbar-clue-led",
+    PUSH_BUTTON: "toolbar-clue-a-b-push",
+    GPIO: "toolbar-clue-gpio",
+    SPEAKER: "toolbar-speaker",
+    SOUND: "toolbar-clue-sound-sensor",
+    PRESSURE: "toolbar-clue-pressure-sensor",
+    HUMIDITY: "toolbar-clue-humidity-sensor",
+    GESTURE: "toolbar-clue-gesture-sensor",
+    PROXIMITY: "toolbar-clue-proximity-sensor",
+    BLUETOOTH: "toolbar-clue-bluetooth",
+    MAGNETOSCOPE: "toolbar-clue-magnet-sensor",
+    GYROSCOPE: "toolbar-clue-gyroscope-sensor",
 };
 
 export interface IModalContent {
@@ -147,9 +168,9 @@ export const MOTION_MODAL_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const motionSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
+        X: sensorValues[SENSOR_LIST.MOTION_X],
+        Y: sensorValues[SENSOR_LIST.MOTION_Y],
+        Z: sensorValues[SENSOR_LIST.MOTION_Z],
     };
     return {
         descriptionTitle: "toolbar-motion-sensor.title",
@@ -272,106 +293,6 @@ export const TEMPERATURE_MODAL_CONTENT = (
     };
 };
 
-export const ACCELEROMETER_MODAL_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number },
-    onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-    sendGesture?: (isActive: boolean) => void
-): IModalContent => {
-    const accelerometerSensorValues = {
-        X_AXIS: sensorValues[SENSOR_LIST.MOTION_X],
-        Y_AXIS: sensorValues[SENSOR_LIST.MOTION_Y],
-        Z_AXIS: sensorValues[SENSOR_LIST.MOTION_Z],
-    };
-    return {
-        components: (
-            <Accelerometer
-                onUpdateValue={onUpdateValue}
-                axisValues={accelerometerSensorValues}
-                onSelectGestures={onSelectGestures}
-                onSendGesture={sendGesture}
-            />
-        ),
-        descriptionText: "toolbar-accelerometer-sensor.description",
-        descriptionTitle: "toolbar-accelerometer-sensor.title",
-        id: "accelerometer",
-        tagInput: TAG_INPUT_SVG,
-        tagOutput: undefined,
-        tryItDescription: "toolbar-accelerometer-sensor.tryItDescription",
-    };
-};
-export const MICROBIT_LED_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
-): IModalContent => {
-    return {
-        descriptionTitle: "toolbar-microbit-led.title",
-        tagInput: undefined,
-        tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-led.description",
-        tryItDescription: "toolbar-microbit-led.tryItDescription",
-        components: undefined,
-        id: "microbit_LED",
-    };
-};
-
-export const MICROBIT_BUTTON_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
-): IModalContent => {
-    return {
-        descriptionTitle: "toolbar-microbit-a-b-push.title",
-        tagInput: undefined,
-        tagOutput: TAG_INPUT_SVG,
-        descriptionText: "toolbar-microbit-a-b-push.description",
-        tryItDescription: "toolbar-microbit-a-b-push.tryItDescription",
-        components: undefined,
-        id: "microbit_button",
-    };
-};
-export const MICROBIT_SOUND_MODAL_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
-): IModalContent => {
-    return {
-        descriptionTitle: "toolbar-microbit-sound.title",
-        tagInput: undefined,
-        tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-sound.description",
-        tryItDescription: "toolbar-microbit-sound.tryItDescription",
-        components: [FEATURE_REQUEST_ON_GITHUB],
-        id: "microbit_sound",
-    };
-};
-export const MICROBIT_GPIO_MODAL_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
-): IModalContent => {
-    return {
-        descriptionTitle: "toolbar-microbit-gpio.title",
-        tagInput: TAG_INPUT_SVG,
-        tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-gpio.description",
-        tryItDescription: "toolbar-microbit-gpio.tryItDescription",
-        components: [FEATURE_REQUEST_ON_GITHUB],
-        id: "microbit_gpio",
-    };
-};
-export const MICROBIT_WIRELESS_MODAL_CONTENT = (
-    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
-    sensorValues: { [key: string]: number }
-): IModalContent => {
-    return {
-        descriptionTitle: "toolbar-microbit-wireless.title",
-        tagInput: TAG_INPUT_SVG,
-        tagOutput: TAG_OUTPUT_SVG,
-        descriptionText: "toolbar-microbit-wireless.description",
-        tryItDescription: "toolbar-microbit-wireless.tryItDescription",
-        components: [FEATURE_REQUEST_ON_GITHUB],
-        id: "microbit_wireless",
-    };
-};
-
 export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.GPIO, GPIO_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.IR, IR_MODAL_CONTENT],
@@ -384,12 +305,32 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.SPEAKER, SPEAKER_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.SWITCH, SWITCH_MODAL_CONTENT],
     [CPX_TOOLBAR_ICON_ID.TEMPERATURE, TEMPERATURE_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.ACCELEROMETER, ACCELEROMETER_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.LEDS, MICROBIT_LED_CONTENT],
-    [MICROBIT_TOOLBAR_ID.PUSH_BUTTON, MICROBIT_BUTTON_CONTENT],
-    [MICROBIT_TOOLBAR_ID.GPIO, MICROBIT_GPIO_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.SOUND, MICROBIT_SOUND_MODAL_CONTENT],
-    [MICROBIT_TOOLBAR_ID.WIRELESS, MICROBIT_WIRELESS_MODAL_CONTENT],
+    [
+        MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
+        MICROBIT_MODAL.ACCELEROMETER_CONTENT,
+    ],
+    [MICROBIT_TOOLBAR_ICON_ID.COMPASS, MICROBIT_MODAL.COMPASS_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.LEDS, MICROBIT_MODAL.LED_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON, MICROBIT_MODAL.BUTTON_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.GPIO, MICROBIT_MODAL.GPIO_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.SOUND, MICROBIT_MODAL.SOUND_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.WIRELESS, MICROBIT_MODAL.WIRELESS_CONTENT],
+    [MICROBIT_TOOLBAR_ICON_ID.COMPASS, MICROBIT_MODAL.COMPASS_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.TEMPERATURE, CLUE_MODAL.TEMPERATURE_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.ACCELEROMETER, CLUE_MODAL.ACCELEROMETER_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.PUSH_BUTTON, CLUE_MODAL.BUTTON_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.GPIO, CLUE_MODAL.GPIO_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.LIGHT, CLUE_MODAL.LIGHT_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.LEDS, CLUE_MODAL.LED_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.SOUND, CLUE_MODAL.SOUND_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.PRESSURE, CLUE_MODAL.PRESSURE_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.HUMIDITY, CLUE_MODAL.HUMIDITY_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.PROXIMITY, CLUE_MODAL.PROXIMITY_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.BLUETOOTH, CLUE_MODAL.BLUETOOTH_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.ACCELEROMETER, CLUE_MODAL.ACCELEROMETER_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.SPEAKER, CLUE_MODAL.SPEAKER_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.GYROSCOPE, CLUE_MODAL.GYROSCOPE_CONTENT],
+    [CLUE_TOOLBAR_ICON_ID.MAGNETOSCOPE, CLUE_MODAL.MAGNETOSCOPE_CONTENT],
 ]);
 
 export const getModalContent = (
@@ -399,18 +340,15 @@ export const getModalContent = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ) => {
+    if (label === CLUE_TOOLBAR_ICON_ID.GESTURE) {
+        return CLUE_MODAL.GESTURE_CONTENT(onSelectGestures, sendGesture);
+    } else if (label === MICROBIT_TOOLBAR_ICON_ID.GESTURE) {
+        return MICROBIT_MODAL.GESTURE_CONTENT(onSelectGestures, sendGesture);
+    }
     const modalContentConstructor = LABEL_TO_MODAL_CONTENT_CONSTRUCTOR.get(
         label
     );
     if (modalContentConstructor) {
-        if (label === MICROBIT_TOOLBAR_ID.ACCELEROMETER) {
-            return ACCELEROMETER_MODAL_CONTENT(
-                onUpdateValue,
-                sensorValues,
-                onSelectGestures,
-                sendGesture
-            );
-        }
         return modalContentConstructor(onUpdateValue, sensorValues);
     } else {
         return;

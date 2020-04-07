@@ -8,7 +8,7 @@ import { sendMessage } from "../../../utils/MessageUtils";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import svg from "../../cpx/Svg_utils";
 import SensorButton from "../SensorButton";
-import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
+import { GenericSliderComponent } from "../GenericSliderComponent";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -46,9 +46,9 @@ const MOTION_SENSOR_PROPERTIES: ISensorProps = {
 };
 interface IProps {
     axisValues: {
-        X_AXIS: number;
-        Y_AXIS: number;
-        Z_AXIS: number;
+        X: number;
+        Y: number;
+        Z: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
@@ -72,7 +72,7 @@ class MotionSensorBar extends React.Component<IProps> {
                     />
                 </div>
                 <br />
-                <ThreeDimensionSlider
+                <GenericSliderComponent
                     axisProperties={MOTION_SENSOR_PROPERTIES}
                     onUpdateValue={this.props.onUpdateValue}
                     axisValues={this.props.axisValues}
