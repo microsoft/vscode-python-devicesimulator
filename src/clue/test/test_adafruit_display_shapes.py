@@ -48,7 +48,7 @@ class TestAdafruitDisplayShapes(object):
         # TAKEN FROM ADAFRUIT'S DISPLAY SHAPES LIBRARY
         # https://github.com/ladyada/Adafruit_CircuitPython_Display_Shapes/blob/master/examples/display_shapes_simpletest.py
         splash = displayio.Group(max_size=10)
-        splash.show = self._send_helper
+        splash._Group__show = self.__send_helper
         board.DISPLAY.show(splash)
         color_bitmap = displayio.Bitmap(320, 240, 1)
         color_palette = displayio.Palette(1)
@@ -77,5 +77,5 @@ class TestAdafruitDisplayShapes(object):
 
         helper._Helper__test_image_equality(self.main_img.load(), expected_images[4])
 
-    def _send_helper(self, image):
+    def __send_helper(self, image):
         self.main_img = image

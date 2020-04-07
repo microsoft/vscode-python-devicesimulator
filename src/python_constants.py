@@ -47,6 +47,7 @@ CPX = "CPX"
 MICROBIT = "micro:bit"
 
 CLUE = "CLUE"
+CLUE_DIR = "clue"
 
 CIRCUITPYTHON = "base_circuitpython"
 
