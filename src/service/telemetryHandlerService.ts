@@ -71,6 +71,7 @@ export class TelemetryHandlerService {
                 break;
             case CONSTANTS.DEVICE_NAME.CLUE:
                 this.handleClueButtonPressTelemetry(buttonState);
+                break;
             default:
                 break;
         }
