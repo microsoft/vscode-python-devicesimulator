@@ -11,6 +11,7 @@ export interface IRefObject {
 interface IProps {
     displayImage: string;
     neopixel: number[];
+    whiteLedStatus: boolean;
 }
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
@@ -1088,6 +1089,19 @@ export class ClueSvg extends React.Component<IProps, {}> {
                 );
             }
             this.pixelStopGradient.current.setAttribute("stop-color", rgbColor);
+        }
+    }
+    private updateLeds() {
+        // update white led
+        if (this.props.whiteLedStatus) {
+            this.ledsRefs.white_leds.map(
+                (ledRef: React.RefObject<SVGRectElement>) => {
+                    if (ledRef.current) {
+                        ledRef.current.setAttribute("fill", "white");
+                    }
+                }
+            );
+        } else {
         }
     }
 }
