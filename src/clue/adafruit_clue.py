@@ -229,6 +229,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         self.__state[CONSTANTS.CLUE_STATE.GYRO_X] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Y] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Z] = 0
+        # LEDs
+        self.__state[CONSTANTS.CLUE_STATE.RED_LED] = False
+        self.__state[CONSTANTS.CLUE_STATE.WHITE_LEDS] = False
+
         self.button_mapping = {
             CONSTANTS.CLUE_STATE.BUTTON_A: "A",
             CONSTANTS.CLUE_STATE.BUTTON_B: "B",
@@ -519,9 +523,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
 
     @property
     def white_leds(self):
-        """Not Implemented!
-        
-        The red led next to the USB plug labeled LED.
+        """The red led next to the USB plug labeled LED.
         .. image :: ../docs/_static/white_leds.jpg
           :alt: White LEDs
         This example turns on the white LEDs.
@@ -530,18 +532,15 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.white_leds = True
         """
-        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+        return self.__state[CONSTANTS.CLUE_STATE.WHITE_LEDS]
 
     @white_leds.setter
     def white_leds(self, value):
-        """Not Implemented!"""
-        utils.print_for_unimplemented_functions(Clue.white_leds.__name__)
+        self.__set_leds(CONSTANTS.CLUE_STATE.WHITE_LEDS, value)
 
     @property
     def red_led(self):
-        """Not Implemented!
-        
-        The red led next to the USB plug labeled LED.
+        """The red led next to the USB plug labeled LED.
         .. image :: ../docs/_static/red_led.jpg
           :alt: Red LED
         This example turns on the red LED.
@@ -550,12 +549,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.red_led = True
         """
-        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+        return self.__state[CONSTANTS.CLUE_STATE.RED_LED]
 
     @red_led.setter
     def red_led(self, value):
-        """Not Implemented!"""
-        utils.print_for_unimplemented_functions(Clue.red_led.__name__)
+        self.__set_leds(CONSTANTS.CLUE_STATE.RED_LED, value)
 
     def play_tone(self, frequency, duration):
         """ Not Implemented!
@@ -744,6 +742,12 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                 self.button_mapping[button]
             )
         self.__state[button] = value
+
+    def __set_leds(self, led, value):
+        value = bool(value)
+        self.__state[led] = value
+        sendable_json = {led: value}
+        utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 
 clue = Clue()  # pylint: disable=invalid-name
