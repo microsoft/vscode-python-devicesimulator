@@ -3104,6 +3104,103 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
+            aria-label="toolbar microbit-compass-sensor"
+            className="toolbar-button button"
+            id="toolbar-microbit-compass-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="18px"
+              version="1.1"
+              viewBox="0 0 200 165"
+              width="18px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill-rule="evenodd"
+                id="gyro"
+              >
+                <ellipse
+                  cx="109.59"
+                  cy="104.27"
+                  fill="none"
+                  rx="24.32"
+                  ry="51.56"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -41.6346 108.0341)"
+                />
+                <ellipse
+                  cx="107.83"
+                  cy="104.27"
+                  fill="none"
+                  rx="53.89"
+                  ry="21.99"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -42.151 106.7874)"
+                />
+                <circle
+                  cx="109.59"
+                  cy="104.27"
+                  fill="none"
+                  r="64.41"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                />
+                <circle
+                  cx="109.59"
+                  cy="102.51"
+                  r="13.01"
+                />
+                <circle
+                  cx="44.44"
+                  cy="169.43"
+                  r="8.76"
+                />
+                <rect
+                  height="6.97"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -94.262 86.2351)"
+                  width="24.1"
+                  x="44.92"
+                  y="153.42"
+                />
+                <circle
+                  cx="174"
+                  cy="40.42"
+                  r="8.76"
+                />
+                <rect
+                  height="6.97"
+                  transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 314.2302 -26.5262)"
+                  width="24.1"
+                  x="150.56"
+                  y="48.33"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
             aria-label="toolbar microbit-sound"
             className="toolbar-button button"
             id="toolbar-microbit-sound-button"

@@ -6,7 +6,7 @@ import { Accelerometer } from "../motion/Accelerometer";
 import { Gesture } from "../motion/Gesture";
 import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
 
-export const ACCELEROMETER_MODAL_CONTENT = (
+export const ACCELEROMETER_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -60,7 +60,7 @@ export const BUTTON_CONTENT = (
         id: "microbit_button",
     };
 };
-export const SOUND_MODAL_CONTENT = (
+export const SOUND_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -74,7 +74,7 @@ export const SOUND_MODAL_CONTENT = (
         id: "microbit_sound",
     };
 };
-export const GPIO_MODAL_CONTENT = (
+export const GPIO_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
@@ -86,6 +86,20 @@ export const GPIO_MODAL_CONTENT = (
         tryItDescription: "toolbar-microbit-gpio.tryItDescription",
         components: [FEATURE_REQUEST_ON_GITHUB],
         id: "microbit_gpio",
+    };
+};
+export const COMPASS_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    return {
+        descriptionTitle: "toolbar-microbit-compass-sensor.title",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: TAG_OUTPUT_SVG,
+        descriptionText: "toolbar-microbit-compass-sensor.description",
+        tryItDescription: "toolbar-microbit-compass-sensor.tryItDescription",
+        components: [FEATURE_REQUEST_ON_GITHUB],
+        id: "microbit_compass",
     };
 };
 export const WIRELESS_CONTENT = (
@@ -102,7 +116,7 @@ export const WIRELESS_CONTENT = (
         id: "microbit_wireless",
     };
 };
-export const GESTURE_MODAL_CONTENT = (
+export const GESTURE_CONTENT = (
     onSelectGestures?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     sendGesture?: (isActive: boolean) => void
 ): IModalContent => {

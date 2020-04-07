@@ -111,6 +111,12 @@ export enum SENSOR_LIST {
     HUMIDITY = "humidity",
     PRESSURE = "pressure",
     PROXIMITY = "proximity",
+    MAGNET_X = "magnet_x",
+    MAGNET_Y = "magnet_y",
+    MAGNET_Z = "magnet_z",
+    GYRO_X = "gyro_x",
+    GYRO_Y = "gyro_y",
+    GYRO_Z = "gyro_z",
 }
 
 export const GESTURES_MICROBIT = [
@@ -126,7 +132,7 @@ export const GESTURES_MICROBIT = [
     "6g",
     "8g",
 ];
-export const GESTURES_CLUE = ["up", "down", "left", "right"];
+export const GESTURES_CLUE = ["up", "down", "left", "right", "shake"];
 
 export enum WEBVIEW_ATTRIBUTES_KEY {
     INITIAL_DEVICE = "initial_device",

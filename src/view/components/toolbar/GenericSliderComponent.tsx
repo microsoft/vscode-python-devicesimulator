@@ -1,7 +1,7 @@
 import * as React from "react";
-import { SENSOR_LIST } from "../../../../constants";
-import { ISensorProps, ISliderProps } from "../../../../viewUtils";
-import InputSlider from "../../InputSlider";
+import { SENSOR_LIST } from "../../constants";
+import { ISensorProps, ISliderProps } from "../../viewUtils";
+import InputSlider from "./InputSlider";
 
 interface IProps {
     axisProperties: ISensorProps;
@@ -11,9 +11,9 @@ interface IProps {
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
-export const ThreeDimensionSlider: React.FC<IProps> = props => {
+export const GenericSliderComponent: React.FC<IProps> = props => {
     return (
-        <div className="ThreeDimensionSlider">
+        <div className="GenericSliderComponent">
             {props.axisProperties.sliderProps.map(
                 (sliderProperties: ISliderProps, index: number) => {
                     return (

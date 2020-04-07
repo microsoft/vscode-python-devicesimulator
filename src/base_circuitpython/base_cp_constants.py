@@ -31,6 +31,7 @@ class CLUE_STATE:
 CPX = "CPX"
 CLUE = "CLUE"
 PIXELS = "pixels"
+SHAKE = "shake"
 
 CLUE_PIN = "D18"
 
@@ -55,6 +56,12 @@ ALL_EXPECTED_INPUT_EVENTS = set(
         CLUE_STATE.PRESSURE,
         CLUE_STATE.PROXIMITY,
         CLUE_STATE.GESTURE,
+        CLUE_STATE.GYRO_X,
+        CLUE_STATE.GYRO_Y,
+        CLUE_STATE.GYRO_Z,
+        CLUE_STATE.MAGNET_X,
+        CLUE_STATE.MAGNET_Y,
+        CLUE_STATE.MAGNET_Z,
     ]
 )
 

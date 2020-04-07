@@ -2,7 +2,7 @@ import * as React from "react";
 import { SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 
-import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
+import { GenericSliderComponent } from "../GenericSliderComponent";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -54,7 +54,7 @@ export class Accelerometer extends React.Component<IProps> {
     render() {
         return (
             <div className="accelerometer">
-                <ThreeDimensionSlider
+                <GenericSliderComponent
                     axisProperties={MOTION_SENSOR_PROPERTIES}
                     onUpdateValue={this.props.onUpdateValue}
                     axisValues={this.props.axisValues}

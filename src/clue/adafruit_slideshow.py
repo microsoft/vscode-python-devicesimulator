@@ -41,6 +41,62 @@ class PlayBackDirection:
 
 # custom
 class SlideShow:
+    """
+    Class for displaying a slideshow of .bmp images on displays.
+    :param str folder: Specify the folder containing the image files, in quotes. Default is
+                       the root directory, ``"/"``.
+    :param PlayBackOrder order: The order in which the images display. You can choose random
+                                (``RANDOM``) or alphabetical (``ALPHABETICAL``). Default is
+                                ``ALPHABETICAL``.
+    :param bool loop: Specify whether to loop the images or play through the list once. `True`
+                 if slideshow will continue to loop, ``False`` if it will play only once.
+                 Default is ``True``.
+    :param int dwell: The number of seconds each image displays, in seconds. Default is 3.
+    :param bool fade_effect: Specify whether to include the fade effect between images. ``True``
+                        tells the code to fade the backlight up and down between image display
+                        transitions. ``False`` maintains max brightness on the backlight between
+                        image transitions. Default is ``True``.
+    :param bool auto_advance: Specify whether to automatically advance after dwell seconds. ``True``
+                 if slideshow should auto play, ``False`` if you want to control advancement
+                 manually.  Default is ``True``.
+    :param PlayBackDirection direction: The playback direction.
+    Example code for Hallowing Express. With this example, the slideshow will play through once
+    in alphabetical order:
+    .. code-block:: python
+        from adafruit_slideshow import PlayBackOrder, SlideShow
+        import board
+        import pulseio
+        slideshow = SlideShow(board.DISPLAY, pulseio.PWMOut(board.TFT_BACKLIGHT), folder="/",
+                              loop=False, order=PlayBackOrder.ALPHABETICAL)
+        while slideshow.update():
+            pass
+    Example code for Hallowing Express. Sets ``dwell`` to 0 seconds, turns ``auto_advance`` off,
+    and uses capacitive touch to advance backwards and forwards through the images and to control
+    the brightness level of the backlight:
+    .. code-block:: python
+        from adafruit_slideshow import PlayBackOrder, SlideShow, PlayBackDirection
+        import touchio
+        import board
+        import pulseio
+        forward_button = touchio.TouchIn(board.TOUCH4)
+        back_button = touchio.TouchIn(board.TOUCH1)
+        brightness_up = touchio.TouchIn(board.TOUCH3)
+        brightness_down = touchio.TouchIn(board.TOUCH2)
+        slideshow = SlideShow(board.DISPLAY, pulseio.PWMOut(board.TFT_BACKLIGHT), folder="/",
+                              auto_advance=False, dwell=0)
+        while True:
+            if forward_button.value:
+                slideshow.direction = PlayBackDirection.FORWARD
+                slideshow.advance()
+            if back_button.value:
+                slideshow.direction = PlayBackDirection.BACKWARD
+                slideshow.advance()
+            if brightness_up.value:
+                slideshow.brightness += 0.001
+            elif brightness_down.value:
+                slideshow.brightness -= 0.001
+    """
+
     def __init__(
         self,
         display,
@@ -77,7 +133,7 @@ class SlideShow:
         """Specify the playback direction.  Default is ``PlayBackDirection.FORWARD``.  Can also be
         ``PlayBackDirection.BACKWARD``."""
 
-        self.advance = self._advance_with_fade
+        self.advance = self.__advance_with_fade
         """Displays the next image. Returns True when a new image was displayed, False otherwise.
         """
 
@@ -85,7 +141,7 @@ class SlideShow:
 
         # assign new advance method if fade is disabled
         if not fade_effect:
-            self.advance = self._advance_no_fade
+            self.advance = self.__advance_no_fade
 
         self._img_start = None
 
@@ -112,7 +168,7 @@ class SlideShow:
         self._curr_img = ""
 
         # load images into main queue
-        self._load_images()
+        self.__load_images()
 
         display.show(self)
         # show the first working image
@@ -135,7 +191,7 @@ class SlideShow:
             raise ValueError("Order must be either 'RANDOM' or 'ALPHABETICAL'")
 
         self._order = order
-        self._load_images()
+        self.__load_images()
 
     @property
     def brightness(self):
@@ -158,12 +214,12 @@ class SlideShow:
 
         return self.advance()
 
-    def _get_next_img(self):
+    def __get_next_img(self):
 
         # handle empty queue
         if not len(self.pic_queue):
             if self.loop:
-                self._load_images()
+                self.__load_images()
             else:
                 return ""
 
@@ -172,7 +228,7 @@ class SlideShow:
         else:
             return self.pic_queue.pop()
 
-    def _load_images(self):
+    def __load_images(self):
         dir_imgs = []
         for d in self.dirs:
             try:
@@ -196,7 +252,7 @@ class SlideShow:
         # (must be list beforehand for potential randomization)
         self.pic_queue = collections.deque(dir_imgs)
 
-    def _advance_with_fade(self):
+    def __advance_with_fade(self):
         if board.DISPLAY.active_group != self:
             return
 
@@ -204,7 +260,7 @@ class SlideShow:
         advance_sucessful = False
 
         while not advance_sucessful:
-            new_path = self._get_next_img()
+            new_path = self.__get_next_img()
             if new_path == "":
                 return False
 
@@ -237,7 +293,7 @@ class SlideShow:
             sendable_img = Image.blend(
                 black_overlay, old_img, i * self.brightness / self.fade_frames
             )
-            self._send(sendable_img)
+            self.__send(sendable_img)
 
         time.sleep(self._BASE_DWELL_DARK)
 
@@ -246,14 +302,14 @@ class SlideShow:
             sendable_img = Image.blend(
                 black_overlay, new_img, i * self.brightness / self.fade_frames
             )
-            self._send(sendable_img)
+            self.__send(sendable_img)
 
         self._curr_img_handle = new_img
         self._curr_img = new_path
         self._img_start = time.monotonic()
         return True
 
-    def _advance_no_fade(self):
+    def __advance_no_fade(self):
         if board.DISPLAY.active_group != self:
             return
 
@@ -262,7 +318,7 @@ class SlideShow:
         advance_sucessful = False
 
         while not advance_sucessful:
-            new_path = self._get_next_img()
+            new_path = self.__get_next_img()
             if new_path == "":
                 return False
 
@@ -304,14 +360,14 @@ class SlideShow:
             )
             img_piece = new_img.crop((0, 0, CONSTANTS.SCREEN_HEIGHT_WIDTH, curr_y))
             old_img.paste(img_piece)
-            self._send(old_img)
+            self.__send(old_img)
 
         self._curr_img_handle = new_img
         self._curr_img = new_path
         self._img_start = time.monotonic()
         return True
 
-    def _send(self, img):
+    def __send(self, img):
         # sends current bmp_img to the frontend
         buffered = BytesIO()
         img.save(buffered, format=CONSTANTS.BMP_IMG)

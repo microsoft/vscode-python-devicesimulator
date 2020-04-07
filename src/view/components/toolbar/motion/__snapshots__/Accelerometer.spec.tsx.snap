@@ -5,7 +5,7 @@ exports[`Accelerometer component  should render correctly 1`] = `
   className="accelerometer"
 >
   <div
-    className="ThreeDimensionSlider"
+    className="GenericSliderComponent"
   >
     <div
       className="inputSlider"

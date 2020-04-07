@@ -59,7 +59,7 @@ class TestAdafruitDisplayText(object):
         text_area.x = x
         text_area.y = y
 
-        main_img = text_area.draw()
+        main_img = text_area._Group__draw()
 
         helper._Helper__test_image_equality(main_img.load(), loaded_img)
         test_count += 1

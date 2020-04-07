@@ -162,14 +162,10 @@ class _ClueSimpleTextDisplay:
     def show(self):
         """Call show() to display the data list."""
         self._display.show(self.text_group)
-        # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
 
     def show_terminal(self):
         """Revert to terminalio screen."""
-
         self._display.show(None)
-        # TODO: implement terminal for clue screen
-        return
 
 
 class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-methods
@@ -229,6 +225,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         self.__state[CONSTANTS.CLUE_STATE.GYRO_X] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Y] = 0
         self.__state[CONSTANTS.CLUE_STATE.GYRO_Z] = 0
+        self.button_mapping = {
+            CONSTANTS.CLUE_STATE.BUTTON_A: "A",
+            CONSTANTS.CLUE_STATE.BUTTON_B: "B",
+        }
 
     @property
     def button_a(self):
@@ -286,8 +286,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         )
 
     def shake(self, shake_threshold=30, avg_count=10, total_delay=0.1):
-        """Not implemented!
-        Detect when the accelerometer is shaken. Optional parameters:
+        """Detect when the accelerometer is shaken. Optional parameters:
         :param shake_threshold: Increase or decrease to change shake sensitivity. This
                                 requires a minimum value of 10. 10 is the total
                                 acceleration if the board is not moving, therefore
@@ -298,7 +297,8 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         :param total_delay: The total time in seconds it takes to obtain avg_count
                             readings from acceleration. (Default 0.1)
         """
-        utils.print_for_unimplemented_functions(Clue.shake.__name__)
+        is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == CONSTANTS.SHAKE
+        return is_shaken
 
     @property
     def color(self):
@@ -383,7 +383,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print("Gesture: {}".format(clue.gesture))
         """
         gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
-        return gesture_mapping[self.__state[CONSTANTS.CLUE_STATE.GESTURE]]
+        return gesture_mapping.get(self.__state[CONSTANTS.CLUE_STATE.GESTURE], 0)
 
     @property
     def humidity(self):
@@ -418,12 +418,17 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             clue.sea_level_pressure = 1015
             print("Altitude: {:.1f}m".format(clue.altitude))
         """
-        altitude = 44330 * (
-            1.0
+        # National Oceanic and Atmospheric Administration (NOAA) formula for converting atmospheric pressure to pressure altitude.
+        OUTSIDE_MULTIPLER_CONSTANT = 44330
+        POWER_CONSTANT = 0.1903
+        WHOLE_CONSTANT = 1
+
+        altitude = OUTSIDE_MULTIPLER_CONSTANT * (
+            WHOLE_CONSTANT
             - math.pow(
                 self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
                 / self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE],
-                0.1903,
+                POWER_CONSTANT,
             )
         )
         return altitude
@@ -730,14 +735,11 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
 
     # helpers
     def __update_button(self, button, value):
-        if button == CONSTANTS.CLUE_STATE.BUTTON_A:
-            if value:
-                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("A")
-            self.__state[CONSTANTS.CLUE_STATE.BUTTON_A] = value
-        elif button == CONSTANTS.CLUE_STATE.BUTTON_B:
-            if value:
-                self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add("B")
-            self.__state[CONSTANTS.CLUE_STATE.BUTTON_B] = value
+        if value:
+            self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].add(
+                self.button_mapping[button]
+            )
+        self.__state[button] = value
 
 
 clue = Clue()  # pylint: disable=invalid-name

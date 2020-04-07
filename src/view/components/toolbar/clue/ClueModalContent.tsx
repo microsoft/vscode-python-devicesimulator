@@ -4,7 +4,7 @@ import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { Accelerometer } from "../motion/Accelerometer";
 import { Gesture } from "../motion/Gesture";
-import { ThreeDimensionSlider } from "../motion/threeDimensionSlider/ThreeDimensionSlider";
+import { GenericSliderComponent } from "../GenericSliderComponent";
 import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
 import TemperatureSensorBar from "../TemperatureSensorBar";
 import * as SENSOR_PROPERTIES from "./ClueSensorProperties";
@@ -68,6 +68,56 @@ export const ACCELEROMETER_CONTENT = (
         tryItDescription: "toolbar-clue-accelerometer-sensor.tryItDescription",
     };
 };
+export const GYROSCOPE_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    const gyroSensorValues = {
+        X: sensorValues[SENSOR_LIST.GYRO_X],
+        Y: sensorValues[SENSOR_LIST.GYRO_Y],
+        Z: sensorValues[SENSOR_LIST.GYRO_Z],
+    };
+    return {
+        components: (
+            <GenericSliderComponent
+                onUpdateValue={onUpdateValue}
+                axisValues={gyroSensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE_GYRO_PROPERTIES}
+            />
+        ),
+        descriptionText: "toolbar-clue-gyroscope-sensor.description",
+        descriptionTitle: "toolbar-clue-gyroscope-sensor.title",
+        id: "gyroscope",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        tryItDescription: "toolbar-clue-gyroscope-sensor.tryItDescription",
+    };
+};
+export const MAGNETOSCOPE_CONTENT = (
+    onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
+    sensorValues: { [key: string]: number }
+): IModalContent => {
+    const magnetSensorValues = {
+        X: sensorValues[SENSOR_LIST.MAGNET_X],
+        Y: sensorValues[SENSOR_LIST.MAGNET_Y],
+        Z: sensorValues[SENSOR_LIST.MAGNET_Z],
+    };
+    return {
+        components: (
+            <GenericSliderComponent
+                onUpdateValue={onUpdateValue}
+                axisValues={magnetSensorValues}
+                axisProperties={SENSOR_PROPERTIES.CLUE_MAGNET_PROPERTIES}
+            />
+        ),
+        descriptionText: "toolbar-clue-magnet-sensor.description",
+        descriptionTitle: "toolbar-clue-magnet-sensor.title",
+        id: "magnetoscope",
+        tagInput: TAG_INPUT_SVG,
+        tagOutput: undefined,
+        tryItDescription: "toolbar-clue-magnet-sensor.tryItDescription",
+    };
+};
 
 export const LIGHT_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
@@ -81,7 +131,7 @@ export const LIGHT_CONTENT = (
     };
     return {
         components: (
-            <ThreeDimensionSlider
+            <GenericSliderComponent
                 onUpdateValue={onUpdateValue}
                 axisValues={accelerometerSensorValues}
                 axisProperties={SENSOR_PROPERTIES.CLUE_LIGHT_PROPERTIES}
@@ -110,7 +160,7 @@ export const HUMIDITY_CONTENT = (
         descriptionText: "toolbar-clue-humidity-sensor.description",
         tryItDescription: "toolbar-clue-humidity-sensor.tryItDescription",
         components: [
-            <ThreeDimensionSlider
+            <GenericSliderComponent
                 onUpdateValue={onUpdateValue}
                 axisValues={humiditySensorValues}
                 axisProperties={SENSOR_PROPERTIES.CLUE_HUMIDITY_PROPERTIES}
@@ -155,7 +205,7 @@ export const PROXIMITY_CONTENT = (
         descriptionText: "toolbar-clue-proximity-sensor.description",
         tryItDescription: "toolbar-clue-proximity-sensor.tryItDescription",
         components: [
-            <ThreeDimensionSlider
+            <GenericSliderComponent
                 onUpdateValue={onUpdateValue}
                 axisValues={proximitySensorValues}
                 axisProperties={SENSOR_PROPERTIES.CLUE__PROXIMITY_PROPERTIES}
@@ -179,7 +229,7 @@ export const PRESSURE_CONTENT = (
         descriptionText: "toolbar-clue-pressure-sensor.description",
         tryItDescription: "toolbar-clue-pressure-sensor.tryItDescription",
         components: [
-            <ThreeDimensionSlider
+            <GenericSliderComponent
                 onUpdateValue={onUpdateValue}
                 axisValues={pressureSensorValues}
                 axisProperties={SENSOR_PROPERTIES.CLUE_PRESSURE_PROPERTIES}
