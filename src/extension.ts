@@ -1012,7 +1012,7 @@ const updatePythonExtraPaths = () => {
             __dirname,
             path.join(__dirname, CONSTANTS.FILESYSTEM.MICROPYTHON_DIRECTORY),
             path.join(__dirname, CONSTANTS.FILESYSTEM.CLUE),
-            path.join(__dirname, CONSTANTS.FILESYSTEM.BASE_CIRCUITPYTHON)
+            path.join(__dirname, CONSTANTS.FILESYSTEM.BASE_CIRCUITPYTHON),
         ],
         vscode.ConfigurationTarget.Global
     );
