@@ -30,10 +30,10 @@ export class TelemetryHandlerService {
                 );
                 break;
             case CONSTANTS.DEVICE_NAME.CLUE:
-                    this.telemetryAI.trackFeatureUsage(
-                        TelemetryEventName.CLUE_DEBUGGER_INIT_SUCCESS
-                    );
-                    break;
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.CLUE_DEBUGGER_INIT_SUCCESS
+                );
+                break;
             default:
                 break;
         }
@@ -70,7 +70,7 @@ export class TelemetryHandlerService {
                 this.handleMicrobitButtonPressTelemetry(buttonState);
                 break;
             case CONSTANTS.DEVICE_NAME.CLUE:
-                this.handleClueButtonPressTelemetry(buttonState)
+                this.handleClueButtonPressTelemetry(buttonState);
             default:
                 break;
         }
@@ -237,7 +237,7 @@ export class TelemetryHandlerService {
                 TelemetryEventName.CLUE_SIMULATOR_BUTTON_B
             );
         }
-    }
+    };
 
     public handleClueSensorTelemetry = (sensor: string) => {
         switch (sensor) {
