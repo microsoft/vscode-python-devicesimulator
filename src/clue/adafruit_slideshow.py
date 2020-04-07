@@ -8,6 +8,8 @@ import time
 import collections
 from random import shuffle
 from common import utils
+from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 import board
 
 # taken from adafruit
@@ -172,6 +174,8 @@ class SlideShow:
         display.show(self)
         # show the first working image
         self.advance()
+
+        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SLIDESHOW)
 
     @property
     def current_image_name(self):

@@ -12,7 +12,6 @@ from common.telemetry_events import TelemetryEvent
 from .pixel import Pixel
 from . import constants as CONSTANTS
 from collections import namedtuple
-from applicationinsights import TelemetryClient
 import common
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])
