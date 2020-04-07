@@ -2,24 +2,26 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import CONSTANTS from "../../constants";
 import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import CONSTANTS, { CLUE_LEDS_COLORS } from "../../constants";
+import { CONSTANTS, CLUE_LEDS_COLORS } from "../../constants";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
 interface IProps {
     displayImage: string;
-    neopixel: number[];
-    whiteLedStatus: boolean;
+    leds: {
+        neopixel: number[];
+        redLed: boolean;
+        whiteLed: boolean;
+    };
 }
 export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
     private ledsRefs = {
         neopixel: React.createRef<SVGCircleElement>(),
-        red_led: React.createRef(),
-        white_leds: [
+        redLed: React.createRef(),
+        whiteLeds: [
             React.createRef<SVGRectElement>(),
             React.createRef<SVGRectElement>(),
         ],
@@ -46,12 +48,10 @@ export class ClueSvg extends React.Component<IProps, {}> {
         return this.displayRef;
     }
     componentDidMount() {
-        this.updateDisplay();
-        this.updateNeopixel();
+        this.updateSvg();
     }
     componentDidUpdate() {
-        this.updateDisplay();
-        this.updateNeopixel();
+        this.updateSvg();
     }
 
     render() {
@@ -935,16 +935,14 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     </text>
                     <g id="Buttons_at_top" data-name="Buttons at top">
                         <rect
-                            className="cls-16"
-                            ref={this.ledsRefs.white_leds[0]}
+                            ref={this.ledsRefs.whiteLeds[0]}
                             x="105.78"
                             y="5.76"
                             width="17.4"
                             height="8.98"
                         />
                         <rect
-                            ref={this.ledsRefs.white_leds[1]}
-                            className="cls-16"
+                            ref={this.ledsRefs.whiteLeds[1]}
                             x="182.92"
                             y="7.04"
                             width="17.4"
@@ -1056,6 +1054,11 @@ export class ClueSvg extends React.Component<IProps, {}> {
             </div>
         );
     }
+    private updateSvg() {
+        this.updateDisplay();
+        this.updateNeopixel();
+        this.updateLeds();
+    }
 
     private updateDisplay() {
         if (this.displayRef.current && this.props.displayImage) {
@@ -1067,7 +1070,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
 
     private updateNeopixel() {
-        const { neopixel } = this.props;
+        const { neopixel } = this.props.leds;
         const rgbColor = `rgb(${neopixel[0] +
             (255 - neopixel[0]) * CONSTANTS.LED_TINT_FACTOR},
         ${neopixel[1] +
@@ -1078,7 +1081,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
             this.ledsRefs.neopixel.current.setAttribute("fill", rgbColor);
         }
         if (this.pixelStopGradient.current) {
-            if (neopixel === DEFAULT_CLUE_STATE.neopixel) {
+            if (neopixel === DEFAULT_CLUE_STATE.leds.neopixel) {
                 this.pixelStopGradient.current.setAttribute(
                     "stop-opacity",
                     "0"
@@ -1094,14 +1097,19 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     private updateLeds() {
         // update white led
-        this.ledsRefs.white_leds.map(
+        const { whiteLed } = this.props.leds;
+
+        this.ledsRefs.whiteLeds.map(
             (ledRef: React.RefObject<SVGRectElement>) => {
-                if (ledRef.current && this.props.whiteLedStatus) {
+                if (ledRef.current && whiteLed) {
+                    console.log("lightup whiteleds");
                     ledRef.current.setAttribute(
                         "fill",
                         CLUE_LEDS_COLORS.WHITE_LEDS_ON
                     );
                 } else if (ledRef.current) {
+                    console.log("off whiteleds");
+
                     ledRef.current.setAttribute(
                         "fill",
                         CLUE_LEDS_COLORS.WHITE_LEDS_OFF

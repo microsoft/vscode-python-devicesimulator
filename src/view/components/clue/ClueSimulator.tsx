@@ -16,9 +16,11 @@ import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: DEFAULT_IMG_CLUE,
-    neopixel: [0, 0, 0],
-    red_led: false,
-    white_led: false,
+    leds: {
+        neopixel: [0, 0, 0],
+        redLed: false,
+        whiteLed: false,
+    },
 };
 
 interface IState {
@@ -33,9 +35,12 @@ interface IState {
 interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
-    neopixel: number[];
-    red_led: boolean;
-    white_led: boolean;
+
+    leds: {
+        neopixel: number[];
+        redLed: boolean;
+        whiteLed: boolean;
+    };
 }
 export class ClueSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
@@ -74,11 +79,14 @@ export class ClueSimulator extends React.Component<any, IState> {
                             displayMessage: message.state.display_base64,
                         },
                     });
-                } else if (message.state.leds) {
+                } else if (message.state.pixels) {
                     this.setState({
                         clue: {
                             ...this.state.clue,
-                            neopixel: message.state.leds.pixel,
+                            leds: {
+                                ...this.state.clue.leds,
+                                neopixel: message.state.leds.pixel,
+                            },
                         },
                     });
                 }
@@ -143,7 +151,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                             onKeyEvent: this.onKeyEvent,
                         }}
                         displayMessage={this.state.clue.displayMessage}
-                        neopixel={this.state.clue.neopixel}
+                        leds={this.state.clue.leds}
                     />
                 </div>
                 <ActionBar

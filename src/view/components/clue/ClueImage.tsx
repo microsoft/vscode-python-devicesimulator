@@ -16,7 +16,11 @@ interface EventTriggers {
 interface IProps {
     eventTriggers: EventTriggers;
     displayMessage: string;
-    neopixel: number[];
+    leds: {
+        neopixel: number[];
+        redLed: boolean;
+        whiteLed: boolean;
+    };
 }
 
 const BUTTON_CLASSNAME = {
@@ -85,7 +89,7 @@ export class ClueImage extends React.Component<IProps, {}> {
             <ClueSvg
                 ref={this.svgRef}
                 displayImage={this.props.displayMessage}
-                neopixel={this.props.neopixel}
+                leds={this.props.leds}
             />
         );
     }
