@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { VIEW_STATE } from "../../constants";
+import { ViewStateContext } from "../../context";
 import "../../styles/SensorButton.css";
 import { ISensorButtonProps } from "../../viewUtils";
-import { ViewStateContext } from "../../context";
-import { VIEW_STATE } from "../../constants";
 
 class SensorButton extends React.Component<ISensorButtonProps> {
     private buttonRef: React.RefObject<HTMLButtonElement> = React.createRef();

@@ -3,15 +3,15 @@ import {
     AB_BUTTONS_KEYS,
     CONSTANTS,
     DEVICE_LIST_KEY,
-    WEBVIEW_MESSAGES,
     VIEW_STATE,
+    WEBVIEW_MESSAGES,
 } from "../../constants";
+import { ViewStateContext } from "../../context";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, MicrobitImage } from "./MicrobitImage";
-import { ViewStateContext } from "../../context";
 
 const DEFAULT_MICROBIT_STATE: IMicrobitState = {
     leds: [
