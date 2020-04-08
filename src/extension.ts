@@ -630,6 +630,8 @@ export async function activate(context: vscode.ExtensionContext) {
                                         break;
                                 }
                             } catch (err) {
+                                // if not a JSON string, it is incomplete
+                                // add to beginning of next strings
                                 pythonProcessDataBuffer.push(message);
                             }
                         }
