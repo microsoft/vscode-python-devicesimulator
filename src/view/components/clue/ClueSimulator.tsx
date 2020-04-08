@@ -12,6 +12,7 @@ import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
+import "../../styles/Simulator.css";
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
@@ -124,7 +125,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                         : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
 
-                <div className="microbit-container">
+                <div className="clue-container">
                     <ClueImage
                         ref={this.imageRef}
                         eventTriggers={{

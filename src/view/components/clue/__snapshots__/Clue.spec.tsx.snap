@@ -11,10 +11,10 @@ Array [
       The simulator will run the .py file you have focused on.
     </div>
     <div
-      className="microbit-container"
+      className="clue-container"
     >
       <div
-        className="microbit-svg"
+        className="clue-svg"
       >
         <svg
           height="100%"
@@ -1090,16 +1090,16 @@ Array [
           >
             <rect
               className="cls-22"
-              height="158"
-              width="182"
-              x="62"
-              y="25"
+              height="170"
+              width="186"
+              x="60"
+              y="24"
             />
             <image
-              height={152}
-              width={176}
-              x={65}
-              y={28}
+              height={168}
+              width={184}
+              x={61}
+              y={25}
             />
             <rect
               className="cls-23"
