@@ -137,11 +137,12 @@ export class GettingStartedPage extends React.Component {
                     <div id="CLUE" className="inv">
                         <h2> Tutorial for CLUE </h2>
                         <h3> 0. Enable Preview Mode (This is required)</h3>
-                        <p> To use the CLUE, you must check the <strong>"Device Simulator Express: Enable Preview Mode"</strong> setting. To access your settings:</p>
+                        <p> To use the CLUE, you must check the <code>"Device Simulator Express: Enable Preview Mode"</code> setting. To access your settings:</p>
                         <ul>
-                            <li>Windows or Linux: press "<kbd>CTRL</kbd> + <kbd>,</kbd>" or go to <strong>"File > Preferences > Settings"</strong></li>
-                            <li>Mac: press "<kbd>CMD</kbd> + <kbd>,</kbd>" on Mac or go to <strong>"Code > Preferences > Settings"</strong>.</li>
+                            <li>Windows or Linux: press <kbd>CTRL</kbd> + <kbd>,</kbd> or go to <code>File -> Preferences -> Settings</code></li>
+                            <li>Mac: press <kbd>CMD</kbd> + <kbd>,</kbd> or go to <code>Code -> Preferences -> Settings</code>.</li>
                         </ul>
+                        <img alt='Enabling preview mode' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'></img>
                         <h3>
                             1. Import the the main CLUE library (This is
                             required)
