@@ -5,17 +5,16 @@ import {
     CONSTANTS,
     DEFAULT_IMG_CLUE,
     DEVICE_LIST_KEY,
-    WEBVIEW_MESSAGES,
     VIEW_STATE,
+    WEBVIEW_MESSAGES,
 } from "../../constants";
+import { ViewStateContext } from "../../context";
+import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
-import { ViewStateContext } from "../../context";
-import "../../styles/Simulator.css";
-
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },

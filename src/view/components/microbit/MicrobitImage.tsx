@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { VIEW_STATE, BUTTON_CLASSNAME } from "../../constants";
+import { BUTTON_CLASSNAME, VIEW_STATE } from "../../constants";
 import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
