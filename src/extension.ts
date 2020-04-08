@@ -27,7 +27,7 @@ import { DeviceSelectionService } from "./service/deviceSelectionService";
 import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
-import { SetupService } from "./service/SetupService";
+import { SetupService } from "./service/setupService";
 import { TelemetryHandlerService } from "./service/telemetryHandlerService";
 import { WebviewService } from "./service/webviewService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
@@ -53,6 +53,8 @@ const deviceSelectionService = new DeviceSelectionService();
 const messagingService = new MessagingService(deviceSelectionService);
 const debuggerCommunicationService = new DebuggerCommunicationService();
 const fileSelectionService = new FileSelectionService(messagingService);
+
+let pythonProcessDataBuffer: string[];
 
 export let outChannel: vscode.OutputChannel | undefined;
 
@@ -471,6 +473,7 @@ export async function activate(context: vscode.ExtensionContext) {
     };
 
     const runSimulatorCommand = async () => {
+        pythonProcessDataBuffer = [];
         // Prevent running new code if a debug session is active
         if (inDebugMode) {
             vscode.window.showErrorMessage(
@@ -557,8 +560,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 command: "activate-play",
                 active_device: deviceSelectionService.getCurrentActiveDevice(),
             });
-
-            childProcess = cp.spawn(pythonExecutablePath, [
+            const args = [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
@@ -566,7 +568,8 @@ export async function activate(context: vscode.ExtensionContext) {
                 ),
                 fileSelectionService.getCurrentFileAbsPath(),
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
-            ]);
+            ];
+            childProcess = cp.spawn(pythonExecutablePath,args);
 
             let dataFromTheProcess = "";
             let oldMessage = "";
@@ -575,8 +578,11 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
-                    // Process the data from the process and send one state at a time
-                    dataFromTheProcess.split("\0").forEach(message => {
+
+                    let processedData = pythonProcessDataBuffer.join('').concat(dataFromTheProcess)
+                    pythonProcessDataBuffer = []
+
+                    processedData.split("\0").forEach(message => {
                         if (
                             currentPanel &&
                             message.length > 0 &&
@@ -620,10 +626,9 @@ export async function activate(context: vscode.ExtensionContext) {
                                         );
                                         break;
                                 }
+
                             } catch (err) {
-                                console.log(
-                                    `Non-JSON output from the process :  ${message}`
-                                );
+                                pythonProcessDataBuffer.push(message)
                             }
                         }
                     });
