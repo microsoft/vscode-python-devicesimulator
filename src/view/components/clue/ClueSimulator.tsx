@@ -6,7 +6,6 @@ import {
     DEFAULT_IMG_CLUE,
     DEVICE_LIST_KEY,
     WEBVIEW_MESSAGES,
-    VIEW_STATE,
 } from "../../constants";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
@@ -14,16 +13,11 @@ import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
 import "../../styles/Simulator.css";
-import { ViewStateContext } from "../../context";
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: DEFAULT_IMG_CLUE,
-    leds: {
-        neopixel: [0, 0, 0],
-        redLed: false,
-        whiteLed: false,
-    },
+    neopixel: [0, 0, 0],
 };
 
 interface IState {
@@ -38,11 +32,7 @@ interface IState {
 interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
-    leds: {
-        neopixel: number[];
-        redLed: boolean;
-        whiteLed: boolean;
-    };
+    neopixel: number[];
 }
 export class ClueSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
@@ -74,7 +64,21 @@ export class ClueSimulator extends React.Component<any, IState> {
                 console.log(
                     `message received ${JSON.stringify(message.state)}`
                 );
-                this.handleStateChangeMessage(message);
+                if (message.state.display_base64) {
+                    this.setState({
+                        clue: {
+                            ...this.state.clue,
+                            displayMessage: message.state.display_base64,
+                        },
+                    });
+                } else if (message.state.pixels) {
+                    this.setState({
+                        clue: {
+                            ...this.state.clue,
+                            neopixel: message.state.pixels,
+                        },
+                    });
+                }
 
                 break;
             case "activate-play":
@@ -136,7 +140,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                             onKeyEvent: this.onKeyEvent,
                         }}
                         displayMessage={this.state.clue.displayMessage}
-                        leds={this.state.clue.leds}
+                        neopixel={this.state.clue.neopixel}
                     />
                 </div>
                 <ActionBar
@@ -212,10 +216,7 @@ export class ClueSimulator extends React.Component<any, IState> {
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         event.stopPropagation();
-        if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER) &&
-            this.context === VIEW_STATE.RUNNING
-        ) {
+        if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
             this.handleButtonClick(key, active);
             if (this.imageRef.current) {
                 if (key === BUTTONS_KEYS.BTN_A) {
@@ -236,8 +237,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                 }
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A) &&
-            this.context === VIEW_STATE.RUNNING
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
             if (this.imageRef.current) {
@@ -247,8 +247,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B) &&
-            this.context === VIEW_STATE.RUNNING
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
             if (this.imageRef.current) {
@@ -258,8 +257,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C) &&
-            this.context === VIEW_STATE.RUNNING
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_AB, active);
             if (this.imageRef.current) {
@@ -274,45 +272,4 @@ export class ClueSimulator extends React.Component<any, IState> {
             this.refreshSimulatorClick();
         }
     }
-    protected handleStateChangeMessage(message: any) {
-        if (message.state.display_base64 != null) {
-            this.setState({
-                clue: {
-                    ...this.state.clue,
-                    displayMessage: message.state.display_base64,
-                },
-            });
-        } else if (message.state.pixels != null) {
-            this.setState({
-                clue: {
-                    ...this.state.clue,
-                    leds: {
-                        ...this.state.clue.leds,
-                        neopixel: message.state.pixels,
-                    },
-                },
-            });
-        } else if (message.state.white_leds != null) {
-            this.setState({
-                clue: {
-                    ...this.state.clue,
-                    leds: {
-                        ...this.state.clue.leds,
-                        whiteLed: message.state.white_leds,
-                    },
-                },
-            });
-        } else if (message.state.red_led != null) {
-            this.setState({
-                clue: {
-                    ...this.state.clue,
-                    leds: {
-                        ...this.state.clue.leds,
-                        redLed: message.state.red_led,
-                    },
-                },
-            });
-        }
-    }
 }
-ClueSimulator.contextType = ViewStateContext;
