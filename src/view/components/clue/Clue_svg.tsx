@@ -47,7 +47,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
 
     render() {
         return (
-            <div className="microbit-svg">
+            <div className="clue-svg">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 375 250.98"
@@ -1010,17 +1010,17 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     <g id="Frame">
                         <rect
                             className="cls-22"
-                            x="62"
-                            y="25"
-                            width="182"
-                            height="158"
+                            x="60"
+                            y="24"
+                            width="186"
+                            height="170"
                         />
                         <image
                             ref={this.displayRef}
-                            x={65}
-                            y={28}
-                            width={176}
-                            height={152}
+                            x={61}
+                            y={25}
+                            width={184}
+                            height={168}
                         />
                         <rect
                             className="cls-23"
