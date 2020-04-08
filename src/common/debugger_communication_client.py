@@ -5,20 +5,34 @@ import sys
 import json
 import socketio
 import copy
+import pathlib
 
 from . import constants as CONSTANTS
 from . import utils
 import threading
-
+import os
+import python_constants as TOPLEVEL_CONSTANTS
 
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.constants import CPX
 
+# add ref for micropython and clue
+abs_path_to_parent_dir = os.path.dirname(
+    os.path.join(pathlib.Path(__file__).parent, "..", "..")
+)
+sys.path.insert(
+    0, os.path.join(abs_path_to_parent_dir, TOPLEVEL_CONSTANTS.MICROPYTHON_LIBRARY_NAME)
+)
+
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, TOPLEVEL_CONSTANTS.CLUE_DIR))
+
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
+from base_circuitpython.base_cp_constants import CLUE
+from adafruit_clue import clue
 
-device_dict = {CPX: cpx, MICROBIT: mb}
+device_dict = {CPX: cpx, MICROBIT: mb, CLUE: clue}
 processing_state_event = threading.Event()
 previous_state = {}
 

@@ -19,7 +19,7 @@ svg.sim.grayscale {
     pointer-events: none;
     fill: "rgb(17, 17, 17)";
 }
-.sim-button:active {
+.sim-button-group > .sim-button:active {
     fill: orange;
 }
 .sim-text-outside {
@@ -31,11 +31,11 @@ svg.sim.grayscale {
 sim-button {
     fill: #111;
 }
-.sim-button-outer:hover {
+.sim-button-group > .sim-button-outer:hover {
     stroke: orange;
     stroke-width: 4px;
 }
-.sim-button-outer:active {
+.sim-button-group > .sim-button-outer:active {
     fill: orange;
 }
 .sim-button-outer {

@@ -98,8 +98,5 @@ class MicrobitModel:
         new_gesture = new_state.get(CONSTANTS.EXPECTED_INPUT_GESTURE)
         self.accelerometer._Accelerometer__update_gesture(new_gesture)
 
-    def __set_debug_mode(self, mode):
-        self.display._Display__debug_mode = mode
-
 
 __mb = MicrobitModel()

@@ -7,8 +7,8 @@ import "../../../styles/MotionSensorBar.css";
 import { sendMessage } from "../../../utils/MessageUtils";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 import svg from "../../cpx/Svg_utils";
-import SensorButton from "../SensorButton";
 import { GenericSliderComponent } from "../GenericSliderComponent";
+import SensorButton from "../SensorButton";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
