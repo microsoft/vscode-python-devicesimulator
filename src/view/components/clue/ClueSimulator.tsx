@@ -5,14 +5,16 @@ import {
     CONSTANTS,
     DEFAULT_IMG_CLUE,
     DEVICE_LIST_KEY,
+    VIEW_STATE,
     WEBVIEW_MESSAGES,
 } from "../../constants";
+import { ViewStateContext } from "../../context";
+import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
-import "../../styles/Simulator.css";
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
@@ -216,7 +218,10 @@ export class ClueSimulator extends React.Component<any, IState> {
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         event.stopPropagation();
-        if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+        if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER) &&
+            this.context === VIEW_STATE.RUNNING
+        ) {
             this.handleButtonClick(key, active);
             if (this.imageRef.current) {
                 if (key === BUTTONS_KEYS.BTN_A) {
@@ -237,7 +242,8 @@ export class ClueSimulator extends React.Component<any, IState> {
                 }
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
             if (this.imageRef.current) {
@@ -247,7 +253,8 @@ export class ClueSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
             if (this.imageRef.current) {
@@ -257,7 +264,8 @@ export class ClueSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_AB, active);
             if (this.imageRef.current) {
@@ -273,3 +281,4 @@ export class ClueSimulator extends React.Component<any, IState> {
         }
     }
 }
+ClueSimulator.contextType = ViewStateContext;
