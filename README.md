@@ -19,7 +19,7 @@ monitor allows you to observe the device output.
 
 - [**Adafruit CLUE**](#adafruit-clue-simulator) (hidden behind preview flag)
   
-  [<img alt='Adafruit CLUE' src='assets/readmeFiles/clue/clue.jpg'>](#adafruit-clue-simulator)
+  [<img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/clue.jpg'>](#adafruit-clue-simulator)
 ## Build Status
 
 | Branch  |                                                                                                                Build Status                                                                                                                 |
@@ -83,11 +83,11 @@ As we only support CPX library now, other libraries (i.e. simpleio) can’t run 
 ### Keyboard Shortcuts
 In Device Simulator Express, you can use keyboard to interact with the device:
 
-- Push Button `A for A, B for B, C for A & B`
-- Capacitive Touch Sensor `A1 – A7: SHIFT + 1 ~ 7`
-- Slider Switch: `SHIFT + S`
-- Refresh the simulator: `SHIFT + R`
-- Run the simulator: `SHIFT + F`
+- Push Button: <kbd>A</kbd> for Button A, <kbd>B</kbd> for Button B, <kbd>C</kbd> for Buttons A & B
+- Capacitive Touch Sensor: <kbd>Shift</kbd> + <kbd>1</kbd> ~ <kbd>7</kbd> for GPIO pins A1 - A7
+- Slider Switch: <kbd>Shift</kbd> + <kbd>S</kbd>
+- Refresh the simulator: <kbd>Shift</kbd> + <kbd>R</kbd>
+- Run the simulator: <kbd>Shift</kbd> + <kbd>F</kbd>
 
 ## BBC micro:bit Simulator
 
@@ -111,9 +111,9 @@ In Device Simulator Express, you can use keyboard to interact with the device:
   - [BBC micro:bit examples on the official micro:bit website](https://microbit.org/projects/make-it-code-it/?filters=python)
 
 ### Keyboard Shortcuts
-- Push Button `A for A, B for B, C for A & B`
-- Refresh the simulator: `SHIFT + R`
-- Run the simulator: `SHIFT + F`
+- Push Button: <kbd>A</kbd> for Button A, <kbd>B</kbd> for Button B, <kbd>C</kbd> for Buttons A & B
+- Refresh the simulator: <kbd>Shift</kbd> + <kbd>R</kbd>
+- Run the simulator: <kbd>Shift</kbd> + <kbd>F</kbd>
 
 ## Adafruit CLUE Simulator
 NOTE: This simulator is hidden under the feature flag. See below on how to enable the feature flag.
@@ -153,38 +153,38 @@ NOTE: This simulator is hidden under the feature flag. See below on how to enabl
   - [Adafruit CLUE Examples on GitHub](https://github.com/adafruit/Adafruit_CircuitPython_CLUE/tree/master/examples)
 
 ### Keyboard Shortcuts
-- Push Button `A for A, B for B, C for A & B`
-- Refresh the simulator: `SHIFT + R`
-- Run the simulator: `SHIFT + F`
+- Push Button: <kbd>A</kbd> for Button A, <kbd>B</kbd> for Button B, <kbd>C</kbd> for Buttons A & B
+- Refresh the simulator: <kbd>Shift</kbd> + <kbd>R</kbd>
+- Run the simulator: <kbd>Shift</kbd> + <kbd>F</kbd>
 
 ## How to enable preview flag
 Currently, we have our Adafruit CLUE simulator hidden behind a preview flag and we want you to try it out!
 ### I. Open settings
-You can use `CTRL + ,` or use `File -> Preferences -> Settings` in the top menu to navigate to settings.
+You can use <kbd>Ctrl</kbd> + <kbd>,</kbd> or use `File -> Preferences -> Settings` in the top menu to navigate to settings.
 
-  <img alt='Adafruit CLUE' src='assets/readmeFiles/clue/open_settings.PNG'>
+  <img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG'>
 
 ### II. Search for our preview flag and enable it!
 In the top search bar, search for `DeviceSimulatorExpress.previewMode`. Then, check the checkbox for the setting that pops up when you serach. 
 
 
-  <img alt='Adafruit CLUE' src='assets/readmeFiles/clue/check_preview_mode.gif'>
+  <img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'>
 
 ## How to use
 
 To use Device Simulator Express, install the extension from the marketplace and reload VS Code.
 
-To access many of the commands, you need to open the command palette. This can be done with `CTRL + SHIFT + P` for Windows and Linux / `CMD + SHIFT + P` for Mac. It can also be accessed from the toolbar by going to `View -> Command Palette`.
+To access many of the commands, you need to open the command palette. This can be done with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> for Windows and Linux / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> for Mac. It can also be accessed from the toolbar by going to `View -> Command Palette`.
 
 ### I. Take a look at the "Device Simulator Express: Getting Started" Command.
-1. Type in `"Device Simulator Express: Getting Started"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
+1. Type in `"Device Simulator Express: Getting Started"` in the command palette (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the command palette).  
 2. Choose the the device you want to play with from the dropdown.
 3. Read, copy and learn some of the things you can do with the simulator!
 
 <img alt='Getting Started' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/getting_started.png'>
 
 ### II. Start with the "Device Simulator Express: New File" Command.
-1. Type in `"Device Simulator Express: New File"` in the command palette (`CTRL + SHIFT + P` / `CMD + SHIFT + P` to open the command palette).  
+1. Type in `"Device Simulator Express: New File"` in the command palette (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the command palette).  
 2. Select the device you want to use.
 3. Name and save your file somewhere, and we’re good to go!
 4. Start with some examples: you can find examples files and tutorials inside the comments at the top of the file.
@@ -233,7 +233,7 @@ Before deploying the Python code to your CPX device, you need to format your dev
 
 ### Commands
 
-Device Simulator Express provides several commands in the Command Palette (`F1` or `CTRL + SHIFT + P` / `CMD + SHIFT + P` for Mac OS) for working with \*.py files:
+Device Simulator Express provides several commands in the Command Palette (<kbd>F1</kbd> or <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> for Mac OS) for working with \*.py files:
 
 - `Device Simulator Express: Getting Started`: Opens a page in VS Code that helps users get started with the extension. Here, users can browse through code that they can use to play with the simulators.
 - `Device Simulator Express: Run Simulator`: Runs Python code on the simulator.
@@ -286,9 +286,9 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 
 - The first time you install the extension, you'll need to execute the `run` command at least once in order to access auto-completion.
 - While running a code file, if you get an error saying it can't find the file, make sure you've clicked on a valid Python code file before running it.
-- To open the output panel again after closing it go to VS Code menu: `View->Output`.
+- To open the output panel again after closing it go to VS Code menu: `View -> Output`.
 - If you try to deploy to the CPX while it's plugged in but you still get an error saying it cannot find the board, make sure your device is formatted correctly and that its name matches `CIRCUITPY`.
-- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: [<device_name>] Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
+- If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 - When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
 
 ## License
