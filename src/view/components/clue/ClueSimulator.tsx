@@ -38,7 +38,6 @@ interface IState {
 interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
-
     leds: {
         neopixel: number[];
         redLed: boolean;
