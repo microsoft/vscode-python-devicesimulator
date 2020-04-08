@@ -8,6 +8,7 @@ import time
 import collections
 from random import shuffle
 from common import utils
+from common import debugger_communication_client
 from common.telemetry import telemetry_py
 from common.telemetry_events import TelemetryEvent
 import board
@@ -380,4 +381,10 @@ class SlideShow:
         img_str = str(byte_base64)[2:-1]
 
         sendable_json = {CONSTANTS.BASE_64: img_str}
-        utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+
+        if utils.debug_mode:
+            debugger_communication_client.debug_send_to_simulator(
+                sendable_json, CONSTANTS.CLUE
+            )
+        else:
+            utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)

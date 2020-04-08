@@ -53,6 +53,10 @@ export const AB_BUTTONS_KEYS = {
     BTN_B: "BTN_B",
     BTN_AB: "BTN_AB",
 };
+export const BUTTON_CLASSNAME = {
+    ACTIVE: "sim-button-group",
+    DEACTIVATED: "sim-button-group-deactivated",
+};
 export const BUTTON_STYLING_CLASSES = {
     DEFAULT: "sim-button-outer",
     KEYPRESSED: "sim-button-key-press",

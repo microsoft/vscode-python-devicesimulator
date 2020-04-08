@@ -21,7 +21,6 @@ class Display:
 
         self.__current_pid = None
         self.__lock = threading.Lock()
-        self.__debug_mode = False
 
     def scroll(self, value, delay=150, wait=True, loop=False, monospace=False):
         """
@@ -352,7 +351,7 @@ class Display:
     def __update_client(self):
         sendable_json = {"leds": self.__get_array()}
 
-        if self.__debug_mode:
+        if common.utils.debug_mode:
             common.debugger_communication_client.debug_send_to_simulator(
                 sendable_json, CONSTANTS.MICROBIT
             )
