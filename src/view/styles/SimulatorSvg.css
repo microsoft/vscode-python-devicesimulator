@@ -19,7 +19,7 @@ svg.sim.grayscale {
     pointer-events: none;
     fill: "rgb(17, 17, 17)";
 }
-.sim-button:active {
+.sim-button-group > .sim-button:active {
     fill: orange;
 }
 .sim-text-outside {
@@ -31,11 +31,11 @@ svg.sim.grayscale {
 sim-button {
     fill: #111;
 }
-.sim-button-outer:hover {
+.sim-button-group > .sim-button-outer:hover {
     stroke: orange;
     stroke-width: 4px;
 }
-.sim-button-outer:active {
+.sim-button-group > .sim-button-outer:active {
     fill: orange;
 }
 .sim-button-outer {
@@ -51,25 +51,6 @@ sim-button {
     pointer-events: none;
 }
 
-/*
-.sim-button-nut:hover {
-    stroke: 1px solid #704a4a;
-}
-.sim-pin:hover {
-    stroke: #d4af37;
-    stroke-width: 2px;
-}
-.sim-pin-touch.touched:hover {
-    stroke: darkorange;
-}
-.sim-led-back:hover {
-    stroke: #a0a0a0;
-    stroke-width: 3px;
-}
-.sim-led:hover {
-    stroke: #ff7f7f;
-    stroke-width: 3px;
-} */
 .sim-systemled {
     fill: #333;
     stroke: #555;
