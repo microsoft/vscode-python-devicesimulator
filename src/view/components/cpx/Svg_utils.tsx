@@ -86,12 +86,9 @@ namespace svg {
         gradientStopElement: SVGStopElement
     ) {
         if (ledStatus) {
-            console.log("turn on");
             ledElement.setAttribute("fill", onColor);
             gradientStopElement.setAttribute("stop-opacity", "1");
         } else {
-            console.log("turn on");
-
             ledElement.setAttribute("fill", offColor);
             gradientStopElement.setAttribute("stop-opacity", "0");
         }

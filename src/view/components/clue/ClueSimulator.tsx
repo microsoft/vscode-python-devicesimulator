@@ -294,7 +294,6 @@ export class ClueSimulator extends React.Component<any, IState> {
                     },
                 },
             });
-            console.log(`whiteled ${message.state.white_leds}`);
         } else if (message.state.red_led != null) {
             this.setState({
                 clue: {
