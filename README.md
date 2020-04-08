@@ -17,7 +17,7 @@ monitor allows you to observe the device output.
   
   [<img alt='bbc micro:bit' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/microbit/microbit.png'>](#bbc-microbit-simulator)
 
-
+- []
 ## Build Status
 
 | Branch  |                                                                                                                Build Status                                                                                                                 |
@@ -98,6 +98,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - Serial monitor (available on Windows and Mac only)
 - Simulation of the micro:bit device, including:
   - 25 LEDs
+  - Push Buttons A and B
   - Light sensor
   - Motion sensors
   - Acceleration detection including gesture detection
@@ -112,6 +113,60 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - Push Button `A for A, B for B, C for A & B`
 - Refresh the simulator: `SHIFT + R`
 - Run the simulator: `SHIFT + F`
+
+## Adafruit CLUE Simulator
+NOTE: This simulator is hidden under the feature flag. See below on how to enable the feature flag.
+
+### Features
+- IntelliSense and syntax highlighting for CircuitPython code for the following drivers and libraries:
+  - `adafruit_clue`
+  - `adafruit_slideshow`
+  - `adafruit_display_shapes`
+  - `adafruit_display_text`
+  - `adafruit_bitmap_font`
+  - `adafruit_fancyled`
+  - `neopixel`
+  - `displayio`
+- Template file generation
+- Integrated Python Debugging for the Simulator
+- Deploy CircuitPython code to the physical device
+- Serial monitor (available on Windows and Mac only)
+- Simulation of the CLUE device, including:
+  - 240x240 color screen
+  - Push Buttons A and B
+  - Sensors for:
+    - Temperature
+    - Light
+    - Color
+    - Acceleration
+    - Humidity
+    - Pressure
+    - Proximity
+    - Gestures
+    - Gyro
+    - Magnetic Field
+
+### Useful Links
+- Tutorials and Example Code for Adafruit CLUE:
+  - [Adafruit CLUE Overview](https://learn.adafruit.com/adafruit-clue)
+  - [Adafruit CLUE Examples on GitHub](https://github.com/adafruit/Adafruit_CircuitPython_CLUE/tree/master/examples)
+
+### Keybindings
+- Push Button `A for A, B for B, C for A & B`
+- Refresh the simulator: `SHIFT + R`
+- Run the simulator: `SHIFT + F`
+
+## How to enable preview flag
+Currently, we have our Adafruit CLUE simulator hidden behind a preview flag and we want you to try it out!
+### I. Open settings
+You can use `CTRL + ,` or use `File -> Preferences -> Settings` in the top menu to navigate to settings.
+
+### II. Search for our preview flag
+In the top search bar, search for `DeviceSimulatorExpress.previewMode'
+
+### III. Enable it!
+Check the checkbox for the setting that pops up when you serach. 
+
 
 ## How to use
 
