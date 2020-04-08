@@ -13,5 +13,6 @@
     "deviceSimulatorExpressExtension.configuration.title": "Device Simulator Express configuration",
     "deviceSimulatorExpressExtension.configuration.properties.configEnvOnChange": "When you change the Python interpreter, the Device Simulator Express will automatically configure itself for the required dependencies.",
     "deviceSimulatorExpressExtension.configuration.properties.debuggerPort": "The port the Server will listen on for communication with the debugger.",
-    "deviceSimulatorExpressExtension.configuration.properties.dependencyChecker": "Whether or not to ask if we can download dependencies. If unchecked, the extension will default to never download dependencies, except when automatically creating a virtual environment in the extension files."
+    "deviceSimulatorExpressExtension.configuration.properties.dependencyChecker": "Whether or not to ask if we can download dependencies. If unchecked, the extension will default to never download dependencies, except when automatically creating a virtual environment in the extension files.",
+    "deviceSimulatorExpressExtension.configuration.properties.previewMode": "Enable this to test out and play with the new Adafruit CLUE simulator!"
 }
