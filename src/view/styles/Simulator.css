@@ -72,6 +72,11 @@
     max-width: 350px;
     padding: 20px;
 }
+.clue-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
 .cpx-container {
     width: 100%;
     padding-top: 10px;
