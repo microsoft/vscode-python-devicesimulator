@@ -1,25 +1,29 @@
 import * as React from "react";
 import {
     AB_BUTTONS_KEYS,
-    // DEVICE_LIST_KEY,
     CONSTANTS,
     DEFAULT_IMG_CLUE,
     DEVICE_LIST_KEY,
     VIEW_STATE,
     WEBVIEW_MESSAGES,
 } from "../../constants";
-import { ViewStateContext } from "../../context";
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
+import "../../styles/Simulator.css";
+import { ViewStateContext } from "../../context";
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
     displayMessage: DEFAULT_IMG_CLUE,
-    neopixel: [0, 0, 0],
+    leds: {
+        neopixel: [0, 0, 0],
+        redLed: false,
+        whiteLed: false,
+    },
 };
 
 interface IState {
@@ -34,7 +38,11 @@ interface IState {
 interface IClueState {
     buttons: { button_a: boolean; button_b: boolean };
     displayMessage: string;
-    neopixel: number[];
+    leds: {
+        neopixel: number[];
+        redLed: boolean;
+        whiteLed: boolean;
+    };
 }
 export class ClueSimulator extends React.Component<any, IState> {
     private imageRef: React.RefObject<ClueImage> = React.createRef();
@@ -63,25 +71,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "set-state":
-                console.log(
-                    `message received ${JSON.stringify(message.state)}`
-                );
-                if (message.state.display_base64) {
-                    this.setState({
-                        clue: {
-                            ...this.state.clue,
-                            displayMessage: message.state.display_base64,
-                        },
-                    });
-                } else if (message.state.pixels) {
-                    this.setState({
-                        clue: {
-                            ...this.state.clue,
-                            neopixel: message.state.pixels,
-                        },
-                    });
-                }
-
+                this.handleStateChangeMessage(message);
                 break;
             case "activate-play":
                 const newRunningFile = this.state.currently_selected_file;
@@ -142,7 +132,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                             onKeyEvent: this.onKeyEvent,
                         }}
                         displayMessage={this.state.clue.displayMessage}
-                        neopixel={this.state.clue.neopixel}
+                        leds={this.state.clue.leds}
                     />
                 </div>
                 <ActionBar
@@ -278,6 +268,46 @@ export class ClueSimulator extends React.Component<any, IState> {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
             this.refreshSimulatorClick();
+        }
+    }
+    protected handleStateChangeMessage(message: any) {
+        if (message.state.display_base64 != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    displayMessage: message.state.display_base64,
+                },
+            });
+        } else if (message.state.pixels != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        neopixel: message.state.pixels,
+                    },
+                },
+            });
+        } else if (message.state.white_leds != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        whiteLed: message.state.white_leds,
+                    },
+                },
+            });
+        } else if (message.state.red_led != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        redLed: message.state.red_led,
+                    },
+                },
+            });
         }
     }
 }
