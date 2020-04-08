@@ -139,8 +139,8 @@ export class GettingStartedPage extends React.Component {
                         <h3> 0. Enable Preview Mode (This is required)</h3>
                         <p> To use the CLUE, you must check the <strong>"Device Simulator Express: Enable Preview Mode"</strong> setting. To access your settings:</p>
                         <ul>
-                            <li>Windows or Linux: type <strong>"CTRL + ,"</strong> or go to <strong>"File > Preferences > Settings"</strong></li>
-                            <li>Mac: type <strong>"CMD + ,"</strong> on Mac or go to <strong>"Code > Preferences > Settings"</strong>.</li>
+                            <li>Windows or Linux: press "<kbd>CTRL</kbd> + <kbd>,</kbd>" or go to <strong>"File > Preferences > Settings"</strong></li>
+                            <li>Mac: press "<kbd>CMD</kbd> + <kbd>,</kbd>" on Mac or go to <strong>"Code > Preferences > Settings"</strong>.</li>
                         </ul>
                         <h3>
                             1. Import the the main CLUE library (This is
