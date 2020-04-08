@@ -61,7 +61,7 @@ class TestAdafruitSlideShow(object):
             direction=PlayBackDirection.FORWARD,
         )
 
-        slideshow._send = self._send_helper
+        slideshow._SlideShow__send = self.__send_helper
 
         # first image's appear time is unstable,since it fades/scrolls in
         # can only predict following ones...
@@ -84,7 +84,7 @@ class TestAdafruitSlideShow(object):
             direction=PlayBackDirection.BACKWARD,
         )
 
-        slideshow2._send = self._send_helper
+        slideshow2._SlideShow__send = self.__send_helper
 
         helper._Helper__test_image_equality(
             self.main_img.load(), slideshow_images[7].load()
@@ -96,5 +96,5 @@ class TestAdafruitSlideShow(object):
                 self.main_img.load(), slideshow_images[i].load()
             )
 
-    def _send_helper(self, image):
+    def __send_helper(self, image):
         self.main_img = image

@@ -1016,6 +1016,8 @@ const updatePythonExtraPaths = () => {
         [
             __dirname,
             path.join(__dirname, CONSTANTS.FILESYSTEM.MICROPYTHON_DIRECTORY),
+            path.join(__dirname, CONSTANTS.FILESYSTEM.CLUE),
+            path.join(__dirname, CONSTANTS.FILESYSTEM.BASE_CIRCUITPYTHON),
         ],
         vscode.ConfigurationTarget.Global
     );
@@ -1032,13 +1034,24 @@ const updatePylintArgs = (context: vscode.ExtensionContext) => {
         CONSTANTS.FILESYSTEM.MICROPYTHON_DIRECTORY
     );
 
+    const cluePath: string = utils.createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        CONSTANTS.FILESYSTEM.CLUE
+    );
+
+    const baseCircuitPythonPath: string = utils.createEscapedPath(
+        context.extensionPath,
+        CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
+        CONSTANTS.FILESYSTEM.BASE_CIRCUITPYTHON
+    );
     // update pylint args to extend system path
     // to include python libs local to extention
     updateConfigLists(
         "python.linting.pylintArgs",
         [
             "--init-hook",
-            `import sys; sys.path.extend([\"${outPath}\",\"${micropythonPath}\"])`,
+            `import sys; sys.path.extend([\"${outPath}\",\"${micropythonPath}\",\"${cluePath}\",\"${baseCircuitPythonPath}\"])`,
         ],
         vscode.ConfigurationTarget.Workspace
     );
