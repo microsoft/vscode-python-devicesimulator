@@ -288,7 +288,7 @@ class Group:
                 # 1 unit (1 unit * scale = scale)
                 y -= scale
 
-                # Group is positioned against anchored_position (default (0,0)),
+                # Group is positioned against anchored_position (already incorporated into self.x and self.y),
                 # which is positioned against anchor_point
 
                 x += self._anchor_point[0]
