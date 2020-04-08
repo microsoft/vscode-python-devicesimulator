@@ -142,7 +142,8 @@ export class GettingStartedPage extends React.Component {
                             <li>Windows or Linux: press <kbd>CTRL</kbd> + <kbd>,</kbd> or go to <code>File -> Preferences -> Settings</code></li>
                             <li>Mac: press <kbd>CMD</kbd> + <kbd>,</kbd> or go to <code>Code -> Preferences -> Settings</code>.</li>
                         </ul>
-                        <img alt='Enabling preview mode' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'></img>
+                        <img alt='Open settings' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'></img>
+                        <img alt='Enable preview mode' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'></img>
                         <h3>
                             1. Import the the main CLUE library (This is
                             required)
