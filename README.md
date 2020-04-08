@@ -166,7 +166,7 @@ You can use `CTRL + ,` or use `File -> Preferences -> Settings` in the top menu 
   <img alt='Adafruit CLUE' src='assets/readmeFiles/clue/open_settings.PNG'>
 
 ### II. Search for our preview flag and enable it!
-In the top search bar, search for `DeviceSimulatorExpress.previewMode'. Then, check the checkbox for the setting that pops up when you serach. 
+In the top search bar, search for `DeviceSimulatorExpress.previewMode`. Then, check the checkbox for the setting that pops up when you serach. 
 
 
   <img alt='Adafruit CLUE' src='assets/readmeFiles/clue/check_preview_mode.gif'>
