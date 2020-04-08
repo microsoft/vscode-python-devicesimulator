@@ -5,7 +5,7 @@
 import terminal_handler
 
 
-class Display:
+class __Display:
     def __init__(self):
         self.active_group = None
         self.terminal = terminal_handler.Terminal()
@@ -25,7 +25,7 @@ class Display:
                 group._Group__draw()
 
 
-DISPLAY = Display()
+DISPLAY = __Display()
 
 # default pin for neopixel,
 # shows that this could
