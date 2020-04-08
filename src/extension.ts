@@ -578,10 +578,11 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
-
+                    // added any incomplete data to beginning
                     let processedData = pythonProcessDataBuffer.join('').concat(dataFromTheProcess)
                     pythonProcessDataBuffer = []
 
+                    // Process the data from the process and send one state at a time
                     processedData.split("\0").forEach(message => {
                         if (
                             currentPanel &&
