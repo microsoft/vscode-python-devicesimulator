@@ -569,7 +569,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 fileSelectionService.getCurrentFileAbsPath(),
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
             ];
-            childProcess = cp.spawn(pythonExecutablePath,args);
+            childProcess = cp.spawn(pythonExecutablePath, args);
 
             let dataFromTheProcess = "";
             let oldMessage = "";
@@ -579,8 +579,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
                     // added any incomplete data to beginning
-                    let processedData = pythonProcessDataBuffer.join('').concat(dataFromTheProcess)
-                    pythonProcessDataBuffer = []
+                    let processedData = pythonProcessDataBuffer
+                        .join("")
+                        .concat(dataFromTheProcess);
+                    pythonProcessDataBuffer = [];
 
                     // Process the data from the process and send one state at a time
                     processedData.split("\0").forEach(message => {
@@ -627,9 +629,8 @@ export async function activate(context: vscode.ExtensionContext) {
                                         );
                                         break;
                                 }
-
                             } catch (err) {
-                                pythonProcessDataBuffer.push(message)
+                                pythonProcessDataBuffer.push(message);
                             }
                         }
                     });
