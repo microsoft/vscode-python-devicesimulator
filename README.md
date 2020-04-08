@@ -19,7 +19,7 @@ monitor allows you to observe the device output.
 
 - [**Adafruit CLUE**](#adafruit-clue-simulator) (hidden behind preview flag)
   
-  [<img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/clue.jpg'>](#adafruit-clue-simulator)
+  [<img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/clue.png'>](#adafruit-clue-simulator)
 ## Build Status
 
 | Branch  |                                                                                                                Build Status                                                                                                                 |
