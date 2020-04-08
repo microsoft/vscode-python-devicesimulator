@@ -579,7 +579,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
                     // NOTE: parts of the flow regarding pythonProcessDataBuffer
-                    // are needed for the CLUE simulator to properly receive 
+                    // are needed for the CLUE simulator to properly receive
                     // base_64 strings on UNIX systems.
 
                     // added any incomplete data to beginning
