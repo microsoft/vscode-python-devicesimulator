@@ -630,9 +630,15 @@ export async function activate(context: vscode.ExtensionContext) {
                                         break;
                                 }
                             } catch (err) {
-                                // if not a JSON string, it is incomplete
-                                // add to beginning of next strings
-                                pythonProcessDataBuffer.push(message);
+                                if (err instanceof SyntaxError) {
+                                    // if not a JSON string, it is incomplete
+                                    // add to beginning of next strings
+                                    pythonProcessDataBuffer.push(message);
+                                } else {
+                                    console.log(
+                                        `Errored output: ${messageToWebview}`
+                                    );
+                                }
                             }
                         }
                     });
