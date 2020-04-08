@@ -5,6 +5,7 @@ import sys
 import json
 import socketio
 import copy
+import pathlib
 
 from . import constants as CONSTANTS
 from . import utils
@@ -17,9 +18,8 @@ from adafruit_circuitplayground.constants import CPX
 
 # add ref for micropython and clue
 abs_path_to_parent_dir = os.path.dirname(
-    os.path.join(os.path.abspath(__file__), "..", "..", "..")
+    os.path.join(pathlib.Path(__file__).parent, "..", "..")
 )
-
 sys.path.insert(
     0, os.path.join(abs_path_to_parent_dir, TOPLEVEL_CONSTANTS.MICROPYTHON_LIBRARY_NAME)
 )
