@@ -116,7 +116,8 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 - Run the simulator: <kbd>Shift</kbd> + <kbd>F</kbd>
 
 ## Adafruit CLUE Simulator
-NOTE: This simulator is hidden under the feature flag. See below on how to enable the feature flag.
+NOTE: This simulator is hidden under the preview mode flag. See below on how to enable the preview mode flag.
+
 
 ### Features
 - IntelliSense and syntax highlighting for CircuitPython code for the following drivers and libraries:
