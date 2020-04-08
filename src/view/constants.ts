@@ -60,6 +60,8 @@ export const BUTTON_STYLING_CLASSES = {
 export const CLUE_LEDS_COLORS = {
     WHITE_LEDS_OFF: "#ffde00",
     WHITE_LEDS_ON: "white",
+    RED_LED_OFF: "#808080",
+    RED_LED_ON: "red",
 };
 export enum DEVICE_LIST_KEY {
     CPX = "CPX",

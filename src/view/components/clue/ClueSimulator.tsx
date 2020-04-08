@@ -72,24 +72,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                 console.log(
                     `message received ${JSON.stringify(message.state)}`
                 );
-                if (message.state.display_base64) {
-                    this.setState({
-                        clue: {
-                            ...this.state.clue,
-                            displayMessage: message.state.display_base64,
-                        },
-                    });
-                } else if (message.state.pixels) {
-                    this.setState({
-                        clue: {
-                            ...this.state.clue,
-                            leds: {
-                                ...this.state.clue.leds,
-                                neopixel: message.state.leds.pixel,
-                            },
-                        },
-                    });
-                }
+                this.handleStateChangeMessage(message);
 
                 break;
             case "activate-play":
@@ -281,6 +264,47 @@ export class ClueSimulator extends React.Component<any, IState> {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
             this.refreshSimulatorClick();
+        }
+    }
+    protected handleStateChangeMessage(message: any) {
+        if (message.state.display_base64 != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    displayMessage: message.state.display_base64,
+                },
+            });
+        } else if (message.state.pixels != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        neopixel: message.state.pixels,
+                    },
+                },
+            });
+        } else if (message.state.white_leds != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        whiteLed: message.state.white_leds,
+                    },
+                },
+            });
+            console.log(`whiteled ${message.state.white_leds}`);
+        } else if (message.state.red_led != null) {
+            this.setState({
+                clue: {
+                    ...this.state.clue,
+                    leds: {
+                        ...this.state.clue.leds,
+                        redLed: message.state.red_led,
+                    },
+                },
+            });
         }
     }
 }

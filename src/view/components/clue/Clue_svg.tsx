@@ -5,6 +5,7 @@ import * as React from "react";
 import "../../styles/SimulatorSvg.css";
 import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 import { CONSTANTS, CLUE_LEDS_COLORS } from "../../constants";
+import svg from "../cpx/Svg_utils";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -20,15 +21,17 @@ export class ClueSvg extends React.Component<IProps, {}> {
     private svgRef: React.RefObject<SVGSVGElement> = React.createRef();
     private ledsRefs = {
         neopixel: React.createRef<SVGCircleElement>(),
-        redLed: React.createRef(),
+        redLed: React.createRef<SVGCircleElement>(),
         whiteLeds: [
             React.createRef<SVGRectElement>(),
             React.createRef<SVGRectElement>(),
         ],
     };
-    private pixelStopGradient: React.RefObject<
-        SVGStopElement
-    > = React.createRef();
+    private gradientRefs = {
+        neopixel: React.createRef<SVGStopElement>(),
+        whiteLed: React.createRef<SVGStopElement>(),
+        redLed: React.createRef<SVGStopElement>(),
+    };
 
     private buttonRefs: IRefObject = {
         BTN_A: React.createRef(),
@@ -68,7 +71,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                 >
                     <defs>
                         <radialGradient
-                            id="grad1"
+                            id="gradNeopixel"
                             cx="50%"
                             cy="50%"
                             r="70%"
@@ -79,9 +82,45 @@ export class ClueSvg extends React.Component<IProps, {}> {
                                 offset="0%"
                                 stopColor="rgb(0,0,0)"
                                 stopOpacity="1"
-                                ref={this.pixelStopGradient}
+                                ref={this.gradientRefs.neopixel}
                             />
                             <stop offset="100%" stopOpacity="0" />
+                        </radialGradient>
+                        <radialGradient
+                            id="gradRedLed"
+                            cx="50%"
+                            cy="50%"
+                            r="70%"
+                            fx="50%"
+                            fy="50%"
+                        >
+                            <stop
+                                offset="0%"
+                                stopColor="rgb(255,0,0)"
+                                stopOpacity="1"
+                                ref={this.gradientRefs.redLed}
+                            />
+                            <stop offset="100%" stopOpacity="0" />
+                        </radialGradient>
+                        <radialGradient
+                            id="gradWhiteLed"
+                            cx="50%"
+                            cy="50%"
+                            r="30%"
+                            fx="50%"
+                            fy="50%"
+                        >
+                            <stop
+                                offset="0%"
+                                stopColor="rgb(255,255,255)"
+                                stopOpacity="0.5"
+                                ref={this.gradientRefs.whiteLed}
+                            />
+                            <stop
+                                offset="100%"
+                                stopColor="rgb(255,255,255)"
+                                stopOpacity="0"
+                            />
                         </radialGradient>
                     </defs>
                     <g id="Green">
@@ -785,6 +824,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             transform="translate(-49.27 -48.48)"
                         />
                     </g>
+
                     <g
                         className="sim-button-group"
                         focusable="true"
@@ -933,18 +973,31 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     <text x={330} y={180} className="sim-text-outside-clue">
                         A+B
                     </text>
+                    <circle
+                        cx={114}
+                        cy={11.5}
+                        r="30"
+                        fill="url(#gradWhiteLed)"
+                    />
+                    <circle
+                        cx={191}
+                        cy={11.5}
+                        r="30"
+                        fill="url(#gradWhiteLed)"
+                    />
+
                     <g id="Buttons_at_top" data-name="Buttons at top">
                         <rect
                             ref={this.ledsRefs.whiteLeds[0]}
                             x="105.78"
-                            y="5.76"
+                            y="7"
                             width="17.4"
                             height="8.98"
                         />
                         <rect
                             ref={this.ledsRefs.whiteLeds[1]}
                             x="182.92"
-                            y="7.04"
+                            y="7"
                             width="17.4"
                             height="8.98"
                         />
@@ -1040,10 +1093,20 @@ export class ClueSvg extends React.Component<IProps, {}> {
                             rx="18.28"
                         />
                     </g>
+                    <text x={318} y={25} className="sim-text-outside-clue">
+                        Red LED
+                    </text>
+                    <circle cx={345} cy={45} r="12" fill="url(#gradRedLed)" />
+                    <circle cx={345} cy={45} r="5" ref={this.ledsRefs.redLed} />
                     <text x={318} y={85} className="sim-text-outside-clue">
                         Neopixel
                     </text>
-                    <circle cx={345} cy={115} r="30" fill="url(#grad1)" />
+                    <circle
+                        cx={345}
+                        cy={115}
+                        r="30"
+                        fill="url(#gradNeopixel)"
+                    />
                     <circle
                         cx={345}
                         cy={115}
@@ -1080,42 +1143,49 @@ export class ClueSvg extends React.Component<IProps, {}> {
         if (this.ledsRefs.neopixel.current) {
             this.ledsRefs.neopixel.current.setAttribute("fill", rgbColor);
         }
-        if (this.pixelStopGradient.current) {
+        if (this.gradientRefs.neopixel.current) {
             if (neopixel === DEFAULT_CLUE_STATE.leds.neopixel) {
-                this.pixelStopGradient.current.setAttribute(
+                this.gradientRefs.neopixel.current.setAttribute(
                     "stop-opacity",
                     "0"
                 );
             } else {
-                this.pixelStopGradient.current.setAttribute(
+                this.gradientRefs.neopixel.current.setAttribute(
                     "stop-opacity",
                     "1"
                 );
             }
-            this.pixelStopGradient.current.setAttribute("stop-color", rgbColor);
+            this.gradientRefs.neopixel.current.setAttribute(
+                "stop-color",
+                rgbColor
+            );
         }
     }
     private updateLeds() {
         // update white led
-        const { whiteLed } = this.props.leds;
+        const { whiteLed, redLed } = this.props.leds;
 
         this.ledsRefs.whiteLeds.map(
             (ledRef: React.RefObject<SVGRectElement>) => {
-                if (ledRef.current && whiteLed) {
-                    console.log("lightup whiteleds");
-                    ledRef.current.setAttribute(
-                        "fill",
-                        CLUE_LEDS_COLORS.WHITE_LEDS_ON
-                    );
-                } else if (ledRef.current) {
-                    console.log("off whiteleds");
-
-                    ledRef.current.setAttribute(
-                        "fill",
-                        CLUE_LEDS_COLORS.WHITE_LEDS_OFF
+                if (ledRef.current && this.gradientRefs.whiteLed.current) {
+                    svg.setLed(
+                        whiteLed,
+                        CLUE_LEDS_COLORS.WHITE_LEDS_OFF,
+                        CLUE_LEDS_COLORS.WHITE_LEDS_ON,
+                        ledRef.current,
+                        this.gradientRefs.whiteLed.current
                     );
                 }
             }
         );
+        if (this.ledsRefs.redLed.current && this.gradientRefs.redLed.current) {
+            svg.setLed(
+                redLed,
+                CLUE_LEDS_COLORS.RED_LED_OFF,
+                CLUE_LEDS_COLORS.RED_LED_ON,
+                this.ledsRefs.redLed.current,
+                this.gradientRefs.redLed.current
+            );
+        }
     }
 }
