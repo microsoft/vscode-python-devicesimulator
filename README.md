@@ -17,7 +17,9 @@ monitor allows you to observe the device output.
   
   [<img alt='bbc micro:bit' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/microbit/microbit.png'>](#bbc-microbit-simulator)
 
-- []
+- [**Adafruit CLUE**](#adafruit-clue-simulator) (hidden behind preview flag)
+  
+  [<img alt='Adafruit CLUE' src='assets/readmeFiles/clue/clue.jpg'>](#adafruit-clue-simulator)
 ## Build Status
 
 | Branch  |                                                                                                                Build Status                                                                                                                 |
@@ -160,6 +162,8 @@ NOTE: This simulator is hidden under the feature flag. See below on how to enabl
 Currently, we have our Adafruit CLUE simulator hidden behind a preview flag and we want you to try it out!
 ### I. Open settings
 You can use `CTRL + ,` or use `File -> Preferences -> Settings` in the top menu to navigate to settings.
+
+  <img alt='Adafruit CLUE' src='assets/readmeFiles/clue/open_settings.PNG'>
 
 ### II. Search for our preview flag
 In the top search bar, search for `DeviceSimulatorExpress.previewMode'
