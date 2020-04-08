@@ -80,8 +80,7 @@ As we only support CPX library now, other libraries (i.e. simpleio) can’t run 
   - [Download Firmware .uf2 file](https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart)
   - [Download the latest version of the Adafruit CPX library](https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries)
 
-### Keybindings
-
+### Keyboard Shortcuts
 In Device Simulator Express, you can use keyboard to interact with the device:
 
 - Push Button `A for A, B for B, C for A & B`
@@ -111,7 +110,7 @@ In Device Simulator Express, you can use keyboard to interact with the device:
   - [MicroPython documentation](https://microbit-micropython.readthedocs.io/en/latest/)
   - [BBC micro:bit examples on the official micro:bit website](https://microbit.org/projects/make-it-code-it/?filters=python)
 
-### Keybindings
+### Keyboard Shortcuts
 - Push Button `A for A, B for B, C for A & B`
 - Refresh the simulator: `SHIFT + R`
 - Run the simulator: `SHIFT + F`
@@ -153,7 +152,7 @@ NOTE: This simulator is hidden under the feature flag. See below on how to enabl
   - [Adafruit CLUE Overview](https://learn.adafruit.com/adafruit-clue)
   - [Adafruit CLUE Examples on GitHub](https://github.com/adafruit/Adafruit_CircuitPython_CLUE/tree/master/examples)
 
-### Keybindings
+### Keyboard Shortcuts
 - Push Button `A for A, B for B, C for A & B`
 - Refresh the simulator: `SHIFT + R`
 - Run the simulator: `SHIFT + F`
