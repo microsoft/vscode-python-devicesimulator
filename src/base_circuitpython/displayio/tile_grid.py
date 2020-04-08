@@ -3,6 +3,8 @@ from . import constants as CONSTANTS
 import threading
 import queue
 from common import utils
+from common.telemetry import telemetry_py
+from common.telemetry_events import TelemetryEvent
 
 # TileGrid implementation loosely based on the
 # displayio.TileGrid class in Adafruit CircuitPython
@@ -105,6 +107,8 @@ class TileGrid:
         self.__flip_x = False
         self.__flip_y = False
         self.__transpose_xy = False
+
+        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TILE_GRID)
 
     @property
     def flip_x(self):
