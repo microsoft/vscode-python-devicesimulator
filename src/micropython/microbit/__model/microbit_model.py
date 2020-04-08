@@ -98,4 +98,5 @@ class MicrobitModel:
         new_gesture = new_state.get(CONSTANTS.EXPECTED_INPUT_GESTURE)
         self.accelerometer._Accelerometer__update_gesture(new_gesture)
 
+
 __mb = MicrobitModel()
