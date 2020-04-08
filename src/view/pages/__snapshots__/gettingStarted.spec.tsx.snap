@@ -221,7 +221,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       <strong>
         "Device Simulator Express: Enable Preview Mode"
       </strong>
-        setting. To access your settings:
+       setting. To access your settings:
     </p>
     <ul>
       <li>
