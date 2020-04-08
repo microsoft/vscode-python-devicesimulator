@@ -160,7 +160,7 @@ NOTE: This simulator is hidden under the feature flag. See below on how to enabl
 ## How to enable preview flag
 Currently, we have our Adafruit CLUE simulator hidden behind a preview flag and we want you to try it out!
 ### I. Open settings
-You can use <kbd>Ctrl</kbd> + <kbd>,</kbd> or use `File -> Preferences -> Settings` in the top menu to navigate to settings.
+For Windows and Linux, you can use <kbd>Ctrl</kbd> + <kbd>,</kbd> or use `File -> Preferences -> Settings` in the top menu to navigate to settings. For Mac, you can use <kbd>Cmd</kbd> + <kbd>,</kbd> or use `Code -> Preferences -> Settings`.
 
   <img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG'>
 
