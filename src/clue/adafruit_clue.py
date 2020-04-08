@@ -140,23 +140,20 @@ class _ClueSimpleTextDisplay:
 
         self._lines = []
         for num in range(1):
-            self._lines.append(self.add_text_line(
-                color=colors[num % len(colors)]))
+            self._lines.append(self.add_text_line(color=colors[num % len(colors)]))
 
     def __getitem__(self, item):
         """Fetch the Nth text line Group"""
         if len(self._lines) - 1 < item:
             for _ in range(item - (len(self._lines) - 1)):
                 self._lines.append(
-                    self.add_text_line(
-                        color=self._colors[item % len(self._colors)])
+                    self.add_text_line(color=self._colors[item % len(self._colors)])
                 )
         return self._lines[item]
 
     def add_text_line(self, color=0xFFFFFF):
         """Adds a line on the display of the specified color and returns the label object."""
-        text_label = self._label.Label(
-            self._font, text="", max_glyphs=45, color=color)
+        text_label = self._label.Label(self._font, text="", max_glyphs=45, color=color)
         text_label.x = 0
         text_label.y = self._y
         self._y = text_label.y + 13 * self.text_scale
