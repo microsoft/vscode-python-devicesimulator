@@ -116,7 +116,7 @@ const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
         label: MICROBIT_TOOLBAR_ICON_ID.GPIO,
     },
     {
-        image: TOOLBAR_SVG.GYROSCOPE_SVG,
+        image: TOOLBAR_SVG.COMPASS_SVG,
         label: MICROBIT_TOOLBAR_ICON_ID.COMPASS,
     },
     {
