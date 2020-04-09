@@ -13,8 +13,8 @@ interface IProps {
     displayImage: string;
     leds: {
         neopixel: number[];
-        redLed: boolean;
-        whiteLed: boolean;
+        isRedLedOn: boolean;
+        isWhiteLedOn: boolean;
     };
 }
 export class ClueSvg extends React.Component<IProps, {}> {
@@ -1163,13 +1163,13 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
     private updateLeds() {
         // update white led
-        const { whiteLed, redLed } = this.props.leds;
+        const { isWhiteLedOn, isRedLedOn } = this.props.leds;
 
         this.ledsRefs.whiteLeds.map(
             (ledRef: React.RefObject<SVGRectElement>) => {
                 if (ledRef.current && this.gradientRefs.whiteLed.current) {
                     svg.setLed(
-                        whiteLed,
+                        isWhiteLedOn,
                         CLUE_LEDS_COLORS.WHITE_LEDS_OFF,
                         CLUE_LEDS_COLORS.WHITE_LEDS_ON,
                         ledRef.current,
@@ -1180,7 +1180,7 @@ export class ClueSvg extends React.Component<IProps, {}> {
         );
         if (this.ledsRefs.redLed.current && this.gradientRefs.redLed.current) {
             svg.setLed(
-                redLed,
+                isRedLedOn,
                 CLUE_LEDS_COLORS.RED_LED_OFF,
                 CLUE_LEDS_COLORS.RED_LED_ON,
                 this.ledsRefs.redLed.current,

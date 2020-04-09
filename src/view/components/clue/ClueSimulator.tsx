@@ -21,8 +21,8 @@ export const DEFAULT_CLUE_STATE: IClueState = {
     displayMessage: DEFAULT_IMG_CLUE,
     leds: {
         neopixel: [0, 0, 0],
-        redLed: false,
-        whiteLed: false,
+        isRedLedOn: false,
+        isWhiteLedOn: false,
     },
 };
 
@@ -40,8 +40,8 @@ interface IClueState {
     displayMessage: string;
     leds: {
         neopixel: number[];
-        redLed: boolean;
-        whiteLed: boolean;
+        isRedLedOn: boolean;
+        isWhiteLedOn: boolean;
     };
 }
 export class ClueSimulator extends React.Component<any, IState> {
@@ -294,7 +294,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                     ...this.state.clue,
                     leds: {
                         ...this.state.clue.leds,
-                        whiteLed: message.state.white_leds,
+                        isWhiteLedOn: message.state.white_leds,
                     },
                 },
             });
@@ -304,7 +304,7 @@ export class ClueSimulator extends React.Component<any, IState> {
                     ...this.state.clue,
                     leds: {
                         ...this.state.clue.leds,
-                        redLed: message.state.red_led,
+                        isRedLedOn: message.state.red_led,
                     },
                 },
             });

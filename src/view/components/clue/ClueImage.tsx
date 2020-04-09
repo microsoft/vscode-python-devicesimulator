@@ -18,8 +18,8 @@ interface IProps {
     displayMessage: string;
     leds: {
         neopixel: number[];
-        redLed: boolean;
-        whiteLed: boolean;
+        isRedLedOn: boolean;
+        isWhiteLedOn: boolean;
     };
 }
 
