@@ -5,7 +5,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
         We're unveiling a new addition to our DSX family of microcontroller simulators! Please welcome the <b>Adafruit
             CLUE
             simulator</b> 💕🔍.<br>
-        This change is <b>hidden</b> under our preview flag by default. <a
+        This change is <b>hidden</b> under a preview flag by default. <a
             href="https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/README.md#how-to-enable-preview-flag">See
             here</a> to learn how to enable
         preview mode!<br>
@@ -56,5 +56,5 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
             <li>Fixed issue with sensors on micro:bit debugger.</li>
         </ul>
     </p>
-    <p><b>Keep being a coding champ 🥳🏆🙌,</b><br>
+    <p><b>Keep being a coding champ 🤩🏆🙌,</b><br>
         &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;
