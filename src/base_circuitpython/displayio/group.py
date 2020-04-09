@@ -69,7 +69,7 @@ class Group:
 
     @x.setter
     def x(self, val):
-        if val != self.__x:
+        if self.__x != val:
             self.__x = val
             self.__elem_changed()
 
@@ -79,7 +79,7 @@ class Group:
 
     @y.setter
     def y(self, val):
-        if val != self.__y:
+        if self.__y != val:
             self.__y = val
             self.__elem_changed()
 
@@ -89,7 +89,7 @@ class Group:
 
     @scale.setter
     def scale(self, val):
-        if val != self.__scale:
+        if self.__scale != val:
             self.__scale = val
             self.__elem_changed()
 
