@@ -214,6 +214,58 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
        Tutorial for CLUE 
     </h2>
     <h3>
+       0. Enable Preview Mode to use the CLUE (This is required)
+    </h3>
+    <p>
+       a. Access your settings:
+    </p>
+    <img
+      alt="Open settings"
+      src="https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG"
+    />
+    <ul>
+      <li>
+        Windows or Linux: press 
+        <kbd>
+          Ctrl
+        </kbd>
+         + 
+        <kbd>
+          ,
+        </kbd>
+         or go to 
+        <code>
+          File -&gt; Preferences -&gt; Settings
+        </code>
+      </li>
+      <li>
+        Mac: press 
+        <kbd>
+          Cmd
+        </kbd>
+         + 
+        <kbd>
+          ,
+        </kbd>
+         or go to 
+        <code>
+          Code -&gt; Preferences -&gt; Settings
+        </code>
+        .
+      </li>
+    </ul>
+    <p>
+       b. Check the 
+      <code>
+        "Device Simulator Express: Preview Mode"
+      </code>
+       setting.
+    </p>
+    <img
+      alt="Enable preview mode"
+      src="https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif"
+    />
+    <h3>
       1. Import the the main CLUE library (This is required)
     </h3>
     <span

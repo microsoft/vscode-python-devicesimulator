@@ -22,6 +22,7 @@ export const CONFIG = {
     PYTHON_PATH: "python.pythonPath",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
+    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
 };
 
 export const CONSTANTS = {
