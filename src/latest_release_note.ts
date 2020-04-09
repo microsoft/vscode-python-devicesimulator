@@ -1,67 +1,57 @@
 // TODO: find a better way of loading html into a string
-export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes 👩🏾‍💻 👨🏾‍💻 (Feb. 27, 2020)</h1>
+export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ⌨️🐍💞 (April 15, 2020)</h1>
 <p>
-    Welcome to the first update to the Device Simulator Express! <u>Please feel free to enable our feature flag in
-        Settings
-        (under the setting titled “<b>deviceSimulatorExpress.previewMode</b>” in the User settings)</u>.
-</p>
-<h2>Changes</h2>
-<p>
-    <h3>Fixes (enabled by default):</h3>
-    <ul>
-        <li>Enabled support for “from adafruit_circuitplayground import cp” as an import statement for the CPX and
-            changed
-            “New File” template to use this format.</li>
+    <p>
+        We're unveiling a new addition to our DSX family of microcontroller simulators! Please welcome the <b>Adafruit
+            CLUE
+            simulator</b> 💕🔍.<br>
+        This change is <b>hidden</b> under a preview flag by default. <a
+            href="https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/README.md#how-to-enable-preview-flag">See
+            here</a> to learn how to enable
+        preview mode!<br>
+    </p>
+    <p>
+        Also, support for <b>BBC micro:bit</b> simulation is now <b>officially released</b>! 💖✨ Previously, it was hidden
+        behind a
+        preview flag.
+    </p>
+    <p>
+        <h2>Features:</h2>
         <ul>
-            <li>Aligns better with newer online tutorials. Best practice for adafruit_circuitplayground library imports
-                changed with <a href="https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/pull/79">this
-                    PR
-                    in Adafruit’s official repo</a>.</li>
-        </ul>
-        <li>State for sensor selection persists.</li>
-        <li>More reliable dependency installation and more informative setup fail information.</li>
-        <li>Fixes to Serial Monitor for CPX device deployment.</li>
-        <li>More robust debugger functionality.</li>
-        <li>Fixed spelling and clarity errors in documentation and pop-up messages.</li>
-    </ul>
-    <h3>New features (only available with feature flag enabled):</h3>
-    <ul>
-        <li><u>BBC micro:bit simulator and debugger – <i>open up a new micro:bit file, write code for the micro:bit and
-                    test it out!</u></i>
-            <ul>
-                <li>Ability to interact with LEDs, buttons, and sensors.</li>
-                <li>Includes autocompletion and error flagging.</li>
-                <li>Supports the following:</li>
+            <li>Added the support for the <b>Adafruit CLUE</b>! This is hidden behind a preview flag by default.
                 <ul>
-                    <li>Classes:
+                    <li>
+                        Added CLUE Simulator, featuring simulation for the following:
                         <ul>
-                            <li>display</li>
-                            <li>image</li>
-                            <li>accelerometer</li>
-                            <li>button</li>
+                            <li>240x240 color display.</li>
+                            <li>Sensors (for temperature, light, color, acceleration, humidity, pressure, proximity,
+                                gestures, gyro, and magnetic field).</li>
                         </ul>
+                    </li>
+                    <li>Implemented deploy-to-device for CLUE.</li>
+                    <li>CLUE code debugger integration.</li>
                 </ul>
-                <ul>
-                    <li>Global static functions:</li>
-                    <ul>
-                        <li>sleep()</li>
-                        <li>running_time()</li>
-                        <li>temperature()</li>
-                    </ul>
-                </ul>
-            </ul>
-            <ul>
-                <li>Includes accessibility considerations for simulation.</li>
-                <ul>
-                    <li>Has ability to use keyboard for button presses and navigation.</li>
-                </ul>
-            </ul>
-    </ul>
-</p>
-<h2>Upcoming Improvements</h2>
-<ul>
-    <li>Deploying to device on the micro:bit with serial monitor interaction.</li>
-</ul>
-<br>
-<p><b>Happy Hacking! ✨✨🐍🐍🍰</b><br>
-    &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;
+            </li>
+            <li>Support for <b>BBC micro:bit</b> is now fully released and will appear by default.</li>
+
+            <li>New "Getting Started" page containing CPX, micro:bit, and CLUE example code.</li>
+            <li>Incorporated support for gesture simulation on the micro:bit.</li>
+            <li>Tab UI now has callout for "about" information on each sensor/input option.</li>
+            <li>The CircuitPython Neopixel and Adafruit_Fancyled libraries can now be used with the Adafruit CPX without
+                importing the CPX library. <a
+                    href="https://circuitpython.readthedocs.io/projects/fancyled/en/latest/examples.html">See here</a>
+                for an example.</li>
+        </ul>
+        <h2>Changes:</h2>
+        <ul>
+            <li>Command palette only shows actions (ie: Open Simulator, Deploy to Device) once instead of per device.
+            </li>
+
+        </ul>
+        <h2>Fixes:</h2>
+        <ul>
+            <li>Fixed issue with sensors on micro:bit debugger.</li>
+        </ul>
+    </p>
+    <p><b>Keep being a coding champ 🤩🏆🙌,</b><br>
+        &nbsp&nbsp&nbsp&nbsp&nbsp <b><i>- The Device Simulator Express Team</i></b></p>`;

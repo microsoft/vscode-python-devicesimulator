@@ -112,7 +112,6 @@ class _ClueSimpleTextDisplay:
         self._display = board.DISPLAY
         self._colors = colors
         self._label = label
-        # self._display = board.DISPLAY
         self._font = terminalio.FONT
         if font:
             self._font = font
@@ -235,6 +234,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             CONSTANTS.CLUE_STATE.BUTTON_A: "A",
             CONSTANTS.CLUE_STATE.BUTTON_B: "B",
         }
+        self.display = board.DISPLAY
 
     @property
     def button_a(self):
