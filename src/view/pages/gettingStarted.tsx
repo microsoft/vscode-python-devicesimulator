@@ -143,7 +143,7 @@ export class GettingStartedPage extends React.Component {
                             <li>Windows or Linux: press <kbd>Ctrl</kbd> + <kbd>,</kbd> or go to <code>File -> Preferences -> Settings</code></li>
                             <li>Mac: press <kbd>Cmd</kbd> + <kbd>,</kbd> or go to <code>Code -> Preferences -> Settings</code>.</li>
                         </ul>
-                        <p> b. Check the <code>"Device Simulator Express: Enable Preview Mode"</code> setting.</p>
+                        <p> b. Check the <code>"Device Simulator Express: Preview Mode"</code> setting.</p>
                         <img alt='Enable preview mode' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'></img>
                         <h3>
                             1. Import the the main CLUE library (This is
