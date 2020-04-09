@@ -336,5 +336,5 @@ class Group:
     def pop(self, i=-1):
         item = self.__contents.pop(i)
         item.parent = None
-        self.elem_changed()
+        self.__elem_changed()
         return item
