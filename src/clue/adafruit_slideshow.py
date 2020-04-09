@@ -7,10 +7,7 @@ from base_circuitpython import base_cp_constants as CONSTANTS
 import time
 import collections
 from random import shuffle
-from common import utils
-from common import debugger_communication_client
-from common.telemetry import telemetry_py
-from common.telemetry_events import TelemetryEvent
+import common
 import board
 
 # taken from adafruit
@@ -157,7 +154,7 @@ class SlideShow:
         # if path is relative, this makes sure that
         # it's relative to the users's code file
         abs_path_parent_dir = os.path.abspath(
-            os.path.join(utils.abs_path_to_user_file, os.pardir)
+            os.path.join(common.utils.abs_path_to_user_file, os.pardir)
         )
         abs_path_folder = os.path.normpath(os.path.join(abs_path_parent_dir, folder))
 
@@ -176,7 +173,9 @@ class SlideShow:
         # show the first working image
         self.advance()
 
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SLIDESHOW)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry.TelemetryEvent.CLUE_API_SLIDESHOW
+        )
 
     @property
     def current_image_name(self):
@@ -382,9 +381,9 @@ class SlideShow:
 
         sendable_json = {CONSTANTS.BASE_64: img_str}
 
-        if utils.debug_mode:
-            debugger_communication_client.debug_send_to_simulator(
+        if common.utils.debug_mode:
+            common.debugger_communication_client.debug_send_to_simulator(
                 sendable_json, CONSTANTS.CLUE
             )
         else:
-            utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+            common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)

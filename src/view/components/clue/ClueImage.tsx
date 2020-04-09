@@ -16,7 +16,11 @@ interface EventTriggers {
 interface IProps {
     eventTriggers: EventTriggers;
     displayMessage: string;
-    neopixel: number[];
+    leds: {
+        neopixel: number[];
+        isRedLedOn: boolean;
+        isWhiteLedOn: boolean;
+    };
 }
 
 export enum BUTTONS_KEYS {
@@ -80,7 +84,7 @@ export class ClueImage extends React.Component<IProps, {}> {
             <ClueSvg
                 ref={this.svgRef}
                 displayImage={this.props.displayMessage}
-                neopixel={this.props.neopixel}
+                leds={this.props.leds}
             />
         );
     }

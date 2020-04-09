@@ -39,7 +39,7 @@ class Group:
         self.__auto_write = auto_write
         self.__contents = []
         self.__max_size = max_size
-        self.scale = scale
+        self.__scale = scale
         """
             .. attribute:: scale
 
@@ -47,14 +47,14 @@ class Group:
         will be represented by 2x2 pixels.
 
         """
-        self.x = x
+        self.__x = x
         """
         .. attribute:: x
 
             X position of the Group in the parent.
 
         """
-        self.y = y
+        self.__y = y
         """
         .. attribute:: y
 
@@ -62,6 +62,36 @@ class Group:
         """
         self.__parent = None
         self.__hidden = False
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, val):
+        if self.__x != val:
+            self.__x = val
+            self.__elem_changed()
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, val):
+        if self.__y != val:
+            self.__y = val
+            self.__elem_changed()
+
+    @property
+    def scale(self):
+        return self.__scale
+
+    @scale.setter
+    def scale(self, val):
+        if self.__scale != val:
+            self.__scale = val
+            self.__elem_changed()
 
     @property
     def hidden(self):
@@ -255,23 +285,24 @@ class Group:
                 # 1 unit (1 unit * scale = scale)
                 y -= scale
 
-                # Group is positioned against anchored_position (default (0,0)),
+                # Group is positioned against anchored_position (already incorporated into self.x and self.y),
                 # which is positioned against anchor_point
 
                 x += self._anchor_point[0]
                 y += self._anchor_point[1]
-                if self._boundingbox is not None and self.anchored_position is not None:
-                    x += self.anchored_position[0]
-                    y += self.anchored_position[1]
         except AttributeError:
             pass
 
         for elem in self.__contents:
             if not elem.hidden:
                 if isinstance(elem, Group):
-                    img = elem._Group__draw(img=img, x=x, y=y, scale=scale, show=False,)
+                    img = elem._Group__draw(
+                        img=img, x=x + self.x, y=y + self.y, scale=scale, show=False,
+                    )
                 else:
-                    img = elem._TileGrid__draw(img=img, x=x, y=y, scale=scale)
+                    img = elem._TileGrid__draw(
+                        img=img, x=x + self.x, y=y + self.y, scale=scale
+                    )
 
         # show should only be true to the highest parent group
         if show:
@@ -305,5 +336,5 @@ class Group:
     def pop(self, i=-1):
         item = self.__contents.pop(i)
         item.parent = None
-        self.elem_changed()
+        self.__elem_changed()
         return item
