@@ -175,3 +175,19 @@ class TestAdafruitClue(object):
     def test_pixel(self, mock_color):
         clue.pixel.fill(mock_color)
         assert clue.pixel[0] == mock_color
+
+    @pytest.mark.parametrize(
+        "value, expected",
+        [(True, True), (False, False), (1, True), ("a", True), (0, False), ("", False)],
+    )
+    def test_red_led(self, value, expected):
+        clue.red_led = value
+        assert clue.red_led == expected
+
+    @pytest.mark.parametrize(
+        "value, expected",
+        [(True, True), (False, False), (1, True), ("a", True), (0, False), ("", False)],
+    )
+    def test_white_leds(self, value, expected):
+        clue.white_leds = value
+        assert clue.white_leds == expected

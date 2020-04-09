@@ -61,6 +61,12 @@ export const BUTTON_STYLING_CLASSES = {
     DEFAULT: "sim-button-outer",
     KEYPRESSED: "sim-button-key-press",
 };
+export const CLUE_LEDS_COLORS = {
+    WHITE_LEDS_OFF: "#ffde00",
+    WHITE_LEDS_ON: "white",
+    RED_LED_OFF: "#808080",
+    RED_LED_ON: "red",
+};
 export enum DEVICE_LIST_KEY {
     CPX = "CPX",
     MICROBIT = "micro:bit",
