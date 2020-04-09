@@ -70,7 +70,7 @@
     "toolbar-clue-accelerometer-sensor.description": " The 3-axis accelerometer, can tell you which direction is down towards the Earth (by measuring gravity) or how fast the board is accelerating in 3D space.",
     "toolbar-clue-accelerometer-sensor.tryItDescription": "Set the acceleration with the sliders.",
     "toolbar-clue-led.title": "Neopixel",
-    "toolbar-clue-led.description": "The CLUE has one full RGB LED (NeoPixel) on the back of the device",
+    "toolbar-clue-led.description": "The CLUE has one full RGB LED (NeoPixel) on the back of the device.",
 
     "toolbar-clue-led.tryItDescription": "Run your code and see the cool effects on the simulator!",
     "toolbar-clue-a-b-push.title": "Buttons",
