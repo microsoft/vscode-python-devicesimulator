@@ -309,7 +309,7 @@
         "glob": "^7.1.4",
         "jest": "^25.1.0",
         "jest-transform-css": "^2.0.0",
-        "office-ui-fabric-react": "^7.85.0",
+        "office-ui-fabric-react": "^7.105.12",
         "open": "^6.4.0",
         "os": "^0.1.1",
         "react": "^16.9.0",

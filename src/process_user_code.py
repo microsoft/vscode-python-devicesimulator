@@ -102,7 +102,7 @@ def handle_user_prints():
 
             data_str = str(message["data"])
             curr_terminal.add_str_to_terminal(data_str[:-1])
-            print(json.dumps(message), file=sys.__stdout__, flush=True)
+            print(json.dumps(message) + "\0", file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
             user_stdout.seek(0)
 
