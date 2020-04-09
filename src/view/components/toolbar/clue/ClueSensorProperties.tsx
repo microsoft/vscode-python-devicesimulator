@@ -47,24 +47,24 @@ const CLUE_MAGNET_X: ISliderProps = {
     axisLabel: "X",
     maxLabel: "Max",
     minLabel: "Min",
-    maxValue: 1600,
-    minValue: 400,
+    maxValue: 1000,
+    minValue: -1000,
     type: SENSOR_LIST.MAGNET_X,
 };
 const CLUE_MAGNET_Y: ISliderProps = {
     axisLabel: "Y",
     maxLabel: "Max",
     minLabel: "Min",
-    maxValue: 1600,
-    minValue: 400,
+    maxValue: 1000,
+    minValue: -1000,
     type: SENSOR_LIST.MAGNET_Y,
 };
 const CLUE_MAGNET_Z: ISliderProps = {
     axisLabel: "Z",
     maxLabel: "Max",
     minLabel: "Min",
-    maxValue: 1600,
-    minValue: 400,
+    maxValue: 1000,
+    minValue: -1000,
     type: SENSOR_LIST.MAGNET_Z,
 };
 
