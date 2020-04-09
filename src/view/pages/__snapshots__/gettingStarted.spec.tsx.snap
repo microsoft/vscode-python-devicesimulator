@@ -222,6 +222,12 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
     <img
       alt="Open settings"
       src="https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG"
+      style={
+        Object {
+          "height": "337px",
+          "width": "346px",
+        }
+      }
     />
     <ul>
       <li>
@@ -264,6 +270,12 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
     <img
       alt="Enable preview mode"
       src="https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif"
+      style={
+        Object {
+          "height": "157px",
+          "width": "333px",
+        }
+      }
     />
     <h3>
       1. Import the the main CLUE library (This is required)
