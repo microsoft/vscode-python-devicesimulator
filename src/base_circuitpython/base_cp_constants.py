@@ -26,6 +26,9 @@ class CLUE_STATE:
     GYRO_X = "gyro_x"
     GYRO_Y = "gyro_y"
     GYRO_Z = "gyro_z"
+    # LEDs
+    RED_LED = "red_led"
+    WHITE_LEDS = "white_leds"
 
 
 CPX = "CPX"

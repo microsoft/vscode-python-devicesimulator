@@ -77,6 +77,22 @@ namespace svg {
         el.appendChild(t);
         return t;
     }
+
+    export function setLed(
+        ledStatus: boolean,
+        offColor: string,
+        onColor: string,
+        ledElement: SVGElement,
+        gradientStopElement: SVGStopElement
+    ) {
+        if (ledStatus) {
+            ledElement.setAttribute("fill", onColor);
+            gradientStopElement.setAttribute("stop-opacity", "1");
+        } else {
+            ledElement.setAttribute("fill", offColor);
+            gradientStopElement.setAttribute("stop-opacity", "0");
+        }
+    }
 }
 
 export default svg;
