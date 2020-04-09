@@ -4,7 +4,7 @@
 import sys
 import json
 
-# WARNING: importing socketio will sometimes cause errors in normat execution
+# WARNING: importing socketio will sometimes cause errors in normal execution
 # try to import common instead of common.debugger_communication_cleint
 import socketio
 
