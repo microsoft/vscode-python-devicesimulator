@@ -11,7 +11,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
         preview mode!<br>
     </p>
     <p>
-        Also, support for <b>micro:bit</b> simulation is now <b>officially released</b>! 💖✨ Previously, it was hidden
+        Also, support for <b>BBC micro:bit</b> simulation is now <b>officially released</b>! 💖✨ Previously, it was hidden
         behind a
         preview flag.
     </p>
@@ -32,7 +32,7 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
                     <li>CLUE code debugger integration.</li>
                 </ul>
             </li>
-            <li>Support for <b>micro:bit</b> is now fully released and will appear by default.</li>
+            <li>Support for <b>BBC micro:bit</b> is now fully released and will appear by default.</li>
 
             <li>New "Getting Started" page containing CPX, micro:bit, and CLUE example code.</li>
             <li>Incorporated support for gesture simulation on the micro:bit.</li>
