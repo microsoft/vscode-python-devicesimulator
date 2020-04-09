@@ -262,7 +262,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
       alt="Enable preview mode"
       src="https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif"
     />
-    
+    <h3>
       1. Import the the main CLUE library (This is required)
     </h3>
     <span
