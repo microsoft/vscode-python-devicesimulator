@@ -16,7 +16,7 @@ export const Dropdown: React.FC<IDropdownProps> = props => {
         <select
             className="dropdown"
             onChange={props.onSelect}
-            name={props.name}
+            title={props.name}
         >
             {renderOptions(props.options)}
         </select>

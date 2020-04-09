@@ -194,7 +194,7 @@ class ToolBar extends React.Component<IProps, IToolbarState, any> {
                 {this.state.isDescriptionVisible && (
                     <Callout
                         className="description-callout"
-                        role="textbox"
+                        role="text"
                         target=".info-icon"
                         setInitialFocus={true}
                         onDismiss={this.onDescriptionDismiss}
