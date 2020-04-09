@@ -27,7 +27,7 @@ import { DeviceSelectionService } from "./service/deviceSelectionService";
 import { FileSelectionService } from "./service/fileSelectionService";
 import { MessagingService } from "./service/messagingService";
 import { PopupService } from "./service/PopupService";
-import { SetupService } from "./service/SetupService";
+import { SetupService } from "./service/setupService";
 import { TelemetryHandlerService } from "./service/telemetryHandlerService";
 import { WebviewService } from "./service/webviewService";
 import { SimulatorDebugConfigurationProvider } from "./simulatorDebugConfigurationProvider";
@@ -53,6 +53,8 @@ const deviceSelectionService = new DeviceSelectionService();
 const messagingService = new MessagingService(deviceSelectionService);
 const debuggerCommunicationService = new DebuggerCommunicationService();
 const fileSelectionService = new FileSelectionService(messagingService);
+
+let pythonProcessDataBuffer: string[];
 
 export let outChannel: vscode.OutputChannel | undefined;
 
@@ -471,6 +473,7 @@ export async function activate(context: vscode.ExtensionContext) {
     };
 
     const runSimulatorCommand = async () => {
+        pythonProcessDataBuffer = [];
         // Prevent running new code if a debug session is active
         if (inDebugMode) {
             vscode.window.showErrorMessage(
@@ -557,8 +560,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 command: "activate-play",
                 active_device: deviceSelectionService.getCurrentActiveDevice(),
             });
-
-            childProcess = cp.spawn(pythonExecutablePath, [
+            const args = [
                 utils.getPathToScript(
                     context,
                     CONSTANTS.FILESYSTEM.OUTPUT_DIRECTORY,
@@ -566,7 +568,8 @@ export async function activate(context: vscode.ExtensionContext) {
                 ),
                 fileSelectionService.getCurrentFileAbsPath(),
                 JSON.stringify({ enable_telemetry: utils.getTelemetryState() }),
-            ]);
+            ];
+            childProcess = cp.spawn(pythonExecutablePath, args);
 
             let dataFromTheProcess = "";
             let oldMessage = "";
@@ -575,8 +578,18 @@ export async function activate(context: vscode.ExtensionContext) {
             childProcess.stdout.on("data", data => {
                 dataFromTheProcess = data.toString();
                 if (currentPanel) {
+                    // NOTE: parts of the flow regarding pythonProcessDataBuffer
+                    // are needed for the CLUE simulator to properly receive
+                    // base_64 strings on UNIX systems.
+
+                    // added any incomplete data to beginning
+                    let processedData = pythonProcessDataBuffer
+                        .join("")
+                        .concat(dataFromTheProcess);
+                    pythonProcessDataBuffer = [];
+
                     // Process the data from the process and send one state at a time
-                    dataFromTheProcess.split("\0").forEach(message => {
+                    processedData.split("\0").forEach(message => {
                         if (
                             currentPanel &&
                             message.length > 0 &&
@@ -621,9 +634,15 @@ export async function activate(context: vscode.ExtensionContext) {
                                         break;
                                 }
                             } catch (err) {
-                                console.log(
-                                    `Non-JSON output from the process :  ${message}`
-                                );
+                                if (err instanceof SyntaxError) {
+                                    // if not a JSON string, it is incomplete
+                                    // add to beginning of next strings
+                                    pythonProcessDataBuffer.push(message);
+                                } else {
+                                    console.log(
+                                        `Errored output: ${messageToWebview}`
+                                    );
+                                }
                             }
                         }
                     });
