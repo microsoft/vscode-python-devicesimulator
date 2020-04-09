@@ -1,12 +1,22 @@
 // TODO: find a better way of loading html into a string
 export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ⌨️🐍💞 (April 15, 2020)</h1>
 <p>
-    We're unveiling a new addition to our DSX family of microcontroller simulators! Please welcome our <b>Adafruit CLUE
-        simulator</b> 💕🔍.<br>
-    This change is <b>hidden</b> under our preview flag by default. <a href="https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/README.md#how-to-enable-preview-flag">See here</a> to learn how to enable
-    preview mode!
     <p>
-        <h2>Changes</h2>
+        We're unveiling a new addition to our DSX family of microcontroller simulators! Please welcome the <b>Adafruit
+            CLUE
+            simulator</b> 💕🔍.<br>
+        This change is <b>hidden</b> under our preview flag by default. <a
+            href="https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/README.md#how-to-enable-preview-flag">See
+            here</a> to learn how to enable
+        preview mode!<br>
+    </p>
+    <p>
+        Also, support for <b>micro:bit</b> simulation is now <b>officially released</b>! 💖✨ Previously, it was hidden
+        behind a
+        preview flag.
+    </p>
+    <p>
+        <h2>Features:</h2>
         <ul>
             <li>Added the support for the <b>Adafruit CLUE</b>! This is hidden behind a preview flag by default.
                 <ul>
@@ -19,11 +29,11 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
                         </ul>
                     </li>
                     <li>Implemented deploy-to-device for CLUE.</li>
-                    <li>Created CLUE code debugger.</li>
+                    <li>CLUE code debugger integration.</li>
                 </ul>
             </li>
-            <li>Command palette only shows actions (ie: Open Simulator, Deploy to Device) once instead of per device.
-            </li>
+            <li>Support for <b>micro:bit</b> is now fully released and will appear by default.</li>
+
             <li>New "Getting Started" page containing CPX, micro:bit, and CLUE example code.</li>
             <li>Support for gesture simulation on the micro:bit. The simulated gestures are: up, down, left, right, face
                 up,
@@ -33,6 +43,12 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes �
                 importing the CPX library. <a
                     href="https://circuitpython.readthedocs.io/projects/fancyled/en/latest/examples.html">See here</a>
                 for an example.</li>
+        </ul>
+        <h2>Changes:</h2>
+        <ul>
+            <li>Command palette only shows actions (ie: Open Simulator, Deploy to Device) once instead of per device.
+            </li>
+
         </ul>
         <h2>Fixes:</h2>
         <ul>
