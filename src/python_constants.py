@@ -3,7 +3,7 @@
 
 ACTIVE_DEVICE_FIELD = "active_device"
 
-CPX_DRIVE_NAME = "CIRCUITPY"
+ADAFRUIT_DRIVE_NAME = "CIRCUITPY"
 
 DEPEND_ERR = 'The required dependencies aren\'t downloaded. Please use CTRL+SHIFT+P to open the command palette and select "Device Simulator Express: Install Extension Dependencies".'
 
@@ -16,14 +16,18 @@ ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 ERROR_TRACEBACK = "\n\tTraceback of code execution : \n"
 ERROR_NO_FILE = "Error : No file was passed to the process to execute.\n"
 
-LIBRARY_NAME = "adafruit_circuitplayground"
+ADAFRUIT_LIBRARY_NAME = "adafruit_circuitplayground"
+MICROPYTHON_LIBRARY_NAME = "micropython"
+
 LINUX_OS = "linux"
 
 MAC_OS = "darwin"
 MOUNT_COMMAND = "mount"
 
-NO_CPX_DETECTED_ERROR_TITLE = "No Circuit Playground Express detected"
-NO_CPX_DETECTED_ERROR_DETAIL = (
+NO_ADAFRUIT_DEVICE_DETECTED_ERROR_TITLE = (
+    "No Adafruit device (Circuit Playground Express or Clue) detected"
+)
+NO_ADAFRUIT_DEVICE_DETECTED_ERROR_DETAIL = (
     "Could not find drive with name 'CIRCUITPYTHON'. Detected OS: {}"
 )
 NO_MICROBIT_DETECTED_ERROR_TITLE = "No micro:bit detected"
@@ -41,3 +45,11 @@ DEFAULT_PORT = "5577"
 CPX = "CPX"
 
 MICROBIT = "micro:bit"
+
+CLUE = "CLUE"
+CLUE_DIR = "clue"
+
+CIRCUITPYTHON = "base_circuitpython"
+
+CODE_START_MSG_CLUE = "soft reboot\ncode.py output:"
+CODE_FINISHED_MSG_CLUE = "\nCode done running. Waiting for reload."

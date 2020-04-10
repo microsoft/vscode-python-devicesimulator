@@ -4,7 +4,7 @@ import { IntlProvider } from "react-intl";
 import * as testRenderer from "react-test-renderer";
 import { Cpx } from "./Cpx";
 
-describe("Device component", () => {
+describe("CPX component", () => {
     it("should render correctly", () => {
         const component = testRenderer
             .create(

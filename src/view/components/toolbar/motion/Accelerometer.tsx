@@ -1,7 +1,8 @@
 import * as React from "react";
 import { SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
-import { ThreeDimensionSlider } from "./threeDimensionSlider/ThreeDimensionSlider";
+
+import { GenericSliderComponent } from "../GenericSliderComponent";
 
 const MOTION_SLIDER_PROPS_X: ISliderProps = {
     axisLabel: "X",
@@ -11,6 +12,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     minValue: -1023,
     type: SENSOR_LIST.MOTION_X,
 };
+
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     axisLabel: "Y",
     maxLabel: "Front",
@@ -19,6 +21,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Y,
 };
+
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     axisLabel: "Z",
     maxLabel: "Down",
@@ -37,24 +40,26 @@ const MOTION_SENSOR_PROPERTIES: ISensorProps = {
     ],
     unitLabel: "Lux",
 };
+
 interface IProps {
     axisValues: {
-        X_AXIS: number;
-        Y_AXIS: number;
-        Z_AXIS: number;
+        X: number;
+        Y: number;
+        Z: number;
     };
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void;
 }
-export const Accelerometer: React.FC<IProps> = (props: IProps) => {
-    return (
-        <div className="AccelerometerBar">
-            <br />
-            {/* Implement Gestures Here */}
-            <ThreeDimensionSlider
-                axisProperties={MOTION_SENSOR_PROPERTIES}
-                onUpdateValue={props.onUpdateValue}
-                axisValues={props.axisValues}
-            />
-        </div>
-    );
-};
+
+export class Accelerometer extends React.Component<IProps> {
+    render() {
+        return (
+            <div className="accelerometer">
+                <GenericSliderComponent
+                    axisProperties={MOTION_SENSOR_PROPERTIES}
+                    onUpdateValue={this.props.onUpdateValue}
+                    axisValues={this.props.axisValues}
+                />
+            </div>
+        );
+    }
+}

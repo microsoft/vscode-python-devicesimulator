@@ -8,7 +8,6 @@ import { sendMessage } from "../../utils/MessageUtils";
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
-import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTON_NEUTRAL, BUTTON_PRESSED } from "./Cpx_svg_style";
 import { CpxImage, updatePinTouch, updateSwitch } from "./CpxImage";
@@ -30,6 +29,7 @@ interface IState {
     selected_file: string;
     cpx: ICpxState;
     play_button: boolean;
+    currently_selected_file: string;
 }
 
 const DEFAULT_CPX_STATE: ICpxState = {
@@ -63,6 +63,7 @@ class Simulator extends React.Component<{}, IState> {
             play_button: false,
             running_file: "",
             selected_file: "",
+            currently_selected_file: "",
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -72,7 +73,6 @@ class Simulator extends React.Component<{}, IState> {
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.togglePlayClick = this.togglePlayClick.bind(this);
         this.refreshSimulatorClick = this.refreshSimulatorClick.bind(this);
-        this.onSelectBlur = this.onSelectBlur.bind(this);
     }
 
     handleMessage = (event: any): void => {
@@ -98,8 +98,11 @@ class Simulator extends React.Component<{}, IState> {
                 });
                 break;
             case "activate-play":
+                const newRunningFile = this.state.currently_selected_file;
+
                 this.setState({
                     play_button: !this.state.play_button,
+                    running_file: newRunningFile,
                 });
                 break;
             case "visible-editors":
@@ -113,9 +116,16 @@ class Simulator extends React.Component<{}, IState> {
                 break;
             case "current-file":
                 console.log("Setting current file", message.state.running_file);
-                this.setState({
-                    running_file: message.state.running_file,
-                });
+                if (this.state.play_button) {
+                    this.setState({
+                        currently_selected_file: message.state.running_file,
+                    });
+                } else {
+                    this.setState({
+                        running_file: message.state.running_file,
+                        currently_selected_file: message.state.running_file,
+                    });
+                }
                 break;
         }
     };
@@ -136,14 +146,9 @@ class Simulator extends React.Component<{}, IState> {
         return (
             <div className="simulator">
                 <div className="file-selector">
-                    <Dropdown
-                        label={"file-dropdown"}
-                        styleLabel={"dropdown"}
-                        lastChosen={this.state.running_file}
-                        width={300}
-                        textOptions={this.state.active_editors}
-                        onBlur={this.onSelectBlur}
-                    />
+                    {this.state.running_file && this.state.play_button
+                        ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
+                        : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
                 <div className="cpx-container">
                     <CpxImage
@@ -191,11 +196,6 @@ class Simulator extends React.Component<{}, IState> {
         sendMessage(WEBVIEW_MESSAGES.REFRESH_SIMULATOR, true);
     }
 
-    protected onSelectBlur(event: React.FocusEvent<HTMLSelectElement>) {
-        this.setState({
-            selected_file: event.currentTarget.value,
-        });
-    }
     protected onKeyEvent(event: KeyboardEvent, active: boolean) {
         let element;
         const target = event.target as SVGElement;

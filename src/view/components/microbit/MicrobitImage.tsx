@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { VIEW_STATE } from "../../constants";
-import CONSTANTS, { MICROBIT_BUTTON_STYLING_CLASSES } from "../../constants";
+import { BUTTON_CLASSNAME, VIEW_STATE } from "../../constants";
+import CONSTANTS, { BUTTON_STYLING_CLASSES } from "../../constants";
 import { ViewStateContext } from "../../context";
-import "../../styles/Microbit.css";
 import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 
 interface EventTriggers {
@@ -18,11 +17,6 @@ interface IProps {
     eventTriggers: EventTriggers;
     leds: number[][];
 }
-
-const BUTTON_CLASSNAME = {
-    ACTIVE: "sim-button-outer",
-    DEACTIVATED: "sim-button-deactivated",
-};
 
 export enum BUTTONS_KEYS {
     BTN_A = "BTN_A",
@@ -93,12 +87,12 @@ export class MicrobitImage extends React.Component<IProps, {}> {
                 if (isActive) {
                     button.children[0].setAttribute(
                         "class",
-                        MICROBIT_BUTTON_STYLING_CLASSES.KEYPRESSED
+                        BUTTON_STYLING_CLASSES.KEYPRESSED
                     );
                 } else {
                     button.children[0].setAttribute(
                         "class",
-                        MICROBIT_BUTTON_STYLING_CLASSES.DEFAULT
+                        BUTTON_STYLING_CLASSES.DEFAULT
                     );
                 }
                 button.setAttribute("pressed", `${isActive}`);
@@ -114,6 +108,8 @@ const setupButton = (
     eventTriggers: EventTriggers,
     key: string
 ) => {
+    buttonElement.setAttribute("class", BUTTON_CLASSNAME.ACTIVE);
+
     buttonElement.onmousedown = e => {
         buttonElement.focus();
         eventTriggers.onMouseDown(e, key);

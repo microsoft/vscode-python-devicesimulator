@@ -1,0 +1,2223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Clue component should render correctly 1`] = `
+Array [
+  <div
+    className="simulator"
+  >
+    <div
+      className="file-selector"
+    >
+      The simulator will run the .py file you have focused on.
+    </div>
+    <div
+      className="clue-container"
+    >
+      <div
+        className="clue-svg"
+      >
+        <svg
+          height="100%"
+          viewBox="0 0 375 250.98"
+          width="100%"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <defs>
+            <radialGradient
+              cx="50%"
+              cy="50%"
+              fx="50%"
+              fy="50%"
+              id="gradNeopixel"
+              r="70%"
+            >
+              <stop
+                offset="0%"
+                stopColor="rgb(0,0,0)"
+                stopOpacity="1"
+              />
+              <stop
+                offset="100%"
+                stopOpacity="0"
+              />
+            </radialGradient>
+            <radialGradient
+              cx="50%"
+              cy="50%"
+              fx="50%"
+              fy="50%"
+              id="gradRedLed"
+              r="70%"
+            >
+              <stop
+                offset="0%"
+                stopColor="rgb(255,0,0)"
+                stopOpacity="1"
+              />
+              <stop
+                offset="100%"
+                stopOpacity="0"
+              />
+            </radialGradient>
+            <radialGradient
+              cx="50%"
+              cy="50%"
+              fx="50%"
+              fy="50%"
+              id="gradWhiteLed"
+              r="30%"
+            >
+              <stop
+                offset="0%"
+                stopColor="rgb(255,255,255)"
+                stopOpacity="0.5"
+              />
+              <stop
+                offset="100%"
+                stopColor="rgb(255,255,255)"
+                stopOpacity="0"
+              />
+            </radialGradient>
+          </defs>
+          <g
+            id="Green"
+          >
+            <rect
+              className="cls-1"
+              height="248.98"
+              rx="18.28"
+              width="301.98"
+              x="1.92"
+              y="0.99"
+            />
+            <path
+              d="M352.66,281.16c-.24-1.61.56-3.37.5-5-.06-1.82,0-3.29,0-5.11,0-.6-.93-1.17-.59-1.49v0c0-.93.14-1.84.12-2.78a2.35,2.35,0,0,1,0-.47H51a2.15,2.15,0,0,1,.09.59c0,3.63-.33,7.25-.41,10.88a19.72,19.72,0,0,0,.34,4.79,29.45,29.45,0,0,0,1.71,4.74c.48,1.19.85,2.37,1.43,3.49l.66.63a8.82,8.82,0,0,0,1.52,1.2,14.9,14.9,0,0,1,2.11,1.61c.52.49,1,1,1.53,1.51a13,13,0,0,0,7.93,2.64,1.86,1.86,0,0,1,1.34.55H336.36a2.16,2.16,0,0,1,.6-.32c1.47-.51,3-1,4.44-1.47.74-.25,1.48-.52,2.21-.81l.22-.09.53-.23,1.05-.51c.16-.19.32-.38.49-.55a11.28,11.28,0,0,1,1.78-1.45l.71-.5c-.1.07.28-.25.28-.25s.21-.2.31-.3l.13-.12.07-.1.22-.3.48-.62c.47-1.27.86-2.58,1.31-3.85.27-.74.54-1.48.75-2.23a10.88,10.88,0,0,0,.26-1.13.64.64,0,0,1,0-.07v-.07q0-.35,0-.69a2,2,0,0,1,.51-1.29C352.73,281.68,352.7,281.41,352.66,281.16Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-2"
+              d="M337.11,97.27l-8.21,8a5.75,5.75,0,0,1-5.11,1.67,10.11,10.11,0,0,1-5.69-3.26,9.08,9.08,0,0,1-2.92-5.53,6.28,6.28,0,0,1,2.18-5l8.09-7.85,4.8,4.94L322.17,98a1.39,1.39,0,0,0-.11,2.21,1.36,1.36,0,0,0,2.18-.08l8.07-7.84Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <circle
+              className="cls-3"
+              cx="245.66"
+              cy="20.77"
+              r="6.6"
+            />
+          </g>
+          <g
+            id="Clue"
+          >
+            <path
+              className="cls-2"
+              d="M307.54,78.85a15.08,15.08,0,1,0-2.61,2.78l-4.61-4.73a9.3,9.3,0,1,1,2.5-2.71Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <polygon
+              className="cls-2"
+              points="265.35 26.2 269.45 30.3 259.85 39.06 265.63 45.11 262.09 48.44 251.64 38.41 265.35 26.2"
+            />
+            <polygon
+              className="cls-2"
+              points="276.59 62.99 289.35 50.19 300.35 61.15 296.77 64.66 290.07 58.19 288.88 59.39 295.73 66.25 292.62 69.37 285.77 62.5 284.69 63.58 291.51 70.41 287.58 73.99 276.59 62.99"
+            />
+          </g>
+          <g
+            data-name="Finger Prints A"
+            id="Finger_Prints_A"
+          >
+            <path
+              className="cls-4"
+              d="M56.44,206.71s-4,.81-5.08.3"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M115.19,141.85S107,131,89.4,131.58"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M86.93,131.55s-16,1-22.88,9.67c0,0-6,7.85-12.69,10.41"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M115.19,146.78s-8.87-12.47-27.15-12a35.07,35.07,0,0,0-20.3,7.47S55,155.13,53.57,155.75c-3.49,1.56-2.94,1.16-2.94,1.16"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M116.55,154.8s-5.43-14.1-25.71-16.72c0,0-15.78,0-25,10.21"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M105.87,147.52s-14-12.75-31.18-1.62c0,0-9.16,6.27-9.43,7.6"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M108.11,149.69s12.43,8.9,4.87,27.41c0,0-14.65,24-34.36,31.87"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M85.09,201.08s22.62-15.61,25.51-27.61"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M91.68,145.64s21.42-.51,20.36,24.7"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M101.48,152.82s24.86,15-17,44.75"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M115.19,182.53s-24,28.17-39.43,32"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M115.31,187.21c-.51-.47-17.81,23.27-40.22,31.12"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M115.19,192.85s-24.84,26.76-39.43,28.33"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M65.74,148.45S55.6,160.61,51.26,160.61"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M63.46,155.69S53,165.84,51.36,164.41"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M63.92,160.13s-9.49,8.58-12.57,8.05"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M63.92,166.34s-9.53,4.74-11.82,4.74"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M63.28,174.08s-9.07,5.55-12.28,4.67"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="14.37"
+              x2="2.53"
+              y1="130.55"
+              y2="133.56"
+            />
+            <path
+              className="cls-4"
+              d="M63.28,182.53S51.91,184.31,51,187.68c0,0,.26,3.95,14.56-2.56"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M71.09,153s9.67-9.07,16.46-7.75c0,0,3.72,2.71,0,3.19,0,0-11.11,3.12-12,5.05"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M92.85,185.35S84.46,198.59,59.44,206"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M88,185.12s-16,18.23-36.59,18.87"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M81.43,185.12s-12.16,13.24-30.9,15.42"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M76.62,185.12s-17.78,11.82-26.54,11.54"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M69.27,185.35c-1.14,1.32-12.46,7.88-17.91,7"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M50.53,211C74.23,208.24,82,199.2,82,199.2s3.55,3.57-2.24,5.62c0,0-7.7,3.69-8.06,14.79"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-5"
+              d="M64.67,220.54c-1.22-2.53,1.35-5.16,1.84-5.71s-5.05,3.43-8.14,2.44"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M71.64,209.67c.68-.52-14.32,6.57-20.64,4.83"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-6"
+              d="M68.7,220.6c-1.89-2.94,2.33-10.1,2.84-10.76"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M95.17,155.18a6.87,6.87,0,0,1,4.12.9c4.26,2.28,9.24,9.44,1.22,21L90.3,188.47"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M98.88,151.63s-7.68-5.19-16.61,3.51"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-7"
+              d="M94.86,177.1s7.45-5.5,6.38-10.76c-1.26-6.22-2.36-5.56-6.38-6.21"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M95,171.08s5.24-2,3.5-4.6c-.79-1.16-3.3-1.93-4.18-1.93"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-8"
+              d="M54,136.57s15.76-9.34,16.09-9.42,3.7,2.21,3.41,3.76c0,0-11.71,13-13.37,14.65-.74.72-2.32-3-2.37-3.63s3-3.1,3-3.1l-1.12-1.29-3.48,3.06S53,138.6,54,136.57Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-2"
+              d="M62.25,135.36c.09-.14,5.61-2.87,5.61-2.87l-4.52,4.61Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M63.64,170.34s-10.09,5.18-12.38,5"
+              transform="translate(-49.27 -48.48)"
+            />
+          </g>
+          <g
+            id="Bottom"
+          >
+            <path
+              className="cls-9"
+              d="M335.52,298.51c1.73-.47,3.56-.61,5.25-1.17.4-.14.79-.29,1.18-.45l.26-.11.82-.34q.6-.26,1.23-.48l-.16-40.78s-.11-11.64-14.42-11.77c-14.3.13-13.42,11.77-13.42,11.77V298.5c6.23.17,11.41.22,16.19.2l2.81-.09A1.17,1.17,0,0,1,335.52,298.51Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-9"
+              d="M269.57,244.65c-14.3.13-13.42,11.78-13.42,11.78v41.78a53.61,53.61,0,0,1,7.28.19h.08c.85,0,1.7,0,2.56,0,1.76.07,3.53.06,5.29.06h5.57c.87,0,1.73,0,2.6.06a11,11,0,0,0,1.87-.36,2.58,2.58,0,0,1,1.27.11l1.32-.14V256.43S283.88,244.78,269.57,244.65Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-9"
+              d="M200.66,298.39c4.71.21,9.43.3,14.14.31l.48,0a2.2,2.2,0,0,1,.6-.12,2.55,2.55,0,0,1,.51-.11v-42s-.12-11.65-14.42-11.78c-14.31.13-13.42,11.78-13.42,11.78v42l.31,0a16.3,16.3,0,0,0,3.35.05h3.39l4.33,0A1.67,1.67,0,0,1,200.66,298.39Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-9"
+              d="M148.42,298.45v-42s-.11-11.65-14.41-11.78h0c-14.31.13-13.42,11.78-13.42,11.78v41.89C132.07,298,140,298.7,148.42,298.45Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-9"
+              d="M61.42,296.3l.24.11a4.86,4.86,0,0,1,.78.49,1.91,1.91,0,0,1,.52.46c4.79.23,19.65.77,25.72.83l-.15-41.45S88.42,245.1,74.12,245c-14.31.13-13.42,11.77-13.42,11.77Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <circle
+              cx="85.24"
+              cy="210.35"
+              r="12.23"
+            />
+            <circle
+              cx="153.2"
+              cy="210.35"
+              r="12.23"
+            />
+            <circle
+              cx="220.8"
+              cy="210.35"
+              r="12.23"
+            />
+            <circle
+              cx="280.98"
+              cy="210.35"
+              r="12.23"
+            />
+            <circle
+              cx="25.35"
+              cy="210.35"
+              r="12.23"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="40.39"
+              y="219.54"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="48.31"
+              y="219.46"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="56.23"
+              y="219.46"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="64.16"
+              y="219.46"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="100.43"
+              y="219.76"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="108.36"
+              y="219.76"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="116.13"
+              y="219.76"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="124.05"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="132.03"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="168.17"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="176.09"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="184.01"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="191.94"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="199.86"
+              y="219.67"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="235.94"
+              y="219.61"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="243.87"
+              y="219.61"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="251.79"
+              y="219.41"
+            />
+            <rect
+              className="cls-10"
+              height="30.12"
+              rx="0.72"
+              width="5.97"
+              x="259.71"
+              y="219.41"
+            />
+            <path
+              className="cls-10"
+              d="M352.06,289.38V268.61a.78.78,0,0,0-.82-.72h-5.18a.78.78,0,0,0-.82.72v25.76l1.34.56c.71-.48,1.45-.93,2.18-1.4a9.06,9.06,0,0,0,1.45-1.23,5.31,5.31,0,0,0,.66-1,1.6,1.6,0,0,1,.65-.61,2,2,0,0,1,.37-.84A.73.73,0,0,0,352.06,289.38Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-10"
+              d="M52.92,291.09h0c.12-.6,0-.12,0,.13l.08.26a1.58,1.58,0,0,1,.49.73v0a1.49,1.49,0,0,0,.15.2,10.15,10.15,0,0,0,1.42,1.07,15.45,15.45,0,0,0,2.9,1.37l1,.33a3.7,3.7,0,0,1,.9.39V268.71a.83.83,0,0,0-.91-.72H53.34a.83.83,0,0,0-.91.72v20.61a2.84,2.84,0,0,1,.24.26A1.75,1.75,0,0,1,52.92,291.09Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-11"
+              d="M76,297"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-11"
+              d="M107.76,292.27"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M136.31,286.57h-1.49V281a5,5,0,0,1-1.91,1.12v-1.34a4.35,4.35,0,0,0,1.26-.72,2.76,2.76,0,0,0,.93-1.24h1.21Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M205.2,285.25v1.38H200a3.63,3.63,0,0,1,.51-1.48,9.93,9.93,0,0,1,1.66-1.86A10.32,10.32,0,0,0,203.4,282a1.61,1.61,0,0,0,.31-.91,1,1,0,0,0-.27-.76,1,1,0,0,0-.73-.27,1,1,0,0,0-.74.28,1.48,1.48,0,0,0-.32.93l-1.47-.15a2.39,2.39,0,0,1,.82-1.75,2.78,2.78,0,0,1,1.74-.54,2.51,2.51,0,0,1,1.8.62,2,2,0,0,1,.66,1.54,2.81,2.81,0,0,1-.19,1,4.43,4.43,0,0,1-.59,1,9.4,9.4,0,0,1-1,1c-.47.43-.77.72-.89.86a2.6,2.6,0,0,0-.31.41Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M263.73,283.81l1.44-.17a1.37,1.37,0,0,0,.37.84,1,1,0,0,0,1.5-.06,1.35,1.35,0,0,0,.31-.94,1.28,1.28,0,0,0-.3-.89,1,1,0,0,0-.73-.32,2.33,2.33,0,0,0-.68.11l.16-1.21a1.33,1.33,0,0,0,.92-.26.94.94,0,0,0,.31-.74.81.81,0,0,0-.23-.62.85.85,0,0,0-.62-.23.9.9,0,0,0-.64.26,1.25,1.25,0,0,0-.33.77l-1.37-.23a3.16,3.16,0,0,1,.43-1.12,1.94,1.94,0,0,1,.8-.66,2.74,2.74,0,0,1,1.16-.24,2.29,2.29,0,0,1,1.75.7,1.8,1.8,0,0,1,.54,1.28,1.83,1.83,0,0,1-1.11,1.63,1.72,1.72,0,0,1,1.06.64,1.8,1.8,0,0,1,.4,1.19,2.35,2.35,0,0,1-.74,1.74,2.81,2.81,0,0,1-3.6.11A2.4,2.4,0,0,1,263.73,283.81Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M272.09,285.86l-2.76-7.73H271l2,5.72,1.89-5.72h1.66l-2.77,7.73Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M322.5,283.73v-1.31h3.36v3.08a4.19,4.19,0,0,1-1.42.84,5.2,5.2,0,0,1-1.89.36,4.23,4.23,0,0,1-2.11-.51,3.29,3.29,0,0,1-1.36-1.45,4.77,4.77,0,0,1-.45-2.06,4.44,4.44,0,0,1,.51-2.15,3.33,3.33,0,0,1,1.48-1.44,3.93,3.93,0,0,1,1.85-.38,3.71,3.71,0,0,1,2.25.6,2.7,2.7,0,0,1,1,1.67l-1.55.29a1.64,1.64,0,0,0-.61-.9,1.89,1.89,0,0,0-1.13-.33,2.13,2.13,0,0,0-1.63.65,2.73,2.73,0,0,0-.6,1.92,3,3,0,0,0,.61,2.07,2,2,0,0,0,1.6.69,2.69,2.69,0,0,0,1-.2,3,3,0,0,0,.84-.46v-1Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M327.32,286.57v-7.73h1.51L332,284v-5.16h1.45v7.73h-1.57l-3.11-5v5Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M335.09,278.84H338a5.51,5.51,0,0,1,1.47.15,2.54,2.54,0,0,1,1.16.71,3.32,3.32,0,0,1,.74,1.25,5.65,5.65,0,0,1,.25,1.83,5,5,0,0,1-.23,1.64,3.52,3.52,0,0,1-.83,1.37,2.83,2.83,0,0,1-1.1.62,5,5,0,0,1-1.38.16h-2.94Zm1.56,1.31v5.12h1.17a4,4,0,0,0,.94-.08,1.35,1.35,0,0,0,.63-.32,1.55,1.55,0,0,0,.41-.75,4.79,4.79,0,0,0,.16-1.41,4.48,4.48,0,0,0-.16-1.38,1.72,1.72,0,0,0-.44-.75,1.45,1.45,0,0,0-.72-.36,7.16,7.16,0,0,0-1.28-.07Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              d="M74.76,278.24a2.11,2.11,0,0,1,1.75.8,6.91,6.91,0,0,1,0,6.3,2.11,2.11,0,0,1-1.75.8,2.21,2.21,0,0,1-1.82-.87A7.08,7.08,0,0,1,73,279,2.13,2.13,0,0,1,74.76,278.24Zm0,1.23a.76.76,0,0,0-.48.17,1.2,1.2,0,0,0-.33.62,8.54,8.54,0,0,0-.15,1.93,7.85,7.85,0,0,0,.14,1.87,1.29,1.29,0,0,0,.34.68.76.76,0,0,0,1,0,1.13,1.13,0,0,0,.32-.62,7.85,7.85,0,0,0,.16-1.93,8.44,8.44,0,0,0-.14-1.87,1.42,1.42,0,0,0-.34-.68A.76.76,0,0,0,74.76,279.47Z"
+              transform="translate(-49.27 -48.48)"
+            />
+          </g>
+          <g
+            data-name="Finger Prints B"
+            id="Finger_Prints_B"
+          >
+            <line
+              className="cls-4"
+              x1="301.28"
+              x2="303.85"
+              y1="125.01"
+              y2="125.01"
+            />
+            <path
+              className="cls-12"
+              d="M344.42,194.53l4.53,4.09v3.74l-2,2.89-3,.95s1.09,1.45.13,2.6-2.88,3.46-4.23,3.56-4.23-1.49-5.28-2.21c-.82-.56-2.5-2-2.5-2l12.38-13.47"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-2"
+              d="M344.46,199.68s2,1.59.64,3.16c0,0-2.05,1.57-2.68,1.11l-.91-1Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-2"
+              d="M336.52,208.15l2.84-3.13a1.39,1.39,0,0,1,1.31,1.44s-1,3.41-2.07,3.16C338.6,209.62,336.51,209.74,336.52,208.15Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287.52,141.58a33.74,33.74,0,0,1,26.82-11.13"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M316.82,130.42s16,1,22.87,9.66c0,0,6,7.85,12.69,10.42"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287.74,146.43A34.47,34.47,0,0,1,336,141.12s12.79,12.88,14.18,13.5c3.48,1.56,2.94,1.15,2.94,1.15"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287.19,153.67s5.43-14.1,25.71-16.73c0,0,15.79.05,25,10.22"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M297.87,146.39s14-12.75,31.18-1.62c0,0,8.23,5.45,8.49,6.78"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M295.93,148.26s-13.35,11.21-5.16,27.7c0,0,14.65,24,34.35,31.87"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M318.65,199.94s-22.62-15.61-25.5-27.61"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M312.06,144.51s-24.32,1.92-19.47,25.44"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M302.17,151.55s-22.49,18.4,17.11,44.88"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287,178.13s4.77,6.64,5.88,7.37"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M294.5,187.66s18.81,21.52,33.49,25.7"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287,184.45c.51-.47,19.21,24.9,41.62,32.74"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M287.75,190.81S313.4,218.48,328,220"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M338,147.31s10.63,12,13.65,12.16"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M340.28,154.56s10.44,10.14,12.1,8.72"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M339.83,159s9.21,8.58,11.82,7.91"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M339.83,165.21s9.53,4.74,11.82,4.74"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="290.56"
+              x2="298.72"
+              y1="120.26"
+              y2="124.28"
+            />
+            <path
+              className="cls-4"
+              d="M340.46,172.94s9.07,5.55,12.29,4.67"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="290.84"
+              x2="302.68"
+              y1="129.42"
+              y2="132.43"
+            />
+            <path
+              className="cls-4"
+              d="M340.46,181.4s11.37,1.78,12.29,5.15c0,0,.37,3.87-12.64-1.88"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M332.65,151.87s-9.66-9.06-16.45-7.74c0,0-3.73,2.7,0,3.18,0,0,10.44,2.3,11.36,4.24"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="299.12"
+              x2="303.12"
+              y1="155.01"
+              y2="156.54"
+            />
+            <path
+              className="cls-4"
+              d="M312.05,184.77s13.24,14.41,25.12,17.6"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="299.91"
+              x2="303.9"
+              y1="152.87"
+              y2="153.36"
+            />
+            <path
+              className="cls-4"
+              d="M349.17,201.35"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M339.54,199.62"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M317.48,185c-.09-.15,10.84,10.54,22.06,14.67"
+              transform="translate(-49.27 -48.48)"
+            />
+            <line
+              className="cls-4"
+              x1="299.67"
+              x2="303.48"
+              y1="149.65"
+              y2="150.39"
+            />
+            <path
+              className="cls-4"
+              d="M323.16,185a39.85,39.85,0,0,0,19.21,11.75"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M328.65,185s14.77,9.86,23.73,10.55"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M334.13,184.45c1.94,2.33,12.8,7.64,18.25,6.78"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M334.61,205c-4.31-1.83-12.91-7-12.91-7s-2.42,3.81,2.24,5.62c0,0,7.71,3.69,8.07,14.79"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M338.6,218.29c1.65-2.77-1-6-1.54-6.74s5.45,4.45,9.1,3.62"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M332.63,207.48c-.49-.69,4.23,5.35,6.89,4.81"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M335,218.48c2.07-2.87-1.91-10.31-2.41-11"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M308.57,154.05a6.88,6.88,0,0,0-4.12.9c-4.26,2.27-9.23,9.43-1.22,21l6.4,7.7"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M304.45,149.78s7.07-3.21,10.94,1.26"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-7"
+              d="M308.89,176s-6.27-5-5.27-10.23a8.83,8.83,0,0,1,5.27-6.73"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M308.55,170s-2.65-1.89-1.77-4.23a3.08,3.08,0,0,1,2.11-1.79"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M345.59,205.67l2.39,2.16s3.67,1.95,4.78,1.68"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-4"
+              d="M343.13,209.87l2.59,1.45s5,2.41,7.4,2.17"
+              transform="translate(-49.27 -48.48)"
+            />
+          </g>
+          <g
+            aria-label="a"
+            className="sim-button-group"
+            focusable="true"
+            role="button"
+            tabIndex={0}
+          >
+            <rect
+              className="sim-button-outer"
+              height="34.82"
+              rx="1.79"
+              width="35.04"
+              x="13.19"
+              y="100.56"
+            />
+            <circle
+              className="sim-button"
+              cx="30.71"
+              cy="117.86"
+              r="11.6"
+            />
+            <circle
+              className="cls-14"
+              cx="17.49"
+              cy="104.88"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="43.92"
+              cy="104.88"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="43.92"
+              cy="131.03"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="17.49"
+              cy="131.03"
+              r="3.23"
+            />
+          </g>
+          <g
+            aria-label="b"
+            className="sim-button-group"
+            focusable="true"
+            role="button"
+            tabIndex={0}
+          >
+            <rect
+              className="sim-button-outer"
+              height="34.82"
+              rx="1.79"
+              width="35.04"
+              x="258.06"
+              y="100.27"
+            />
+            <circle
+              className="sim-button"
+              cx="275.58"
+              cy="117.58"
+              focusable="false"
+              r="11.6"
+              style={
+                Object {
+                  "strokeWidth": 0,
+                }
+              }
+            />
+            <circle
+              className="cls-14"
+              cx="262.37"
+              cy="104.6"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="288.79"
+              cy="104.6"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="288.8"
+              cy="130.74"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="262.37"
+              cy="130.74"
+              r="3.23"
+            />
+          </g>
+          <g
+            aria-label="ab"
+            className="sim-button-group"
+            focusable="true"
+            role="button"
+            tabIndex={0}
+          >
+            <rect
+              className="sim-button-outer"
+              height="34.82"
+              rx="1.79"
+              width="35.04"
+              x="327.48"
+              y="192.69"
+            />
+            <circle
+              className="sim-button"
+              cx="345"
+              cy="210"
+              focusable="false"
+              r="11.6"
+              style={
+                Object {
+                  "strokeWidth": 0,
+                }
+              }
+            />
+            <circle
+              className="cls-14"
+              cx="331.79"
+              cy="197.02"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="358.21"
+              cy="197.02"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="358.21"
+              cy="223.16"
+              r="3.23"
+            />
+            <circle
+              className="cls-14"
+              cx="331.79"
+              cy="223.16"
+              r="3.23"
+            />
+          </g>
+          <text
+            className="sim-text-outside-clue"
+            x={330}
+            y={180}
+          >
+            A+B
+          </text>
+          <circle
+            cx={114}
+            cy={11.5}
+            fill="url(#gradWhiteLed)"
+            r="30"
+          />
+          <circle
+            cx={191}
+            cy={11.5}
+            fill="url(#gradWhiteLed)"
+            r="30"
+          />
+          <g
+            data-name="Buttons at top"
+            id="Buttons_at_top"
+          >
+            <rect
+              height="8.98"
+              width="17.4"
+              x="105.78"
+              y="7"
+            />
+            <rect
+              height="8.98"
+              width="17.4"
+              x="182.92"
+              y="7"
+            />
+            <rect
+              height="15.57"
+              width="24.18"
+              x="141.05"
+              y="3.38"
+            />
+            <polyline
+              className="cls-17"
+              points="101.04 11.16 57.9 11.16 53.94 14.23"
+            />
+            <text
+              className="cls-18"
+              transform="translate(29.59 11.79) rotate(45.15) scale(1 1.56)"
+            >
+              LIGHT
+            </text>
+            <text
+              className="cls-18"
+              transform="translate(22.78 18.93) rotate(45.15) scale(1 1.56)"
+            >
+              GESTURE
+            </text>
+            <text
+              className="cls-18"
+              transform="translate(15.48 26.01) rotate(45.15) scale(1 1.56)"
+            >
+              P
+              <tspan
+                className="cls-19"
+                x="4.13"
+                y={0}
+              >
+                R
+              </tspan>
+              <tspan
+                className="cls-20"
+                x="8.47"
+                y={0}
+              >
+                O
+              </tspan>
+              <tspan
+                x="13.43"
+                y={0}
+              >
+                XIMI
+              </tspan>
+              <tspan
+                className="cls-21"
+                x="28.48"
+                y={0}
+              >
+                T
+              </tspan>
+              <tspan
+                x="32.56"
+                y={0}
+              >
+                Y
+              </tspan>
+            </text>
+            <path
+              className="cls-2"
+              d="M74,56.37l1.72-1.8.9.86-1.72,1.8L76.73,59l-.86.91-1.8-1.72-1.72,1.8-.9-.86,1.72-1.8-1.81-1.72.86-.9Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <path
+              className="cls-2"
+              d="M66.81,63.6l1.72-1.81.9.86-1.72,1.81,1.8,1.71-.86.91-1.8-1.72-1.72,1.8-.9-.86L66,64.5l-1.81-1.72.86-.9Z"
+              transform="translate(-49.27 -48.48)"
+            />
+            <rect
+              className="cls-2"
+              height="12.92"
+              width="8.61"
+              x="127.86"
+              y="5.76"
+            />
+            <rect
+              className="cls-2"
+              height="12.92"
+              width="8.61"
+              x="169.77"
+              y="5.76"
+            />
+          </g>
+          <g
+            id="Frame"
+          >
+            <rect
+              className="cls-22"
+              height="170"
+              width="186"
+              x="60"
+              y="24"
+            />
+            <image
+              height={168}
+              width={184}
+              x={61}
+              y={25}
+            />
+            <rect
+              className="cls-23"
+              height="248.98"
+              rx="18.28"
+              width="301.98"
+              x="1.82"
+              y="0.99"
+            />
+          </g>
+          <text
+            className="sim-text-outside-clue"
+            x={318}
+            y={25}
+          >
+            Red LED
+          </text>
+          <circle
+            cx={345}
+            cy={45}
+            fill="url(#gradRedLed)"
+            r="12"
+          />
+          <circle
+            cx={345}
+            cy={45}
+            r="5"
+          />
+          <text
+            className="sim-text-outside-clue"
+            x={318}
+            y={85}
+          >
+            Neopixel
+          </text>
+          <circle
+            cx={345}
+            cy={115}
+            fill="url(#gradNeopixel)"
+            r="30"
+          />
+          <circle
+            cx={345}
+            cy={115}
+            r="12"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      className="buttons"
+    >
+      <button
+        aria-label="play"
+        className="play-button button"
+        id="play-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="play-icon"
+            d="M1.00005 0.854163C1.00003 0.471921 1.41151 0.231022 1.74482 0.418142L12.487 6.44883C12.8243 6.63823 12.828 7.12258 12.4936 7.31706L1.75209 13.5631C1.41877 13.757 1.00077 13.5165 1.00075 13.1309L1.00005 0.854163Z"
+            fill="#23D18B"
+          />
+        </svg>
+      </button>
+      <button
+        aria-label="refresh"
+        className="refresh-button button"
+        id="refresh-button"
+        onClick={[Function]}
+        role="button"
+        style={
+          Object {
+            "width": 60,
+          }
+        }
+        tabIndex={0}
+      >
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 14 14"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            className="button-icon"
+            clip-rule="evenodd"
+            d="M7.12508 4.13728V2.92015C4.59083 2.92015 2.53127 4.74924 2.53127 6.9999C2.53127 7.53706 2.64611 8.06063 2.86815 8.5298C2.98299 8.77458 2.89877 9.05336 2.69205 9.23695C2.30158 9.58373 1.64313 9.46134 1.43641 9.00577C1.15313 8.38701 1 7.70705 1 6.9999C1 3.99449 3.74097 1.56024 7.12508 1.56024V0.343119C7.12508 0.0371382 7.53852 -0.112452 7.77587 0.0983343L9.91199 1.99541C10.0651 2.1314 10.0651 2.34219 9.91199 2.47818L7.77587 4.37526C7.53852 4.59285 7.12508 4.44326 7.12508 4.13728ZM11.3818 5.46997C11.267 5.23199 11.3512 4.94641 11.5579 4.76282C11.9484 4.41604 12.6068 4.53843 12.8136 4.994C13.0969 5.61277 13.25 6.29272 13.25 6.99988C13.25 10.0053 10.509 12.4395 7.1249 12.4395V13.6635C7.1249 13.9626 6.71146 14.1122 6.47411 13.9014L4.33799 12.0044C4.18487 11.8684 4.18487 11.6576 4.33799 11.5216L6.47411 9.62451C6.71146 9.40692 7.1249 9.55651 7.1249 9.8625V11.0796C9.65915 11.0796 11.7187 9.25053 11.7187 6.99988C11.7187 6.46271 11.5962 5.94594 11.3818 5.46997Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>,
+  <div
+    className="toolbar-parent"
+    id="toolbar-parent"
+  >
+    <div
+      className="toolbar"
+    >
+      <div
+        className="toolbar-icon"
+      >
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-a-b-push"
+            className="toolbar-button button"
+            id="toolbar-clue-a-b-push-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Push Button
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="push_btn"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                  transform="translate(1.000000, 1.000000)"
+                >
+                  <g
+                    id="Group-8"
+                  >
+                    <path
+                      d="M2,0 L12,0 C13.1045695,-2.02906125e-16 14,0.8954305 14,2 L14,12 C14,13.1045695 13.1045695,14 12,14 L2,14 C0.8954305,14 1.3527075e-16,13.1045695 0,12 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z M2,1.2 C1.5581722,1.2 1.2,1.5581722 1.2,2 L1.2,12 C1.2,12.4418278 1.5581722,12.8 2,12.8 L12,12.8 C12.4418278,12.8 12.8,12.4418278 12.8,12 L12.8,2 C12.8,1.5581722 12.4418278,1.2 12,1.2 L2,1.2 Z"
+                      fill-rule="nonzero"
+                      id="Rectangle"
+                    />
+                    <circle
+                      cx="7"
+                      cy="7"
+                      id="Oval"
+                      r="3.5"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-led"
+            className="toolbar-button button"
+            id="toolbar-clue-led-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                neon_pixel
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="neon_pixel"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                >
+                  <g
+                    id="Group-7"
+                  >
+                    <circle
+                      cx="8"
+                      cy="1.6"
+                      id="Oval-3"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="8"
+                      cy="14.4"
+                      id="Oval-3-Copy"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="1.6"
+                      cy="8"
+                      id="Oval-3-Copy-2"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="14.4"
+                      cy="8"
+                      id="Oval-3-Copy-3"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="12.2666667"
+                      cy="3.73333333"
+                      id="Oval-3-Copy-4"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="3.73333333"
+                      cy="3.73333333"
+                      id="Oval-3-Copy-6"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="3.73333333"
+                      cy="12.2666667"
+                      id="Oval-3-Copy-7"
+                      r="1.6"
+                    />
+                    <circle
+                      cx="12.2666667"
+                      cy="12.2666667"
+                      id="Oval-3-Copy-5"
+                      r="1.6"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-temperature-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-temperature-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Temperature Sensor
+              </title>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="temperature"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  fill-rule="nonzero"
+                  id="thermometer"
+                  transform="translate(4.000000, 0.000000)"
+                >
+                  <path
+                    d="M6.66665625,9.01853125 L6.66665625,2.66665625 C6.66665625,1.19390625 5.47275,0 4,0 C2.52725,0 1.33334375,1.19390625 1.33334375,2.66665625 L1.33334375,9.0185 C0.515,9.7509375 0,10.8153438 0,12 C0,14.2091562 1.790875,16 4,16 C6.209125,16 8,14.2091562 8,12 C8,10.8153438 7.485,9.7509375 6.66665625,9.01853125 Z M4,14.6666563 C2.52725,14.6666563 1.33334375,13.47275 1.33334375,12 C1.33334375,11.2300937 1.659625,10.515875 2.2225625,10.0120312 L2.6666875,9.61453125 L2.6666875,2.66665625 C2.6666875,1.93028125 3.26365625,1.3333125 4.00003125,1.3333125 C4.73640625,1.3333125 5.333375,1.93025 5.333375,2.66665625 L5.333375,9.61453125 L5.7775,10.0120312 C6.3404375,10.515875 6.66671875,11.2300625 6.66671875,12 C6.66665625,13.47275 5.47275,14.6666563 4,14.6666563 Z"
+                    id="Shape"
+                  />
+                  <rect
+                    height="8"
+                    id="Rectangle"
+                    width="1.33334375"
+                    x="3.33334375"
+                    y="5.33334375"
+                  />
+                  <circle
+                    cx="4"
+                    cy="12"
+                    id="Oval"
+                    r="2"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-light-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-light-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              fill="none"
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Light sensor
+              </title>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="light_sensor"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  fill-rule="nonzero"
+                  id="Group-10"
+                  transform="translate(4.000000, 0.000000)"
+                >
+                  <g
+                    id="light-bulb"
+                  >
+                    <path
+                      d="M8.30374549,6.20872934 L7.44295783,8.17745143 C7.23654761,8.7386575 7.20852246,8.7656952 6.99231195,9.20813126 L6.45540049,10.4361106 C6.46864532,10.5933327 6.46346172,11 6.05537849,11 L2.94465012,11 C2.68129241,11 2.58708458,10.8227848 2.55655729,10.6570975 L2.54351121,10.6570975 L0,4.83978978 L0.0886634694,4.84519734 C0.0290289823,4.57964193 -0.00106181819,4.307929 2.86084252e-05,4.03423261 C0.00757892,1.8945771 1.94423384,0.0877568873 4.31880683,0.00284992256 C5.55705792,-0.0379054205 6.72735622,0.359459175 7.61829298,1.13041441 C8.50922975,1.89797338 9,2.93723463 9,4.04781772 C9,4.82474009 8.75968094,5.56322682 8.30374549,6.20872934 Z"
+                      id="Shape"
+                    />
+                    <path
+                      d="M6.5,12.4 C6.82926694,12.4 7.1,12.6707331 7.1,13 C7.1,13.3307854 6.83256829,13.6 6.5,13.6 L2.5,13.6 C2.16921459,13.6 1.9,13.3325683 1.9,13 C1.9,12.6692146 2.16743171,12.4 2.5,12.4 L6.5,12.4 Z"
+                      id="Shape"
+                    />
+                    <path
+                      d="M5.66965517,14.8 C5.96435528,14.8 6.2,15.0737859 6.2,15.4 C6.2,15.7277609 5.9672384,16 5.66965517,16 L3.53034483,16 C3.23437963,16 3,15.7294873 3,15.4 C3,15.0722391 3.2327616,14.8 3.53034483,14.8 L5.66965517,14.8 Z"
+                      id="Shape"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-accelerometer-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-accelerometer-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              fill="none"
+              height="16px"
+              version="1.1"
+              viewBox="0 0 17 16"
+              width="17px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="motion_sensor"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                >
+                  <g
+                    id="Group-12"
+                  >
+                    <path
+                      d="M8,8.8203 L5.88,11.9103 L8,11.9103 L8,12.5493 L5,12.5493 L5,12.0303 L7.12,8.9403 L5.12,8.9403 L5.12,8.2993 L8,8.2993 L8,8.8203 Z M17,10.5903 L13.87,8.7903 L13.87,9.9903 L11.76,9.9903 C11.63,8.7803 11.1,7.6503 10.25,6.7693 C9.39,5.9103 8.25,5.3703 7.04,5.2403 L7.04,3.1203 L8.23,3.1203 L6.38,0.0003 L4.63,3.1203 L5.83,3.1203 L5.83,5.2403 C4.5,5.3803 3.27,6.0003 2.38,6.9803 C1.48,7.9693 0.99,9.2503 1,10.5703 C0.99,11.2803 1.12,11.9903 1.38,12.6393 C1.65,13.2993 2.04,13.9003 2.54,14.4103 C3.04,14.9103 3.64,15.3093 4.3,15.5903 C4.96,15.8603 5.66,16.0003 6.38,16.0003 C7.72,16.0093 9.01,15.5193 10.01,14.6303 C11,13.7403 11.63,12.5093 11.76,11.1903 L13.87,11.1903 L13.87,12.3893 L17,10.5903 Z"
+                      id="Fill-1"
+                    />
+                    <polygon
+                      id="Fill-3"
+                      points="2.3398 4 2.9998 4 2.9998 2.42 4.3398 0 3.6108 0 2.6698 1.75 1.7598 0 0.9998 0 2.3398 2.4"
+                    />
+                    <polygon
+                      id="Fill-10"
+                      points="14.54 4.0098 13.69 5.5198 12.84 4.0098 12.05 4.0098 13.269 6.0098 12 8.1398 12.769 8.1398 13.67 6.5498 14.58 8.1398 15.37 8.1398 14.08 5.9998 15.31 3.9998"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-humidity-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-humidity-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="35 35 181 181"
+              width="16px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill="none"
+                fill-rule="evenodd"
+                id="humidity"
+              >
+                <g>
+                  <path
+                    d="M123.13,50.43c4.14,6.25,7.98,11.81,11.58,17.52c10.71,16.99,20.59,34.4,26.96,53.59c3.8,11.44,4.64,23,1.55,34.7
+			c-3.89,14.73-13.31,23.8-28.24,27.02c-8.35,1.81-16.73,1.74-25.02-0.31c-16.53-4.08-26.66-16.53-28.33-34.45
+			c-0.64-6.82-0.5-13.55,1.16-20.23c0.42-1.68,1.01-2.45,2.85-2.79c16.53-3.12,26.55-14.69,27.7-31.56c0.48-7-0.51-13.75-2.72-20.37
+			c-0.35-1.06-0.8-2.59-0.33-3.35C114.34,63.73,118.57,57.4,123.13,50.43z"
+                  />
+                  <path
+                    d="M78.62,31.48c5.42,9.14,11.25,18.07,16.13,27.5c3.69,7.13,6.87,14.7,8.91,22.43c1.38,5.21,1.2,11.19,0.26,16.57
+			c-1.99,11.39-9.61,18.11-21.27,19.19c-4.74,0.44-9.75,0.15-14.38-0.94c-9.75-2.3-15.83-10.44-17.11-21.19
+			c-0.88-7.38,0.39-14.38,3-21.22C59.8,59,68,45.6,76.98,32.64c0.25-0.36,0.38-0.79,0.56-1.19C77.9,31.45,78.26,31.47,78.62,31.48z"
+                  />
+                </g>
+                <g>
+                  <path
+                    d="M109.12,162.47c0.31-0.69,0.49-1.15,0.72-1.6c7.17-13.83,14.34-27.65,21.48-41.5
+			c0.49-0.96,1.05-1.36,2.14-1.27c1.26,0.11,2.53,0.02,4.02,0.02c-0.22,0.58-0.34,1-0.54,1.38c-7.02,13.58-14.08,27.14-21.04,40.75
+			c-0.85,1.66-1.72,2.56-3.66,2.24C111.32,162.34,110.33,162.47,109.12,162.47z"
+                  />
+                  <path
+                    d="M145.82,153.07c0.03,5.17-4.03,9.34-9.15,9.39c-5.32,0.05-9.51-4.1-9.49-9.41c0.02-5.08,4.23-9.25,9.33-9.25
+			C141.63,143.81,145.79,147.95,145.82,153.07z M132.14,153.12c-0.03,2.44,1.93,4.43,4.37,4.45c2.3,0.02,4.31-1.95,4.39-4.28
+			c0.08-2.43-1.86-4.44-4.31-4.48C134.11,148.75,132.17,150.63,132.14,153.12z"
+                  />
+                  <path
+                    d="M110.12,136.75c-5.24-0.01-9.32-4.14-9.28-9.4c0.04-5.2,4.22-9.26,9.49-9.21c5.09,0.05,9.14,4.24,9.12,9.42
+			C119.43,132.67,115.27,136.77,110.12,136.75z M114.51,127.45c-0.01-2.47-1.97-4.39-4.43-4.36c-2.46,0.03-4.37,2-4.32,4.46
+			c0.05,2.37,1.97,4.27,4.34,4.28C112.56,131.85,114.52,129.9,114.51,127.45z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-pressure-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-pressure-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="35 35 160 181"
+              width="16px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill="none"
+                fill-rule="evenodd"
+                id="pressure"
+              >
+                <g>
+                  <path
+                    d="M187.33,103.15c-2.55-38.41-35.41-70.19-73.01-72c-40.85-1.97-77.96,28.39-81.79,71.31    c-3.09,34.66,20.9,78.17,71.32,83.79c0,0,3.15,0.22,4.72,0.22c2.59,0,7.34-0.37,7.34-0.37    C162.71,180.95,189.92,142.09,187.33,103.15z M109.24,174.51c-36.41-0.23-66.06-30.97-65.19-67.6    c0.84-35.08,30.52-64.44,66.07-64.27c36.37,0.18,65.79,30,65.54,66.43C175.4,145.63,145.83,174.75,109.24,174.51z"
+                  />
+                </g>
+                <path
+                  d="M114.58,61.2c0,1.52,0.04,3.05-0.01,4.57c-0.1,2.77-2.1,4.72-4.78,4.72c-2.64-0.01-4.65-2.04-4.69-4.8   c-0.04-3.05-0.04-6.1,0.01-9.14c0.04-2.81,2-4.78,4.68-4.8c2.69-0.02,4.69,1.92,4.79,4.7c0.06,1.58,0.01,3.17,0.01,4.75   C114.59,61.2,114.59,61.2,114.58,61.2z"
+                />
+                <path
+                  d="M141.24,72.73c-0.87,1.25-1.71,2.52-2.63,3.74c-1.67,2.22-4.43,2.66-6.62,1.12c-2.16-1.52-2.64-4.34-1.09-6.62   c1.72-2.52,3.46-5.02,5.25-7.49c1.65-2.28,4.38-2.77,6.58-1.25c2.21,1.52,2.74,4.26,1.23,6.6   C143.11,70.17,142.16,71.44,141.24,72.73C141.25,72.74,141.25,72.73,141.24,72.73z"
+                />
+                <path
+                  d="M156.47,97.47c-1.43,0.52-2.85,1.08-4.3,1.55c-2.64,0.86-5.16-0.36-6.07-2.87c-0.89-2.48,0.32-5.07,2.91-6.04   c2.85-1.08,5.71-2.12,8.59-3.12c2.66-0.92,5.18,0.25,6.11,2.75c0.94,2.52-0.2,5.06-2.78,6.11   C159.46,96.44,157.96,96.94,156.47,97.47C156.47,97.48,156.47,97.48,156.47,97.47z"
+                />
+                <path
+                  d="M154.74,126.47c-1.47-0.39-2.96-0.75-4.41-1.19c-2.65-0.81-4.02-3.25-3.32-5.83c0.69-2.54,3.17-3.97,5.85-3.28   c2.95,0.75,5.9,1.54,8.83,2.37c2.71,0.77,4.1,3.17,3.43,5.76c-0.68,2.6-3.07,4.03-5.78,3.41   C157.79,127.35,156.27,126.89,154.74,126.47C154.74,126.48,154.74,126.48,154.74,126.47z"
+                />
+                <path
+                  d="M86.13,67.04c0.87,1.25,1.79,2.47,2.61,3.75c1.51,2.33,0.99,5.08-1.21,6.6c-2.16,1.51-4.98,1-6.59-1.24   c-1.78-2.48-3.53-4.97-5.24-7.49c-1.58-2.33-1.1-5.06,1.08-6.62c2.19-1.56,4.94-1.12,6.62,1.1C84.35,64.41,85.23,65.74,86.13,67.04   C86.13,67.04,86.13,67.04,86.13,67.04z"
+                />
+                <path
+                  d="M66.17,88.15c1.43,0.52,2.88,1,4.29,1.57c2.57,1.04,3.72,3.59,2.8,6.1c-0.91,2.47-3.5,3.68-6.11,2.76   c-2.88-1.01-5.74-2.05-8.59-3.13c-2.63-1-3.81-3.52-2.91-6.04c0.9-2.53,3.41-3.75,6.05-2.89C63.21,87.01,64.68,87.6,66.17,88.15   C66.17,88.14,66.17,88.14,66.17,88.15z"
+                />
+                <path
+                  d="M61.93,116.89c1.47-0.39,2.93-0.83,4.42-1.17c2.7-0.62,5.11,0.81,5.79,3.39c0.68,2.55-0.76,5.02-3.42,5.77   c-2.93,0.82-5.88,1.62-8.83,2.36c-2.73,0.69-5.14-0.7-5.85-3.27c-0.71-2.59,0.64-5.03,3.3-5.84   C58.85,117.65,60.39,117.29,61.93,116.89C61.93,116.88,61.93,116.88,61.93,116.89z"
+                />
+                <path
+                  d="M74.94,142.86c0.98-1.17,1.93-2.36,2.95-3.5c1.86-2.06,4.65-2.27,6.69-0.54c2.01,1.7,2.26,4.55,0.5,6.69   c-1.93,2.36-3.89,4.69-5.88,7c-1.84,2.13-4.61,2.38-6.67,0.67c-2.07-1.71-2.36-4.48-0.65-6.68   C72.86,145.25,73.91,144.07,74.94,142.86C74.93,142.85,74.93,142.86,74.94,142.86z"
+                />
+                <circle
+                  cx="109.19"
+                  cy="108.89"
+                  r="11.18"
+                />
+                <g>
+                  <path
+                    d="M96.02,170.32c0.29-3.2,0.56-6.41,0.87-9.61c0.99-10.46,2.01-20.92,3-31.38c0.67-7.04,1.26-14.08,1.99-21.11    c0.47-4.56,4.37-7.42,8.72-6.57c4.44,0.86,7.04,5.06,5.62,9.49c-3.17,9.89-6.49,19.73-9.74,29.6c-2.94,8.93-5.88,17.86-8.82,26.79    c-0.32,0.98-0.69,1.94-1.03,2.91C96.42,170.4,96.22,170.36,96.02,170.32z M106.3,108.38c-0.27,1.53,0.88,3.14,2.42,3.38    c1.55,0.25,3.16-0.88,3.42-2.39c0.27-1.56-0.83-3.08-2.42-3.35C108.12,105.75,106.57,106.83,106.3,108.38z"
+                  />
+                </g>
+                <circle
+                  cx="109.19"
+                  cy="108.89"
+                  r="6.89"
+                />
+                <circle
+                  cx="109.95"
+                  cy="108.38"
+                  r="11.18"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-proximity-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-proximity-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 45 200 170"
+              width="16px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill="none"
+                fill-rule="evenodd"
+                id="humidity"
+              >
+                <g>
+                  <path
+                    d="M106.98,74l18.61-18.61l13.52,13.52L120.5,87.52l18.61,18.61l-13.52,13.52l-18.61-18.61l-18.61,18.61l-13.52-13.52    l18.61-18.61L74.86,68.91L88.37,55.4L106.98,74z"
+                  />
+                </g>
+                <g>
+                  <g>
+                    <g>
+                      <path
+                        d="M168.29,159.6L144,158.45l18.01-16.38l0.81-17.2l-16.37-18l24.29,1.15l24.57,27.01L168.29,159.6z"
+                      />
+                    </g>
+                  </g>
+                  <rect
+                    height="20.81"
+                    width="115.25"
+                    x="48.41"
+                    y="122.83"
+                  />
+                  <g>
+                    <g>
+                      <path
+                        d="M47.06,105.41l24.29,1.15l-18.01,16.38l-0.81,17.2l16.37,18l-24.29-1.15l-24.57-27.01L47.06,105.41z"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-gesture-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-gesture-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="25 35 165 165"
+              width="16px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill="none"
+                fill-rule="evenodd"
+                id="gesture"
+              >
+                <g
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <path
+                      d="M77.36,36.04c2.42,0.38,4.58,1.24,5.79,4.15c1.26,3.04,0.46,6-2.09,7.49c-7.49,4.36-13.84,10.24-18.59,18.01    c-11.07,18.11-13.21,38.68-6.26,61.66c0.22,0.74,0.43,1.48,0.68,2.21c1.23,3.47,0.16,6.51-2.67,7.58    c-2.63,0.99-5.66-0.69-6.92-4.13c-3-8.21-4.83-16.63-5.33-25.14c-1.63-28.22,7.07-50.22,26.03-65.91c2.01-1.67,4.21-3.07,6.32-4.6    C75.34,36.92,76.35,36.48,77.36,36.04z"
+                    />
+                    <g>
+                      <path
+                        d="M92.68,53.69l-13.51,9.14l3.09-16.03l-6.47-9.56l-16.03-3.09l13.51-9.14l24.05,4.64L92.68,53.69z"
+                      />
+                    </g>
+                    <g>
+                      <path
+                        d="M38.48,141.9l-5.94-15.19l14.96,6.54l10.75-4.21l6.54-14.95l5.94,15.19l-9.81,22.44L38.48,141.9z"
+                      />
+                    </g>
+                  </g>
+                </g>
+                <g
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M110.93,146.76c-0.25-1.57-0.33-2.41-0.52-3.23c-2.88-12.45-5.85-24.89-8.65-37.36c-2.9-12.93-5.67-25.89-8.42-38.86   c-1.61-7.61,4.82-14.88,12.55-14.3c4.3,0.32,7.45,3.08,8.61,7.65c3.58,14.17,7.13,28.34,10.69,42.51c0.22,0.89,0.45,1.78,0.87,3.44   c2.58-4.13,5.47-6.81,9.64-7.73c4.24-0.94,7.82,0.26,10.85,3.52c2.75-2.49,5.66-4.2,9.38-4.37c3.39-0.15,6.12,0.88,8.04,3.64   c1,1.45,1.76,1.5,3.25,0.61c5.77-3.43,11.61-1.54,14.4,4.55c0.72,1.58,1.29,3.25,1.72,4.94c3.45,13.55,6.84,27.11,10.26,40.66   c2.26,8.94,1.26,17.42-3.33,25.5c-2.46,4.34-5.99,7.47-10.55,9.17c-8.8,3.28-17.82,5.75-27.34,5.61c-6.75-0.1-13.13-1.78-19.27-4.6   c-3.89-1.79-8.19-2.77-11.86-4.9c-6.7-3.9-13.13-8.27-19.54-12.65c-4.38-3-8.4-6.56-12.82-9.49c-2.93-1.94-6.29-3.24-9.49-4.76   c-0.85-0.4-1.82-0.55-2.72-0.86c-4.93-1.72-6.52-3.64-6.36-7.63c0.21-5.19,3.29-9.88,7.44-10.76c8.58-1.83,16.7-0.39,24.25,4.07   C104.83,142.79,107.56,144.63,110.93,146.76z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-gyroscope-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-gyroscope-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="18px"
+              version="1.1"
+              viewBox="0 0 200 165"
+              width="18px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill-rule="evenodd"
+                id="gyro"
+              >
+                <ellipse
+                  cx="109.59"
+                  cy="104.27"
+                  fill="none"
+                  rx="24.32"
+                  ry="51.56"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -41.6346 108.0341)"
+                />
+                <ellipse
+                  cx="107.83"
+                  cy="104.27"
+                  fill="none"
+                  rx="53.89"
+                  ry="21.99"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -42.151 106.7874)"
+                />
+                <circle
+                  cx="109.59"
+                  cy="104.27"
+                  fill="none"
+                  r="64.41"
+                  stroke="var(--vscode-badgeForegroundOverride)"
+                  stroke-width="10"
+                />
+                <circle
+                  cx="109.59"
+                  cy="102.51"
+                  r="13.01"
+                />
+                <circle
+                  cx="44.44"
+                  cy="169.43"
+                  r="8.76"
+                />
+                <rect
+                  height="6.97"
+                  transform="matrix(0.7071 -0.7071 0.7071 0.7071 -94.262 86.2351)"
+                  width="24.1"
+                  x="44.92"
+                  y="153.42"
+                />
+                <circle
+                  cx="174"
+                  cy="40.42"
+                  r="8.76"
+                />
+                <rect
+                  height="6.97"
+                  transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 314.2302 -26.5262)"
+                  width="24.1"
+                  x="150.56"
+                  y="48.33"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-magnet-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-magnet-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 25 160 150"
+              width="16px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <g
+                className="button-icon"
+                fill="none"
+                fill-rule="evenodd"
+                id="magnet"
+              >
+                <path
+                  d="M21.81,76.32c0.64-3.3,0.98-6.68,1.95-9.87c6.4-21.01,20.32-34.25,41.88-38.48c18.83-3.69,35.21,1.92,48.82,15.46    c12.34,12.28,38.02,37.79,38.47,38.15c-7.62,7.62-15.04,15.04-22.67,22.66c-2.51-2.55-5.1-5.24-7.74-7.88    C112.36,86.17,102.15,76,91.99,65.79c-3.81-3.83-8.23-6.26-13.65-6.97c-11.1-1.45-21.86,5.97-24.24,16.88    c-1.75,8.04,0.32,15.05,6.1,20.87c12.42,12.5,38.56,38.27,39.05,38.63c-7.74,7.73-15.15,15.15-22.72,22.71    
+            c-3.24-3.28-6.6-6.69-9.97-10.08c-10.1-10.13-20.33-20.12-30.27-30.4c-8.28-8.58-12.87-19.02-14.18-30.88    c-0.05-0.46-0.2-0.91-0.31-1.37C21.81,82.23,21.81,79.28,21.81,76.32z M143.46,82.02c-6-6.03-12.08-12.13-18.04-18.12    c-4.29,4.29-8.67,8.68-12.92,12.93c6.01,6,12.1,12.1,18.05,18.05C134.86,90.59,139.25,86.21,143.46,82.02z M76.72,148.76    c4.43-4.42,8.82-8.8,13.11-13.09c-6.01-6.02-12.11-12.12-17.94-17.95c-4.33,4.32-8.75,8.73-13.1,13.07    C64.67,136.68,70.69,142.72,76.72,148.76z"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-gpio"
+            className="toolbar-button button"
+            id="toolbar-clue-gpio-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 18 16"
+              width="18px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                GPIO
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="GPIO"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                  transform="translate(0.000000, 5.000000)"
+                >
+                  <path
+                    d="M4.80046857,3.47534517 C4.80046857,5.04142012 3.93244826,6 2.49863335,6 C0.938305349,6 0,4.8678501 0,2.99408284 C0,1.14398422 0.941819602,0 2.46349082,0 C3.70050761,0 4.6212417,0.808678501 4.74775478,2.01183432 L3.47559547,2.01183432 C3.34908239,1.51084813 2.96954315,1.20710059 2.46349082,1.20710059 C1.74306911,1.20710059 1.31433034,1.86982249 1.31433034,2.97830375 C1.31433034,4.10650888 1.78875439,4.79289941 2.52674736,4.79289941 C3.11362749,4.79289941 3.52128075,4.40631164 3.55290902,3.83037475 L3.55642327,3.7357002 L2.62866068,3.7357002 L2.62866068,2.74161736 L4.80046857,2.74161736 L4.80046857,3.47534517 Z M5.76337368,0.153846154 L7.9843811,0.153846154 C9.0737993,0.153846154 9.81179227,0.950690335 9.81179227,2.17357002 C9.81179227,3.38461538 9.03514252,4.17751479 7.90706755,4.17751479 L7.05310426,4.17751479 L7.05310426,5.84615385 L5.76337368,5.84615385 L5.76337368,0.153846154 Z M7.05310426,1.26627219 L7.05310426,3.08481262 L7.63647013,3.08481262 C8.18469348,3.08481262 8.50800469,2.76923077 8.50800469,2.17751479 C8.50800469,1.57790927 8.18820773,1.26627219 7.64349863,1.26627219 L7.05310426,1.26627219 Z M12.0468567,5.84615385 L10.7571261,5.84615385 L10.7571261,0.153846154 L12.0468567,0.153846154 L12.0468567,5.84615385 Z M15.5048809,0 C17.0300664,0 18,1.14792899 18,2.99802761 C18,4.85207101 17.0300664,6 15.5048809,6 C13.9726669,6 13.0027333,4.85207101 13.0027333,2.99802761 C13.0027333,1.14792899 13.9832097,0 15.5048809,0 Z M15.5048809,1.19921105 C14.7914877,1.19921105 14.3170636,1.90138067 14.3170636,2.99802761 C14.3170636,4.09861933 14.7844592,4.80078895 15.5048809,4.80078895 C16.2182741,4.80078895 16.6891839,4.09861933 16.6891839,2.99802761 C16.6891839,1.90138067 16.2147599,1.19921105 15.5048809,1.19921105 Z"
+                    id="GPIO"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar clue-sound-sensor"
+            className="toolbar-button button"
+            id="toolbar-clue-sound-sensor-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="18px"
+              version="1.1"
+              viewBox="0 0 16 18"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Sound Sensor
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="sound_sensor"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-11"
+                  transform="translate(2.000000, 0.000000)"
+                >
+                  <g
+                    id="sound_sensor"
+                  >
+                    <g
+                      id="Group-10"
+                      transform="translate(0.699999, 0.500000)"
+                    >
+                      <path
+                        d="M4.65016298,15.17144 L4.65016298,13.7922942 C3.41527114,13.6318998 2.27078933,13.0204521 1.42065147,12.0614597 C0.509552396,11.0338061 0.00398839588,9.68310861 0.00476157979,8.28145 L0.00834533542,5.98768213 C-0.00652451305,5.89234444 -0.00148383948,5.79482389 0.0231545884,5.70166373 C0.0479493684,5.60784878 0.0920825187,5.52041375 0.152773487,5.44534368 C0.214260428,5.36930716 0.291307036,5.30778738 0.378750119,5.26528351 C0.467116009,5.22234964 0.563755426,5.2 0.661734024,5.2 C0.759712621,5.2 0.856352039,5.22234964 0.944763779,5.26530579 C1.03216101,5.30778738 1.10920762,5.36930716 1.17071652,5.44537084 C1.23138553,5.52041375 1.27551868,5.60784878 1.30030061,5.70161513 C1.32495189,5.79482389 1.32999256,5.89234444 1.31870647,5.94145 L1.31870647,8.28145 C1.31870647,9.39842656 1.7407743,10.4688536 2.49065412,11.2565939 C3.23776665,12.0414273 4.24899942,12.48144 5.30237579,12.48144 C6.35576276,12.48144 7.36702974,12.0414195 8.1141248,11.2565952 C8.86399397,10.4688567 9.28605464,9.39842995 9.28605464,8.28145 L9.28605464,5.94145 C9.28605464,5.7641305 9.35340694,5.59327417 9.47477135,5.46583435 C9.5988672,5.33554463 9.76913931,5.26145 9.94778672,5.26145 L9.95606024,5.26156411 C10.1315221,5.26640491 10.2972241,5.34259908 10.4172766,5.47214571 C10.534967,5.59895982 10.5999995,5.76713855 10.5999995,5.94145 L10.5999995,8.28125635 C10.6009032,9.6813488 10.0967463,11.030573 9.1877971,12.05803 C8.3395495,13.0167651 7.19732431,13.6291336 5.96410787,13.7917484 L5.96410787,15.1721304 L7.56185834,15.1758074 C7.71875063,15.202875 7.86029753,15.2869159 7.96145211,15.4119207 C8.06030087,15.5342853 8.11404343,15.6880984 8.11404343,15.84644 C8.11404343,16.0047816 8.06030087,16.1585947 7.96129407,16.2811548 C7.86029753,16.4059641 7.71875063,16.490005 7.51085483,16.52144 L3.04293061,16.5170774 C2.8859552,16.4900107 2.74438664,16.4059406 2.64341658,16.2810571 C2.54447382,16.1586811 2.49066056,16.0048291 2.49066056,15.84644 C2.49066056,15.6880509 2.54447382,15.5341989 2.64341658,15.4118229 C2.74438664,15.2869394 2.8859552,15.2028693 3.09390627,15.17144 L4.65016298,15.17144 Z"
+                        fill-rule="nonzero"
+                        id="Shape"
+                      />
+                      <rect
+                        className="button-rectangle"
+                        height="9.3"
+                        id="Rectangle-2"
+                        rx="1.9"
+                        stroke-width="1.2"
+                        width="3.8"
+                        x="3.40000068"
+                        y="1.1"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div
+          className="ms-TooltipHost root-49"
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <button
+            aria-label="toolbar speaker"
+            className="toolbar-button button"
+            id="toolbar-speaker-button"
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "width": 32,
+              }
+            }
+            tabIndex={0}
+          >
+            <svg
+              height="16px"
+              version="1.1"
+              viewBox="0 0 16 16"
+              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <title>
+                Speaker
+              </title>
+              <desc>
+                Created with Sketch.
+              </desc>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                id="speaker"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  className="button-icon"
+                  id="Group-10"
+                  transform="translate(1.000000, 1.000000)"
+                >
+                  <g
+                    id="sound"
+                  >
+                    <path
+                      d="M0,4.46138 C0,4.35093 0.089543,4.26138 0.2,4.26138 L3.35989,4.26138 C3.41494,4.26138 3.46756,4.23869 3.50534,4.19866 L7.40837,0.0631292 C7.53259,-0.0684915 7.75382,0.0194193 7.75382,0.200402 L7.75382,13.7995 C7.75382,13.9805 7.53259,14.0684 7.40837,13.9368 L3.50534,9.80125 C3.46756,9.76122 3.41494,9.73853 3.35989,9.73853 L0.2,9.73853 C0.0895431,9.73853 0,9.64898 0,9.53853 L0,4.46138 Z M9.47694,1.2485 C9.47694,1.11913 9.59801,1.02371 9.72228,1.05971 C12.189,1.77423 14,4.16201 14,6.99903 C14,9.83605 12.189,12.2238 9.72228,12.9384 C9.59801,12.9743 9.47694,12.8789 9.47694,12.7496 L9.47694,12.0651 C9.47694,11.9778 9.53367,11.9011 9.61583,11.8716 C11.4213,11.2241 12.9096,9.1562 12.9096,7.03991 C12.9096,4.92363 11.4213,2.85576 9.61583,2.20821 C9.53367,2.17874 9.47694,2.10205 9.47694,2.01476 L9.47694,1.2485 Z"
+                      id="Shape"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

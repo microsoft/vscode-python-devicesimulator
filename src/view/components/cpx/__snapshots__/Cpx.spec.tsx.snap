@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Device component should render correctly 1`] = `
+exports[`CPX component should render correctly 1`] = `
 Array [
   <div
     className="simulator"
@@ -8,21 +8,7 @@ Array [
     <div
       className="file-selector"
     >
-      <div>
-        <select
-          className="dropdown"
-          id="file-dropdown"
-          onBlur={[Function]}
-        >
-          <option
-            disabled={true}
-            selected={true}
-            value=""
-          >
-            Choose a .py file to run on the Simulator
-          </option>
-        </select>
-      </div>
+      The simulator will run the .py file you have focused on.
     </div>
     <div
       className="cpx-container"
@@ -4029,9 +4015,9 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar push-button"
+            aria-label="toolbar a-b-push"
             className="toolbar-button button"
-            id="toolbar-push-button-button"
+            id="toolbar-a-b-push-button"
             onClick={[Function]}
             role="button"
             style={

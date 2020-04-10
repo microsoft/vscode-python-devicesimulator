@@ -5,3 +5,9 @@ requests==2.22.0
 pywin32==227; platform_system == "Windows"
 PyObjC; platform_system == "darwin"
 uflash==1.3.0
+adafruit-circuitpython-fancyled==1.3.3
+Pillow==7.0.0
+adafruit-circuitpython-display-text-DSX_CUSTOM_MAR172020.tar.gz
+adafruit-circuitpython-bitmap_font==1.1.0
+adafruit-circuitpython-display-shapes==1.2.0
+adafruit-circuitpython-neopixel==5.0.0

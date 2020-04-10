@@ -1,4 +1,6 @@
 import { Webview } from "vscode";
+
+import * as fs from "fs";
 import { VSCODE_MESSAGES_TO_WEBVIEW } from "../view/constants";
 import { DeviceSelectionService } from "./deviceSelectionService";
 export class MessagingService {

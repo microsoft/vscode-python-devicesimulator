@@ -7,27 +7,35 @@ import traceback
 from pathlib import Path
 import python_constants as CONSTANTS
 import check_python_dependencies
+from common import utils
 
 # will propagate errors if dependencies aren't sufficient
 check_python_dependencies.check_for_dependencies()
 
-# Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
-sys.path.insert(0, abs_path_to_lib)
 
-# Insert absolute path to python libraries into sys.path
-abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, abs_path_to_lib)
+# Insert absolute path to Adafruit library for CPX into sys.path
+abs_path_to_adafruit_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.ADAFRUIT_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_adafruit_lib)
+
+# Insert absolute path to Micropython libraries for micro:bit into sys.path
+abs_path_to_micropython_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.MICROPYTHON_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_micropython_lib)
+
+# Insert absolute path to library for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
+
+# Insert absolute path to Circuitpython libraries for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
 
 # This import must happen after the sys.path is modified
-from adafruit_circuitplayground.express import cpx
-from microbit.__model.microbit_model import __mb as mb
 from common import debugger_communication_client
 
-
 ## Execute User Code ##
-
 
 # Get user's code path
 abs_path_to_code_file = ""
@@ -45,10 +53,8 @@ if len(sys.argv) > 2:
 debugger_communication_client.init_connection(server_port)
 
 # Init API variables
-cpx._Express__abs_path_to_code_file = abs_path_to_code_file
-cpx._Express__debug_mode = True
-cpx.pixels._Pixel__set_debug_mode(True)
-mb._MicrobitModel__set_debug_mode(True)
+utils.abs_path_to_user_file = abs_path_to_code_file
+utils.debug_mode = True
 
 # Execute the user's code file
 with open(abs_path_to_code_file, encoding="utf8") as user_code_file:

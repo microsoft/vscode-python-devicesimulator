@@ -2,16 +2,23 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
-import { MICROBIT_TOOLBAR_ID } from "../../components/toolbar/SensorModalUtils";
-import { SENSOR_LIST, VSCODE_MESSAGES_TO_WEBVIEW } from "../../constants";
+import { MICROBIT_TOOLBAR_ICON_ID } from "../../components/toolbar/SensorModalUtils";
+import {
+    GESTURES_MICROBIT,
+    SENSOR_LIST,
+    VSCODE_MESSAGES_TO_WEBVIEW,
+    WEBVIEW_MESSAGES,
+} from "../../constants";
 import "../../styles/Simulator.css";
 import * as TOOLBAR_SVG from "../../svgs/toolbar_svg";
+import { sendMessage } from "../../utils/MessageUtils";
 import ToolBar from "../toolbar/ToolBar";
 import { MicrobitSimulator } from "./MicrobitSimulator";
 
 // Component grouping the functionality for micro:bit functionalities
 interface IState {
     sensors: { [key: string]: number };
+    currentSelectedGesture?: string;
 }
 const DEFAULT_STATE = {
     sensors: {
@@ -21,6 +28,7 @@ const DEFAULT_STATE = {
         [SENSOR_LIST.MOTION_Y]: 0,
         [SENSOR_LIST.MOTION_Z]: 0,
     },
+    currentSelectedGesture: GESTURES_MICROBIT[0],
 };
 
 export class Microbit extends React.Component<{}, IState> {
@@ -51,6 +59,8 @@ export class Microbit extends React.Component<{}, IState> {
                     buttonList={MICROBIT_TOOLBAR_BUTTONS}
                     onUpdateSensor={this.updateSensor}
                     sensorValues={this.state.sensors}
+                    onSelectGesture={this.updateGesture}
+                    sendGesture={this.sendGesture}
                 />
             </React.Fragment>
         );
@@ -58,27 +68,63 @@ export class Microbit extends React.Component<{}, IState> {
     updateSensor = (sensor: SENSOR_LIST, value: number) => {
         this.setState({ sensors: { ...this.state.sensors, [sensor]: value } });
     };
+    updateGesture = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ currentSelectedGesture: event.target.value });
+    };
+    sendGesture = (isActive: boolean) => {
+        if (this.state.currentSelectedGesture) {
+            if (isActive) {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: this.state.currentSelectedGesture,
+                });
+            } else {
+                sendMessage(WEBVIEW_MESSAGES.GESTURE, {
+                    gesture: "",
+                });
+            }
+        }
+    };
 }
 
 const MICROBIT_TOOLBAR_BUTTONS: Array<{ label: string; image: JSX.Element }> = [
     {
         image: TOOLBAR_SVG.PUSH_BUTTON_SVG,
-        label: MICROBIT_TOOLBAR_ID.PUSH_BUTTON,
+        label: MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON,
     },
     {
         image: TOOLBAR_SVG.RED_LED_SVG,
-        label: MICROBIT_TOOLBAR_ID.LEDS,
+        label: MICROBIT_TOOLBAR_ICON_ID.LEDS,
     },
     {
         image: TOOLBAR_SVG.TEMPERATURE_SVG,
-        label: MICROBIT_TOOLBAR_ID.TEMPERATURE,
+        label: MICROBIT_TOOLBAR_ICON_ID.TEMPERATURE,
     },
     {
         image: TOOLBAR_SVG.LIGHT_SVG,
-        label: MICROBIT_TOOLBAR_ID.LIGHT,
+        label: MICROBIT_TOOLBAR_ICON_ID.LIGHT,
     },
     {
         image: TOOLBAR_SVG.MOTION_SVG,
-        label: MICROBIT_TOOLBAR_ID.ACCELEROMETER,
+        label: MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
+    },
+    {
+        image: TOOLBAR_SVG.GESTURE_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.GESTURE,
+    },
+    {
+        image: TOOLBAR_SVG.GPIO_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.GPIO,
+    },
+    {
+        image: TOOLBAR_SVG.COMPASS_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.COMPASS,
+    },
+    {
+        image: TOOLBAR_SVG.SPEAKER_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.SOUND,
+    },
+    {
+        image: TOOLBAR_SVG.WIRELESS_SVG,
+        label: MICROBIT_TOOLBAR_ICON_ID.WIRELESS,
     },
 ];

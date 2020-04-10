@@ -1,14 +1,15 @@
 import * as React from "react";
 import {
+    AB_BUTTONS_KEYS,
     CONSTANTS,
     DEVICE_LIST_KEY,
-    MICROBIT_BUTTONS_KEYS,
+    VIEW_STATE,
     WEBVIEW_MESSAGES,
 } from "../../constants";
+import { ViewStateContext } from "../../context";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
-import Dropdown from "../Dropdown";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, MicrobitImage } from "./MicrobitImage";
 
@@ -25,10 +26,12 @@ const DEFAULT_MICROBIT_STATE: IMicrobitState = {
 
 interface IState {
     active_editors: string[];
-    running_file: string;
+    running_file?: string;
+    currently_selected_file: string;
     play_button: boolean;
     selected_file: string;
     microbit: IMicrobitState;
+    sendGesture?: (isActive: boolean) => void;
 }
 
 interface IMicrobitState {
@@ -44,7 +47,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             play_button: false,
             selected_file: "",
             active_editors: [],
-            running_file: "",
+            running_file: undefined,
+            currently_selected_file: "",
         };
         this.onKeyEvent = this.onKeyEvent.bind(this);
     }
@@ -71,8 +75,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "activate-play":
+                const newRunningFile = this.state.currently_selected_file;
                 this.setState({
                     play_button: !this.state.play_button,
+                    running_file: newRunningFile,
                 });
                 break;
             case "visible-editors":
@@ -81,9 +87,17 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 });
                 break;
             case "current-file":
-                this.setState({
-                    running_file: message.state.running_file,
-                });
+                if (this.state.play_button) {
+                    this.setState({
+                        currently_selected_file: message.state.running_file,
+                    });
+                } else {
+                    this.setState({
+                        running_file: message.state.running_file,
+                        currently_selected_file: message.state.running_file,
+                    });
+                }
+
                 break;
         }
     };
@@ -100,14 +114,9 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         return (
             <div className="simulator">
                 <div className="file-selector">
-                    <Dropdown
-                        label={"file-dropdown"}
-                        styleLabel={"dropdown"}
-                        lastChosen={this.state.running_file}
-                        width={300}
-                        textOptions={this.state.active_editors}
-                        onBlur={this.onSelectFile}
-                    />
+                    {this.state.running_file && this.state.play_button
+                        ? CONSTANTS.CURRENTLY_RUNNING(this.state.running_file)
+                        : CONSTANTS.FILES_PLACEHOLDER}
                 </div>
                 <div className="microbit-container">
                     <MicrobitImage
@@ -130,6 +139,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             </div>
         );
     }
+
     protected togglePlayClick = () => {
         const button =
             window.document.getElementById(CONSTANTS.ID_NAME.PLAY_BUTTON) ||
@@ -142,11 +152,7 @@ export class MicrobitSimulator extends React.Component<any, IState> {
             state: !this.state.play_button,
         });
     };
-    protected onSelectFile(event: React.FocusEvent<HTMLSelectElement>) {
-        this.setState({
-            selected_file: event.currentTarget.value,
-        });
-    }
+
     protected refreshSimulatorClick = () => {
         const button = window.document.getElementById(
             CONSTANTS.ID_NAME.REFRESH_BUTTON
@@ -159,13 +165,13 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     protected handleButtonClick = (key: string, isActive: boolean) => {
         let newButtonState = this.state.microbit.buttons;
         switch (key) {
-            case MICROBIT_BUTTONS_KEYS.BTN_A:
+            case AB_BUTTONS_KEYS.BTN_A:
                 newButtonState.button_a = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_B:
+            case AB_BUTTONS_KEYS.BTN_B:
                 newButtonState.button_b = isActive;
                 break;
-            case MICROBIT_BUTTONS_KEYS.BTN_AB:
+            case AB_BUTTONS_KEYS.BTN_AB:
                 newButtonState = {
                     button_a: isActive,
                     button_b: isActive,
@@ -194,7 +200,10 @@ export class MicrobitSimulator extends React.Component<any, IState> {
     };
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         event.stopPropagation();
-        if ([event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER)) {
+        if (
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.ENTER) &&
+            this.context === VIEW_STATE.RUNNING
+        ) {
             this.handleButtonClick(key, active);
             if (this.imageRef.current) {
                 if (key === BUTTONS_KEYS.BTN_A) {
@@ -215,7 +224,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 }
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
             if (this.imageRef.current) {
@@ -225,7 +235,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
             if (this.imageRef.current) {
@@ -235,7 +246,8 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 );
             }
         } else if (
-            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C)
+            [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C) &&
+            this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_AB, active);
             if (this.imageRef.current) {
@@ -251,3 +263,4 @@ export class MicrobitSimulator extends React.Component<any, IState> {
         }
     }
 }
+MicrobitSimulator.contextType = ViewStateContext;

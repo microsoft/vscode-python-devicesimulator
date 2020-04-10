@@ -12,7 +12,6 @@ from common.telemetry_events import TelemetryEvent
 from .pixel import Pixel
 from . import constants as CONSTANTS
 from collections import namedtuple
-from applicationinsights import TelemetryClient
 import common
 
 Acceleration = namedtuple("acceleration", ["x", "y", "z"])
@@ -47,9 +46,7 @@ class Express:
             "touch": [False] * 7,
             "shake": False,
         }
-        self.__debug_mode = False
-        self.__abs_path_to_code_file = ""
-        self.pixels = Pixel(self.__state, self.__debug_mode)
+        self.pixels = Pixel(self.__state)
 
     @property
     def acceleration(self):
@@ -86,7 +83,7 @@ class Express:
         """  Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_TAPPED)
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        utils.print_for_unimplemented_functions("tapped")
 
     @property
     def red_led(self):
@@ -115,7 +112,7 @@ class Express:
         return self.__state["light"]
 
     def __show(self):
-        if self.__debug_mode:
+        if utils.debug_mode:
             common.debugger_communication_client.debug_send_to_simulator(
                 self.__state, CONSTANTS.CPX
             )
@@ -154,12 +151,12 @@ class Express:
     def touch_A7(self):
         return self.__touch(7)
 
-    def adjust_touch_threshold(self, adjustement):
+    def adjust_touch_threshold(self, adjustment):
         """Not implemented!
         The CPX Simulator doesn't use capacitive touch threshold.
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_ADJUST_THRESHOLD)
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        utils.print_for_unimplemented_functions(Express.adjust_touch_threshold.__name__)
 
     def shake(self, shake_threshold=30):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_SHAKE)
@@ -169,7 +166,7 @@ class Express:
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PLAY_FILE)
         file_name = utils.remove_leading_slashes(file_name)
         abs_path_parent_dir = os.path.abspath(
-            os.path.join(self.__abs_path_to_code_file, os.pardir)
+            os.path.join(utils.abs_path_to_user_file, os.pardir)
         )
         abs_path_wav_file = os.path.normpath(
             os.path.join(abs_path_parent_dir, file_name)
@@ -192,19 +189,19 @@ class Express:
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PLAY_TONE)
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        utils.print_for_unimplemented_functions(Express.play_tone.__name__)
 
     def start_tone(self, frequency):
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_START_TONE)
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        utils.print_for_unimplemented_functions(Express.start_tone.__name__)
 
     def stop_tone(self):
         """ Not Implemented!
         """
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_STOP_TONE)
-        raise NotImplementedError(CONSTANTS.NOT_IMPLEMENTED_ERROR)
+        utils.print_for_unimplemented_functions(Express.stop_tone.__name__)
 
     def update_state(self, new_state):
         for event in CONSTANTS.ALL_EXPECTED_INPUT_EVENTS:

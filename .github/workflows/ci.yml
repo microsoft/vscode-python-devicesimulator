@@ -1,0 +1,52 @@
+# This workflow will do a clean install of node dependencies, python dependencies, build the source code and run tests
+
+name: CI
+
+on:
+  push:
+    branches: [ dev, staging ]
+  pull_request:
+    branches: [ dev, staging ]
+
+jobs:
+  build-and-test:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-18.04]
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Linux dependencies
+      if: matrix.os == 'ubuntu-18.04'
+      run: |
+        sudo apt-get update
+        sudo apt-get install g++-multilib
+        sudo apt-get install -y build-essential
+        sudo apt-get install libudev-dev
+    - name: Use Node.js ${{ matrix.node-version }} and install npm dependencies
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - name: Setup Python environment
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.x
+    - run: |
+        python -m pip install --upgrade pip
+        pip install -r ./src/dev-requirements.txt
+    - name: Use npm to compile, format-check and test
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm run compile
+    - run: npm run check
+    - name: Run tests
+      uses: GabrielBB/xvfb-action@v1.0
+      with: 
+        run: npm run test

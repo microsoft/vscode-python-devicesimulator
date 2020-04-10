@@ -21,20 +21,41 @@ threads = []
 user_stdout = io.StringIO()
 sys.stdout = user_stdout
 
-# Insert absolute path to Adafruit library into sys.path
 abs_path_to_parent_dir = os.path.dirname(os.path.abspath(__file__))
-abs_path_to_lib = os.path.join(abs_path_to_parent_dir, CONSTANTS.LIBRARY_NAME)
-sys.path.insert(0, abs_path_to_lib)
+
+# Insert absolute path to library for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE_DIR))
+
+# Insert absolute path to Circuitpython libraries for CLUE into sys.path
+sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
+
+# Insert absolute path to Adafruit library for CPX into sys.path
+abs_path_to_adafruit_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.ADAFRUIT_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_adafruit_lib)
+
+# Insert absolute path to Micropython libraries for micro:bit into sys.path
+abs_path_to_micropython_lib = os.path.join(
+    abs_path_to_parent_dir, CONSTANTS.MICROPYTHON_LIBRARY_NAME
+)
+sys.path.insert(0, abs_path_to_micropython_lib)
 
 # This import must happen after the sys.path is modified
 from common.telemetry import telemetry_py
-
+from common import utils
 from adafruit_circuitplayground.express import cpx
 from adafruit_circuitplayground.constants import CPX
 
 from microbit.__model.microbit_model import __mb as mb
 from microbit.__model.constants import MICROBIT
 
+from adafruit_clue import clue
+from base_circuitpython.base_cp_constants import CLUE
+import board
+
+# get handle to terminal for clue
+curr_terminal = board.DISPLAY.terminal
 
 # Handle User Inputs Thread
 class UserInput(threading.Thread):
@@ -42,7 +63,7 @@ class UserInput(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        device_dict = {CPX: cpx, MICROBIT: mb}
+        device_dict = {CPX: cpx, MICROBIT: mb, CLUE: clue}
         while True:
             read_val = sys.stdin.readline()
             sys.stdin.flush()
@@ -67,10 +88,21 @@ user_input.start()
 # Handle User's Print Statements Thread
 def handle_user_prints():
     global user_stdout
+    global curr_terminal
     while True:
         if user_stdout.getvalue():
             message = {"type": "print", "data": user_stdout.getvalue()}
-            print(json.dumps(message), file=sys.__stdout__, flush=True)
+
+            # when I use the value for user_stdout.getvalue() directly
+            # as the argument for add_str_to_terminal, it only sends the first
+            # line of the stream.
+
+            # hence, I parse it out of the message dict and take off the
+            # extra newline at the end.
+
+            data_str = str(message["data"])
+            curr_terminal.add_str_to_terminal(data_str[:-1])
+            print(json.dumps(message) + "\0", file=sys.__stdout__, flush=True)
             user_stdout.truncate(0)
             user_stdout.seek(0)
 
@@ -82,7 +114,9 @@ user_prints.start()
 
 # Execute User Code Thread
 def execute_user_code(abs_path_to_code_file):
-    cpx._Express__abs_path_to_code_file = abs_path_to_code_file
+    global curr_terminal
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_START_MSG_CLUE)
+    utils.abs_path_to_user_file = abs_path_to_code_file
     # Execute the user's code.py file
     with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
         user_code = user_code_file.read()
@@ -98,6 +132,11 @@ def execute_user_code(abs_path_to_code_file):
             for frameIndex in range(2, len(stackTrace) - 1):
                 errorMessage += "\t" + str(stackTrace[frameIndex])
             print(e, errorMessage, file=sys.stderr, flush=True)
+
+            curr_terminal.add_str_to_terminal(errorMessage)
+
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_FINISHED_MSG_CLUE)
+    board.DISPLAY.show(None)
 
 
 user_code = threading.Thread(args=(sys.argv[1],), target=execute_user_code)

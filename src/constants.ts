@@ -20,16 +20,26 @@ export const CONFIG = {
     CONFIG_ENV_ON_SWITCH:
         "deviceSimulatorExpress.configNewEnvironmentUponSwitch",
     PYTHON_PATH: "python.pythonPath",
-    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
+    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
 };
 
 export const CONSTANTS = {
+    WEBVIEW_TYPE: {
+        SIMULATOR: "simulator",
+        TUTORIAL: "tutorial",
+    },
     DEBUG_CONFIGURATION_TYPE: "deviceSimulatorExpress",
     DEVICE_NAME: {
         CPX: "CPX",
         MICROBIT: "micro:bit",
+        CLUE: "CLUE",
+    },
+    DEVICE_NAME_FORMAL: {
+        CPX: "Circuit Playground Express",
+        MICROBIT: "micro:bit",
+        CLUE: "CLUE",
     },
     ERROR: {
         BAD_PYTHON_PATH:
@@ -84,11 +94,15 @@ export const CONSTANTS = {
         ),
         NO_DEVICE: localize(
             "error.noDevice",
-            "No plugged in boards detected. Please double check if your board is connected and/or properly formatted"
+            "The device is not detected. Please double check if your board is connected and/or properly formatted"
         ),
         NO_FILE_TO_RUN: localize(
             "error.noFileToRun",
             '[ERROR] We can\'t find a Python file to run. Please make sure you select or open a new ".py" code file, or use the "New File" command to get started and see useful links.\n'
+        ),
+        NO_FILE_TO_DEPLOY: localize(
+            "error.noFileToDeploy",
+            "[ERROR] We can't find a Python file to deploy to your device.\n"
         ),
         NO_FOLDER_OPENED: localize(
             "error.noFolderCreated",
@@ -119,8 +133,11 @@ export const CONSTANTS = {
         ),
     },
     FILESYSTEM: {
-        OUTPUT_DIRECTORY: "out",
+        BASE_CIRCUITPYTHON: "base_circuitpython",
+        CLUE: "clue",
         PYTHON_VENV_DIR: "venv",
+        MICROPYTHON_DIRECTORY: "micropython",
+        OUTPUT_DIRECTORY: "out",
     },
     INFO: {
         ALREADY_SUCCESSFUL_INSTALL: localize(
@@ -184,6 +201,18 @@ export const CONSTANTS = {
             "info.newFile",
             "New to Python or the Circuit Playground Express? We are here to help!"
         ),
+        NO_DEVICE_CHOSEN_TO_DEPLOY_TO: localize(
+            "info.noDeviceChosenToDeployTo",
+            "\n[INFO] No device was selected to deploy to.\n"
+        ),
+        NO_DEVICE_CHOSEN_TO_SIMULATE_TO: localize(
+            "info.noDeviceChosenToSimulateTo",
+            "\n[INFO] No device was selected to simulate.\n"
+        ),
+        NO_DEVICE_CHOSEN_FOR_NEW_FILE: localize(
+            "info.noDeviceChosenForNewFile",
+            "\n[INFO] No device was selected to open a template file for.\n"
+        ),
         OPENED_SERIAL_PORT: (port: string) => {
             return localize(
                 "info.openedSerialPort",
@@ -238,8 +267,9 @@ export const CONSTANTS = {
         DOWNLOAD_PYTHON: "https://www.python.org/downloads/",
         EXAMPLE_CODE:
             "https://github.com/adafruit/Adafruit_CircuitPython_CircuitPlayground/tree/master/examples",
-        HELP:
+        CPX_HELP:
             "https://learn.adafruit.com/adafruit-circuit-playground-express/circuitpython-quickstart",
+        CLUE_HELP: "https://learn.adafruit.com/adafruit-clue/circuitpython",
         INSTALL:
             "https://github.com/microsoft/vscode-python-devicesimulator/blob/dev/docs/install.md",
         PRIVACY: "https://www.adafruit.com/privacy",
@@ -264,6 +294,7 @@ export const CONSTANTS = {
     TEMPLATE: {
         CPX: "cpx_template.py",
         MICROBIT: "microbit_template.py",
+        CLUE: "clue_template.py",
     },
     WARNING: {
         ACCEPT_AND_RUN: localize(
@@ -311,6 +342,8 @@ export enum TelemetryEventName {
     CPX_DEBUGGER_INIT_FAIL = "CPX.DEBUGGER.INIT.FAIL",
     MICROBIT_DEBUGGER_INIT_SUCCESS = "MICROBIT.DEBUGGER.INIT.SUCCESS",
     MICROBIT_DEBUGGER_INIT_FAIL = "MICROBIT.DEBUGGER.INIT.FAIL",
+    CLUE_DEBUGGER_INIT_SUCCESS = "CLUE.DEBUGGER.INIT.SUCCESS",
+    CLUE_DEBUGGER_INIT_FAIL = "CLUE.DEBUGGER.INIT.FAIL",
 
     // Extension commands
     COMMAND_RUN_SIMULATOR_BUTTON = "COMMAND.RUN.SIMULATOR_BUTTON",
@@ -320,6 +353,7 @@ export enum TelemetryEventName {
     COMMAND_SERIAL_MONITOR_OPEN = "COMMAND.SERIAL_MONITOR.OPEN",
     COMMAND_SERIAL_MONITOR_BAUD_RATE = "COMMAND.SERIAL_MONITOR.BAUD_RATE",
     COMMAND_SERIAL_MONITOR_CLOSE = "COMMAND.SERIAL_MONITOR.CLOSE",
+    COMMAND_GETTING_STARTED = "COMMAND.GETTING_STARTED",
 
     CPX_COMMAND_DEPLOY_DEVICE = "CPX.COMMAND.DEPLOY.DEVICE",
     CPX_COMMAND_NEW_FILE = "CPX.COMMAND.NEW.FILE.CPX",
@@ -328,6 +362,10 @@ export enum TelemetryEventName {
     MICROBIT_COMMAND_DEPLOY_DEVICE = "MICROBIT.COMMAND.DEPLOY.DEVICE",
     MICROBIT_COMMAND_NEW_FILE = "MICROBIT.COMMAND.NEW.FILE",
     MICROBIT_COMMAND_OPEN_SIMULATOR = "MICROBIT.COMMAND.OPEN.SIMULATOR",
+
+    CLUE_COMMAND_DEPLOY_DEVICE = "CLUE.COMMAND.DEPLOY.DEVICE",
+    CLUE_COMMAND_NEW_FILE = "CLUE.COMMAND.NEW.FILE.CPX",
+    CLUE_COMMAND_OPEN_SIMULATOR = "CLUE.COMMAND.OPEN.SIMULATOR",
 
     // Simulator interaction
     CPX_SIMULATOR_BUTTON_A = "CPX.SIMULATOR.BUTTON.A",
@@ -339,6 +377,10 @@ export enum TelemetryEventName {
     MICROBIT_SIMULATOR_BUTTON_B = "MICROBIT.SIMULATOR.BUTTON.B",
     MICROBIT_SIMULATOR_BUTTON_AB = "MICROBIT.SIMULATOR.BUTTON.AB",
 
+    CLUE_SIMULATOR_BUTTON_A = "CLUE.SIMULATOR.BUTTON.A",
+    CLUE_SIMULATOR_BUTTON_B = "CLUE.SIMULATOR.BUTTON.B",
+    CLUE_SIMULATOR_BUTTON_AB = "CLUE.SIMULATOR.BUTTON.AB",
+
     // Sensors
     CPX_SIMULATOR_TEMPERATURE_SENSOR = "CPX.SIMULATOR.TEMPERATURE",
     CPX_SIMULATOR_LIGHT_SENSOR = "CPX.SIMULATOR.LIGHT",
@@ -349,6 +391,17 @@ export enum TelemetryEventName {
     MICROBIT_SIMULATOR_TEMPERATURE_SENSOR = "MICROBIT.SIMULATOR.TEMPERATURE",
     MICROBIT_SIMULATOR_LIGHT_SENSOR = "MICROBIT.SIMULATOR.LIGHT",
     MICROBIT_SIMULATOR_MOTION_SENSOR = "MICROBIT.SIMULATOR.MOTION",
+    MICROBIT_SIMULATOR_GESTURE_SENSOR = "MICROBIT.SIMULATOR.GESTURE",
+
+    CLUE_SIMULATOR_TEMPERATURE_SENSOR = "CLUE.SIMULATOR.TEMPERATURE",
+    CLUE_SIMULATOR_LIGHT_SENSOR = "CLUE.SIMULATOR.LIGHT",
+    CLUE_SIMULATOR_MOTION_SENSOR = "CLUE.SIMULATOR.MOTION",
+    CLUE_SIMULATOR_GESTURE_SENSOR = "CLUE.SIMULATOR.GESTURE",
+    CLUE_SIMULATOR_PRESSURE_SENSOR = "CLUE.SIMULATOR.PRESSURE",
+    CLUE_SIMULATOR_PROXIMITY_SENSOR = "CLUE.SIMULATOR.PROXIMITY",
+    CLUE_SIMULATOR_HUMIDITY_SENSOR = "CLUE.SIMULATOR.HUMIDITY",
+    CLUE_SIMULATOR_GYRO_SENSOR = "CLUE.SIMULATOR.GYRO",
+    CLUE_SIMULATOR_MAGNET_SENSOR = "CLUE.SIMULATOR.MAGNET",
 
     // Pop-up dialog
     CPX_CLICK_DIALOG_DONT_SHOW = "CPX.CLICK.DIALOG.DONT.SHOW",
@@ -356,7 +409,10 @@ export enum TelemetryEventName {
     CPX_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CPX.CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
     CPX_CLICK_DIALOG_TUTORIALS = "CPX.CLICK.DIALOG.TUTORIALS",
 
+    CLUE_CLICK_DIALOG_HELP_DEPLOY_TO_DEVICE = "CLUE.CLICK.DIALOG.HELP.DEPLOY.TO.DEVICE",
+
     ERROR_PYTHON_PROCESS = "ERROR.PYTHON.PROCESS",
+
     CPX_ERROR_COMMAND_NEW_FILE = "CPX.ERROR.COMMAND.NEW.FILE",
     CPX_ERROR_DEPLOY_WITHOUT_DEVICE = "CPX.ERROR.DEPLOY.WITHOUT.DEVICE",
     CPX_ERROR_PYTHON_DEVICE_PROCESS = "CPX.ERROR.PYTHON.DEVICE.PROCESS",
@@ -367,6 +423,11 @@ export enum TelemetryEventName {
     MICROBIT_ERROR_PYTHON_DEVICE_PROCESS = "MICROBIT.ERROR.PYTHON.DEVICE.PROCESS",
     MICROBIT_SUCCESS_COMMAND_DEPLOY_DEVICE = "MICROBIT.SUCCESS.COMMAND.DEPLOY.DEVICE",
 
+    CLUE_ERROR_COMMAND_NEW_FILE = "CLUE.ERROR.COMMAND.NEW.FILE",
+    CLUE_ERROR_DEPLOY_WITHOUT_DEVICE = "CLUE.ERROR.DEPLOY.WITHOUT.DEVICE",
+    CLUE_ERROR_PYTHON_DEVICE_PROCESS = "CLUE.ERROR.PYTHON.DEVICE.PROCESS",
+    CLUE_SUCCESS_COMMAND_DEPLOY_DEVICE = "CLUE.SUCCESS.COMMAND.DEPLOY.DEVICE",
+
     // Performance
     CPX_PERFORMANCE_DEPLOY_DEVICE = "CPX.PERFORMANCE.DEPLOY.DEVICE",
     CPX_PERFORMANCE_NEW_FILE = "CPX.PERFORMANCE.NEW.FILE",
@@ -375,6 +436,10 @@ export enum TelemetryEventName {
     MICROBIT_PERFORMANCE_DEPLOY_DEVICE = "MICROBIT.PERFORMANCE.DEPLOY.DEVICE",
     MICROBIT_PERFORMANCE_NEW_FILE = "MICROBIT.PERFORMANCE.NEW.FILE",
     MICROBIT_PERFORMANCE_OPEN_SIMULATOR = "MICROBIT.PERFORMANCE.OPEN.SIMULATOR",
+
+    CLUE_PERFORMANCE_DEPLOY_DEVICE = "CLUE.PERFORMANCE.DEPLOY.DEVICE",
+    CLUE_PERFORMANCE_NEW_FILE = "CLUE.PERFORMANCE.NEW.FILE",
+    CLUE_PERFORMANCE_OPEN_SIMULATOR = "CLUE.PERFORMANCE.OPEN.SIMULATOR",
 
     // Venv options
     SETUP_VENV_CREATION_ERR = "SETUP.VENV.CREATION.ERR",
