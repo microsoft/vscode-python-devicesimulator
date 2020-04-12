@@ -22,7 +22,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     render() {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
         return (
-            <div className="inputSlider">
+            <div className="input-slider">
                 <span>{this.props.axisLabel}</span>
                 <input
                     type="text"
@@ -32,7 +32,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                     defaultValue={this.props.minValue.toLocaleString()}
                     pattern={`^-?[0-9]{0,${
                         this.props.maxValue.toString().length
-                    }}$`}
+                        }}$`}
                     onKeyUp={this.handleOnChange}
                     aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
                 />
