@@ -66,7 +66,7 @@ export const CPX_TOOLBAR_ICON_ID = {
 
 export const MICROBIT_TOOLBAR_ICON_ID = {
     TEMPERATURE: "toolbar-temperature-sensor",
-    LIGHT: "toolbar-light-sensor",
+    LIGHT: "toolbar-microbit-light-sensor",
     ACCELEROMETER: "toolbar-accelerometer-sensor",
     LEDS: "toolbar-microbit-led",
     PUSH_BUTTON: "toolbar-microbit-a-b-push",
@@ -309,6 +309,7 @@ export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
         MICROBIT_TOOLBAR_ICON_ID.ACCELEROMETER,
         MICROBIT_MODAL.ACCELEROMETER_CONTENT,
     ],
+    [MICROBIT_TOOLBAR_ICON_ID.LIGHT, MICROBIT_MODAL.LIGHT_CONTENT],
     [MICROBIT_TOOLBAR_ICON_ID.COMPASS, MICROBIT_MODAL.COMPASS_CONTENT],
     [MICROBIT_TOOLBAR_ICON_ID.LEDS, MICROBIT_MODAL.LED_CONTENT],
     [MICROBIT_TOOLBAR_ICON_ID.PUSH_BUTTON, MICROBIT_MODAL.BUTTON_CONTENT],
