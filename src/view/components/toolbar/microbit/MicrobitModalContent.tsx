@@ -2,7 +2,7 @@ import * as React from "react";
 import { GESTURES_MICROBIT, SENSOR_LIST } from "../../../constants";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
-import { Gesture } from "../motion/Gesture";
+import { Gesture } from "../Gesture";
 import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
 import { GenericSliderComponent } from "../GenericSliderComponent";
 import * as SENSOR_PROPERTIES from './MicrobitSensorProperties'

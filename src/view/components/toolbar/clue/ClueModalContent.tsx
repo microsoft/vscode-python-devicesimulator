@@ -3,9 +3,8 @@ import { GESTURES_CLUE, SENSOR_LIST } from "../../../constants";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { GenericSliderComponent } from "../GenericSliderComponent";
-import { Gesture } from "../motion/Gesture";
+import { Gesture } from "../Gesture";
 import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
-import TemperatureSensorBar from "../TemperatureSensorBar";
 import * as SENSOR_PROPERTIES from "./ClueSensorProperties";
 
 export const TEMPERATURE_CONTENT = (
