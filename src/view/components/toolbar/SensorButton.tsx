@@ -13,8 +13,8 @@ class SensorButton extends React.Component<ISensorButtonProps> {
     public setButtonClass = (isActive: boolean) => {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
 
-        if (isActive && !isInputDisabled && this.buttonRef.current) {
-            this.buttonRef.current.setAttribute(
+        if (isActive && !isInputDisabled) {
+            this.buttonRef.current?.setAttribute(
                 "class",
                 "sensor-button active-button"
             );
