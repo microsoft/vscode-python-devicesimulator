@@ -124,7 +124,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                         eventTriggers={{
                             onMouseDown: this.onMouseDown,
                             onMouseUp: this.onMouseUp,
-                            onMouseLeave: this.onMouseLeave,
                             onKeyEvent: this.onKeyEvent,
                         }}
                         leds={this.state.microbit.leds}

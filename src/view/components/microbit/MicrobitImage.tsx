@@ -10,7 +10,6 @@ import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
     onMouseDown: (event: Event, buttonKey: string) => void;
-    onMouseLeave: (event: Event, buttonKey: string) => void;
     onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void;
 }
 interface IProps {
