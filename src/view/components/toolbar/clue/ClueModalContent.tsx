@@ -12,11 +12,15 @@ export const TEMPERATURE_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
     sensorValues: { [key: string]: number }
 ): IModalContent => {
+    const temperatureSensorValues = {
+        T: sensorValues[SENSOR_LIST.TEMPERATURE]
+    }
     return {
         components: [
-            <TemperatureSensorBar
-                onUpdateSensor={onUpdateValue}
-                value={sensorValues[SENSOR_LIST.TEMPERATURE]}
+            <GenericSliderComponent
+                onUpdateValue={onUpdateValue}
+                axisValues={temperatureSensorValues}
+                axisProperties={SENSOR_PROPERTIES.TEMPERATURE_SENSOR_PROPERTIES}
             />,
         ],
         descriptionText: "toolbar-clue-temperature-sensor.description",

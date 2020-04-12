@@ -182,3 +182,18 @@ export const MOTION_SENSOR_PROPERTIES: ISensorProps = {
     ],
     unitLabel: "m/s2",
 };
+
+const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
+    axisLabel: "T",
+    maxLabel: "Hot",
+    maxValue: 125,
+    minLabel: "Cold",
+    minValue: -55,
+    type: SENSOR_LIST.TEMPERATURE,
+};
+
+export const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
+    LABEL: "Temperature sensor",
+    sliderProps: [TEMPERATURE_SLIDER_PROPS],
+    unitLabel: "°C",
+};

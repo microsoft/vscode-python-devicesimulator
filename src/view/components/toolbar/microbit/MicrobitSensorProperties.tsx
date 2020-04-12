@@ -55,7 +55,7 @@ export const MOTION_SENSOR_PROPERTIES: ISensorProps = {
 };
 
 const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
-    axisLabel: " ",
+    axisLabel: "T",
     maxLabel: "Hot",
     maxValue: 125,
     minLabel: "Cold",
