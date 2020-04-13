@@ -1,10 +1,14 @@
 import * as React from "react";
 import { SENSOR_LIST } from "../../../constants";
-import { IModalContent, FEATURE_REQUEST_ON_GITHUB, TRY_IT_MAKE_CODE } from "../SensorModalUtils";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
 import { GenericSliderComponent } from "../GenericSliderComponent";
-import * as SENSOR_PROPERTIES from './CpxSensorProperties'
+import {
+    FEATURE_REQUEST_ON_GITHUB,
+    IModalContent,
+    TRY_IT_MAKE_CODE,
+} from "../SensorModalUtils";
+import * as SENSOR_PROPERTIES from "./CpxSensorProperties";
 
 export const GPIO_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
@@ -40,8 +44,8 @@ export const LIGHT_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const lightSensorValues = {
-        L: sensorValues[SENSOR_LIST.LIGHT]
-    }
+        L: sensorValues[SENSOR_LIST.LIGHT],
+    };
     return {
         descriptionTitle: "toolbar-light-sensor.title",
         tagInput: TAG_INPUT_SVG,
@@ -174,8 +178,8 @@ export const TEMPERATURE_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const temperatureSensorValues = {
-        T: sensorValues[SENSOR_LIST.TEMPERATURE]
-    }
+        T: sensorValues[SENSOR_LIST.TEMPERATURE],
+    };
     return {
         components: [
             <GenericSliderComponent

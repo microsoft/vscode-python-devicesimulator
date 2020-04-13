@@ -3,10 +3,9 @@
 import * as React from "react";
 import { SENSOR_LIST } from "../../constants";
 import { ARROW_RIGHT_SVG } from "../../svgs/arrow_right_svg";
-import * as CPX_MODAL from "./cpx/CpxModalContent"
 import * as CLUE_MODAL from "./clue/ClueModalContent";
+import * as CPX_MODAL from "./cpx/CpxModalContent";
 import * as MICROBIT_MODAL from "./microbit/MicrobitModalContent";
-
 
 export const TRY_IT_MAKE_CODE = (
     <div className="link-parent">
@@ -111,8 +110,6 @@ export const DEFAULT_MODAL_CONTENT: IModalContent = {
     components: undefined,
     id: "none",
 };
-
-
 
 export const LABEL_TO_MODAL_CONTENT_CONSTRUCTOR = new Map([
     [CPX_TOOLBAR_ICON_ID.GPIO, CPX_MODAL.GPIO_CONTENT],

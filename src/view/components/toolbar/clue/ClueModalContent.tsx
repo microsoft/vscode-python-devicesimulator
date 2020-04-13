@@ -12,8 +12,8 @@ export const TEMPERATURE_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const temperatureSensorValues = {
-        T: sensorValues[SENSOR_LIST.TEMPERATURE]
-    }
+        T: sensorValues[SENSOR_LIST.TEMPERATURE],
+    };
     return {
         components: [
             <GenericSliderComponent

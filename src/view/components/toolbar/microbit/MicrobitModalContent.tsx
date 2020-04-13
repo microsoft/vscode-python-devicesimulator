@@ -2,10 +2,10 @@ import * as React from "react";
 import { GESTURES_MICROBIT, SENSOR_LIST } from "../../../constants";
 import { TAG_INPUT_SVG } from "../../../svgs/tag_input_svg";
 import { TAG_OUTPUT_SVG } from "../../../svgs/tag_output_svg";
+import { GenericSliderComponent } from "../GenericSliderComponent";
 import { Gesture } from "../Gesture";
 import { FEATURE_REQUEST_ON_GITHUB, IModalContent } from "../SensorModalUtils";
-import { GenericSliderComponent } from "../GenericSliderComponent";
-import * as SENSOR_PROPERTIES from './MicrobitSensorProperties'
+import * as SENSOR_PROPERTIES from "./MicrobitSensorProperties";
 
 export const ACCELEROMETER_CONTENT = (
     onUpdateValue: (sensor: SENSOR_LIST, value: number) => void,
@@ -143,8 +143,8 @@ export const LIGHT_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const lightSensorValues = {
-        L: sensorValues[SENSOR_LIST.LIGHT]
-    }
+        L: sensorValues[SENSOR_LIST.LIGHT],
+    };
     return {
         descriptionTitle: "toolbar-light-sensor.title",
         tagInput: TAG_INPUT_SVG,
@@ -167,8 +167,8 @@ export const TEMPERATURE_CONTENT = (
     sensorValues: { [key: string]: number }
 ): IModalContent => {
     const temperatureSensorValues = {
-        T: sensorValues[SENSOR_LIST.TEMPERATURE]
-    }
+        T: sensorValues[SENSOR_LIST.TEMPERATURE],
+    };
     return {
         components: [
             <GenericSliderComponent

@@ -1,5 +1,5 @@
-import { ISliderProps, ISensorProps } from "../../../viewUtils";
 import { SENSOR_LIST } from "../../../constants";
+import { ISensorProps, ISliderProps } from "../../../viewUtils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
     maxValue: 255,
@@ -9,7 +9,6 @@ const LIGHT_SLIDER_PROPS: ISliderProps = {
     type: "light",
     axisLabel: "L",
 };
-
 
 export const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
     LABEL: "Light sensor",
