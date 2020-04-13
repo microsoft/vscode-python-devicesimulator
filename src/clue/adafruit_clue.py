@@ -205,7 +205,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         self.__state[CONSTANTS.CLUE_STATE.PROXIMITY] = 0
         self.__state[CONSTANTS.CLUE_STATE.GESTURE] = ""
         self.__state[CONSTANTS.CLUE_STATE.HUMIDITY] = 0
-        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 1013
         self.__state[CONSTANTS.CLUE_STATE.PIXEL] = neopixel.NeoPixel(
             pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
         )
