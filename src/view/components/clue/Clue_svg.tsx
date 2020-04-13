@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { CLUE_LEDS_COLORS, CONSTANTS } from "../../constants";
 import "../../styles/SimulatorSvg.css";
-import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import { CONSTANTS, CLUE_LEDS_COLORS } from "../../constants";
 import svg from "../cpx/Svg_utils";
+import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
