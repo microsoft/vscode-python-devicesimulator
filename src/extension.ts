@@ -132,6 +132,10 @@ export async function activate(context: vscode.ExtensionContext) {
     const openWebview = () => {
         if (currentPanel && currentPanel.webview) {
             messagingService.setWebview(currentPanel.webview);
+            currentPanel.webview.html = webviewService.getWebviewContent(
+                WEBVIEW_TYPES.SIMULATOR,
+                true
+            );
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
             currentPanel = vscode.window.createWebviewPanel(
