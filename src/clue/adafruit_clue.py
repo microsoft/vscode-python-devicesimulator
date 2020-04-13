@@ -501,7 +501,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 0")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_0.__name__)
+        utils.print_for_unimplemented_functions("touch_0")
 
     @property
     def touch_1(self):
@@ -519,7 +519,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 1")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_1.__name__)
+        utils.print_for_unimplemented_functions("touch_1")
 
     @property
     def touch_2(self):
@@ -537,7 +537,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 2")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_2.__name__)
+        utils.print_for_unimplemented_functions("touch_2")
 
     @property
     def white_leds(self):
@@ -652,7 +652,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print(clue.sound_level)
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.sound_level.__name__)
+        utils.print_for_unimplemented_functions("sound_level")
 
     def loud_sound(self, sound_threshold=200):
         """Not Implemented!
