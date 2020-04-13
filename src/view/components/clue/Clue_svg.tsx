@@ -1157,7 +1157,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
             "stop-color",
             rgbColor
         );
-
     }
     private updateLeds() {
         // update white led
@@ -1172,7 +1171,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     ledRef.current,
                     this.gradientRefs.whiteLed.current
                 );
-
             }
         );
         svg.setLed(
@@ -1182,6 +1180,5 @@ export class ClueSvg extends React.Component<IProps, {}> {
             this.ledsRefs.redLed.current,
             this.gradientRefs.redLed.current
         );
-
     }
 }

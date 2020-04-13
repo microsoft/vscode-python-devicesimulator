@@ -218,7 +218,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                     BUTTONS_KEYS.BTN_AB,
                     active
                 );
-
             }
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A) &&
@@ -230,7 +229,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 BUTTONS_KEYS.BTN_A,
                 active
             );
-
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B) &&
             this.context === VIEW_STATE.RUNNING
@@ -241,7 +239,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 BUTTONS_KEYS.BTN_B,
                 active
             );
-
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C) &&
             this.context === VIEW_STATE.RUNNING
@@ -252,7 +249,6 @@ export class MicrobitSimulator extends React.Component<any, IState> {
                 BUTTONS_KEYS.BTN_AB,
                 active
             );
-
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {
