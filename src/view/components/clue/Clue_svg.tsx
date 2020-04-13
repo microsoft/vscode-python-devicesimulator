@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { CLUE_LEDS_COLORS, CONSTANTS } from "../../constants";
 import "../../styles/SimulatorSvg.css";
-import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import { CONSTANTS, CLUE_LEDS_COLORS } from "../../constants";
 import svg from "../cpx/Svg_utils";
+import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -1157,7 +1157,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
             "stop-color",
             rgbColor
         );
-
     }
     private updateLeds() {
         // update white led
@@ -1172,7 +1171,6 @@ export class ClueSvg extends React.Component<IProps, {}> {
                     ledRef.current,
                     this.gradientRefs.whiteLed.current
                 );
-
             }
         );
         svg.setLed(
@@ -1182,6 +1180,5 @@ export class ClueSvg extends React.Component<IProps, {}> {
             this.ledsRefs.redLed.current,
             this.gradientRefs.redLed.current
         );
-
     }
 }

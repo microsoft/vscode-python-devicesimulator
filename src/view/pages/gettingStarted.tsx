@@ -6,9 +6,7 @@ export class GettingStartedPage extends React.Component {
 
     componentDidMount() {
         this.selectRef.current?.addEventListener("change", (event: any) => {
-            const visibleElement = document.querySelector(
-                ".visibleElement"
-            );
+            const visibleElement = document.querySelector(".visibleElement");
             const target = document.getElementById(event!.target!.value);
             if (visibleElement !== null) {
                 visibleElement.className = "inv";
@@ -17,7 +15,6 @@ export class GettingStartedPage extends React.Component {
                 target.className = "visibleElement";
             }
         });
-
     }
 
     render() {

@@ -595,7 +595,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     // base_64 strings on UNIX systems.
 
                     // added any incomplete data to beginning
-                    let processedData = pythonProcessDataBuffer
+                    const processedData = pythonProcessDataBuffer
                         .join("")
                         .concat(dataFromTheProcess);
                     pythonProcessDataBuffer = [];

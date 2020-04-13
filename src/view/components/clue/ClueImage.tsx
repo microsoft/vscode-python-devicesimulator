@@ -49,7 +49,6 @@ export class ClueImage extends React.Component<IProps, {}> {
                 this.svgRef.current.getButtons()
             );
         }
-
     }
     componentWillUnmount() {
         window.document.removeEventListener("keydown", this.handleKeyDown);
@@ -87,7 +86,6 @@ export class ClueImage extends React.Component<IProps, {}> {
         );
     }
     public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
-
         const button = this.svgRef.current?.getButtons()[key].current;
         if (button) {
             button.focus();
@@ -105,7 +103,6 @@ export class ClueImage extends React.Component<IProps, {}> {
             button.setAttribute("pressed", `${isActive}`);
             button.setAttribute("aria-pressed", `${isActive}`);
         }
-
     }
 }
 

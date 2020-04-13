@@ -96,7 +96,6 @@ export class MicrobitImage extends React.Component<IProps, {}> {
             button.setAttribute("pressed", `${isActive}`);
             button.setAttribute("aria-pressed", `${isActive}`);
         }
-
     }
 }
 
