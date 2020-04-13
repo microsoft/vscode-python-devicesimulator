@@ -1,20 +1,18 @@
 import pytest
 
 from ..pixel import Pixel
-
+from .. import constants as CONSTANTS
 
 class TestPixel(object):
     def setup_method(self):
-        self.pixel = Pixel(
-            {
-                "brightness": 1.0,
-                "button_a": False,
-                "button_b": False,
-                "pixels": [(255, 0, 0), (0, 255, 0), (0, 0, 255)],
-                "red_led": False,
-                "switch": False,
-            }
-        )
+        state = {}
+        state[CONSTANTS.EXPRESS_STATE.BRIGHTNESS] = 1.0
+        state[CONSTANTS.EXPRESS_STATE.BUTTON_A] = False
+        state[CONSTANTS.EXPRESS_STATE.BUTTON_B] = False
+        state[CONSTANTS.EXPRESS_STATE.PIXELS] = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
+        state[CONSTANTS.EXPRESS_STATE.RED_LED] = False
+        state[CONSTANTS.EXPRESS_STATE.SWITCH] = False
+        self.pixel = Pixel(state)
 
     def test_get_item_out_of_bounds(self):
         with pytest.raises(IndexError):
@@ -52,7 +50,7 @@ class TestPixel(object):
 
     def test_fill(self):
         self.pixel.fill((123, 123, 123))
-        assert all(p == (123, 123, 123) for p in self.pixel._Pixel__state["pixels"])
+        assert all(p == (123, 123, 123) for p in self.pixel._Pixel__state[CONSTANTS.EXPRESS_STATE.PIXELS])
 
     @pytest.mark.parametrize(
         "val, expected",
@@ -101,7 +99,7 @@ class TestPixel(object):
         assert expected == self.pixel._Pixel__valid_rgb_value(pixValue)
 
     def test_get_brightness(self):
-        self.pixel._Pixel__state["brightness"] = 0.4
+        self.pixel._Pixel__state[CONSTANTS.EXPRESS_STATE.BRIGHTNESS] = 0.4
         assert 0.4 == pytest.approx(self.pixel.brightness)
 
     @pytest.mark.parametrize("brightness", [-0.1, 1.1])

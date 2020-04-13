@@ -36,7 +36,7 @@ class Pixel:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PIXELS)
-        return self.__state["pixels"][index]
+        return self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][index]
 
     def __setitem__(self, index, val):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PIXELS)
@@ -46,11 +46,11 @@ class Pixel:
         else:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
-        self.__state["pixels"][index] = self.__extract_pixel_value(val, is_slice)
+        self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][index] = self.__extract_pixel_value(val, is_slice)
         self.__show_if_auto_write()
 
     def __iter__(self):
-        yield from self.__state["pixels"]
+        yield from self.__state[CONSTANTS.EXPRESS_STATE.PIXELS]
 
     def __enter__(self):
         return self
@@ -59,18 +59,18 @@ class Pixel:
         return "[" + ", ".join([str(x) for x in self]) + "]"
 
     def __len__(self):
-        return len(self.__state["pixels"])
+        return len(self.__state[CONSTANTS.EXPRESS_STATE.PIXELS])
 
     def __valid_index(self, index):
         return (
             type(index) is int
-            and index >= -len(self.__state["pixels"])
-            and index < len(self.__state["pixels"])
+            and index >= -len(self.__state[CONSTANTS.EXPRESS_STATE.PIXELS])
+            and index < len(self.__state[CONSTANTS.EXPRESS_STATE.PIXELS])
         )
 
     def fill(self, val):
-        for index in range(len(self.__state["pixels"])):
-            self.__state["pixels"][index] = self.__extract_pixel_value(val)
+        for index in range(len(self.__state[CONSTANTS.EXPRESS_STATE.PIXELS])):
+            self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][index] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
 
     def __extract_pixel_value(self, val, is_slice=False):
@@ -113,14 +113,14 @@ class Pixel:
     @property
     def brightness(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BRIGHTNESS)
-        return self.__state["brightness"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.BRIGHTNESS]
 
     @brightness.setter
     def brightness(self, brightness):
         if not self.__valid_brightness(brightness):
             raise ValueError(CONSTANTS.BRIGHTNESS_RANGE_ERROR)
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BRIGHTNESS)
-        self.__state["brightness"] = brightness
+        self.__state[CONSTANTS.EXPRESS_STATE.BRIGHTNESS] = brightness
         self.__show_if_auto_write()
 
     def __valid_brightness(self, brightness):

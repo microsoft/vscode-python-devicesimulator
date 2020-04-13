@@ -1,6 +1,23 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+class EXPRESS_STATE:
+    BUTTON_A = "button_a"
+    BUTTON_B = "button_b"
+    ACCELERATION = "acceleration"
+    BRIGHTNESS = "brightness"
+    PIXELS = "pixels"
+    RED_LED = "red_led"
+    SWITCH = "switch"
+    TEMPERATURE = "temperature"
+    LIGHT = "light"
+    MOTION_X = "motion_x"
+    MOTION_Y = "motion_y"
+    MOTION_Z = "motion_z"
+    TOUCH = "touch"
+    SHAKE = "shake"
+    DETECT_TAPS = "detect_taps"
+
 ASSIGN_PIXEL_TYPE_ERROR = (
     "The pixel color value type should be tuple, list or hexadecimal."
 )
@@ -32,18 +49,10 @@ ERROR_SENDING_EVENT = "Error trying to send event to the process : "
 TIME_DELAY = 0.03
 
 
-EVENTS_BUTTON_PRESS = ["button_a", "button_b", "switch"]
-EVENTS_SENSOR_CHANGED = ["temperature", "light", "motion_x", "motion_y", "motion_z"]
+EVENTS_BUTTON_PRESS = [EXPRESS_STATE.BUTTON_A, EXPRESS_STATE.BUTTON_B, EXPRESS_STATE.SWITCH]
+EVENTS_SENSOR_CHANGED = [EXPRESS_STATE.TEMPERATURE, EXPRESS_STATE.LIGHT, EXPRESS_STATE.MOTION_X, EXPRESS_STATE.MOTION_Y, EXPRESS_STATE.MOTION_Z]
 
 ALL_EXPECTED_INPUT_EVENTS = [
-    "button_a",
-    "button_b",
-    "switch",
-    "temperature",
-    "light",
-    "shake",
-    "motion_x",
-    "motion_y",
-    "motion_z",
-    "touch",
+    EXPRESS_STATE.BUTTON_A, EXPRESS_STATE.BUTTON_B, EXPRESS_STATE.SWITCH,
+    EXPRESS_STATE.TEMPERATURE, EXPRESS_STATE.LIGHT, EXPRESS_STATE.SHAKE, EXPRESS_STATE.MOTION_X, EXPRESS_STATE.MOTION_Y, EXPRESS_STATE.MOTION_Z, EXPRESS_STATE.TOUCH
 ]
