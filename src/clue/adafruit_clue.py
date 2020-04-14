@@ -115,8 +115,8 @@ class _ClueSimpleTextDisplay:
         self._font = terminalio.FONT
         if font:
             self._font = font
-        self.text_group = displayio.Group(max_size=20, scale=text_scale)
         self.text_scale = text_scale
+        self.text_group = displayio.Group(max_size=20, scale=self.text_scale)
         if title:
             # Fail gracefully if title is longer than 60 characters.
             if len(title) > 60:
@@ -130,12 +130,12 @@ class _ClueSimpleTextDisplay:
                 scale=title_scale,
             )
             title.x = 0
-            title.y = 8
-            self._y = title.y + 18 * text_scale
+            title.y = 8 * self.text_scale
+            self._y = title.y + 18 * self.text_scale
 
             self.text_group.append(title)
         else:
-            self._y = 3
+            self._y = 3 * self.text_scale
 
         self._lines = []
         for num in range(1):
@@ -205,7 +205,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         self.__state[CONSTANTS.CLUE_STATE.PROXIMITY] = 0
         self.__state[CONSTANTS.CLUE_STATE.GESTURE] = ""
         self.__state[CONSTANTS.CLUE_STATE.HUMIDITY] = 0
-        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 0
+        self.__state[CONSTANTS.CLUE_STATE.PRESSURE] = 1013
         self.__state[CONSTANTS.CLUE_STATE.PIXEL] = neopixel.NeoPixel(
             pin=CONSTANTS.CLUE_PIN, n=1, pixel_order=neopixel.RGB
         )
@@ -501,7 +501,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 0")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_0.__name__)
+        utils.print_for_unimplemented_functions("touch_0")
 
     @property
     def touch_1(self):
@@ -519,7 +519,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 1")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_1.__name__)
+        utils.print_for_unimplemented_functions("touch_1")
 
     @property
     def touch_2(self):
@@ -537,7 +537,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                   print("Touched pad 2")
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions(Clue.touch_2.__name__)
+        utils.print_for_unimplemented_functions("touch_2")
 
     @property
     def white_leds(self):
@@ -652,7 +652,7 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               print(clue.sound_level)
         """
         telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.sound_level.__name__)
+        utils.print_for_unimplemented_functions("sound_level")
 
     def loud_sound(self, sound_threshold=200):
         """Not Implemented!
