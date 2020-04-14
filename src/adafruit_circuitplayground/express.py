@@ -14,67 +14,69 @@ from . import constants as CONSTANTS
 from collections import namedtuple
 import common
 
-Acceleration = namedtuple("acceleration", ["x", "y", "z"])
+Acceleration = namedtuple(CONSTANTS.EXPRESS_STATE.ACCELERATION, ["x", "y", "z"])
 
 
 class Express:
     def __init__(self):
         # State in the Python process
-        self.__state = {
-            "brightness": 1.0,
-            "button_a": False,
-            "button_b": False,
-            "pixels": [
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-            ],
-            "red_led": False,
-            "switch": False,
-            "temperature": 0,
-            "light": 0,
-            "motion_x": 0,
-            "motion_y": 0,
-            "motion_z": 0,
-            "touch": [False] * 7,
-            "shake": False,
-        }
+        self.__state = {}
+        self.__state[CONSTANTS.EXPRESS_STATE.BRIGHTNESS] = 1.0
+        self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_A] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_B] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.PIXELS] = [
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+        ]
+        self.__state[CONSTANTS.EXPRESS_STATE.RED_LED] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.SWITCH] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.TEMPERATURE] = 0
+        self.__state[CONSTANTS.EXPRESS_STATE.LIGHT] = 0
+        self.__state[CONSTANTS.EXPRESS_STATE.MOTION_X] = 0
+        self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Y] = 0
+        self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Z] = 0
+        self.__state[CONSTANTS.EXPRESS_STATE.TOUCH] = [False] * 7
+        self.__state[CONSTANTS.EXPRESS_STATE.SHAKE] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.DETECT_TAPS] = 0
         self.pixels = Pixel(self.__state)
 
     @property
     def acceleration(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_ACCELERATION)
         return Acceleration(
-            self.__state["motion_x"], self.__state["motion_y"], self.__state["motion_z"]
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_X],
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Y],
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Z],
         )
 
     @property
     def button_a(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BUTTON_A)
-        return self.__state["button_a"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_A]
 
     @property
     def button_b(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_BUTTON_B)
-        return self.__state["button_b"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_B]
 
     @property
     def detect_taps(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_DETECT_TAPS)
-        return self.__state["detect_taps"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.DETECT_TAPS]
 
     @detect_taps.setter
     def detect_taps(self, value):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_DETECT_TAPS)
         value_int = int(value)
-        self.__state["detect_taps"] = (
+        self.__state[CONSTANTS.EXPRESS_STATE.DETECT_TAPS] = (
             value_int if (value_int == 1 or value_int == 2) else 1
         )
 
@@ -88,28 +90,28 @@ class Express:
     @property
     def red_led(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_RED_LED)
-        return self.__state["red_led"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.RED_LED]
 
     @red_led.setter
     def red_led(self, value):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_RED_LED)
-        self.__state["red_led"] = bool(value)
+        self.__state[CONSTANTS.EXPRESS_STATE.RED_LED] = bool(value)
         self.__show()
 
     @property
     def switch(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_SWITCH)
-        return self.__state["switch"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.SWITCH]
 
     @property
     def temperature(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_TEMPERATURE)
-        return self.__state["temperature"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.TEMPERATURE]
 
     @property
     def light(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_LIGHT)
-        return self.__state["light"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.LIGHT]
 
     def __show(self):
         if utils.debug_mode:
@@ -121,7 +123,7 @@ class Express:
 
     def __touch(self, i):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_TOUCH)
-        return self.__state["touch"][i - 1]
+        return self.__state[CONSTANTS.EXPRESS_STATE.TOUCH][i - 1]
 
     @property
     def touch_A1(self):
@@ -160,7 +162,7 @@ class Express:
 
     def shake(self, shake_threshold=30):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_SHAKE)
-        return self.__state["shake"]
+        return self.__state[CONSTANTS.EXPRESS_STATE.SHAKE]
 
     def play_file(self, file_name):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_PLAY_FILE)
