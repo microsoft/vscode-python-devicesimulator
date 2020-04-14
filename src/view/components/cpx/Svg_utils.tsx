@@ -82,15 +82,15 @@ namespace svg {
         ledStatus: boolean,
         offColor: string,
         onColor: string,
-        ledElement: SVGElement,
-        gradientStopElement: SVGStopElement
+        ledElement: SVGElement | null,
+        gradientStopElement: SVGStopElement | null
     ) {
         if (ledStatus) {
-            ledElement.setAttribute("fill", onColor);
-            gradientStopElement.setAttribute("stop-opacity", "1");
+            ledElement?.setAttribute("fill", onColor);
+            gradientStopElement?.setAttribute("stop-opacity", "1");
         } else {
-            ledElement.setAttribute("fill", offColor);
-            gradientStopElement.setAttribute("stop-opacity", "0");
+            ledElement?.setAttribute("fill", offColor);
+            gradientStopElement?.setAttribute("stop-opacity", "0");
         }
     }
 }

@@ -10,7 +10,6 @@ import { IRefObject, MicrobitSvg } from "./Microbit_svg";
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
     onMouseDown: (event: Event, buttonKey: string) => void;
-    onMouseLeave: (event: Event, buttonKey: string) => void;
     onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void;
 }
 interface IProps {
@@ -80,24 +79,22 @@ export class MicrobitImage extends React.Component<IProps, {}> {
         return <MicrobitSvg ref={this.svgRef} />;
     }
     public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
-        if (this.svgRef.current) {
-            const button = this.svgRef.current.getButtons()[key].current;
-            if (button) {
-                button.focus();
-                if (isActive) {
-                    button.children[0].setAttribute(
-                        "class",
-                        BUTTON_STYLING_CLASSES.KEYPRESSED
-                    );
-                } else {
-                    button.children[0].setAttribute(
-                        "class",
-                        BUTTON_STYLING_CLASSES.DEFAULT
-                    );
-                }
-                button.setAttribute("pressed", `${isActive}`);
-                button.setAttribute("aria-pressed", `${isActive}`);
+        const button = this.svgRef.current?.getButtons()[key].current;
+        if (button) {
+            button.focus();
+            if (isActive) {
+                button.children[0].setAttribute(
+                    "class",
+                    BUTTON_STYLING_CLASSES.KEYPRESSED
+                );
+            } else {
+                button.children[0].setAttribute(
+                    "class",
+                    BUTTON_STYLING_CLASSES.DEFAULT
+                );
             }
+            button.setAttribute("pressed", `${isActive}`);
+            button.setAttribute("aria-pressed", `${isActive}`);
         }
     }
 }
@@ -117,9 +114,7 @@ const setupButton = (
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
     };
-    buttonElement.onmouseleave = e => {
-        eventTriggers.onMouseLeave(e, key);
-    };
+
     buttonElement.onkeydown = e => {
         // ensure that the keydown is enter,
         // or else it may register shortcuts twice
@@ -147,7 +142,6 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             // to implement
             ref.current.onmousedown = null;
             ref.current.onmouseup = null;
-            ref.current.onmouseleave = null;
             ref.current.onkeydown = null;
             ref.current.onkeyup = null;
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);

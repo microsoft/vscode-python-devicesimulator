@@ -149,7 +149,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "%deviceSimulatorExpressExtension.configuration.properties.previewMode%",
-                    "scope": "resource"    
+                    "scope": "resource"
                 }
             }
         },
@@ -286,7 +286,7 @@
         "tslint-microsoft-contrib": "^6.1.0",
         "tslint-react": "^3.6.0",
         "tslint-react-hooks": "^2.0.0",
-        "typescript": "^3.3.1",
+        "typescript": "^3.8.3",
         "typescript-react-intl": "^0.4.0",
         "version-from-git": "^1.1.1",
         "vsce": "^1.47.0",
