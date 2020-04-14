@@ -10,7 +10,6 @@ import { ClueSvg, IRefObject } from "./Clue_svg";
 interface EventTriggers {
     onMouseUp: (event: Event, buttonKey: string) => void;
     onMouseDown: (event: Event, buttonKey: string) => void;
-    onMouseLeave: (event: Event, buttonKey: string) => void;
     onKeyEvent: (event: KeyboardEvent, active: boolean, key: string) => void;
 }
 interface IProps {
@@ -42,15 +41,13 @@ export class ClueImage extends React.Component<IProps, {}> {
         }
     }
     componentDidUpdate() {
-        if (this.svgRef.current) {
-            if (this.context === VIEW_STATE.PAUSE) {
-                disableAllButtons(this.svgRef.current.getButtons());
-            } else if (this.context === VIEW_STATE.RUNNING) {
-                setupAllButtons(
-                    this.props.eventTriggers,
-                    this.svgRef.current.getButtons()
-                );
-            }
+        if (this.context === VIEW_STATE.PAUSE && this.svgRef.current) {
+            disableAllButtons(this.svgRef.current.getButtons());
+        } else if (this.context === VIEW_STATE.RUNNING && this.svgRef.current) {
+            setupAllButtons(
+                this.props.eventTriggers,
+                this.svgRef.current.getButtons()
+            );
         }
     }
     componentWillUnmount() {
@@ -89,24 +86,22 @@ export class ClueImage extends React.Component<IProps, {}> {
         );
     }
     public updateButtonAttributes(key: BUTTONS_KEYS, isActive: boolean) {
-        if (this.svgRef.current) {
-            const button = this.svgRef.current.getButtons()[key].current;
-            if (button) {
-                button.focus();
-                if (isActive) {
-                    button.children[0].setAttribute(
-                        "class",
-                        BUTTON_STYLING_CLASSES.KEYPRESSED
-                    );
-                } else {
-                    button.children[0].setAttribute(
-                        "class",
-                        BUTTON_STYLING_CLASSES.DEFAULT
-                    );
-                }
-                button.setAttribute("pressed", `${isActive}`);
-                button.setAttribute("aria-pressed", `${isActive}`);
+        const button = this.svgRef.current?.getButtons()[key].current;
+        if (button) {
+            button.focus();
+            if (isActive) {
+                button.children[0].setAttribute(
+                    "class",
+                    BUTTON_STYLING_CLASSES.KEYPRESSED
+                );
+            } else {
+                button.children[0].setAttribute(
+                    "class",
+                    BUTTON_STYLING_CLASSES.DEFAULT
+                );
             }
+            button.setAttribute("pressed", `${isActive}`);
+            button.setAttribute("aria-pressed", `${isActive}`);
         }
     }
 }
@@ -125,9 +120,7 @@ const setupButton = (
     buttonElement.onmouseup = e => {
         eventTriggers.onMouseUp(e, key);
     };
-    buttonElement.onmouseleave = e => {
-        eventTriggers.onMouseLeave(e, key);
-    };
+
     buttonElement.onkeydown = e => {
         // ensure that the keydown is enter,
         // or else it may register shortcuts twice
@@ -155,7 +148,6 @@ const disableAllButtons = (buttonRefs: IRefObject) => {
             // to implement
             ref.current.onmousedown = null;
             ref.current.onmouseup = null;
-            ref.current.onmouseleave = null;
             ref.current.onkeydown = null;
             ref.current.onkeyup = null;
             ref.current.setAttribute("class", BUTTON_CLASSNAME.DEACTIVATED);
