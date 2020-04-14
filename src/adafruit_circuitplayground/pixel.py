@@ -46,7 +46,9 @@ class Pixel:
         else:
             if not self.__valid_index(index):
                 raise IndexError(CONSTANTS.INDEX_ERROR)
-        self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][index] = self.__extract_pixel_value(val, is_slice)
+        self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][
+            index
+        ] = self.__extract_pixel_value(val, is_slice)
         self.__show_if_auto_write()
 
     def __iter__(self):
@@ -70,7 +72,9 @@ class Pixel:
 
     def fill(self, val):
         for index in range(len(self.__state[CONSTANTS.EXPRESS_STATE.PIXELS])):
-            self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][index] = self.__extract_pixel_value(val)
+            self.__state[CONSTANTS.EXPRESS_STATE.PIXELS][
+                index
+            ] = self.__extract_pixel_value(val)
         self.__show_if_auto_write()
 
     def __extract_pixel_value(self, val, is_slice=False):

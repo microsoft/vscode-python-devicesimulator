@@ -25,17 +25,17 @@ class Express:
         self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_A] = False
         self.__state[CONSTANTS.EXPRESS_STATE.BUTTON_B] = False
         self.__state[CONSTANTS.EXPRESS_STATE.PIXELS] = [
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-                (0, 0, 0),
-            ]
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+            (0, 0, 0),
+        ]
         self.__state[CONSTANTS.EXPRESS_STATE.RED_LED] = False
         self.__state[CONSTANTS.EXPRESS_STATE.SWITCH] = False
         self.__state[CONSTANTS.EXPRESS_STATE.TEMPERATURE] = 0
@@ -52,7 +52,9 @@ class Express:
     def acceleration(self):
         telemetry_py.send_telemetry(TelemetryEvent.CPX_API_ACCELERATION)
         return Acceleration(
-            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_X], self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Y], self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Z]
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_X],
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Y],
+            self.__state[CONSTANTS.EXPRESS_STATE.MOTION_Z],
         )
 
     @property

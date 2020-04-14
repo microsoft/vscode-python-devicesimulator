@@ -3,6 +3,7 @@ import pytest
 from ..pixel import Pixel
 from .. import constants as CONSTANTS
 
+
 class TestPixel(object):
     def setup_method(self):
         state = {}
@@ -50,7 +51,10 @@ class TestPixel(object):
 
     def test_fill(self):
         self.pixel.fill((123, 123, 123))
-        assert all(p == (123, 123, 123) for p in self.pixel._Pixel__state[CONSTANTS.EXPRESS_STATE.PIXELS])
+        assert all(
+            p == (123, 123, 123)
+            for p in self.pixel._Pixel__state[CONSTANTS.EXPRESS_STATE.PIXELS]
+        )
 
     @pytest.mark.parametrize(
         "val, expected",

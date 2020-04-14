@@ -6,6 +6,7 @@ from ..express import Express
 from ..pixel import Pixel
 from .. import constants as CONSTANTS
 
+
 class TestExpress(object):
     def setup_method(self):
         self.cpx = Express()
