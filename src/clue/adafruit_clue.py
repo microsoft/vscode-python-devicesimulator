@@ -56,9 +56,7 @@ Implementation Notes
    https://github.com/adafruit/Adafruit_CircuitPython_NeoPixel
 """
 
-from common.telemetry_events import TelemetryEvent
-from common.telemetry import telemetry_py
-from common import utils
+import common
 from base_circuitpython import base_cp_constants as CONSTANTS
 import neopixel
 import time
@@ -247,7 +245,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_a:
                   print("Button A pressed")
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_BUTTON_A)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_BUTTON_A
+        )
         return self.__state[CONSTANTS.CLUE_STATE.BUTTON_A]
 
     @property
@@ -261,7 +261,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.button_b:
                   print("Button B pressed")
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_BUTTON_B)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_BUTTON_B
+        )
         return self.__state[CONSTANTS.CLUE_STATE.BUTTON_B]
 
     @property
@@ -273,7 +275,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print(clue.were_pressed)
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_WERE_PRESSED)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_WERE_PRESSED
+        )
         ret = self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].copy()
         self.__state[CONSTANTS.CLUE_STATE.PRESSED_BUTTONS].clear()
         return ret
@@ -288,7 +292,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
             print("Accel: {:.2f} {:.2f} {:.2f}".format(*clue.acceleration))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_ACCELERATION)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_ACCELERATION
+        )
         return (
             self.__state[CONSTANTS.CLUE_STATE.MOTION_X],
             self.__state[CONSTANTS.CLUE_STATE.MOTION_Y],
@@ -307,7 +313,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         :param total_delay: The total time in seconds it takes to obtain avg_count
                             readings from acceleration. (Default 0.1)
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SHAKE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SHAKE
+        )
         is_shaken = self.__state[CONSTANTS.CLUE_STATE.GESTURE] == CONSTANTS.SHAKE
         return is_shaken
 
@@ -322,7 +330,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Color: R: {} G: {} B: {} C: {}".format(*clue.color))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_COLOR)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_COLOR
+        )
         return (
             self.__state[CONSTANTS.CLUE_STATE.LIGHT_R],
             self.__state[CONSTANTS.CLUE_STATE.LIGHT_G],
@@ -339,7 +349,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             print("Temperature: {:.1f}C".format(clue.temperature))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TEMPERATURE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_TEMPERATURE
+        )
         return self.__state[CONSTANTS.CLUE_STATE.TEMPERATURE]
 
     @property
@@ -352,7 +364,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_MAGNETIC)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_MAGNETIC
+        )
         return (
             self.__state[CONSTANTS.CLUE_STATE.MAGNET_X],
             self.__state[CONSTANTS.CLUE_STATE.MAGNET_Y],
@@ -370,7 +384,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Proximity: {}".format(clue.proximity))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_PROXIMITY)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_PROXIMITY
+        )
         return self.__state[CONSTANTS.CLUE_STATE.PROXIMITY]
 
     @property
@@ -379,7 +395,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         This example prints the values. Try moving the board to see how the printed values change.
               print("Gyro: {:.2f} {:.2f} {:.2f}".format(*clue.gyro))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_GYRO)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_GYRO
+        )
         return (
             self.__state[CONSTANTS.CLUE_STATE.GYRO_X],
             self.__state[CONSTANTS.CLUE_STATE.GYRO_Y],
@@ -398,7 +416,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Gesture: {}".format(clue.gesture))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_GESTURE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_GESTURE
+        )
         gesture_mapping = {"": 0, "up": 1, "down": 2, "left": 3, "right": 4}
         return gesture_mapping.get(self.__state[CONSTANTS.CLUE_STATE.GESTURE], 0)
 
@@ -412,7 +432,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print("Humidity: {:.1f}%".format(clue.humidity))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_HUMIDITY)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_HUMIDITY
+        )
         return self.__state[CONSTANTS.CLUE_STATE.HUMIDITY]
 
     @property
@@ -424,7 +446,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             print("Pressure: {:.3f}hPa".format(clue.pressure))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_PRESSURE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_PRESSURE
+        )
         return self.__state[CONSTANTS.CLUE_STATE.PRESSURE]
 
     @property
@@ -450,7 +474,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                 POWER_CONSTANT,
             )
         )
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_ALTITUDE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_ALTITUDE
+        )
         return altitude
 
     @property
@@ -464,12 +490,16 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             clue.sea_level_pressure = 1015
             print("Pressure: {:.3f}hPa".format(clue.pressure))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SEA_LEVEL_PRESSURE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SEA_LEVEL_PRESSURE
+        )
         return self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE]
 
     @sea_level_pressure.setter
     def sea_level_pressure(self, value):
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SEA_LEVEL_PRESSURE)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SEA_LEVEL_PRESSURE
+        )
         self.__state[CONSTANTS.CLUE_STATE.SEA_LEVEL_PRESSURE] = value
 
     @property
@@ -482,7 +512,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             while True:
                 clue.pixel.fill((255, 0, 255))
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_PIXEL)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_PIXEL
+        )
         return self.__state[CONSTANTS.CLUE_STATE.PIXEL]
 
     @property
@@ -500,8 +532,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.touch_0:
                   print("Touched pad 0")
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions("touch_0")
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_TOUCH
+        )
+        common.utils.print_for_unimplemented_functions("touch_0")
 
     @property
     def touch_1(self):
@@ -518,8 +552,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.touch_1:
                   print("Touched pad 1")
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions("touch_1")
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_TOUCH
+        )
+        common.utils.print_for_unimplemented_functions("touch_1")
 
     @property
     def touch_2(self):
@@ -536,8 +572,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               if clue.touch_2:
                   print("Touched pad 2")
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TOUCH)
-        utils.print_for_unimplemented_functions("touch_2")
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_TOUCH
+        )
+        common.utils.print_for_unimplemented_functions("touch_2")
 
     @property
     def white_leds(self):
@@ -550,12 +588,16 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.white_leds = True
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_WHITE_LEDS)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_WHITE_LEDS
+        )
         return self.__state[CONSTANTS.CLUE_STATE.WHITE_LEDS]
 
     @white_leds.setter
     def white_leds(self, value):
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_WHITE_LEDS)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_WHITE_LEDS
+        )
         self.__set_leds(CONSTANTS.CLUE_STATE.WHITE_LEDS, value)
 
     @property
@@ -569,12 +611,16 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.red_led = True
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_RED_LED)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_RED_LED
+        )
         return self.__state[CONSTANTS.CLUE_STATE.RED_LED]
 
     @red_led.setter
     def red_led(self, value):
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_RED_LED)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_RED_LED
+        )
         self.__set_leds(CONSTANTS.CLUE_STATE.RED_LED, value)
 
     def play_tone(self, frequency, duration):
@@ -591,8 +637,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
             from adafruit_clue import clue
             clue.play_tone(880, 1)
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.play_tone.__name__)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SOUND
+        )
+        common.utils.print_for_unimplemented_functions(Clue.play_tone.__name__)
 
     def start_tone(self, frequency):
         """ Not Implemented!
@@ -614,8 +662,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                  else:
                      clue.stop_tone()
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.start_tone.__name__)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SOUND
+        )
+        common.utils.print_for_unimplemented_functions(Clue.start_tone.__name__)
 
     def stop_tone(self):
         """ Not Implemented!
@@ -635,8 +685,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
                  else:
                      clue.stop_tone()
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.stop_tone.__name__)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SOUND
+        )
+        common.utils.print_for_unimplemented_functions(Clue.stop_tone.__name__)
 
     @property
     def sound_level(self):
@@ -651,8 +703,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
           while True:
               print(clue.sound_level)
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions("sound_level")
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SOUND
+        )
+        common.utils.print_for_unimplemented_functions("sound_level")
 
     def loud_sound(self, sound_threshold=200):
         """Not Implemented!
@@ -684,8 +738,10 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               else:
                   clue.pixel.fill(0)
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_SOUND)
-        utils.print_for_unimplemented_functions(Clue.loud_sound.__name__)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_SOUND
+        )
+        common.utils.print_for_unimplemented_functions(Clue.loud_sound.__name__)
 
     @staticmethod
     def simple_text_display(
@@ -745,7 +801,9 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
               clue_data[2].text = "Magnetic: {:.3f} {:.3f} {:.3f}".format(*clue.magnetic)
               clue_data.show()
         """
-        telemetry_py.send_telemetry(TelemetryEvent.CLUE_API_TEXT_DISPLAY)
+        common.telemetry.telemetry_py.send_telemetry(
+            common.telemetry_events.TelemetryEvent.CLUE_API_TEXT_DISPLAY
+        )
         return _ClueSimpleTextDisplay(
             title=title,
             title_color=title_color,
@@ -775,7 +833,12 @@ class Clue:  # pylint: disable=too-many-instance-attributes, too-many-public-met
         value = bool(value)
         self.__state[led] = value
         sendable_json = {led: value}
-        utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
+        if common.utils.debug_mode:
+            common.debugger_communication_client.debug_send_to_simulator(
+                sendable_json, CONSTANTS.CLUE
+            )
+        else:
+            common.utils.send_to_simulator(sendable_json, CONSTANTS.CLUE)
 
 
 clue = Clue()  # pylint: disable=invalid-name
