@@ -13,7 +13,7 @@ interface IProps {
 }
 export const GenericSliderComponent: React.FC<IProps> = props => {
     return (
-        <div className="GenericSliderComponent">
+        <div className="generic-slider-component">
             {props.axisProperties.sliderProps.map(
                 (sliderProperties: ISliderProps, index: number) => {
                     return (
