@@ -20,9 +20,9 @@ exports[`Toolbar component  should render correctly 1`] = `
         onMouseLeave={[Function]}
       >
         <button
-          aria-label="toolbar light-sensor"
+          aria-label="toolbar microbit-light-sensor"
           className="toolbar-button button"
-          id="toolbar-light-sensor-button"
+          id="toolbar-microbit-light-sensor-button"
           onClick={[Function]}
           role="button"
           style={

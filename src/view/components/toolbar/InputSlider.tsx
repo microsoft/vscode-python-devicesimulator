@@ -22,7 +22,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     render() {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
         return (
-            <div className="inputSlider">
+            <div className="input-slider">
                 <span>{this.props.axisLabel}</span>
                 <input
                     type="text"
