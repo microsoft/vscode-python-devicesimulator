@@ -10,8 +10,7 @@ https://blog.adafruit.com/2020/02/12/three-fun-sensor-packed-projects-to-try-on-
 
 from adafruit_clue import clue
 
-clue_data = clue.simple_text_display(title="Hello World!", title_scale=2)
+clue_data = clue.simple_text_display(title="Hello World", title_scale=3)
 
 while True:
-    clue_data[0].text = "Have fun :)"
     clue_data.show()
