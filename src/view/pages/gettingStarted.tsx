@@ -31,7 +31,9 @@ export class GettingStartedPage extends React.Component {
                             Learn more about:
                         </option>
                         <optgroup label="Devices">
-                            <option value="CPX">Circuit Playground Express</option>
+                            <option value="CPX">
+                                Circuit Playground Express
+                            </option>
                             <option value="micro:bit">micro:bit</option>
                             <option value="CLUE">CLUE</option>
                         </optgroup>
@@ -270,7 +272,7 @@ export class GettingStartedPage extends React.Component {
                             <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F11</kbd> to restart</li>
                             <li><kbd>Shift</kbd> + <kbd>F5</kbd> to stop</li>
                         </ul>
-                        {/* <img> GIF OF DOING DEBUG STUFF </img> */}
+                        <img alt='debugging experience' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/users/t-vali/getting-started-improvements/src/view/pages/gettingStartedPictures/debugger/debugging.gif'></img>
                         <h3 className="normalFontWeight">
                             > Observe the device's state on the "Variables" tab on the left when stopped at a breakpoint
                         </h3>
