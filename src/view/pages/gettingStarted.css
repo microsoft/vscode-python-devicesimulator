@@ -2,7 +2,17 @@
     display: none;
 }
 
-.normal-font-weight {
+.codeText {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+ }
+
+li:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.normalFontWeight {
     font-weight: normal;
 }
 
