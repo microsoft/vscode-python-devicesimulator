@@ -150,15 +150,6 @@ export class GettingStartedPage extends React.Component {
                     {/* prettier-ignore */}
                     <div id="CLUE" className="inv">
                         <h2> Tutorial for CLUE </h2>
-                        <h3 className="normalFontWeight"> > Enable Preview Mode to use the CLUE (This is required)</h3>
-                        <p> a. Access your settings:</p>
-                        <img alt='Open settings' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG' style={{ width: '346px', height: '337px' }}></img>
-                        <ul>
-                            <li>Windows or Linux: press <kbd>Ctrl</kbd> + <kbd>,</kbd> or go to <code>File -> Preferences -> Settings</code></li>
-                            <li>Mac: press <kbd>Cmd</kbd> + <kbd>,</kbd> or go to <code>Code -> Preferences -> Settings</code>.</li>
-                        </ul>
-                        <p> b. Check the <code>"Device Simulator Express: Preview Mode"</code> setting.</p>
-                        <img alt='Enable preview mode' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif' style={{ width: '333px', height: '157px' }}></img>
                         <h3 className="normalFontWeight">
                             > Import the the main CLUE library (This is
                             required)

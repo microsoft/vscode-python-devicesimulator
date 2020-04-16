@@ -9,7 +9,7 @@
 }
 
 li:not(:last-child) {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 .normalFontWeight {
@@ -52,5 +52,5 @@ li:not(:last-child) {
 
 .container {
     text-align: left;
-    padding: 0 10px 0 10px;
+    padding: 0 10px 20px 10px;
 }
