@@ -7,14 +7,14 @@ import {
     VIEW_STATE,
     WEBVIEW_MESSAGES,
 } from "../../constants";
+import { ViewStateContext } from "../../context";
+import "../../styles/Simulator.css";
 import "../../styles/Simulator.css";
 import PlayLogo from "../../svgs/play_svg";
 import StopLogo from "../../svgs/stop_svg";
 import { sendMessage } from "../../utils/MessageUtils";
 import ActionBar from "../simulator/ActionBar";
 import { BUTTONS_KEYS, ClueImage } from "./ClueImage";
-import "../../styles/Simulator.css";
-import { ViewStateContext } from "../../context";
 
 export const DEFAULT_CLUE_STATE: IClueState = {
     buttons: { button_a: false, button_b: false },
@@ -128,7 +128,6 @@ export class ClueSimulator extends React.Component<any, IState> {
                         eventTriggers={{
                             onMouseDown: this.onMouseDown,
                             onMouseUp: this.onMouseUp,
-                            onMouseLeave: this.onMouseLeave,
                             onKeyEvent: this.onKeyEvent,
                         }}
                         displayMessage={this.state.clue.displayMessage}
@@ -194,18 +193,17 @@ export class ClueSimulator extends React.Component<any, IState> {
             },
         });
     };
+
     protected onMouseUp = (event: Event, key: string) => {
         event.preventDefault();
         this.handleButtonClick(key, false);
     };
+
     protected onMouseDown = (event: Event, key: string) => {
         event.preventDefault();
         this.handleButtonClick(key, true);
     };
-    protected onMouseLeave = (event: Event, key: string) => {
-        event.preventDefault();
-        console.log(`To implement onMouseLeave ${key}`);
-    };
+
     protected onKeyEvent(event: KeyboardEvent, active: boolean, key: string) {
         event.stopPropagation();
         if (
@@ -213,57 +211,49 @@ export class ClueSimulator extends React.Component<any, IState> {
             this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(key, active);
-            if (this.imageRef.current) {
-                if (key === BUTTONS_KEYS.BTN_A) {
-                    this.imageRef.current.updateButtonAttributes(
-                        BUTTONS_KEYS.BTN_A,
-                        active
-                    );
-                } else if (key === BUTTONS_KEYS.BTN_B) {
-                    this.imageRef.current.updateButtonAttributes(
-                        BUTTONS_KEYS.BTN_B,
-                        active
-                    );
-                } else if (key === BUTTONS_KEYS.BTN_AB) {
-                    this.imageRef.current.updateButtonAttributes(
-                        BUTTONS_KEYS.BTN_AB,
-                        active
-                    );
-                }
+            if (key === BUTTONS_KEYS.BTN_A) {
+                this.imageRef.current?.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_A,
+                    active
+                );
+            } else if (key === BUTTONS_KEYS.BTN_B) {
+                this.imageRef.current?.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_B,
+                    active
+                );
+            } else if (key === BUTTONS_KEYS.BTN_AB) {
+                this.imageRef.current?.updateButtonAttributes(
+                    BUTTONS_KEYS.BTN_AB,
+                    active
+                );
             }
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.A) &&
             this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_A, active);
-            if (this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_A,
-                    active
-                );
-            }
+            this.imageRef.current?.updateButtonAttributes(
+                BUTTONS_KEYS.BTN_A,
+                active
+            );
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.B) &&
             this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_B, active);
-            if (this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_B,
-                    active
-                );
-            }
+            this.imageRef.current?.updateButtonAttributes(
+                BUTTONS_KEYS.BTN_B,
+                active
+            );
         } else if (
             [event.code, event.key].includes(CONSTANTS.KEYBOARD_KEYS.C) &&
             this.context === VIEW_STATE.RUNNING
         ) {
             this.handleButtonClick(BUTTONS_KEYS.BTN_AB, active);
-            if (this.imageRef.current) {
-                this.imageRef.current.updateButtonAttributes(
-                    BUTTONS_KEYS.BTN_AB,
-                    active
-                );
-            }
+            this.imageRef.current?.updateButtonAttributes(
+                BUTTONS_KEYS.BTN_AB,
+                active
+            );
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_F) {
             this.togglePlayClick();
         } else if (event.key === CONSTANTS.KEYBOARD_KEYS.CAPITAL_R) {

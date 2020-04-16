@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as React from "react";
+import { CLUE_LEDS_COLORS, CONSTANTS } from "../../constants";
 import "../../styles/SimulatorSvg.css";
-import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
-import { CONSTANTS, CLUE_LEDS_COLORS } from "../../constants";
 import svg from "../cpx/Svg_utils";
+import { DEFAULT_CLUE_STATE } from "./ClueSimulator";
 export interface IRefObject {
     [key: string]: React.RefObject<SVGRectElement>;
 }
@@ -1124,8 +1124,8 @@ export class ClueSvg extends React.Component<IProps, {}> {
     }
 
     private updateDisplay() {
-        if (this.displayRef.current && this.props.displayImage) {
-            this.displayRef.current.setAttribute(
+        if (this.props.displayImage) {
+            this.displayRef.current?.setAttribute(
                 "href",
                 `data:image/png;base64,${this.props.displayImage}`
             );
@@ -1140,26 +1140,23 @@ export class ClueSvg extends React.Component<IProps, {}> {
             (255 - neopixel[1]) * CONSTANTS.LED_TINT_FACTOR},${neopixel[2] +
             (255 - neopixel[2]) * CONSTANTS.LED_TINT_FACTOR})`;
 
-        if (this.ledsRefs.neopixel.current) {
-            this.ledsRefs.neopixel.current.setAttribute("fill", rgbColor);
-        }
-        if (this.gradientRefs.neopixel.current) {
-            if (neopixel === DEFAULT_CLUE_STATE.leds.neopixel) {
-                this.gradientRefs.neopixel.current.setAttribute(
-                    "stop-opacity",
-                    "0"
-                );
-            } else {
-                this.gradientRefs.neopixel.current.setAttribute(
-                    "stop-opacity",
-                    "1"
-                );
-            }
-            this.gradientRefs.neopixel.current.setAttribute(
-                "stop-color",
-                rgbColor
+        this.ledsRefs.neopixel.current?.setAttribute("fill", rgbColor);
+
+        if (neopixel === DEFAULT_CLUE_STATE.leds.neopixel) {
+            this.gradientRefs.neopixel.current?.setAttribute(
+                "stop-opacity",
+                "0"
+            );
+        } else {
+            this.gradientRefs.neopixel.current?.setAttribute(
+                "stop-opacity",
+                "1"
             );
         }
+        this.gradientRefs.neopixel.current?.setAttribute(
+            "stop-color",
+            rgbColor
+        );
     }
     private updateLeds() {
         // update white led
@@ -1167,25 +1164,21 @@ export class ClueSvg extends React.Component<IProps, {}> {
 
         this.ledsRefs.whiteLeds.map(
             (ledRef: React.RefObject<SVGRectElement>) => {
-                if (ledRef.current && this.gradientRefs.whiteLed.current) {
-                    svg.setLed(
-                        isWhiteLedOn,
-                        CLUE_LEDS_COLORS.WHITE_LEDS_OFF,
-                        CLUE_LEDS_COLORS.WHITE_LEDS_ON,
-                        ledRef.current,
-                        this.gradientRefs.whiteLed.current
-                    );
-                }
+                svg.setLed(
+                    isWhiteLedOn,
+                    CLUE_LEDS_COLORS.WHITE_LEDS_OFF,
+                    CLUE_LEDS_COLORS.WHITE_LEDS_ON,
+                    ledRef.current,
+                    this.gradientRefs.whiteLed.current
+                );
             }
         );
-        if (this.ledsRefs.redLed.current && this.gradientRefs.redLed.current) {
-            svg.setLed(
-                isRedLedOn,
-                CLUE_LEDS_COLORS.RED_LED_OFF,
-                CLUE_LEDS_COLORS.RED_LED_ON,
-                this.ledsRefs.redLed.current,
-                this.gradientRefs.redLed.current
-            );
-        }
+        svg.setLed(
+            isRedLedOn,
+            CLUE_LEDS_COLORS.RED_LED_OFF,
+            CLUE_LEDS_COLORS.RED_LED_ON,
+            this.ledsRefs.redLed.current,
+            this.gradientRefs.redLed.current
+        );
     }
 }

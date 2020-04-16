@@ -305,6 +305,7 @@ A `ThirdPartyNotices.txt` file is provided in the extension's source code listin
 -   If you try to deploy to the CPX while it's plugged in but you still get an error saying it cannot find the board, make sure your device is formatted correctly and that its name matches `CIRCUITPY`.
 -   If you can't get the Simulator communication working while debugging, try to open your `Settings` and check the port used under `"Device Simulator Express: Debugger Server Port"`. You can either change it (usually ports above 5000 should work) or try to free it, then start debugging again.
 -   When you are using the serial monitor, if you get some unusual error messages, unplug the device and reload the VS Code windows.
+-   If you're using Ubuntu and having some problems with setting up the environment, try reviewing [this article's](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-ubuntu-16-04)  "Step 1" section on how to set up Python 3 on Ubuntu 16.04. Then, ensure that you've run `sudo apt-get install -y python3-venv` to allow for virtual environment creation.
 
 ## License
 
