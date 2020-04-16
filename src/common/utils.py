@@ -52,14 +52,7 @@ def escape_if_OSX(file_name):
     return file_name
 
 
-def print_for_unimplemented_functions(function_name, one_more_call=False):
-    # Frame 0 is this function call
-    # Frame 1 is the call that calls this function, which is a microbit function
-    # Frame 2 is the call that calls the microbit function, which is in the user's file
-    # If one_more_call is True, then there is another frame between what was originally supposed to be frame 1 and 2.
-    frame_no = 2 if not one_more_call else 3
-    line_number = sys._getframe(frame_no).f_lineno
-    user_file_name = sys._getframe(frame_no).f_code.co_filename
+def print_for_unimplemented_functions(function_name):
     print(
-        f"'{function_name}' on line {line_number} in {user_file_name} is not implemented in the simulator but it will work on the actual device!"
+        f"'{function_name}' is not implemented in the simulator but it will work on the actual device!"
     )
