@@ -32,8 +32,8 @@ export class SetupService {
         context: vscode.ExtensionContext,
         needsResponse: boolean = false
     ) => {
-        const originalpythonExecutablePath = await this.getCurrentPythonExecutablePath();
-        let pythonExecutablePath = originalpythonExecutablePath;
+        const originalPythonExecutablePath = await this.getCurrentPythonExecutablePath();
+        let pythonExecutablePath = originalPythonExecutablePath;
         const pythonExecutableName: string =
             os.platform() === "win32"
                 ? HELPER_FILES.PYTHON_EXE
@@ -71,7 +71,7 @@ export class SetupService {
                 } else {
                     pythonExecutablePath = await this.promptInstallVenv(
                         context,
-                        originalpythonExecutablePath,
+                        originalPythonExecutablePath,
                         pythonExecutableName
                     );
                     this.telemetryAI.trackFeatureUsage(
@@ -92,7 +92,7 @@ export class SetupService {
                     TelemetryEventName.SETUP_HAS_VENV
                 );
             }
-            if (pythonExecutablePath === originalpythonExecutablePath) {
+            if (pythonExecutablePath === originalPythonExecutablePath) {
                 // going with original interpreter, either because
                 // already in venv or error in creating custom venv
                 if (checkConfig(CONFIG.SHOW_DEPENDENCY_INSTALL)) {
@@ -160,23 +160,23 @@ export class SetupService {
     };
 
     public getCurrentPythonExecutablePath = async (
-        tryingPython3: boolean = false
+        isTryingPython3: boolean = false
     ) => {
-        let originalpythonExecutablePath = "";
-        const systemPythonVar = tryingPython3
+        let originalPythonExecutablePath = "";
+        const systemPythonVar = isTryingPython3
             ? GLOBAL_ENV_VARS.PYTHON3
             : GLOBAL_ENV_VARS.PYTHON;
         // try to get name from interpreter
         try {
-            originalpythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
+            originalPythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
         } catch (err) {
-            originalpythonExecutablePath = systemPythonVar;
+            originalPythonExecutablePath = systemPythonVar;
         }
 
         if (
-            originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON3 ||
-            originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
-            originalpythonExecutablePath === ""
+            originalPythonExecutablePath === GLOBAL_ENV_VARS.PYTHON3 ||
+            originalPythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
+            originalPythonExecutablePath === ""
         ) {
             // catching any instance where the python path needs to be resolved
             // from an system variable
@@ -188,12 +188,12 @@ export class SetupService {
                     systemPythonVar,
                     `-c "import sys; print(sys.executable)"`
                 );
-                originalpythonExecutablePath = stdout.trim();
+                originalPythonExecutablePath = stdout.trim();
             } catch (err) {
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.SETUP_NO_PYTHON_PATH
                 );
-                if (tryingPython3) {
+                if (isTryingPython3) {
                     // if trying python3 failed, that means that BOTH
                     // python and python3 failed as system variables
                     // so that means that there is no python
@@ -225,13 +225,13 @@ export class SetupService {
             }
             if (
                 !(await this.validatePythonVersion(
-                    originalpythonExecutablePath
+                    originalPythonExecutablePath
                 ))
             ) {
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.SETUP_INVALID_PYTHON_VER
                 );
-                if (tryingPython3) {
+                if (isTryingPython3) {
                     // if we're trying python3, it means we already tried python and it
                     // all doesn't seem to work, but it got this far, so it means that
                     // their system python3 version is still not above 3.7, but they
@@ -248,6 +248,9 @@ export class SetupService {
                                     DialogResponses.INSTALL_PYTHON
                                 ) {
                                     const okAction = () => {
+                                        this.telemetryAI.trackFeatureUsage(
+                                            TelemetryEventName.SETUP_DOWNLOAD_PYTHON
+                                        );
                                         open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                                     };
                                     showPrivacyModal(
@@ -269,14 +272,14 @@ export class SetupService {
             // should only be applicable if the user defined their own path
 
             // fix path to be absolute
-            if (!path.isAbsolute(originalpythonExecutablePath)) {
-                originalpythonExecutablePath = path.join(
+            if (!path.isAbsolute(originalPythonExecutablePath)) {
+                originalPythonExecutablePath = path.join(
                     vscode.workspace.rootPath,
-                    originalpythonExecutablePath
+                    originalPythonExecutablePath
                 );
             }
 
-            if (!fs.existsSync(originalpythonExecutablePath)) {
+            if (!fs.existsSync(originalPythonExecutablePath)) {
                 await vscode.window.showErrorMessage(
                     CONSTANTS.ERROR.BAD_PYTHON_PATH
                 );
@@ -288,7 +291,7 @@ export class SetupService {
 
             if (
                 !(await this.validatePythonVersion(
-                    originalpythonExecutablePath
+                    originalPythonExecutablePath
                 ))
             ) {
                 this.telemetryAI.trackFeatureUsage(
@@ -302,6 +305,9 @@ export class SetupService {
                     .then((installChoice: vscode.MessageItem | undefined) => {
                         if (installChoice === DialogResponses.INSTALL_PYTHON) {
                             const okAction = () => {
+                                this.telemetryAI.trackFeatureUsage(
+                                    TelemetryEventName.SETUP_DOWNLOAD_PYTHON
+                                );
                                 open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                             };
                             showPrivacyModal(
@@ -314,7 +320,7 @@ export class SetupService {
             }
         }
 
-        return originalpythonExecutablePath;
+        return originalPythonExecutablePath;
     };
 
     public isPipInstalled = async (pythonExecutablePath: string) => {
