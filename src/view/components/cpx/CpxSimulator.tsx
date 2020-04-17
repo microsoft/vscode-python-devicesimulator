@@ -368,11 +368,12 @@ class Simulator extends React.Component<{}, IState> {
     }
 
     private handleSwitchClick() {
-        let cpxState = this.state.cpx;
-        const switchIsOn: boolean = !this.state.cpx.switch;
+        const switchIsOn = !this.state.cpx.switch;
         updateSwitch(switchIsOn);
-        cpxState = { ...cpxState, switch: switchIsOn };
-        this.setState({ ...this.state, ...cpxState });
+        this.setState({
+            ...this.state,
+            cpx: { ...this.state.cpx, switch: switchIsOn },
+        });
         return { switch: switchIsOn };
     }
 
