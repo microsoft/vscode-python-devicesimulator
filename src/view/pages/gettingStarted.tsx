@@ -248,13 +248,13 @@ export class GettingStartedPage extends React.Component {
                             > Enter debug mode
                         </h3>
                         <p>Press <kbd>F5</kbd> or go to <code>Run -> Start Debugging</code></p>
-                        <img alt='Start debugging' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/users/t-vali/getting-started-improvements/src/view/pages/gettingStartedPictures/debugger/start_debugging.jpg' style={{ width: '390px', height: '142px' }}></img>
+                        <img alt='Start debugging' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/src/view/pages/gettingStartedPictures/debugger/start_debugging.jpg' style={{ width: '390px', height: '142px' }}></img>
                         <h3 className="normalFontWeight">
                             > Set a breakpoint or multiple breakpoints 
                         </h3>
                         <p>Stopping at a breakpoint pauses the program at that particular place.</p>
                         <p>Use the debug toolbar or the shortcuts below</p>
-                        <img alt='Debugger Toolbar' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/users/t-vali/getting-started-improvements/src/view/pages/gettingStartedPictures/debugger/toolbar.png'></img>
+                        <img alt='Debugger Toolbar' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/src/view/pages/gettingStartedPictures/debugger/toolbar.png'></img>
                         <ul>
                             <li><kbd>F5</kbd> to continue / pause</li>
                             <li><kbd>F10</kbd> to step over (execute current statement and all functions that it calls and stop before the next statement)</li>
@@ -263,11 +263,11 @@ export class GettingStartedPage extends React.Component {
                             <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F11</kbd> to restart</li>
                             <li><kbd>Shift</kbd> + <kbd>F5</kbd> to stop</li>
                         </ul>
-                        <img alt='debugging experience' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/users/t-vali/getting-started-improvements/src/view/pages/gettingStartedPictures/debugger/debugging.gif'></img>
+                        <img alt='debugging experience' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/src/view/pages/gettingStartedPictures/debugger/debugging.gif'></img>
                         <h3 className="normalFontWeight">
                             > Observe the device's state on the "Variables" tab on the left when stopped at a breakpoint
                         </h3>
-                        <img alt='Debugger Variables' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/users/t-vali/getting-started-improvements/src/view/pages/gettingStartedPictures/debugger/debugger_vars.png' style={{ width: '286px', height: '504px' }}></img>
+                        <img alt='Debugger Variables' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/src/view/pages/gettingStartedPictures/debugger/debugger_vars.png' style={{ width: '286px', height: '504px' }}></img>
                         <h3 className="normalFontWeight">And much more! These links have more tutorials:</h3>
                         <h3 className="normalFontWeight">
                             <a href="https://code.visualstudio.com/docs/editor/debugging">
