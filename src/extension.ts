@@ -279,7 +279,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     currentPanel,
                     context
                 );
-                console.log("sent");
             }
 
             currentPanel.onDidDispose(
