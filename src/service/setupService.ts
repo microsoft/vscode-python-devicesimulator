@@ -159,9 +159,13 @@ export class SetupService {
         return pythonExecutablePath;
     };
 
-    public getCurrentPythonExecutablePath = async (tryingPython3: boolean = false) => {
+    public getCurrentPythonExecutablePath = async (
+        tryingPython3: boolean = false
+    ) => {
         let originalpythonExecutablePath = "";
-        const systemPythonVar = tryingPython3 ? GLOBAL_ENV_VARS.PYTHON3 : GLOBAL_ENV_VARS.PYTHON;
+        const systemPythonVar = tryingPython3
+            ? GLOBAL_ENV_VARS.PYTHON3
+            : GLOBAL_ENV_VARS.PYTHON;
         // try to get name from interpreter
         try {
             originalpythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
@@ -219,38 +223,47 @@ export class SetupService {
                     return this.getCurrentPythonExecutablePath(true);
                 }
             }
-            if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
+            if (
+                !(await this.validatePythonVersion(
+                    originalpythonExecutablePath
+                ))
+            ) {
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.SETUP_INVALID_PYTHON_VER
                 );
                 if (tryingPython3) {
-                    // if we're trying python3, it means we already tried python and it 
-                    // all doesn't seem to work, but it got this far, so it means that 
-                    // their system python3 version is still not above 3.7, but they 
+                    // if we're trying python3, it means we already tried python and it
+                    // all doesn't seem to work, but it got this far, so it means that
+                    // their system python3 version is still not above 3.7, but they
                     // don't have a path selected.
                     vscode.window
                         .showInformationMessage(
                             CONSTANTS.ERROR.INVALID_PYTHON_PATH,
                             DialogResponses.INSTALL_PYTHON
                         )
-                        .then((installChoice: vscode.MessageItem | undefined) => {
-                            if (installChoice === DialogResponses.INSTALL_PYTHON) {
-                                const okAction = () => {
-                                    open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-                                };
-                                showPrivacyModal(
-                                    okAction,
-                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
-                                );
+                        .then(
+                            (installChoice: vscode.MessageItem | undefined) => {
+                                if (
+                                    installChoice ===
+                                    DialogResponses.INSTALL_PYTHON
+                                ) {
+                                    const okAction = () => {
+                                        open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                                    };
+                                    showPrivacyModal(
+                                        okAction,
+                                        CONSTANTS.INFO
+                                            .THIRD_PARTY_WEBSITE_PYTHON
+                                    );
+                                }
                             }
-                        });
+                        );
                     return "";
                 } else {
                     // otherwise, we ran the "python" system variable
                     // and we can try python3
                     return this.getCurrentPythonExecutablePath(true);
                 }
-
             }
         } else {
             // should only be applicable if the user defined their own path
@@ -273,7 +286,11 @@ export class SetupService {
                 return "";
             }
 
-            if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
+            if (
+                !(await this.validatePythonVersion(
+                    originalpythonExecutablePath
+                ))
+            ) {
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.SETUP_INVALID_PYTHON_VER
                 );
@@ -294,20 +311,15 @@ export class SetupService {
                         }
                     });
                 return "";
-
             }
         }
-
 
         return originalpythonExecutablePath;
     };
 
     public isPipInstalled = async (pythonExecutablePath: string) => {
         try {
-            await this.executePythonCommand(
-                pythonExecutablePath,
-                " -m pip"
-            );
+            await this.executePythonCommand(pythonExecutablePath, " -m pip");
             return true;
         } catch (err) {
             vscode.window

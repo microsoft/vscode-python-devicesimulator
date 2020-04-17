@@ -543,7 +543,7 @@ export const HELPER_FILES = {
 
 export const GLOBAL_ENV_VARS = {
     PYTHON: "python",
-    PYTHON3: "python3"
+    PYTHON3: "python3",
 };
 export const LANGUAGE_VARS = {
     PYTHON: { ID: "python", FILE_ENDS: ".py" },
