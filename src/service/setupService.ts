@@ -159,26 +159,29 @@ export class SetupService {
         return pythonExecutablePath;
     };
 
-    public getCurrentPythonExecutablePath = async () => {
+    public getCurrentPythonExecutablePath = async (tryingPython3: boolean = false) => {
         let originalpythonExecutablePath = "";
-
+        const systemPythonVar = tryingPython3 ? GLOBAL_ENV_VARS.PYTHON3 : GLOBAL_ENV_VARS.PYTHON;
         // try to get name from interpreter
         try {
             originalpythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
         } catch (err) {
-            originalpythonExecutablePath = GLOBAL_ENV_VARS.PYTHON;
+            originalpythonExecutablePath = systemPythonVar;
         }
 
         if (
+            originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON3 ||
             originalpythonExecutablePath === GLOBAL_ENV_VARS.PYTHON ||
             originalpythonExecutablePath === ""
         ) {
+            // catching any instance where the python path needs to be resolved
+            // from an system variable
             this.telemetryAI.trackFeatureUsage(
                 TelemetryEventName.SETUP_AUTO_RESOLVE_PYTHON_PATH
             );
             try {
                 const { stdout } = await this.executePythonCommand(
-                    GLOBAL_ENV_VARS.PYTHON,
+                    systemPythonVar,
                     `-c "import sys; print(sys.executable)"`
                 );
                 originalpythonExecutablePath = stdout.trim();
@@ -186,17 +189,102 @@ export class SetupService {
                 this.telemetryAI.trackFeatureUsage(
                     TelemetryEventName.SETUP_NO_PYTHON_PATH
                 );
+                if (tryingPython3) {
+                    // if trying python3 failed, that means that BOTH
+                    // python and python3 failed as system variables
+                    // so that means that there is no python
+                    vscode.window
+                        .showErrorMessage(
+                            CONSTANTS.ERROR.NO_PYTHON_PATH,
+                            DialogResponses.INSTALL_PYTHON
+                        )
+                        .then((selection: vscode.MessageItem | undefined) => {
+                            if (selection === DialogResponses.INSTALL_PYTHON) {
+                                const okAction = () => {
+                                    this.telemetryAI.trackFeatureUsage(
+                                        TelemetryEventName.SETUP_DOWNLOAD_PYTHON
+                                    );
+                                    open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                                };
+                                showPrivacyModal(
+                                    okAction,
+                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
+                                );
+                            }
+                        });
+                    // no python installed, cannot get path
+                    return "";
+                } else {
+                    // "python" didn't resolve to anything, trying "python3"
+                    return this.getCurrentPythonExecutablePath(true);
+                }
+            }
+            if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.SETUP_INVALID_PYTHON_VER
+                );
+                if (tryingPython3) {
+                    // if we're trying python3, it means we already tried python and it 
+                    // all doesn't seem to work, but it got this far, so it means that 
+                    // their system python3 version is still not above 3.7, but they 
+                    // don't have a path selected.
+                    vscode.window
+                        .showInformationMessage(
+                            CONSTANTS.ERROR.INVALID_PYTHON_PATH,
+                            DialogResponses.INSTALL_PYTHON
+                        )
+                        .then((installChoice: vscode.MessageItem | undefined) => {
+                            if (installChoice === DialogResponses.INSTALL_PYTHON) {
+                                const okAction = () => {
+                                    open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
+                                };
+                                showPrivacyModal(
+                                    okAction,
+                                    CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
+                                );
+                            }
+                        });
+                    return "";
+                } else {
+                    // otherwise, we ran the "python" system variable
+                    // and we can try python3
+                    return this.getCurrentPythonExecutablePath(true);
+                }
+
+            }
+        } else {
+            // should only be applicable if the user defined their own path
+
+            // fix path to be absolute
+            if (!path.isAbsolute(originalpythonExecutablePath)) {
+                originalpythonExecutablePath = path.join(
+                    vscode.workspace.rootPath,
+                    originalpythonExecutablePath
+                );
+            }
+
+            if (!fs.existsSync(originalpythonExecutablePath)) {
+                await vscode.window.showErrorMessage(
+                    CONSTANTS.ERROR.BAD_PYTHON_PATH
+                );
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.SETUP_INVALID_PYTHON_INTERPRETER_PATH
+                );
+                return "";
+            }
+
+            if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
+                this.telemetryAI.trackFeatureUsage(
+                    TelemetryEventName.SETUP_INVALID_PYTHON_VER
+                );
                 vscode.window
-                    .showErrorMessage(
-                        CONSTANTS.ERROR.NO_PYTHON_PATH,
+                    .showInformationMessage(
+                        CONSTANTS.ERROR.INVALID_PYTHON_PATH,
                         DialogResponses.INSTALL_PYTHON
                     )
-                    .then((selection: vscode.MessageItem | undefined) => {
-                        if (selection === DialogResponses.INSTALL_PYTHON) {
+                    .then((installChoice: vscode.MessageItem | undefined) => {
+                        if (installChoice === DialogResponses.INSTALL_PYTHON) {
                             const okAction = () => {
-                                this.telemetryAI.trackFeatureUsage(
-                                    TelemetryEventName.SETUP_DOWNLOAD_PYTHON
-                                );
                                 open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
                             };
                             showPrivacyModal(
@@ -205,34 +293,11 @@ export class SetupService {
                             );
                         }
                     });
-                // no python installed, cannot get path
                 return "";
+
             }
         }
-        // fix path to be absolute
-        if (!path.isAbsolute(originalpythonExecutablePath)) {
-            originalpythonExecutablePath = path.join(
-                vscode.workspace.rootPath,
-                originalpythonExecutablePath
-            );
-        }
 
-        if (!fs.existsSync(originalpythonExecutablePath)) {
-            await vscode.window.showErrorMessage(
-                CONSTANTS.ERROR.BAD_PYTHON_PATH
-            );
-            this.telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SETUP_INVALID_PYTHON_INTERPRETER_PATH
-            );
-            return "";
-        }
-
-        if (!(await this.validatePythonVersion(originalpythonExecutablePath))) {
-            this.telemetryAI.trackFeatureUsage(
-                TelemetryEventName.SETUP_INVALID_PYTHON_VER
-            );
-            return "";
-        }
 
         return originalpythonExecutablePath;
     };
@@ -247,7 +312,7 @@ export class SetupService {
         } catch (err) {
             vscode.window
                 .showErrorMessage(
-                    CONSTANTS.ERROR.NO_PIP,
+                    `We found that you may not Pip installed on your interpreter at ${pythonExecutablePath}, please install it and try again.`,
                     DialogResponses.INSTALL_PIP
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
@@ -294,22 +359,6 @@ export class SetupService {
             "--version"
         );
         if (stdout < VERSIONS.MIN_PY_VERSION) {
-            vscode.window
-                .showInformationMessage(
-                    CONSTANTS.ERROR.INVALID_PYTHON_PATH,
-                    DialogResponses.INSTALL_PYTHON
-                )
-                .then((installChoice: vscode.MessageItem | undefined) => {
-                    if (installChoice === DialogResponses.INSTALL_PYTHON) {
-                        const okAction = () => {
-                            open(CONSTANTS.LINKS.DOWNLOAD_PYTHON);
-                        };
-                        showPrivacyModal(
-                            okAction,
-                            CONSTANTS.INFO.THIRD_PARTY_WEBSITE_PYTHON
-                        );
-                    }
-                });
             return false;
         } else {
             return true;
