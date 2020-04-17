@@ -33,6 +33,9 @@ export class SetupService {
         needsResponse: boolean = false
     ) => {
         const originalPythonExecutablePath = await this.getCurrentPythonExecutablePath();
+        if (originalPythonExecutablePath === "") {
+            return;
+        }
         let pythonExecutablePath = originalPythonExecutablePath;
         const pythonExecutableName: string =
             os.platform() === "win32"
