@@ -112,10 +112,6 @@ export const CONSTANTS = {
             "error.noProgramFoundDebug",
             "Cannot find a program to debug."
         ),
-        NO_PIP: localize(
-            "error.noPip",
-            "We found that you don't have Pip installed on your computer, please install it and try again."
-        ),
         NO_PYTHON_PATH: localize(
             "error.noPythonPath",
             "We found that you don't have Python 3 installed on your computer, please install the latest version, add it to your PATH and try again."
@@ -533,7 +529,7 @@ export const STATUS_BAR_PRIORITY = {
 };
 
 export const VERSIONS = {
-    MIN_PY_VERSION: "3.7.0",
+    MIN_PY_VERSION: "Python 3.7.0",
 };
 
 export const HELPER_FILES = {

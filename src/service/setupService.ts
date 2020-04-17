@@ -304,7 +304,7 @@ export class SetupService {
 
     public isPipInstalled = async (pythonExecutablePath: string) => {
         try {
-            const { stdout } = await this.executePythonCommand(
+            await this.executePythonCommand(
                 pythonExecutablePath,
                 " -m pip"
             );
@@ -312,7 +312,7 @@ export class SetupService {
         } catch (err) {
             vscode.window
                 .showErrorMessage(
-                    `We found that you may not Pip installed on your interpreter at ${pythonExecutablePath}, please install it and try again.`,
+                    `We found that you may not have Pip installed on your interpreter at ${pythonExecutablePath}, please install it and try again.`,
                     DialogResponses.INSTALL_PIP
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
@@ -447,7 +447,7 @@ export class SetupService {
             );
             vscode.window
                 .showErrorMessage(
-                    `Virtual environment for download could not be completed. Using original interpreter at: ${pythonExecutable}.`,
+                    `Virtual environment for download could not be completed. Using original interpreter at: ${pythonExecutable}. If you're on Linux, try running "sudo apt-get install python3-venv".`,
                     DialogResponses.READ_INSTALL_MD
                 )
                 .then((selection: vscode.MessageItem | undefined) => {
