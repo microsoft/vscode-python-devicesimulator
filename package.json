@@ -144,12 +144,6 @@
                     "default": 5577,
                     "description": "%deviceSimulatorExpressExtension.configuration.properties.debuggerPort%",
                     "scope": "resource"
-                },
-                "deviceSimulatorExpress.previewMode": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%deviceSimulatorExpressExtension.configuration.properties.previewMode%",
-                    "scope": "resource"
                 }
             }
         },
