@@ -310,14 +310,8 @@ export async function activate(context: vscode.ExtensionContext) {
     const openSimulator: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.openSimulator",
         async () => {
-            const isPreviewMode = getIsPreviewMode();
-
             const chosen_device = await vscode.window.showQuickPick(
-                Object.values(CONSTANTS.DEVICE_NAME_FORMAL).filter(
-                    device =>
-                        isPreviewMode ||
-                        device !== CONSTANTS.DEVICE_NAME_FORMAL.CLUE
-                )
+                Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
             );
 
             if (!chosen_device) {
@@ -420,14 +414,8 @@ export async function activate(context: vscode.ExtensionContext) {
     const newFile: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.newFile",
         async () => {
-            const isPreviewMode = getIsPreviewMode();
-
             const chosen_device = await vscode.window.showQuickPick(
-                Object.values(CONSTANTS.DEVICE_NAME_FORMAL).filter(
-                    device =>
-                        isPreviewMode ||
-                        device !== CONSTANTS.DEVICE_NAME_FORMAL.CLUE
-                )
+                Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
             );
 
             if (!chosen_device) {
@@ -797,14 +785,8 @@ export async function activate(context: vscode.ExtensionContext) {
     const deployToDevice: vscode.Disposable = vscode.commands.registerCommand(
         "deviceSimulatorExpress.common.deployToDevice",
         async () => {
-            const isPreviewMode = getIsPreviewMode();
-
             const chosen_device = await vscode.window.showQuickPick(
-                Object.values(CONSTANTS.DEVICE_NAME_FORMAL).filter(
-                    device =>
-                        isPreviewMode ||
-                        device !== CONSTANTS.DEVICE_NAME_FORMAL.CLUE
-                )
+                Object.values(CONSTANTS.DEVICE_NAME_FORMAL)
             );
 
             if (!chosen_device) {
@@ -1023,13 +1005,6 @@ export async function activate(context: vscode.ExtensionContext) {
             }
         }
     );
-
-    const getIsPreviewMode = (): boolean => {
-        const isPreviewMode: boolean = vscode.workspace
-            .getConfiguration()
-            .get(CONFIG.ENABLE_PREVIEW_MODE);
-        return isPreviewMode;
-    };
 
     context.subscriptions.push(
         installDependencies,
