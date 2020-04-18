@@ -24,8 +24,8 @@ def update_state_with_device_name(state, device_name):
     return updated_state
 
 
-def create_message(msg,send_type="state"):
-    if isinstance(msg,dict):
+def create_message(msg, send_type="state"):
+    if isinstance(msg, dict):
         msg = json.dumps(msg)
 
     message = {"type": send_type, "data": msg}
@@ -46,9 +46,10 @@ def send_to_simulator(state, device_name):
 
 def send_print_to_simulator(raw_msg):
     data_str = str(raw_msg)
-    message = create_message(data_str,"print")
+    message = create_message(data_str, "print")
     print(json.dumps(message) + "\0", file=sys.__stdout__, flush=True)
     time.sleep(CONSTANTS.TIME_DELAY)
+
 
 def remove_leading_slashes(string):
     string = string.lstrip("\\/")
