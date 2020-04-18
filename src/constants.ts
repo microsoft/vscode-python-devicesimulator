@@ -22,7 +22,6 @@ export const CONFIG = {
     PYTHON_PATH: "python.pythonPath",
     SHOW_DEPENDENCY_INSTALL: "deviceSimulatorExpress.showDependencyInstall",
     SHOW_NEW_FILE_POPUP: "deviceSimulatorExpress.showNewFilePopup",
-    ENABLE_PREVIEW_MODE: "deviceSimulatorExpress.previewMode",
 };
 
 export const CONSTANTS = {
@@ -111,10 +110,6 @@ export const CONSTANTS = {
         NO_PROGRAM_FOUND_DEBUG: localize(
             "error.noProgramFoundDebug",
             "Cannot find a program to debug."
-        ),
-        NO_PIP: localize(
-            "error.noPip",
-            "We found that you don't have Pip installed on your computer, please install it and try again."
         ),
         NO_PYTHON_PATH: localize(
             "error.noPythonPath",
@@ -533,7 +528,7 @@ export const STATUS_BAR_PRIORITY = {
 };
 
 export const VERSIONS = {
-    MIN_PY_VERSION: "3.7.0",
+    MIN_PY_VERSION: "Python 3.7.0",
 };
 
 export const HELPER_FILES = {
@@ -547,6 +542,7 @@ export const HELPER_FILES = {
 
 export const GLOBAL_ENV_VARS = {
     PYTHON: "python",
+    PYTHON3: "python3",
 };
 export const LANGUAGE_VARS = {
     PYTHON: { ID: "python", FILE_ENDS: ".py" },
