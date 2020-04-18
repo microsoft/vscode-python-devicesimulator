@@ -4,7 +4,7 @@
 
 <a href='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/'><img src='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28' alt='Azure DevOps Board Badge' /></a>
 
-Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX) or your BBC micro:bit! Test and debug your code on the device simulator and see the same
+Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX), your BBC micro:bit or the Adafruit CLUE! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
@@ -120,8 +120,6 @@ In Device Simulator Express, you can use keyboard to interact with the device:
 
 ## Adafruit CLUE Simulator
 
-NOTE: This simulator is hidden under the preview mode flag. See below on how to enable the preview mode flag.
-
 ### Features
 
 -   IntelliSense and syntax highlighting for CircuitPython code for the following drivers and libraries:
@@ -163,22 +161,6 @@ NOTE: This simulator is hidden under the preview mode flag. See below on how to 
 -   Push Button: <kbd>A</kbd> for Button A, <kbd>B</kbd> for Button B, <kbd>C</kbd> for Buttons A & B
 -   Refresh the simulator: <kbd>Shift</kbd> + <kbd>R</kbd>
 -   Run the simulator: <kbd>Shift</kbd> + <kbd>F</kbd>
-
-## How to enable preview flag
-
-Currently, we have our Adafruit CLUE simulator hidden behind a preview flag and we want you to try it out!
-
-### I. Open settings
-
-For Windows and Linux, you can use <kbd>Ctrl</kbd> + <kbd>,</kbd> or use `File -> Preferences -> Settings` in the top menu to navigate to settings. For Mac, you can use <kbd>Cmd</kbd> + <kbd>,</kbd> or use `Code -> Preferences -> Settings`.
-
-  <img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/open_settings.PNG'>
-
-### II. Search for our preview flag and enable it!
-
-In the top search bar, search for `DeviceSimulatorExpress.previewMode`. Then, check the checkbox for the setting that pops up when you serach.
-
-  <img alt='Adafruit CLUE' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/assets/readmeFiles/clue/check_preview_mode.gif'>
 
 ## How to use
 
