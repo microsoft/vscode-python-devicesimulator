@@ -63,5 +63,5 @@ def escape_if_OSX(file_name):
 
 
 def print_for_unimplemented_functions(function_name):
-    unimp_msg = f"'{function_name}' is not implemented in the simulator but it will work on the actual device!\n"
-    send_print_to_simulator(unimp_msg)
+    msg = f"'{function_name}' is not implemented in the simulator but it will work on the actual device!\n"
+    send_print_to_simulator(msg)
