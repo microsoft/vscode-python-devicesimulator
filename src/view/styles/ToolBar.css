@@ -167,10 +167,16 @@
     -webkit-appearance: none;
     text-decoration: none;
 }
+
 .gesture-container {
     display: "flex";
     justify-content: "space-between";
     flex-direction: "column";
     align-items: "center";
     height: 750;
+    padding-top: 10px;
+}
+
+.generic-slider-component {
+    padding-top: 10px;
 }

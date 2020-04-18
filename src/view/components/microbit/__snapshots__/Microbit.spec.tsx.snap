@@ -2781,9 +2781,9 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar temperature-sensor"
+            aria-label="toolbar microbit-temperature-sensor"
             className="toolbar-button button"
-            id="toolbar-temperature-sensor-button"
+            id="toolbar-microbit-temperature-sensor-button"
             onClick={[Function]}
             role="button"
             style={
@@ -2848,9 +2848,9 @@ Array [
           onMouseLeave={[Function]}
         >
           <button
-            aria-label="toolbar light-sensor"
+            aria-label="toolbar microbit-light-sensor"
             className="toolbar-button button"
-            id="toolbar-light-sensor-button"
+            id="toolbar-microbit-light-sensor-button"
             onClick={[Function]}
             role="button"
             style={

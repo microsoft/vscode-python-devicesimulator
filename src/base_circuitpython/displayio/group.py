@@ -8,6 +8,7 @@ from . import constants as CONSTANTS
 
 import common
 import board
+import sys
 
 # Group implementation loosely based on the
 # displayio.Group class in Adafruit CircuitPython
@@ -33,12 +34,22 @@ class Group:
     """
 
     def __init__(
-        self, max_size, scale=1, x=0, y=0, check_active_group_ref=True, auto_write=True
+        self,
+        max_size=sys.maxsize,
+        scale=1,
+        x=0,
+        y=0,
+        check_active_group_ref=True,
+        auto_write=True,
     ):
         self.__check_active_group_ref = check_active_group_ref
         self.__auto_write = auto_write
         self.__contents = []
         self.__max_size = max_size
+
+        if scale < 1:
+            raise ValueError(CONSTANTS.SCALE_TOO_SMALL)
+
         self.__scale = scale
         """
             .. attribute:: scale
@@ -89,6 +100,9 @@ class Group:
 
     @scale.setter
     def scale(self, val):
+        if val < 1:
+            raise ValueError(CONSTANTS.SCALE_TOO_SMALL)
+
         if self.__scale != val:
             self.__scale = val
             self.__elem_changed()

@@ -2,14 +2,40 @@
     display: none;
 }
 
+.codeText {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+li:not(:last-child) {
+    margin-bottom: 6px;
+}
+
+.normalFontWeight {
+    font-weight: normal;
+}
+
 .deviceSelector {
     width: 250px;
-    border: 1px solid #3d484c;
+    border: 1px solid var(--vscode-dropdown-border);
+    background-color: var(--vscode-dropdown-background);
+    color: var(--vscode-dropdown-foreground);
     margin: 0 0 5px;
     padding: 8px;
     border-radius: 5px;
     font-size: 12px;
     padding-right: 30px;
+}
+
+.deviceSelector optgroup {
+    background-color: var(--vscode-dropdown-listBackground);
+    color: var(--vscode-dropdown-foreground);
+}
+
+.deviceSelector option {
+    background-color: var(--vscode-dropdown-listBackground);
+    color: var(--vscode-dropdown-foreground);
 }
 
 .codeBox {
@@ -26,5 +52,5 @@
 
 .container {
     text-align: left;
-    padding: 0 10px 0 10px;
+    padding: 0 10px 20px 10px;
 }

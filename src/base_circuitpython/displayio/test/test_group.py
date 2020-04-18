@@ -53,6 +53,11 @@ class TestGroup(object):
         with pytest.raises(ValueError, match=CONSTANTS.INCORR_SUBCLASS):
             g1.append(group_item)
 
+    @pytest.mark.parametrize("scale", [(0), (-2)])
+    def test_invalid_scale(self, scale):
+        with pytest.raises(ValueError, match=CONSTANTS.SCALE_TOO_SMALL):
+            g1 = Group(scale=scale)
+
     def test_layer_already_in_group(self):
         g1 = Group(max_size=4)
 
