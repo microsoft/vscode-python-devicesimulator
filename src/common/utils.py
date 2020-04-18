@@ -24,8 +24,11 @@ def update_state_with_device_name(state, device_name):
     return updated_state
 
 
-def create_message(state):
-    message = {"type": "state", "data": json.dumps(state)}
+def create_message(msg,send_type="state"):
+    if isinstance(msg,dict):
+        msg = json.dumps(msg)
+
+    message = {"type": send_type, "data": msg}
     return message
 
 
@@ -41,6 +44,12 @@ def send_to_simulator(state, device_name):
         time.sleep(CONSTANTS.TIME_DELAY)
 
 
+def send_print_to_simulator(raw_msg):
+    data_str = str(raw_msg)
+    message = create_message(data_str,"print")
+    print(json.dumps(message) + "\0", file=sys.__stdout__, flush=True)
+    time.sleep(CONSTANTS.TIME_DELAY)
+
 def remove_leading_slashes(string):
     string = string.lstrip("\\/")
     return string
@@ -53,6 +62,5 @@ def escape_if_OSX(file_name):
 
 
 def print_for_unimplemented_functions(function_name):
-    print(
-        f"'{function_name}' is not implemented in the simulator but it will work on the actual device!"
-    )
+    unimp_msg = f"'{function_name}' is not implemented in the simulator but it will work on the actual device!\n"
+    send_print_to_simulator(unimp_msg)
