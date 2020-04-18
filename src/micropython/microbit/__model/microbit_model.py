@@ -30,15 +30,11 @@ class MicrobitModel:
 
     def panic(self, n):
         # Due to the shim, there is another call frame.
-        utils.print_for_unimplemented_functions(
-            MicrobitModel.panic.__name__, one_more_call=True
-        )
+        utils.print_for_unimplemented_functions(MicrobitModel.panic.__name__)
 
     def reset(self):
         # Due to the shim, there is another call frame.
-        utils.print_for_unimplemented_functions(
-            MicrobitModel.reset.__name__, one_more_call=True
-        )
+        utils.print_for_unimplemented_functions(MicrobitModel.reset.__name__)
 
     def sleep(self, n):
         time.sleep(n / 1000)
