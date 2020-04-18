@@ -207,7 +207,11 @@ Before deploying the Python code to your CPX device, you need to format your dev
     -   Download the lastest versions of the cpx libraries (link: https://learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries).
 
 -   _For the micro:bit_:
+
     -   Download the firmware with the .hex file (link: https://microbit.org/get-started/user-guide/firmware/).
+
+-   _For the CLUE_:
+    -   Download the latest versions of the cpx libraries and follow the instructions here (link:https://learn.adafruit.com/adafruit-clue/circuitpython).
 
 1. Plug in your device (make sure it’s formatted properly already).
 2. Run the command `"Device Simulator Express: Deploy to Device"`.
