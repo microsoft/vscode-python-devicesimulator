@@ -8,7 +8,32 @@ Make without limit! Device Simulator Express, a Microsoft Garage project, allows
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
 monitor allows you to observe the device output.
 
-## Devices we support:
+## Table of Contents
+  - [Devices we support](#devices-we-support)
+  - [Prerequisites](#prerequisites)
+  - [Adafruit Circuit Playground Express (CPX) Simulator](#adafruit-circuit-playground-express-cpx-simulator)
+    - [Features](#features)
+    - [Useful Links](#useful-links)
+    - [Keyboard Shortcuts](#keyboard-shortcuts)
+  - [BBC micro:bit Simulator](#bbc-microbit-simulator)
+    - [Features](#features-1)
+    - [Useful Links](#useful-links-1)
+    - [Keyboard Shortcuts](#keyboard-shortcuts-1)
+  - [Adafruit CLUE Simulator](#adafruit-clue-simulator)
+    - [Features](#features-2)
+    - [Useful Links](#useful-links-2)
+    - [Keyboard Shortcuts](#keyboard-shortcuts-2)
+  - [How to use](#how-to-use)
+    - [Commands](#commands)
+  - [Contribute](#contribute)
+  - [Provide feedback](#provide-feedback)
+  - [Privacy and Telemetry Notice](#privacy-and-telemetry-notice)
+  - [Third Party Notice](#third-party-notice)
+  - [Troubleshooting Tips](#troubleshooting-tips)
+  - [License](#license)
+  - [Notes](#notes)
+  
+## Devices we support
 
 -   [**Adafruit Circuit Playground Express (CPX)**](#adafruit-circuit-playground-express-cpx-simulator)
 
