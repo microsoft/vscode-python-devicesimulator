@@ -21,6 +21,9 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
     render() {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
+
+        const nbDecimals =
+            this.props.step.toString().split(".")[1]?.length || 0;
         return (
             <div className="input-slider">
                 <span>{this.props.axisLabel}</span>
@@ -31,8 +34,9 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                     onInput={this.handleOnChange}
                     defaultValue={this.props.minValue.toLocaleString()}
                     pattern={`^-?[0-9]{0,${
-                        this.props.maxValue.toString().length
-                    }}$`}
+                        (this.props.maxValue / this.props.step).toString()
+                            .length
+                    }}[.]{0,${nbDecimals > 0 ? 1 : 0}}[0-9]{0,${nbDecimals}}$`}
                     onKeyUp={this.handleOnChange}
                     aria-label={`${this.props.type} sensor input ${this.props.axisLabel}`}
                 />
@@ -56,6 +60,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
                         aria-label={`${this.props.type} sensor`}
                         defaultValue={this.props.minValue.toLocaleString()}
                         disabled={isInputDisabled}
+                        step={this.props.step}
                     />
                     <span className="downLabelArea">
                         <span className="minLabel">{this.props.minLabel}</span>
@@ -100,7 +105,7 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
     };
 
     private validateRange = (valueString: string) => {
-        let valueInt = parseInt(valueString, 10);
+        let valueInt = parseFloat(valueString);
         if (valueInt < this.props.minValue) {
             valueInt = this.props.minValue;
             this.setState({ value: valueInt });
