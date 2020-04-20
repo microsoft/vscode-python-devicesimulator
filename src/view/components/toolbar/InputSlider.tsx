@@ -104,7 +104,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
     private validateRange = (valueString: string) => {
         let valueInt = parseFloat(valueString);
-        console.log(`original value ${valueString}`);
         if (valueInt < this.props.minValue) {
             valueInt = this.props.minValue;
             this.setState({ value: valueInt });
@@ -112,8 +111,6 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
             valueInt = this.props.maxValue;
             this.setState({ value: valueInt });
         }
-        console.log(`updated value ${valueInt}`);
-
         return valueInt;
     };
 }

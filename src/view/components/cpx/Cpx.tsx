@@ -11,7 +11,7 @@ import Simulator from "./CpxSimulator";
 // Component grouping the functionality for circuit playground express
 const DEFAULT_STATE = {
     sensors: {
-        [SENSOR_LIST.TEMPERATURE]: 0.0,
+        [SENSOR_LIST.TEMPERATURE]: 0,
         [SENSOR_LIST.LIGHT]: 0,
         [SENSOR_LIST.MOTION_X]: 0,
         [SENSOR_LIST.MOTION_Y]: 0,
