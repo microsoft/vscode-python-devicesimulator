@@ -8,6 +8,7 @@ const LIGHT_SLIDER_PROPS: ISliderProps = {
     maxLabel: "Bright",
     type: "light",
     axisLabel: "L",
+    step: 1,
 };
 
 export const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
@@ -23,6 +24,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     minLabel: "Left",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_X,
+    step: 1,
 };
 
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
@@ -32,6 +34,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     minLabel: "Back",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Y,
+    step: 1,
 };
 
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
@@ -41,6 +44,7 @@ const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     minLabel: "Up",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Z,
+    step: 1,
 };
 
 export const MOTION_SENSOR_PROPERTIES: ISensorProps = {
@@ -60,6 +64,7 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
     minLabel: "Cold",
     minValue: -55,
     type: SENSOR_LIST.TEMPERATURE,
+    step: 1,
 };
 
 export const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
