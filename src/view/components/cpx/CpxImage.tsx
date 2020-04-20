@@ -380,7 +380,7 @@ export const updateSwitch = (switchState: boolean): void => {
     if (switchElement && switchInner) {
         svg.addClass(switchInner, "sim-slide-switch-inner");
 
-        if (switchState) {
+        if (!switchState) {
             svg.addClass(switchInner, "on");
             switchInner.setAttribute("transform", "translate(-5,0)");
         } else {
