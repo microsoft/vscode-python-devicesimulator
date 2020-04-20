@@ -164,7 +164,7 @@ class SlideShow:
 
         self._order = order
         self._curr_img = ""
-        self._current_image_index = -1
+        self._current_image_index = None
 
         # load images into main queue
         self.__load_images()
@@ -220,22 +220,37 @@ class SlideShow:
     def __get_next_img(self):
 
         if self.direction == PlayBackDirection.FORWARD:
-            self._current_image_index +=1
-            
-            if (self._current_image_index>= len(self.dir_imgs)):
-                self.__load_images()
+            if self._current_image_index == None:
                 self._current_image_index = 0
+            else:
+                self._current_image_index += 1
+
+            if self._current_image_index >= len(self.dir_imgs):
+
+                if self.loop:
+                    self._current_image_index = 0
+                    self.__load_images()
+                else:
+                    self._current_image_index = len(self.dir_imgs) - 10
+                    return ""
 
         else:
-            self._current_image_index -=1
-            
-            if (self._current_image_index< 0):
-                self.__load_images()
-                self._current_image_index = len(self.dir_imgs)-1
+            if self._current_image_index == None:
+                self._current_image_index = len(self.dir_imgs) - 1
+            else:
+                self._current_image_index -= 1
+
+            if self._current_image_index < 0:
+                if self.loop:
+                    self._current_image_index = len(self.dir_imgs) - 1
+                    self.__load_images()
+                else:
+                    self._current_image_index = 0
+                    return ""
 
         img = self.dir_imgs[self._current_image_index]
         return img
-    
+
     def __load_images(self):
         self.dir_imgs = []
         for d in self.dirs:
@@ -243,7 +258,7 @@ class SlideShow:
                 new_path = os.path.join(self.folder, d)
 
                 # only add bmp imgs
-                if os.path.splitext(new_path)[1] == CONSTANTS.BMP_IMG_ENDING:
+                if os.path.splitext(new_path)[-1] == CONSTANTS.BMP_IMG_ENDING:
                     self.dir_imgs.append(new_path)
             except Image.UnidentifiedImageError as e:
                 continue
@@ -255,7 +270,6 @@ class SlideShow:
             shuffle(self.dir_imgs)
         else:
             self.dir_imgs.sort()
-            
 
     def __advance_with_fade(self):
         if board.DISPLAY.active_group != self:
@@ -267,6 +281,7 @@ class SlideShow:
         while not advance_sucessful:
             new_path = self.__get_next_img()
             if new_path == "":
+                self._img_start = time.monotonic()
                 return False
 
             try:
@@ -325,6 +340,7 @@ class SlideShow:
         while not advance_sucessful:
             new_path = self.__get_next_img()
             if new_path == "":
+                self._img_start = time.monotonic()
                 return False
 
             try:
