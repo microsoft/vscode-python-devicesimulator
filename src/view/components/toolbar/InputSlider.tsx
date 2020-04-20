@@ -21,7 +21,9 @@ class InputSlider extends React.Component<ISliderProps, any, any> {
 
     render() {
         const isInputDisabled = this.context === VIEW_STATE.PAUSE;
-        const nbDecimals = this.props.step.toString().split(".")[1].length || 0;
+
+        const nbDecimals =
+            this.props.step.toString().split(".")[1]?.length || 0;
         return (
             <div className="input-slider">
                 <span>{this.props.axisLabel}</span>
