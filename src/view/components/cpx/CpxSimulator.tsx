@@ -49,7 +49,7 @@ const DEFAULT_CPX_STATE: ICpxState = {
         [0, 0, 0],
     ],
     red_led: false,
-    switch: false,
+    switch: true,
     touch: [false, false, false, false, false, false, false],
     shake: false,
 };

@@ -37,7 +37,7 @@ class Express:
             (0, 0, 0),
         ]
         self.__state[CONSTANTS.EXPRESS_STATE.RED_LED] = False
-        self.__state[CONSTANTS.EXPRESS_STATE.SWITCH] = False
+        self.__state[CONSTANTS.EXPRESS_STATE.SWITCH] = True
         self.__state[CONSTANTS.EXPRESS_STATE.TEMPERATURE] = 0
         self.__state[CONSTANTS.EXPRESS_STATE.LIGHT] = 0
         self.__state[CONSTANTS.EXPRESS_STATE.MOTION_X] = 0
