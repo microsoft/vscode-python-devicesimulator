@@ -176,7 +176,7 @@ export const SVG_STYLE = `
         stroke-width: 1px;
     }
     
-    .sim-slide-switch-inner.on {
+    .sim-slide-switch-inner.off {
         fill:#ff0000 !important;
     }
     

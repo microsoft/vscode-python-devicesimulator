@@ -380,12 +380,12 @@ export const updateSwitch = (switchState: boolean): void => {
     if (switchElement && switchInner) {
         svg.addClass(switchInner, "sim-slide-switch-inner");
 
-        if (!switchState) {
-            svg.addClass(switchInner, "on");
-            switchInner.setAttribute("transform", "translate(-5,0)");
-        } else {
-            svg.removeClass(switchInner, "on");
+        if (switchState) {
+            svg.removeClass(switchInner, "off");
             switchInner.removeAttribute("transform");
+        } else {
+            svg.addClass(switchInner, "off");
+            switchInner.setAttribute("transform", "translate(-5,0)");
         }
         switchElement.setAttribute("aria-pressed", switchState.toString());
     }
