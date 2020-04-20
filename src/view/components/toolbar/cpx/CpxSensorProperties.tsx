@@ -2,12 +2,13 @@ import { SENSOR_LIST } from "../../../constants";
 import { ISensorProps, ISliderProps } from "../../../viewUtils";
 
 const LIGHT_SLIDER_PROPS: ISliderProps = {
-    maxValue: 255,
+    maxValue: 320,
     minValue: 0,
     minLabel: "Dark",
     maxLabel: "Bright",
     type: "light",
     axisLabel: "L",
+    step: 1,
 };
 
 export const LIGHT_SENSOR_PROPERTIES: ISensorProps = {
@@ -23,6 +24,7 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
     minLabel: "Cold",
     minValue: -55,
     type: SENSOR_LIST.TEMPERATURE,
+    step: 0.1,
 };
 export const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {
     LABEL: "Temperature sensor",
@@ -37,6 +39,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     minLabel: "Left",
     minValue: -78,
     type: SENSOR_LIST.MOTION_X,
+    step: 1,
 };
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     axisLabel: "Y",
@@ -45,6 +48,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     minLabel: "Back",
     minValue: -78,
     type: SENSOR_LIST.MOTION_Y,
+    step: 1,
 };
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     axisLabel: "Z",
@@ -53,6 +57,7 @@ const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     minLabel: "Up",
     minValue: -78,
     type: SENSOR_LIST.MOTION_Z,
+    step: 1,
 };
 
 export const MOTION_SENSOR_PROPERTIES: ISensorProps = {
