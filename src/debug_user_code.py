@@ -32,8 +32,14 @@ sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
 # Insert absolute path to Circuitpython libraries for CLUE into sys.path
 sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
 
+# get board so we can get terminal handle
+import board
+
 # This import must happen after the sys.path is modified
 from common import debugger_communication_client
+
+# get handle to terminal for clue
+curr_terminal = board.DISPLAY.terminal
 
 ## Execute User Code ##
 
@@ -56,12 +62,23 @@ debugger_communication_client.init_connection(server_port)
 utils.abs_path_to_user_file = abs_path_to_code_file
 utils.debug_mode = True
 
+# overriding print function so that it shows on clue terminal
+def print_decorator(func):
+    global curr_terminal
+    def wrapped_func(*args,**kwargs):
+        curr_terminal.add_str_to_terminal(''.join(args))
+        return func(*args,**kwargs)
+    return wrapped_func
+
+print = print_decorator(print)
+
 # Execute the user's code file
 with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
+    
     user_code = user_code_file.read()
     try:
         codeObj = compile(user_code, abs_path_to_code_file, CONSTANTS.EXEC_COMMAND)
-        exec(codeObj, {})
+        exec(codeObj, {'print':print})
         sys.stdout.flush()
     except Exception as e:
         exc_type, exc_value, exc_traceback = sys.exc_info()
