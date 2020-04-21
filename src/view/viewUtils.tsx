@@ -11,6 +11,7 @@ export interface ISliderProps {
     axisLabel: string;
     value?: number;
     onUpdateValue?: (sensor: SENSOR_LIST, value: number) => void;
+    step: number;
 }
 
 export interface ISensorButtonProps {

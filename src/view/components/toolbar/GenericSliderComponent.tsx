@@ -29,6 +29,7 @@ export const GenericSliderComponent: React.FC<IProps> = props => {
                                 value={
                                     props.axisValues[sliderProperties.axisLabel]
                                 }
+                                step={sliderProperties.step}
                             />
                             <br />
                         </React.Fragment>
