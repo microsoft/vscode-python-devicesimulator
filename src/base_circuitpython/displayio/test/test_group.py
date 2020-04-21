@@ -7,10 +7,10 @@ from unittest import mock
 
 from common import utils
 
-from ..tile_grid import TileGrid
-from ..group import Group
-from ..palette import Palette
-from ..bitmap import Bitmap
+from displayio.tile_grid import TileGrid
+from displayio.group import Group
+from displayio.palette import Palette
+from displayio.bitmap import Bitmap
 from .. import constants as CONSTANTS
 from PIL import Image
 
