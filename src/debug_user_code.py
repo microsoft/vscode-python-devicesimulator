@@ -65,20 +65,23 @@ utils.debug_mode = True
 # overriding print function so that it shows on clue terminal
 def print_decorator(func):
     global curr_terminal
-    def wrapped_func(*args,**kwargs):
-        curr_terminal.add_str_to_terminal(''.join(args))
-        return func(*args,**kwargs)
+
+    def wrapped_func(*args, **kwargs):
+        curr_terminal.add_str_to_terminal("".join(str(e) for e in args))
+        return func(*args, **kwargs)
+
     return wrapped_func
+
 
 print = print_decorator(print)
 
 # Execute the user's code file
 with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
-    
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_START_MSG_CLUE)
     user_code = user_code_file.read()
     try:
         codeObj = compile(user_code, abs_path_to_code_file, CONSTANTS.EXEC_COMMAND)
-        exec(codeObj, {'print':print})
+        exec(codeObj, {"print": print})
         sys.stdout.flush()
     except Exception as e:
         exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -88,3 +91,5 @@ with open(abs_path_to_code_file, encoding="utf8") as user_code_file:
         for frameIndex in range(2, len(stackTrace) - 1):
             errorMessage += "\t" + str(stackTrace[frameIndex])
         print(e, errorMessage, file=sys.stderr, flush=True)
+    curr_terminal.add_str_to_terminal(CONSTANTS.CODE_FINISHED_MSG_CLUE)
+    board.DISPLAY.show(None)
