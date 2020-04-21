@@ -4,28 +4,31 @@ import { ISensorProps, ISliderProps } from "../../../viewUtils";
 const CLUE_SLIDER_R: ISliderProps = {
     axisLabel: "R",
     maxLabel: "Max",
-    maxValue: 255,
+    maxValue: 65535,
     minLabel: "Min",
     minValue: 0,
     type: SENSOR_LIST.LIGHT_R,
+    step: 1,
 };
 
 const CLUE_SLIDER_G: ISliderProps = {
     axisLabel: "G",
     maxLabel: "Max",
-    maxValue: 255,
+    maxValue: 65535,
     minLabel: "Min",
     minValue: 0,
     type: SENSOR_LIST.LIGHT_G,
+    step: 1,
 };
 
 const CLUE_SLIDER_B: ISliderProps = {
     axisLabel: "B",
     maxLabel: "Max",
-    maxValue: 255,
+    maxValue: 65535,
     minLabel: "Min",
     minValue: 0,
     type: SENSOR_LIST.LIGHT_B,
+    step: 1,
 };
 const CLUE_SLIDER_C: ISliderProps = {
     axisLabel: "C",
@@ -34,6 +37,7 @@ const CLUE_SLIDER_C: ISliderProps = {
     minLabel: "Min",
     minValue: 0,
     type: SENSOR_LIST.LIGHT_C,
+    step: 1,
 };
 
 export const CLUE_LIGHT_PROPERTIES: ISensorProps = {
@@ -50,6 +54,7 @@ const CLUE_MAGNET_X: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.MAGNET_X,
+    step: 0.1,
 };
 const CLUE_MAGNET_Y: ISliderProps = {
     axisLabel: "Y",
@@ -58,6 +63,7 @@ const CLUE_MAGNET_Y: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.MAGNET_Y,
+    step: 0.1,
 };
 const CLUE_MAGNET_Z: ISliderProps = {
     axisLabel: "Z",
@@ -66,6 +72,7 @@ const CLUE_MAGNET_Z: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.MAGNET_Z,
+    step: 0.1,
 };
 
 export const CLUE_MAGNET_PROPERTIES: ISensorProps = {
@@ -80,6 +87,7 @@ const CLUE_GYRO_X: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.GYRO_X,
+    step: 0.1,
 };
 const CLUE_GYRO_Y: ISliderProps = {
     axisLabel: "Y",
@@ -88,6 +96,7 @@ const CLUE_GYRO_Y: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.GYRO_Y,
+    step: 0.1,
 };
 const CLUE_GYRO_Z: ISliderProps = {
     axisLabel: "Z",
@@ -96,6 +105,7 @@ const CLUE_GYRO_Z: ISliderProps = {
     maxValue: 1000,
     minValue: -1000,
     type: SENSOR_LIST.GYRO_Z,
+    step: 0.1,
 };
 
 export const CLUE_GYRO_PROPERTIES: ISensorProps = {
@@ -114,6 +124,7 @@ export const CLUE_HUMIDITY_PROPERTIES: ISensorProps = {
             minLabel: "Min",
             minValue: 0,
             type: SENSOR_LIST.HUMIDITY,
+            step: 0.1,
         },
     ],
     unitLabel: "%",
@@ -128,6 +139,7 @@ export const CLUE__PROXIMITY_PROPERTIES: ISensorProps = {
             minLabel: "Min",
             minValue: 0,
             type: SENSOR_LIST.PROXIMITY,
+            step: 1,
         },
     ],
     unitLabel: "",
@@ -142,6 +154,7 @@ export const CLUE_PRESSURE_PROPERTIES: ISensorProps = {
             minLabel: "Min",
             minValue: 800,
             type: SENSOR_LIST.PRESSURE,
+            step: 0.1,
         },
     ],
     unitLabel: "hPa",
@@ -153,6 +166,7 @@ const MOTION_SLIDER_PROPS_X: ISliderProps = {
     minLabel: "Left",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_X,
+    step: 0.1,
 };
 
 const MOTION_SLIDER_PROPS_Y: ISliderProps = {
@@ -162,6 +176,7 @@ const MOTION_SLIDER_PROPS_Y: ISliderProps = {
     minLabel: "Back",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Y,
+    step: 0.1,
 };
 
 const MOTION_SLIDER_PROPS_Z: ISliderProps = {
@@ -171,6 +186,7 @@ const MOTION_SLIDER_PROPS_Z: ISliderProps = {
     minLabel: "Up",
     minValue: -1023,
     type: SENSOR_LIST.MOTION_Z,
+    step: 0.1,
 };
 
 export const MOTION_SENSOR_PROPERTIES: ISensorProps = {
@@ -190,6 +206,7 @@ const TEMPERATURE_SLIDER_PROPS: ISliderProps = {
     minLabel: "Cold",
     minValue: -55,
     type: SENSOR_LIST.TEMPERATURE,
+    step: 0.1,
 };
 
 export const TEMPERATURE_SENSOR_PROPERTIES: ISensorProps = {

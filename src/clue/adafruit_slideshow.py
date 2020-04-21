@@ -5,7 +5,6 @@ import base64
 from io import BytesIO
 from base_circuitpython import base_cp_constants as CONSTANTS
 import time
-import collections
 from random import shuffle
 import common
 import board
@@ -165,6 +164,7 @@ class SlideShow:
 
         self._order = order
         self._curr_img = ""
+        self._current_image_index = None
 
         # load images into main queue
         self.__load_images()
@@ -219,41 +219,57 @@ class SlideShow:
 
     def __get_next_img(self):
 
-        # handle empty queue
-        if not len(self.pic_queue):
-            if self.loop:
-                self.__load_images()
-            else:
-                return ""
-
         if self.direction == PlayBackDirection.FORWARD:
-            return self.pic_queue.popleft()
+            if self._current_image_index == None:
+                self._current_image_index = 0
+            else:
+                self._current_image_index += 1
+
+            if self._current_image_index >= len(self.dir_imgs):
+
+                if self.loop:
+                    self._current_image_index = 0
+                    self.__load_images()
+                else:
+                    self._current_image_index = len(self.dir_imgs) - 10
+                    return ""
+
         else:
-            return self.pic_queue.pop()
+            if self._current_image_index == None:
+                self._current_image_index = len(self.dir_imgs) - 1
+            else:
+                self._current_image_index -= 1
+
+            if self._current_image_index < 0:
+                if self.loop:
+                    self._current_image_index = len(self.dir_imgs) - 1
+                    self.__load_images()
+                else:
+                    self._current_image_index = 0
+                    return ""
+
+        img = self.dir_imgs[self._current_image_index]
+        return img
 
     def __load_images(self):
-        dir_imgs = []
+        self.dir_imgs = []
         for d in self.dirs:
             try:
                 new_path = os.path.join(self.folder, d)
 
                 # only add bmp imgs
-                if os.path.splitext(new_path)[1] == CONSTANTS.BMP_IMG_ENDING:
-                    dir_imgs.append(new_path)
+                if os.path.splitext(new_path)[-1] == CONSTANTS.BMP_IMG_ENDING:
+                    self.dir_imgs.append(new_path)
             except Image.UnidentifiedImageError as e:
                 continue
 
-        if not len(dir_imgs):
+        if not len(self.dir_imgs):
             raise RuntimeError(CONSTANTS.NO_VALID_IMGS_ERR)
 
         if self._order == PlayBackOrder.RANDOM:
-            shuffle(dir_imgs)
+            shuffle(self.dir_imgs)
         else:
-            dir_imgs.sort()
-
-        # convert list to queue
-        # (must be list beforehand for potential randomization)
-        self.pic_queue = collections.deque(dir_imgs)
+            self.dir_imgs.sort()
 
     def __advance_with_fade(self):
         if board.DISPLAY.active_group != self:
@@ -265,6 +281,7 @@ class SlideShow:
         while not advance_sucessful:
             new_path = self.__get_next_img()
             if new_path == "":
+                self._img_start = time.monotonic()
                 return False
 
             try:
@@ -323,6 +340,7 @@ class SlideShow:
         while not advance_sucessful:
             new_path = self.__get_next_img()
             if new_path == "":
+                self._img_start = time.monotonic()
                 return False
 
             try:
