@@ -33,7 +33,7 @@ const CLUE_SLIDER_B: ISliderProps = {
 const CLUE_SLIDER_C: ISliderProps = {
     axisLabel: "C",
     maxLabel: "Max",
-    maxValue: 255,
+    maxValue: 65535,
     minLabel: "Min",
     minValue: 0,
     type: SENSOR_LIST.LIGHT_C,
