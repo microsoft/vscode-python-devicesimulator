@@ -947,7 +947,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     new DebuggerCommunicationServer(
                         currentPanel,
                         utils.getServerPortConfig(),
-                        deviceSelectionService.getCurrentActiveDevice()
+                        deviceSelectionService
                     )
                 );
 
