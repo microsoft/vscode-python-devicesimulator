@@ -32,7 +32,6 @@ sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CLUE))
 # Insert absolute path to Circuitpython libraries for CLUE into sys.path
 sys.path.insert(0, os.path.join(abs_path_to_parent_dir, CONSTANTS.CIRCUITPYTHON))
 
-
 # This import must happen after the sys.path is modified
 from common import debugger_communication_client
 

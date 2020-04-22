@@ -6,7 +6,6 @@ export const LATEST_RELEASE_NOTE = `<h1>Device Simulator Express Release Notes ğ
 </div>
 
 <h2>ğŸ“ April 22, 2020</h2>
-
 <h3>Changes:</h3>
 <ul>
 <li>Increased precision for certain sensors on the CLUE and CPX.</li>
