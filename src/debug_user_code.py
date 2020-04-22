@@ -38,6 +38,7 @@ from common import debugger_communication_client
 # get board so we can get terminal handle
 import board
 
+
 # get handle to terminal for clue
 curr_terminal = board.DISPLAY.terminal
 
