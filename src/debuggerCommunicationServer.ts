@@ -5,6 +5,7 @@ import * as http from "http";
 import * as socketio from "socket.io";
 import { WebviewPanel } from "vscode";
 import { SERVER_INFO } from "./constants";
+import { DeviceSelectionService } from "./service/deviceSelectionService";
 
 export const DEBUGGER_MESSAGES = {
     EMITTER: {
@@ -24,14 +25,14 @@ export class DebuggerCommunicationServer {
     private serverHttp: http.Server;
     private serverIo: socketio.Server;
     private simulatorWebview: WebviewPanel | undefined;
-    private currentActiveDevice;
+    private deviceSelectionService: DeviceSelectionService;
     private isPendingResponse = false;
     private pendingCallbacks: Function[] = [];
 
     constructor(
         webviewPanel: WebviewPanel | undefined,
         port = SERVER_INFO.DEFAULT_SERVER_PORT,
-        currentActiveDevice: string
+        deviceSelectionService: DeviceSelectionService
     ) {
         this.port = port;
         this.serverHttp = new http.Server();
@@ -42,7 +43,7 @@ export class DebuggerCommunicationServer {
         this.initEventsHandlers();
         console.info(`Server running on port ${this.port}`);
 
-        this.currentActiveDevice = currentActiveDevice;
+        this.deviceSelectionService = deviceSelectionService;
     }
 
     // send the message to start closing the connection
@@ -119,12 +120,16 @@ export class DebuggerCommunicationServer {
         try {
             const messageToWebview = JSON.parse(data);
             if (messageToWebview.type === "state") {
-                console.log(`State recieved: ${messageToWebview.data}`);
-                if (this.simulatorWebview) {
+                const messageState = JSON.parse(messageToWebview.data);
+                if (
+                    this.simulatorWebview &&
+                    messageState.device_name ===
+                        this.deviceSelectionService.getCurrentActiveDevice()
+                ) {
                     this.simulatorWebview.webview.postMessage({
-                        active_device: this.currentActiveDevice,
+                        active_device: this.deviceSelectionService.getCurrentActiveDevice(),
                         command: "set-state",
-                        state: JSON.parse(messageToWebview.data),
+                        state: messageState,
                     });
                 }
             }
