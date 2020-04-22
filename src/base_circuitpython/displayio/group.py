@@ -3,7 +3,7 @@ from io import BytesIO
 from PIL import Image
 import adafruit_display_text
 
-from .tile_grid import TileGrid
+from displayio.tile_grid import TileGrid
 from . import constants as CONSTANTS
 
 import common

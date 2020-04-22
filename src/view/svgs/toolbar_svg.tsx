@@ -52,7 +52,6 @@ export const GPIO_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>GPIO</title>
         <desc>Created with Sketch.</desc>
         <g
             id="GPIO"
@@ -84,7 +83,6 @@ export const IR_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>IR</title>
         <desc>Created with Sketch.</desc>
         <g
             id="IR"
@@ -119,8 +117,6 @@ export const LIGHT_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.LIGHT}</title>
-
         <g
             id="light_sensor"
             stroke="none"
@@ -199,7 +195,6 @@ export const NEO_PIXEL_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>neon_pixel</title>
         <desc>Created with Sketch.</desc>
         <g
             id="neon_pixel"
@@ -253,7 +248,6 @@ export const PUSH_BUTTON_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.PUSH_BUTTON}</title>
         <desc>Created with Sketch.</desc>
         <g
             id="push_btn"
@@ -289,7 +283,6 @@ export const RED_LED_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.RED_LED}</title>
         <desc>Created with Sketch.</desc>
         <g
             id="red_LED"
@@ -328,7 +321,6 @@ export const SLIDER_SWITCH_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.SWITCH}</title>
         <desc>Created with Sketch.</desc>
         <g
             id="slider_switch"
@@ -364,7 +356,6 @@ export const SOUND_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.SOUND}</title>
         <desc>Created with Sketch.</desc>
         <g
             id="sound_sensor"
@@ -411,7 +402,6 @@ export const SPEAKER_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.SPEAKER}</title>
         <desc>Created with Sketch.</desc>
         <g
             id="speaker"
@@ -445,8 +435,6 @@ export const TEMPERATURE_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.TEMPERATURE}</title>
-
         <g
             id="temperature"
             stroke="none"
@@ -486,8 +474,6 @@ export const WIRELESS_SVG = (
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-        <title>{TOOLBAR_ICON_LABEL.WIRELESS}</title>
-
         <g
             id="wireless"
             fill="none"

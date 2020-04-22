@@ -61,7 +61,6 @@ The following dependencies are required to install before launching Device Simul
 You will be prompted to install the Python dependencies during the first use.
 
 -   _**[Visual Studio Code](https://code.visualstudio.com/)**_
--   _**[Node](https://nodejs.org/en/download/)**_
 -   _**[Python 3.7+](https://www.python.org/downloads/)**_: Make sure you've added Python and pip to your PATH in your environment variables. (1)
 -   _**[Python VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)**_: This will be installed automatically from the marketplace when you install Device Simulator Express.
 
