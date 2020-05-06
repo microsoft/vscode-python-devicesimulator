@@ -49,7 +49,7 @@ export class GettingStartedPage extends React.Component {
                     <div id="CPX" className="inv">
                         <h2> Tutorial for Circuit Playground Express </h2>
                         <h3 className="normalFontWeight">
-                            Import the Circuit Playground library to use it (This is required)
+                            > Import the Circuit Playground library to use it (This is required)
                         </h3>
                         <span className="codeBox">
                             <pre className="codeText">from adafruit_circuitplayground import cp</pre>
