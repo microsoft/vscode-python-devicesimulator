@@ -59,7 +59,7 @@ exports[`GettingStartedPage component  should render correctly 1`] = `
     <h3
       className="normalFontWeight"
     >
-      Import the Circuit Playground library to use it (This is required)
+      &gt; Import the Circuit Playground library to use it (This is required)
     </h3>
     <span
       className="codeBox"
