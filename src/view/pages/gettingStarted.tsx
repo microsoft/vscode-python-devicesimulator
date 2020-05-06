@@ -49,8 +49,7 @@ export class GettingStartedPage extends React.Component {
                     <div id="CPX" className="inv">
                         <h2> Tutorial for Circuit Playground Express </h2>
                         <h3 className="normalFontWeight">
-                            > Import the micro:bit library to use it (This is
-                            required)
+                            Import the Circuit Playground library to use it (This is required)
                         </h3>
                         <span className="codeBox">
                             <pre className="codeText">from adafruit_circuitplayground import cp</pre>
@@ -250,7 +249,7 @@ export class GettingStartedPage extends React.Component {
                         <p>Press <kbd>F5</kbd> or go to <code>Run -> Start Debugging</code></p>
                         <img alt='Start debugging' src='https://raw.githubusercontent.com/microsoft/vscode-python-devicesimulator/dev/src/view/pages/gettingStartedPictures/debugger/start_debugging.jpg' style={{ width: '390px', height: '142px' }}></img>
                         <h3 className="normalFontWeight">
-                            > Set a breakpoint or multiple breakpoints 
+                            > Set a breakpoint or multiple breakpoints
                         </h3>
                         <p>Stopping at a breakpoint pauses the program at that particular place.</p>
                         <p>Use the debug toolbar or the shortcuts below</p>
