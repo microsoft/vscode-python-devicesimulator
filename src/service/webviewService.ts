@@ -42,17 +42,17 @@ export class WebviewService {
                 </script>
                 <script ></script>
                 ${this.loadScript(
-            this.context,
-            webviewType,
-            "out/vendor.js",
-            hasDevice
-        )}
+                    this.context,
+                    webviewType,
+                    "out/vendor.js",
+                    hasDevice
+                )}
                 ${this.loadScript(
-            this.context,
-            webviewType,
-            "out/simulator.js",
-            hasDevice
-        )}
+                    this.context,
+                    webviewType,
+                    "out/simulator.js",
+                    hasDevice
+                )}
               </body>
               </html>`;
     }
@@ -64,7 +64,7 @@ export class WebviewService {
             { preserveFocus: true, viewColumn: vscode.ViewColumn.One },
             {
                 enableScripts: true,
-                retainContextWhenHidden: true
+                retainContextWhenHidden: true,
             }
         );
         this.tutorialPanel.webview.html = this.getWebviewContent(
@@ -90,9 +90,9 @@ export class WebviewService {
         if (hasDevice) {
             attributeString = `${
                 WEBVIEW_ATTRIBUTES_KEY.TYPE
-                }=${attributeValue} ${
+            }=${attributeValue} ${
                 WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
-                }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
+            }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
         } else {
             attributeString = `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${attributeValue} `;
         }
