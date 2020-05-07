@@ -64,6 +64,7 @@ export class WebviewService {
             { preserveFocus: true, viewColumn: vscode.ViewColumn.One },
             {
                 enableScripts: true,
+                retainContextWhenHidden: true,
             }
         );
         this.tutorialPanel.webview.html = this.getWebviewContent(
