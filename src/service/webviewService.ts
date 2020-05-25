@@ -26,7 +26,7 @@ export class WebviewService {
         }
     }
 
-    public getWebviewContent(webviewType: string, hasDevice: boolean) {
+    public getWebviewContent(webviewType: string, hasDevice: boolean, panel: vscode.WebviewPanel) {
         return `<!DOCTYPE html>
               <html lang="en">
               <head>
@@ -42,17 +42,19 @@ export class WebviewService {
                 </script>
                 <script ></script>
                 ${this.loadScript(
-                    this.context,
-                    webviewType,
-                    "out/vendor.js",
-                    hasDevice
-                )}
+            this.context,
+            webviewType,
+            "out/vendor.js",
+            hasDevice,
+            panel
+        )}
                 ${this.loadScript(
-                    this.context,
-                    webviewType,
-                    "out/simulator.js",
-                    hasDevice
-                )}
+            this.context,
+            webviewType,
+            "out/simulator.js",
+            hasDevice,
+            panel
+        )}
               </body>
               </html>`;
     }
@@ -69,7 +71,8 @@ export class WebviewService {
         );
         this.tutorialPanel.webview.html = this.getWebviewContent(
             WEBVIEW_TYPES.GETTING_STARTED,
-            false
+            false,
+            this.tutorialPanel
         );
         this.tutorialPanel.onDidDispose(() => {
             this.disposeTutorialPanel();
@@ -84,22 +87,23 @@ export class WebviewService {
         context: vscode.ExtensionContext,
         attributeValue: string,
         scriptPath: string,
-        hasDevice: boolean
+        hasDevice: boolean,
+        panel: vscode.WebviewPanel
     ) {
         let attributeString: string;
         if (hasDevice) {
             attributeString = `${
                 WEBVIEW_ATTRIBUTES_KEY.TYPE
-            }=${attributeValue} ${
+                }=${attributeValue} ${
                 WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
-            }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
+                }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
         } else {
             attributeString = `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${attributeValue} `;
         }
-        return `<script ${attributeString} src="${vscode.Uri.file(
-            context.asAbsolutePath(scriptPath)
-        )
-            .with({ scheme: "vscode-resource" })
-            .toString()}"></script>`;
+        // Load appropriate vscode ressources to the webview 
+        const onDiskPath = vscode.Uri.file(context.asAbsolutePath(scriptPath));
+        const scriptSrc = panel.webview.asWebviewUri(onDiskPath);
+
+        return `<script ${attributeString} src="${scriptSrc}"></script>`;
     }
 }

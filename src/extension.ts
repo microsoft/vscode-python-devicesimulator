@@ -134,7 +134,8 @@ export async function activate(context: vscode.ExtensionContext) {
             messagingService.setWebview(currentPanel.webview);
             currentPanel.webview.html = webviewService.getWebviewContent(
                 WEBVIEW_TYPES.SIMULATOR,
-                true
+                true,
+                currentPanel
             );
             currentPanel.reveal(vscode.ViewColumn.Beside);
         } else {
@@ -158,7 +159,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
             currentPanel.webview.html = webviewService.getWebviewContent(
                 WEBVIEW_TYPES.SIMULATOR,
-                true
+                true,
+                currentPanel
             );
             messagingService.setWebview(currentPanel.webview);
 
