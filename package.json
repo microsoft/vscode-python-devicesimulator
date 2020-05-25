@@ -257,7 +257,7 @@
         "@types/node": "^10.12.21",
         "@types/react": "16.8.6",
         "@types/react-dom": "16.8.4",
-        "@types/vscode": "^1.34.0",
+        "@types/vscode": "^1.45.1",
         "css-loader": "^1.0.0",
         "del": "^4.0.0",
         "event-stream": "^4.0.1",
