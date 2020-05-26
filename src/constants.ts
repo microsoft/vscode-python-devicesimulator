@@ -40,6 +40,10 @@ export const CONSTANTS = {
         MICROBIT: "micro:bit",
         CLUE: "CLUE",
     },
+    SCRIPT_PATH: {
+        SIMULATOR: "out/simulator.js",
+        VSCODE_API: "out/vscode_import.js",
+    },
     ERROR: {
         BAD_PYTHON_PATH:
             'Your interpreter is not pointing to a valid Python executable. Please select a different interpreter (CTRL+SHIFT+P and type "python.selectInterpreter") and restart the application',

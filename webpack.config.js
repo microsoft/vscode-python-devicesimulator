@@ -9,7 +9,10 @@ module.exports = {
     path: path.resolve(__dirname, "out"),
     filename: "[name].js"
   },
-  devtool: "eval-source-map",
+  devServer: {
+    historyApiFallback: true
+  },
+  devtool: "source-map",
   resolve: {
     extensions: [".js", ".ts", ".tsx", ".json"]
   },
