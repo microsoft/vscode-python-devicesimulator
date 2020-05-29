@@ -26,35 +26,44 @@ export class WebviewService {
         }
     }
 
-    public getWebviewContent(webviewType: string, hasDevice: boolean) {
+    public getWebviewContent(
+        webviewType: string,
+        hasDevice: boolean,
+        panel: vscode.WebviewPanel
+    ) {
+        const onDiskPath = vscode.Uri.file(
+            this.context.asAbsolutePath(CONSTANTS.SCRIPT_PATH.SIMULATOR)
+        );
+        const scriptSrc = panel.webview.asWebviewUri(onDiskPath);
+
+        const vscodeImportPath = vscode.Uri.file(
+            this.context.asAbsolutePath(CONSTANTS.SCRIPT_PATH.VSCODE_API)
+        );
+        const vscodeImportPathSrc = panel.webview.asWebviewUri(
+            vscodeImportPath
+        );
+
+        const attributeString = this.getAttributeString(webviewType, hasDevice);
+        const nonce = getNonce();
+
         return `<!DOCTYPE html>
               <html lang="en">
               <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+                <meta
+                http-equiv="Content-Security-Policy"
+                content=" script-src ${panel.webview.cspSource}  nonce-${nonce}"
+              />
                 <title>${CONSTANTS.NAME}</title>
                 </head>
               <body>
                 <div id="root"></div>
-                <script >
-                  const vscode = acquireVsCodeApi();
-                </script>
-                <script ></script>
-                ${this.loadScript(
-                    this.context,
-                    webviewType,
-                    "out/vendor.js",
-                    hasDevice
-                )}
-                ${this.loadScript(
-                    this.context,
-                    webviewType,
-                    "out/simulator.js",
-                    hasDevice
-                )}
-              </body>
-              </html>`;
+                <script nonce="${nonce}" src=${vscodeImportPathSrc} ></script>
+                <script nonce="${nonce}" src=${scriptSrc} ${attributeString} ></script>
+
+            </body>
+            < /html>`;
     }
 
     private createTutorialPanel() {
@@ -69,7 +78,8 @@ export class WebviewService {
         );
         this.tutorialPanel.webview.html = this.getWebviewContent(
             WEBVIEW_TYPES.GETTING_STARTED,
-            false
+            false,
+            this.tutorialPanel
         );
         this.tutorialPanel.onDidDispose(() => {
             this.disposeTutorialPanel();
@@ -79,27 +89,24 @@ export class WebviewService {
     private disposeTutorialPanel() {
         this.tutorialPanel = undefined;
     }
-
-    private loadScript(
-        context: vscode.ExtensionContext,
-        attributeValue: string,
-        scriptPath: string,
-        hasDevice: boolean
-    ) {
-        let attributeString: string;
+    private getAttributeString(webviewType: string, hasDevice: boolean) {
         if (hasDevice) {
-            attributeString = `${
-                WEBVIEW_ATTRIBUTES_KEY.TYPE
-            }=${attributeValue} ${
+            return `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${webviewType} ${
                 WEBVIEW_ATTRIBUTES_KEY.INITIAL_DEVICE
-            }=${this.deviceSelectionService.getCurrentActiveDevice()}`;
+            }=${this.deviceSelectionService.getCurrentActiveDevice()} `;
         } else {
-            attributeString = `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${attributeValue} `;
+            return `${WEBVIEW_ATTRIBUTES_KEY.TYPE}=${webviewType} `;
         }
-        return `<script ${attributeString} src="${vscode.Uri.file(
-            context.asAbsolutePath(scriptPath)
-        )
-            .with({ scheme: "vscode-resource" })
-            .toString()}"></script>`;
     }
+}
+// Nonce generator taken from vscode extension samples found here:
+// https://github.com/microsoft/vscode-extension-samples/blob/master/custom-editor-sample/src/util.ts
+function getNonce() {
+    let text = "";
+    const possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 32; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }
