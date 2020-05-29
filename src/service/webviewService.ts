@@ -99,7 +99,8 @@ export class WebviewService {
         }
     }
 }
-// Nonce generator taken from vscode extension samples
+// Nonce generator taken from vscode extension samples found here:
+// https://github.com/microsoft/vscode-extension-samples/blob/master/custom-editor-sample/src/util.ts
 function getNonce() {
     let text = "";
     const possible =
