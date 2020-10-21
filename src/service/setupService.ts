@@ -171,7 +171,20 @@ export class SetupService {
             : GLOBAL_ENV_VARS.PYTHON;
         // try to get name from interpreter
         try {
-            originalPythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
+            const extension = vscode.extensions.getExtension("ms-python.python");
+            const usingNewInterpreterStorage = extension.packageJSON?.featureFlags?.usingNewInterpreterStorage;
+            if (usingNewInterpreterStorage) {
+                if (!extension.isActive) {
+                    await extension.activate();
+                }
+                const execCommand = extension.exports.settings.getExecutionDetails ?
+                    extension.exports.settings.getExecutionDetails().execCommand :
+                    extension.exports.settings.getExecutionCommand();
+                    originalPythonExecutablePath = execCommand.join(" ");
+            }
+            else {
+                originalPythonExecutablePath = getConfig(CONFIG.PYTHON_PATH);
+            }
         } catch (err) {
             originalPythonExecutablePath = systemPythonVar;
         }
