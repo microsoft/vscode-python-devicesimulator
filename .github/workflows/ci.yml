@@ -29,12 +29,12 @@ jobs:
         sudo apt-get install -y build-essential
         sudo apt-get install libudev-dev
     - name: Use Node.js ${{ matrix.node-version }} and install npm dependencies
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - name: Setup Python environment
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.x
     - run: |
