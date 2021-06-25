@@ -236,13 +236,13 @@
             }
         ],
         "menus": {
-			"editor/title": [
-				{
-					"command": "deviceSimulatorExpress.common.deployToDevice",
-					"when": "editorLangId == python && !notebookEditorFocused",
+            "editor/title": [
+                {
+                    "command": "deviceSimulatorExpress.common.deployToDevice",
+                    "when": "editorLangId == python && !notebookEditorFocused",
                     "group": "navigation"
-				}
-			]
+                }
+            ]
         }
     },
     "scripts": {
