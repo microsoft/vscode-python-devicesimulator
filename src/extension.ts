@@ -68,6 +68,21 @@ const sendCurrentDeviceMessage = (currentPanel: vscode.WebviewPanel) => {
 };
 // Extension activation
 export async function activate(context: vscode.ExtensionContext) {
+    const warningMessage = "The Device Simulator Express extension is no longer maintained and has been unpublished from the Marketplace.";
+    const detailsButtton = "Details...";
+    const goAawayButton = "Don't show again";
+    const notifiedKey = "notified-of-deprecation";
+    if (!context.globalState.get<boolean>(notifiedKey, false)) {
+        vscode.window.showWarningMessage(warningMessage, detailsButtton, goAawayButton).then((choice) => {
+            if (choice === detailsButtton) {
+                const url = "https://github.com/microsoft/vscode-python-devicesimulator/wiki/Deprecation-of-the-extension";
+                vscode.env.openExternal(vscode.Uri.parse(url));
+            } else if (choice === goAawayButton) {
+                context.globalState.update(notifiedKey, true);
+            }
+        });
+    }
+
     telemetryAI = new TelemetryAI(context);
     setupService = new SetupService(telemetryAI);
     let currentPanel: vscode.WebviewPanel | undefined;
