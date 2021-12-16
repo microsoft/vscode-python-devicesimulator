@@ -1,7 +1,5 @@
 # Device Simulator Express, a Microsoft Garage project
 
-<a href='https://www.python.org/downloads/'><img src='https://img.shields.io/badge/Python-3.7%2B-blue.svg' alt='Python versions: 3.7+' /></a> <img src='https://img.shields.io/badge/VS%20Code-v1.43+-blue' alt='VS Code version 1.43'> <img src='https://www.repostatus.org/badges/latest/active.svg' alt='Project Status: Active – The project has reached a stable, usable state and is being actively developed.' /> <a href='LICENSE'><img src='https://img.shields.io/badge/license-MIT-blue.svg' alt='License: We are using the MIT License'></a> <a href='CONTRIBUTING.md'><img src='https://img.shields.io/badge/PRs-Welcome-brightgreen.svg' alt='We are welcoming PRS!'></a> <img src='https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg' alt='Platforms Supported: Windows, MacOSX'/>
-
 <a href='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/'><img src='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28' alt='Azure DevOps Board Badge' /></a>
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX), your BBC micro:bit or the Adafruit CLUE! Test and debug your code on the device simulator and see the same
@@ -32,7 +30,7 @@ monitor allows you to observe the device output.
   - [Troubleshooting Tips](#troubleshooting-tips)
   - [License](#license)
   - [Notes](#notes)
-  
+
 ## Devices we support
 
 -   [**Adafruit Circuit Playground Express (CPX)**](#adafruit-circuit-playground-express-cpx-simulator)
@@ -57,7 +55,7 @@ monitor allows you to observe the device output.
 
 ## Prerequisites
 
-The following dependencies are required to install before launching Device Simulator Express.  
+The following dependencies are required to install before launching Device Simulator Express.
 You will be prompted to install the Python dependencies during the first use.
 
 -   _**[Visual Studio Code](https://code.visualstudio.com/)**_
@@ -89,7 +87,7 @@ You will be prompted to install the Python dependencies during the first use.
     -   7 Capacitive Touch sensors
 
 The simulator supports most of the sensors on CPX except **IR transmitter & Receiver**, **Sound Sensor (microphone)**, **Speaker (Play Tone)** and the **"tap" on Motion Sensor**.
-The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.  
+The code related to these sensors can still run on the actual CPX board and be deployed using Device Simulator Express.
 As we only support CPX library now, other libraries (i.e. simpleio) can’t run on the simulator. But they will work on the actual device!
 
 ### Useful Links
@@ -276,7 +274,7 @@ Device Simulator Express provides several commands in the Command Palette (<kbd>
 
 To add a review for our extension, please do so on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-python.devicesimulatorexpress)
 
-To report issues, provide feedback or requests, please use this link: [Provide Feedback](https://github.com/microsoft/vscode-python-devicesimulator/issues).  
+To report issues, provide feedback or requests, please use this link: [Provide Feedback](https://github.com/microsoft/vscode-python-devicesimulator/issues).
 We would love to hear from you about your experience to keep improving our project.
 
 ## Privacy and Telemetry Notice
