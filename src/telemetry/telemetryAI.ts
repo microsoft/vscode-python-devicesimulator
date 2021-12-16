@@ -5,7 +5,7 @@ import getPackageInfo from "./getPackageInfo";
 // tslint:disable-next-line:export-name
 export default class TelemetryAI {
     private static telemetryReporter: TelemetryReporter;
-    private static enableTelemetry: boolean | undefined;
+    private static enableTelemetry: boolean | undefined = false;
 
     constructor(vscodeContext: vscode.ExtensionContext) {
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(
@@ -14,9 +14,6 @@ export default class TelemetryAI {
         TelemetryAI.enableTelemetry = vscode.workspace
             .getConfiguration()
             .get("telemetry.enableTelemetry");
-        if (TelemetryAI.enableTelemetry === undefined) {
-            TelemetryAI.enableTelemetry = true;
-        }
     }
 
     public getExtensionName(context: vscode.ExtensionContext): string {
@@ -34,34 +31,18 @@ export default class TelemetryAI {
         properties?: { [key: string]: string },
         measurements?: { [key: string]: number }
     ) {
-        if (TelemetryAI.enableTelemetry) {
-            TelemetryAI.telemetryReporter.sendTelemetryEvent(
-                eventName,
-                properties,
-                measurements
-            );
-        }
     }
 
     public trackFeatureUsage(
         eventName: string,
         eventProperties?: { [key: string]: string }
     ) {
-        this.sendTelemetryIfEnabled(eventName, eventProperties);
     }
 
     public runWithLatencyMeasure(
         functionToRun: () => void,
         eventName: string
     ): void {
-        const numberOfNanosecondsInSecond: number = 1000000000;
-        const startTime: number = Number(process.hrtime.bigint());
-        functionToRun();
-        const latency: number = Number(process.hrtime.bigint()) - startTime;
-        const measurement = {
-            duration: latency / numberOfNanosecondsInSecond,
-        };
-        this.sendTelemetryIfEnabled(eventName, {}, measurement);
     }
 
     private createTelemetryReporter(
