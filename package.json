@@ -1,9 +1,9 @@
 {
-    "name": "__EXTENSIONNAME__",
-    "displayName": "__DISPLAYNAME__",
-    "description": "__DESCRIPTION__",
-    "version": "0.0.0-UNTRACKEDVERSION",
-    "publisher": "__PUBLISHER__",
+    "name": "devicesimulatorexpress",
+    "displayName": "Device Simulator Express",
+    "description": "Device Simulator Express, a Microsoft Garage project",
+    "version": "2021.0.0",
+    "publisher": "ms-python",
     "instrumentationKey": "__AIKEY__",
     "icon": "assets/icon.png",
     "engines": {
