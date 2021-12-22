@@ -1,5 +1,8 @@
 # ⚠️ NOTE: this extension is no longer maintained! ⚠️
 
+Please see the [deprecation notice](https://github.com/microsoft/vscode-python-devicesimulator/wiki/Deprecation-of-the-extension) for details.
+
+
 # Device Simulator Express, a Microsoft Garage project
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX), your BBC micro:bit or the Adafruit CLUE! Test and debug your code on the device simulator and see the same
