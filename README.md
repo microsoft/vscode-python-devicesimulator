@@ -1,6 +1,6 @@
-# Device Simulator Express, a Microsoft Garage project
+# ⚠️ NOTE: this extension is no longer maintained! ⚠️
 
-<a href='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/'><img src='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28' alt='Azure DevOps Board Badge' /></a>
+# Device Simulator Express, a Microsoft Garage project
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX), your BBC micro:bit or the Adafruit CLUE! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
