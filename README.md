@@ -1,8 +1,8 @@
+# ⚠️ NOTE: this extension is no longer maintained! ⚠️
+
+Please see the [deprecation notice](https://github.com/microsoft/vscode-python-devicesimulator/wiki/Deprecation-of-the-extension) for details.
+
 # Device Simulator Express, a Microsoft Garage project
-
-<a href='https://www.python.org/downloads/'><img src='https://img.shields.io/badge/Python-3.7%2B-blue.svg' alt='Python versions: 3.7+' /></a> <img src='https://img.shields.io/badge/VS%20Code-v1.43+-blue' alt='VS Code version 1.43'> <img src='https://www.repostatus.org/badges/latest/active.svg' alt='Project Status: Active – The project has reached a stable, usable state and is being actively developed.' /> <a href='LICENSE'><img src='https://img.shields.io/badge/license-MIT-blue.svg' alt='License: We are using the MIT License'></a> <a href='CONTRIBUTING.md'><img src='https://img.shields.io/badge/PRs-Welcome-brightgreen.svg' alt='We are welcoming PRS!'></a> <img src='https://img.shields.io/badge/platform-win%20%7C%20osx-lightgrey.svg' alt='Platforms Supported: Windows, MacOSX'/>
-
-<a href='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/_boards/board/t/227906bb-31ac-4b07-8626-3d757754a616/Microsoft.RequirementCategory/'><img src='https://microsoftgarage.visualstudio.com/002806e2-ebaa-4672-9d2e-5fe5d29154ef/227906bb-31ac-4b07-8626-3d757754a616/_apis/work/boardbadge/73f82653-3da1-4a6f-bb79-c91c9eecec28' alt='Azure DevOps Board Badge' /></a>
 
 Make without limit! Device Simulator Express, a Microsoft Garage project, allows you to code microcontrollers without the hardware on hand! You can program your Adafruit Circuit Playground Express (CPX), your BBC micro:bit or the Adafruit CLUE! Test and debug your code on the device simulator and see the same
 result when you plug in your actual microcontroller. Curious about the output of the device, the serial
