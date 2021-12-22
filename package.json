@@ -2,7 +2,7 @@
     "name": "devicesimulatorexpress",
     "displayName": "Device Simulator Express",
     "description": "Device Simulator Express, a Microsoft Garage project",
-    "version": "2021.0.0",
+    "version": "2022.0.0",
     "publisher": "ms-python",
     "instrumentationKey": "__AIKEY__",
     "icon": "assets/icon.png",
