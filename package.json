@@ -6,6 +6,9 @@
     "publisher": "__PUBLISHER__",
     "instrumentationKey": "__AIKEY__",
     "icon": "assets/icon.png",
+    "featureFlags": {
+        "usingNewPythonInterpreterPathApi": true
+    },
     "engines": {
         "vscode": "^1.43.0"
     },
