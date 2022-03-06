@@ -12,6 +12,16 @@
     "categories": [
         "Other"
     ],
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": false,
+            "description": "Device Simulator Express runs Python files in the workspace."
+        },
+        "virtualWorkspaces": {
+            "supported": false,
+            "description": "Depends on the Python extension, which does not support virtual Workspaces."
+        }
+    },
     "preview": true,
     "license": "MIT",
     "homepage": "https://github.com/microsoft/vscode-python-devicesimulator",
@@ -81,7 +91,8 @@
             {
                 "command": "deviceSimulatorExpress.common.deployToDevice",
                 "title": "%deviceSimulatorExpressExtension.commands.common.deployToDevice%",
-                "category": "%deviceSimulatorExpressExtension.commands.common.label%"
+                "category": "%deviceSimulatorExpressExtension.commands.common.label%",
+				"icon": "$(circuit-board)"
             },
             {
                 "command": "deviceSimulatorExpress.common.newFile",
@@ -223,7 +234,16 @@
                     }
                 ]
             }
-        ]
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "deviceSimulatorExpress.common.deployToDevice",
+                    "when": "editorLangId == python && !notebookEditorFocused",
+                    "group": "navigation"
+                }
+            ]
+        }
     },
     "scripts": {
         "start": "webpack-dev-server",
